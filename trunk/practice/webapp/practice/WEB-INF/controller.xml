@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<site-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/site-conf.xsd">
+       <include location="component://common/webcommon/WEB-INF/common-controller.xml"/>
+       <description>Practice Component Site Configuration File</description>
+       <owner>Copyright 2001-2009 The Apache Software Foundation</owner>
+       <handler name="screen" type="view" class="org.ofbiz.widget.screen.ScreenWidgetViewHandler"/>
+       <!-- Request Mappings -->
+       <request-map uri="main">
+           <security https="false" auth="false"/>
+           <response name="success" type="view" value="main"/>
+       </request-map>
+       <request-map uri="person">
+           <security https="false" auth="false"/>
+           <response name="success" type="view" value="person"/>
+       </request-map>
+       <request-map uri="personForm">
+           <security https="false" auth="false"/>
+           <response name="success" type="view" value="personForm"/>
+       </request-map>
+       <request-map uri="test">
+           <security https="false" auth="false"/>
+           <response name="success" type="view" value="test"/>
+       </request-map>
+       <!-- end of request mappings -->
+       <!-- View Mappings -->
+       
+       <view-map name="main" type="screen" page="component://practice/widget/PracticeScreens.xml#main"/>
+       <view-map name="person" type="screen" page="component://practice/widget/PracticeScreens.xml#person"/>
+       <view-map name="personForm" type="screen" page="component://practice/widget/PracticeScreens.xml#personForm"/>
+       <view-map name="test" type="screen" page="component://practice/widget/CommonScreens.xml#main-decorator"/>
+       
+       <!-- end of view mappings -->
+</site-conf>
