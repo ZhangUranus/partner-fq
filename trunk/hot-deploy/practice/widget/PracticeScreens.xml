@@ -5,30 +5,25 @@
         <section>
             <widgets>
                <decorator-screen name="CommonPracticeDecorator" location="component://practice/widget/CommonScreens.xml">
-                    <decorator-section name="center">
-                     <container style="left">
-                      <screenlet title="测试页签" >
-                      <include-form name="PraticeForm" location="component://practice/widget/PracticeForms.xml"/>
+               <decorator-section name="pre-body">
+                     <container >
+                     <include-menu location="component://practice/widget/BaseBillMenus.xml" name="EditUIMenu"/>
+                      </container>
+                     
+                    </decorator-section>
+                    <decorator-section name="body">
+                     <container >
+                      <screenlet title="基础单据" >
+                      <include-form name="BaseBillHead" location="component://practice/widget/BaseBill.xml"/>
                       </screenlet>
                       </container>
                       
-                      <container style="left">
-                      <screenlet title="测试页签" >
-                      <include-form name="PraticeForm" location="component://practice/widget/PracticeForms.xml"/>
+                      <container>
+                      <screenlet title="分录" >
+                      <include-form name="BaseBillEntry" location="component://practice/widget/BaseBill.xml"/>
                       </screenlet>
                       </container>
-                      <container style="clear"></container>
-                      <container style="left">
-                      <screenlet title="测试页签" >
-                      <include-form name="PraticeForm" location="component://practice/widget/PracticeForms.xml"/>
-                      </screenlet>
-                      </container>
-                      
-                      <container style="left">
-                      <screenlet title="测试页签" >
-                      <include-form name="PraticeForm" location="component://practice/widget/PracticeForms.xml"/>
-                      </screenlet>
-                      </container>
+                     
                     </decorator-section>
                 </decorator-screen>
                 

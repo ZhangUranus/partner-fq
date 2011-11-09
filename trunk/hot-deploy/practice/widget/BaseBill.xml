@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+	
+	<!-- 基础单据表格 ，表头和表体 -->
+     <form name="BaseBillHead" type="single"  >
+     <actions>
+     
+     </actions>
+		<field name="id" title="id"><hidden/></field>
+		<field name="number" title="编码"><text></text></field>
+		<field name="name" title="名称"><text></text></field>
+		<field name="bizDate" title="日期"><text></text></field>
+		<field name="submit" title="提交"><submit button-type="button"></submit></field>
+	</form>
+
+	<form name="BaseBillEntry" type="list" separate-columns="true" header-row-style="header-row-2" default-table-style="basic-table hover-bar" list-name="entry" >
+     <actions>
+     
+     </actions>
+		<field name="id" title="id"><hidden/></field>
+		<field name="number" title="编码"><text></text></field>
+		<field name="name" title="名称"><text></text></field>
+		<field name="bizDate" title="日期"><text></text></field>
+	</form>
+
+</forms>

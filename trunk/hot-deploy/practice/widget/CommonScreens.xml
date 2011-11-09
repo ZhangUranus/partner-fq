@@ -6,10 +6,11 @@
             <actions/>
             <widgets>
                 <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                <decorator-section name="pre-body">
+                      <decorator-section-include name="pre-body"/>
+                    </decorator-section>
                     <decorator-section name="body">
-                      <decorator-section-include name="top"/>
-                      <decorator-section-include name="center"/>
-                      <decorator-section-include name="bottom"/>
+                      <decorator-section-include name="body"/>
                     </decorator-section>
                 </decorator-screen>
             </widgets>
