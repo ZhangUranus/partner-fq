@@ -23,6 +23,8 @@ under the License.
     <description>Practice Component Services</description>
     <vendor>OFBiz</vendor>
     <version>1.0</version>
-<service name="TestService" engine="java" location="org.ofbiz.practice.TestService" invoke="test"></service>
-    
+	<service name="TestService" engine="java" location="org.ofbiz.practice.TestService" invoke="test"></service>
+    <service name="CreateBillIdService" engine="java" location="org.ofbiz.practice.process.PraticeService" invoke="getNewBillId">
+    <attribute name="newBillId" mode="OUT" type="String"></attribute>
+    </service>
 </services>
