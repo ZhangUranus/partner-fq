@@ -40,14 +40,16 @@ under the License.
         <fileset dir="../../framework/service/build/lib" includes="*.jar"/>
         <fileset dir="../../framework/minilang/build/lib" includes="*.jar"/>
         <fileset dir="../../framework/common/build/lib" includes="*.jar"/>
-        <fileset dir="../../applications/securityext/build/lib" includes="*.jar"/>
+        <fileset dir="../../hot-deploy/practice/build/lib" includes="*.jar"/>
      </path>
 
     <!-- ================================================================== -->
     <!-- Compilation of the source files                                                                                                                         -->
     <!-- ================================================================== -->
 
-    <target name="classes" depends="prepare"/>
+    <target name="classes" depends="prepare">
+    	<copy todir="build/classes"><fileset dir="${ofbiz.home.dir}/bin"><include name="org/ofbiz/practice/**/*.class" /> </fileset> </copy>
+    </target>
 
     <!-- ================================================================== -->
     <!-- Build JavaDoc                                                      -->

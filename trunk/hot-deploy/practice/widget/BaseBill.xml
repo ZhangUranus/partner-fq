@@ -3,25 +3,40 @@
 	xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
 	
 	<!-- 基础单据表格 ，表头和表体 -->
-     <form name="BaseBillHead" type="single"  >
+     <form name="BaseBillHead" type="single"   >
      <actions>
-     
+     	<set field="newBillId"  from-field="parameters.newBillId" global="true"/>
      </actions>
-		<field name="id" title="id"><hidden/></field>
-		<field name="number" title="编码"><text></text></field>
-		<field name="name" title="名称"><text></text></field>
-		<field name="bizDate" title="日期"><text></text></field>
-		<field name="submit" title="提交"><submit button-type="button"></submit></field>
+		<field name="id" title="id"><hidden value="${newBillId}"/></field>
+		<field name="number" title="编码" position="1" ><text default-value="${parameters.number}"></text></field>
+		<field name="name" title="名称" position="2" ><text></text></field>
+		<field name="bizDate" title="日期" position="3" ><date-time/></field>
+		<field name="note" title="备注"  ><textarea/></field>
+		<field name="LayerFromLayer" title="test">
+            <lookup  target-form-name="BaseBillEntry" position="center"/>
+        </field>
 	</form>
 
-	<form name="BaseBillEntry" type="list" separate-columns="true" header-row-style="header-row-2" default-table-style="basic-table hover-bar" list-name="entry" >
+<!-- 分录列表 -->
+	<form name="BaseBillEntry" type="list" separate-columns="true" header-row-style="header-row-2" default-table-style="basic-table hover-bar" list-name="entry1" >
+     <actions>
+     </actions>
+     
+		<field name="id" title="id" ><hidden/></field>
+		<field name="seq" title="序号"><text></text></field>
+		<field name="note" title="备注"><text></text></field>
+	</form>
+	<!-- 分录编辑 -->
+	<form name="BaseBillEntryEdit" type="single" target="addBillEntry1">
      <actions>
      
      </actions>
+     	<field name="parentId" title="parentId"><hidden value="${newBillId}"/></field>
 		<field name="id" title="id"><hidden/></field>
-		<field name="number" title="编码"><text></text></field>
-		<field name="name" title="名称"><text></text></field>
-		<field name="bizDate" title="日期"><text></text></field>
+		<field name="seq" title="序号" position="1"><text></text></field>
+		<field name="note" title="备注" position="2"><text></text></field>
+		<field name="add" title="添加" ><submit button-type="button"/></field>
+		<on-event-update-area event-type="submit" area-id="AjaxEntry" area-target="billEntry1" ></on-event-update-area>
 	</form>
 
 </forms>

@@ -10,6 +10,23 @@
            <security https="false" auth="false"/>
            <response name="success" type="view" value="main"/>
        </request-map>
+       <request-map uri="createNewBill">
+           <security https="false" auth="false"/>
+           <event type="java" path="org.ofbiz.practice.process.PraticeProcessEvent" invoke="createNewBill"/>
+           <response name="success" type="view" value="createNewBill"/>
+       </request-map>
+       <request-map uri="getBillEntry1">
+           <security https="false" auth="false"/>
+           <event type="java" path="org.ofbiz.practice.process.PraticeProcessEvent" invoke="getBillEntry1"/>
+           <response name="success" type="view" value="billEntry1Screen"/>
+       </request-map>
+       <request-map uri="addBillEntry1">
+           <security https="false" auth="false"/>
+           <event type="java" path="org.ofbiz.practice.process.PraticeProcessEvent" invoke="addEntry1"/>
+           <response name="success" type="request" value="json"/>
+       </request-map>
+       
+       
        <request-map uri="person">
            <security https="false" auth="false"/>
            <response name="success" type="view" value="person"/>
@@ -29,6 +46,7 @@
        <view-map name="person" type="screen" page="component://practice/widget/PracticeScreens.xml#person"/>
        <view-map name="personForm" type="screen" page="component://practice/widget/PracticeScreens.xml#personForm"/>
        <view-map name="test" type="screen" page="component://practice/widget/CommonScreens.xml#main-decorator"/>
-       
+       <view-map name="createNewBill" type="screen" page="component://practice/widget/PracticeScreens.xml#main"/>
+       <view-map name="billEntry1Screen" type="screen" page="component://practice/widget/PracticeScreens.xml#billEntry1"/>
        <!-- end of view mappings -->
 </site-conf>
