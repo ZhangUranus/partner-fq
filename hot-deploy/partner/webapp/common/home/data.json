@@ -1,0 +1,53 @@
+data = 
+{
+	'parentId':'',
+	'supportId':'',
+	'buyer':'',
+	'createTime':'',
+	'supportName':'',
+	'materialData':[
+		{
+			'parentId': 'B20111112001',
+			'materialId': 'S001',
+			'materialType': 1,
+	        'unit': 1,
+	        'count': 0,
+	        'unitPrice': 0.1
+	    },
+	    {
+			'parentId': 'B20111112001',
+			'materialId': 'S001',
+			'materialType': 1,
+	        'unit': 1,
+	        'count': 0,
+	        'unitPrice': 0.1
+	    }
+	]
+}
+
+"
+{
+	'parentId':'20111112001',
+	'supportId':'S001',
+	'buyer':'刘继煌',
+	'createTime':'2011-11-12 13:58:22',
+	'supportName':'宝胜',
+	'materialData':[
+		{
+			'parentId':'B20111112001',
+			'materialId':'S002',
+			'materialType':1,
+			'unit':1,
+			'count':2,
+			'unitPrice':100
+		},{
+			'parentId':'B20111112001',
+			'materialId':'S001',
+			'materialType':1,
+			'unit':1,
+			'count':20,
+			'unitPrice':10
+		}
+	]
+}"
+			
