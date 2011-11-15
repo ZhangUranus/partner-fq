@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<site-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://www.ofbiz.org/dtds/site-conf.xsd">
+	<include location="component://common/webcommon/WEB-INF/common-controller.xml"/>
+    <description>Learning Module Site Configuration File</description>
+    <handler name="screen" type="view" class="org.ofbiz.widget.screen.ScreenWidgetViewHandler" />
+    <handler name="java" type="request" class="org.ofbiz.webapp.event.JavaEventHandler"/>
+    
+    <!-- Request Mappings -->
+    <request-map uri="main">
+         <response name="success" type="view" value="main" />
+    </request-map>
+    <request-map uri="formPage">
+         <response name="success" type="view" value="formPage" />
+    </request-map>
+    <request-map uri="formSubmit">
+    	<event type="java" path="org.ofbiz.partner.warehouse.TestEvent" invoke="TestStoreEvent"/>
+    	<response name="success" type="none" />
+    </request-map>
+    
+    <request-map uri="PurchaseOrdersEdit">
+         <response name="success" type="view" value="PurchaseOrdersEdit" />
+    </request-map>
+    <request-map uri="AddPurchaseOrders">
+    	<event type="java" path="org.ofbiz.partner.warehouse.PurchaseOrdersEvents" invoke="addPurchaseOrders"/>
+    	<response name="success" type="none" />
+	</request-map>
+    
+    
+    <!-- end of request mappings -->
+    
+    <!-- View Mappings -->
+    <view-map name="main" type="screen"
+    	page="component://partner/widget/warehouse/WarehouseScreens.xml#main" />
+    <view-map name="formPage" type="screen"
+    	page="component://partner/widget/warehouse/WarehouseScreens.xml#formPage" />
+    <view-map name="PurchaseOrdersEdit" type="screen"
+    	page="component://partner/widget/warehouse/WarehouseScreens.xml#PurchaseOrdersEdit" />
+    <!-- end of view mappings -->
+    
+</site-conf>
