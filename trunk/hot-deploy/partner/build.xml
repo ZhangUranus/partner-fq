@@ -24,7 +24,7 @@
  *  $Id: build.xml 4537 2005-02-21 23:55:27Z jaz $
 -->
 
-<project name="partner Sample Application" default="jar" basedir=".">
+<project name="SCM Application" default="jar" basedir=".">
 
     <!-- ================================================================== -->
     <!-- Initialization of all property settings                            -->
@@ -32,7 +32,7 @@
 
     <target name="init">                
         <property environment="env"/>
-        <property name="desc" value="partner Application"/>
+        <property name="desc" value="SCM Application"/>
         <property name="name" value="ofbiz-partner"/>
         <property name="src.dir" value="src"/>
         <property name="dtd.dir" value="dtd"/>
@@ -42,7 +42,6 @@
     
     <target name="classpath">		        
         <path id="local.class.path">
-            <!--<fileset dir="${lib.dir}" includes="*.jar"/>-->
         	<fileset dir="../../framework/base/lib" includes="*.jar"/>
         	<fileset dir="../../framework/base/lib/j2eespecs" includes="*.jar"/>
             <fileset dir="../../framework/base/build/lib" includes="*.jar"/>
@@ -95,7 +94,6 @@
         </javac>
         <!-- also put the DTDs in the jar file... -->
         <copy todir="${build.dir}/classes">
-            <!--<fileset dir="${dtd.dir}" includes="*.dtd"/>-->
             <fileset dir="${src.dir}" includes="**/*.properties,**/*.xml,**/*.bsh,**/*.logic,**/*.js,**/*.jacl,**/*.py"/>
         </copy>                	
     </target>
@@ -104,18 +102,6 @@
         <jar jarfile="${build.dir}/lib/${name}.jar" basedir="${build.dir}/classes"/>         
     </target>    
     
-    <!-- ================================================================== -->
-    <!-- Build JavaDoc                                                      -->
-    <!-- ================================================================== -->
-
-    <target name="docs" depends="prepare-docs,classpath">
-        <javadoc packagenames="org.ofbiz.partner.*" 
-                 classpathref="local.class.path"
-                 destdir="${build.dir}/javadocs" 
-                 Windowtitle="Open for Business - ${desc}">
-            <sourcepath path="${src.dir}"/>
-        </javadoc>
-    </target>
     
-    <target name="all" depends="jar,docs"/>   
+    <target name="all" depends="jar"/>   
 </project>

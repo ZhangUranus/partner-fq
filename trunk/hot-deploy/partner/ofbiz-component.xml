@@ -2,32 +2,22 @@
 <ofbiz-component name="partner"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="http://www.ofbiz.org/dtds/ofbiz-component.xsd">
-	
 	<resource-loader name="main" type="component"/>
 	<classpath type="jar" location="build/lib/*"/>
 	<classpath type="jar" location="lib/*"/>
-    <entity-resource type="model" reader-name="main" loader="main" location="entitydef/entitymodel.xml"/>
     
-    
-	<webapp name="warehouse" 
-		title="Warehouse" 
+	<webapp name="scm" 
+		title="SCM" 
 		server="default-server" 
-		location="webapp/warehouse" 
+		location="webapp/scm" 
 		base-permission="NONE" 
-		mount-point="/warehouse"/>
+		mount-point="/scm"/>
 		
-	<webapp name="component"
-        title="Component"
+	<webapp name="scmui"
+        title="SCMUI"
         server="default-server"
-        location="webapp/component"
-        mount-point="/component"
-        app-bar-display="false"/>
-    
-    <webapp name="common"
-        title="Common"
-        server="default-server"
-        location="webapp/common"
-        mount-point="/common"
+        location="webapp/scmui"
+        mount-point="/scmui"
         app-bar-display="false"/>
         
 </ofbiz-component>
