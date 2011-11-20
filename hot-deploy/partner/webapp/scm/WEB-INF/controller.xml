@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<site-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://www.ofbiz.org/dtds/site-conf.xsd">
+	<include location="component://common/webcommon/WEB-INF/common-controller.xml"/>
+    <description>SCM Controller</description>
+    <handler name="java" type="request" class="org.ofbiz.webapp.event.JavaEventHandler"/>
+    
+    <!-- Request Mappings -->
+
+    <!-- end of request mappings -->
+    
+    <!-- View Mappings -->
+    	
+    <!-- end of View Mappings -->
+</site-conf>
