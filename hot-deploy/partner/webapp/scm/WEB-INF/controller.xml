@@ -6,7 +6,11 @@
     <handler name="java" type="request" class="org.ofbiz.webapp.event.JavaEventHandler"/>
     
     <!-- Request Mappings -->
-
+	<request-map uri="checkLogin">
+    	<security auth="false" />
+        <event type="java" path="org.ofbiz.partner.scm.security" invoke="checkLogin"/>
+        <response name="success" type="none" />
+    </request-map>
     <!-- end of request mappings -->
     
     <!-- View Mappings -->
