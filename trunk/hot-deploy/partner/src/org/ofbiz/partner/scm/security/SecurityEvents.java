@@ -1,24 +1,11 @@
 package org.ofbiz.partner.scm.security;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import javolution.util.FastList;
 
 import net.sf.json.JSONObject;
 
-import org.ofbiz.base.util.Debug;
-import org.ofbiz.base.util.UtilProperties;
-import org.ofbiz.base.util.UtilValidate;
 import org.ofbiz.entity.GenericDelegator;
-import org.ofbiz.entity.GenericEntityException;
-import org.ofbiz.entity.GenericValue;
-import org.ofbiz.entity.condition.EntityCondition;
 import org.ofbiz.partner.scm.common.CommonEvents;
 import org.ofbiz.webapp.control.LoginWorker;
 
