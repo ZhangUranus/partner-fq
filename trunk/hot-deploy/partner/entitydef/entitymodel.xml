@@ -30,8 +30,8 @@ under the License.
 		<field name="menuType" type="indicator"/>
 		<field name="parentId" type="id-uuid"/>
 		<field name="sort" type="numeric"/>
-		<field name="hyperlink" type="id"/>
-		<field name="styleName" type="id"/>
+		<field name="hyperlink" type="id-long"/>
+		<field name="styleName" type="id-long"/>
 		<field name="display" type="indicator"/>
 		<field name="description" type="long-varchar"/>
 		<prim-key field="menuId"/>
