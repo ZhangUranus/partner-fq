@@ -33,7 +33,7 @@ Ext.define('SCM.view.MenuPanel' ,{
 	            title: treeData.text,
 	            rootVisible:false,
 	            autoScroll:true,
-	            iconCls: treeData.cls,
+	            iconCls: treeData.iconCls,
 	            store : Ext.create('Ext.data.TreeStore', {
 	                proxy: {
 			            type: 'ajax',
