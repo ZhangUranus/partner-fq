@@ -113,7 +113,7 @@ public class CommonEvents {
 			tempObject = new JSONObject();
 			tempObject.put("id", node.getString("menuId"));
 			tempObject.put("text", node.getString("menuName"));
-			tempObject.put("cls", node.getString("styleName"));
+			tempObject.put("iconCls", node.getString("styleName"));
 			tempObject.put("sort", node.getString("sort"));
 			if(node.getString("menuType").equals("1")){
 				tempObject.put("leaf", true);
