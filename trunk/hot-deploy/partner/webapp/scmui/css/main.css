@@ -1,10 +1,35 @@
-.system-manage {
+.warehouse-management {
+	background-image: url( ../images/icons/warehouse-management.png ) !important;
+}
+.purchase-management {
+	background-image: url( ../images/icons/purchase-management.png ) !important;
+}
+.purchase-bill-management {
+	background-image: url( ../images/icons/purchase-bill-management.png ) !important;
+}
+.purchase-warehousing {
+	background-image: url( ../images/icons/purchase-warehousing.png ) !important;
+}
+.purchase-return {
+	background-image: url( ../images/icons/purchase-return.png ) !important;
+}
+.consign-process {
+	background-image: url( ../images/icons/consign-process.png ) !important;
+}
+.consign-draw-material {
+	background-image: url( ../images/icons/consign-draw-material.png ) !important;
+}
+
+
+
+.system-management {
 	background-image: url( ../images/icons/system-manage.png );
 }
 
-.base-config {
+.basic-setting{
 	background-image: url( ../images/icons/base-config.png );
 }
+
 
 .tab-left {
 	position: absolute;
