@@ -8,9 +8,20 @@
     <!-- Request Mappings -->
 	<request-map uri="checkLogin">
     	<security auth="false" />
-        <event type="java" path="org.ofbiz.partner.scm.security" invoke="checkLogin"/>
+        <event type="java" path="org.ofbiz.partner.scm.security.SecurityEvents" invoke="checkLogin"/>
         <response name="success" type="none" />
     </request-map>
+    <request-map uri="getTreeRootData">
+    	<security auth="false" />
+        <event type="java" path="org.ofbiz.partner.scm.security.SecurityEvents" invoke="getTreeRootData"/>
+        <response name="success" type="none" />
+    </request-map>
+    <request-map uri="getTreeDataByParentId">
+    	<security auth="false" />
+        <event type="java" path="org.ofbiz.partner.scm.security.SecurityEvents" invoke="getTreeDataByParentId"/>
+        <response name="success" type="none" />
+    </request-map>
+    
     <!-- end of request mappings -->
     
     <!-- View Mappings -->

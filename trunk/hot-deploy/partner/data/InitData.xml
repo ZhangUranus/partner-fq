@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<entity-engine-xml>
+    <TSystemMenu menuId='systemManage' menuName='系统管理' menuType='0' parentId='-1' sort='1' hyperlink='' styleName='system-manage' display='1' description='系统管理模块' />
+	<TSystemMenu menuId='userManage' menuName='用户管理' menuType='1' parentId='systemManage' sort='11' hyperlink='UserManage' styleName='user-manage' display='1' description='用户管理页面' />
+	<TSystemMenu menuId='logManage' menuName='日志管理' menuType='1' parentId='systemManage' sort='12' hyperlink='RoleManage' styleName='log-manage' display='1' description='角色管理页面' />
+	<TSystemMenu menuId='baseConfig' menuName='基础设置' menuType='0' parentId='-1' sort='2' hyperlink='' styleName='base-config' display='1' description='基础设置模块' />
+	<TSystemMenu menuId='baseCodeManage' menuName='基础代码管理' menuType='0' parentId='baseConfig' sort='21' hyperlink='' styleName='base-code-manage' display='1' description='基础代码管理模块' />
+	<TSystemMenu menuId='resourceUnitCode' menuName='料品单位' menuType='1' parentId='baseCodeManage' sort='211' hyperlink='ResourceUnit' styleName='resource-unit-code' display='1' description='物料单位维护页面' />
+	<TSystemMenu menuId='sexCode' menuName='性别' menuType='1' parentId='baseCodeManage' sort='212' hyperlink='SexCode' styleName='sex-code' display='1' description='性别代码维护页面' />
+	<TSystemMenu menuId='departmentManage' menuName='部门资料维护' menuType='1' parentId='baseConfig' sort='22' hyperlink='DepartmentManage' styleName='department-manage' display='1' description='部门资料维护页面' />
+</entity-engine-xml>
