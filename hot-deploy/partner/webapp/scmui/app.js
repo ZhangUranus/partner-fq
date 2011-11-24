@@ -10,6 +10,11 @@ Ext.application({
 			defaults : {
 				xtype : 'container'
 			},
+			listeners: {
+				resize : function() {
+					this.doLayout();
+				}
+			},
 			items: [{
 				region : 'north',
 				xtype : 'maintop'
