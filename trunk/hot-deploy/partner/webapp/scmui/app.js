@@ -4,21 +4,43 @@ Ext.application({
 	appFolder:'app',
 	controllers: ['Homes'],
 	launch : function(){
-			var viewport = Ext.create('Ext.container.Viewport',{
-				id: 'main-view',
-				layout: 'border',
-				items: [
-					{
-						region: 'north',
-						xtype: 'mainbar'
-					},{
-						region: 'west',
-						xtype: 'menupanel'
-					},{
-						region: 'center',
-						xtype: 'contentpanel'
+		var viewport = Ext.create('Ext.container.Viewport',{
+			id: 'main-view',
+			layout: 'border',
+			defaults : {
+				xtype : 'container'
+			},
+			items: [{
+				region : 'north',
+				xtype : 'maintop'
+			},{
+				region : 'center',
+				layout : 'border',
+				minWidth : 800,
+				items : [{
+					region : 'west',
+					xtype : 'maintree',
+					id : 'main-tree',
+					border : 1,
+					width : 240
+				}, {
+					region : 'center',
+					id : 'main-content-container',
+					layout : 'fit',
+					minWidth : 800,
+					border : false,
+					items : {
+						xtype : 'maincontent'
 					}
-				]
-			});
+				}]
+			},{
+				region : 'south',
+				id : 'footer',
+				height : 20,
+				contentEl : "footer-content"
+			}]
+		});
+		
+		viewport.doLayout();
 	}
 });
