@@ -1,3 +1,6 @@
+.main-index {
+	background-image: url( ../images/icons/main-index.png ) !important;
+}
 .warehouse-management {
 	background-image: url( ../images/icons/warehouse-management.png ) !important;
 }
@@ -19,50 +22,85 @@
 .consign-draw-material {
 	background-image: url( ../images/icons/consign-draw-material.png ) !important;
 }
-
-
-
+.consign-return-material {
+	background-image: url( ../images/icons/consign-return-material.png ) !important;
+}
+.consign-warehousing {
+	background-image: url( ../images/icons/consign-warehousing.png ) !important;
+}
+.consign-return-product {
+	background-image: url( ../images/icons/consign-return-product.png ) !important;
+}
+.workshop-manufacture {
+	background-image: url( ../images/icons/workshop-manufacture.png ) !important;
+}
+.workshop-draw-material {
+	background-image: url( ../images/icons/workshop-draw-material.png ) !important;
+}
+.workshop-return-material {
+	background-image: url( ../images/icons/workshop-return-material.png ) !important;
+}
+.workshop-warehousing {
+	background-image: url( ../images/icons/workshop-warehousing.png ) !important;
+}
+.workshop-return-product {
+	background-image: url( ../images/icons/workshop-return-product.png ) !important;
+}
+.production-plan {
+	background-image: url( ../images/icons/production-plan.png ) !important;
+}
+.analytic-statistics {
+	background-image: url( ../images/icons/analytic-statistics.png ) !important;
+}
+.stock-detail {
+	background-image: url( ../images/icons/stock-detail.png ) !important;
+}
+.semi-product-cost-report {
+	background-image: url( ../images/icons/semi-product-cost-report.png ) !important;
+}
+.consign-process-matching-report {
+	background-image: url( ../images/icons/consign-process-matching-report.png ) !important;
+}
+.packing-material-report {
+	background-image: url( ../images/icons/packing-material-report.png ) !important;
+}
+.product-report {
+	background-image: url( ../images/icons/product-report.png ) !important;
+}
 .system-management {
-	background-image: url( ../images/icons/system-manage.png );
+	background-image: url( ../images/icons/system-management.png ) !important;
 }
-
+.user-management {
+	background-image: url( ../images/icons/user-management.png ) !important;
+}
+.log-management {
+	background-image: url( ../images/icons/log-management.png ) !important;
+}
 .basic-setting{
-	background-image: url( ../images/icons/base-config.png );
+	background-image: url( ../images/icons/basic-setting.png ) !important;
+}
+.basic-coding-maintaince{
+	background-image: url( ../images/icons/basic-coding-maintaince.png ) !important;
+}
+.cust-info-maintaince{
+	background-image: url( ../images/icons/cust-info-maintaince.png ) !important;
+}
+.warehouse-info-maintaince{
+	background-image: url( ../images/icons/warehouse-info-maintaince.png ) !important;
+}
+.material-info-maintaince{
+	background-image: url( ../images/icons/material-info-maintaince.png ) !important;
+}
+.department-info-maintaince{
+	background-image: url( ../images/icons/department-info-maintaince.png ) !important;
+}
+.staff-info-maintaince{
+	background-image: url( ../images/icons/staff-info-maintaince.png ) !important;
+}
+.BOM-bill-info-maintaince{
+	background-image: url( ../images/icons/BOM-bill-info-maintaince.png ) !important;
 }
 
-
-.tab-left {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 9px;
-	height: 29px;
-	background: url(../images/tabs.png) no-repeat -8px -141px;
-	z-index: 3;
-}
-
-.tab-right {
-	position: absolute;
-	right: 0;
-	top: 0;
-	width: 26px;
-	height: 29px;
-	background: url(../images/tabs.png) no-repeat 0 -239px;
-	z-index: 5;
-}
-
-.tab-middle {
-	z-index: 5;
-	position: relative;
-	padding: 6px 3px 0 6px;
-	margin: 0 7px;
-	background: url(../images/tabs.png) repeat-x 0 -173px;
-	height: 29px;
-	overflow: hidden;
-	white-space: nowrap;
-	text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5);
-	font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande",
-		sans-serif;
-	font-weight: bold;
-	font-size: 11px;
+#main-top {
+    background: url(../images/header.png) repeat-x;
 }

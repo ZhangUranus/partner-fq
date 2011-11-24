@@ -1,11 +1,9 @@
-Ext.define('SCM.view.MenuPanel' ,{
-		extend: 'Ext.panel.Panel',
-		alias : 'widget.menupanel',
+Ext.define('SCM.view.main.MainTree', {
+		extend : 'Ext.panel.Panel',
+		alias : 'widget.maintree',
 		title : '功能菜单',
-		width: 200,
-		split: true,
-		collapsible: true,
-		animCollapse: true,
+		collapsible : true,
+		animCollapse : true,
         height: 32,
         layout:'accordion',
 		initComponent: function(){
@@ -45,6 +43,20 @@ Ext.define('SCM.view.MenuPanel' ,{
 			        }]
 	            })
 	        });
+	        
+	        tempTree.getSelectionModel().on('select', function(selModel, record) {
+		        if (record.get('leaf')) {
+		            Ext.getCmp('main-content').add({
+		            	xtype: 'welcomeindex',
+		            	title: record.data.text,
+		            	iconCls: record.data.iconCls,
+		            	html : record.data.text,
+		            	closable: true
+		            }).show();
+		            
+		        }
+		    });
+	        
 	        this.add(tempTree);
 		}
 	}
