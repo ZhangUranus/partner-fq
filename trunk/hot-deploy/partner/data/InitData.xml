@@ -36,7 +36,7 @@ under the License.
 	<TSystemMenu menuId='productionPlan' menuName='生产计划' menuType='1' parentId='workshopManufacture' sort='135' hyperlink='ProductionPlan' styleName='production-plan' display='1' description='生产计划' />
 	<TSystemMenu menuId='analyticStatistics' menuName='分析统计' menuType='0' parentId='warehouseManagement' sort='14' hyperlink='' styleName='analytic-statistics' display='1' description='分析统计' />
 	<TSystemMenu menuId='stockDetail' menuName='库存情况' menuType='1' parentId='analyticStatistics' sort='141' hyperlink='StockDetail' styleName='stock-detail' display='1' description='库存情况' />
-	<TSystemMenu menuId='semiProductCostReport' menuName='黑胚材料耗用表' menuType='1' parentId='analyticStatistics' sort='142' hyperlink='SemiProductCostReport' styleName='semi-product-costReport' display='1' description='黑胚材料耗用表' />
+	<TSystemMenu menuId='semiProductCostReport' menuName='黑胚材料耗用表' menuType='1' parentId='analyticStatistics' sort='142' hyperlink='SemiProductCostReport' styleName='semi-product-cost-report' display='1' description='黑胚材料耗用表' />
 	<TSystemMenu menuId='consignProcessMatchingReport' menuName='发外加工对数表' menuType='1' parentId='analyticStatistics' sort='143' hyperlink='ConsignProcessMatchingReport' styleName='consign-process-matching-report' display='1' description='发外加工对数表' />
 	<TSystemMenu menuId='packingMaterialReport' menuName='安装包装材料表' menuType='1' parentId='analyticStatistics' sort='144' hyperlink='PackingMaterialReport' styleName='packing-material-report' display='1' description='安装包装材料表' />
 	<TSystemMenu menuId='productReport' menuName='成品报表' menuType='1' parentId='analyticStatistics' sort='145' hyperlink='ProductReport' styleName='product-report' display='1' description='成品报表' />
