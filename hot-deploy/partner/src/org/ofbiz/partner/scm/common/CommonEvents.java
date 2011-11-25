@@ -114,6 +114,7 @@ public class CommonEvents {
 			tempObject.put("id", node.getString("menuId"));
 			tempObject.put("text", node.getString("menuName"));
 			tempObject.put("iconCls", node.getString("styleName"));
+			tempObject.put("hyperlink", node.getString("hyperlink"));
 			tempObject.put("sort", node.getString("sort"));
 			if(node.getString("menuType").equals("1")){
 				tempObject.put("leaf", true);
