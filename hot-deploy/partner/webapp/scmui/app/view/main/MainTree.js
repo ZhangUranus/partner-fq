@@ -1,7 +1,12 @@
+/**
+ * @Purpose menu tree
+ * @author jeff-liu
+ * @Date 2011-11-24
+ */
 Ext.define('SCM.view.main.MainTree', {
 		extend : 'Ext.panel.Panel',
 		alias : 'widget.maintree',
-		title : '功能菜单',
+		title : LocaleLang.menu,
 		collapsible : true,
 		animCollapse : true,
         height: 32,
@@ -19,7 +24,7 @@ Ext.define('SCM.view.main.MainTree', {
 		        	}
 		        },
 		        failure : function(response, option) {
-		        	Ext.Msg.alert('警告','数据载入失败！'); 
+		        	Ext.Msg.alert(LocaleLang.warning,LocaleLang.loadDataError+LocaleLang.plaint); 
 		        },
 		        scope : this
 		    });

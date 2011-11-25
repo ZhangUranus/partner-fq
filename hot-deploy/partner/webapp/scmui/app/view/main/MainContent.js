@@ -1,3 +1,8 @@
+/**
+ * @Purpose page container
+ * @author jeff-liu
+ * @Date 2011-11-24
+ */
 Ext.define('SCM.view.main.MainContent' ,{
 		extend: 'Ext.tab.Panel',
 		alias : 'widget.maincontent',
@@ -5,7 +10,7 @@ Ext.define('SCM.view.main.MainContent' ,{
 		items : [
 			{
 				xtype: 'welcomeindex',
-				title: '我的首页',
+				title: LocaleLang.home,
 		        iconCls: 'main-index',
 		        closable: false
 			}
