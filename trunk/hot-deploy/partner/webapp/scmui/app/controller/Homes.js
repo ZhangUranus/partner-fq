@@ -1,3 +1,8 @@
+/**
+ * @Purpose framework controller
+ * @author jeff-liu
+ * @Date 2011-11-24
+ */
 Ext.define('SCM.controller.Homes', {
 		extend : 'Ext.app.Controller',
 		views: [
