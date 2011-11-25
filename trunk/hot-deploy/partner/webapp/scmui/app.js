@@ -45,7 +45,6 @@ Ext.application({
 				contentEl : "footer-content"
 			}]
 		});
-		
 		viewport.doLayout();
 	}
 });
