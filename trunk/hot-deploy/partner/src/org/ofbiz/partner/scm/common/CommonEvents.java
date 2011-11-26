@@ -74,7 +74,7 @@ public class CommonEvents {
     	response.setContentType("application/x-json");
         try {
             response.setContentLength(jsonStr.getBytes("UTF8").length);
-            System.out.println(jsonStr);
+            Debug.logInfo(jsonStr, module);
             out = response.getWriter();
             out.write(jsonStr);
             out.flush();
@@ -114,9 +114,9 @@ public class CommonEvents {
 			tempObject.put("id", node.getString("menuId"));
 			tempObject.put("text", node.getString("menuName"));
 			tempObject.put("iconCls", node.getString("styleName"));
-			tempObject.put("hyperlink", node.getString("hyperlink"));
 			tempObject.put("sort", node.getString("sort"));
 			if(node.getString("menuType").equals("1")){
+				tempObject.put("hyperlink", node.getString("hyperlink"));
 				tempObject.put("leaf", true);
 			}else if(flag){
 				tempObject.put("children", getTreeDataByParentId(delegator,node.getString("menuId"),true));
@@ -125,6 +125,7 @@ public class CommonEvents {
 			count ++;
         }
 		jsonStr.append("]");
+		Debug.logInfo(jsonStr.toString(), module);
     	return jsonStr.toString();
     }
     
