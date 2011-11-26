@@ -10,8 +10,10 @@ Ext.define('SCM.controller.Homes', {
 			'main.MainContent',
 			'main.MainTree',
 			'main.MainTitle',
-			'main.WelcomeIndex'
+			'main.WelcomeIndex',
+			'main.PageError'
         ],
+		models: ['MainTreeModel'],
 		init: function(){
 			this.control();
 		}
