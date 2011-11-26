@@ -24,7 +24,7 @@ Ext.define('SCM.view.main.MainTree', {
 		        	}
 		        },
 		        failure : function(response, option) {
-		        	Ext.Msg.alert(LocaleLang.warning,LocaleLang.loadDataError+LocaleLang.plaint); 
+		        	Ext.Msg.alert(LocaleLang.warning,LocaleLang.canNotLoadData+LocaleLang.exclamationMark); 
 		        },
 		        scope : this
 		    });
@@ -38,26 +38,35 @@ Ext.define('SCM.view.main.MainTree', {
 	            autoScroll:true,
 	            iconCls: treeData.iconCls,
 	            store : Ext.create('Ext.data.TreeStore', {
+	            	model : 'SCM.model.MainTreeModel',
 	                proxy: {
 			            type: 'ajax',
 			            url: '../scm/control/getTreeDataByParentId?parentId='+treeData.id
 			        },
 			        sorters: [{
-			            property: treeData.sort,
+			            property: 'sort',
 			            direction: 'ASC'
 			        }]
 	            })
 	        });
-	        
 	        tempTree.getSelectionModel().on('select', function(selModel, record) {
 		        if (record.get('leaf')) {
-		            Ext.getCmp('main-content').add({
-		            	xtype: 'welcomeindex',
-		            	title: record.data.text,
-		            	iconCls: record.data.iconCls,
-		            	html : record.data.text,
-		            	closable: true
-		            }).show();
+		        	try {
+			            Ext.getCmp('main-content').add({
+			            	xtype: record.data.hyperlink,
+			            	title: record.data.text,
+			            	iconCls: record.data.iconCls,
+			            	html : record.data.text,
+			            	closable: true
+			            }).show();
+		        	} catch (e) {
+		        		Ext.getCmp('main-content').add({
+			            	xtype: 'pageerror',
+			            	title: record.data.text,
+			            	iconCls: record.data.iconCls,
+			            	closable: true
+			            }).show();
+					}
 		            
 		        }
 		    });
