@@ -22,6 +22,27 @@
         <response name="success" type="none" />
     </request-map>
     
+    <request-map uri="requestJsonData">
+           <security https="false" auth="false"/>
+           <event type="java" path="org.ofbiz.partner.scm.common.EntityCRUDEvent" invoke="getColl2Json"/>
+           <response name="success" type="none"/>
+       </request-map>
+       <request-map uri="updateJsonData">
+           <security https="false" auth="false"/>
+           <event type="java" path="org.ofbiz.partner.scm.common.EntityCRUDEvent" invoke="updateFromJson"/>
+           <response name="success" type="none"/>
+       </request-map>
+       <request-map uri="addnewJsonData">
+           <security https="false" auth="false"/>
+           <event type="java" path="org.ofbiz.partner.scm.common.EntityCRUDEvent" invoke="addnewFromJson"/>
+           <response name="success" type="none"/>
+       </request-map>
+       <request-map uri="deleteJsonData">
+           <security https="false" auth="false"/>
+           <event type="java" path="org.ofbiz.partner.scm.common.EntityCRUDEvent" invoke="deleteFromJson"/>
+           <response name="success" type="none"/>
+       </request-map>
+    
     <!-- end of request mappings -->
     
     <!-- View Mappings -->

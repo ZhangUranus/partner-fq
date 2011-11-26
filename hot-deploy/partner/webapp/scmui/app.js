@@ -2,7 +2,10 @@ Ext.Loader.setConfig({enabled:true});
 Ext.application({
 	name:'SCM',
 	appFolder:'app',
-	controllers: ['Homes'],
+	controllers: [
+	              'Homes',
+	              'basedata.UnitController'
+	              ],
 	launch : function(){
 		var viewport = Ext.create('Ext.container.Viewport',{
 			id: 'main-view',

@@ -51,4 +51,5 @@ under the License.
 	<TSystemMenu menuId='departmentInfoMaintaince' menuName='部门资料维护' menuType='1' parentId='basicSetting' sort='35' hyperlink='departmentinfomaintaince' styleName='department-info-maintaince' display='1' description='部门资料维护页面' />
 	<TSystemMenu menuId='staffInfoMaintaince' menuName='职员资料维护' menuType='1' parentId='basicSetting' sort='36' hyperlink='staffInfomaintaince' styleName='staff-info-maintaince' display='1' description='职员资料维护页面' />
 	<TSystemMenu menuId='BOMBillInfoMaintaince' menuName='BOM单资料维护' menuType='1' parentId='basicSetting' sort='37' hyperlink='bombillinfomaintaince' styleName='BOM-bill-info-maintaince' display='1' description='BOM单资料维护' />
+	<TSystemMenu menuId='UnitMaintaince' menuName='计量单位维护' menuType='1' parentId='basicSetting' sort='38' hyperlink='unitlist' styleName='BOM-bill-info-maintaince' display='1' description='计量单位维护' />
 </entity-engine-xml>
