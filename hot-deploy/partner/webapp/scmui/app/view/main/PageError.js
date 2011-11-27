@@ -1,5 +1,5 @@
 /**
- * @Purpose home page
+ * @Purpose “页面未开发”提示页面
  * @author jeff-liu
  * @Date 2011-11-24
  */

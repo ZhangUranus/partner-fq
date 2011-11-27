@@ -1,5 +1,5 @@
 /**
- * @Purpose framework controller
+ * @Purpose 主框架控制类
  * @author jeff-liu
  * @Date 2011-11-24
  */
@@ -13,13 +13,13 @@ Ext.define('SCM.controller.Homes', {
 			'main.WelcomeIndex',
 			'main.PageError'
         ],
-        models: ['MainTreeModel'],
-		refs:[
+        models: ['MainTreeModel'],	//树形菜单model类
+		refs:[//增加引用
 	          {ref: 'mainTreePanel',selector: 'maintreepanel'},
 	          {ref: 'mainContent',selector: 'maincontent'}
 	    ],
 		
-		init: function(){
+		init: function(){//增加事件监听
 			this.control({
 				'maintreepanel':{
 					afterrender : this.initTreePanel
@@ -30,7 +30,7 @@ Ext.define('SCM.controller.Homes', {
 			});
 		},
 		
-		initTreePanel: function(){
+		initTreePanel: function(){//初始化功能模块
 			Ext.Ajax.request({
 				url : '../scm/control/getTreeRootData',
 				params: {
@@ -39,7 +39,7 @@ Ext.define('SCM.controller.Homes', {
 		        success : function(response , option) {
 		        	var data = Ext.decode(response.responseText);
 		        	for(var treeData in data){
-		        		this.createTreePanel(this,data[treeData]);
+		        		this.createTreePanel(this,data[treeData]);//创建各模块树形菜单
 		        	}
 		        },
 		        failure : function(response, option) {
@@ -49,12 +49,12 @@ Ext.define('SCM.controller.Homes', {
 		    });
 		},
 		
-		createTreePanel: function(self,treeData){
+		createTreePanel: function(self,treeData){//树形菜单创建方法
 			var tempTree = Ext.create('Ext.tree.Panel', {
 	            id: treeData.id,
 	            title: treeData.text,
-	            rootVisible:false,
-	            autoScroll:true,
+	            rootVisible:false,  //根节点不可见
+	            autoScroll:true,	//自动滚动条
 	            iconCls: treeData.iconCls,
 	            store : Ext.create('Ext.data.TreeStore', {
 	            	model : 'SCM.model.MainTreeModel',
@@ -62,13 +62,13 @@ Ext.define('SCM.controller.Homes', {
 			            type: 'ajax',
 			            url: '../scm/control/getTreeDataByParentId?parentId='+treeData.id
 			        },
-			        sorters: [{
+			        sorters: [{//根据sort字段排序
 			            property: 'sort',
 			            direction: 'ASC'
 			        }]
 	            }),
 	            listeners:{
-	            	itemclick : function(tree,record){
+	            	itemclick : function(tree,record){//在页面展示区域增加tab
 	            		self.getMainContent().addTab(record.data);
 	            	}
 	            }
@@ -76,7 +76,7 @@ Ext.define('SCM.controller.Homes', {
 
 	        this.getMainTreePanel().add(tempTree);
 		},
-		closeTab: function(tabPanel,tab){
+		closeTab: function(tabPanel,tab){//关闭tab页
 			this.getMainContent().removeTab(tab);
 		}
 	}

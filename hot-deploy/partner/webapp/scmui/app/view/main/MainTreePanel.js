@@ -1,5 +1,5 @@
 /**
- * @Purpose menu tree
+ * @Purpose 树形菜单容器
  * @author jeff-liu
  * @Date 2011-11-24
  */

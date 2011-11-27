@@ -1,5 +1,5 @@
 /**
- * @Purpose top block container
+ * @Purpose 系统logo版面容器
  * @author jeff-liu
  * @Date 2011-11-24
  */
