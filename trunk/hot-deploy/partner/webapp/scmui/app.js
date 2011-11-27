@@ -3,9 +3,9 @@ Ext.application({
 	name:'SCM',
 	appFolder:'app',
 	controllers: [
-	              'Homes',
-	              'basedata.UnitController'
-	              ],
+		'Homes',
+		'basedata.UnitController'
+	],
 	launch : function(){
 		var viewport = Ext.create('Ext.container.Viewport',{
 			id: 'main-view',
@@ -27,7 +27,7 @@ Ext.application({
 				minWidth : 800,
 				items : [{
 					region : 'west',
-					xtype : 'maintree',
+					xtype : 'maintreepanel',
 					id : 'main-tree',
 					border : 1,
 					width : 240
