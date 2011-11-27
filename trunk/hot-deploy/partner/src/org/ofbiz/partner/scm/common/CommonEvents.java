@@ -23,13 +23,17 @@ import org.ofbiz.entity.GenericEntityException;
 import org.ofbiz.entity.GenericValue;
 import org.ofbiz.entity.condition.EntityCondition;
 
-
+/**
+ * 公共事件类
+ * @author Jeff-liu 
+ *
+ */
 public class CommonEvents {
 	public static final String module = CommonEvents.class.getName();
 	public static final String usernameCookieName = "OFBiz.Username";
 	
-	/*
-	 * get username form cookie
+	/**
+	 * 从Cookies中取出username
 	 * 
 	 * */
 	public static String getUsername(HttpServletRequest request) {
@@ -47,8 +51,8 @@ public class CommonEvents {
         return cookieUsername;
     }
 	
-	/*
-	 * set username to cookie
+	/**
+	 * 设置username到Cookies中
 	 * 
 	 * */
     public static void setUsername(HttpServletRequest request, HttpServletResponse response) {
@@ -65,8 +69,8 @@ public class CommonEvents {
         }
     }
 	
-    /*
-	 * return the json data to ext
+    /**
+	 * 将Json字符串返回给前端Ext
 	 * 
 	 * */
     public static void writeJsonDataToExt(HttpServletResponse response,String jsonStr){
@@ -85,23 +89,27 @@ public class CommonEvents {
         }
     }
     
-    /*
-	 * get tree data by parent_id
+    /**
+	 * 根据传入父节点Id获取树形菜单数据（json字符串格式）
 	 * 
-	 * flag : true ->find children
-	 *        false ->do not find children
+	 * flag : true ->遍历所有子节点
+	 *        false ->只查找该节点下层节点
 	 * */
     public static String getTreeDataByParentId(GenericDelegator delegator,String parentId,boolean flag){
-		EntityCondition condition = EntityCondition.makeCondition("parentId",parentId);
+    	EntityCondition condition = EntityCondition.makeCondition("parentId",parentId);		//设置查询条件
 		List<GenericValue> menuList = FastList.newInstance();
 		List<String> orders = new ArrayList<String>();
-		orders.add("sort");
+		orders.add("sort");		//增加排序字段
+		
+		//根据parentId从数据库中获取子节点列表
 		try {
 			menuList =  delegator.findList("TSystemMenu", condition, null, orders, null, true);
 		} catch (GenericEntityException e) {
 			Debug.logError("Problems with findList "+e, module);
 		}
 		
+		
+		//将list对象转换为json格式字符串
 		StringBuffer jsonStr = new StringBuffer();
 		jsonStr.append("[");
 		int count = 0;
@@ -118,7 +126,7 @@ public class CommonEvents {
 			if(node.getString("menuType").equals("1")){
 				tempObject.put("hyperlink", node.getString("hyperlink"));
 				tempObject.put("leaf", true);
-			}else if(flag){
+			}else if(flag){	//当节点有下级节点，而且flag值为true，遍历节点
 				tempObject.put("children", getTreeDataByParentId(delegator,node.getString("menuId"),true));
 			}
 			jsonStr.append(tempObject.toString());

@@ -9,12 +9,17 @@ import org.ofbiz.entity.GenericDelegator;
 import org.ofbiz.partner.scm.common.CommonEvents;
 import org.ofbiz.webapp.control.LoginWorker;
 
+/**
+ * 用户安全事件类
+ * @author Jeff-liu 
+ *
+ */
 
 public class SecurityEvents {
 	public static final String module = SecurityEvents.class.getName();
     
-    /*
-     * check user login.
+    /**
+     * 检查用户名密码
      */
 	public static String checkLogin(HttpServletRequest request, HttpServletResponse response) {
 		String responseString = LoginWorker.checkLogin(request, response);
@@ -29,8 +34,8 @@ public class SecurityEvents {
 		return responseString;
 	}
 	
-	/*
-     * get tree's data by parentId
+	/**
+     * 获取用户功能菜单数据
      */
 	public static String getTreeDataByParentId(HttpServletRequest request, HttpServletResponse response) {
 		GenericDelegator delegator = (GenericDelegator) request.getAttribute("delegator");
@@ -40,8 +45,8 @@ public class SecurityEvents {
 		return "success";
 	}
 	
-	/*
-     * get tree's root data
+	/**
+     * 获取用户功能模块数据
      */
 	public static String getTreeRootData(HttpServletRequest request, HttpServletResponse response) {
 		GenericDelegator delegator = (GenericDelegator) request.getAttribute("delegator");
