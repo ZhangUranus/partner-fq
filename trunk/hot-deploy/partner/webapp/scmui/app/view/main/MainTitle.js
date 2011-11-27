@@ -1,5 +1,5 @@
 /**
- * @Purpose page title
+ * @Purpose 系统logo页面
  * @author jeff-liu
  * @Date 2011-11-24
  */

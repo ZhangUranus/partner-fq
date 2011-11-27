@@ -1,5 +1,5 @@
 /**
- * @Purpose tree model
+ * @Purpose 树形model类
  * @author jeff-liu
  * @Date 2011-11-26
  */
