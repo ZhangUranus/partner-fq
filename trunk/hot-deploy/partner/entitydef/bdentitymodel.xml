@@ -31,12 +31,122 @@ under the License.
 
     <!-- 计量单位实体 -->
     <entity entity-name="Unit"
-            package-name="org.ofbiz.practice"
+            package-name="org.ofbiz.scm.basedata"
             title="Unit Entity">
       <field name="id" type="id-long"></field>
       <field name="number" type="name"></field>
       <field name="name" type="name"></field>
       <field name="description" type="description"></field>
+      <prim-key field="id"/>
+    </entity>
+    
+    <!-- 仓库类型实体 -->
+    <entity entity-name="WarehouseType"
+            package-name="org.ofbiz.scm.basedata"
+            title="WarehouseType Entity">
+      <field name="id" type="id-long"></field>
+      <field name="number" type="name"></field>
+      <field name="name" type="name"></field>
+      <prim-key field="id"/>
+    </entity>
+    <!-- 仓库实体与仓库view实体 -->
+    <entity entity-name="Warehouse"
+            package-name="org.ofbiz.scm.basedata"
+            title="Warehouse Entity">
+      <field name="id" type="id-long"></field>
+      <field name="wsTypeId" type="id-long"></field>
+      <field name="number" type="name"></field>
+      <field name="name" type="name"></field>
+      <field name="description" type="description"></field>
+      <prim-key field="id"/>
+    </entity>
+    <view-entity entity-name="WarehouseView"
+            package-name="org.ofbiz.scm.basedata"
+            title="WarehouseView Entity">
+            <member-entity entity-alias="WarehouseV" entity-name="Warehouse"></member-entity>
+            <member-entity entity-alias="WarehouseTypeV" entity-name="WarehouseType"></member-entity>
+            <alias-all entity-alias="WarehouseV" >
+			</alias-all>
+			<alias name="warehouseTypeName" entity-alias="WarehouseTypeV" field="name"></alias>
+			<view-link entity-alias="WarehouseV" rel-entity-alias="WarehouseTypeV" rel-optional="true">
+				<key-map field-name="wsTypeId" rel-field-name="id"/>
+			</view-link>
+    </view-entity>
+    <!-- 车间实体 -->
+    <entity entity-name="Workshop"
+            package-name="org.ofbiz.scm.basedata"
+            title="Workshop  Entity">
+      <field name="id" type="id-long"></field>
+      <field name="number" type="name"></field>
+      <field name="name" type="name"></field>
+      <field name="description" type="description"></field>
+      <prim-key field="id"/>
+    </entity>    
+    <!-- 供应商实体 -->
+    <entity entity-name="Supplier"
+            package-name="org.ofbiz.scm.basedata"
+            title="Supplier  Entity">
+      <field name="id" type="id-long"></field>
+      <field name="number" type="name"></field>
+      <field name="name" type="name"></field>
+      <field name="address" type="description"></field>
+      <prim-key field="id"/>
+    </entity> 
+    <!-- 委外供应商实体 -->
+    <entity entity-name="ConsignProcesser"
+            package-name="org.ofbiz.scm.basedata"
+            title="ConsignProcesser  Entity">
+      <field name="id" type="id-long"></field>
+      <field name="number" type="name"></field>
+      <field name="name" type="name"></field>
+      <field name="contractor" type="name"></field>
+      <field name="phone" type="name"></field>
+      <field name="address" type="description"></field>
+      <prim-key field="id"/>
+    </entity> 
+    <!-- 客户实体 -->
+    <entity entity-name="Customer"
+            package-name="org.ofbiz.scm.basedata"
+            title="Customer  Entity">
+      <field name="id" type="id-long"></field>
+      <field name="number" type="name"></field>
+      <field name="name" type="name"></field>
+      <field name="contractor" type="name"></field>
+      <field name="fax" type="name"></field>
+      <field name="postCode" type="name"></field>
+      <field name="phone" type="name"></field>
+      <field name="address" type="description"></field>
+      <prim-key field="id"/>
+    </entity> 
+    
+    <!-- BOM实体表头 -->
+    <entity entity-name="MaterialBOM"
+            package-name="org.ofbiz.scm.basedata"
+            title="MaterialBOM  Entity">
+      <field name="id" type="id-long"></field>
+      <field name="materialId" type="id-long"></field>
+      <prim-key field="id"/>
+    </entity> 
+    <!-- BOM实体表体 -->
+    <entity entity-name="MaterialBOMEntry"
+            package-name="org.ofbiz.scm.basedata"
+            title="MaterialBOMEntry  Entity">
+      <field name="id" type="id-long"></field>
+      <field name="parentId" type="id-long"></field>
+      <field name="materialId" type="id-long"></field>
+      <field name="volume" type="floating-point"></field>
+      <field name="unitId" type="id-long"></field>
+      <prim-key field="id"/>
+    </entity>
+     
+    <!-- 部门实体 -->
+    <entity entity-name="Deparment"
+            package-name="org.ofbiz.scm.basedata"
+            title="Deparment  Entity">
+      <field name="id" type="id-long"></field>
+      <field name="parentId" type="id-long"></field>
+      <field name="number" type="name"></field>
+      <field name="name" type="name"></field>
       <prim-key field="id"/>
     </entity>
     
