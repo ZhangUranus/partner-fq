@@ -9,7 +9,9 @@ Ext.application({
 	appFolder:'app',
 	controllers: [//载入系统controller
 		'Homes',
-		'basedata.UnitController'
+		'basedata.UnitController',
+		'basedata.WarehouseTypeController',
+		'basedata.WarehouseController'
 	],
 	launch : function(){//初始化系统主页面
 		var viewport = Ext.create('Ext.container.Viewport',{
