@@ -54,6 +54,7 @@
             <fileset dir="../../framework/common/build/lib" includes="*.jar"/>
             <fileset dir="../../framework/webapp/lib" includes="*.jar"/>
             <fileset dir="../../framework/webapp/build/lib" includes="*.jar"/>
+            <fileset dir="../../hot-deploy/partner/lib" includes="*.jar"/>
         </path>
     </target>
     
