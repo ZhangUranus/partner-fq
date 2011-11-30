@@ -15,6 +15,9 @@ import javolution.util.FastList;
 
 import net.sf.json.JSONObject;
 
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilProperties;
 import org.ofbiz.base.util.UtilValidate;
@@ -22,6 +25,7 @@ import org.ofbiz.entity.GenericDelegator;
 import org.ofbiz.entity.GenericEntityException;
 import org.ofbiz.entity.GenericValue;
 import org.ofbiz.entity.condition.EntityCondition;
+import org.ofbiz.partner.scm.authz.UserManager;
 
 /**
  * 公共事件类
@@ -29,8 +33,17 @@ import org.ofbiz.entity.condition.EntityCondition;
  *
  */
 public class CommonEvents {
-	public static final String module = CommonEvents.class.getName();
-	public static final String usernameCookieName = "OFBiz.Username";
+	private static final String module = CommonEvents.class.getName();
+	private static final String usernameCookieName = "OFBiz.Username";
+	private static GenericDelegator delegator = null;
+	private static ObjectMapper objectMapper = new ObjectMapper();
+	
+	public static GenericDelegator getDelegator(HttpServletRequest request){
+		if(delegator == null){
+			delegator = (GenericDelegator)request.getAttribute("delegator");
+		}
+		return delegator;
+	}
 	
 	/**
 	 * 从Cookies中取出username
@@ -68,25 +81,42 @@ public class CommonEvents {
             }
         }
     }
+    
+    /**
+	 * 设置属性到Session中
+	 * 
+	 * */
+    public static void setAttributeToSession(HttpServletRequest request,String attributeName,String attributeValue){
+    	if(!"".equals(attributeName) && !"".equals(attributeValue)){
+    		request.getSession().setAttribute(attributeName, attributeValue);
+    	}
+    }
+    
+    /**
+	 * 从session中获取属性值
+	 * 
+	 * */
+    public static String getAttributeToSession(HttpServletRequest request,String attributeName){
+    	if(!"".equals(attributeName)){
+    		return request.getSession().getAttribute(attributeName).toString();
+    	}else{
+    		return "";
+    	}
+    }
 	
     /**
 	 * 将Json字符串返回给前端Ext
+     * @throws IOException 
 	 * 
 	 * */
-    public static void writeJsonDataToExt(HttpServletResponse response,String jsonStr){
+    public static void writeJsonDataToExt(HttpServletResponse response,String jsonStr) throws IOException{
     	Writer out;
     	response.setContentType("application/x-json");
-        try {
-            response.setContentLength(jsonStr.getBytes("UTF8").length);
-            Debug.logInfo(jsonStr, module);
-            out = response.getWriter();
-            out.write(jsonStr);
-            out.flush();
-        } catch (UnsupportedEncodingException e) {
-            Debug.logError("Problems with Json encoding: " + e, module);
-        } catch (IOException e) {
-            Debug.logError(e, module);
-        }
+    	response.setContentLength(jsonStr.getBytes("UTF8").length);
+        Debug.logInfo(jsonStr, module);
+        out = response.getWriter();
+        out.write(jsonStr);
+        out.flush();
     }
     
     /**
@@ -107,8 +137,6 @@ public class CommonEvents {
 		} catch (GenericEntityException e) {
 			Debug.logError("Problems with findList "+e, module);
 		}
-		
-		
 		//将list对象转换为json格式字符串
 		StringBuffer jsonStr = new StringBuffer();
 		jsonStr.append("[");
@@ -133,6 +161,68 @@ public class CommonEvents {
 			count ++;
         }
 		jsonStr.append("]");
+		Debug.logInfo(jsonStr.toString(), module);
+    	return jsonStr.toString();
+    }
+    
+    public static String getUserList(HttpServletRequest request){
+		List<GenericValue> userList = UserManager.getUserList(request);
+		
+		//将list对象转换为json格式字符串
+		StringBuffer jsonStr = new StringBuffer();
+		jsonStr.append("{records:[");
+		boolean isFirstValue = true;
+		if(userList.isEmpty()){
+			return "";
+		}
+		for (GenericValue node: userList) {
+			if(isFirstValue){
+				isFirstValue = false;
+			}else{
+				jsonStr.append(",");
+			}
+			try {
+				jsonStr.append(objectMapper.writeValueAsString(node));
+			} catch (JsonGenerationException e) {
+				e.printStackTrace();
+			} catch (JsonMappingException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+        }
+		jsonStr.append("]}");
+		Debug.logInfo(jsonStr.toString(), module);
+    	return jsonStr.toString();
+    }
+    
+    public static String getDepartmentList(HttpServletRequest request){
+		List<GenericValue> departmentList = UserManager.getDepartmentList(request);
+		
+		//将list对象转换为json格式字符串
+		StringBuffer jsonStr = new StringBuffer();
+		jsonStr.append("{records:[");
+		boolean isFirstValue = true;
+		if(departmentList.isEmpty()){
+			return "";
+		}
+		for (GenericValue node: departmentList) {
+			if(isFirstValue){
+				isFirstValue = false;
+			}else{
+				jsonStr.append(",");
+			}
+			try {
+				jsonStr.append(objectMapper.writeValueAsString(node));
+			} catch (JsonGenerationException e) {
+				e.printStackTrace();
+			} catch (JsonMappingException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+        }
+		jsonStr.append("]}");
 		Debug.logInfo(jsonStr.toString(), module);
     	return jsonStr.toString();
     }
