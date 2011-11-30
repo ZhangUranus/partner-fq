@@ -1,8 +1,8 @@
-Ext.define('SCM.view.basedata.warehouse.EditUI', {
+Ext.define('SCM.view.basedata.customer.EditUI', {
     extend: 'Ext.window.Window',
-    alias : 'widget.warehouseedit',
+    alias : 'widget.customeredit',
 
-    title : '仓库',
+    title : '计量单位',
     layout: 'fit',
     autoShow: true,
     modal:true,//背景变灰，不能编辑
@@ -13,12 +13,9 @@ Ext.define('SCM.view.basedata.warehouse.EditUI', {
 		this.initToolbar();
         this.callParent(arguments);
     },
-   
+    
 	//初始化表单
 	initForm: function(){
-
-        // 创建一个仓库类型store绑定仓库类型选择框
-        var warehouseType = Ext.create('WarehouseTypeStore');
     	this.items = [
 	              {
 	                  xtype: 'form',
@@ -31,14 +28,6 @@ Ext.define('SCM.view.basedata.warehouse.EditUI', {
 	                          hidden:true
 	                      },
 	                      {
-	                          xtype: 'combobox',
-	                          name : 'warehouseTypeName',//定义管理的model字段
-	                          fieldLabel: '仓库类型',
-	                          store:warehouseType,
-	                          displayField:'name',//显示字段
-	                          valueField: 'id',//值字段，后台通过该字段传递
-	                      },
-	                      {
 	                          xtype: 'textfield',
 	                          name : 'number',
 	                          fieldLabel: '编码'
@@ -48,6 +37,31 @@ Ext.define('SCM.view.basedata.warehouse.EditUI', {
 	                          xtype: 'textfield',
 	                          name : 'name',
 	                          fieldLabel: '名称'
+	                      },
+	                      {
+	                          xtype: 'textfield',
+	                          name : 'address',
+	                          fieldLabel: '地址'
+	                      },
+	                      {
+	                          xtype: 'textfield',
+	                          name : 'contact',
+	                          fieldLabel: '联系人'
+	                      },
+	                      {
+	                          xtype: 'textfield',
+	                          name : 'phone',
+	                          fieldLabel: '电话'
+	                      },
+	                      {
+	                          xtype: 'textfield',
+	                          name : 'fax',
+	                          fieldLabel: '传真'
+	                      },
+	                      {
+	                          xtype: 'textfield',
+	                          name : 'postCode',
+	                          fieldLabel: '邮政编码'
 	                      }
 	                  ]
 	              }

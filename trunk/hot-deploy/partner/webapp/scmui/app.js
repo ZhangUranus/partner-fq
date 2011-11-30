@@ -11,7 +11,8 @@ Ext.application({
 		'Homes',
 		'basedata.UnitController',
 		'basedata.WarehouseTypeController',
-		'basedata.WarehouseController'
+		'basedata.WarehouseController',
+		'basedata.CustomerController',
 	],
 	launch : function(){//初始化系统主页面
 		var viewport = Ext.create('Ext.container.Viewport',{

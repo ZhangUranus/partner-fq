@@ -1,18 +1,18 @@
 //
-Ext.define('SCM.store.basedata.WarehouseTypeStore', {
+Ext.define('SCM.store.basedata.CustomerStore', {
     extend: 'Ext.data.Store',
-    model: 'SCM.model.basedata.WarehouseTypeModel',
-    alias:'WarehouseTypeStore',
+    model: 'SCM.model.basedata.CustomerModel',
+    alias:'CustomerStore',
     autoLoad: false,
     autoSync: true,
 
     proxy: {
         type: 'ajax',
 		api: {
-            read: '../../scm/control/requestJsonData?entity=WarehouseType',
-            create: '../../scm/control/addnewJsonData?entity=WarehouseType',
-            update: '../../scm/control/updateJsonData?entity=WarehouseType',
-            destroy: '../../scm/control/deleteJsonData?entity=WarehouseType'
+            read: '../../scm/control/requestJsonData?entity=Customer',
+            create: '../../scm/control/addnewJsonData?entity=Customer',
+            update: '../../scm/control/updateJsonData?entity=Customer',
+            destroy: '../../scm/control/deleteJsonData?entity=Customer'
         },
         reader: {
             type: 'json',
