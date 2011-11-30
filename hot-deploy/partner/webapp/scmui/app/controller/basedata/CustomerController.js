@@ -1,79 +1,88 @@
-Ext.define('SCM.controller.basedata.WarehouseController', {
+Ext.define('SCM.controller.basedata.CustomerController', {
     extend: 'Ext.app.Controller',
     
 	views: [
-        'basedata.warehouse.ListUI',
-        'basedata.warehouse.EditUI'
+        'basedata.customer.ListUI',
+        'basedata.customer.EditUI'
     ],
     stores:[
-        'basedata.WarehouseStore'
+        'basedata.CustomerStore'
     ],
     refs:[
-          {ref: 'warehouseinfomaintaince',selector: 'warehouseinfomaintaince'}, //定义引用，可以通过getXxxx()方法获取
-          {ref: 'warehouseedit',selector: 'warehouseedit'}
+          {ref: 'customerlist',selector: 'custinfomaintaince'}, //定义引用，可以通过getUnitlist()方法获取
+          {ref: 'customeredit',selector: 'customeredit'}
     ],
 
     init: function() {
 		this.control({
 			//列表双击事件
-	        'warehouseinfomaintaince': {
+	        'custinfomaintaince': {
 	    		itemdblclick: this.modifyRecord
 	        },
 	        //列表新增按钮
-	        'warehouseinfomaintaince button[action=addNew]':{
+	        'custinfomaintaince button[action=addNew]':{
 	        	click: this.addNewRecord
 	        },
 	        //列表修改按钮
-	        'warehouseinfomaintaince button[action=modify]':{
+	        'custinfomaintaince button[action=modify]':{
 	        	click: this.editRecord
 	        },
 	        //列表删除按钮
-	        'warehouseinfomaintaince button[action=delete]':{
+	        'custinfomaintaince button[action=delete]':{
 	        	click: this.deleteRecord
 	        },
 	        //列表刷新按钮
-	        'warehouseinfomaintaince button[action=refresh]':{
+	        'custinfomaintaince button[action=refresh]':{
 	        	click: this.refreshRecord
 	        },
-	        
+	        //列表退出按钮
+	        'custinfomaintaince button[action=exitList]':{
+	        	click: this.exitList
+	        },
 	        //编辑界面保存
-	        'warehouseedit button[action=save]':{
+	        'customeredit button[action=save]':{
 	        	click: this.saveRecord
+	        },
+	        //编辑界面删除
+	        'customeredit button[action=delete]':{
+	        	click: this.deleteRecord
+	        },
+	        //编辑界面退出
+	        'customeredit button[action=exitEdit]':{
+	        	click: this.exitEdit
 	        }
-	        
 	    });
     },
     
     //双击编辑
     modifyRecord: function(grid, record){
-        var editui=Ext.widget('warehouseedit');
+        var editui=Ext.widget('customeredit');
         editui.uiStatus='Modify';
     	editui.down('form').loadRecord(record);
     },
     //修改
     editRecord: function(button){
-    	listPanel=button.up('warehouseinfomaintaince');
+    	listPanel=button.up('custinfomaintaince');
     	
     	sm=listPanel.getSelectionModel();
     	if(sm.hasSelection()){//判断是否选择行记录
     		record=sm.getLastSelected();
-    		var editui=Ext.widget('warehouseedit');
+    		var editui=Ext.widget('customeredit');
     		editui.uiStatus='Modify';
         	editui.down('form').loadRecord(record);
     	}
     },
     //新增
     addNewRecord: function(button){
-    	newRecord=Ext.create('WarehouseModel');//新增记录
-    	var editui=Ext.widget('warehouseedit');
+    	newRecord=Ext.create('CustomerModel');//新增记录
+    	var editui=Ext.widget('customeredit');
     	editui.uiStatus='AddNew';
     	editui.down('form').loadRecord(newRecord);
     	
     },
-    
   //删除记录
     deleteRecord: function(button){
-    	listPanel=button.up('warehouseinfomaintaince');
+    	listPanel=button.up('custinfomaintaince');
     	sm=listPanel.getSelectionModel();
     	if(sm.hasSelection()){//判断是否选择行记录
     		//删除选择的记录
@@ -83,13 +92,13 @@ Ext.define('SCM.controller.basedata.WarehouseController', {
     },
   //刷新
     refreshRecord: function(button){
-    	listPanel=button.up("warehouseinfomaintaince");
+    	listPanel=button.up("custinfomaintaince");
     	listPanel.store.load();
     },
     //保存记录
     saveRecord: function(button){
     	//取编辑界面
-    	var win=this.getWarehouseedit();
+    	var win=this.getCustomeredit();
     	//取表单
     	form=win.down("form");
     	values=form.getValues();
@@ -98,13 +107,13 @@ Ext.define('SCM.controller.basedata.WarehouseController', {
     		record=form.getRecord();
     		record.set(values);
     	}else if(win.uiStatus=='AddNew'){//新增记录
-    		record=Ext.create('WarehouseModel');
+    		record=Ext.create('CustomerModel');
     		record.set(values);
-    		this.getWarehouseinfomaintaince().store.add(record);
+    		this.getCustomerlist().store.add(record);
     	}
     	
+    	
     	win.close();
-    	//this.getWarehouseinfomaintaince().store.load();//保存后刷新页面
     }
 
 });

@@ -3,7 +3,7 @@ Ext.define('SCM.store.basedata.UnitStore', {
     extend: 'Ext.data.Store',
     model: 'SCM.model.basedata.UnitModel',
     alias:'UnitStore',
-    autoLoad: true,
+    autoLoad: false,
     autoSync: true,
 
     proxy: {
@@ -17,7 +17,8 @@ Ext.define('SCM.store.basedata.UnitStore', {
         reader: {
             type: 'json',
             root: 'records',
-            successProperty: 'success'
+            successProperty: 'success',
+            messageProperty: 'message'
         },
 		writer: {
             type: 'json',
@@ -27,7 +28,7 @@ Ext.define('SCM.store.basedata.UnitStore', {
         listeners: {
             exception: function(proxy, response, operation){
                 Ext.MessageBox.show({
-                    title: 'ERROR',
+                    title: '服务器端异常',
                     msg: operation.getError(),
                     icon: Ext.MessageBox.ERROR,
                     buttons: Ext.Msg.OK

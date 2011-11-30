@@ -15,6 +15,7 @@ Ext.define('SCM.view.basedata.warehouse.ListUI' ,{
         this.initToolBar();
 //        this.initStore();
         this.callParent(arguments);
+        this.store.load();
     },
 
 	//初始化列
