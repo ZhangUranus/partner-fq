@@ -53,4 +53,9 @@ under the License.
 	<TSystemMenu menuId='BOMBillInfoMaintaince' menuName='BOM单资料维护' menuType='1' parentId='basicSetting' sort='37' hyperlink='bombillinfomaintaince' styleName='BOM-bill-info-maintaince' display='1' description='BOM单资料维护' />
 	<TSystemMenu menuId='UnitMaintaince' menuName='计量单位维护' menuType='1' parentId='basicSetting' sort='38' hyperlink='unitlist' styleName='BOM-bill-info-maintaince' display='1' description='计量单位维护' />
 	<TSystemMenu menuId='WarehousetTypeMaintaince' menuName='仓库类型维护' menuType='1' parentId='basicSetting' sort='39' hyperlink='warehousetypelist' styleName='BOM-bill-info-maintaince' display='1' description='仓库类型维护' />
+	
+	<TSystemUser userId='admin' userName='管理员' userEname="admin" password="e10adc3949ba59abbe56e057f20f883e" sex='1' departmentId='systemManagement' position='系统管理员' phoneNumber='13800138000' email='admin@scm.com' valid='Y' />
+	<TSystemUser userId='liujihuang' userName='刘继煌' userEname="Jeff" password="e10adc3949ba59abbe56e057f20f883e" sex='0' departmentId='systemManagement' position='系统管理员' phoneNumber='13800138000' email='liujihuang@scm.com' valid='Y' />
+	<TSystemUser userId='linrifu' userName='林日福' userEname="Mark" password="e10adc3949ba59abbe56e057f20f883e" sex='0' departmentId='systemManagement' position='系统管理员' phoneNumber='13800138000' email='linrifu@scm.com' valid='Y' />
+	
 </entity-engine-xml>
