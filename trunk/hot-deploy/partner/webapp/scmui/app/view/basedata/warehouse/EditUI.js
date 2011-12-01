@@ -36,7 +36,7 @@ Ext.define('SCM.view.basedata.warehouse.EditUI', {
 	                          fieldLabel: '仓库类型',
 	                          store:warehouseType,
 	                          displayField:'name',//显示字段
-	                          valueField: 'id',//值字段，后台通过该字段传递
+	                          valueField: 'id'//值字段，后台通过该字段传递
 	                      },
 	                      {
 	                          xtype: 'textfield',
