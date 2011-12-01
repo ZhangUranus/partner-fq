@@ -13,6 +13,7 @@ Ext.application({
 		'basedata.WarehouseTypeController',
 		'basedata.WarehouseController',
 		'basedata.CustomerController',
+		'system.SystemController'
 	],
 	launch : function(){//初始化系统主页面
 		var viewport = Ext.create('Ext.container.Viewport',{
