@@ -7,6 +7,7 @@ Ext.define('SCM.model.system.UserModel', {
     extend: 'Ext.data.Model',
     alias: 'UserModel',
     fields: [
+    	{name: 'id',  type: 'string'},
         {name: 'userId',   type: 'string'},
         {name: 'userName',   type: 'string'},
         {name: 'userEname', type: 'string', defaultValue: ''},
@@ -18,5 +19,7 @@ Ext.define('SCM.model.system.UserModel', {
         {name: 'phoneNumber', type: 'string', defaultValue: ''},
         {name: 'email', type: 'string', defaultValue: ''},
         {name: 'valid', type: 'string', defaultValue: 'Y'}
-    ]
+    ],
+    requires: ['Ext.data.UuidGenerator'],
+    idgen: 'uuid' //使用uuid生成记录id 每个模型必须要有id字段
 });
