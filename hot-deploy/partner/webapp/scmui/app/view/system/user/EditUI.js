@@ -4,6 +4,7 @@ Ext.define('SCM.view.system.user.EditUI', {
 
     title : '用户管理',
     layout: 'fit',
+    width : 300,
     autoShow: true,
     modal:true,//背景变灰，不能编辑
     uiStatus:'AddNew',
