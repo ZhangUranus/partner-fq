@@ -35,5 +35,48 @@ under the License.
 		<field name="display" type="indicator"/>
 		<field name="description" type="long-varchar"/>
 		<prim-key field="menuId"/>
-    </entity>
+	</entity>
+	<entity entity-name="TSystemUser" package-name="org.ofbiz.partner.system" title="User table">
+		<field name="userId" type="id-uuid-ne"/>
+		<field name="userName" type="name"/>
+		<field name="userEname" type="name"/>
+		<field name="password" type="id-uuid"/>
+		<field name="sex" type="indicator"/>
+		<field name="departmentId" type="id-uuid"/>
+		<field name="position" type="name"/>
+		<field name="phoneNumber" type="id"/>
+		<field name="email" type="email"/>
+		<field name="valid" type="indicator"/>
+		<prim-key field="userId"/>
+	</entity>
+	<view-entity entity-name="VSystemUser" package-name="org.ofbiz.partner.system">
+		<member-entity entity-alias="User" entity-name="TSystemUser"/>
+		<member-entity entity-alias="Department" entity-name="Deparment"/>
+		<alias-all entity-alias="User" >
+			</alias-all>
+		<alias name="departmentName" entity-alias="Department" field="name"></alias>
+		<view-link entity-alias="User" rel-entity-alias="Department">
+		    <key-map field-name="departmentId" rel-field-name="number"/>
+		</view-link>
+	</view-entity>
+	<entity entity-name="TSystemUserOfRole" package-name="org.ofbiz.partner.system" title="User Of Role table">
+		<field name="userId" type="id-uuid-ne"/>
+		<field name="roleId" type="id-uuid-ne"/>
+		<prim-key field="userId"/>
+		<prim-key field="roleId"/>
+	</entity>
+	<entity entity-name="TSystemRole" package-name="org.ofbiz.partner.system" title="Role table">
+		<field name="roleId" type="id-uuid-ne"/>
+		<field name="roleName" type="name"/>
+		<field name="description" type="long-varchar"/>
+		<prim-key field="roleId"/>
+	</entity>
+	<entity entity-name="TSystemMenuOfRole" package-name="org.ofbiz.partner.system" title="Menu Of Role table">
+		<field name="menuId" type="id-uuid-ne"/>
+		<field name="roleId" type="id-uuid-ne"/>
+		<field name="operateType" type="name"/>
+		<prim-key field="menuId"/>
+		<prim-key field="roleId"/>
+		<prim-key field="operateType"/>
+	</entity>
 </entitymodel>
