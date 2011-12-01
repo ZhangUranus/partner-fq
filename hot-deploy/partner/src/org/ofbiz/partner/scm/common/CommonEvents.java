@@ -25,7 +25,6 @@ import org.ofbiz.entity.GenericDelegator;
 import org.ofbiz.entity.GenericEntityException;
 import org.ofbiz.entity.GenericValue;
 import org.ofbiz.entity.condition.EntityCondition;
-import org.ofbiz.partner.scm.authz.UserManager;
 
 /**
  * 公共事件类
@@ -164,67 +163,4 @@ public class CommonEvents {
 		Debug.logInfo(jsonStr.toString(), module);
     	return jsonStr.toString();
     }
-    
-    public static String getUserList(HttpServletRequest request){
-		List<GenericValue> userList = UserManager.getUserList(request);
-		
-		//将list对象转换为json格式字符串
-		StringBuffer jsonStr = new StringBuffer();
-		jsonStr.append("{records:[");
-		boolean isFirstValue = true;
-		if(userList.isEmpty()){
-			return "";
-		}
-		for (GenericValue node: userList) {
-			if(isFirstValue){
-				isFirstValue = false;
-			}else{
-				jsonStr.append(",");
-			}
-			try {
-				jsonStr.append(objectMapper.writeValueAsString(node));
-			} catch (JsonGenerationException e) {
-				e.printStackTrace();
-			} catch (JsonMappingException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-        }
-		jsonStr.append("]}");
-		Debug.logInfo(jsonStr.toString(), module);
-    	return jsonStr.toString();
-    }
-    
-    public static String getDepartmentList(HttpServletRequest request){
-		List<GenericValue> departmentList = UserManager.getDepartmentList(request);
-		
-		//将list对象转换为json格式字符串
-		StringBuffer jsonStr = new StringBuffer();
-		jsonStr.append("{records:[");
-		boolean isFirstValue = true;
-		if(departmentList.isEmpty()){
-			return "";
-		}
-		for (GenericValue node: departmentList) {
-			if(isFirstValue){
-				isFirstValue = false;
-			}else{
-				jsonStr.append(",");
-			}
-			try {
-				jsonStr.append(objectMapper.writeValueAsString(node));
-			} catch (JsonGenerationException e) {
-				e.printStackTrace();
-			} catch (JsonMappingException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-        }
-		jsonStr.append("]}");
-		Debug.logInfo(jsonStr.toString(), module);
-    	return jsonStr.toString();
-    }
-    
 }

@@ -93,14 +93,4 @@ public class SecurityEvents {
 		}
 		return "success";
 	}
-	
-	public static String getUserList(HttpServletRequest request, HttpServletResponse response){
-		String jsonStr = CommonEvents.getUserList(request);
-		try {
-			CommonEvents.writeJsonDataToExt(response, jsonStr);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return "success";
-	}
 }
