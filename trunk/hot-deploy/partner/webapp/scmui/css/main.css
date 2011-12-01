@@ -101,6 +101,16 @@
 	background-image: url( ../images/icons/BOM-bill-info-maintaince.png ) !important;
 }
 
+.tree-user{
+	background-image: url( ../images/icons/tree-user.png ) !important;
+}
+.tree-user-invalid{
+	background-image: url( ../images/icons/tree-user-invalid.png ) !important;
+}
+.tree-department{
+	background-image: url( ../images/icons/tree-department.png ) !important;
+}
+
 #main-top {
     background: url(../images/header.png) repeat-x;
 }
