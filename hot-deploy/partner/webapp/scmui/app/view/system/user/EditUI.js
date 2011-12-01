@@ -22,17 +22,21 @@ Ext.define('SCM.view.system.user.EditUI', {
 	                  xtype: 'form',
 	                  bodyPadding:5,
 	                  items: [
+	                  	  {
+	                          xtype: 'textfield',
+	                          name : 'id',
+	                          fieldLabel: 'id',
+	                          hidden:true
+	                      },
 	                      {
 	                          xtype: 'textfield',
 	                          name : 'userId',
-	                          fieldLabel: '登录名',
-	                          readOnly : true
+	                          fieldLabel: '登录名'
 	                      },
 	                      {
 	                          xtype: 'textfield',
 	                          name : 'userName',
-	                          fieldLabel: '用户名',
-	                          readOnly : true
+	                          fieldLabel: '用户名'
 	                      },
 	                      {
 	                          xtype: 'combobox',
@@ -45,8 +49,7 @@ Ext.define('SCM.view.system.user.EditUI', {
 	                      {
 	                          xtype: 'textfield',
 	                          name : 'departmentId',
-	                          fieldLabel: '部门编码',
-	                          readOnly : true
+	                          fieldLabel: '部门编码'
 	                      },
 	                      {
 	                          xtype: 'textfield',
@@ -61,7 +64,7 @@ Ext.define('SCM.view.system.user.EditUI', {
 	                      {
 	                          xtype: 'textfield',
 	                          name : 'email',
-	                          fieldLabel: '手机号码'
+	                          fieldLabel: '邮箱'
 	                      },{
 	                          xtype: 'combobox',
 	                          name : 'valid',//定义管理的model字段

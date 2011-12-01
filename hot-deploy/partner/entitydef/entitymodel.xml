@@ -37,6 +37,7 @@ under the License.
 		<prim-key field="menuId"/>
 	</entity>
 	<entity entity-name="TSystemUser" package-name="org.ofbiz.partner.system" title="User table">
+		<field name="id" type="id-uuid-ne"/>
 		<field name="userId" type="id-uuid-ne"/>
 		<field name="userName" type="name"/>
 		<field name="userEname" type="name"/>
@@ -47,7 +48,7 @@ under the License.
 		<field name="phoneNumber" type="id"/>
 		<field name="email" type="email"/>
 		<field name="valid" type="indicator"/>
-		<prim-key field="userId"/>
+		<prim-key field="id"/>
 	</entity>
 	<view-entity entity-name="VSystemUser" package-name="org.ofbiz.partner.system">
 		<member-entity entity-alias="User" entity-name="TSystemUser"/>
