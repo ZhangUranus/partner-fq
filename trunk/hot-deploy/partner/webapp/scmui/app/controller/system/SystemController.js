@@ -99,7 +99,9 @@ Ext.define('SCM.controller.system.SystemController', {
     		record.set(values);
     	}else if(win.uiStatus=='AddNew'){//新增记录
     		record=Ext.create('UserModel');
+    		debugger;
     		record.set(values);
+    		record.roleModel().add({'userId': record.data.userId,'roleId': 'aaa'});
     		this.getUsermanagement().store.add(record);
     	}
     	
