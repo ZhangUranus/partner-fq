@@ -56,6 +56,8 @@ Ext.define('SCM.controller.Main', {
             iconCls: treeData.iconCls,
             store : Ext.create('Ext.data.TreeStore', {
                 model : 'SCM.model.MenuModel',
+                autoLoad: false,
+                autoSync: true,
                 proxy: {
                     type: 'ajax',
                     url: '../scm/control/getTreeDataByParentId?flag=true&parentId='+treeData.id
