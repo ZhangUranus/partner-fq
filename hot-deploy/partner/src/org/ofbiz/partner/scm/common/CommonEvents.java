@@ -1,7 +1,6 @@
 package org.ofbiz.partner.scm.common;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,8 +14,6 @@ import javolution.util.FastList;
 
 import net.sf.json.JSONObject;
 
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilProperties;
@@ -136,13 +133,18 @@ public class CommonEvents {
 		} catch (GenericEntityException e) {
 			Debug.logError("Problems with findList "+e, module);
 		}
+		if (menuList == null || menuList.size() < 1) {
+			return "[]";
+		}
 		//将list对象转换为json格式字符串
 		StringBuffer jsonStr = new StringBuffer();
+		boolean isFirstValue = true;
 		jsonStr.append("[");
-		int count = 0;
 		JSONObject tempObject = null;
 		for (GenericValue node: menuList) {
-			if(count!=0){
+			if (isFirstValue) {
+				isFirstValue = false;
+			} else {
 				jsonStr.append(",");
 			}
 			tempObject = new JSONObject();
@@ -157,7 +159,6 @@ public class CommonEvents {
 				tempObject.put("children", getTreeDataByParentId(delegator,node.getString("menuId"),true));
 			}
 			jsonStr.append(tempObject.toString());
-			count ++;
         }
 		jsonStr.append("]");
 		Debug.logInfo(jsonStr.toString(), module);
