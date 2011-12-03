@@ -41,7 +41,7 @@ under the License.
 		<field name="userId" type="id-uuid-ne"/>
 		<field name="userName" type="name"/>
 		<field name="userEname" type="name"/>
-		<field name="password" type="id-uuid"/>
+		<field name="password" type="id-long"/>
 		<field name="sex" type="indicator"/>
 		<field name="departmentId" type="id-uuid"/>
 		<field name="position" type="name"/>
