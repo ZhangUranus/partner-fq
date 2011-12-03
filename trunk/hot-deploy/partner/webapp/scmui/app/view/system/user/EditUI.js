@@ -33,6 +33,13 @@ Ext.define('SCM.view.system.user.EditUI', {
 	                          name : 'userId',
 	                          fieldLabel: '登录名'
 	                      },
+                          {
+                              xtype: 'textfield',
+                              name : 'password',
+                              fieldLabel: '密码',
+                              inputType: 'password'
+                          },
+                          
 	                      {
 	                          xtype: 'textfield',
 	                          name : 'userName',
