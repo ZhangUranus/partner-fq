@@ -18,8 +18,8 @@ Ext.define('SCM.view.Login',{
                 xtype: 'textfield',
                 fieldLabel: '用户名',
                 blankText : '用户名不能为空',
-                name:'UserName',
-                id:'UserName',
+                name:'username',
+                id:'username',
                 allowBlank: false,
                 width:240
             },{
@@ -27,8 +27,8 @@ Ext.define('SCM.view.Login',{
                 fieldLabel: '密   码',
                 allowBlank: false,
                 blankText : '密码不能为空',
-                name:'PassWord',
-                id:'PassWord',
+                name:'password',
+                id:'password',
                 width:240,
                 inputType : 'password' 
             }],
@@ -44,11 +44,9 @@ Ext.define('SCM.view.Login',{
                             waitTitle:'正在验证登录',
                             url:'../scm/control/checkLogin',
                             success: function(form, action) {
-                                //登录成功后。
-                                //隐藏登录窗口，并重新加载菜单
                                 win.hide();
-                                //Ext.getCmp('SystemMenus').store.load();
-                                
+                                Ext.getCmp('main-tree').show();
+                                Ext.getCmp('main-content').show();
                             },
                             failure: function(form, action) {
                                 Ext.MessageBox.show({

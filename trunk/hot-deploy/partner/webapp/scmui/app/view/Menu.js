@@ -9,6 +9,7 @@ Ext.define('SCM.view.Menu', {
 			initComponent : function() {
 				Ext.apply(this, {
 							id : 'main-tree',
+//                            hidden : true,
 							margins : '0 0 -1 1',
 							layout : 'accordion',
 							region : 'west',
