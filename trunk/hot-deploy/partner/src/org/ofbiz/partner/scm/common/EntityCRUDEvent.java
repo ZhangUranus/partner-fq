@@ -20,7 +20,9 @@ import net.sf.json.JSONObject;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.ofbiz.base.crypto.HashCrypt;
 import org.ofbiz.base.util.Debug;
+import org.ofbiz.common.login.LoginServices;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericEntityException;
 import org.ofbiz.entity.GenericValue;
@@ -111,7 +113,11 @@ public class EntityCRUDEvent {
 				// TODO 现在只判断相同名称的字段是否存在，以后是否要考虑字段类型等
 				ModelField vModelField = vModel.getField(fieldName);
 				if (vModelField != null) {
-					v.set(fieldName, record.get(fieldName));
+					if(fieldName.equals("password")){
+						v.set(fieldName, HashCrypt.getDigestHash(record.get(fieldName).toString(), LoginServices.getHashType()));
+					}else{
+						v.set(fieldName, record.get(fieldName));
+					}
 				}
 			}
 			try {
@@ -156,7 +162,11 @@ public class EntityCRUDEvent {
 
 				ModelField vModelField = vModel.getField(fieldName);
 				if (vModelField != null) {
-					v.set(fieldName, record.get(fieldName));
+					if(fieldName.equals("password")){
+						v.set(fieldName, HashCrypt.getDigestHash(record.get(fieldName).toString(), LoginServices.getHashType()));
+					}else{
+						v.set(fieldName, record.get(fieldName));
+					}
 				}
 			}
 			try {
