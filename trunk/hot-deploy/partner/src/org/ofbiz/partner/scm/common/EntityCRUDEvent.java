@@ -105,9 +105,6 @@ public class EntityCRUDEvent {
 			Debug.logError(e, module);
 			throw e;
 		}
-		String testStr ="{success:true,children:[{id:'1',text:'01 &#x5BCC;&#x6865;&#x516C;&#x53F8;',leaf:false,children:[{id:'11',text:'0101 &#x8D22;&#x52A1;&#x90E8; ',leaf:true},{id:'12',text:'0102 &#x91C7;&#x8D2D;&#x90E8;',leaf:true}]}]}";
-		
-		CommonEvents.writeJsonDataToExt(response,testStr);
 		return "success";
 	}
 	/**
