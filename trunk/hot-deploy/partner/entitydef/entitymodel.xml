@@ -52,7 +52,7 @@ under the License.
 	</entity>
 	<view-entity entity-name="VSystemUser" package-name="org.ofbiz.partner.system">
 		<member-entity entity-alias="User" entity-name="TSystemUser"/>
-		<member-entity entity-alias="Department" entity-name="Deparment"/>
+		<member-entity entity-alias="Department" entity-name="Department"/>
 		<alias-all entity-alias="User" >
 			</alias-all>
 		<alias name="departmentName" entity-alias="Department" field="name"></alias>

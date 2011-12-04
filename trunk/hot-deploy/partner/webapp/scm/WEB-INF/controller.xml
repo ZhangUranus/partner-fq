@@ -27,6 +27,11 @@
            <event type="java" path="org.ofbiz.partner.scm.common.EntityCRUDEvent" invoke="getColl2Json"/>
            <response name="success" type="none"/>
        </request-map>
+       <request-map uri="requestTreeJsonData">
+           <security https="false" auth="false"/>
+           <event type="java" path="org.ofbiz.partner.scm.common.EntityCRUDEvent" invoke="getTree2Json"/>
+           <response name="success" type="none"/>
+       </request-map>
        <request-map uri="updateJsonData">
            <security https="false" auth="false"/>
            <event type="java" path="org.ofbiz.partner.scm.common.EntityCRUDEvent" invoke="updateFromJson"/>

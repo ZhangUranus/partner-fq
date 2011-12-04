@@ -32,8 +32,9 @@ Ext.define('SCM.view.basedata.warehouse.EditUI', {
 	                      },
 	                      {
 	                          xtype: 'combobox',
-	                          name : 'warehouseTypeName',//定义管理的model字段
+	                          name : 'wsTypeId',//定义管理的model字段
 	                          fieldLabel: '仓库类型',
+							  editable:false,
 	                          store:warehouseType,
 	                          displayField:'name',//显示字段
 	                          valueField: 'id'//值字段，后台通过该字段传递

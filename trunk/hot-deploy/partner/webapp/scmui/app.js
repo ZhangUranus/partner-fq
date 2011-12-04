@@ -13,6 +13,7 @@ Ext.application({
         'basedata.WarehouseTypeController', 
         'basedata.WarehouseController', 
         'basedata.CustomerController', 
+		'basedata.DepartmentController',
         'system.SystemController'
     ],
     launch : function() {
