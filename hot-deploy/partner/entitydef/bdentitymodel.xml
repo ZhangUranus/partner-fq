@@ -140,9 +140,9 @@ under the License.
     </entity>
      
     <!-- 部门实体 -->
-    <entity entity-name="Deparment"
+    <entity entity-name="Department"
             package-name="org.ofbiz.scm.basedata"
-            title="Deparment  Entity">
+            title="Department  Entity">
       <field name="id" type="id-long"></field>
       <field name="parentId" type="id-long"></field>
       <field name="number" type="name"></field>

@@ -49,6 +49,10 @@ Ext.define('SCM.controller.basedata.WarehouseController', {
         var editui=Ext.widget('warehouseedit');
         editui.uiStatus='Modify';
     	editui.down('form').loadRecord(record);
+
+		//****load完record后需要调整id字段的显示
+		editui.down('form').down('[name=wsTypeId]').setValue(record.get('warehouseTypeName'));
+
     },
     //修改
     editRecord: function(button){
@@ -60,6 +64,11 @@ Ext.define('SCM.controller.basedata.WarehouseController', {
     		var editui=Ext.widget('warehouseedit');
     		editui.uiStatus='Modify';
         	editui.down('form').loadRecord(record);
+			
+			//****load完record后需要调整id字段的显示
+			editui.down('form').down('[name=wsTypeId]').setValue(record.get('warehouseTypeName'));
+
+
     	}
     },
     //新增

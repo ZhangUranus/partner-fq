@@ -6,7 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,43 +44,72 @@ public class EntityCRUDEvent {
 	/**
 	 * 获取实体值列表
 	 */
-	public static String getColl2Json(HttpServletRequest request,HttpServletResponse response) {
-		EntityConditionList<EntityCondition> condition = null;
-		if (request.getParameter("entity") == null) {
-			return bizError(response, "实体类型为空");
-		}
-		String entityName = request.getParameter("entity").toString();
+	public static String getColl2Json(HttpServletRequest request,HttpServletResponse response)  throws Exception {
 		try {
-			if(request.getParameter("filters") != null){
-				String testStr = "[{'name': 'userId','value': 'admin'},{'name': 'valid','value': 'Y'}]";
-				/* [
-				 * 		{'name': 'userId','value': 'admin'},
-				 * 		{'name': 'valid','value': 'Y'}
-				 * ]
-				 */
-				List<EntityCondition> conds = FastList.newInstance();
-				List<LinkedHashMap<String, Object>> list = objectMapper.readValue(testStr, List.class);
-				for (int i = 0; i < list.size(); i++){
-					conds.add(EntityCondition.makeCondition(list.get(i).get("name").toString(),list.get(i).get("value").toString()));
-				}
-				condition = EntityCondition.makeCondition(conds);
-			}
-			List<GenericValue> valueList = CommonEvents.getDelegator(request).findList(entityName, condition, null, null, null, false);
+			List<GenericValue> valueList =getValueList(request);
 			String jsonStr = getJsonFromGenValList(valueList); // 将查询结果转换为json字符串
 			CommonEvents.writeJsonDataToExt(response, jsonStr); // 将结果返回前端Ext
 		} catch (GenericEntityException e) {
 			Debug.logError(e, module);
+			throw e;
 		} catch (JsonGenerationException e) {
 			Debug.logError(e, module);
+			throw e;
 		} catch (JsonMappingException e) {
 			Debug.logError(e, module);
+			throw e;
 		} catch (IOException e) {
 			Debug.logError(e, module);
-		} finally {
-			return "success";
+			throw e;
 		}
+		return "success";
+		
 	}
 
+	/**
+	 * 返回tree数据类型格式为,实体必须有下面字段： id , parentId ,name 
+	 * {success:true,children:[{id:'xxx',text:'xxx',leaf:false,children:[{id:'xxx',text:'xxx',leaf:true},{...}]},{...}]}
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	public static String getTree2Json(HttpServletRequest request,HttpServletResponse response) throws Exception {
+		try {
+			List<GenericValue> valueList =getValueList(request);
+			List<TreeNode> treeNodes = TreeOprCommon.buildTree(valueList); // 构建数节点
+			
+			JSONObject jsonResult=new JSONObject();
+			jsonResult.element("success", true);//成功标记
+			if(treeNodes!=null){
+				List<JSONObject> rootList=new ArrayList<JSONObject>();//根节点json对象列表
+				for(TreeNode node:treeNodes){//构建每个根节点列表
+					JSONObject rootObj=getTreeJsonObject(node);
+					if(rootObj!=null){
+						rootList.add(rootObj);
+					}
+				}
+				jsonResult.element("children", rootList);
+			}
+			
+			CommonEvents.writeJsonDataToExt(response, jsonResult.toString()); // 将结果返回前端Ext
+		} catch (GenericEntityException e) {
+			Debug.logError(e, module);
+			throw e;
+		} catch (JsonGenerationException e) {
+			Debug.logError(e, module);
+			throw e;
+		} catch (JsonMappingException e) {
+			Debug.logError(e, module);
+			throw e;
+		} catch (IOException e) {
+			Debug.logError(e, module);
+			throw e;
+		}
+		String testStr ="{success:true,children:[{id:'1',text:'01 &#x5BCC;&#x6865;&#x516C;&#x53F8;',leaf:false,children:[{id:'11',text:'0101 &#x8D22;&#x52A1;&#x90E8; ',leaf:true},{id:'12',text:'0102 &#x91C7;&#x8D2D;&#x90E8;',leaf:true}]}]}";
+		
+		CommonEvents.writeJsonDataToExt(response,testStr);
+		return "success";
+	}
 	/**
 	 * 新增记录
 	 * 
@@ -314,6 +342,104 @@ public class EntityCRUDEvent {
 		} else {
 			return object.toString();
 		}
+	}
+	
+	/**
+	 * 根据请求返回查找结果
+	 * @param request
+	 * @return
+	 */
+	public static List<GenericValue> getValueList(HttpServletRequest request) throws Exception{
+		EntityConditionList<EntityCondition> condition = null;
+		if (request.getParameter("entity") == null) {
+			return null;
+		}
+		String entityName = request.getParameter("entity").toString();
+		try {
+			//过滤字段，对字段做与方式过滤，obectMapper是静态变量，线程不安全
+//			if(request.getParameter("filter") != null){
+//				List<EntityCondition> conds = FastList.newInstance();
+//				List<LinkedHashMap<String, Object>> list = objectMapper.readValue(request.getParameter("filter").toString(), List.class);
+//				for (int i = 0; i < list.size(); i++){
+//					conds.add(EntityCondition.makeCondition(list.get(i).get("property").toString(),list.get(i).get("value").toString()));
+//				}
+//				condition = EntityCondition.makeCondition(conds);
+//			}
+			//处理whereStr过滤
+			if(request.getParameter("whereStr")!=null){
+				EntityCondition whrCond=EntityCondition.makeConditionWhere(request.getParameter("whereStr"));
+				List<EntityCondition> conds = FastList.newInstance();
+				conds.add(whrCond);
+				condition=EntityCondition.makeCondition(conds);
+			}
+			List<GenericValue> valueList = CommonEvents.getDelegator(request).findList(entityName, condition, null, null, null, false);
+			return valueList;
+		} catch (GenericEntityException e) {
+			Debug.logError(e, module);
+			throw e;
+		}
+	}
+	
+	/**
+	 * 根据节点对象递归生成json对象
+	 * @param treeNode
+	 * @return
+	 */
+	public static JSONObject getTreeJsonObject(TreeNode treeNode){
+		if(treeNode!=null){
+			JSONObject nodeJson=new JSONObject();
+			GenericValue value=treeNode.getValue();
+			nodeJson.element("id", value.getString("id"));
+			nodeJson.element("text", value.getString("name"));
+			boolean isLeaf=true;//是否叶子节点
+			//递归构建children
+			List<TreeNode> childrenList=treeNode.getChildren();
+			if(childrenList!=null&&childrenList.size()>0){
+				List<JSONObject> childrenJson=new ArrayList<JSONObject>();
+				for(TreeNode child:childrenList){
+					JSONObject childJson=getTreeJsonObject(child);
+					if(childJson!=null){
+						childrenJson.add(childJson);
+					}
+				}
+				nodeJson.element("children", childrenJson);
+				isLeaf=false;
+			}
+			
+			nodeJson.element("leaf", isLeaf);
+			return nodeJson;
+		}
+		return null;
+		
+		//将list对象转换为json格式字符串
+//				StringBuffer jsonStr = new StringBuffer();
+//				boolean isFirstValue = true;
+//				jsonStr.append("[");
+//				JSONObject tempObject = null;
+//				for (GenericValue node: treeNode) {
+//					if (isFirstValue) {
+//						isFirstValue = false;
+//					} else {
+//						jsonStr.append(",");
+//					}
+//					tempObject = new JSONObject();
+//					tempObject.put("id", node.getString("menuId"));
+//					tempObject.put("text", node.getString("menuName"));
+//					tempObject.put("iconCls", node.getString("styleName"));
+//					tempObject.put("sort", node.getString("sort"));
+//					if(node.getString("menuType").equals("1")){
+//						tempObject.put("hyperlink", node.getString("hyperlink"));
+//						tempObject.put("leaf", true);
+//					}else if(flag){	//当节点有下级节点，而且flag值为true，遍历节点
+//						tempObject.put("children", getTreeDataByParentId(delegator,node.getString("menuId"),true));
+//					}
+//					jsonStr.append(tempObject.toString());
+//		        }
+//				jsonStr.append("]");
+//				Debug.logInfo(jsonStr.toString(), module);
+//		    	return tempObject;
+		
+		
 	}
 
 }
