@@ -9,7 +9,7 @@ Ext.define('SCM.store.basedata.DepartmentStore', {
     proxy: {
         type: 'ajax',
 		api: {
-            read: '../../scm/control/requestJsonData?entity=Department',
+            read: '../../scm/control/requestJsonData?entity=DepartmentListView',
             create: '../../scm/control/addnewJsonData?entity=Department',
             update: '../../scm/control/updateJsonData?entity=Department',
             destroy: '../../scm/control/deleteJsonData?entity=Department'
