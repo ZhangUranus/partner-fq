@@ -22,54 +22,40 @@ Ext.define('SCM.view.basedata.department.ListUI' ,{
         Ext.applyIf(me, {
             items: [
                 {
-	                  xtype: 'form',
-					  region: 'center',
-	                  bodyPadding:5,
-	                  items: [
-	                      {
-	                          xtype: 'textfield',
-	                          name : 'id',
-	                          fieldLabel: 'id',
-	                          hidden:true
-	                      },
-						  {
-	                          xtype: 'selectorfield',
-							  storeName:'SCM.store.basedata.DepartmentStore',//定义数据集名称
-							  selectorColumns: [//定义选择对话框的列
-												{
-													xtype: 'gridcolumn',
-													dataIndex: 'id',
-													text: 'id',
-													hidden:true
-												},
-												{
-													xtype: 'gridcolumn',
-														dataIndex: 'number',
-														text: '部门编号'
-													},
-													{
-														xtype: 'gridcolumn',
-														dataIndex: 'name',
-														text: '名称'
-													}
-												],
-	                          name : 'parentId',
-	                          fieldLabel: '上级部门'
-	                          
-	                      },
-	                      {
-	                          xtype: 'textfield',
-	                          name : 'number',
-	                          fieldLabel: '编码'
-	                          
-	                      },
-	                      {
-	                          xtype: 'textfield',
-	                          name : 'name',
-	                          fieldLabel: '名称'
-	                      }
-	                  ]
-	              },
+                    xtype: 'gridpanel',
+                    title: '',
+                    region: 'center',
+					store: 'basedata.DepartmentStore',//列表型store
+                    columns: [
+                        {
+                            xtype: 'gridcolumn',
+                            dataIndex: 'id',
+                            text: 'id',
+							hidden:true
+                        },
+						{
+                            xtype: 'gridcolumn',
+                            dataIndex: 'parentId',
+                            text: 'parentId',
+							hidden:true
+                        },
+						{
+                            xtype: 'gridcolumn',
+                            dataIndex: 'parentDeptName',
+                            text: '上级部门'
+                        },
+                        {
+                            xtype: 'gridcolumn',
+                            dataIndex: 'number',
+                            text: '编号'
+                        },
+                        {
+                            xtype: 'gridcolumn',
+                            dataIndex: 'name',
+                            text: '名称'
+                        }
+                    ]
+                },
                 {//树结构
                     xtype: 'treepanel',
                     width: 200,

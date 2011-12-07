@@ -21,152 +21,162 @@ Ext.define('SCM.controller.basedata.DepartmentController', {
 			'departmentinfomaintaince treepanel':{
 				select:this.selectNode
 		     },
-			//ÁĞ±íË«»÷ÊÂ¼ş
+			//åˆ—è¡¨åŒå‡»äº‹ä»¶
 	        'departmentinfomaintaince gridpanel': {
 	    		itemdblclick: this.modifyRecord
 	        },
-	        //ÁĞ±íĞÂÔö°´Å¥
+	        //åˆ—è¡¨æ–°å¢æŒ‰é’®
 	        'departmentinfomaintaince button[action=addNew]':{
 	        	click: this.addNewRecord
 	        },
-	        //ÁĞ±íĞŞ¸Ä°´Å¥
+	        //åˆ—è¡¨ä¿®æ”¹æŒ‰é’®
 	        'departmentinfomaintaince button[action=modify]':{
 	        	click: this.editRecord
 	        },
-	        //ÁĞ±íÉ¾³ı°´Å¥
+	        //åˆ—è¡¨åˆ é™¤æŒ‰é’®
 	        'departmentinfomaintaince button[action=delete]':{
 	        	click: this.deleteRecord
 	        },
-			//ÁĞ±íË¢ĞÂ°´Å¥
+			//åˆ—è¡¨åˆ·æ–°æŒ‰é’®
 	        'departmentinfomaintaince button[action=refresh]':{
-	        	click: this.refreshAll
+	        	click: this.refreshTree
 	        },
-			//±à¼­½çÃæÉÏ¼¶²¿ÃÅ×Ö¶ÎÑ¡Ôñ½çÃæÈ·¶¨
+			//ç¼–è¾‘ç•Œé¢ä¸Šçº§éƒ¨é—¨å­—æ®µé€‰æ‹©ç•Œé¢ç¡®å®š
 			'#selectorwin button[name=btnSure]':{
 				click: this.selectParent
 			},
-			//±à¼­½çÃæÉÏ¼¶²¿ÃÅ×Ö¶ÎÑ¡Ôñ½çÃæÈ¡Ïû
+			//ç¼–è¾‘ç•Œé¢ä¸Šçº§éƒ¨é—¨å­—æ®µé€‰æ‹©ç•Œé¢å–æ¶ˆ
 			'#selectorwin button[name=btnCancel]':{
 				click: this.cancelParent
 			},
-			 //±à¼­½çÃæ±£´æ
+			 //ç¼–è¾‘ç•Œé¢ä¿å­˜
 	        'departmentedit button[action=save]':{
 	        	click: this.saveRecord
 	        }
 		}
 		);
     },
-	//Ñ¡ÔñÊ÷ĞÎ½ÚµãÊ±£¬¸üĞÂÁĞ±íÊı¾İ£¬ÏÔÊ¾½Úµã¼°ÏÂ¼¶Êı¾İ
+	//é€‰æ‹©æ ‘å½¢èŠ‚ç‚¹æ—¶ï¼Œæ›´æ–°åˆ—è¡¨æ•°æ®ï¼Œæ˜¾ç¤ºèŠ‚ç‚¹åŠä¸‹çº§æ•°æ®
 	selectNode: function(me, record, index, eOpts){
 		//console.log(this.getMaingrid());
 		var gridStore=this.getMaingrid().getStore();
 		gridStore.clearFilter();
-		//gridStore.filter([{property: "parentId", value: record.data.id}]);//¸Ã¹ıÂË·½Ê½Ö»ÄÜ½øĞĞÈ«²¿ÓëºÏ²¢¹ıÂË£¬
+		//gridStore.filter([{property: "parentId", value: record.data.id}]);//è¯¥è¿‡æ»¤æ–¹å¼åªèƒ½è¿›è¡Œå…¨éƒ¨ä¸åˆå¹¶è¿‡æ»¤ï¼Œ
 		
-		gridStore.load({params:{'whereStr':'DepartmentV.id =\''+record.data.id+'\'  or DepartmentV.parent_Id=\''+record.data.id+'\''}});//Ê¹ÓÃwhere¹ıÂË×Ö·û´®
+		gridStore.load({params:{'whereStr':'DepartmentV.id =\''+record.data.id+'\'  or DepartmentV.parent_Id=\''+record.data.id+'\''}});//ä½¿ç”¨whereè¿‡æ»¤å­—ç¬¦ä¸²
 	},
-	//Ë«»÷±à¼­
+	//åŒå‡»ç¼–è¾‘
     modifyRecord: function(grid, record){
         var editui=Ext.widget('departmentedit');
         editui.uiStatus='Modify';
 		this.ajustId2Display(record);
     	editui.down('form').loadRecord(record);
-		this.refreshAll();
     },
-    //ĞŞ¸Ä
+    //ä¿®æ”¹
     editRecord: function(button){
     	listPanel=this.getMaingrid();
     	
     	sm=listPanel.getSelectionModel();
-    	if(sm.hasSelection()){//ÅĞ¶ÏÊÇ·ñÑ¡ÔñĞĞ¼ÇÂ¼
+    	if(sm.hasSelection()){//åˆ¤æ–­æ˜¯å¦é€‰æ‹©è¡Œè®°å½•
     		record=sm.getLastSelected();
 			this.ajustId2Display(record);
     		var editui=Ext.widget('departmentedit');
     		editui.uiStatus='Modify';
         	editui.down('form').loadRecord(record);
     	}
-		this.refreshAll();
     },
-    //ĞÂÔö
+    //æ–°å¢
     addNewRecord: function(button){
-    	newRecord=Ext.create('DepartmentModel');//ĞÂÔö¼ÇÂ¼
+    	newRecord=Ext.create('DepartmentModel');//æ–°å¢è®°å½•
     	var editui=Ext.widget('departmentedit');
     	editui.uiStatus='AddNew';
     	editui.down('form').loadRecord(newRecord);
-		this.refreshAll();
     },
-	//Ñ¡ÔñÁĞ±í·µ»ØÖµ
+	//é€‰æ‹©åˆ—è¡¨è¿”å›å€¼
 	selectParent: function(button){
 
 		var win=button.up('window');
 		var grid=win.down('gridpanel');
 		var records=grid.getSelectionModel().getSelection() ;
 									
-		//setValue(records[0].get('name'));//µÚÒ»ÌõÑ¡ÖĞ¼ÇÂ¼
+		//setValue(records[0].get('name'));//ç¬¬ä¸€æ¡é€‰ä¸­è®°å½•
 		//console.log(records[0].get('name'));
 		var edit=this.getDepartmentedit();
-		var parentField=edit.down('form').down('selectorfield[name=parentId]');//²éÕÒ±à¼­½çÃæµÄÉÏ¼¶²¿ÃÅ¿Ø¼ş
-		parentField.record=records[0];//±£´æÑ¡Ôñ¶ÔÏó
-		parentField.setValue(records[0].get(parentField.displayField));//ÉèÖÃÏÔÊ¾Ãû³Æ
+		var parentField=edit.down('form').down('selectorfield[name=parentId]');//æŸ¥æ‰¾ç¼–è¾‘ç•Œé¢çš„ä¸Šçº§éƒ¨é—¨æ§ä»¶
+		parentField.record=records[0];//ä¿å­˜é€‰æ‹©å¯¹è±¡
+		parentField.setValue(records[0].get(parentField.displayField));//è®¾ç½®æ˜¾ç¤ºåç§°
 		win.close();
 	},
 	cancelParent: function(button){
 		var win=button.up('window');
 		win.close();
 	},
-  //É¾³ı¼ÇÂ¼
+  //åˆ é™¤è®°å½•
     deleteRecord: function(button){
     	listPanel=this.getMaingrid();
     	sm=listPanel.getSelectionModel();
-    	if(sm.hasSelection()){//ÅĞ¶ÏÊÇ·ñÑ¡ÔñĞĞ¼ÇÂ¼
-    		//É¾³ıÑ¡ÔñµÄ¼ÇÂ¼
+    	if(sm.hasSelection()){//åˆ¤æ–­æ˜¯å¦é€‰æ‹©è¡Œè®°å½•
+    		//åˆ é™¤é€‰æ‹©çš„è®°å½•
     		records=sm.getSelection();
     		listPanel.store.remove(records);
     	}
-		this.refreshAll();
+		this.refreshTree();
     },
-	//±£´æ¼ÇÂ¼
+	//ä¿å­˜è®°å½•
 	saveRecord: function(button){
-		//È¡±à¼­½çÃæ
+		//å–ç¼–è¾‘ç•Œé¢
     	var win=this.getDepartmentedit();
-    	//È¡±íµ¥
+    	//å–è¡¨å•
     	form=win.down('form');
     	values=form.getValues();
 
-		//µ÷Õûid×Ö¶Î,±£´æµÄÊ±ºòÊÇÒª±£´æid
+		//è°ƒæ•´idå­—æ®µ,ä¿å­˜çš„æ—¶å€™æ˜¯è¦ä¿å­˜id
 		var parentField=form.down('selectorfield[name=parentId]');
 		if(parentField.record!=null){
 			values.parentId=parentField.record.get('id');
 		}
 
     	var record;
-    	if(win.uiStatus=='Modify'){//ĞŞ¸Ä¼ÇÂ¼
+    	if(win.uiStatus=='Modify'){//ä¿®æ”¹è®°å½•
     		record=form.getRecord();
     		record.set(values);
-    	}else if(win.uiStatus=='AddNew'){//ĞÂÔö¼ÇÂ¼
+    	}else if(win.uiStatus=='AddNew'){//æ–°å¢è®°å½•
     		record=Ext.create('DepartmentModel');
     		record.set(values);
     		this.getMaingrid().store.add(record);
     	}
     	
     	win.close();
-		this.refreshAll();
+		this.refreshTree();
 	},
-	//µ÷ÕûÏÔÊ¾×Ö¶Î£¬½«id×Ö¶ÎÖµÉèÖÃÎªdisplay×Ö¶ÎÖµ
+	//è°ƒæ•´æ˜¾ç¤ºå­—æ®µï¼Œå°†idå­—æ®µå€¼è®¾ç½®ä¸ºdisplayå­—æ®µå€¼
 	ajustId2Display : function(record){
-		record.set('parentId',record.get('parentDeptName'));//ÉÏ¼¶²¿ÃÅ
+		record.set('parentId',record.get('parentDeptName'));//ä¸Šçº§éƒ¨é—¨
 	},
+
 	refreshAll : function(button){
 		var treegrid=this.getDepttreegrid();
-		treegrid.store.load();//£¿£¿£¿£¿µ÷ÓÃÕâ¸ö·½·¨»á´¥·¢É¾³ı²Ù×÷£¿£¿£¿£¿
-		//Çå¿ÕgridÊı¾İ
+		treegrid.store.load();//ï¼Ÿï¼Ÿï¼Ÿï¼Ÿè°ƒç”¨è¿™ä¸ªæ–¹æ³•ä¼šè§¦å‘åˆ é™¤æ“ä½œï¼Ÿï¼Ÿï¼Ÿï¼Ÿ
+		//æ¸…ç©ºgridæ•°æ®
 		var gridStore=this.getMaingrid().store;
 		gridStore.clearFilter();
 		gridStore.load({params:{'whereStr':'DepartmentV.id =\'empty\''}});
 	},
 	refreshTree : function(button){
 		var treegrid=this.getDepttreegrid();
-		treegrid.store.load();//£¿£¿£¿£¿µ÷ÓÃÕâ¸ö·½·¨»á´¥·¢É¾³ı²Ù×÷£¿£¿£¿£¿
+		var selectedRecord=treegrid.getSelectionModel().getLastSelected();
+		var spath=null;
+		if(selectedRecord!=null){
+			spath=selectedRecord.getPath();
+		}
+        
+		treegrid.store.load();//ï¼Ÿï¼Ÿï¼Ÿï¼Ÿè°ƒç”¨è¿™ä¸ªæ–¹æ³•ä¼šè§¦å‘åˆ é™¤æ“ä½œï¼Ÿï¼Ÿï¼Ÿï¼Ÿ
+		//æ¢å¤ä¸Šæ¬¡é€‰æ‹©èŠ‚ç‚¹
+		if(spath!=null){
+			treegrid.selectPath(spath);
+			console.log(spath);
+		}
+		
 		
 	}
 
