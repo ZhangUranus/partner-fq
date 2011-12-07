@@ -6,6 +6,7 @@ Ext.define('SCM.model.basedata.DepartmentModel', {
     fields: [
              {name: 'id',  type: 'string'},
 			 {name: 'parentId',  type: 'string'},
+			 {name: 'parentDeptName',  type: 'string'},
              {name: 'number',   type: 'string'},
              {name: 'name', type: 'string'}
          ],

@@ -217,8 +217,10 @@ public class EntityCRUDEvent {
 			return bizError(response, "新增记录为空或者实体类型为空");
 		}
 
+		if(request.getParameter("isIgnore")!=null&&request.getParameter("isIgnore").toString().equals("true")){
+			return "success";
+		}
 		List records = getRecordsFromRequest(request);
-
 		// 循环每个记录删除
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
 		String entityName = request.getParameter("entity").toString();

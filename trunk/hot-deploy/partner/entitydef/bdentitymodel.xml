@@ -150,5 +150,18 @@ under the License.
       <prim-key field="id"/>
     </entity>
     
+     <view-entity entity-name="DepartmentListView"
+            package-name="org.ofbiz.scm.basedata"
+            title="DepartmentListView  Entity">
+      		<member-entity entity-alias="DepartmentV" entity-name="Department"></member-entity>
+            <member-entity entity-alias="ParentDepartmentV" entity-name="Department"></member-entity>
+            <alias-all entity-alias="DepartmentV" >
+			</alias-all>
+			<alias name="parentDeptName" entity-alias="ParentDepartmentV" field="name"></alias>
+			<view-link entity-alias="DepartmentV" rel-entity-alias="ParentDepartmentV" rel-optional="true">
+				<key-map field-name="parentId" rel-field-name="id"/>
+			</view-link>
+    </view-entity>
+    
     </entitymodel>
     

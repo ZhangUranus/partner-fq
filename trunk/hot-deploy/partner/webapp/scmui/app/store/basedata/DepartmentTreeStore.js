@@ -15,9 +15,7 @@ Ext.define('SCM.store.basedata.DepartmentTreeStore', {
         type: 'ajax',
 		api: {
             read: '../../scm/control/requestTreeJsonData?entity=Department',
-            create: '../../scm/control/addnewJsonData?entity=Department',
-            update: '../../scm/control/updateJsonData?entity=Department',
-            destroy: '../../scm/control/deleteJsonData?entity=Department'
+			destroy: '../../scm/control/deleteJsonData?entity=Department&isIgnore=true'//在调用,treestore的load方法时，会调用删除操作，所以忽略实际删除
         },
         reader: {
             type: 'json',
