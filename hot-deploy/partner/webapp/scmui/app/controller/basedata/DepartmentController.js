@@ -42,12 +42,12 @@ Ext.define('SCM.controller.basedata.DepartmentController', {
 	        	click: this.refreshTree
 	        },
 			//编辑界面上级部门字段选择界面确定
-			'#selectorwin button[name=btnSure]':{
+			'#departmentForm-parentId-selWin button[name=btnSure]':{
 				click: this.selectParent
 			},
 			//编辑界面上级部门字段选择界面取消
-			'#selectorwin button[name=btnCancel]':{
-				click: this.cancelParent
+			'#departmentForm-parentId-selWin button[name=btnCancel]':{
+				click: this.cancelSelWin
 			},
 			 //编辑界面保存
 	        'departmentedit button[action=save]':{
@@ -97,20 +97,27 @@ Ext.define('SCM.controller.basedata.DepartmentController', {
     },
 	//选择列表返回值
 	selectParent: function(button){
+		var edit=this.getDepartmentedit();
+		var form=edit.down('form')
+		this.selectValwin(button,'parentId',form);
+	},
+		//选择框保存公共方法
+	selectValwin:function(button,fieldName,targetForm){
+		if(Ext.isEmpty(button)||Ext.isEmpty(fieldName)||Ext.isEmpty(targetForm)){
+			return;
+		}
 
 		var win=button.up('window');
 		var grid=win.down('gridpanel');
 		var records=grid.getSelectionModel().getSelection() ;
-									
-		//setValue(records[0].get('name'));//第一条选中记录
-		//console.log(records[0].get('name'));
-		var edit=this.getDepartmentedit();
-		var parentField=edit.down('form').down('selectorfield[name=parentId]');//查找编辑界面的上级部门控件
+
+		var parentField=targetForm.down('selectorfield[name='+fieldName+']');//查找编辑界面的上级部门控件
 		parentField.displayValue=records[0].get('name');//设置显示名称
 		parentField.setValue(records[0].get('id'));//设置value值
 		win.close();
 	},
-	cancelParent: function(button){
+	//选择框取消公共方法
+	cancelSelWin:function(button){
 		var win=button.up('window');
 		win.close();
 	},
@@ -173,7 +180,7 @@ Ext.define('SCM.controller.basedata.DepartmentController', {
 		if(spath!=null){
 			
 			treegrid.getRootNode().expandChildren(true);
-			console.log(spath);
+			//console.log(spath);
 		}
 		
 		

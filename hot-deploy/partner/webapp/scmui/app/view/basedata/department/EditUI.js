@@ -23,6 +23,7 @@ Ext.define('SCM.view.basedata.department.EditUI', {
     	this.items = [
 	              {
 	                  xtype: 'form',
+					  name:'departmentForm',
 	                  bodyPadding:5,
 	                  items: [
 	                      {
@@ -52,6 +53,7 @@ Ext.define('SCM.view.basedata.department.EditUI', {
 														text: '名称'
 													}
 												],
+							  parentFormName:'departmentForm',
 	                          name : 'parentId',
 	                          fieldLabel: '上级部门'
 	                          

@@ -1,9 +1,10 @@
-//选择字段，必须覆盖storeName
+//选择字段，必须定义storeName、parentFormName、name
 Ext.define('SCM.ux.SelectorField', {
     extend: 'Ext.form.field.Trigger',
 	alias: 'widget.selectorfield',
 	storeName: undefined,
-	record:undefined,//字段对象，保存选择的model
+	parentFormName:undefined,//字段所在的form的alias名
+	selWinId:undefined,//选择框的
 	displayValue:undefined,//显示字段
 	initComponent: function() {
 		this.valueField='id';
@@ -33,7 +34,8 @@ Ext.define('SCM.ux.SelectorField', {
  					{
 						xtype: 'gridcolumn',
 						dataIndex: 'id',
-						text: 'id'
+						text: 'id',
+						hidden:true
 					},
 					{
 						xtype: 'gridcolumn',
@@ -49,59 +51,67 @@ Ext.define('SCM.ux.SelectorField', {
 	,
 	//触发选择动作
 	onTriggerClick: function(event) {
+		if(this.parentFormName== undefined||typeof(this.parentFormName)!='string'
+		 ||this.name== undefined||typeof(this.name)!='string'){
+			Ext.MessageBox.alert('','控件的name或者parentFormName属性定义有错');
+			return ;
+		}else{//构造唯一选择窗口id  formName-控件name-selWin
+			this.selWinId=this.parentFormName+'-'+this.name+'-selWin';
+		}
+
 		if(this.storeName== undefined||typeof(this.storeName)!='string'){
 			return ;
 		}
 		var gridStore=Ext.create(this.storeName);
 		var win=Ext.create('Ext.window.Window',
-		{title:'选择框',
-		 height: 383,
-		 width: 523,
-		 id:'selectorwin',//定义唯一id
-					layout: {
-						type: 'border'
-					},
-			        modal:true,
-					store:gridStore,
-					dockedItems: [
+	   {title:'选择框',
+		height: 383,
+		width: 523,
+		id:this.selWinId,//定义唯一id
+		layout: {
+		  type: 'border'
+		},
+		modal:true,
+		store:gridStore,
+		dockedItems: [
+			{
+				xtype: 'toolbar',
+				dock: 'bottom',
+				items: [
 					{
-						xtype: 'toolbar',
-						dock: 'bottom',
-						items: [
-							{
-								xtype: 'tbfill'
-							},
-							{
-								xtype: 'button',
-								name:'btnSure',
-								width: 50,
-								text: '确定'
-							},
-							{
-								xtype: 'button',
-								width: 50,
-								name:'btnCancel',
-								text: '取消'
-							},
-							{
-								xtype: 'tbspacer'
-							}
-						]
+						xtype: 'tbfill'
+					},
+					{
+						xtype: 'button',
+						name:'btnSure',
+						width: 50,
+						text: '确定'
+					},
+					{
+						xtype: 'button',
+						width: 50,
+						name:'btnCancel',
+						text: '取消'
+					},
+					{
+						xtype: 'tbspacer'
 					}
-					],
+				]
+			}
+		],
 					
-					items: [
-						{
-							xtype: 'gridpanel',
-							region: 'center',
-							store: gridStore,
-							columns: this.selectorColumns
-						}
-					]
+		items: [
+				{
+				xtype: 'gridpanel',
+				region: 'center',
+				store: gridStore,
+				columns: this.selectorColumns
+				}
+		        ]
 		});
 		gridStore.load();
 		win.show();
 
 	}
-
+	
 });

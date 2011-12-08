@@ -1,12 +1,10 @@
-//定义数据模型
-Ext.define('SCM.model.basedata.DepartmentModel', {
+//定义计量单位数据模型
+Ext.define('SCM.model.basedata.MaterialTypeModel', {
     extend: 'Ext.data.Model',
-    alias: 'DepartmentModel',
+    alias: 'MaterialTypeModel',
     //字段
     fields: [
              {name: 'id',  type: 'string'},
-			 {name: 'parentId',  type: 'string'},
-			 {name: 'parentDeptName',  type: 'string',persist:false},
              {name: 'number',   type: 'string'},
              {name: 'name', type: 'string'}
          ],

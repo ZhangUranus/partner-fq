@@ -118,7 +118,48 @@ under the License.
       <field name="address" type="description"></field>
       <prim-key field="id"/>
     </entity> 
-    
+     <!-- 物料类别实体 -->
+    <entity entity-name="TMaterialType"
+            package-name="org.ofbiz.scm.basedata"
+            title="MaterialType  Entity">
+      <field name="id" type="id-long"></field>
+      <field name="parentId" type="id-long"></field>
+      <field name="number" type="name"></field>
+      <field name="name" type="name"></field>
+      <prim-key field="id"/>
+    </entity> 
+    <!-- 物料实体 -->
+    <entity entity-name="TMaterial"
+            package-name="org.ofbiz.scm.basedata"
+            title="Material  Entity">
+      <field name="id" type="id-long"></field>
+      <field name="number" type="name"></field>
+      <field name="name" type="name"></field>
+      <field name="model" type="name"></field>
+      <field name="defaultPrice" type="floating-point"></field>
+      <field name="defaultSupplier" type="name"></field>
+      <field name="safeStock" type="floating-point"></field>
+      <field name="defaultUnitId" type="id-long"></field>
+      <field name="materialTypeId" type="id-long"></field>
+      <prim-key field="id"/>
+    </entity> 
+     <view-entity entity-name="TMaterialListView"
+            package-name="org.ofbiz.scm.basedata"
+            title="TMaterialListView  Entity">
+      		<member-entity entity-alias="TMaterialV" entity-name="TMaterial"></member-entity>
+            <member-entity entity-alias="DefaultUnitV" entity-name="Unit"></member-entity>
+            <member-entity entity-alias="TMaterialTypeV" entity-name="TMaterialType"></member-entity>
+            <alias-all entity-alias="TMaterialV" >
+			</alias-all>
+			<alias name="defaultUnitName" entity-alias="DefaultUnitV" field="name"></alias>
+			<alias name="materialTypeName" entity-alias="TMaterialTypeV" field="name"></alias>
+			<view-link entity-alias="TMaterialV" rel-entity-alias="DefaultUnitV" rel-optional="true">
+				<key-map field-name="defaultUnitId" rel-field-name="id"/>
+			</view-link>
+			<view-link entity-alias="TMaterialV" rel-entity-alias="TMaterialTypeV" rel-optional="true">
+				<key-map field-name="materialTypeId" rel-field-name="id"/>
+			</view-link>
+    </view-entity>
     <!-- BOM实体表头 -->
     <entity entity-name="MaterialBOM"
             package-name="org.ofbiz.scm.basedata"
