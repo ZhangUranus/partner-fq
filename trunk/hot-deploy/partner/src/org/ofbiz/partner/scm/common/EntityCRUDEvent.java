@@ -115,9 +115,9 @@ public class EntityCRUDEvent {
 	 * @return
 	 */
 	public static String addnewFromJson(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws Exception {
 		if (request.getParameter("records") == null || request.getParameter("entity") == null) {
-			return bizError(response, "新增记录为空或者实体类型为空");
+			throw new Exception("更新记录为空或者实体类型为空");
 		}
 
 		List records = getRecordsFromRequest(request);
@@ -148,7 +148,7 @@ public class EntityCRUDEvent {
 			try {
 				delegator.create(v);
 			} catch (GenericEntityException e) {
-				return bizError(response, "新增记录出错");
+				throw e;
 			}
 		}
 		return "success";
@@ -163,9 +163,9 @@ public class EntityCRUDEvent {
 	 * @return
 	 */
 	public static String updateFromJson(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws Exception{
 		if (request.getParameter("records") == null || request.getParameter("entity") == null) {
-			return bizError(response, "更新记录为空或者实体类型为空");
+			throw new Exception("更新记录为空或者实体类型为空");
 		}
 
 		List records = getRecordsFromRequest(request);
@@ -197,7 +197,7 @@ public class EntityCRUDEvent {
 			try {
 				delegator.store(v);
 			} catch (GenericEntityException e) {
-				return bizError(response, "更新记录出错");
+				throw e;
 			}
 		}
 		return "success";
@@ -212,9 +212,9 @@ public class EntityCRUDEvent {
 	 * @return
 	 */
 	public static String deleteFromJson(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response)throws Exception {
 		if (request.getParameter("records") == null || request.getParameter("entity") == null) {
-			return bizError(response, "新增记录为空或者实体类型为空");
+			throw new Exception("新增记录为空或者实体类型为空");
 		}
 
 		if(request.getParameter("isIgnore")!=null&&request.getParameter("isIgnore").toString().equals("true")){
@@ -244,7 +244,7 @@ public class EntityCRUDEvent {
 					try {
 						delegator.removeValue(v);
 					} catch (GenericEntityException e) {
-						return bizError(response, "删除记录出错");
+						throw e;
 					}
 					break;
 				}
