@@ -4,11 +4,30 @@ Ext.define('SCM.ux.SelectorField', {
 	alias: 'widget.selectorfield',
 	storeName: undefined,
 	record:undefined,//字段对象，保存选择的model
-	displayField:'name',//显示字段
+	displayValue:undefined,//显示字段
 	initComponent: function() {
 		this.valueField='id';
 		this.displayField='name';
 		this.callParent(arguments);
+	},
+	valueToRaw:function(value){
+		if(this.displayValue!=undefined){
+			return this.displayValue;
+		}
+		return ''+Ext.value(value,'');
+	},
+
+	rawToValue:function(rawValue){
+		if(this.value!=undefined){
+			return this.value;
+		}
+		return this.rawValue;
+	},
+	getSubmitValue:function(){
+		if(this.value!=undefined){
+			return this.value;
+		}
+		return this.processRawValue(this.getRawValue());
 	},
 	selectorColumns: [//默认选择列
  					{

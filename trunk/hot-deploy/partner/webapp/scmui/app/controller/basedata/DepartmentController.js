@@ -69,8 +69,9 @@ Ext.define('SCM.controller.basedata.DepartmentController', {
     modifyRecord: function(grid, record){
         var editui=Ext.widget('departmentedit');
         editui.uiStatus='Modify';
-		this.ajustId2Display(record);
-    	editui.down('form').loadRecord(record);
+		var form=editui.down('form');
+		this.ajustId2Display(form,record);
+    	form.loadRecord(record);
     },
     //修改
     editRecord: function(button){
@@ -79,10 +80,12 @@ Ext.define('SCM.controller.basedata.DepartmentController', {
     	sm=listPanel.getSelectionModel();
     	if(sm.hasSelection()){//判断是否选择行记录
     		record=sm.getLastSelected();
-			this.ajustId2Display(record);
+			
     		var editui=Ext.widget('departmentedit');
     		editui.uiStatus='Modify';
-        	editui.down('form').loadRecord(record);
+			var form=editui.down('form');
+			this.ajustId2Display(form,record);
+			form.loadRecord(record);
     	}
     },
     //新增
@@ -103,8 +106,8 @@ Ext.define('SCM.controller.basedata.DepartmentController', {
 		//console.log(records[0].get('name'));
 		var edit=this.getDepartmentedit();
 		var parentField=edit.down('form').down('selectorfield[name=parentId]');//查找编辑界面的上级部门控件
-		parentField.record=records[0];//保存选择对象
-		parentField.setValue(records[0].get(parentField.displayField));//设置显示名称
+		parentField.displayValue=records[0].get('name');//设置显示名称
+		parentField.setValue(records[0].get('id'));//设置value值
 		win.close();
 	},
 	cancelParent: function(button){
@@ -130,12 +133,6 @@ Ext.define('SCM.controller.basedata.DepartmentController', {
     	form=win.down('form');
     	values=form.getValues();
 
-		//调整id字段,保存的时候是要保存id
-		var parentField=form.down('selectorfield[name=parentId]');
-		if(parentField.record!=null){
-			values.parentId=parentField.record.get('id');
-		}
-
     	var record;
     	if(win.uiStatus=='Modify'){//修改记录
     		record=form.getRecord();
@@ -149,9 +146,10 @@ Ext.define('SCM.controller.basedata.DepartmentController', {
     	win.close();
 		this.refreshTree();
 	},
-	//调整显示字段，将id字段值设置为display字段值
-	ajustId2Display : function(record){
-		record.set('parentId',record.get('parentDeptName'));//上级部门
+	//调整显示字段，将id字段值设置为displayValue字段值
+	ajustId2Display : function(form,record){
+		var parentField=form.down('selectorfield[name=parentId]');
+		parentField.displayValue=record.get('parentDeptName');//上级部门
 	},
 
 	refreshAll : function(button){
@@ -173,7 +171,8 @@ Ext.define('SCM.controller.basedata.DepartmentController', {
 		treegrid.store.load();//？？？？调用这个方法会触发删除操作？？？？
 		//恢复上次选择节点
 		if(spath!=null){
-			treegrid.selectPath(spath);
+			
+			treegrid.getRootNode().expandChildren(true);
 			console.log(spath);
 		}
 		
