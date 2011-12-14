@@ -115,3 +115,36 @@ Ext.define('SCM.ux.SelectorField', {
 	}
 	
 });
+	//选择框保存公共方法，设置form字段值
+	function selectValwin(button,fieldName,targetForm){
+		if(Ext.isEmpty(button)||Ext.isEmpty(fieldName)||Ext.isEmpty(targetForm)){
+			return;
+		}
+
+		var win=button.up('window');
+		var grid=win.down('gridpanel');
+		var records=grid.getSelectionModel().getSelection() ;
+
+		var tField=targetForm.down('selectorfield[name='+fieldName+']');//查找编辑界面的控件
+		tField.displayValue=records[0].get('name');//设置显示名称
+		tField.setValue(records[0].get('id'));//设置value值
+		win.close();
+	}
+    //选择框保存公共方法，根据选择的字段设置id字段和名称字段
+	function selectValIdAName(button,idProperty,displayProperty,targetRecord){
+		if(Ext.isEmpty(button)||Ext.isEmpty(idProperty)||Ext.isEmpty(displayProperty)||Ext.isEmpty(targetRecord)){
+			return;
+		}
+		var win=button.up('window');
+		var grid=win.down('gridpanel');
+		var records=grid.getSelectionModel().getSelection() ;
+		
+		targetRecord.set(displayProperty,records[0].get('name'));//设置显示名称
+		targetRecord.set(idProperty,records[0].get('id'));//设置value值
+		win.close();
+	}
+	//选择框取消公共方法
+	function cancelSelWin(button){
+		var win=button.up('window');
+		win.close();
+	}

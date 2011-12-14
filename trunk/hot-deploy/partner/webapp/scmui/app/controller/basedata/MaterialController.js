@@ -9,7 +9,7 @@ Ext.define('SCM.controller.basedata.MaterialController', {
 	stores:[
 		'basedata.MaterialTypeTreeStore',
 		'basedata.MaterialTypeStore',
-		'basedata.MaterialStore',
+		'basedata.MaterialStore'
 	],
 	refs:[
 		{ref: 'materialgrid',selector: 'materialinfomaintaince gridpanel'},
@@ -90,7 +90,7 @@ Ext.define('SCM.controller.basedata.MaterialController', {
     	sm=listPanel.getSelectionModel();
     	if(sm.hasSelection()){//判断是否选择行记录
     		record=sm.getLastSelected();
-			
+			//获取现在的记录id，通过id加载编辑页面数据
     		var editui=Ext.widget('materialedit');
     		editui.uiStatus='Modify';
 			var form=editui.down('form');

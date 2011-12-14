@@ -47,7 +47,21 @@
            <event type="java" path="org.ofbiz.partner.scm.common.EntityCRUDEvent" invoke="deleteFromJson"/>
            <response name="success" type="none"/>
        </request-map>
-    
+       <request-map uri="createWithEntry">
+           <security https="false" auth="false"/>
+           <event type="java" path="org.ofbiz.partner.scm.common.MultiEntryCRUDEvent" invoke="createEnityWithEntry"/>
+           <response name="success" type="none"/>
+       </request-map>
+       <request-map uri="updateWithEntry">
+           <security https="false" auth="false"/>
+           <event type="java" path="org.ofbiz.partner.scm.common.MultiEntryCRUDEvent" invoke="updateEnityWithEntry"/>
+           <response name="success" type="none"/>
+       </request-map>
+       <request-map uri="deleteWithEntry">
+           <security https="false" auth="false"/>
+           <event type="java" path="org.ofbiz.partner.scm.common.MultiEntryCRUDEvent" invoke="deleteEnityWithEntry"/>
+           <response name="success" type="none"/>
+       </request-map>
     <!-- end of request mappings -->
     
     <!-- View Mappings -->
