@@ -161,24 +161,83 @@ under the License.
 			</view-link>
     </view-entity>
     <!-- BOM实体表头 -->
-    <entity entity-name="MaterialBOM"
+    <entity entity-name="MaterialBom"
             package-name="org.ofbiz.scm.basedata"
-            title="MaterialBOM  Entity">
+            title="MaterialBom  Entity">
       <field name="id" type="id-long"></field>
       <field name="materialId" type="id-long"></field>
       <prim-key field="id"/>
     </entity> 
-    <!-- BOM实体表体 -->
-    <entity entity-name="MaterialBOMEntry"
+    <view-entity entity-name="MaterialBomView"
             package-name="org.ofbiz.scm.basedata"
-            title="MaterialBOMEntry  Entity">
+            title="MaterialBomView  Entity">
+      		<member-entity entity-alias="MaterialBomV" entity-name="MaterialBom"></member-entity>
+      		<member-entity entity-alias="TMaterialV" entity-name="TMaterial"></member-entity>
+            <alias-all entity-alias="MaterialBomV" ></alias-all>
+			<alias name="materialName" entity-alias="TMaterialV" field="name"></alias>			
+			<view-link entity-alias="MaterialBomV" rel-entity-alias="TMaterialV" rel-optional="true">
+				<key-map field-name="materialId" rel-field-name="id"/>
+			</view-link>
+    </view-entity>
+    <!-- BOM实体表体 -->
+    <entity entity-name="MaterialBomEntry"
+            package-name="org.ofbiz.scm.basedata"
+            title="MaterialBomEntry  Entity">
       <field name="id" type="id-long"></field>
       <field name="parentId" type="id-long"></field>
-      <field name="materialId" type="id-long"></field>
+      <field name="entryMaterialId" type="id-long"></field>
       <field name="volume" type="floating-point"></field>
-      <field name="unitId" type="id-long"></field>
+      <field name="entryUnitId" type="id-long"></field>
       <prim-key field="id"/>
     </entity>
+    <view-entity entity-name="MaterialBomEntryView"
+            package-name="org.ofbiz.scm.basedata"
+            title="MaterialBomEntryView  Entity">
+            <member-entity entity-alias="MaterialBomEntryV" entity-name="MaterialBomEntry"></member-entity>
+            <member-entity entity-alias="TEntryMaterialV" entity-name="TMaterial"></member-entity>
+            <member-entity entity-alias="UnitV" entity-name="Unit"></member-entity>  
+			<alias-all entity-alias="MaterialBomEntryV" ></alias-all>
+			<alias name="entryMaterialName" entity-alias="TEntryMaterialV" field="name"></alias>	
+			<alias name="entryUnitName" entity-alias="UnitV" field="name"></alias>
+			
+
+			<view-link entity-alias="MaterialBomEntryV" rel-entity-alias="TEntryMaterialV" rel-optional="true">
+				<key-map field-name="entryMaterialId" rel-field-name="id"/>
+			</view-link>
+			<view-link entity-alias="MaterialBomEntryV" rel-entity-alias="UnitV" rel-optional="true">
+				<key-map field-name="entryUnitId" rel-field-name="id"/>
+			</view-link>
+    </view-entity>
+    <view-entity entity-name="MaterialBomListView"
+            package-name="org.ofbiz.scm.basedata"
+            title="MaterialBomListView  Entity">
+      		<member-entity entity-alias="MaterialBomV" entity-name="MaterialBom"></member-entity>
+      		 <member-entity entity-alias="TMaterialV" entity-name="TMaterial"></member-entity>
+            <member-entity entity-alias="MaterialBomEntryV" entity-name="MaterialBomEntry"></member-entity>
+            <member-entity entity-alias="TEntryMaterialV" entity-name="TMaterial"></member-entity>
+            <member-entity entity-alias="UnitV" entity-name="Unit"></member-entity>  
+
+			<alias name="id" entity-alias="MaterialBomV" field="id"></alias>
+			<alias name="materialName" entity-alias="TMaterialV" field="name"></alias>
+			<alias name="bomMaterialNum" entity-alias="TEntryMaterialV" field="name"></alias>
+			<alias name="bomMaterialModel" entity-alias="TEntryMaterialV" field="model"></alias>
+			<alias name="volume" entity-alias="MaterialBomEntryV" field="volume"></alias>
+			<alias name="unitName" entity-alias="UnitV" field="name"></alias>
+			
+			<view-link entity-alias="MaterialBomV" rel-entity-alias="TMaterialV" rel-optional="true">
+				<key-map field-name="materialId" rel-field-name="id"/>
+			</view-link>
+			<view-link entity-alias="MaterialBomV" rel-entity-alias="MaterialBomEntryV" rel-optional="true">
+				<key-map field-name="id" rel-field-name="parentId"/>
+			</view-link>
+			<view-link entity-alias="MaterialBomEntryV" rel-entity-alias="TEntryMaterialV" rel-optional="true">
+				<key-map field-name="entryMaterialId" rel-field-name="id"/>
+			</view-link>
+			<view-link entity-alias="MaterialBomEntryV" rel-entity-alias="UnitV" rel-optional="true">
+				<key-map field-name="entryUnitId" rel-field-name="id"/>
+			</view-link>
+    </view-entity>
+     
      
     <!-- 部门实体 -->
     <entity entity-name="Department"

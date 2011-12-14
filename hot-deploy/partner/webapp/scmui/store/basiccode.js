@@ -27,3 +27,32 @@ Ext.partner.basiccode.validRenderer = function(value){
 	}else 
 		return "否"
 };
+
+/**  
+ * 用于处理提交数据  封装表头标题数据
+ */  
+function processOneEntryModel(oneEntryModel, record, entryStore) {   
+    var createAr = new Array();   
+    var updateAr = new Array();   
+    var deleteAr = new Array(); 
+	
+    var removed = entryStore.getRemovedRecords();   
+    var updated = entryStore.getUpdatedRecords();   
+    var newed = entryStore.getNewRecords();   
+    Ext.each(removed, function(record) {   
+        deleteAr.push(record.data);   
+    });   
+    Ext.each(updated, function(record) {   
+        updateAr.push(record.data);   
+    });   
+    Ext.each(newed, function(record) {   
+        createAr.push(record.data);   
+    });   
+    oneEntryModel.set('updateEntrys', updateAr);   
+    oneEntryModel.set('createEntrys', createAr);   
+    oneEntryModel.set('deleteEntrys', deleteAr);   
+    oneEntryModel.set('head', record.data);   
+
+	oneEntryModel.phantom=record.phantom;//新增，或者更新
+    return oneEntryModel;   
+}  

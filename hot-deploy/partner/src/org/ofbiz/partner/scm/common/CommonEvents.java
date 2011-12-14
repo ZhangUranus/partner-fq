@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import javolution.util.FastList;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.codehaus.jackson.map.ObjectMapper;
@@ -164,4 +165,29 @@ public class CommonEvents {
 		Debug.logInfo(jsonStr.toString(), module);
     	return jsonStr.toString();
     }
+    /**
+     * 根据request返回记录list
+     * @param request
+     * @return
+     */
+	public static List getRecordsFromRequest(HttpServletRequest request) {
+		StringBuffer jsonStr = new StringBuffer();
+		jsonStr.append("{records:");
+		jsonStr.append(request.getParameter("records").toString());
+		jsonStr.append("}");
+
+		// 获取新增记录，转换为json对象
+		JSONObject recordsObject = JSONObject.fromObject(jsonStr.toString());
+
+		Object rcsObj = recordsObject.get("records");
+
+		List records = null;
+		if (rcsObj instanceof JSONArray) {// 多记录
+			records = recordsObject.getJSONArray("records");// 获取records对象的数组
+		} else if (rcsObj instanceof JSONObject) {// 单记录
+			records = new ArrayList();
+			records.add(recordsObject.get("records"));
+		}
+		return records;
+	}
 }

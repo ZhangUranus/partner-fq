@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -120,7 +121,7 @@ public class EntityCRUDEvent {
 			throw new Exception("更新记录为空或者实体类型为空");
 		}
 
-		List records = getRecordsFromRequest(request);
+		List records = CommonEvents.getRecordsFromRequest(request);
 
 		// 循环每个记录新增
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
@@ -168,7 +169,7 @@ public class EntityCRUDEvent {
 			throw new Exception("更新记录为空或者实体类型为空");
 		}
 
-		List records = getRecordsFromRequest(request);
+		List records = CommonEvents.getRecordsFromRequest(request);
 
 		// 循环每个记录更新
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
@@ -220,7 +221,7 @@ public class EntityCRUDEvent {
 		if(request.getParameter("isIgnore")!=null&&request.getParameter("isIgnore").toString().equals("true")){
 			return "success";
 		}
-		List records = getRecordsFromRequest(request);
+		List records = CommonEvents.getRecordsFromRequest(request);
 		// 循环每个记录删除
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
 		String entityName = request.getParameter("entity").toString();
@@ -255,26 +256,7 @@ public class EntityCRUDEvent {
 		return "success";
 	}
 
-	private static List getRecordsFromRequest(HttpServletRequest request) {
-		StringBuffer jsonStr = new StringBuffer();
-		jsonStr.append("{records:");
-		jsonStr.append(request.getParameter("records").toString());
-		jsonStr.append("}");
 
-		// 获取新增记录，转换为json对象
-		JSONObject recordsObject = JSONObject.fromObject(jsonStr.toString());
-
-		Object rcsObj = recordsObject.get("records");
-
-		List records = null;
-		if (rcsObj instanceof JSONArray) {// 多记录
-			records = recordsObject.getJSONArray("records");// 获取records对象的数组
-		} else if (rcsObj instanceof JSONObject) {// 单记录
-			records = new ArrayList();
-			records.add(recordsObject.get("records"));
-		}
-		return records;
-	}
 
 	/**
 	 * 返回统一的json错误信息
@@ -356,15 +338,16 @@ public class EntityCRUDEvent {
 		String entityName = request.getParameter("entity").toString();
 		try {
 			//过滤字段，对字段做与方式过滤，obectMapper是静态变量，线程不安全
-//			if(request.getParameter("filter") != null){
-//				List<EntityCondition> conds = FastList.newInstance();
-//				List<LinkedHashMap<String, Object>> list = objectMapper.readValue(request.getParameter("filter").toString(), List.class);
-//				for (int i = 0; i < list.size(); i++){
-//					conds.add(EntityCondition.makeCondition(list.get(i).get("property").toString(),list.get(i).get("value").toString()));
-//				}
-//				condition = EntityCondition.makeCondition(conds);
-//			}
-			//处理whereStr过滤
+			if(request.getParameter("filter") != null){
+				ObjectMapper objMapper = new ObjectMapper();//新建局部变量
+				List<EntityCondition> conds = FastList.newInstance();
+				List<LinkedHashMap<String, Object>> list = objMapper.readValue(request.getParameter("filter").toString(), List.class);
+				for (int i = 0; i < list.size(); i++){
+					conds.add(EntityCondition.makeCondition(list.get(i).get("property").toString(),list.get(i).get("value").toString()));
+				}
+				condition = EntityCondition.makeCondition(conds);
+			}
+			//处理whereStr过滤，覆盖filter条件
 			if(request.getParameter("whereStr")!=null){
 				EntityCondition whrCond=EntityCondition.makeConditionWhere(request.getParameter("whereStr"));
 				List<EntityCondition> conds = FastList.newInstance();
