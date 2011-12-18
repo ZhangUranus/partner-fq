@@ -40,18 +40,26 @@ Ext.define('SCM.view.basedata.materialbom.EditUI', {
 							},
 							region: 'north',
 							items: [
+								
 								 {
 								  xtype: 'textfield',
-								  name : 'id',
-								  fieldLabel: 'id',
-								  hidden:true
+								  name : 'number',
+								  margin: 5,
+								  fieldLabel: '编码'
 								 },
 								{
 								  xtype: 'selectorfield',
 								  storeName:'SCM.store.basedata.MaterialStore',//定义数据集名称
 								  parentFormName:'materialbomform',
 								  name : 'materialId',
+								  margin: 5,
 								  fieldLabel: '物料'
+								},
+								{
+								  xtype: 'textfield',
+								  name : 'id',
+								  fieldLabel: 'id',
+								  hidden:true
 								}
 							]
 						},

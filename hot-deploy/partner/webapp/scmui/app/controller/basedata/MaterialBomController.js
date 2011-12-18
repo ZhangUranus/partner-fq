@@ -123,13 +123,25 @@ Ext.define('SCM.controller.basedata.MaterialBomController', {
 	//删除记录
 	deleteRecord: function(){
 		listPanel=this.getMaterialbomlist();
+		//清除新增标记
+		newRecords=listPanel.store.getNewRecords();
+		for(i in newRecords){
+				newRecords[i].phantom=false;
+		}
+
     	sm=listPanel.getSelectionModel();
     	if(sm.hasSelection()){//判断是否选择行记录
     		//删除选择的记录
     		records=sm.getSelection();
+			
     		listPanel.store.remove(records);
 			listPanel.store.proxy.afterRequest=function(request,success){
-				//this.refresh();
+				if(request.action=='destroy'){
+					var store = Ext.data.StoreManager.lookup('basedata.MaterialBomStore');
+					if(store!=null){
+						store.load();//刷新界面
+					}
+				}
 			};
 			listPanel.store.sync();
     	}

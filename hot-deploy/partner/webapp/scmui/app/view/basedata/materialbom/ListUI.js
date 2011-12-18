@@ -15,7 +15,12 @@ Ext.define('SCM.view.basedata.materialbom.ListUI' ,{
 
     initComponent: function() {
         var me = this;
-
+	    var groupingFeature = Ext.create('Ext.grid.feature.Grouping',{
+			groupHeaderTpl: 'BOM编码:{name}  (分录数量 {rows.length})',
+			groupByText : '用本字段分组',   
+			showGroupsText : '显示分组',    
+			startCollapsed: false //设置初始分组是否收起  
+		});
         Ext.applyIf(me, {
             items: [
                 {
@@ -32,6 +37,7 @@ Ext.define('SCM.view.basedata.materialbom.ListUI' ,{
                     title: '',
                     region: 'center',
 					store:'basedata.MaterialBomStore',
+					features: [groupingFeature],
                     columns: [
 						{
                             xtype: 'gridcolumn',
@@ -41,30 +47,41 @@ Ext.define('SCM.view.basedata.materialbom.ListUI' ,{
                         },
 						{
                             xtype: 'gridcolumn',
+                            dataIndex: 'number',
+							width:150,
+                            text: 'BOM编码'
+                        },
+						{
+                            xtype: 'gridcolumn',
                             dataIndex: 'materialName',
 							width:150,
+							groupable: false,
                             text: '物料名称'
                         },
 						{
                             xtype: 'gridcolumn',
                             dataIndex: 'bomMaterialNum',
 							width:150,
+							groupable: false,
                             text: 'BOM物料名称'
                         },
 						{
                             xtype: 'gridcolumn',
                             dataIndex: 'bomMaterialModel',
 							width:150,
+							groupable: false,
                             text: 'BOM物料规格型号'
                         },
 						{
                             xtype: 'numbercolumn',
                             dataIndex: 'volume',
+							groupable: false,
                             text: '数量'
                         },
 						{
                             xtype: 'gridcolumn',
                             dataIndex: 'unitName',
+							groupable: false,
                             text: '计量单位'
                         }
 							

@@ -5,7 +5,7 @@ Ext.define('SCM.store.basedata.MaterialBomStore', {
     alias:'MaterialBomStore',
     autoLoad: false,
     autoSync: false,
-
+	groupField: 'number',
     proxy: {
         type: 'ajax',
 		api: {
