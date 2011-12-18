@@ -165,6 +165,7 @@ under the License.
             package-name="org.ofbiz.scm.basedata"
             title="MaterialBom  Entity">
       <field name="id" type="id-long"></field>
+      <field name="number" type="name"></field>
       <field name="materialId" type="id-long"></field>
       <prim-key field="id"/>
     </entity> 
@@ -218,6 +219,7 @@ under the License.
             <member-entity entity-alias="UnitV" entity-name="Unit"></member-entity>  
 
 			<alias name="id" entity-alias="MaterialBomV" field="id"></alias>
+			<alias name="number" entity-alias="MaterialBomV" field="number"></alias>
 			<alias name="materialName" entity-alias="TMaterialV" field="name"></alias>
 			<alias name="bomMaterialNum" entity-alias="TEntryMaterialV" field="name"></alias>
 			<alias name="bomMaterialModel" entity-alias="TEntryMaterialV" field="model"></alias>

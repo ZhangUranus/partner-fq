@@ -5,8 +5,9 @@ Ext.define('SCM.model.basedata.MaterialBomEditModel', {
     //字段
     fields: [
              {name: 'id',  type: 'string'},
+			 {name: 'number',  type: 'string'},
              {name: 'materialId',   type: 'string'},
-             {name: 'materialName', type: 'string',persist:false},
+             {name: 'materialName', type: 'string',persist:false}
 			 
     ],
 
