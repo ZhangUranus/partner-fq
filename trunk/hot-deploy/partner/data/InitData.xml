@@ -20,7 +20,7 @@ under the License.
 <entity-engine-xml>
     <TSystemMenu menuId='warehouseManagement' menuName='仓库管理' menuType='0' parentId='-1' sort='1' hyperlink='' styleName='warehouse-management' display='1' description='仓库管理' />
 	<TSystemMenu menuId='purchaseManagement' menuName='采购管理' menuType='0' parentId='warehouseManagement' sort='11' hyperlink='' styleName='purchase-management' display='1' description='采购管理' />
-	<TSystemMenu menuId='purchaseBillManagement' menuName='采购单管理' menuType='1' parentId='purchaseManagement' sort='111' hyperlink='purchasebillmanagement' styleName='purchase-bill-management' display='1' description='采购单管理' />
+	<TSystemMenu menuId='purchaseBillManagement' menuName='采购单管理' menuType='1' parentId='purchaseManagement' sort='111' hyperlink='PurchaseBilllist' styleName='purchase-bill-management' display='1' description='采购单管理' />
 	<TSystemMenu menuId='purchaseWarehousing' menuName='采购入库' menuType='1' parentId='purchaseManagement' sort='112' hyperlink='purchasewarehousing' styleName='purchase-warehousing' display='1' description='采购入库' />
 	<TSystemMenu menuId='purchaseReturn' menuName='采购退货' menuType='1' parentId='purchaseManagement' sort='113' hyperlink='purchasereturn' styleName='purchase-return' display='1' description='采购退货' />
 	<TSystemMenu menuId='consignProcess' menuName='委外加工' menuType='0' parentId='warehouseManagement' sort='12' hyperlink='' styleName='consign-process' display='1' description='委外加工' />
