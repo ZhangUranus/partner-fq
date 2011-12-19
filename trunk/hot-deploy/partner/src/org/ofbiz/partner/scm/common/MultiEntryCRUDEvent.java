@@ -1,5 +1,6 @@
 package org.ofbiz.partner.scm.common;
 
+import java.sql.Timestamp;
 import java.util.Iterator;
 import java.util.List;
 
@@ -80,8 +81,12 @@ public class MultiEntryCRUDEvent {
 			// 判断字段有效性，值对象中必须存在字段才能设置该对象的值
 			// TODO 现在只判断相同名称的字段是否存在，以后是否要考虑字段类型等
 			ModelField vModelField = vModel.getField(fieldName);
-			if (vModelField != null) {
+			if (vModelField != null&&!vModelField.getType().equals("date-time")) {
 				v.set(fieldName, headRecord.get(fieldName));
+			}else if (headRecord.get(fieldName)!=null&&vModelField.getType().equals("date-time")){//时间字段的转换
+				long tsl=Long.valueOf(headRecord.get(fieldName).toString());
+				Timestamp ts=new Timestamp(tsl);
+				v.set(fieldName, ts);
 			}
 		}
 	}
