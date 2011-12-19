@@ -1,0 +1,5 @@
+單據模板功能列表：
+1.單分錄功能，增刪該查功能
+2.基本字段，表頭（id ,number 單據編碼,bizDate 業務日期,note 備註 ,status 單據狀態  ）；表體字段（id,parentId,entryStatus 分錄狀態）
+
+3.列表介面 編輯介面
