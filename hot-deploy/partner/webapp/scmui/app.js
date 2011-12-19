@@ -16,6 +16,7 @@ Ext.application({
 		'basedata.DepartmentController',
 		'basedata.MaterialController',
 		'basedata.MaterialBomController',
+		'PurchaseBill.PurchaseBillController',
         'system.SystemController'
     ],
     launch : function() {
