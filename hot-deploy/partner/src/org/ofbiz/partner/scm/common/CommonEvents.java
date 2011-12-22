@@ -23,6 +23,8 @@ import org.ofbiz.entity.GenericDelegator;
 import org.ofbiz.entity.GenericEntityException;
 import org.ofbiz.entity.GenericValue;
 import org.ofbiz.entity.condition.EntityCondition;
+import org.ofbiz.entity.condition.EntityConditionList;
+import org.ofbiz.entity.util.EntityFindOptions;
 
 /**
  * 公共事件类
@@ -47,18 +49,11 @@ public class CommonEvents {
 	 * 
 	 * */
 	public static String getUsername(HttpServletRequest request) {
-        String cookieUsername = null;
-        Cookie[] cookies = request.getCookies();
-        if (Debug.verboseOn()) Debug.logVerbose("Cookies:" + cookies, module);
-        if (cookies != null) {
-            for (Cookie cookie: cookies) {
-                if (cookie.getName().equals(usernameCookieName)) {
-                    cookieUsername = cookie.getValue();
-                    break;
-                }
-            }
-        }
-        return cookieUsername;
+		if(request.getSession().getAttribute("username") == null){
+			return "";
+		}else{
+			return request.getSession().getAttribute("username").toString();
+		}
     }
 	
 	/**
@@ -67,10 +62,11 @@ public class CommonEvents {
 	 * */
     public static void setUsername(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
+        session.setAttribute("username", request.getParameter("username"));
         String domain = UtilProperties.getPropertyValue("url.properties", "cookie.domain");
         synchronized (session) {
             if (UtilValidate.isEmpty(getUsername(request))) {
-                Cookie cookie = new Cookie(usernameCookieName, request.getParameter("USERNAME"));
+                Cookie cookie = new Cookie(usernameCookieName, request.getParameter("username"));
                 cookie.setMaxAge(60 * 60 * 24 * 365);
                 cookie.setPath("/");
                 cookie.setDomain(domain);
@@ -122,15 +118,23 @@ public class CommonEvents {
 	 * flag : true ->遍历所有子节点
 	 *        false ->只查找该节点下层节点
 	 * */
-    public static String getTreeDataByParentId(GenericDelegator delegator,String parentId,boolean flag){
-    	EntityCondition condition = EntityCondition.makeCondition("parentId",parentId);		//设置查询条件
+    public static String getTreeDataByParentId(HttpServletRequest request,GenericDelegator delegator,String parentId,boolean flag){
+    	EntityConditionList<EntityCondition> condition = null;
+    	List<EntityCondition> conds = FastList.newInstance();
+    	conds.add(EntityCondition.makeCondition("parentId",parentId));
+    	conds.add(EntityCondition.makeCondition("userId",getUsername(request)));
+    	condition = EntityCondition.makeCondition(conds);
+    	
 		List<GenericValue> menuList = FastList.newInstance();
 		List<String> orders = new ArrayList<String>();
 		orders.add("sort");		//增加排序字段
 		
+		EntityFindOptions findOptions = new EntityFindOptions();
+		findOptions.setDistinct(true);
+		
 		//根据parentId从数据库中获取子节点列表
 		try {
-			menuList =  delegator.findList("TSystemMenu", condition, null, orders, null, true);
+			menuList =  delegator.findList("VSystemMenu", condition, null, orders, findOptions, true);
 		} catch (GenericEntityException e) {
 			Debug.logError("Problems with findList "+e, module);
 		}
@@ -157,7 +161,7 @@ public class CommonEvents {
 				tempObject.put("hyperlink", node.getString("hyperlink"));
 				tempObject.put("leaf", true);
 			}else if(flag){	//当节点有下级节点，而且flag值为true，遍历节点
-				tempObject.put("children", getTreeDataByParentId(delegator,node.getString("menuId"),true));
+				tempObject.put("children", getTreeDataByParentId(request,delegator,node.getString("menuId"),true));
 			}
 			jsonStr.append(tempObject.toString());
         }
