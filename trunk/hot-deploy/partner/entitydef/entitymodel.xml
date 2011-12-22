@@ -36,11 +36,27 @@ under the License.
 		<field name="description" type="long-varchar"/>
 		<prim-key field="menuId"/>
 	</entity>
+	<view-entity entity-name="VSystemMenu" package-name="org.ofbiz.partner.system">
+		<member-entity entity-alias="Menu" entity-name="TSystemMenu"/>
+		<member-entity entity-alias="User" entity-name="TSystemUser"/>
+		<member-entity entity-alias="MenuOfRole" entity-name="TSystemMenuOfRole"/>
+		<member-entity entity-alias="UserOfRole" entity-name="TSystemUserOfRole"/>
+		<alias-all entity-alias="Menu" ></alias-all>
+		<alias name="userId" entity-alias="User" field="userId"></alias>
+		<view-link entity-alias="User" rel-entity-alias="UserOfRole" rel-optional="true">
+		    <key-map field-name="userId" rel-field-name="userId"/>
+		</view-link>
+		<view-link entity-alias="UserOfRole" rel-entity-alias="MenuOfRole" rel-optional="true">
+		    <key-map field-name="roleId" rel-field-name="roleId"/>
+		</view-link>
+		<view-link entity-alias="MenuOfRole" rel-entity-alias="Menu" rel-optional="true">
+		    <key-map field-name="menuId" rel-field-name="menuId"/>
+		</view-link>
+	</view-entity>
 	<entity entity-name="TSystemUser" package-name="org.ofbiz.partner.system" title="User table">
 		<field name="id" type="id-uuid-ne"/>
 		<field name="userId" type="id-uuid-ne"/>
 		<field name="userName" type="name"/>
-		<field name="userEname" type="name"/>
 		<field name="password" type="id-long"/>
 		<field name="sex" type="indicator"/>
 		<field name="departmentId" type="id-uuid"/>
@@ -50,21 +66,28 @@ under the License.
 		<field name="valid" type="indicator"/>
 		<prim-key field="id"/>
 	</entity>
-	<view-entity entity-name="VSystemUser" package-name="org.ofbiz.partner.system">
+	<view-entity entity-name="VSystemUserTree" package-name="org.ofbiz.partner.system">
 		<member-entity entity-alias="User" entity-name="TSystemUser"/>
-		<member-entity entity-alias="Department" entity-name="Department"/>
-		<alias-all entity-alias="User" >
+		<alias name="id" entity-alias="User" field="id"></alias>
+		<alias name="name" entity-alias="User" field="userName"></alias>
+		<alias name="parentId" entity-alias="User" field="departmentId"></alias>
+		<alias name="valid" entity-alias="User" field="valid"></alias>
+	</view-entity>
+	<view-entity entity-name="VSystemUserOfRole" package-name="org.ofbiz.partner.system">
+		<member-entity entity-alias="Role" entity-name="TSystemRole"/>
+		<member-entity entity-alias="UserOfRole" entity-name="TSystemUserOfRole"/>
+		<alias-all entity-alias="Role" >
 			</alias-all>
-		<alias name="departmentName" entity-alias="Department" field="name"></alias>
-		<view-link entity-alias="User" rel-entity-alias="Department">
-		    <key-map field-name="departmentId" rel-field-name="number"/>
+		<alias name="roleId" entity-alias="UserOfRole" field="roleId"></alias>
+		<view-link entity-alias="Role" rel-entity-alias="UserOfRole" rel-optional="true">
+		    <key-map field-name="roleId" rel-field-name="roleId"/>
 		</view-link>
 	</view-entity>
 	<entity entity-name="TSystemUserOfRole" package-name="org.ofbiz.partner.system" title="User Of Role table">
+		<field name="id" type="id-uuid-ne"/>
 		<field name="userId" type="id-uuid-ne"/>
 		<field name="roleId" type="id-uuid-ne"/>
-		<prim-key field="userId"/>
-		<prim-key field="roleId"/>
+		<prim-key field="id"/>
 	</entity>
 	<entity entity-name="TSystemRole" package-name="org.ofbiz.partner.system" title="Role table">
 		<field name="roleId" type="id-uuid-ne"/>
@@ -73,11 +96,10 @@ under the License.
 		<prim-key field="roleId"/>
 	</entity>
 	<entity entity-name="TSystemMenuOfRole" package-name="org.ofbiz.partner.system" title="Menu Of Role table">
+		<field name="id" type="id-uuid-ne"/>
 		<field name="menuId" type="id-uuid-ne"/>
 		<field name="roleId" type="id-uuid-ne"/>
 		<field name="operateType" type="name"/>
-		<prim-key field="menuId"/>
-		<prim-key field="roleId"/>
-		<prim-key field="operateType"/>
+		<prim-key field="id"/>
 	</entity>
 </entitymodel>
