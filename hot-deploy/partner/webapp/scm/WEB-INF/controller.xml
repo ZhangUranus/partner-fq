@@ -11,6 +11,11 @@
         <event type="java" path="org.ofbiz.partner.scm.security.SecurityEvents" invoke="checkLogin"/>
         <response name="success" type="none" />
     </request-map>
+    <request-map uri="isLogin">
+    	<security auth="false" />
+        <event type="java" path="org.ofbiz.partner.scm.security.SecurityEvents" invoke="isLogin"/>
+        <response name="success" type="none" />
+    </request-map>
     <request-map uri="getTreeRootData">
     	<security auth="false" />
         <event type="java" path="org.ofbiz.partner.scm.security.SecurityEvents" invoke="getTreeRootData"/>
@@ -21,10 +26,21 @@
         <event type="java" path="org.ofbiz.partner.scm.security.SecurityEvents" invoke="getTreeDataByParentId"/>
         <response name="success" type="none" />
     </request-map>
+    <request-map uri="getUserTreeToJson">
+    	<security auth="false" />
+        <event type="java" path="org.ofbiz.partner.scm.security.SecurityEvents" invoke="getUserTreeToJson"/>
+        <response name="success" type="none" />
+    </request-map>
+    
     
     <request-map uri="requestJsonData">
            <security https="false" auth="false"/>
            <event type="java" path="org.ofbiz.partner.scm.common.EntityCRUDEvent" invoke="getColl2Json"/>
+           <response name="success" type="none"/>
+       </request-map>
+       <request-map uri="requestRecordJson">
+           <security https="false" auth="false"/>
+           <event type="java" path="org.ofbiz.partner.scm.common.EntityCRUDEvent" invoke="getRecordJson"/>
            <response name="success" type="none"/>
        </request-map>
        <request-map uri="requestTreeJsonData">
