@@ -1,32 +1,33 @@
 /**
- * @Purpose 角色model
+ * @Purpose 树形model类
  * @author jeff-liu
  * @Date 2011-11-26
  */
-Ext.define('SCM.model.system.RoleModel', {
-    extend: 'Ext.data.Model',
-    alias: 'RoleModel',
-    fields: [
-        {name: 'roleId',   type: 'string'},
-        {name: 'roleName',   type: 'string'}
+Ext.define('SCM.model.system.UserTreeModel', {
+    extend : 'Ext.data.Model',
+    alias:'UserTreeModel',
+    fields : [
+        {name: 'id',   type: 'string'},
+        {name: 'text',   type: 'string'},
+        {name: 'iconCls',   type: 'string'},
+        {name: 'leaf',   type: 'boolean', defaultValue: true},
+        {name: 'isUser',   type: 'boolean', defaultValue: true}
     ],
-    idProperty : 'roleId',
-    requires: ['Ext.data.UuidGenerator'],
-    idgen: 'uuid', //使用uuid生成记录id 每个模型必须要有id字段
+    
     proxy: {
         type: 'ajax',
         api: {
-            read: '../../scm/control/requestJsonData?entity=TSystemRole'
+            read: '../../scm/control/getUserTreeToJson'
         },
         reader: {
             type: 'json',
-            root: 'records',
+            root: 'children',
             successProperty: 'success',
             messageProperty: 'message'
         },
         writer: {
             type: 'json',
-            root: 'records',
+            root: 'children',
             encode: true //请求服务器时以param参数传进json数据
         },
         listeners: {
