@@ -66,6 +66,32 @@ public class EntityCRUDEvent {
 		return "success";
 		
 	}
+	
+	/**
+	 * 获取实体一条记录
+	 */
+	public static String getRecordJson(HttpServletRequest request,HttpServletResponse response)  throws Exception {
+		try {
+			List<GenericValue> valueList =getValueList(request);
+			GenericValue value = valueList.get(0);
+			String jsonStr = getJsonFromGenVal(value); // 将查询结果转换为json字符串
+			CommonEvents.writeJsonDataToExt(response, jsonStr); // 将结果返回前端Ext
+		} catch (GenericEntityException e) {
+			Debug.logError(e, module);
+			throw e;
+		} catch (JsonGenerationException e) {
+			Debug.logError(e, module);
+			throw e;
+		} catch (JsonMappingException e) {
+			Debug.logError(e, module);
+			throw e;
+		} catch (IOException e) {
+			Debug.logError(e, module);
+			throw e;
+		}
+		return "success";
+		
+	}
 
 	/**
 	 * 返回tree数据类型格式为,实体必须有下面字段： id , parentId ,name 
@@ -304,6 +330,27 @@ public class EntityCRUDEvent {
 			jsonStr.append(objectMapper.writeValueAsString(v));
 		}
 		jsonStr.append("]}");
+		return jsonStr.toString();
+	}
+	
+	/**
+	 * 根据genericValue生成json对象
+	 * 
+	 * @param valueList
+	 * @return
+	 * @throws IOException
+	 * @throws JsonMappingException
+	 * @throws JsonGenerationException
+	 */
+	private static String getJsonFromGenVal(GenericValue value) throws JsonGenerationException, JsonMappingException, IOException {
+		if (value == null ) {
+			return "{'success':true,'records':{}}";
+		}
+		// 封装实体数据，构建json字符串
+		StringBuffer jsonStr = new StringBuffer();
+		jsonStr.append("{'success':true,'records':");
+		jsonStr.append(objectMapper.writeValueAsString(value));
+		jsonStr.append("}");
 		return jsonStr.toString();
 	}
 
