@@ -1,48 +1,179 @@
 /*
- * 仓库列表界面
- * Mark
+ * 定义树形基础资料列表界面
+ * Jeff
  */
 Ext.define('SCM.view.system.user.ListUI' ,{
-    extend: 'Ext.grid.Panel',
-    alias : 'widget.usermanagement',//对应菜单link
-
+    extend: 'Ext.panel.Panel',
+    alias : 'widget.usermanagement',
+    layout: {
+        type: 'border'
+    },
     title : '用户管理',
-    
-    store: 'system.UserStore',
-    
+    border: false,
     initComponent: function() {
-        this.initColumns();
-        this.initToolBar();
-        this.callParent(arguments);
-        this.store.load();
-    },
-
-	//初始化列
-	initColumns: function(){
-    	 this.columns = [
-    	                 {header: '登录名',  dataIndex: 'userId', width:100},
-    	                 {header: '用户名',  dataIndex: 'userName', width:100},
-    	                 {header: '性别',  dataIndex: 'sex', renderer: Ext.partner.basiccode.sexRenderer, width:100},
-    	                 {header: '部门',  dataIndex: 'departmentName', width:100},
-    	                 {header: '职位',  dataIndex: 'position', width:100},
-    	                 {header: '手机号码', dataIndex: 'phoneNumber', width:120},
-    	                 {header: '邮箱', dataIndex: 'email', width:150},
-    	                 {header: '是否有效', dataIndex: 'valid', renderer: Ext.partner.basiccode.validRenderer, width:100}
-    	 ];
-    },
-    //初始化工具栏
-    initToolBar: function(){
-    	this.dockedItems=[
-    	   {xtype:'toolbar',
-    		items:[{text:'新增',cls:'x-btn-text-icon',icon:'/scmui/images/icons/add.png',action:'addNew'},
-    		       {text:'修改',cls:'x-btn-text-icon',icon:'/scmui/images/icons/edit.png',action:'modify'},
-    		       {text:'删除',cls:'x-btn-text-icon',icon:'/scmui/images/icons/delete.png',action:'delete'},
-    		       {text:'刷新',cls:'x-btn-text-icon',icon:'/scmui/images/icons/refresh.png',action:'refresh'}
-    		       ]}
-    	];
-    },
-    //初始化数据缓存，定义数据格式
-    initStore: function(){
-
+        var me = this;
+		var treeStore=Ext.create('UserTreeStore');
+        var roleStore=Ext.create('RoleStore');
+        var departmentStore=Ext.create('DepartmentStore');
+        var checkBoxModel = Ext.create('Ext.selection.CheckboxModel');
+        checkBoxModel.setSelectionMode('MULTI');
+        Ext.applyIf(me, {
+            items: [
+                {
+                    region : 'center',
+                    id:'user-form-layout',
+		            layout:'card',
+		            activeItem: 0,
+		            defaults: {border:false},
+                    items: [
+                        {
+                            id: 'form-main',
+                            html: '<h1>请选择用户！</h1>'
+		                },
+                        {
+		                    xtype: 'form',
+		                    id : 'user-form',
+		                    bodyStyle: 'background:#ffc; padding:20px;',
+		                    uiStatus:'AddNew',
+		                    modifyed:false,
+		                    dockedItems: [
+		                        {
+		                            xtype:'toolbar',
+		                            dock: 'top',
+		                            items:[
+		                                {text:'保存',cls:'x-btn-text-icon',icon:'/scmui/images/icons/save.png',action:'save'}
+		                            ]
+		                        }
+		                    ],
+		                    items: [
+		                          {
+		                              xtype: 'textfield',
+		                              name : 'id',
+		                              anchor: '80%',
+		                              fieldLabel: 'id',
+		                              hidden:true
+		                          },
+		                          {
+		                              xtype: 'textfield',
+		                              name : 'userId',
+		                              anchor: '80%',
+		                              fieldLabel: '登录名'
+		                          },
+		                          {
+		                              xtype: 'textfield',
+		                              anchor: '80%',
+		                              name : 'password',
+		                              fieldLabel: '密码',
+		                              inputType: 'password'
+		                          },
+		                          {
+		                              xtype: 'textfield',
+		                              anchor: '80%',
+		                              name : 'passwordComfirm',
+		                              fieldLabel: '确认密码',
+		                              inputType: 'password'
+		                          },
+		                          {
+		                              xtype: 'textfield',
+		                              anchor: '80%',
+		                              name : 'userName',
+		                              fieldLabel: '用户名'
+		                          },
+		                          {
+		                              xtype: 'combobox',
+		                              anchor: '80%',
+		                              name : 'sex',//定义管理的model字段
+		                              fieldLabel: '性别',
+		                              store:Ext.partner.basiccode.sexStore,
+		                              displayField:'name',//显示字段
+		                              valueField: 'id'//值字段，后台通过该字段传递
+		                          },
+		                          {
+		                              xtype: 'combobox',
+		                              anchor: '80%',
+		                              id: 'user-department-combobox',
+		                              name : 'departmentId',//定义管理的model字段
+		                              fieldLabel: '部门编码',
+		                              store:departmentStore,
+		                              displayField:'name',//显示字段
+		                              valueField: 'id'//值字段，后台通过该字段传递
+		                          },
+		                          {
+		                              xtype: 'textfield',
+		                              anchor: '80%',
+		                              name : 'position',
+		                              fieldLabel: '职位'
+		                          },
+		                          {
+		                              xtype: 'textfield',
+		                              anchor: '80%',
+		                              name : 'phoneNumber',
+		                              fieldLabel: '手机号码'
+		                          },
+		                          {
+		                              xtype: 'textfield',
+		                              anchor: '80%',
+		                              name : 'email',
+		                              fieldLabel: '邮箱'
+		                          },{
+		                              xtype: 'combobox',
+		                              anchor: '80%',
+		                              name : 'valid',//定义管理的model字段
+		                              fieldLabel: '是否有效',
+		                              store:Ext.partner.basiccode.validStore,
+		                              displayField:'name',//显示字段
+		                              valueField: 'id'//值字段，后台通过该字段传递
+		                        },{
+								    xtype: 'gridpanel',
+		                            id : 'user-grid',
+								    selModel: checkBoxModel,
+		                            store : roleStore,
+		                            anchor: '80% 30%',
+		                            layout: 'column',
+		                            inited : false,
+		                            modifyed : false,
+		                            frame: true,
+								    columns: [
+								        {
+								            xtype: 'gridcolumn',
+								            dataIndex: 'roleId',
+		                                    anchor: '50%',
+								            text: '角色编码'
+								        },
+								        {
+								            xtype: 'gridcolumn',
+								            dataIndex: 'roleName',
+		                                    anchor: '50%',
+								            text: '角色名称'
+								        }
+								    ]
+								}
+                            ]
+		                }
+                    ]
+                }
+                ,{//树结构
+                    region : 'west',
+                    xtype: 'treepanel',
+                    id : 'user-tree',
+                    width : '200',
+                    border : false,
+                    width : 212,
+                    minSize : 130,
+                    maxSize : 300,
+                    rootVisible : false,
+                    autoScroll : true,
+                    store:treeStore
+                },{
+                    xtype:'toolbar',//工具栏
+                    items:[
+                   {text:'新增',cls:'x-btn-text-icon',icon:'/scmui/images/icons/add.png',action:'addNew'},
+                   {text:'删除',cls:'x-btn-text-icon',icon:'/scmui/images/icons/delete.png',action:'delete'}],
+                    region:'north'
+                }
+            ]
+        });
+        me.callParent(arguments);
     }
+    
 });

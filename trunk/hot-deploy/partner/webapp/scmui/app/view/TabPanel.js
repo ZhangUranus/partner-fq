@@ -11,7 +11,7 @@ Ext.define('SCM.view.TabPanel', {
 				Ext.apply(this, {
 							id : 'main-content',
 							region : 'center',
-//                            hidden : true,
+                            hidden : true,
 							defaults : {
 								autoScroll : true
 							},
