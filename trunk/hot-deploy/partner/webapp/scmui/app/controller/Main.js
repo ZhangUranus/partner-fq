@@ -14,14 +14,25 @@ Ext.define('SCM.controller.Main', {
     ],
     init : function() {
         var me = this;
+        Ext.Ajax.request({//判断用户是否已经登录
+            url:'../scm/control/isLogin',
+            success : function(response , option) {
+                var result = Ext.decode(response.responseText)
+                if(result.success){
+	                Ext.getCmp('main-tree').show();
+	                Ext.getCmp('main-content').show();
+                }else{
+                    var win;
+	                if(!win){
+	                    win = Ext.create('SCM.view.Login').show();
+	                }
+                } 
+            }
+        });
         
-//        var win;
-//        if(!win){
-//            win = Ext.create('SCM.view.Login').show();
-//        }
         me.control({
             'menu':{
-                    afterrender : this.initTreePanel
+                    show : this.initTreePanel
             },
 			'tabpanel' : {
 				remove : me.closeTab
