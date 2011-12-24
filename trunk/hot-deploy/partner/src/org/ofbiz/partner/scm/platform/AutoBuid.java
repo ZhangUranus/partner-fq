@@ -35,9 +35,12 @@ public static void main(String[] args){
 	Field testfield1=new Field("myfield1", "自定义字段1");
 	Field testfield2=new Field("myfield2", "自定义字段2","date");
 	Field testfield3=new Field("myfield3", "自定义字段3","boolean");
+	Field testfield4=new Field("myfield4", "自定义字段4","entity","Unit");
 	headFields.add(testfield1.getMap());
 	headFields.add(testfield2.getMap());
 	headFields.add(testfield3.getMap());
+	headFields.add(testfield4.getMap());
+	
 	
 	final String TARGET_FOLDER="D:\\Learning\\ofbiz\\apache-ofbiz-10.04\\hot-deploy\\partner\\";
 	

@@ -11,9 +11,14 @@ Ext.define('SCM.model.${TemplateName}.${TemplateName}EditModel', {
 					return new Date(value);
 				}
 			  }
-			 #foreach($headfield in $HeadFields)//\n
-			 ,{name: '$headfield.name',type:'$headfield.type' #if($headfield.type=='date'),defaultValue:new Date(),convert: function(value, record) {return new Date(value);} #end #if($headfield.isPersis==false),persis:false #end}
-			 #end //\n
+			 #foreach($headfield in $HeadFields)
+			 #if($headfield.type!='entity')//\n
+			 ,{name: '${headfield.name}',type:'${headfield.type}' #if($headfield.type=='date'),dateFormat:'time',defaultValue:new Date(),convert: function(value, record) {return new Date(value);} #end #if($headfield.isPersis==false),persist:false #end}
+			 #else//\n
+			 ,{name: '${headfield.name}${headfield.entity}Id',type:'string'  #if($headfield.isPersis==false),persist:false #end}
+			 ,{name: '${headfield.name}${headfield.entity}Name',type:'string',persist:false }
+			 #end
+			 #end//\n
 			 ,{name: 'note',  type: 'string'}
     ],
     requires: ['Ext.data.UuidGenerator'],

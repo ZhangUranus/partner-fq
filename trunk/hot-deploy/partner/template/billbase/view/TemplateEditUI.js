@@ -55,7 +55,7 @@ Ext.define('SCM.view.${TemplateName}.EditUI', {
 								  fieldLabel: '日期'
 								}
 								#foreach($headfield in $HeadFields)
-								#if($headfield.isHidden==false)//\n
+								#if($headfield.isHidden==false&&$headfield.type!='entity')//\n
 								,{
 								  #if($headfield.type=='string')//\n
 								  xtype: 'textfield'
@@ -83,8 +83,17 @@ Ext.define('SCM.view.${TemplateName}.EditUI', {
 								  ,fieldLabel: '$headfield.alias'
 								  #end//\n
 								  ,name : '$headfield.name'
-								  ,margin: 5,
+								  ,margin: 5
 								  
+								}
+								#elseif($headfield.isHidden==false&&$headfield.type=='entity')//\n
+								,{
+								  xtype: 'selectorfield',
+								  storeName:'${headfield.entity}Store',//定义数据集名称
+								  parentFormName:'${TemplateName}form',
+								  name : '${headfield.name}${headfield.entity}Id',
+								  margin: 5,
+								  fieldLabel: '${headfield.alias}'
 								}
 								#end 
 								#end //\n

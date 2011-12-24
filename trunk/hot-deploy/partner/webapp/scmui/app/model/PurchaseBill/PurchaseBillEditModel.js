@@ -11,13 +11,16 @@ Ext.define('SCM.model.PurchaseBill.PurchaseBillEditModel', {
 					return new Date(value);
 				}
 			  }
-			 //\n
+			 			 //\n
 			 ,{name: 'myfield1',type:'string'  }
-			 //\n
-			 ,{name: 'myfield2',type:'date' ,defaultValue:new Date(),convert: function(value, record) {return new Date(value);}  }
-			 //\n
+			 			 			 //\n
+			 ,{name: 'myfield2',type:'date' ,dateFormat:'time',defaultValue:new Date(),convert: function(value, record) {return new Date(value);}  }
+			 			 			 //\n
 			 ,{name: 'myfield3',type:'boolean'  }
-			  //\n
+			 			 			 //\n
+			 ,{name: 'myfield4UnitId',type:'string'  }
+			 ,{name: 'myfield4UnitName',type:'string',persist:false }
+			 			 //\n
 			 ,{name: 'note',  type: 'string'}
     ],
     requires: ['Ext.data.UuidGenerator'],

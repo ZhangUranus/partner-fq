@@ -38,7 +38,7 @@ under the License.
       <field name="bizDate" type="date-time"></field>
       #foreach($headfield in $HeadFields)
       		#if($headfield.isPersis==true)<!-- \n -->
-	  <field name="$headfield.name" type="#if($headfield.type=='string')value#elseif($headfield.type=='int')numeric#elseif($headfield.type=='float')floating-point#elseif($headfield.type=='boolean')boolean#elseif($headfield.type=='date')date-time#end"></field>
+	  <field name="#if($headfield.type=='entity')${headfield.name}${headfield.entity}Id#else${headfield.name}#end" type="#if($headfield.type=='string')value#elseif($headfield.type=='int')numeric#elseif($headfield.type=='float')floating-point#elseif($headfield.type=='boolean')boolean#elseif($headfield.type=='date')date-time#elseif($headfield.type=='entity')id-long#end"></field>
 			#end 
 	  #end <!-- \n -->
       <field name="note" type="description"></field>
@@ -59,8 +59,25 @@ under the License.
             package-name="org.ofbiz.scm.${TemplateName}"
             title="${TemplateName}View  Entity">
       		<member-entity entity-alias="${TemplateName}V" entity-name="${TemplateName}"></member-entity>
-      		
+      		#foreach($headfield in $HeadFields)
+      		#if($headfield.isHidden==false&&$headfield.type=="entity"&&$headfield.isPersis==true)<!-- \n -->
+			<member-entity entity-alias="${headfield.entity}V" entity-name="${headfield.entity}"></member-entity>
+			#end 
+	  		#end <!-- \n -->
             <alias-all entity-alias="${TemplateName}V" ></alias-all>
+            #foreach($headfield in $HeadFields)
+      		#if($headfield.isHidden==false&&$headfield.type=="entity"&&$headfield.isPersis==true)<!-- \n -->
+			<alias name="${headfield.name}${headfield.entity}Name" entity-alias="${headfield.entity}V" field="name"></alias>	
+			#end 
+	  		#end 
+	  		
+	  		#foreach($headfield in $HeadFields)
+      		#if($headfield.isHidden==false&&$headfield.type=="entity"&&$headfield.isPersis==true)<!-- \n -->
+			<view-link entity-alias="${TemplateName}V" rel-entity-alias="${headfield.entity}V" rel-optional="true">
+				<key-map field-name="${headfield.name}${headfield.entity}Id" rel-field-name="id"/>
+			</view-link>
+			#end 
+	  		#end <!-- \n -->
     </view-entity>
 	<!--表体视图  -->
     <view-entity entity-name="${TemplateName}EntryView"
@@ -89,19 +106,28 @@ under the License.
             package-name="org.ofbiz.scm.basedata"
             title="${TemplateName}ListView  Entity">
       		<member-entity entity-alias="${TemplateName}V" entity-name="${TemplateName}"></member-entity>
-            <member-entity entity-alias="${TemplateName}EntryV" entity-name="${TemplateName}Entry"></member-entity>
-
-			<alias name="id" entity-alias="${TemplateName}V" field="id"></alias>
-			<alias name="number" entity-alias="${TemplateName}V" field="number"></alias>
-			<alias name="bizDate" entity-alias="${TemplateName}V" field="bizDate"></alias>
-			#foreach($headfield in $HeadFields)
-      		#if($headfield.isListVisible==true)
-			<alias name="$headfield.name" entity-alias="${TemplateName}V" field="$headfield.name"></alias>
+      		#foreach($headfield in $HeadFields)
+      		#if($headfield.isListVisible==true&&$headfield.type=="entity"&&$headfield.isPersis==true)<!-- \n -->
+			<member-entity entity-alias="${headfield.name}${headfield.entity}V" entity-name="${headfield.entity}"></member-entity>
 			#end 
-	  		#end 
+	  		#end <!-- \n -->
+            <member-entity entity-alias="${TemplateName}EntryV" entity-name="${TemplateName}Entry"></member-entity>
+			<alias-all entity-alias="${TemplateName}V" ></alias-all>
+			#foreach($headfield in $HeadFields)
+      		#if($headfield.isListVisible==true&&$headfield.type=="entity"&&$headfield.isPersis==true)<!-- \n -->
+			<alias name="${headfield.name}${headfield.entity}Name" entity-alias="${headfield.name}${headfield.entity}V" field="name"></alias>	
+			#end 
+	  		#end <!-- \n -->
 			<alias name="entryId" entity-alias="${TemplateName}EntryV" field="id"></alias>
 			
 		
+			#foreach($headfield in $HeadFields)
+      		#if($headfield.isListVisible==true&&$headfield.type=="entity"&&$headfield.isPersis==true)<!-- \n -->
+			<view-link entity-alias="${TemplateName}V" rel-entity-alias="${headfield.name}${headfield.entity}V" rel-optional="true">
+				<key-map field-name="${headfield.name}${headfield.entity}Id" rel-field-name="id"/>
+			</view-link>
+			#end 
+	  		#end <!-- \n -->
 			<view-link entity-alias="${TemplateName}V" rel-entity-alias="${TemplateName}EntryV" rel-optional="true">
 				<key-map field-name="id" rel-field-name="parentId"/>
 			</view-link>

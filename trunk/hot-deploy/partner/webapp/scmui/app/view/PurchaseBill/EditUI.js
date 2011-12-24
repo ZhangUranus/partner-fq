@@ -61,7 +61,7 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 								  ,fieldLabel: '自定义字段1'
 								  								  								  								  								  //\n
 								  ,name : 'myfield1'
-								  ,margin: 5,
+								  ,margin: 5
 								  
 								}
 																								//\n
@@ -72,7 +72,7 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 								  ,fieldLabel: '自定义字段2'
 								  //\n
 								  ,name : 'myfield2'
-								  ,margin: 5,
+								  ,margin: 5
 								  
 								}
 																								//\n
@@ -84,8 +84,17 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 								  ,boxLabel:'自定义字段3'
 								  								  //\n
 								  ,name : 'myfield3'
-								  ,margin: 5,
+								  ,margin: 5
 								  
+								}
+																								//\n
+								,{
+								  xtype: 'selectorfield',
+								  storeName:'UnitStore',//定义数据集名称
+								  parentFormName:'PurchaseBillform',
+								  name : 'myfield4UnitId',
+								  margin: 5,
+								  fieldLabel: '自定义字段4'
 								}
 																 //\n
 								,{

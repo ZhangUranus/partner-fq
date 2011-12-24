@@ -92,6 +92,14 @@ Ext.define('SCM.view.PurchaseBill.ListUI' ,{
 							,groupable: false
                             ,text: '自定义字段3'
                         }
+																		//\n
+						,{
+							xtype:'gridcolumn'
+							,dataIndex: 'myfield4UnitName'
+							,width:150
+							,groupable: false
+                            ,text: '自定义字段4'
+                        }
 												 //\n
 						,{
                             xtype: 'gridcolumn',
