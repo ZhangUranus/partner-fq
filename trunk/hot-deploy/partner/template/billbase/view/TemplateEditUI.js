@@ -46,21 +46,55 @@ Ext.define('SCM.view.${TemplateName}.EditUI', {
 								  name : 'number',
 								  margin: 5,
 								  fieldLabel: '编码'
-								 },
-								{
+								 }
+								,{
 								  xtype: 'datefield',
 								  name : 'bizDate',
 								  margin: 5,
 								  format:'Y-m-d',
 								  fieldLabel: '日期'
-								},
-								{
+								}
+								#foreach($headfield in $HeadFields)
+								#if($headfield.isHidden==false)//\n
+								,{
+								  #if($headfield.type=='string')//\n
+								  xtype: 'textfield'
+								  ,fieldLabel: '$headfield.alias'
+								  #end
+								  #if($headfield.type=='int')//\n
+								  xtype: 'numberfield'
+								  ,hideTrigger:true,
+								  ,fieldLabel: '$headfield.alias'
+								  #end
+								  #if($headfield.type=='float')//\n
+								  xtype: 'numberfield'
+								  ,hideTrigger:true
+								  ,fieldLabel: '$headfield.alias'
+								  #end
+								  #if($headfield.type=='boolean')//\n
+								  xtype: 'checkboxfield'
+								  ,uncheckedValue:false
+								  ,inputValue:true
+								  ,boxLabel:'$headfield.alias'
+								  #end
+								  #if($headfield.type=='date')//\n
+								  xtype: 'datefield'
+								  ,format:'Y-m-d'
+								  ,fieldLabel: '$headfield.alias'
+								  #end//\n
+								  ,name : '$headfield.name'
+								  ,margin: 5,
+								  
+								}
+								#end 
+								#end //\n
+								,{
 								  xtype: 'textareafield',
 								  name : 'note',
 								  margin: 5,
 								  fieldLabel: '备注'
-								},
-								{
+								}
+								,{
 								  xtype: 'textfield',
 								  name : 'id',
 								  fieldLabel: 'id',

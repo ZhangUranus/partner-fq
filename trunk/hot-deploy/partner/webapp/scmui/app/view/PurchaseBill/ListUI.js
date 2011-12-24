@@ -44,22 +44,56 @@ Ext.define('SCM.view.PurchaseBill.ListUI' ,{
                             dataIndex: 'id',
                             text: 'id',
 							hidden:true
-                        },
-						{
+                        }
+						,{
                             xtype: 'gridcolumn',
                             dataIndex: 'number',
 							width:150,
                             text: '编码'
-                        },
-						{
+                        }
+						,{
                             xtype: 'datecolumn',
                             dataIndex: 'bizDate',
 							width:150,
 							format : 'Y-m-d',
 							groupable: false,
                             text: '业务日期'
-                        },
-						{
+                        }
+												//\n
+						,{
+							//\n
+							xtype: 'gridcolumn'
+																																			//\n
+							,dataIndex: 'myfield1'
+							,width:150
+							,groupable: false
+                            ,text: '自定义字段1'
+                        }
+																		//\n
+						,{
+																																			//\n
+							xtype: 'datecolumn'
+							,format : 'Y-m-d'
+							//\n
+							,dataIndex: 'myfield2'
+							,width:150
+							,groupable: false
+                            ,text: '自定义字段2'
+                        }
+																		//\n
+						,{
+																												//\n
+							xtype: 'booleancolumn'
+							,trueText:'是'
+							,falseText:'否'
+														//\n
+							,dataIndex: 'myfield3'
+							,width:150
+							,groupable: false
+                            ,text: '自定义字段3'
+                        }
+												 //\n
+						,{
                             xtype: 'gridcolumn',
                             dataIndex: 'entryId',
 							width:150,
