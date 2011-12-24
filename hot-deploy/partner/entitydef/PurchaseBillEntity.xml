@@ -42,6 +42,8 @@ under the License.
 	  <field name="myfield2" type="date-time"></field>
 				        		<!-- \n -->
 	  <field name="myfield3" type="boolean"></field>
+				        		<!-- \n -->
+	  <field name="myfield4UnitId" type="id-long"></field>
 				   <!-- \n -->
       <field name="note" type="description"></field>
       <prim-key field="id"/>
@@ -61,8 +63,18 @@ under the License.
             package-name="org.ofbiz.scm.PurchaseBill"
             title="PurchaseBillView  Entity">
       		<member-entity entity-alias="PurchaseBillV" entity-name="PurchaseBill"></member-entity>
-      		
+      		      			  		      			  		      			  		      		<!-- \n -->
+			<member-entity entity-alias="UnitV" entity-name="Unit"></member-entity>
+				  		 <!-- \n -->
             <alias-all entity-alias="PurchaseBillV" ></alias-all>
+                  			  		      			  		      			  		      		<!-- \n -->
+			<alias name="myfield4UnitName" entity-alias="UnitV" field="name"></alias>	
+				  			  		
+	  		      			  		      			  		      			  		      		<!-- \n -->
+			<view-link entity-alias="PurchaseBillV" rel-entity-alias="UnitV" rel-optional="true">
+				<key-map field-name="myfield4UnitId" rel-field-name="id"/>
+			</view-link>
+				  		 <!-- \n -->
     </view-entity>
 	<!--表体视图  -->
     <view-entity entity-name="PurchaseBillEntryView"
@@ -91,17 +103,22 @@ under the License.
             package-name="org.ofbiz.scm.basedata"
             title="PurchaseBillListView  Entity">
       		<member-entity entity-alias="PurchaseBillV" entity-name="PurchaseBill"></member-entity>
+      		      			  		      			  		      			  		      		<!-- \n -->
+			<member-entity entity-alias="myfield4UnitV" entity-name="Unit"></member-entity>
+				  		 <!-- \n -->
             <member-entity entity-alias="PurchaseBillEntryV" entity-name="PurchaseBillEntry"></member-entity>
-
-			<alias name="id" entity-alias="PurchaseBillV" field="id"></alias>
-			<alias name="number" entity-alias="PurchaseBillV" field="number"></alias>
-			<alias name="bizDate" entity-alias="PurchaseBillV" field="bizDate"></alias>
-			      					<alias name="myfield1" entity-alias="PurchaseBillV" field="myfield1"></alias>
-				  		      					<alias name="myfield2" entity-alias="PurchaseBillV" field="myfield2"></alias>
-				  		      					<alias name="myfield3" entity-alias="PurchaseBillV" field="myfield3"></alias>
-				  					<alias name="entryId" entity-alias="PurchaseBillEntryV" field="id"></alias>
+			<alias-all entity-alias="PurchaseBillV" ></alias-all>
+			      			  		      			  		      			  		      		<!-- \n -->
+			<alias name="myfield4UnitName" entity-alias="myfield4UnitV" field="name"></alias>	
+				  		 <!-- \n -->
+			<alias name="entryId" entity-alias="PurchaseBillEntryV" field="id"></alias>
 			
 		
+			      			  		      			  		      			  		      		<!-- \n -->
+			<view-link entity-alias="PurchaseBillV" rel-entity-alias="myfield4UnitV" rel-optional="true">
+				<key-map field-name="myfield4UnitId" rel-field-name="id"/>
+			</view-link>
+				  		 <!-- \n -->
 			<view-link entity-alias="PurchaseBillV" rel-entity-alias="PurchaseBillEntryV" rel-optional="true">
 				<key-map field-name="id" rel-field-name="parentId"/>
 			</view-link>

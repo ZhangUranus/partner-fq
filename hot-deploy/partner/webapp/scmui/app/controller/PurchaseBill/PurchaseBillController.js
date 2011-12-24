@@ -53,6 +53,17 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 			'PurchaseBilledit button[action=save]':{
 				click: this.saveRecord
 			}
+																								//\n
+			//编辑界面自定义字段4字段选择界面确定
+			,'#PurchaseBillform-myfield4UnitId-selWin button[name=btnSure]':{
+				click: this.selectmyfield4Unit
+			}
+			//编辑界面自定义字段4字段选择界面取消
+			,'#PurchaseBillform-myfield4UnitId-selWin button[name=btnCancel]':{
+				click: cancelSelWin
+			}
+						//\n
+
 		}
 		);
     },
@@ -195,13 +206,24 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 		if(selMod!=null){
 			 return selMod.getLastSelected();
 		}
-	},
-	//调整显示字段，将id字段值设置为displayValue字段值
-	ajustId2Display : function(form,record){
+	}
+								//\n
+	//表头选择框保存
+	,selectmyfield4Unit:function(button){
+		var edit=this.getPurchaseBilledit();
+		var form=edit.down('form');
+		selectValwin(button,'myfield4UnitId',form);
+	}
+			//调整显示字段，将id字段值设置为displayValue字段值
+	,ajustId2Display : function(form,record){
 		//示例代码
 		//var material=form.down('selectorfield[name=materialId]');
 		//material.displayValue=record.get('materialName');//默认物料
+																//\n
+		var myfield4Unit=form.down('selectorfield[name=myfield4UnitId]');
+		myfield4Unit.displayValue=record.get('myfield4UnitName');
+				
 	}
-
+	
 
 });

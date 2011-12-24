@@ -38,12 +38,12 @@ under the License.
 	</entity>
 	<view-entity entity-name="VSystemMenu" package-name="org.ofbiz.partner.system">
 		<member-entity entity-alias="Menu" entity-name="TSystemMenu"/>
-		<member-entity entity-alias="User" entity-name="TSystemUser"/>
+		<member-entity entity-alias="TUser" entity-name="TSystemUser"/>
 		<member-entity entity-alias="MenuOfRole" entity-name="TSystemMenuOfRole"/>
 		<member-entity entity-alias="UserOfRole" entity-name="TSystemUserOfRole"/>
 		<alias-all entity-alias="Menu" ></alias-all>
-		<alias name="userId" entity-alias="User" field="userId"></alias>
-		<view-link entity-alias="User" rel-entity-alias="UserOfRole" rel-optional="true">
+		<alias name="userId" entity-alias="TUser" field="userId"></alias>
+		<view-link entity-alias="TUser" rel-entity-alias="UserOfRole" rel-optional="true">
 		    <key-map field-name="userId" rel-field-name="userId"/>
 		</view-link>
 		<view-link entity-alias="UserOfRole" rel-entity-alias="MenuOfRole" rel-optional="true">
@@ -67,11 +67,11 @@ under the License.
 		<prim-key field="id"/>
 	</entity>
 	<view-entity entity-name="VSystemUserTree" package-name="org.ofbiz.partner.system">
-		<member-entity entity-alias="User" entity-name="TSystemUser"/>
-		<alias name="id" entity-alias="User" field="id"></alias>
-		<alias name="name" entity-alias="User" field="userName"></alias>
-		<alias name="parentId" entity-alias="User" field="departmentId"></alias>
-		<alias name="valid" entity-alias="User" field="valid"></alias>
+		<member-entity entity-alias="TUser" entity-name="TSystemUser"/>
+		<alias name="id" entity-alias="TUser" field="id"></alias>
+		<alias name="name" entity-alias="TUser" field="userName"></alias>
+		<alias name="parentId" entity-alias="TUser" field="departmentId"></alias>
+		<alias name="valid" entity-alias="TUser" field="valid"></alias>
 	</view-entity>
 	<view-entity entity-name="VSystemUserOfRole" package-name="org.ofbiz.partner.system">
 		<member-entity entity-alias="Role" entity-name="TSystemRole"/>

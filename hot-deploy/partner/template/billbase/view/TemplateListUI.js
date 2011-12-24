@@ -60,7 +60,7 @@ Ext.define('SCM.view.${TemplateName}.ListUI' ,{
                             text: '业务日期'
                         }
 						#foreach($headfield in $HeadFields)
-						#if($headfield.isListVisible==true)//\n
+						#if($headfield.isListVisible==true&&$headfield.type!='entity')//\n
 						,{
 							#if($headfield.type=='string')//\n
 							xtype: 'gridcolumn'
@@ -81,6 +81,14 @@ Ext.define('SCM.view.${TemplateName}.ListUI' ,{
 							,format : 'Y-m-d'
 							#end//\n
 							,dataIndex: '$headfield.name'
+							,width:150
+							,groupable: false
+                            ,text: '$headfield.alias'
+                        }
+						#elseif($headfield.isListVisible==true&&$headfield.type=='entity')//\n
+						,{
+							xtype:'gridcolumn'
+							,dataIndex: '${headfield.name}${headfield.entity}Name'
 							,width:150
 							,groupable: false
                             ,text: '$headfield.alias'

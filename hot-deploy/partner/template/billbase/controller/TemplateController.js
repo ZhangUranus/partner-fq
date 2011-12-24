@@ -53,6 +53,19 @@ Ext.define('SCM.controller.${TemplateName}.${TemplateName}Controller', {
 			'${TemplateName}edit button[action=save]':{
 				click: this.saveRecord
 			}
+			#foreach($headfield in $HeadFields)
+			#if($headfield.isHidden==false&&$headfield.type=='entity')//\n
+			//编辑界面${headfield.alias}字段选择界面确定
+			,'#${TemplateName}form-${headfield.name}${headfield.entity}Id-selWin button[name=btnSure]':{
+				click: this.select${headfield.name}${headfield.entity}
+			}
+			//编辑界面${headfield.alias}字段选择界面取消
+			,'#${TemplateName}form-${headfield.name}${headfield.entity}Id-selWin button[name=btnCancel]':{
+				click: cancelSelWin
+			}
+			#end
+			#end//\n
+
 		}
 		);
     },
@@ -195,13 +208,30 @@ Ext.define('SCM.controller.${TemplateName}.${TemplateName}Controller', {
 		if(selMod!=null){
 			 return selMod.getLastSelected();
 		}
-	},
+	}
+	#foreach($headfield in $HeadFields)
+	#if($headfield.isHidden==false&&$headfield.type=='entity')//\n
+	//表头选择框保存
+	,select${headfield.name}${headfield.entity}:function(button){
+		var edit=this.get${TemplateName}edit();
+		var form=edit.down('form');
+		selectValwin(button,'${headfield.name}${headfield.entity}Id',form);
+	}
+	#end
+	#end
 	//调整显示字段，将id字段值设置为displayValue字段值
-	ajustId2Display : function(form,record){
+	,ajustId2Display : function(form,record){
 		//示例代码
 		//var material=form.down('selectorfield[name=materialId]');
 		//material.displayValue=record.get('materialName');//默认物料
-	}
+		#foreach($headfield in $HeadFields)
+		#if($headfield.isHidden==false&&$headfield.type=='entity')//\n
+		var ${headfield.name}${headfield.entity}=form.down('selectorfield[name=${headfield.name}${headfield.entity}Id]');
+		${headfield.name}${headfield.entity}.displayValue=record.get('${headfield.name}${headfield.entity}Name');
+		#end
+		#end
 
+	}
+	
 
 });

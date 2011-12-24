@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 字段类型是string,int,float,date,boolean,entity
  * 字段类，记录一个字段的配置信息
  * @author Mark
  *
@@ -28,26 +29,33 @@ public class Field {
 	//是否保存到数据库
 	private boolean isPersis=true;
 	
+	//当字段类型是entity时，该字段记录关联的实体名称
+	private String relatedEntity=null;
+	
 	private Map<String, String> propertiesMap=new HashMap<String, String>();
 	public Field(String name) {
 		super();
-		initField(name,name,"string");
+		initField(name,name,"string",null);
 	}
 
 	public Field(String name, String alias) {
 		super();
-		this.initField(name, alias, "string");
+		this.initField(name, alias, "string",null);
 	}
 
 	public Field(String name, String alias, String fieldType) {
 		super();
-		this.initField(name, alias, fieldType);
+		this.initField(name, alias, fieldType,null);
 	}
-
-	private void initField(String name, String alias, String fieldType){
+	public Field(String name, String alias, String fieldType,String relatedEntity) {
+		super();
+		this.initField(name, alias, fieldType,relatedEntity);
+	}
+	private void initField(String name, String alias, String fieldType,String relatedEntity){
 		this.name = name;
 		this.alias = alias;
 		this.fieldType=fieldType;
+		this.relatedEntity=relatedEntity;
 		propertiesMap.put("name", this.name);
 		propertiesMap.put("alias", this.alias);
 		propertiesMap.put("type", this.fieldType);
@@ -55,7 +63,7 @@ public class Field {
 		propertiesMap.put("isHidden", String.valueOf(this.isHidden));
 		propertiesMap.put("isEditable", String.valueOf(this.isEditable));
 		propertiesMap.put("isPersis", String.valueOf(this.isPersis));
-		
+		propertiesMap.put("entity", this.relatedEntity);
 	}
 	
 	public String getName() {
@@ -123,6 +131,14 @@ public class Field {
 	
 	public Map<String, String> getMap(){
 		return this.propertiesMap;
+	}
+
+	public String getRelatedEntity() {
+		return relatedEntity;
+	}
+
+	public void setRelatedEntity(String relatedEntity) {
+		this.relatedEntity = relatedEntity;
 	}
 	
 }
