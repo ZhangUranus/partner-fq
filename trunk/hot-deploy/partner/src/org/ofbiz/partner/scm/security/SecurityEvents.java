@@ -108,6 +108,16 @@ public class SecurityEvents {
 		return "success";
 	}
 	
+	public static String logout(HttpServletRequest request, HttpServletResponse response) {
+		CommonEvents.removeAttributeFromSession(request, "username");
+		try {
+			CommonEvents.writeJsonDataToExt(response, "{'success': true}");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return "success";
+	}
+	
 	/**
      * 获取用户权限字符串(Json字符串格式)
      */
