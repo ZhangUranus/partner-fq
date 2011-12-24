@@ -16,6 +16,11 @@
         <event type="java" path="org.ofbiz.partner.scm.security.SecurityEvents" invoke="isLogin"/>
         <response name="success" type="none" />
     </request-map>
+    <request-map uri="logout">
+    	<security auth="false" />
+        <event type="java" path="org.ofbiz.partner.scm.security.SecurityEvents" invoke="logout"/>
+        <response name="success" type="none" />
+    </request-map>
     <request-map uri="getTreeRootData">
     	<security auth="false" />
         <event type="java" path="org.ofbiz.partner.scm.security.SecurityEvents" invoke="getTreeRootData"/>

@@ -10,7 +10,8 @@ Ext.define('SCM.controller.Main', {
     views : ['Header', 'Menu', 'South', 'TabPanel', 'Viewport', 'WelcomeIndex', 'PageError'],
     refs : [// 增加引用
         {ref : 'menu',selector : 'menu'}, 
-        {ref : 'tabpanel',selector : 'tabpanel'}
+        {ref : 'tabpanel',selector : 'tabpanel'},
+        {ref : 'header',selector : 'header'}
     ],
     init : function() {
         var me = this;
@@ -32,11 +33,14 @@ Ext.define('SCM.controller.Main', {
         
         me.control({
             'menu':{
-                    show : this.initTreePanel
+                show : this.initTreePanel
             },
 			'tabpanel' : {
-				remove : me.closeTab
-			}
+				remove : this.closeTab
+			},
+            'header button[action=logout]' : {
+                click : this.logout
+            }
 		});
 	},
     initTreePanel: function(){//初始化功能模块
@@ -88,5 +92,13 @@ Ext.define('SCM.controller.Main', {
     },
     closeTab : function(tabPanel, tab) {// 关闭tab页
         this.getTabpanel().removeTab(tab);
+    },
+    logout : function() {//注销
+        Ext.Ajax.request({//判断用户是否已经登录
+            url:'../scm/control/logout',
+            success : function(response , option) {
+                Ext.Msg.alert("提示","你已经注销！",new Function("window.location = window.location;"));
+            }
+        });
     }
 })
