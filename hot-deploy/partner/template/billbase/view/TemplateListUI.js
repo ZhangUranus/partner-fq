@@ -44,22 +44,50 @@ Ext.define('SCM.view.${TemplateName}.ListUI' ,{
                             dataIndex: 'id',
                             text: 'id',
 							hidden:true
-                        },
-						{
+                        }
+						,{
                             xtype: 'gridcolumn',
                             dataIndex: 'number',
 							width:150,
                             text: '编码'
-                        },
-						{
+                        }
+						,{
                             xtype: 'datecolumn',
                             dataIndex: 'bizDate',
 							width:150,
 							format : 'Y-m-d',
 							groupable: false,
                             text: '业务日期'
-                        },
-						{
+                        }
+						#foreach($headfield in $HeadFields)
+						#if($headfield.isListVisible==true)//\n
+						,{
+							#if($headfield.type=='string')//\n
+							xtype: 'gridcolumn'
+							#end
+							#if($headfield.type=='int')//\n
+							xtype: 'numbercolumn'
+							#end
+							#if($headfield.type=='float')//\n
+							xtype: 'numbercolumn'
+							#end
+							#if($headfield.type=='boolean')//\n
+							xtype: 'booleancolumn'
+							,trueText:'是'
+							,falseText:'否'
+							#end
+							#if($headfield.type=='date')//\n
+							xtype: 'datecolumn'
+							,format : 'Y-m-d'
+							#end//\n
+							,dataIndex: '$headfield.name'
+							,width:150
+							,groupable: false
+                            ,text: '$headfield.alias'
+                        }
+						#end 
+						#end //\n
+						,{
                             xtype: 'gridcolumn',
                             dataIndex: 'entryId',
 							width:150,

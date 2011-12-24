@@ -81,12 +81,21 @@ public class MultiEntryCRUDEvent {
 			// 判断字段有效性，值对象中必须存在字段才能设置该对象的值
 			// TODO 现在只判断相同名称的字段是否存在，以后是否要考虑字段类型等
 			ModelField vModelField = vModel.getField(fieldName);
-			if (vModelField != null&&!vModelField.getType().equals("date-time")) {
-				v.set(fieldName, headRecord.get(fieldName));
-			}else if (headRecord.get(fieldName)!=null&&vModelField.getType().equals("date-time")){//时间字段的转换
+			if (headRecord.get(fieldName)!=null&&vModelField.getType().equals("date-time")){//时间字段的转换
 				long tsl=Long.valueOf(headRecord.get(fieldName).toString());
 				Timestamp ts=new Timestamp(tsl);
 				v.set(fieldName, ts);
+			}else if(headRecord.get(fieldName)!=null&&vModelField.getType().equals("boolean")){ 
+				//布尔值处理，客户端传来的事ture or false 转换为 整数 1 or 0
+				Boolean bv=Boolean.valueOf(headRecord.get(fieldName).toString());
+				if(bv){
+					v.set(fieldName,Integer.valueOf(1));
+				}else{
+					v.set(fieldName,Integer.valueOf(0));
+				}
+				
+			}else{
+				v.set(fieldName, headRecord.get(fieldName));
 			}
 		}
 	}

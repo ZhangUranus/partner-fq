@@ -55,12 +55,13 @@ function processOneEntryModel(oneEntryModel, record, entryStore) {
 
 	oneEntryModel.phantom=record.phantom;//新增，或者更新
     return oneEntryModel;   
-}  
+};
 
 /** 
  * 修改date对象数据的JSON提交方式 
  */  
 Ext.JSON.encodeDate = function(d) {  
-    return d.getTime();  
+	time=d.getTime();
+    return   time;
 };  
  

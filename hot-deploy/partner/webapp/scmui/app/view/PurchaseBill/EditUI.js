@@ -46,21 +46,55 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 								  name : 'number',
 								  margin: 5,
 								  fieldLabel: '编码'
-								 },
-								{
+								 }
+								,{
 								  xtype: 'datefield',
 								  name : 'bizDate',
 								  margin: 5,
 								  format:'Y-m-d',
 								  fieldLabel: '日期'
-								},
-								{
+								}
+																//\n
+								,{
+								  //\n
+								  xtype: 'textfield'
+								  ,fieldLabel: '自定义字段1'
+								  								  								  								  								  //\n
+								  ,name : 'myfield1'
+								  ,margin: 5,
+								  
+								}
+																								//\n
+								,{
+								  								  								  								  								  //\n
+								  xtype: 'datefield'
+								  ,format:'Y-m-d'
+								  ,fieldLabel: '自定义字段2'
+								  //\n
+								  ,name : 'myfield2'
+								  ,margin: 5,
+								  
+								}
+																								//\n
+								,{
+								  								  								  								  //\n
+								  xtype: 'checkboxfield'
+								  ,uncheckedValue:false
+								  ,inputValue:true
+								  ,boxLabel:'自定义字段3'
+								  								  //\n
+								  ,name : 'myfield3'
+								  ,margin: 5,
+								  
+								}
+																 //\n
+								,{
 								  xtype: 'textareafield',
 								  name : 'note',
 								  margin: 5,
 								  fieldLabel: '备注'
-								},
-								{
+								}
+								,{
 								  xtype: 'textfield',
 								  name : 'id',
 								  fieldLabel: 'id',
