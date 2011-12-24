@@ -62,7 +62,7 @@ public class CommonEvents {
 	 * */
     public static void setUsername(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
-        session.setAttribute("username", request.getParameter("username"));
+        setAttributeToSession(request, "username", request.getParameter("username"));
         String domain = UtilProperties.getPropertyValue("url.properties", "cookie.domain");
         synchronized (session) {
             if (UtilValidate.isEmpty(getUsername(request))) {
@@ -82,6 +82,16 @@ public class CommonEvents {
     public static void setAttributeToSession(HttpServletRequest request,String attributeName,String attributeValue){
     	if(!"".equals(attributeName) && !"".equals(attributeValue)){
     		request.getSession().setAttribute(attributeName, attributeValue);
+    	}
+    }
+    
+    /**
+	 * 清理Session中属性
+	 * 
+	 * */
+    public static void removeAttributeFromSession(HttpServletRequest request,String attributeName){
+    	if(!"".equals(attributeName)){
+    		request.getSession().removeAttribute(attributeName);
     	}
     }
     
