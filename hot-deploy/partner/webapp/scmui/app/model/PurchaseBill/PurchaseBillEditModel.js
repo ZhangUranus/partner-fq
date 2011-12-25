@@ -20,6 +20,8 @@ Ext.define('SCM.model.PurchaseBill.PurchaseBillEditModel', {
 			 			 			 //\n
 			 ,{name: 'myfield4UnitId',type:'string'  }
 			 ,{name: 'myfield4UnitName',type:'string',persist:false }
+			 			 			 //\n
+			 ,{name: 'myfield5',type:'int'  }
 			 			 //\n
 			 ,{name: 'note',  type: 'string'}
     ],

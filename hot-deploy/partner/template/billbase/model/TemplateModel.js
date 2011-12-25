@@ -17,6 +17,15 @@ Ext.define('SCM.model.${TemplateName}.${TemplateName}Model', {
 			 #end
 		#end //\n
 			 ,{name: 'entryId', type: 'string'}
+		#foreach($entryfield in $EntryFields)
+			 #if($entryfield.type!='entity')//\n
+			 ,{name: '${entryfield.name}',type:'$entryfield.type' #if($entryfield.type=='date'),dateFormat:'time' #end #if($entryfield.isPersis==false),persist:false #end}
+			 #else//\n
+			 ,{name: '${entryfield.name}${entryfield.entity}Id',type:'string'  #if($entryfield.isPersis==false),persist:false #end}
+			 ,{name: '${entryfield.name}${entryfield.entity}Name',type:'string' ,persist:false }
+			 #end
+		#end //\n
+
     ],
 	idProperty:'emptyId'//设置一个没用的id，这样才能支持显示多分录
 });

@@ -4,8 +4,16 @@ Ext.define('SCM.model.${TemplateName}.${TemplateName}EditEntryModel', {
     alias: '${TemplateName}EditEntryModel',
     //字段
     fields: [
-             {name: 'id',  type: 'string'},
-			 {name: 'parentId',  type: 'string'}
+             {name: 'id',  type: 'string'}
+			 ,{name: 'parentId',  type: 'string'}
+			 #foreach($entryfield in $EntryFields)
+			 #if($entryfield.type!='entity')//\n
+			 ,{name: '${entryfield.name}',type:'${entryfield.type}' #if(${entryfield.type}=='date'),dateFormat:'time',defaultValue:new Date(),convert: function(value, record) {return new Date(value);} #end #if(${entryfield.isPersis}==false),persist:false #end}
+			 #else//\n
+			 ,{name: '${entryfield.name}${entryfield.entity}Id',type:'string'  #if(${entryfield.isPersis}==false),persist:false #end}
+			 ,{name: '${entryfield.name}${entryfield.entity}Name',type:'string',persist:false }
+			 #end
+			 #end//\n
     ],
 
     requires: ['Ext.data.UuidGenerator'],

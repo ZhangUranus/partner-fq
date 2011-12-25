@@ -64,6 +64,18 @@ Ext.define('SCM.controller.${TemplateName}.${TemplateName}Controller', {
 				click: cancelSelWin
 			}
 			#end
+			#end
+			#foreach($entryfield in $EntryFields)
+			#if($entryfield.isHidden==false&&$entryfield.type=='entity')//\n
+			//编辑界面分录${entryfield.alias}字段选择界面确定
+			,'#${TemplateName}form-${entryfield.name}${entryfield.entity}Name-selWin button[name=btnSure]':{
+				click: this.select${entryfield.name}${entryfield.entity}
+			}
+			//编辑界面分录${entryfield.alias}字段选择界面取消
+			,'#${TemplateName}form-${entryfield.name}${entryfield.entity}Name-selWin button[name=btnCancel]':{
+				click: cancelSelWin
+			}
+			#end
 			#end//\n
 
 		}
@@ -219,6 +231,15 @@ Ext.define('SCM.controller.${TemplateName}.${TemplateName}Controller', {
 	}
 	#end
 	#end
+	#foreach($entryfield in $EntryFields)
+	#if($entryfield.isHidden==false&&$entryfield.type=='entity')//\n
+	//表头选择框保存
+	,select${entryfield.name}${entryfield.entity}:function(button){
+		var sr=this.getSelectedEntry();
+		selectValIdAName(button,'${entryfield.name}${entryfield.entity}Id','${entryfield.name}${entryfield.entity}Name',sr);
+	}
+	#end
+	#end//\n
 	//调整显示字段，将id字段值设置为displayValue字段值
 	,ajustId2Display : function(form,record){
 		//示例代码

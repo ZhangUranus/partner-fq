@@ -69,18 +69,7 @@ Ext.define('SCM.view.PurchaseBill.ListUI' ,{
 							,groupable: false
                             ,text: '自定义字段1'
                         }
-																		//\n
-						,{
-																																			//\n
-							xtype: 'datecolumn'
-							,format : 'Y-m-d'
-							//\n
-							,dataIndex: 'myfield2'
-							,width:150
-							,groupable: false
-                            ,text: '自定义字段2'
-                        }
-																		//\n
+																														//\n
 						,{
 																												//\n
 							xtype: 'booleancolumn'
@@ -100,6 +89,17 @@ Ext.define('SCM.view.PurchaseBill.ListUI' ,{
 							,groupable: false
                             ,text: '自定义字段4'
                         }
+																		//\n
+						,{
+														//\n
+							xtype: 'numbercolumn'
+							,format:'0'
+																												//\n
+							,dataIndex: 'myfield5'
+							,width:150
+							,groupable: false
+                            ,text: '自定义字段5'
+                        }
 												 //\n
 						,{
                             xtype: 'gridcolumn',
@@ -108,6 +108,68 @@ Ext.define('SCM.view.PurchaseBill.ListUI' ,{
 							groupable: false,
                             text: '分录id'
                         }
+												//\n
+						,{
+							//\n
+							xtype: 'gridcolumn'
+																																			//\n
+							,dataIndex: 'myentryfield1'
+							,width:150
+							,groupable: false
+                            ,text: '自定义字段1'
+                        }
+																		//\n
+						,{
+																																			//\n
+							xtype: 'datecolumn'
+							,format : 'Y-m-d'
+							//\n
+							,dataIndex: 'myentryfield2'
+							,width:150
+							,groupable: false
+                            ,text: '自定义字段2'
+                        }
+																		//\n
+						,{
+																												//\n
+							xtype: 'booleancolumn'
+							,trueText:'是'
+							,falseText:'否'
+														//\n
+							,dataIndex: 'myentryfield3'
+							,width:150
+							,groupable: false
+                            ,text: '自定义字段3'
+                        }
+																		//\n
+						,{
+							xtype:'gridcolumn'
+							,dataIndex: 'myentryfield4UnitName'
+							,width:150
+							,groupable: false
+                            ,text: '自定义字段4'
+                        }
+																		//\n
+						,{
+																					//\n
+							xtype: 'numbercolumn'
+																					//\n
+							,dataIndex: 'myentryfield5'
+							,width:150
+							,groupable: false
+                            ,text: '自定义字段5'
+                        }
+																		//\n
+						,{
+														//\n
+							xtype: 'numbercolumn'
+																												//\n
+							,dataIndex: 'myentryfield6'
+							,width:150
+							,groupable: false
+                            ,text: '自定义字段6'
+                        }
+												 //\n
 							
                     ],
                     viewConfig: {
