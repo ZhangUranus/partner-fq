@@ -62,7 +62,16 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 			,'#PurchaseBillform-myfield4UnitId-selWin button[name=btnCancel]':{
 				click: cancelSelWin
 			}
-						//\n
+																																				//\n
+			//编辑界面分录自定义字段4字段选择界面确定
+			,'#PurchaseBillform-myentryfield4UnitName-selWin button[name=btnSure]':{
+				click: this.selectmyentryfield4Unit
+			}
+			//编辑界面分录自定义字段4字段选择界面取消
+			,'#PurchaseBillform-myentryfield4UnitName-selWin button[name=btnCancel]':{
+				click: cancelSelWin
+			}
+																		//\n
 
 		}
 		);
@@ -214,7 +223,14 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 		var form=edit.down('form');
 		selectValwin(button,'myfield4UnitId',form);
 	}
-			//调整显示字段，将id字段值设置为displayValue字段值
+												//\n
+	//表头选择框保存
+	,selectmyentryfield4Unit:function(button){
+		var sr=this.getSelectedEntry();
+		selectValIdAName(button,'myentryfield4UnitId','myentryfield4UnitName',sr);
+	}
+						//\n
+	//调整显示字段，将id字段值设置为displayValue字段值
 	,ajustId2Display : function(form,record){
 		//示例代码
 		//var material=form.down('selectorfield[name=materialId]');
@@ -222,7 +238,7 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 																//\n
 		var myfield4Unit=form.down('selectorfield[name=myfield4UnitId]');
 		myfield4Unit.displayValue=record.get('myfield4UnitName');
-				
+								
 	}
 	
 

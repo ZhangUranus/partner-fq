@@ -4,8 +4,22 @@ Ext.define('SCM.model.PurchaseBill.PurchaseBillEditEntryModel', {
     alias: 'PurchaseBillEditEntryModel',
     //字段
     fields: [
-             {name: 'id',  type: 'string'},
-			 {name: 'parentId',  type: 'string'}
+             {name: 'id',  type: 'string'}
+			 ,{name: 'parentId',  type: 'string'}
+			 			 //\n
+			 ,{name: 'myentryfield1',type:'string'  }
+			 			 			 //\n
+			 ,{name: 'myentryfield2',type:'date' ,dateFormat:'time',defaultValue:new Date(),convert: function(value, record) {return new Date(value);}  }
+			 			 			 //\n
+			 ,{name: 'myentryfield3',type:'boolean'  }
+			 			 			 //\n
+			 ,{name: 'myentryfield4UnitId',type:'string'  }
+			 ,{name: 'myentryfield4UnitName',type:'string',persist:false }
+			 			 			 //\n
+			 ,{name: 'myentryfield5',type:'float'  }
+			 			 			 //\n
+			 ,{name: 'myentryfield6',type:'int'  }
+			 			 //\n
     ],
 
     requires: ['Ext.data.UuidGenerator'],

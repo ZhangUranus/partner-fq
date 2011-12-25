@@ -2,15 +2,15 @@ Ext.define('SCM.view.${TemplateName}.EditUI', {
     extend: 'Ext.window.Window',
     alias : 'widget.${TemplateName}edit',
 
-	height: 450,
-	width: 600,
+	height: 550,
+	width: 815,
     title : '${TemplateName}',
     layout: 'fit',
     autoShow: true,
     modal:true,//背景变灰，不能编辑
     uiStatus:'AddNew',
     
-	requires: ['SCM.ux.SelectorField'],
+	requires: ['SCM.ux.SelectorField','Ext.ux.CheckColumn'],
 
     initComponent: function() {
 		this.initForm();
@@ -33,9 +33,9 @@ Ext.define('SCM.view.${TemplateName}.EditUI', {
 						  items: [
 						{
 							xtype: 'container',
-							height: 120,
+							height: 200,
 							layout: {
-								columns: 2,
+								columns: 3,
 								type: 'table'
 							},
 							region: 'north',
@@ -63,7 +63,8 @@ Ext.define('SCM.view.${TemplateName}.EditUI', {
 								  #end
 								  #if($headfield.type=='int')//\n
 								  xtype: 'numberfield'
-								  ,hideTrigger:true,
+								  ,allowDecimals:false
+								  ,hideTrigger:true
 								  ,fieldLabel: '$headfield.alias'
 								  #end
 								  #if($headfield.type=='float')//\n
@@ -121,13 +122,82 @@ Ext.define('SCM.view.${TemplateName}.EditUI', {
 									dataIndex: 'id',
 									text: 'id',
 									hidden:true
-								},
-								{
+								}
+								,{
 									xtype: 'gridcolumn',
 									dataIndex: 'parentId',
 									text: 'parentId'
 
 								}
+								#foreach($entryfield in $EntryFields)
+								#if($entryfield.isHidden==false&&$entryfield.type!='entity')//\n
+								,{
+								  #if($entryfield.type=='string')//\n
+								  xtype: 'gridcolumn'
+								  ,editor: {
+											xtype: 'textfield'
+										}
+								  #end
+								  #if($entryfield.type=='int')//\n
+								  xtype: 'numbercolumn'
+								  ,format:'0'
+								  ,editor: {
+											xtype: 'numberfield'
+											,allowDecimals:false
+											,allowBlank: false
+											,hideTrigger:true
+										}
+								  #end
+								  #if($entryfield.type=='float')//\n
+								  xtype: 'numbercolumn'
+								   ,editor: {
+											xtype: 'numberfield'
+											,allowBlank: false
+											,hideTrigger:true
+										}
+								  #end
+								  #if($entryfield.type=='boolean')//\n
+								  xtype: 'checkcolumn'
+								  , editor: {
+										xtype: 'checkbox'
+										,cls: 'x-grid-checkheader-editor'
+								  }
+								  #end
+								  #if($entryfield.type=='date')//\n
+								  xtype: 'datecolumn'
+								  ,format:'Y-m-d'
+								  ,editor: {
+										xtype: 'datefield',
+										allowBlank: false,
+										format: 'Y-m-d'
+								   }
+								  #end//\n
+								  ,dataIndex:'$entryfield.name'
+								  ,text: '$entryfield.alias'
+								  
+								}
+								#elseif($entryfield.isHidden==false&&$entryfield.type=='entity')//\n
+								,{
+									xtype: 'gridcolumn'
+									,dataIndex: '${entryfield.name}${entryfield.entity}Id'
+									,text: '${entryfield.name}${entryfield.entity}Id'
+									,hidden:true
+									
+								}
+								,{
+									xtype: 'gridcolumn',
+									dataIndex: '${entryfield.name}${entryfield.entity}Name',
+									text: '$entryfield.alias',
+									editor:{
+											  xtype: 'selectorfield',
+											  storeName:'${entryfield.entity}Store',//定义数据集名称
+											  parentFormName:'${TemplateName}form',
+											  name : '${entryfield.name}${entryfield.entity}Name'
+										   }
+									
+								}
+								#end 
+								#end //\n
 							],
 							viewConfig: {
 

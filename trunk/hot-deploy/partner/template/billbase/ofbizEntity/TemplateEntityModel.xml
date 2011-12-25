@@ -51,6 +51,11 @@ under the License.
             title="${TemplateName}Entry Entity">
       <field name="id" type="id-long"></field>
       <field name="parentId" type="id-long"></field>
+      #foreach($entryfield in $EntryFields)
+      #if($entryfield.isPersis==true)<!-- \n -->
+	  <field name="#if($entryfield.type=='entity')${entryfield.name}${entryfield.entity}Id#else${entryfield.name}#end" type="#if($entryfield.type=='string')value#elseif($entryfield.type=='int')numeric#elseif($entryfield.type=='float')floating-point#elseif($entryfield.type=='boolean')boolean#elseif($entryfield.type=='date')date-time#elseif($entryfield.type=='entity')id-long#end"></field>
+	  #end 
+	  #end <!-- \n -->
       <prim-key field="id"/>
     </entity>
    
@@ -61,19 +66,19 @@ under the License.
       		<member-entity entity-alias="${TemplateName}V" entity-name="${TemplateName}"></member-entity>
       		#foreach($headfield in $HeadFields)
       		#if($headfield.isHidden==false&&$headfield.type=="entity"&&$headfield.isPersis==true)<!-- \n -->
-			<member-entity entity-alias="${headfield.entity}V" entity-name="${headfield.entity}"></member-entity>
+			<member-entity entity-alias="${headfield.name}${headfield.entity}V" entity-name="${headfield.entity}"></member-entity>
 			#end 
 	  		#end <!-- \n -->
             <alias-all entity-alias="${TemplateName}V" ></alias-all>
             #foreach($headfield in $HeadFields)
       		#if($headfield.isHidden==false&&$headfield.type=="entity"&&$headfield.isPersis==true)<!-- \n -->
-			<alias name="${headfield.name}${headfield.entity}Name" entity-alias="${headfield.entity}V" field="name"></alias>	
+			<alias name="${headfield.name}${headfield.entity}Name" entity-alias="${headfield.name}${headfield.entity}V" field="name"></alias>	
 			#end 
 	  		#end 
 	  		
 	  		#foreach($headfield in $HeadFields)
       		#if($headfield.isHidden==false&&$headfield.type=="entity"&&$headfield.isPersis==true)<!-- \n -->
-			<view-link entity-alias="${TemplateName}V" rel-entity-alias="${headfield.entity}V" rel-optional="true">
+			<view-link entity-alias="${TemplateName}V" rel-entity-alias="${headfield.name}${headfield.entity}V" rel-optional="true">
 				<key-map field-name="${headfield.name}${headfield.entity}Id" rel-field-name="id"/>
 			</view-link>
 			#end 
@@ -84,7 +89,26 @@ under the License.
             package-name="org.ofbiz.scm.${TemplateName}"
             title="${TemplateName}EntryView  Entity">
             <member-entity entity-alias="${TemplateName}EntryV" entity-name="${TemplateName}Entry"></member-entity>
+            #foreach($entryfield in $EntryFields)
+      		#if($entryfield.isHidden==false&&$entryfield.type=="entity"&&$entryfield.isPersis==true)<!-- \n -->
+			<member-entity entity-alias="${entryfield.name}${entryfield.entity}V" entity-name="${entryfield.entity}"></member-entity>
+			#end 
+	  		#end <!-- \n -->
+            
             <alias-all entity-alias="${TemplateName}EntryV" ></alias-all>
+            #foreach($entryfield in $EntryFields)
+      		#if($entryfield.isHidden==false&&$entryfield.type=="entity"&&$entryfield.isPersis==true)<!-- \n -->
+			<alias name="${entryfield.name}${entryfield.entity}Name" entity-alias="${entryfield.name}${entryfield.entity}V" field="name"></alias>	
+			#end 
+	  		#end 
+            
+            #foreach($entryfield in $EntryFields)
+      		#if($entryfield.isHidden==false&&$entryfield.type=="entity"&&$entryfield.isPersis==true)<!-- \n -->
+			<view-link entity-alias="${TemplateName}EntryV" rel-entity-alias="${entryfield.name}${entryfield.entity}V" rel-optional="true">
+				<key-map field-name="${entryfield.name}${entryfield.entity}Id" rel-field-name="id"/>
+			</view-link>
+			#end 
+	  		#end <!-- \n -->
             <!-- 实例代码
             <member-entity entity-alias="TEntryMaterialV" entity-name="TMaterial"></member-entity>
             <member-entity entity-alias="UnitV" entity-name="Unit"></member-entity>  
@@ -112,14 +136,24 @@ under the License.
 			#end 
 	  		#end <!-- \n -->
             <member-entity entity-alias="${TemplateName}EntryV" entity-name="${TemplateName}Entry"></member-entity>
+            #foreach($entryfield in $EntryFields)
+      		#if($entryfield.isHidden==false&&$entryfield.type=="entity"&&$entryfield.isPersis==true)<!-- \n -->
+			<member-entity entity-alias="${entryfield.name}${entryfield.entity}V" entity-name="${entryfield.entity}"></member-entity>
+			#end 
+	  		#end <!-- 表头字段\n -->
 			<alias-all entity-alias="${TemplateName}V" ></alias-all>
 			#foreach($headfield in $HeadFields)
       		#if($headfield.isListVisible==true&&$headfield.type=="entity"&&$headfield.isPersis==true)<!-- \n -->
 			<alias name="${headfield.name}${headfield.entity}Name" entity-alias="${headfield.name}${headfield.entity}V" field="name"></alias>	
 			#end 
-	  		#end <!-- \n -->
+	  		#end <!-- 表体字段\n -->
+	  		<alias-all entity-alias="${TemplateName}EntryV" ><exclude field="id"/></alias-all>
 			<alias name="entryId" entity-alias="${TemplateName}EntryV" field="id"></alias>
-			
+			#foreach($entryfield in $EntryFields)
+      		#if($entryfield.isHidden==false&&$entryfield.type=="entity"&&$entryfield.isPersis==true)<!-- \n -->
+			<alias name="${entryfield.name}${entryfield.entity}Name" entity-alias="${entryfield.name}${entryfield.entity}V" field="name"></alias>	
+			#end 
+	  		#end
 		
 			#foreach($headfield in $HeadFields)
       		#if($headfield.isListVisible==true&&$headfield.type=="entity"&&$headfield.isPersis==true)<!-- \n -->
@@ -131,7 +165,13 @@ under the License.
 			<view-link entity-alias="${TemplateName}V" rel-entity-alias="${TemplateName}EntryV" rel-optional="true">
 				<key-map field-name="id" rel-field-name="parentId"/>
 			</view-link>
-			
+			#foreach($entryfield in $EntryFields)
+      		#if($entryfield.isHidden==false&&$entryfield.type=="entity"&&$entryfield.isPersis==true)<!-- \n -->
+			<view-link entity-alias="${TemplateName}EntryV" rel-entity-alias="${entryfield.name}${entryfield.entity}V" rel-optional="true">
+				<key-map field-name="${entryfield.name}${entryfield.entity}Id" rel-field-name="id"/>
+			</view-link>
+			#end 
+	  		#end <!-- \n -->
     </view-entity>
      
 </entitymodel>

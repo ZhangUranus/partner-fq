@@ -67,6 +67,7 @@ Ext.define('SCM.view.${TemplateName}.ListUI' ,{
 							#end
 							#if($headfield.type=='int')//\n
 							xtype: 'numbercolumn'
+							,format:'0'
 							#end
 							#if($headfield.type=='float')//\n
 							xtype: 'numbercolumn'
@@ -102,6 +103,42 @@ Ext.define('SCM.view.${TemplateName}.ListUI' ,{
 							groupable: false,
                             text: '分录id'
                         }
+						#foreach($entryfield in $EntryFields)
+						#if($entryfield.isListVisible==true&&$entryfield.type!='entity')//\n
+						,{
+							#if($entryfield.type=='string')//\n
+							xtype: 'gridcolumn'
+							#end
+							#if($entryfield.type=='int')//\n
+							xtype: 'numbercolumn'
+							#end
+							#if($entryfield.type=='float')//\n
+							xtype: 'numbercolumn'
+							#end
+							#if($entryfield.type=='boolean')//\n
+							xtype: 'booleancolumn'
+							,trueText:'是'
+							,falseText:'否'
+							#end
+							#if($entryfield.type=='date')//\n
+							xtype: 'datecolumn'
+							,format : 'Y-m-d'
+							#end//\n
+							,dataIndex: '$entryfield.name'
+							,width:150
+							,groupable: false
+                            ,text: '$entryfield.alias'
+                        }
+						#elseif($entryfield.isListVisible==true&&$entryfield.type=='entity')//\n
+						,{
+							xtype:'gridcolumn'
+							,dataIndex: '${entryfield.name}${entryfield.entity}Name'
+							,width:150
+							,groupable: false
+                            ,text: '$entryfield.alias'
+                        }
+						#end 
+						#end //\n
 							
                     ],
                     viewConfig: {

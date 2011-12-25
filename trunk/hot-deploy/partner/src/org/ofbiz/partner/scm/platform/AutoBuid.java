@@ -30,17 +30,32 @@ public static void main(String[] args){
 	/* first, we init the runtime engine.  Defaults are fine. */
 
 	String tname="PurchaseBill";//修改这个变量生成不同的单据第一个字母一定要大写
-	//field type : int , float ,string ,date ,boolean 
+	//field type : int , float ,string ,date ,boolean ,entity
 	Vector<Map<String, String>>	headFields=new Vector<Map<String,String>>();
+	Vector<Map<String, String>>	entryFields=new Vector<Map<String,String>>();
 	Field testfield1=new Field("myfield1", "自定义字段1");
 	Field testfield2=new Field("myfield2", "自定义字段2","date");
+	testfield2.setListVisible(false);
 	Field testfield3=new Field("myfield3", "自定义字段3","boolean");
 	Field testfield4=new Field("myfield4", "自定义字段4","entity","Unit");
+	Field testfield5=new Field("myfield5", "自定义字段5","int");
 	headFields.add(testfield1.getMap());
 	headFields.add(testfield2.getMap());
 	headFields.add(testfield3.getMap());
 	headFields.add(testfield4.getMap());
-	
+	headFields.add(testfield5.getMap());
+	Field testentryfield1=new Field("myentryfield1", "自定义字段1");
+	Field testentryfield2=new Field("myentryfield2", "自定义字段2","date");
+	Field testentryfield3=new Field("myentryfield3", "自定义字段3","boolean");
+	Field testentryfield4=new Field("myentryfield4", "自定义字段4","entity","Unit");
+	Field testentryfield5=new Field("myentryfield5", "自定义字段5","float");
+	Field testentryfield6=new Field("myentryfield6", "自定义字段6","int");
+	entryFields.add(testentryfield1.getMap());
+	entryFields.add(testentryfield2.getMap());
+	entryFields.add(testentryfield3.getMap());
+	entryFields.add(testentryfield4.getMap());
+	entryFields.add(testentryfield5.getMap());
+	entryFields.add(testentryfield6.getMap());
 	
 	final String TARGET_FOLDER="D:\\Learning\\ofbiz\\apache-ofbiz-10.04\\hot-deploy\\partner\\";
 	
@@ -54,6 +69,7 @@ public static void main(String[] args){
     //设置变量
     context.put("TemplateName", tname);
     context.put("HeadFields", headFields);
+    context.put("EntryFields", entryFields);
     /* lets render a template */
 
     
