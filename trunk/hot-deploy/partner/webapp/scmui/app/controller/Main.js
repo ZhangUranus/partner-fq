@@ -84,7 +84,14 @@ Ext.define('SCM.controller.Main', {
             }),
             listeners:{
                 itemclick : function(tree,record){//在页面展示区域增加tab
-                    self.getTabpanel().addTab(record.data);
+                    Ext.Ajax.request({
+			            url:'../scm/control/getUserPermissions?menuId='+record.get("id"),
+			            success : function(response , option) {
+                            var permission = Ext.decode(response.responseText);
+                            debugger;
+			                self.getTabpanel().addTab(record.data,permission);
+			            }
+			        });
                 }
             }
         });

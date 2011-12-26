@@ -30,7 +30,7 @@ Ext.define('SCM.view.TabPanel', {
 			hasTab : function(data) {//判断系统是否已经存在tab页
 				return Ext.Array.contains(this.tabs, data.id);
 			},
-			addTab : function(data) {//增加tab页
+			addTab : function(data,permission) {//增加tab页
 				if (data.leaf) {//判断点击节点是否为叶子节点
 					if (!this.hasTab(data)) {//判断系统是否已经存在tab
 						try {
@@ -39,7 +39,8 @@ Ext.define('SCM.view.TabPanel', {
 										id : data.id,
 										title : data.text,
 										iconCls : data.iconCls,
-										closable : true
+										closable : true,
+                                        permission : permission
 									}).show();
 						} catch (e) {//异常时展现出错页面
 							this.add({
