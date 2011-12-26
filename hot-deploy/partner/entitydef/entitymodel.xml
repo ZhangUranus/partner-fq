@@ -95,6 +95,16 @@ under the License.
 		<field name="description" type="long-varchar"/>
 		<prim-key field="roleId"/>
 	</entity>
+	<view-entity entity-name="VSystemUserOfMenu" package-name="org.ofbiz.partner.system">
+		<member-entity entity-alias="UserOfRole" entity-name="TSystemUserOfRole"/>
+		<member-entity entity-alias="MenuOfRole" entity-name="TSystemMenuOfRole"/>
+		<alias name="userId" entity-alias="UserOfRole" field="userId"></alias>
+		<alias name="menuId" entity-alias="MenuOfRole" field="menuId"></alias>
+		<alias name="operateType" entity-alias="MenuOfRole" field="operateType"></alias>
+		<view-link entity-alias="UserOfRole" rel-entity-alias="MenuOfRole" rel-optional="true">
+		    <key-map field-name="roleId" rel-field-name="roleId"/>
+		</view-link>
+	</view-entity>
 	<entity entity-name="TSystemMenuOfRole" package-name="org.ofbiz.partner.system" title="Menu Of Role table">
 		<field name="id" type="id-uuid-ne"/>
 		<field name="menuId" type="id-uuid-ne"/>

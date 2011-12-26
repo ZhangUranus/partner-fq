@@ -35,13 +35,14 @@ Ext.define('SCM.view.system.user.ListUI' ,{
 		                    id : 'user-form',
 		                    bodyStyle: 'background:#ffc; padding:20px;',
 		                    uiStatus:'AddNew',
+                            inited : false,
 		                    modifyed:false,
 		                    dockedItems: [
 		                        {
 		                            xtype:'toolbar',
 		                            dock: 'top',
 		                            items:[
-		                                {text:'保存',cls:'x-btn-text-icon',icon:'/scmui/images/icons/save.png',action:'save'}
+		                                {id:'user-save',text:'保存',cls:'x-btn-text-icon',icon:'/scmui/images/icons/save.png',action:'save'}
 		                            ]
 		                        }
 		                    ],
@@ -167,8 +168,9 @@ Ext.define('SCM.view.system.user.ListUI' ,{
                 },{
                     xtype:'toolbar',//工具栏
                     items:[
-                   {text:'新增',cls:'x-btn-text-icon',icon:'/scmui/images/icons/add.png',action:'addNew'},
-                   {text:'删除',cls:'x-btn-text-icon',icon:'/scmui/images/icons/delete.png',action:'delete'}],
+	                   {id:'user-new',text:'新增',cls:'x-btn-text-icon',icon:'/scmui/images/icons/add.png',action:'addNew'},
+	                   {id:'user-delete',text:'删除',cls:'x-btn-text-icon',icon:'/scmui/images/icons/delete.png',action:'delete'}
+                    ],
                     region:'north'
                 }
             ]

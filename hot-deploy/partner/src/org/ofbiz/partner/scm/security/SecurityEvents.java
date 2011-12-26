@@ -21,6 +21,7 @@ import org.ofbiz.entity.GenericEntityException;
 import org.ofbiz.entity.GenericValue;
 import org.ofbiz.entity.condition.EntityCondition;
 import org.ofbiz.entity.condition.EntityConditionList;
+import org.ofbiz.entity.util.EntityFindOptions;
 import org.ofbiz.partner.scm.common.CommonEvents;
 import org.ofbiz.partner.scm.common.TreeNode;
 import org.ofbiz.partner.scm.common.TreeOprCommon;
@@ -121,8 +122,48 @@ public class SecurityEvents {
 	/**
      * 获取用户权限字符串(Json字符串格式)
      */
-	private static String getUserPermissions(String username) {
-		return "";
+	public static String getUserPermissions(HttpServletRequest request, HttpServletResponse response) {
+		EntityConditionList<EntityCondition> condition = null;
+    	List<EntityCondition> conds = FastList.newInstance();
+    	conds.add(EntityCondition.makeCondition("menuId",request.getParameter("menuId")));
+    	conds.add(EntityCondition.makeCondition("userId",CommonEvents.getUsername(request)));
+    	condition = EntityCondition.makeCondition(conds);
+    	List<GenericValue> permissionList = FastList.newInstance();
+    	
+    	EntityFindOptions findOptions = new EntityFindOptions();
+		findOptions.setDistinct(true);
+		
+		try {
+			permissionList =  CommonEvents.getDelegator(request).findList("VSystemUserOfMenu", condition, null, null, findOptions, false);
+		} catch (GenericEntityException e) {
+			Debug.logError("Problems with findList "+e, module);
+		}
+		
+		JSONObject tempObject = new JSONObject();
+		tempObject.put("edit", false);
+		tempObject.put("add", false);
+		tempObject.put("view", false);
+		tempObject.put("remove", false);
+		tempObject.put("audit", false);
+		for (GenericValue node: permissionList) {
+			if("V".equals(node.get("operateType"))){
+				tempObject.put("view", true);
+			}else if("E".equals(node.get("operateType"))){
+				tempObject.put("edit", true);
+			}else if("N".equals(node.get("operateType"))){
+				tempObject.put("add", true);
+			}else if("D".equals(node.get("operateType"))){
+				tempObject.put("remove", true);
+			}else{
+				tempObject.put("audit", true);
+			}
+		}
+		try {
+			CommonEvents.writeJsonDataToExt(response, tempObject.toString());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return "success";
 	}
 	
 	/**
@@ -145,8 +186,8 @@ public class SecurityEvents {
 	
 	public static String getUserTreeToJson(HttpServletRequest request, HttpServletResponse response){
 		try {
-			List<GenericValue> valueList = CommonEvents.getDelegator(request).findList("Department",null, null, null, null, true);
-			List<GenericValue> userList = CommonEvents.getDelegator(request).findList("VSystemUserTree",null, null, null, null, true);
+			List<GenericValue> valueList = CommonEvents.getDelegator(request).findList("Department",null, null, null, null, false);
+			List<GenericValue> userList = CommonEvents.getDelegator(request).findList("VSystemUserTree",null, null, null, null, false);
 			valueList.addAll(userList);			//将用户数据添加到list中
 			List<TreeNode> treeNodes = TreeOprCommon.buildTree(valueList); // 构建数节点
 			

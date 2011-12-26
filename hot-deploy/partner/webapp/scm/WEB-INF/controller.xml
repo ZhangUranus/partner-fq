@@ -36,7 +36,11 @@
         <event type="java" path="org.ofbiz.partner.scm.security.SecurityEvents" invoke="getUserTreeToJson"/>
         <response name="success" type="none" />
     </request-map>
-    
+    <request-map uri="getUserPermissions">
+    	<security auth="false" />
+        <event type="java" path="org.ofbiz.partner.scm.security.SecurityEvents" invoke="getUserPermissions"/>
+        <response name="success" type="none" />
+    </request-map>
     
     <request-map uri="requestJsonData">
            <security https="false" auth="false"/>
