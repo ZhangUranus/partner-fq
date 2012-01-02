@@ -12,7 +12,8 @@ Ext.define('SCM.controller.${TemplateName}.${TemplateName}Controller', {
 		'${TemplateName}.${TemplateName}EditEntryStore'
 	],
 	refs:[
-		{ref: '${TemplateName}list',selector: '${TemplateName}list gridpanel'},
+		{ref: '${TemplateName}list',selector: '${TemplateName}list gridpanel[region=center]'},
+		{ref: '${TemplateName}listentry',selector: '${TemplateName}list gridpanel[region=south]'},
 		{ref: '${TemplateName}edit',selector: '${TemplateName}edit'},
 		{ref: '${TemplateName}editentry',selector: '${TemplateName}edit gridpanel'}
 	],
@@ -24,9 +25,9 @@ Ext.define('SCM.controller.${TemplateName}.${TemplateName}Controller', {
 	        '${TemplateName}list button[action=addNew]':{
 	        	click: this.addNewRecord
 	        },
-			//列表双击事件
-	        '${TemplateName}list gridpanel': {
-	    		itemdblclick: this.editRecord
+			//列表选择事件，显示明细
+	        '${TemplateName}list gridpanel[region=center]': {
+	    		select: this.showDetail
 	        },
 	        //列表修改按钮
 	        '${TemplateName}list  button[action=modify]':{
@@ -121,6 +122,17 @@ Ext.define('SCM.controller.${TemplateName}.${TemplateName}Controller', {
 			});
 		}
 		
+	},
+	//显示分录信息
+	showDetail: function(me, record,index,eOpts){
+		if(record!=null&&record.get("id")!=null){
+			var entryStore=this.get${TemplateName}listentry().store;
+			if(entryStore!=null){
+				entryStore.clearFilter(true);
+				entryStore.filter([{property: "parentId", value: record.data.id}]);
+				entryStore.load();
+			}
+		}
 	},
 	//删除记录
 	deleteRecord: function(){

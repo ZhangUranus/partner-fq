@@ -126,7 +126,8 @@ Ext.define('SCM.view.${TemplateName}.EditUI', {
 								,{
 									xtype: 'gridcolumn',
 									dataIndex: 'parentId',
-									text: 'parentId'
+									text: 'parentId',
+									hidden:true
 
 								}
 								#foreach($entryfield in $EntryFields)

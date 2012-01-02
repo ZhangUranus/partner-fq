@@ -15,12 +15,8 @@ Ext.define('SCM.view.${TemplateName}.ListUI' ,{
 
     initComponent: function() {
         var me = this;
-	    var groupingFeature = Ext.create('Ext.grid.feature.Grouping',{
-			groupHeaderTpl: '单据编码:{name}  (分录数量 {rows.length})',
-			groupByText : '用本字段分组',   
-			showGroupsText : '显示分组',    
-			startCollapsed: false //设置初始分组是否收起  
-		});
+	    var entryStore=Ext.create('${TemplateName}EditEntryStore',{id:'${TemplateName}ListEntry'});
+
         Ext.applyIf(me, {
             items: [
                 {
@@ -36,10 +32,13 @@ Ext.define('SCM.view.${TemplateName}.ListUI' ,{
                     xtype: 'gridpanel',
                     title: '',
                     region: 'center',
-					store:'${TemplateName}.${TemplateName}Store',
-					features: [groupingFeature],
+					store:'${TemplateName}.${TemplateName}EditStore',
                     columns: [
 						{
+                             xtype: 'rownumberer',
+							 width: 40
+                        }
+						,{
                             xtype: 'gridcolumn',
                             dataIndex: 'id',
                             text: 'id',
@@ -96,55 +95,87 @@ Ext.define('SCM.view.${TemplateName}.ListUI' ,{
                         }
 						#end 
 						#end //\n
-						,{
-                            xtype: 'gridcolumn',
-                            dataIndex: 'entryId',
-							width:150,
-							groupable: false,
-                            text: '分录id'
-                        }
-						#foreach($entryfield in $EntryFields)
-						#if($entryfield.isListVisible==true&&$entryfield.type!='entity')//\n
-						,{
-							#if($entryfield.type=='string')//\n
-							xtype: 'gridcolumn'
-							#end
-							#if($entryfield.type=='int')//\n
-							xtype: 'numbercolumn'
-							#end
-							#if($entryfield.type=='float')//\n
-							xtype: 'numbercolumn'
-							#end
-							#if($entryfield.type=='boolean')//\n
-							xtype: 'booleancolumn'
-							,trueText:'是'
-							,falseText:'否'
-							#end
-							#if($entryfield.type=='date')//\n
-							xtype: 'datecolumn'
-							,format : 'Y-m-d'
-							#end//\n
-							,dataIndex: '$entryfield.name'
-							,width:150
-							,groupable: false
-                            ,text: '$entryfield.alias'
-                        }
-						#elseif($entryfield.isListVisible==true&&$entryfield.type=='entity')//\n
-						,{
-							xtype:'gridcolumn'
-							,dataIndex: '${entryfield.name}${entryfield.entity}Name'
-							,width:150
-							,groupable: false
-                            ,text: '$entryfield.alias'
-                        }
-						#end 
-						#end //\n
-							
+
                     ],
                     viewConfig: {
 
                     }
-                }
+                }//end gridpanel
+				,{
+                    xtype: 'gridpanel',
+                    title: '',
+                    region: 'south',
+					height:150,
+					split: true,
+					store:entryStore,
+					columns: [
+								{
+									 xtype: 'rownumberer',
+									 width: 40
+								}
+								,{
+									xtype: 'gridcolumn',
+									dataIndex: 'id',
+									text: 'id',
+									hidden:true
+								}
+								,{
+									xtype: 'gridcolumn',
+									dataIndex: 'parentId',
+									text: 'parentId',
+									hidden:true
+
+								}
+								#foreach($entryfield in $EntryFields)
+								#if($entryfield.isHidden==false&&$entryfield.type!='entity')//\n
+								,{
+								  #if($entryfield.type=='string')//\n
+								  xtype: 'gridcolumn'
+								  #end
+								  #if($entryfield.type=='int')//\n
+								  xtype: 'numbercolumn'
+								  ,format:'0'
+								  #end
+								  #if($entryfield.type=='float')//\n
+								  xtype: 'numbercolumn'
+								  #end
+								  #if($entryfield.type=='boolean')//\n
+								  xtype: 'booleancolumn'
+								  ,trueText:'是'
+								  ,falseText:'否'
+								  #end
+								  #if($entryfield.type=='date')//\n
+								  xtype: 'datecolumn'
+								  ,format:'Y-m-d'
+								  #end//\n
+								  ,dataIndex:'$entryfield.name'
+								  ,text: '$entryfield.alias'
+								  
+								}
+								#elseif($entryfield.isHidden==false&&$entryfield.type=='entity')//\n
+								,{
+									xtype: 'gridcolumn'
+									,dataIndex: '${entryfield.name}${entryfield.entity}Id'
+									,text: '${entryfield.name}${entryfield.entity}Id'
+									,hidden:true
+									
+								}
+								,{
+									xtype: 'gridcolumn',
+									dataIndex: '${entryfield.name}${entryfield.entity}Name',
+									text: '$entryfield.alias',
+									editor:{
+											  xtype: 'selectorfield',
+											  storeName:'${entryfield.entity}Store',//定义数据集名称
+											  parentFormName:'${TemplateName}form',
+											  name : '${entryfield.name}${entryfield.entity}Name'
+										   }
+									
+								}
+								#end 
+								#end //\n
+							]
+				}
             ]
         });
         me.callParent(arguments);

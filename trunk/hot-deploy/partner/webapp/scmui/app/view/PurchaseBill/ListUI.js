@@ -15,12 +15,8 @@ Ext.define('SCM.view.PurchaseBill.ListUI' ,{
 
     initComponent: function() {
         var me = this;
-	    var groupingFeature = Ext.create('Ext.grid.feature.Grouping',{
-			groupHeaderTpl: '单据编码:{name}  (分录数量 {rows.length})',
-			groupByText : '用本字段分组',   
-			showGroupsText : '显示分组',    
-			startCollapsed: false //设置初始分组是否收起  
-		});
+	    var entryStore=Ext.create('PurchaseBillEditEntryStore',{id:'PurchaseBillListEntry'});
+
         Ext.applyIf(me, {
             items: [
                 {
@@ -36,10 +32,13 @@ Ext.define('SCM.view.PurchaseBill.ListUI' ,{
                     xtype: 'gridpanel',
                     title: '',
                     region: 'center',
-					store:'PurchaseBill.PurchaseBillStore',
-					features: [groupingFeature],
+					store:'PurchaseBill.PurchaseBillEditStore',
                     columns: [
 						{
+                             xtype: 'rownumberer',
+							 width: 40
+                        }
+						,{
                             xtype: 'gridcolumn',
                             dataIndex: 'id',
                             text: 'id',
@@ -101,81 +100,109 @@ Ext.define('SCM.view.PurchaseBill.ListUI' ,{
                             ,text: '自定义字段5'
                         }
 												 //\n
-						,{
-                            xtype: 'gridcolumn',
-                            dataIndex: 'entryId',
-							width:150,
-							groupable: false,
-                            text: '分录id'
-                        }
-												//\n
-						,{
-							//\n
-							xtype: 'gridcolumn'
-																																			//\n
-							,dataIndex: 'myentryfield1'
-							,width:150
-							,groupable: false
-                            ,text: '自定义字段1'
-                        }
-																		//\n
-						,{
-																																			//\n
-							xtype: 'datecolumn'
-							,format : 'Y-m-d'
-							//\n
-							,dataIndex: 'myentryfield2'
-							,width:150
-							,groupable: false
-                            ,text: '自定义字段2'
-                        }
-																		//\n
-						,{
-																												//\n
-							xtype: 'booleancolumn'
-							,trueText:'是'
-							,falseText:'否'
-														//\n
-							,dataIndex: 'myentryfield3'
-							,width:150
-							,groupable: false
-                            ,text: '自定义字段3'
-                        }
-																		//\n
-						,{
-							xtype:'gridcolumn'
-							,dataIndex: 'myentryfield4UnitName'
-							,width:150
-							,groupable: false
-                            ,text: '自定义字段4'
-                        }
-																		//\n
-						,{
-																					//\n
-							xtype: 'numbercolumn'
-																					//\n
-							,dataIndex: 'myentryfield5'
-							,width:150
-							,groupable: false
-                            ,text: '自定义字段5'
-                        }
-																		//\n
-						,{
-														//\n
-							xtype: 'numbercolumn'
-																												//\n
-							,dataIndex: 'myentryfield6'
-							,width:150
-							,groupable: false
-                            ,text: '自定义字段6'
-                        }
-												 //\n
-							
+
                     ],
                     viewConfig: {
 
                     }
-                }
+                }//end gridpanel
+				,{
+                    xtype: 'gridpanel',
+                    title: '',
+                    region: 'south',
+					height:150,
+					split: true,
+					store:entryStore,
+					columns: [
+								{
+									 xtype: 'rownumberer',
+									 width: 40
+								}
+								,{
+									xtype: 'gridcolumn',
+									dataIndex: 'id',
+									text: 'id',
+									hidden:true
+								}
+								,{
+									xtype: 'gridcolumn',
+									dataIndex: 'parentId',
+									text: 'parentId',
+									hidden:true
+
+								}
+																//\n
+								,{
+								  //\n
+								  xtype: 'gridcolumn'
+								  								  								  								  								  //\n
+								  ,dataIndex:'myentryfield1'
+								  ,text: '自定义字段1'
+								  
+								}
+																								//\n
+								,{
+								  								  								  								  								  //\n
+								  xtype: 'datecolumn'
+								  ,format:'Y-m-d'
+								  //\n
+								  ,dataIndex:'myentryfield2'
+								  ,text: '自定义字段2'
+								  
+								}
+																								//\n
+								,{
+								  								  								  								  //\n
+								  xtype: 'booleancolumn'
+								  ,trueText:'是'
+								  ,falseText:'否'
+								  								  //\n
+								  ,dataIndex:'myentryfield3'
+								  ,text: '自定义字段3'
+								  
+								}
+																								//\n
+								,{
+									xtype: 'gridcolumn'
+									,dataIndex: 'myentryfield4UnitId'
+									,text: 'myentryfield4UnitId'
+									,hidden:true
+									
+								}
+								,{
+									xtype: 'gridcolumn',
+									dataIndex: 'myentryfield4UnitName',
+									text: '自定义字段4',
+									editor:{
+											  xtype: 'selectorfield',
+											  storeName:'UnitStore',//定义数据集名称
+											  parentFormName:'PurchaseBillform',
+											  name : 'myentryfield4UnitName'
+										   }
+									
+								}
+																								//\n
+								,{
+								  								  								  //\n
+								  xtype: 'numbercolumn'
+								  								  								  //\n
+								  ,dataIndex:'myentryfield5'
+								  ,text: '自定义字段5'
+								  
+								}
+																								//\n
+								,{
+								  								  //\n
+								  xtype: 'numbercolumn'
+								  ,format:'0'
+								  								  								  								  //\n
+								  ,dataIndex:'myentryfield6'
+								  ,text: '自定义字段6'
+								  
+								}
+																 //\n
+							]
+				}
             ]
         });
         me.callParent(arguments);
