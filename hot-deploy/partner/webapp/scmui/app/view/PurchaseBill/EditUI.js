@@ -137,7 +137,8 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 								,{
 									xtype: 'gridcolumn',
 									dataIndex: 'parentId',
-									text: 'parentId'
+									text: 'parentId',
+									hidden:true
 
 								}
 																//\n

@@ -12,7 +12,8 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 		'PurchaseBill.PurchaseBillEditEntryStore'
 	],
 	refs:[
-		{ref: 'PurchaseBilllist',selector: 'PurchaseBilllist gridpanel'},
+		{ref: 'PurchaseBilllist',selector: 'PurchaseBilllist gridpanel[region=center]'},
+		{ref: 'PurchaseBilllistentry',selector: 'PurchaseBilllist gridpanel[region=south]'},
 		{ref: 'PurchaseBilledit',selector: 'PurchaseBilledit'},
 		{ref: 'PurchaseBilleditentry',selector: 'PurchaseBilledit gridpanel'}
 	],
@@ -24,9 +25,9 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 	        'PurchaseBilllist button[action=addNew]':{
 	        	click: this.addNewRecord
 	        },
-			//列表双击事件
-	        'PurchaseBilllist gridpanel': {
-	    		itemdblclick: this.editRecord
+			//列表选择事件，显示明细
+	        'PurchaseBilllist gridpanel[region=center]': {
+	    		select: this.showDetail
 	        },
 	        //列表修改按钮
 	        'PurchaseBilllist  button[action=modify]':{
@@ -116,6 +117,17 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 			});
 		}
 		
+	},
+	//显示分录信息
+	showDetail: function(me, record,index,eOpts){
+		if(record!=null&&record.get("id")!=null){
+			var entryStore=this.getPurchaseBilllistentry().store;
+			if(entryStore!=null){
+				entryStore.clearFilter(true);
+				entryStore.filter([{property: "parentId", value: record.data.id}]);
+				entryStore.load();
+			}
+		}
 	},
 	//删除记录
 	deleteRecord: function(){

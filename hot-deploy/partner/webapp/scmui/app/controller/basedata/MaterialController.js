@@ -21,43 +21,43 @@ Ext.define('SCM.controller.basedata.MaterialController', {
 			'materialinfomaintaince treepanel':{
 				select:this.selectNode
 		     },
-			//ÁĞ±íË«»÷ÊÂ¼ş
+			//åˆ—è¡¨åŒå‡»äº‹ä»¶
 	        'materialinfomaintaince gridpanel': {
 	    		itemdblclick: this.modifyRecord
 	        },
-	        //ÁĞ±íĞÂÔö°´Å¥
+	        //åˆ—è¡¨æ–°å¢æŒ‰é’®
 	        'materialinfomaintaince button[action=addNew]':{
 	        	click: this.addNewRecord
 	        },
-	        //ÁĞ±íĞŞ¸Ä°´Å¥
+	        //åˆ—è¡¨ä¿®æ”¹æŒ‰é’®
 	        'materialinfomaintaince button[action=modify]':{
 	        	click: this.editRecord
 	        },
-	        //ÁĞ±íÉ¾³ı°´Å¥
+	        //åˆ—è¡¨åˆ é™¤æŒ‰é’®
 	        'materialinfomaintaince button[action=delete]':{
 	        	click: this.deleteRecord
 	        },
-			//ÁĞ±íË¢ĞÂ°´Å¥
+			//åˆ—è¡¨åˆ·æ–°æŒ‰é’®
 	        'materialinfomaintaince button[action=refresh]':{
 	        	click: this.refresh
 	        },
-			//±à¼­½çÃæÎïÁÏÀà±ğ×Ö¶ÎÑ¡Ôñ½çÃæÈ·¶¨
+			//ç¼–è¾‘ç•Œé¢ç‰©æ–™ç±»åˆ«å­—æ®µé€‰æ‹©ç•Œé¢ç¡®å®š
 			'#materialform-materialTypeId-selWin button[name=btnSure]':{
 				click: this.selectMaterialType
 			},
-			//±à¼­½çÃæÎïÁÏÀà±ğ×Ö¶ÎÑ¡Ôñ½çÃæÈ¡Ïû
+			//ç¼–è¾‘ç•Œé¢ç‰©æ–™ç±»åˆ«å­—æ®µé€‰æ‹©ç•Œé¢å–æ¶ˆ
 			'#materialform-materialTypeId-selWin button[name=btnCancel]':{
 				click: this.cancelSelWin
 			},
-			//±à¼­½çÃæÄ¬ÈÏ¼ÆÁ¿µ¥Î»×Ö¶ÎÑ¡Ôñ½çÃæÈ·¶¨
+			//ç¼–è¾‘ç•Œé¢é»˜è®¤è®¡é‡å•ä½å­—æ®µé€‰æ‹©ç•Œé¢ç¡®å®š
 			'#materialform-defaultUnitId-selWin button[name=btnSure]':{
 				click: this.selectDefaultUnit
 			},
-			//±à¼­½çÃæÄ¬ÈÏ¼ÆÁ¿µ¥Î»×Ö¶ÎÑ¡Ôñ½çÃæÈ¡Ïû
+			//ç¼–è¾‘ç•Œé¢é»˜è®¤è®¡é‡å•ä½å­—æ®µé€‰æ‹©ç•Œé¢å–æ¶ˆ
 			'#materialform-defaultUnitId-selWin button[name=btnCancel]':{
 				click: this.cancelSelWin
 			},
-			 //±à¼­½çÃæ±£´æ
+			 //ç¼–è¾‘ç•Œé¢ä¿å­˜
 	        'materialedit button[action=save]':{
 	        	click: this.saveRecord
 	        }
@@ -65,17 +65,17 @@ Ext.define('SCM.controller.basedata.MaterialController', {
 		}
 		);
     },
-	//Ñ¡ÔñÊ÷ĞÎ½ÚµãÊ±£¬¸üĞÂÁĞ±íÊı¾İ
+	//é€‰æ‹©æ ‘å½¢èŠ‚ç‚¹æ—¶ï¼Œæ›´æ–°åˆ—è¡¨æ•°æ®
 	selectNode: function(me, record, index, eOpts){
 		
 		var gridStore=this.getMaterialgrid().getStore();
 		gridStore.clearFilter();
-		//gridStore.filter([{property: "parentId", value: record.data.id}]);//¸Ã¹ıÂË·½Ê½Ö»ÄÜ½øĞĞÈ«²¿ÓëºÏ²¢¹ıÂË£¬
+		//gridStore.filter([{property: "parentId", value: record.data.id}]);//è¯¥è¿‡æ»¤æ–¹å¼åªèƒ½è¿›è¡Œå…¨éƒ¨ä¸åˆå¹¶è¿‡æ»¤ï¼Œ
 		
-		gridStore.load({params:{'whereStr':'TMaterialV.material_Type_Id =\''+record.data.id+'\''}});//Ê¹ÓÃwhere¹ıÂË×Ö·û´®
+		gridStore.load({params:{'whereStr':'TMaterialV.material_Type_Id =\''+record.data.id+'\''}});//ä½¿ç”¨whereè¿‡æ»¤å­—ç¬¦ä¸²
 	},
 	
-	//Ë«»÷±à¼­
+	//åŒå‡»ç¼–è¾‘
     modifyRecord: function(grid, record){
         var editui=Ext.widget('materialedit');
         editui.uiStatus='Modify';
@@ -83,14 +83,14 @@ Ext.define('SCM.controller.basedata.MaterialController', {
 		this.ajustId2Display(form,record);
     	form.loadRecord(record);
     },
-    //ĞŞ¸Ä
+    //ä¿®æ”¹
     editRecord: function(button){
     	listPanel=this.getMaterialgrid();
     	
     	sm=listPanel.getSelectionModel();
-    	if(sm.hasSelection()){//ÅĞ¶ÏÊÇ·ñÑ¡ÔñĞĞ¼ÇÂ¼
+    	if(sm.hasSelection()){//åˆ¤æ–­æ˜¯å¦é€‰æ‹©è¡Œè®°å½•
     		record=sm.getLastSelected();
-			//»ñÈ¡ÏÖÔÚµÄ¼ÇÂ¼id£¬Í¨¹ıid¼ÓÔØ±à¼­Ò³ÃæÊı¾İ
+			//è·å–ç°åœ¨çš„è®°å½•idï¼Œé€šè¿‡idåŠ è½½ç¼–è¾‘é¡µé¢æ•°æ®
     		var editui=Ext.widget('materialedit');
     		editui.uiStatus='Modify';
 			var form=editui.down('form');
@@ -98,37 +98,37 @@ Ext.define('SCM.controller.basedata.MaterialController', {
 			form.loadRecord(record);
     	}
     },
-    //ĞÂÔö
+    //æ–°å¢
     addNewRecord: function(button){
-    	newRecord=Ext.create('MaterialModel');//ĞÂÔö¼ÇÂ¼
+    	newRecord=Ext.create('MaterialModel');//æ–°å¢è®°å½•
     	var editui=Ext.widget('materialedit');
     	editui.uiStatus='AddNew';
     	editui.down('form').loadRecord(newRecord);
     },
-	 //É¾³ı¼ÇÂ¼
+	 //åˆ é™¤è®°å½•
     deleteRecord: function(button){
     	listPanel=this.getMaterialgrid();
     	sm=listPanel.getSelectionModel();
-    	if(sm.hasSelection()){//ÅĞ¶ÏÊÇ·ñÑ¡ÔñĞĞ¼ÇÂ¼
-    		//É¾³ıÑ¡ÔñµÄ¼ÇÂ¼
+    	if(sm.hasSelection()){//åˆ¤æ–­æ˜¯å¦é€‰æ‹©è¡Œè®°å½•
+    		//åˆ é™¤é€‰æ‹©çš„è®°å½•
     		records=sm.getSelection();
     		listPanel.store.remove(records);
     	}
 		this.refresh();
     },
-	//±£´æ¼ÇÂ¼
+	//ä¿å­˜è®°å½•
 	saveRecord: function(button){
-		//È¡±à¼­½çÃæ
+		//å–ç¼–è¾‘ç•Œé¢
     	var win=this.getMaterialedit();
-    	//È¡±íµ¥
+    	//å–è¡¨å•
     	form=win.down('form');
     	values=form.getValues();
 
     	var record;
-    	if(win.uiStatus=='Modify'){//ĞŞ¸Ä¼ÇÂ¼
+    	if(win.uiStatus=='Modify'){//ä¿®æ”¹è®°å½•
     		record=form.getRecord();
     		record.set(values);
-    	}else if(win.uiStatus=='AddNew'){//ĞÂÔö¼ÇÂ¼
+    	}else if(win.uiStatus=='AddNew'){//æ–°å¢è®°å½•
     		record=Ext.create('MaterialModel');
     		record.set(values);
     		this.getMaterialgrid().store.add(record);
@@ -137,29 +137,29 @@ Ext.define('SCM.controller.basedata.MaterialController', {
     	win.close();
 		this.refresh();
 	},
-	//µ÷ÕûÏÔÊ¾×Ö¶Î£¬½«id×Ö¶ÎÖµÉèÖÃÎªdisplayValue×Ö¶ÎÖµ
+	//è°ƒæ•´æ˜¾ç¤ºå­—æ®µï¼Œå°†idå­—æ®µå€¼è®¾ç½®ä¸ºdisplayValueå­—æ®µå€¼
 	ajustId2Display : function(form,record){
 		var defaultUnit=form.down('selectorfield[name=defaultUnitId]');
-		defaultUnit.displayValue=record.get('defaultUnitName');//Ä¬ÈÏ¼ÆÁ¿µ¥Î»
+		defaultUnit.displayValue=record.get('defaultUnitName');//é»˜è®¤è®¡é‡å•ä½
 	},
-	//Ë¢ĞÂ
+	//åˆ·æ–°
     refresh : function(button){
 		listPanel=this.getMaterialgrid();
 		listPanel.store.load();
 	},
-	//ÎïÁÏÀà±ğÑ¡Ôñ¿ò±£´æ
+	//ç‰©æ–™ç±»åˆ«é€‰æ‹©æ¡†ä¿å­˜
 	selectMaterialType:function(button){
 		var edit=this.getMaterialedit();
 		var form=edit.down('form')
 		this.selectValwin(button,'materialTypeId',form);
 	},
-	//Ä¬ÈÏ¼ÆÁ¿µ¥Î»Ñ¡Ôñ¿ò±£´æ
+	//é»˜è®¤è®¡é‡å•ä½é€‰æ‹©æ¡†ä¿å­˜
 	selectDefaultUnit:function(button){
 		var edit=this.getMaterialedit();
 		var form=edit.down('form')
 		this.selectValwin(button,'defaultUnitId',form);
 	},
-	//Ñ¡Ôñ¿ò±£´æ¹«¹²·½·¨
+	//é€‰æ‹©æ¡†ä¿å­˜å…¬å…±æ–¹æ³•
 	selectValwin:function(button,fieldName,targetForm){
 		if(Ext.isEmpty(button)||Ext.isEmpty(fieldName)||Ext.isEmpty(targetForm)){
 			return;
@@ -169,12 +169,12 @@ Ext.define('SCM.controller.basedata.MaterialController', {
 		var grid=win.down('gridpanel');
 		var records=grid.getSelectionModel().getSelection() ;
 
-		var parentField=targetForm.down('selectorfield[name='+fieldName+']');//²éÕÒ±à¼­½çÃæµÄÉÏ¼¶²¿ÃÅ¿Ø¼ş
-		parentField.displayValue=records[0].get('name');//ÉèÖÃÏÔÊ¾Ãû³Æ
-		parentField.setValue(records[0].get('id'));//ÉèÖÃvalueÖµ
+		var parentField=targetForm.down('selectorfield[name='+fieldName+']');//æŸ¥æ‰¾ç¼–è¾‘ç•Œé¢çš„ä¸Šçº§éƒ¨é—¨æ§ä»¶
+		parentField.displayValue=records[0].get('name');//è®¾ç½®æ˜¾ç¤ºåç§°
+		parentField.setValue(records[0].get('id'));//è®¾ç½®valueå€¼
 		win.close();
 	},
-	//Ñ¡Ôñ¿òÈ¡Ïû¹«¹²·½·¨
+	//é€‰æ‹©æ¡†å–æ¶ˆå…¬å…±æ–¹æ³•
 	cancelSelWin:function(button){
 		var win=button.up('window');
 		win.close();
