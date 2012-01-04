@@ -15,30 +15,9 @@ Ext.define('SCM.model.system.UserTreeModel', {
     ],
     
     proxy: {
-        type: 'ajax',
+        type: 'jsonajax',
         api: {
             read: '../../scm/control/getUserTreeToJson'
-        },
-        reader: {
-            type: 'json',
-            root: 'children',
-            successProperty: 'success',
-            messageProperty: 'message'
-        },
-        writer: {
-            type: 'json',
-            root: 'children',
-            encode: true //请求服务器时以param参数传进json数据
-        },
-        listeners: {
-            exception: function(proxy, response, operation){
-                Ext.MessageBox.show({
-                    title: '服务器端异常',
-                    msg: operation.getError(),
-                    icon: Ext.MessageBox.ERROR,
-                    buttons: Ext.Msg.OK
-                });
-            }
         }
     }
 });
