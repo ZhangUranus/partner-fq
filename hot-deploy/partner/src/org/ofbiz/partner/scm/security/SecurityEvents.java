@@ -1,6 +1,5 @@
 package org.ofbiz.partner.scm.security;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -12,12 +11,10 @@ import javolution.util.FastList;
 
 import net.sf.json.JSONObject;
 
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.map.JsonMappingException;
 import org.ofbiz.base.crypto.HashCrypt;
 import org.ofbiz.base.util.Debug;
+import org.ofbiz.base.util.UtilProperties;
 import org.ofbiz.common.login.LoginServices;
-import org.ofbiz.entity.GenericEntityException;
 import org.ofbiz.entity.GenericValue;
 import org.ofbiz.entity.condition.EntityCondition;
 import org.ofbiz.entity.condition.EntityConditionList;
@@ -37,8 +34,9 @@ public class SecurityEvents {
     
     /**
      * 检查用户名密码
+     * @throws Exception 
      */
-	public static String checkLogin(HttpServletRequest request, HttpServletResponse response) {
+	public static String checkLogin(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		//String responseString = LoginWorker.checkLogin(request, response);
 		String responseString = "success";
 		List<GenericValue> recordList = FastList.newInstance();
@@ -52,31 +50,14 @@ public class SecurityEvents {
 		condition = EntityCondition.makeCondition(conds);
 		try {
 			recordList =  CommonEvents.getDelegator(request).findList("TSystemUser", condition, null, null, null, true);
-		} catch (GenericEntityException e) {
-			Debug.logError("Problems with findList "+e, module);
+		} catch (Exception e) {
+			Debug.logError(e, module);
+			throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "GetEntityListException"));
 		}
 		if (recordList == null || recordList.size() < 1) {
 			responseString = "fail";
 		}
 		
-		//登录成功，将权限信息写入session
-		//String permissionJsonString = getUserPermissions(request.getParameter("USERNAME"))
-		//CommonEvents.setAttributeToSession(request, "UserPermissions", permissionJsonString);
-		/*permissionJsonString: 
-		 * {permissions : {
-		 * 		basepermission : true,
-		 * 		purchaseBillManagement : [//采购单
-		 * 		{
-		 * 			view : true,
-		 * 			edit : true
-		 * 		},
-		 * 		purchaseWarehousing : {
-		 * 			delete : true,
-		 * 			audit : true
-		 * 		}
-		 * }}
-		 * 
-		 */
 		JSONObject jsonStr = new JSONObject();
 		if (!"success".equals(responseString)) {
 			jsonStr.put("success", false);
@@ -84,16 +65,11 @@ public class SecurityEvents {
         	CommonEvents.setUsername(request, response);
 			jsonStr.put("success", true);
         }
-		try {
-			CommonEvents.writeJsonDataToExt(response, jsonStr.toString());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		CommonEvents.writeJsonDataToExt(response, jsonStr.toString());
 		return responseString;
 	}
 	
-	public static String isLogin(HttpServletRequest request, HttpServletResponse response) {
+	public static String isLogin(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		JSONObject jsonStr = new JSONObject();
 		if("".equals(CommonEvents.getUsername(request))){
 			
@@ -101,28 +77,21 @@ public class SecurityEvents {
 		}else{
 			jsonStr.put("success", true);
 		}
-		try {
-			CommonEvents.writeJsonDataToExt(response, jsonStr.toString());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		CommonEvents.writeJsonDataToExt(response, jsonStr.toString());
 		return "success";
 	}
 	
-	public static String logout(HttpServletRequest request, HttpServletResponse response) {
+	public static String logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		CommonEvents.removeAttributeFromSession(request, "username");
-		try {
-			CommonEvents.writeJsonDataToExt(response, "{'success': true}");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		CommonEvents.writeJsonDataToExt(response, "{'success': true}");
 		return "success";
 	}
 	
 	/**
      * 获取用户权限字符串(Json字符串格式)
+	 * @throws Exception 
      */
-	public static String getUserPermissions(HttpServletRequest request, HttpServletResponse response) {
+	public static String getUserPermissions(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		EntityConditionList<EntityCondition> condition = null;
     	List<EntityCondition> conds = FastList.newInstance();
     	conds.add(EntityCondition.makeCondition("menuId",request.getParameter("menuId")));
@@ -135,56 +104,51 @@ public class SecurityEvents {
 		
 		try {
 			permissionList =  CommonEvents.getDelegator(request).findList("VSystemUserOfMenu", condition, null, null, findOptions, false);
-		} catch (GenericEntityException e) {
-			Debug.logError("Problems with findList "+e, module);
+		} catch (Exception e) {
+			Debug.logError(e, module);
+			throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "GetEntityListException"));
 		}
 		
 		JSONObject tempObject = new JSONObject();
 		tempObject.put("edit", false);
 		tempObject.put("add", false);
-		tempObject.put("view", false);
+		//tempObject.put("view", false);
 		tempObject.put("remove", false);
 		tempObject.put("audit", false);
 		for (GenericValue node: permissionList) {
-			if("V".equals(node.get("operateType"))){
-				tempObject.put("view", true);
-			}else if("E".equals(node.get("operateType"))){
+//			if("V".equals(node.get("operateType"))){//view权限只在取菜单时使用，所以不需要列入考虑
+//				tempObject.put("view", true);
+//			} 
+			if("E".equals(node.get("operateType"))){
 				tempObject.put("edit", true);
 			}else if("N".equals(node.get("operateType"))){
 				tempObject.put("add", true);
 			}else if("D".equals(node.get("operateType"))){
 				tempObject.put("remove", true);
-			}else{
+			}else if("A".equals(node.get("operateType"))){
 				tempObject.put("audit", true);
 			}
 		}
-		try {
-			CommonEvents.writeJsonDataToExt(response, tempObject.toString());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		CommonEvents.writeJsonDataToExt(response, tempObject.toString());
 		return "success";
 	}
 	
 	/**
      * 获取用户功能菜单数据
+	 * @throws Exception 
      */
-	public static String getTreeDataByParentId(HttpServletRequest request, HttpServletResponse response) {
+	public static String getTreeDataByParentId(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String parentId = request.getParameter("parentId");
 		String flag = request.getParameter("flag");
 		boolean isRoot = false;
 		if(flag.equals("true")){
 			isRoot = true;
 		}
-		try {
-			CommonEvents.writeJsonDataToExt(response, CommonEvents.getTreeDataByParentId(request,CommonEvents.getDelegator(request), parentId, isRoot));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		CommonEvents.writeJsonDataToExt(response, CommonEvents.getTreeDataByParentId(request,CommonEvents.getDelegator(request), parentId, isRoot));
 		return "success";
 	}
 	
-	public static String getUserTreeToJson(HttpServletRequest request, HttpServletResponse response){
+	public static String getUserTreeToJson(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		try {
 			List<GenericValue> valueList = CommonEvents.getDelegator(request).findList("Department",null, null, null, null, false);
 			List<GenericValue> userList = CommonEvents.getDelegator(request).findList("VSystemUserTree",null, null, null, null, false);
@@ -205,20 +169,10 @@ public class SecurityEvents {
 			}
 			
 			CommonEvents.writeJsonDataToExt(response, jsonResult.toString()); // 将结果返回前端Ext
-		} catch (GenericEntityException e) {
+		} catch (Exception e) {
 			Debug.logError(e, module);
-		} catch (JsonGenerationException e) {
-			Debug.logError(e, module);
-		} catch (JsonMappingException e) {
-			Debug.logError(e, module);
-		} catch (IOException e) {
-			Debug.logError(e, module);
+			throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "GetEntityListException"));
 		}
-		return "success";
-	}
-	
-	public static String getUserInfo(HttpServletRequest request, HttpServletResponse response) {
-		
 		return "success";
 	}
 	
