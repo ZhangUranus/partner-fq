@@ -41,6 +41,7 @@ Ext.define('SCM.view.system.user.ListUI' ,{
 		                        {
 		                            xtype:'toolbar',
 		                            dock: 'top',
+                                    height: 28,
 		                            items:[
 		                                {id:'user-save',text:'保存',cls:'x-btn-text-icon',icon:'/scmui/images/icons/save.png',action:'save'}
 		                            ]
@@ -58,27 +59,41 @@ Ext.define('SCM.view.system.user.ListUI' ,{
 		                              xtype: 'textfield',
 		                              name : 'userId',
 		                              anchor: '80%',
-		                              fieldLabel: '登录名'
+		                              fieldLabel: '登录名',
+                                      allowBlank : false,
+                                      minLength : 4,
+                                      maxLength : 32,
+                                      regex : ''
 		                          },
 		                          {
 		                              xtype: 'textfield',
 		                              anchor: '80%',
 		                              name : 'password',
 		                              fieldLabel: '密码',
-		                              inputType: 'password'
+		                              inputType: 'password',
+                                      allowBlank : false,
+                                      minLength : 6,
+                                      maxLength : 16
 		                          },
 		                          {
 		                              xtype: 'textfield',
 		                              anchor: '80%',
 		                              name : 'passwordComfirm',
 		                              fieldLabel: '确认密码',
-		                              inputType: 'password'
+		                              inputType: 'password',
+                                      allowBlank : false,
+                                      minLength : 6,
+                                      maxLength : 16
 		                          },
 		                          {
 		                              xtype: 'textfield',
 		                              anchor: '80%',
 		                              name : 'userName',
-		                              fieldLabel: '用户名'
+		                              fieldLabel: '用户名',
+                                      allowBlank : false,
+                                      minLength : 4,
+                                      maxLength : 32,
+                                      regex : ''
 		                          },
 		                          {
 		                              xtype: 'combobox',
@@ -103,16 +118,20 @@ Ext.define('SCM.view.system.user.ListUI' ,{
 		                              xtype: 'textfield',
 		                              anchor: '80%',
 		                              name : 'position',
-		                              fieldLabel: '职位'
+		                              fieldLabel: '职位',
+                                      maxLength : 32
 		                          },
 		                          {
 		                              xtype: 'textfield',
 		                              anchor: '80%',
 		                              name : 'phoneNumber',
-		                              fieldLabel: '手机号码'
+		                              fieldLabel: '手机号码',
+                                      minLength : 11,
+                                      maxLength : 11,
+                                      regex : ''
 		                          },
 		                          {
-		                              xtype: 'textfield',
+		                              xtype: 'email',
 		                              anchor: '80%',
 		                              name : 'email',
 		                              fieldLabel: '邮箱'
@@ -167,6 +186,7 @@ Ext.define('SCM.view.system.user.ListUI' ,{
                     store:treeStore
                 },{
                     xtype:'toolbar',//工具栏
+                    height: 28,
                     items:[
 	                   {id:'user-new',text:'新增',cls:'x-btn-text-icon',icon:'/scmui/images/icons/add.png',action:'addNew'},
 	                   {id:'user-delete',text:'删除',cls:'x-btn-text-icon',icon:'/scmui/images/icons/delete.png',action:'delete'}
