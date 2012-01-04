@@ -16,7 +16,7 @@ Ext.define('SCM.controller.system.SystemController', {
 
     init: function() {
 		this.control({
-            //树形节点单击事件
+            //完成用户界面初始化后调用
             'usermanagement': {
                 afterrender: this.initList
             },
@@ -39,7 +39,7 @@ Ext.define('SCM.controller.system.SystemController', {
 	        },
             
             'usermanagement form textfield':{
-                change: this.textFieldchange
+                change: this.fieldchange
             },
             
             //角色列表更新事件
@@ -60,33 +60,43 @@ Ext.define('SCM.controller.system.SystemController', {
         this.saveButton = view.down('button[action=save]');
         var departmentCombobox = Ext.getCmp('user-department-combobox');
         departmentCombobox.store.load();
+        this.initButton();
         this.changeComponentsState();
     },
     
-    changeComponentsState: function(){
+    initButton: function(){
         if(this.userView.permission.add){
-            this.newButton.setDisabled(false);
+            this.newButton.setVisible(true);
         }else{
-            this.newButton.setDisabled(true);
+            this.newButton.setVisible(false);
         }
-        if(this.userView.permission.remove && this.selectUser){
+        
+        if(this.userView.permission.remove ){
+            this.deleteButton.setVisible(true);
+        }else{
+            this.deleteButton.setVisible(false);
+        }
+    },
+    
+    changeComponentsState: function(){
+        if(this.selectUser){
             this.deleteButton.setDisabled(false);
         }else{
             this.deleteButton.setDisabled(true);
         }
         if(this.userForm.uiStatus=='AddNew'){
-            this.saveButton.setDisabled(false);
+            this.saveButton.setVisible(true);
             this.userGrid.setDisabled(false);
             this.userForm.getForm().findField('userId').setReadOnly(false);
             this.changeFormFieldState(this.userForm,false);
         }else{
             this.userForm.getForm().findField('userId').setReadOnly(true);
             if(this.userView.permission.edit){
-                this.saveButton.setDisabled(false);
+                this.saveButton.setVisible(true);
                 this.userGrid.setDisabled(false);
                 this.changeFormFieldState(this.userForm,false);
             }else{
-                this.saveButton.setDisabled(true);
+                this.saveButton.setVisible(false);
                 this.userGrid.setDisabled(true);
                 this.changeFormFieldState(this.userForm,true);
             }
@@ -105,7 +115,7 @@ Ext.define('SCM.controller.system.SystemController', {
 		form.getForm().findField('valid').setReadOnly(readOnly);
     },
     
-    textFieldchange: function(textField,newValue,oldValue){
+    fieldchange: function(textField,newValue,oldValue){
         if(this.userForm.inited && !this.userForm.modifyed){
             this.userForm.modifyed = true;
         }
