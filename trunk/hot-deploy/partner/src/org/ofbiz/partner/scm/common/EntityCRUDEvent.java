@@ -1,6 +1,5 @@
 package org.ofbiz.partner.scm.common;
 
-import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -14,14 +13,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import javolution.util.FastList;
 
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.ofbiz.base.crypto.HashCrypt;
 import org.ofbiz.base.util.Debug;
+import org.ofbiz.base.util.UtilProperties;
 import org.ofbiz.common.login.LoginServices;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericEntityException;
@@ -46,22 +43,31 @@ public class EntityCRUDEvent {
 	 * 获取实体值列表
 	 */
 	public static String getColl2Json(HttpServletRequest request,HttpServletResponse response)  throws Exception {
+		int start = 0;
+		int limit = 0;
+		int total = 0;
 		try {
 			List<GenericValue> valueList =getValueList(request);
-			String jsonStr = getJsonFromGenValList(valueList); // 将查询结果转换为json字符串
+			total = valueList.size();
+			if(request.getParameter("start") != null){
+				start = Integer.parseInt(request.getParameter("start"));
+			}
+			if(request.getParameter("limit") != null){
+				limit = Integer.parseInt(request.getParameter("limit"));
+			}
+			int toIndex = start+limit;
+			if(limit>0){
+				if(total >toIndex){
+					valueList = valueList.subList(start, start+limit);
+				}else{
+					valueList = valueList.subList(start, total);
+				}
+			}
+			String jsonStr = getJsonFromGenValList(valueList,total); // 将查询结果转换为json字符串
 			CommonEvents.writeJsonDataToExt(response, jsonStr); // 将结果返回前端Ext
-		} catch (GenericEntityException e) {
+		}catch (Exception e) {
 			Debug.logError(e, module);
-			throw e;
-		} catch (JsonGenerationException e) {
-			Debug.logError(e, module);
-			throw e;
-		} catch (JsonMappingException e) {
-			Debug.logError(e, module);
-			throw e;
-		} catch (IOException e) {
-			Debug.logError(e, module);
-			throw e;
+			throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "GetEntityListException"));
 		}
 		return "success";
 		
@@ -76,18 +82,9 @@ public class EntityCRUDEvent {
 			GenericValue value = valueList.get(0);
 			String jsonStr = getJsonFromGenVal(value); // 将查询结果转换为json字符串
 			CommonEvents.writeJsonDataToExt(response, jsonStr); // 将结果返回前端Ext
-		} catch (GenericEntityException e) {
+		} catch (Exception e) {
 			Debug.logError(e, module);
-			throw e;
-		} catch (JsonGenerationException e) {
-			Debug.logError(e, module);
-			throw e;
-		} catch (JsonMappingException e) {
-			Debug.logError(e, module);
-			throw e;
-		} catch (IOException e) {
-			Debug.logError(e, module);
-			throw e;
+			throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "GetEntityRecordException"));
 		}
 		return "success";
 		
@@ -119,18 +116,9 @@ public class EntityCRUDEvent {
 			}
 			
 			CommonEvents.writeJsonDataToExt(response, jsonResult.toString()); // 将结果返回前端Ext
-		} catch (GenericEntityException e) {
+		} catch (Exception e) {
 			Debug.logError(e, module);
-			throw e;
-		} catch (JsonGenerationException e) {
-			Debug.logError(e, module);
-			throw e;
-		} catch (JsonMappingException e) {
-			Debug.logError(e, module);
-			throw e;
-		} catch (IOException e) {
-			Debug.logError(e, module);
-			throw e;
+			throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "GetTreeJsonException"));
 		}
 		return "success";
 	}
@@ -141,12 +129,13 @@ public class EntityCRUDEvent {
 	 * @param response
 	 * @return
 	 */
-	public static String addnewFromJson(HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		if (request.getParameter("records") == null || request.getParameter("entity") == null) {
-			throw new Exception("更新记录为空或者实体类型为空");
+	public static String addnewFromJson(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		if (request.getParameter("entity") == null ){
+			throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "EntityNameEmpty"));
 		}
-
+		if(request.getParameter("records") == null){
+			throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "RecordsEmpty"));
+		}
 		List records = CommonEvents.getRecordsFromRequest(request);
 
 		// 循环每个记录新增
@@ -167,15 +156,29 @@ public class EntityCRUDEvent {
 				if (vModelField != null) {//如果是密码，需要做加密保存处理
 					if(fieldName.equals("password") && !record.get(fieldName).toString().startsWith("{SHA}")){
 						v.set(fieldName, HashCrypt.getDigestHash(record.get(fieldName).toString(), LoginServices.getHashType()));
+					}else if(fieldName.equals("name")){
+						if(checkNameUnique(request,entityName,record.get(fieldName).toString())){
+							v.set(fieldName, record.get(fieldName));
+						}else{
+							throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "NameIsExist"));
+						}
 					}else{
 						v.set(fieldName, record.get(fieldName));
 					}
 				}
 			}
+			
+			String entityNumber = CommonEvents.getSerialNumber(request, entityName);
+			if(!"".equals(entityNumber)){//判断系统编码是否存在，存在的使用系统编码
+				ModelField vModelField = vModel.getField("number");
+				if (vModelField != null) {
+					v.set("number", entityNumber);
+				}
+			}
 			try {
 				delegator.create(v);
 			} catch (GenericEntityException e) {
-				throw e;
+				throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "AddRecordToDBEntityException"));
 			}
 		}
 		return "success";
@@ -189,10 +192,12 @@ public class EntityCRUDEvent {
 	 * @param response
 	 * @return
 	 */
-	public static String updateFromJson(HttpServletRequest request,
-			HttpServletResponse response) throws Exception{
-		if (request.getParameter("records") == null || request.getParameter("entity") == null) {
-			throw new Exception("更新记录为空或者实体类型为空");
+	public static String updateFromJson(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		if (request.getParameter("entity") == null ){
+			throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "EntityNameEmpty"));
+		}
+		if(request.getParameter("records") == null){
+			throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "RecordsEmpty"));
 		}
 
 		List records = CommonEvents.getRecordsFromRequest(request);
@@ -204,18 +209,29 @@ public class EntityCRUDEvent {
 			JSONObject record = (JSONObject) r;// 单条记录
 			GenericValue v = delegator.makeValue(entityName);// 新建一个值对象
 			ModelEntity vModel = v.getModelEntity();// 获取值对象字段模型
-			//
-
+			String pkField = vModel.getOnlyPk().getName();
+			String pkValue = "";
+			
 			// 根据json对象设置对象值
 			Iterator<String> i = record.keys();
 			while (i.hasNext()) {// 更新每个字段
 				String fieldName = i.next();
 				// 判断字段有效性，值对象中必须存在字段才能设置该对象的值
-
+				
+				if(pkField.equals(fieldName)){
+					pkValue = record.getString(fieldName);
+				}
 				ModelField vModelField = vModel.getField(fieldName);
+				
 				if (vModelField != null) {//如果是密码，需要做加密保存处理
 					if(fieldName.equals("password") && !record.get(fieldName).toString().startsWith("{SHA}")){
 						v.set(fieldName, HashCrypt.getDigestHash(record.get(fieldName).toString(), LoginServices.getHashType()));
+					}else if(fieldName.equals("name")){
+						if(checkNameUnique(request,entityName,record.get(fieldName).toString(),pkField,pkValue)){
+							v.set(fieldName, record.get(fieldName));
+						}else{
+							throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "NameIsExist"));
+						}
 					}else{
 						v.set(fieldName, record.get(fieldName));
 					}
@@ -224,7 +240,7 @@ public class EntityCRUDEvent {
 			try {
 				delegator.store(v);
 			} catch (GenericEntityException e) {
-				throw e;
+				throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "UpdateRecordToDBEntityException"));
 			}
 		}
 		return "success";
@@ -238,10 +254,12 @@ public class EntityCRUDEvent {
 	 * @param response
 	 * @return
 	 */
-	public static String deleteFromJson(HttpServletRequest request,
-			HttpServletResponse response)throws Exception {
-		if (request.getParameter("records") == null || request.getParameter("entity") == null) {
-			throw new Exception("新增记录为空或者实体类型为空");
+	public static String deleteFromJson(HttpServletRequest request, HttpServletResponse response)throws Exception {
+		if (request.getParameter("entity") == null ){
+			throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "EntityNameEmpty"));
+		}
+		if(request.getParameter("records") == null){
+			throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "RecordsEmpty"));
 		}
 
 		if(request.getParameter("isIgnore")!=null&&request.getParameter("isIgnore").toString().equals("true")){
@@ -255,7 +273,6 @@ public class EntityCRUDEvent {
 			JSONObject record = (JSONObject) r;// 单条记录
 			GenericValue v = delegator.makeValue(entityName);// 新建一个值对象
 			ModelEntity vModel = v.getModelEntity();// 获取值对象字段模型
-			//
 
 			// 根据json对象设置对象值
 			Iterator<String> i = record.keys();
@@ -271,7 +288,7 @@ public class EntityCRUDEvent {
 					try {
 						delegator.removeValue(v);
 					} catch (GenericEntityException e) {
-						throw e;
+						throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "DeleteRecordToDBEntityException"));
 					}
 					break;
 				}
@@ -290,16 +307,13 @@ public class EntityCRUDEvent {
 	 * @param response
 	 * @param string
 	 * @return
+	 * @throws Exception 
 	 */
-	private static String bizError(HttpServletResponse response, String errStr) {
+	private static String bizError(HttpServletResponse response, String errStr) throws Exception {
+		
 		// 设置返回参数
 		String jResult = "{success=false,msg='" + errStr + "'}";
-		try {
-			CommonEvents.writeJsonDataToExt(response, jResult); // 将结果返回前端Ext
-		} catch (IOException e) {
-			Debug.logError(e, module);
-		}
-
+		CommonEvents.writeJsonDataToExt(response, jResult); // 将结果返回前端Ext
 		return "success";
 	}
 
@@ -308,14 +322,11 @@ public class EntityCRUDEvent {
 	 * 
 	 * @param valueList
 	 * @return
-	 * @throws IOException
-	 * @throws JsonMappingException
-	 * @throws JsonGenerationException
+	 * @throws Exception 
 	 */
-	private static String getJsonFromGenValList(List<GenericValue> valueList)
-			throws JsonGenerationException, JsonMappingException, IOException {
+	private static String getJsonFromGenValList(List<GenericValue> valueList,int total) throws Exception {
 		if (valueList == null || valueList.size() < 1) {
-			return "{'success':true,'records':[]}";
+			return "{'success':true,total:0,'records':[]}";
 		}
 		// 封装实体数据，构建json字符串
 		StringBuffer jsonStr = new StringBuffer();
@@ -327,9 +338,14 @@ public class EntityCRUDEvent {
 			} else {
 				jsonStr.append(",");
 			}
-			jsonStr.append(objectMapper.writeValueAsString(v));
+			try {
+				jsonStr.append(objectMapper.writeValueAsString(v));
+			} catch (Exception e) {
+				Debug.logError(e, module);
+				throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "EntityObjectToStringException"));
+			}
 		}
-		jsonStr.append("]}");
+		jsonStr.append("],total:"+total+"}");
 		return jsonStr.toString();
 	}
 	
@@ -338,18 +354,21 @@ public class EntityCRUDEvent {
 	 * 
 	 * @param valueList
 	 * @return
-	 * @throws IOException
-	 * @throws JsonMappingException
-	 * @throws JsonGenerationException
+	 * @throws Exception 
 	 */
-	private static String getJsonFromGenVal(GenericValue value) throws JsonGenerationException, JsonMappingException, IOException {
+	private static String getJsonFromGenVal(GenericValue value) throws Exception {
 		if (value == null ) {
 			return "{'success':true,'records':{}}";
 		}
 		// 封装实体数据，构建json字符串
 		StringBuffer jsonStr = new StringBuffer();
 		jsonStr.append("{'success':true,'records':");
-		jsonStr.append(objectMapper.writeValueAsString(value));
+		try {
+			jsonStr.append(objectMapper.writeValueAsString(value));
+		} catch (Exception e) {
+			Debug.logError(e, module);
+			throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "EntityObjectToStringException"));
+		}
 		jsonStr.append("}");
 		return jsonStr.toString();
 	}
@@ -379,8 +398,8 @@ public class EntityCRUDEvent {
 	 */
 	public static List<GenericValue> getValueList(HttpServletRequest request) throws Exception{
 		EntityConditionList<EntityCondition> condition = null;
-		if (request.getParameter("entity") == null) {
-			return null;
+		if (request.getParameter("entity") == null ){
+			throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "EntityNameEmpty"));
 		}
 		String entityName = request.getParameter("entity").toString();
 		try {
@@ -395,17 +414,27 @@ public class EntityCRUDEvent {
 				condition = EntityCondition.makeCondition(conds);
 			}
 			//处理whereStr过滤，覆盖filter条件
-			if(request.getParameter("whereStr")!=null){
+			if(request.getParameter("whereStr")!=null && !"".equals(request.getParameter("whereStr"))){
 				EntityCondition whrCond=EntityCondition.makeConditionWhere(request.getParameter("whereStr"));
 				List<EntityCondition> conds = FastList.newInstance();
 				conds.add(whrCond);
 				condition=EntityCondition.makeCondition(conds);
 			}
-			List<GenericValue> valueList = CommonEvents.getDelegator(request).findList(entityName, condition, null, null, null, false);
+			List<String> orders = new ArrayList<String>();
+			if(request.getParameter("sort")!=null){
+				ObjectMapper objMapper = new ObjectMapper();//新建局部变量
+				List<EntityCondition> conds = FastList.newInstance();
+				List<LinkedHashMap<String, Object>> list = objMapper.readValue(request.getParameter("sort").toString(), List.class);
+				for (int i = 0; i < list.size(); i++){
+					String field = list.get(i).get("property").toString() + " " +list.get(i).get("direction").toString();
+					orders.add(field);		//增加排序字段
+				}
+			}
+			List<GenericValue> valueList = CommonEvents.getDelegator(request).findList(entityName, condition, null, orders, null, false);
 			return valueList;
-		} catch (GenericEntityException e) {
+		} catch (Exception e) {
 			Debug.logError(e, module);
-			throw e;
+			throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "GetDBEntityListException"));
 		}
 	}
 	
@@ -470,5 +499,25 @@ public class EntityCRUDEvent {
 		
 		
 	}
-
+	
+	private static boolean checkNameUnique(HttpServletRequest request,String entityName,String nameValue,String pkField,String pkValue) throws GenericEntityException{
+		EntityCondition pkcondition = EntityCondition.makeCondition(pkField,pkValue);
+		List<GenericValue> nameList = CommonEvents.getDelegator(request).findList(entityName, pkcondition, null, null, null, true);
+		if(nameList.size()>0){//判断是否有修改name字段
+			if(nameList.get(0).getString("name").equals(nameValue)){
+				return true;
+			}
+		}
+		return checkNameUnique(request,entityName,nameValue);
+	}
+	
+	private static boolean checkNameUnique(HttpServletRequest request,String entityName,String nameValue) throws GenericEntityException{
+		EntityCondition condition = EntityCondition.makeCondition("name",nameValue);
+		List<GenericValue> valueList = CommonEvents.getDelegator(request).findList(entityName, condition, null, null, null, true);
+		if(valueList.size()>0){
+			return false;
+		}else{
+			return true;
+		}
+	}
 }
