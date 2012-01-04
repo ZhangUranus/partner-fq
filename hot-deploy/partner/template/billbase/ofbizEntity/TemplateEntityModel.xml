@@ -38,10 +38,12 @@ under the License.
       <field name="bizDate" type="date-time"></field>
       #foreach($headfield in $HeadFields)
       		#if($headfield.isPersis==true)<!-- \n -->
-	  <field name="#if($headfield.type=='entity')${headfield.name}${headfield.entity}Id#else${headfield.name}#end" type="#if($headfield.type=='string')value#elseif($headfield.type=='int')numeric#elseif($headfield.type=='float')floating-point#elseif($headfield.type=='boolean')boolean#elseif($headfield.type=='date')date-time#elseif($headfield.type=='entity')id-long#end"></field>
+	  <field name="#if($headfield.type=='entity')${headfield.name}${headfield.entity}Id#else${headfield.name}#end" type="#if($headfield.type=='string')value#elseif($headfield.type=='int')numeric#elseif($headfield.type=='float')floating-point#elseif($headfield.type=='boolean')boolean#elseif($headfield.type=='date')date-time#elseif($headfield.type=='entity')id-long#elseif($headfield.type=='enum')value#end"></field>
 			#end 
 	  #end <!-- \n -->
       <field name="note" type="description"></field>
+      <field name="createdStamp" type="date-time"></field>
+      <field name="lastUpdatedStamp" type="date-time"></field>
       <prim-key field="id"/>
     </entity>
     
@@ -53,7 +55,7 @@ under the License.
       <field name="parentId" type="id-long"></field>
       #foreach($entryfield in $EntryFields)
       #if($entryfield.isPersis==true)<!-- \n -->
-	  <field name="#if($entryfield.type=='entity')${entryfield.name}${entryfield.entity}Id#else${entryfield.name}#end" type="#if($entryfield.type=='string')value#elseif($entryfield.type=='int')numeric#elseif($entryfield.type=='float')floating-point#elseif($entryfield.type=='boolean')boolean#elseif($entryfield.type=='date')date-time#elseif($entryfield.type=='entity')id-long#end"></field>
+	  <field name="#if($entryfield.type=='entity')${entryfield.name}${entryfield.entity}Id#else${entryfield.name}#end" type="#if($entryfield.type=='string')value#elseif($entryfield.type=='int')numeric#elseif($entryfield.type=='float')floating-point#elseif($entryfield.type=='boolean')boolean#elseif($entryfield.type=='date')date-time#elseif($entryfield.type=='entity')id-long#elseif($entryfield.type=='enum')value#end"></field>
 	  #end 
 	  #end <!-- \n -->
       <prim-key field="id"/>

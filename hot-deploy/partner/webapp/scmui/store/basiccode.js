@@ -28,6 +28,28 @@ Ext.partner.basiccode.validRenderer = function(value){
 		return "否"
 };
 
+Ext.partner.basiccode.billStatusStore = new Ext.data.Store({
+	fields: ['id', 'name'],
+	data : [
+		{'id':'0', 'name':'保存'},
+		{'id':'1', 'name':'已审核'},
+		{'id':'2', 'name':'审核不通过'},
+		{'id':'3', 'name':'已结算'}
+	]
+});
+Ext.partner.basiccode.billStatusRenderer = function(value){
+	if(value=='0'){
+		return '保存';
+	}else if(value=='1'){
+		return '已审核';
+	}else if(value=='2'){
+		return '审核不通过';
+	}else if(value=='3'){
+		return '已结算';
+	}
+		
+};
+
 /**  
  * 用于处理提交数据  封装表头标题数据
  */  
@@ -64,4 +86,12 @@ Ext.JSON.encodeDate = function(d) {
 	time=d.getTime();
     return   time;
 };  
- 
+
+showError= function(msg){
+	Ext.MessageBox.show({
+                    title: '错误',
+                    msg: msg,
+                    icon: Ext.MessageBox.ERROR,
+                    buttons: Ext.Msg.OK
+                });
+};

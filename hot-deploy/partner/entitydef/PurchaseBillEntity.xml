@@ -46,8 +46,12 @@ under the License.
 	  <field name="myfield4UnitId" type="id-long"></field>
 				        		<!-- \n -->
 	  <field name="myfield5" type="numeric"></field>
+				        		<!-- \n -->
+	  <field name="myField6" type="value"></field>
 				   <!-- \n -->
       <field name="note" type="description"></field>
+      <field name="createdStamp" type="date-time"></field>
+      <field name="lastUpdatedStamp" type="date-time"></field>
       <prim-key field="id"/>
     </entity>
     
@@ -69,6 +73,8 @@ under the License.
 	  <field name="myentryfield5" type="floating-point"></field>
 	  	        <!-- \n -->
 	  <field name="myentryfield6" type="numeric"></field>
+	  	        <!-- \n -->
+	  <field name="myentryfield7" type="value"></field>
 	  	   <!-- \n -->
       <prim-key field="id"/>
     </entity>
@@ -80,16 +86,16 @@ under the License.
       		<member-entity entity-alias="PurchaseBillV" entity-name="PurchaseBill"></member-entity>
       		      			  		      			  		      			  		      		<!-- \n -->
 			<member-entity entity-alias="myfield4UnitV" entity-name="Unit"></member-entity>
-				  		      			  		 <!-- \n -->
+				  		      			  		      			  		 <!-- \n -->
             <alias-all entity-alias="PurchaseBillV" ></alias-all>
                   			  		      			  		      			  		      		<!-- \n -->
 			<alias name="myfield4UnitName" entity-alias="myfield4UnitV" field="name"></alias>	
-				  		      			  			  		
+				  		      			  		      			  			  		
 	  		      			  		      			  		      			  		      		<!-- \n -->
 			<view-link entity-alias="PurchaseBillV" rel-entity-alias="myfield4UnitV" rel-optional="true">
 				<key-map field-name="myfield4UnitId" rel-field-name="id"/>
 			</view-link>
-				  		      			  		 <!-- \n -->
+				  		      			  		      			  		 <!-- \n -->
     </view-entity>
 	<!--表体视图  -->
     <view-entity entity-name="PurchaseBillEntryView"
@@ -98,17 +104,17 @@ under the License.
             <member-entity entity-alias="PurchaseBillEntryV" entity-name="PurchaseBillEntry"></member-entity>
                   			  		      			  		      			  		      		<!-- \n -->
 			<member-entity entity-alias="myentryfield4UnitV" entity-name="Unit"></member-entity>
-				  		      			  		      			  		 <!-- \n -->
+				  		      			  		      			  		      			  		 <!-- \n -->
             
             <alias-all entity-alias="PurchaseBillEntryV" ></alias-all>
                   			  		      			  		      			  		      		<!-- \n -->
 			<alias name="myentryfield4UnitName" entity-alias="myentryfield4UnitV" field="name"></alias>	
-				  		      			  		      			  		            
+				  		      			  		      			  		      			  		            
                   			  		      			  		      			  		      		<!-- \n -->
 			<view-link entity-alias="PurchaseBillEntryV" rel-entity-alias="myentryfield4UnitV" rel-optional="true">
 				<key-map field-name="myentryfield4UnitId" rel-field-name="id"/>
 			</view-link>
-				  		      			  		      			  		 <!-- \n -->
+				  		      			  		      			  		      			  		 <!-- \n -->
             <!-- 实例代码
             <member-entity entity-alias="TEntryMaterialV" entity-name="TMaterial"></member-entity>
             <member-entity entity-alias="UnitV" entity-name="Unit"></member-entity>  
@@ -132,25 +138,25 @@ under the License.
       		<member-entity entity-alias="PurchaseBillV" entity-name="PurchaseBill"></member-entity>
       		      			  		      			  		      			  		      		<!-- \n -->
 			<member-entity entity-alias="myfield4UnitV" entity-name="Unit"></member-entity>
-				  		      			  		 <!-- \n -->
+				  		      			  		      			  		 <!-- \n -->
             <member-entity entity-alias="PurchaseBillEntryV" entity-name="PurchaseBillEntry"></member-entity>
                   			  		      			  		      			  		      		<!-- \n -->
 			<member-entity entity-alias="myentryfield4UnitV" entity-name="Unit"></member-entity>
-				  		      			  		      			  		 <!-- 表头字段\n -->
+				  		      			  		      			  		      			  		 <!-- 表头字段\n -->
 			<alias-all entity-alias="PurchaseBillV" ></alias-all>
 			      			  		      			  		      			  		      		<!-- \n -->
 			<alias name="myfield4UnitName" entity-alias="myfield4UnitV" field="name"></alias>	
-				  		      			  		 <!-- 表体字段\n -->
+				  		      			  		      			  		 <!-- 表体字段\n -->
 	  		<alias-all entity-alias="PurchaseBillEntryV" ><exclude field="id"/></alias-all>
 			<alias name="entryId" entity-alias="PurchaseBillEntryV" field="id"></alias>
 			      			  		      			  		      			  		      		<!-- \n -->
 			<alias name="myentryfield4UnitName" entity-alias="myentryfield4UnitV" field="name"></alias>	
-				  		      			  		      			  				
+				  		      			  		      			  		      			  				
 			      			  		      			  		      			  		      		<!-- \n -->
 			<view-link entity-alias="PurchaseBillV" rel-entity-alias="myfield4UnitV" rel-optional="true">
 				<key-map field-name="myfield4UnitId" rel-field-name="id"/>
 			</view-link>
-				  		      			  		 <!-- \n -->
+				  		      			  		      			  		 <!-- \n -->
 			<view-link entity-alias="PurchaseBillV" rel-entity-alias="PurchaseBillEntryV" rel-optional="true">
 				<key-map field-name="id" rel-field-name="parentId"/>
 			</view-link>
@@ -158,7 +164,7 @@ under the License.
 			<view-link entity-alias="PurchaseBillEntryV" rel-entity-alias="myentryfield4UnitV" rel-optional="true">
 				<key-map field-name="myentryfield4UnitId" rel-field-name="id"/>
 			</view-link>
-				  		      			  		      			  		 <!-- \n -->
+				  		      			  		      			  		      			  		 <!-- \n -->
     </view-entity>
      
 </entitymodel>

@@ -63,7 +63,7 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 			,'#PurchaseBillform-myfield4UnitId-selWin button[name=btnCancel]':{
 				click: cancelSelWin
 			}
-																																				//\n
+																																										//\n
 			//编辑界面分录自定义字段4字段选择界面确定
 			,'#PurchaseBillform-myentryfield4UnitName-selWin button[name=btnSure]':{
 				click: this.selectmyentryfield4Unit
@@ -72,7 +72,7 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 			,'#PurchaseBillform-myentryfield4UnitName-selWin button[name=btnCancel]':{
 				click: cancelSelWin
 			}
-																		//\n
+																								//\n
 
 		}
 		);
@@ -115,7 +115,9 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 					entryStore.load();
 				}
 			});
-		}
+		}else{
+    		showError('请选择记录!');
+    	}
 		
 	},
 	//显示分录信息
@@ -153,12 +155,17 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 				}
 			};
 			listPanel.store.sync();
+    	}else{
+    		showError('请选择记录!');
     	}
 	},
 	//刷新
 	refresh: function(button){
-		listPanel=this.getPurchaseBilllist();
+		var listPanel=this.getPurchaseBilllist();
     	listPanel.store.load();
+    	
+    	var entryPanel=this.getPurchaseBilllistentry();
+    	entryPanel.store.removeAll();
 	},
     //保存记录
 	saveRecord: function(button){
@@ -235,13 +242,13 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 		var form=edit.down('form');
 		selectValwin(button,'myfield4UnitId',form);
 	}
-												//\n
+														//\n
 	//表头选择框保存
 	,selectmyentryfield4Unit:function(button){
 		var sr=this.getSelectedEntry();
 		selectValIdAName(button,'myentryfield4UnitId','myentryfield4UnitName',sr);
 	}
-						//\n
+								//\n
 	//调整显示字段，将id字段值设置为displayValue字段值
 	,ajustId2Display : function(form,record){
 		//示例代码
@@ -250,7 +257,7 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 																//\n
 		var myfield4Unit=form.down('selectorfield[name=myfield4UnitId]');
 		myfield4Unit.displayValue=record.get('myfield4UnitName');
-								
+												
 	}
 	
 

@@ -25,7 +25,9 @@ Ext.define('SCM.view.${TemplateName}.ListUI' ,{
 				   {text:'新增',cls:'x-btn-text-icon',icon:'/scmui/images/icons/add.png',action:'addNew'},
     		       {text:'修改',cls:'x-btn-text-icon',icon:'/scmui/images/icons/edit.png',action:'modify'},
     		       {text:'删除',cls:'x-btn-text-icon',icon:'/scmui/images/icons/delete.png',action:'delete'},
-    		       {text:'刷新',cls:'x-btn-text-icon',icon:'/scmui/images/icons/refresh.png',action:'refresh'}],
+    		       {text:'刷新',cls:'x-btn-text-icon',icon:'/scmui/images/icons/refresh.png',action:'refresh'},
+    		       {text:'审核',cls:'x-btn-text-icon',icon:'/scmui/images/icons/audit.gif',action:'audit'},
+    		       {text:'反审核',cls:'x-btn-text-icon',icon:'/scmui/images/icons/unaudit.gif',action:'unaudit'}],
 					region:'north'
                 },
                 {
@@ -79,6 +81,10 @@ Ext.define('SCM.view.${TemplateName}.ListUI' ,{
 							#if($headfield.type=='date')//\n
 							xtype: 'datecolumn'
 							,format : 'Y-m-d'
+							#end//\n
+							#if($headfield.type=='enum')//\n
+							xtype: 'gridcolumn'
+					        ,renderer:$headfield.enumRender
 							#end//\n
 							,dataIndex: '$headfield.name'
 							,width:150
@@ -148,6 +154,10 @@ Ext.define('SCM.view.${TemplateName}.ListUI' ,{
 								  xtype: 'datecolumn'
 								  ,format:'Y-m-d'
 								  #end//\n
+								  #if($entryfield.type=='enum')//\n
+								  xtype: 'gridcolumn'
+							      ,renderer:$entryfield.enumRender
+									#end//\n
 								  ,dataIndex:'$entryfield.name'
 								  ,text: '$entryfield.alias'
 								  

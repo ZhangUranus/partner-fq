@@ -9,31 +9,35 @@ Ext.define('SCM.model.PurchaseBill.PurchaseBillModel', {
 			 ,{name: 'number',type:'string'}
              ,{name: 'bizDate',type:'date',dateFormat:'time'}
 					 //\n
-			 ,{name: 'myfield1',type:'string'  }
+			 ,{name: 'myfield1'  ,type:'string'  }
 			 					 //\n
-			 ,{name: 'myfield2',type:'date' ,dateFormat:'time'  }
+			 ,{name: 'myfield2'  ,type:'date' ,dateFormat:'time'  }
 			 					 //\n
-			 ,{name: 'myfield3',type:'boolean'  }
+			 ,{name: 'myfield3'  ,type:'boolean'  }
 			 					 //\n
 			 ,{name: 'myfield4UnitId',type:'string'  }
 			 ,{name: 'myfield4UnitName',type:'string' ,persist:false }
 			 					 //\n
-			 ,{name: 'myfield5',type:'int'  }
+			 ,{name: 'myfield5'  ,type:'int'  }
+			 					 //\n
+			 ,{name: 'myField6' ,type:'string'   }
 			 		 //\n
 			 ,{name: 'entryId', type: 'string'}
 					 //\n
-			 ,{name: 'myentryfield1',type:'string'  }
+			 ,{name: 'myentryfield1'  ,type:'string'   }
 			 					 //\n
-			 ,{name: 'myentryfield2',type:'date' ,dateFormat:'time'  }
+			 ,{name: 'myentryfield2'  ,type:'date'  ,dateFormat:'time'  }
 			 					 //\n
-			 ,{name: 'myentryfield3',type:'boolean'  }
+			 ,{name: 'myentryfield3'  ,type:'boolean'   }
 			 					 //\n
 			 ,{name: 'myentryfield4UnitId',type:'string'  }
 			 ,{name: 'myentryfield4UnitName',type:'string' ,persist:false }
 			 					 //\n
-			 ,{name: 'myentryfield5',type:'float'  }
+			 ,{name: 'myentryfield5'  ,type:'float'   }
 			 					 //\n
-			 ,{name: 'myentryfield6',type:'int'  }
+			 ,{name: 'myentryfield6'  ,type:'int'   }
+			 					 //\n
+			 ,{name: 'myentryfield7' ,type:'string'    }
 			 		 //\n
 
     ],

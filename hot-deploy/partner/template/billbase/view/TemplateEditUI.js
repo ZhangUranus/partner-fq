@@ -31,6 +31,7 @@ Ext.define('SCM.view.${TemplateName}.EditUI', {
 						  bodyPadding:5,
 						  layout:'border',
 						  items: [
+						  //开始container
 						{
 							xtype: 'container',
 							height: 200,
@@ -83,6 +84,13 @@ Ext.define('SCM.view.${TemplateName}.EditUI', {
 								  ,format:'Y-m-d'
 								  ,fieldLabel: '$headfield.alias'
 								  #end//\n
+								   #if($headfield.type=='enum')//\n
+								  xtype: 'combobox'
+								  ,fieldLabel: '$headfield.alias'
+								  ,store:$headfield.enumStore
+								  ,displayField:'name'
+								  ,valueField:'id'
+								  #end//\n
 								  ,name : '$headfield.name'
 								  ,margin: 5
 								  
@@ -112,6 +120,7 @@ Ext.define('SCM.view.${TemplateName}.EditUI', {
 								}
 							]
 						},
+						//开始gridpanel
 						{
 							xtype: 'gridpanel',
 							region: 'center',
@@ -168,9 +177,19 @@ Ext.define('SCM.view.${TemplateName}.EditUI', {
 								  xtype: 'datecolumn'
 								  ,format:'Y-m-d'
 								  ,editor: {
-										xtype: 'datefield',
-										allowBlank: false,
-										format: 'Y-m-d'
+										xtype: 'datefield'
+										,allowBlank: false
+										,format: 'Y-m-d'
+								   }
+								  #end//\n
+								  #if($entryfield.type=='enum')//\n
+								  xtype: 'gridcolumn'
+								  ,renderer:$entryfield.enumRender
+								  ,editor: {
+										xtype: 'combobox'
+										,store:$entryfield.enumStore
+										,displayField:'name'
+										,valueField:'id'
 								   }
 								  #end//\n
 								  ,dataIndex:'$entryfield.name'
@@ -199,34 +218,65 @@ Ext.define('SCM.view.${TemplateName}.EditUI', {
 								}
 								#end 
 								#end //\n
-							],
+							],//end columns
 							viewConfig: {
 
 							},
 							plugins: [cellEditing],
+							//开始工具栏
 							dockedItems: [
 								{
 									xtype: 'toolbar',
 									dock: 'top',
 									items: [
 										{
-											xtype: 'button',
-											text: '分录新增',
-											action: 'addLine'
+											xtype: 'button'
+											,text: '分录新增'
+											,cls:'x-btn-text-icon'
+											,icon:'/scmui/images/icons/addline.gif'
+											,action: 'addLine'
 										},
 										{
-											xtype: 'button',
-											text: '分录删除',
-											action: 'deleteLine'
+											xtype: 'button'
+											,text: '分录删除'
+											,cls:'x-btn-text-icon'
+											,icon:'/scmui/images/icons/dline.gif'
+											,action: 'deleteLine'
 										}
 									]
 								}
-							]
+							]//end工具栏
+						}//end gridpanel
+	                    ,{
+							xtype: 'container',
+							height: 50,
+							layout: {
+								columns: 3,
+								type: 'table'
+								},
+							region: 'south',
+							items: [
+									
+							       {
+								  xtype: 'datefield',
+								  name : 'createdStamp',
+								  format:'Y-m-d H:i:s',
+								  disabled:true,
+								  margin: 5,
+								  fieldLabel: '创建时间'
+								}
+								,{
+								  xtype: 'datefield',
+								  name : 'lastUpdatedStamp',
+								  margin: 5,
+								  format:'Y-m-d H:i:s',
+								  disabled:true,
+								  fieldLabel: '最后更新时间'
+								}]
 						}
-	                      
 	                  ]
 	              }
-	          ];
+	          ];//结束items
     },
     
     //初始化工具栏

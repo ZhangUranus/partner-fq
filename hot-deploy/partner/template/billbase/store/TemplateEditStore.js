@@ -9,7 +9,8 @@ Ext.define('SCM.store.${TemplateName}.${TemplateName}EditStore', {
     proxy: {
         type: 'ajax',
 		api: {
-            read: '../../scm/control/requestJsonData?entity=${TemplateName}View'
+            read: '../../scm/control/requestJsonData?entity=${TemplateName}View',
+            destroy:'../../scm/control/deleteWithEntry?headEntity=${TemplateName}&entryEntity=${TemplateName}Entry'
         },
         reader: {
             type: 'json',

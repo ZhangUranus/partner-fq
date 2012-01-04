@@ -120,7 +120,9 @@ Ext.define('SCM.controller.${TemplateName}.${TemplateName}Controller', {
 					entryStore.load();
 				}
 			});
-		}
+		}else{
+    		showError('请选择记录!');
+    	}
 		
 	},
 	//显示分录信息
@@ -158,12 +160,17 @@ Ext.define('SCM.controller.${TemplateName}.${TemplateName}Controller', {
 				}
 			};
 			listPanel.store.sync();
+    	}else{
+    		showError('请选择记录!');
     	}
 	},
 	//刷新
 	refresh: function(button){
-		listPanel=this.get${TemplateName}list();
+		var listPanel=this.get${TemplateName}list();
     	listPanel.store.load();
+    	
+    	var entryPanel=this.get${TemplateName}listentry();
+    	entryPanel.store.removeAll();
 	},
     //保存记录
 	saveRecord: function(button){
