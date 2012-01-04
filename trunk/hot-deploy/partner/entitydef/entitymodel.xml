@@ -112,4 +112,15 @@ under the License.
 		<field name="operateType" type="name"/>
 		<prim-key field="id"/>
 	</entity>
+	<entity entity-name="TSystemSerialNumber" package-name="org.ofbiz.partner.system" title="system serial number">
+		<field name="id" type="id-uuid-ne"/>
+		<field name="serialDate" type="name"/>
+		<field name="entityName" type="id-long"/>
+		<field name="prefix" type="name"/>
+		<field name="serialNumber" type="numeric"/>
+		<field name="initNumber" type="numeric"/>
+		<field name="description" type="long-varchar"/>
+		<field name="hasDate" type="indicator"/>
+		<prim-key field="id"/>
+	</entity>
 </entitymodel>
