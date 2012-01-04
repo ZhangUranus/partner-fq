@@ -1,3 +1,21 @@
+.system-add {
+	background-image: url( ../images/icons/add.png ) !important;
+}
+.system-edit {
+	background-image: url( ../images/icons/edit.png ) !important;
+}
+.system-clear {
+	background-image: url( ../images/icons/clear.png ) !important;
+}
+.system-delete {
+	background-image: url( ../images/icons/delete.png ) !important;
+}
+.system-refresh {
+	background-image: url( ../images/icons/refresh.png ) !important;
+}
+.system-search {
+	background-image: url( ../images/icons/search.png ) !important;
+}
 .main-index {
 	background-image: url( ../images/icons/main-index.png ) !important;
 }
@@ -114,3 +132,5 @@
 #main-top {
     background: url(../images/header.png) repeat-x;
 }
+
+
