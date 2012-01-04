@@ -108,18 +108,67 @@ public class CommonEvents {
     }
 	
     /**
-	 * 将Json字符串返回给前端Ext
-     * @throws IOException 
+	 * 获取系统流水号
 	 * 
 	 * */
-    public static void writeJsonDataToExt(HttpServletResponse response,String jsonStr) throws IOException{
+    public static synchronized String getSerialNumber(HttpServletRequest request,String entityName) throws Exception{
+    	StringBuffer serialNumber = new StringBuffer();
+    	String today = new java.text.SimpleDateFormat("yyyyMMdd").format(new java.util.Date());
+    	String prefix = "";
+    	long serial = 0;
+    	List<GenericValue> list = FastList.newInstance();
+    	EntityCondition condition = EntityCondition.makeCondition("entityName",entityName);
+    	try {
+    		list = getDelegator(request).findList("TSystemSerialNumber", condition, null, null, null, true);
+    		if(list.isEmpty()){
+        		return "";
+        	}
+    		GenericValue value = list.get(0);
+    		serial = value.getLong("initNumber");
+    		prefix = value.getString("prefix");
+    		if("0".equals(value.getString("hasDate"))){
+    			serial = value.getLong("serialNumber");
+        		value.set("serialNumber", serial+1);
+        		today = "";
+        	}else{
+        		if(!value.getString("serialDate").equals(today)){
+            		value.set("serialDate", today);
+            		value.set("serialNumber", serial);
+            	}else{
+            		serial = value.getLong("serialNumber");
+            		value.set("serialNumber", serial+1);
+            	}
+        	}        	
+        	value.store();
+        	serialNumber.append(prefix);
+        	serialNumber.append(today);
+        	serialNumber.append(serial);
+		} catch (Exception e) {
+			Debug.logError(e, module);
+			throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "GetSerialNumberExcetion"));
+		}
+    	return serialNumber.toString();
+    }
+    
+    /**
+	 * 将Json字符串返回给前端Ext
+     * @throws Exception 
+	 * 
+	 * */
+    public static void writeJsonDataToExt(HttpServletResponse response,String jsonStr) throws Exception {
     	Writer out;
     	response.setContentType("application/x-json");
-    	response.setContentLength(jsonStr.getBytes("UTF8").length);
-        Debug.logInfo(jsonStr, module);
-        out = response.getWriter();
-        out.write(jsonStr);
-        out.flush();
+    	try {
+			response.setContentLength(jsonStr.getBytes("UTF8").length);
+			Debug.logInfo(jsonStr, module);
+	        out = response.getWriter();
+	        out.write(jsonStr);
+	        out.flush();
+		} catch (Exception e) {
+			Debug.logError(e, module);
+			throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "WriteJsonToWebException"));
+		}
+        
     }
     
     /**
@@ -127,8 +176,9 @@ public class CommonEvents {
 	 * 
 	 * flag : true ->遍历所有子节点
 	 *        false ->只查找该节点下层节点
+     * @throws Exception 
 	 * */
-    public static String getTreeDataByParentId(HttpServletRequest request,GenericDelegator delegator,String parentId,boolean flag){
+    public static String getTreeDataByParentId(HttpServletRequest request,GenericDelegator delegator,String parentId,boolean flag) throws Exception{
     	EntityConditionList<EntityCondition> condition = null;
     	List<EntityCondition> conds = FastList.newInstance();
     	conds.add(EntityCondition.makeCondition("parentId",parentId));
@@ -145,8 +195,9 @@ public class CommonEvents {
 		//根据parentId从数据库中获取子节点列表
 		try {
 			menuList =  delegator.findList("VSystemMenu", condition, null, orders, findOptions, true);
-		} catch (GenericEntityException e) {
-			Debug.logError("Problems with findList "+e, module);
+		} catch (Exception e) {
+			Debug.logError(e, module);
+			throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "GetEntityListException"));
 		}
 		if (menuList == null || menuList.size() < 1) {
 			return "[]";
