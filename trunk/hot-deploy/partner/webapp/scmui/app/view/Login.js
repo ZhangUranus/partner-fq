@@ -2,8 +2,10 @@ Ext.define('SCM.view.Login',{
     extend:'Ext.window.Window',
     alias: 'widget.loginForm',
     requires: ['Ext.form.*'],
+    id : 'login-window',
     initComponent:function(){
         var form = Ext.widget('form',{
+            id : 'login-form',
             border: false,
             bodyPadding: 10,
             fieldDefaults: {
@@ -46,9 +48,31 @@ Ext.define('SCM.view.Login',{
             }],
             buttons:[{
                 text:'登录',
-                handler:function(){
-                    var form = this.up('form').getForm();
-                    var win = this.up('window');
+                handler:this.login
+            }]
+        })
+        Ext.apply(this,{
+            height: 160,
+            width: 280,
+            title: '用户登陆',
+            closeAction: 'hide',
+            closable : false, 
+            iconCls: 'win',
+            layout: 'fit',
+            modal : true, 
+            plain : true,
+            resizable: false,
+            items:form
+        });
+        var nav = Ext.create('Ext.util.KeyNav', Ext.getDoc(), {
+            scope : this,
+            enter : this.login
+        });
+        this.callParent(arguments);
+    },
+    login : function(){
+                    var form = Ext.getCmp('login-form').getForm();
+                    var win = Ext.getCmp('login-window');
                     if(form.isValid()){
                         form.submit({
                             clientValidation: true,
@@ -71,21 +95,4 @@ Ext.define('SCM.view.Login',{
                         });
                     }
                 }
-            }]
-        })
-        Ext.apply(this,{
-            height: 160,
-            width: 280,
-            title: '用户登陆',
-            closeAction: 'hide',
-            closable : false, 
-            iconCls: 'win',
-            layout: 'fit',
-            modal : true, 
-            plain : true,
-            resizable: false,
-            items:form
-        });
-        this.callParent(arguments);
-    }
 });
