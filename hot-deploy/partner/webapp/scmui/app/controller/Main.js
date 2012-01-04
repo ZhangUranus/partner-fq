@@ -27,6 +27,7 @@ Ext.define('SCM.controller.Main', {
 	                if(!win){
 	                    win = Ext.create('SCM.view.Login').show();
 	                }
+                    win.down('form').getForm().findField('username').focus(true,true);
                 } 
             }
         });
@@ -88,7 +89,7 @@ Ext.define('SCM.controller.Main', {
 			            url:'../scm/control/getUserPermissions?menuId='+record.get("id"),
 			            success : function(response , option) {
                             var permission = Ext.decode(response.responseText);
-                            debugger;
+                            //var permission = Ext.decode("{edit: true,add: true,remove: true,view:false}");
 			                self.getTabpanel().addTab(record.data,permission);
 			            }
 			        });
