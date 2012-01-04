@@ -210,4 +210,18 @@ under the License.
 	<TSystemMenuOfRole id='0eddc2f2-25fc-466a-921b-df094ab076dd' menuId='packingMaterialReport' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='V' />
 	<TSystemMenuOfRole id='e97d3623-4e32-4e79-a561-440d6e668508' menuId='productReport' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='V' />
 	<TSystemMenuOfRole id='d358c0d6-48e9-4641-85a9-c36f50b6541d' menuId='BOMBillInfoMaintaince' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='V' />
+	
+	<TSystemSerialNumber id='80c869ca-fe97-4da1-b5b5-5017195aaf5d' serialDate='20120101' entityName='Unit' prefix='UNT' serialNumber='100001' initNumber='100001' description='计量单位编号' hasDate='0' />
+	<TSystemSerialNumber id='76f21d31-e491-4bbb-b798-05a52fd45e10' serialDate='20120101' entityName='WarehouseType' prefix='WHT' serialNumber='100001' initNumber='100001' description='仓库类型编号' hasDate='0' />
+	<TSystemSerialNumber id='b44376e5-6445-47fd-ac77-137c4066d3c3' serialDate='20120101' entityName='Warehouse' prefix='WH' serialNumber='100001' initNumber='100001' description='仓库编号' hasDate='0' />
+	<TSystemSerialNumber id='47ef2564-903d-479b-aaa0-92f7889d519d' serialDate='20120101' entityName='Workshop' prefix='WS' serialNumber='100001' initNumber='100001' description='车间编号' hasDate='0' />
+	<TSystemSerialNumber id='3e048094-2275-41e7-8929-bf73032bdbbb' serialDate='20120101' entityName='Supplier' prefix='SUP' serialNumber='100001' initNumber='100001' description='供应商编号' hasDate='0' />
+	<TSystemSerialNumber id='7b8f2eff-d59e-4283-8e1f-ff99d37cf868' serialDate='20120101' entityName='ConsignProcesser' prefix='CP' serialNumber='100001' initNumber='100001' description='委外供应商编号' hasDate='0' />
+	<TSystemSerialNumber id='9fb59915-b9dd-464c-94af-65b87dfe7cf1' serialDate='20120101' entityName='Customer' prefix='CUST' serialNumber='100001' initNumber='100001' description='客户编号' hasDate='0' />
+	<TSystemSerialNumber id='cbdae0dc-d4a2-4e6a-ae00-d19f541b28c3' serialDate='20120101' entityName='TMaterialType' prefix='MTT' serialNumber='100001' initNumber='100001' description='物料类别编号' hasDate='0' />
+	<TSystemSerialNumber id='b28c6cee-1701-4200-8eb2-ae6721c9cbf4' serialDate='20120101' entityName='TMaterial' prefix='MT' serialNumber='100001' initNumber='100001' description='物料编号' hasDate='0' />
+	<TSystemSerialNumber id='80152339-42c2-4950-8ffb-45219d545ee6' serialDate='20120101' entityName='MaterialBom' prefix='MTB' serialNumber='100001' initNumber='100001' description='BOM单编号' hasDate='0' />
+	<TSystemSerialNumber id='e77cbcf6-4ccb-46b9-9806-7f1e8f9563f6' serialDate='20120101' entityName='Department' prefix='DPM' serialNumber='100001' initNumber='100001' description='部门编号' hasDate='0' />
+	<TSystemSerialNumber id='53db06e9-6884-41b2-8951-7123021fc5a9' serialDate='20120101' entityName='PurchaseBill' prefix='PUR' serialNumber='100001' initNumber='100001' description='采购单编号' hasDate='1' />
+	
 </entity-engine-xml>
