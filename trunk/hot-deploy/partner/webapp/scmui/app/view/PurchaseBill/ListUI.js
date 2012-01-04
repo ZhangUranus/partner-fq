@@ -25,7 +25,9 @@ Ext.define('SCM.view.PurchaseBill.ListUI' ,{
 				   {text:'新增',cls:'x-btn-text-icon',icon:'/scmui/images/icons/add.png',action:'addNew'},
     		       {text:'修改',cls:'x-btn-text-icon',icon:'/scmui/images/icons/edit.png',action:'modify'},
     		       {text:'删除',cls:'x-btn-text-icon',icon:'/scmui/images/icons/delete.png',action:'delete'},
-    		       {text:'刷新',cls:'x-btn-text-icon',icon:'/scmui/images/icons/refresh.png',action:'refresh'}],
+    		       {text:'刷新',cls:'x-btn-text-icon',icon:'/scmui/images/icons/refresh.png',action:'refresh'},
+    		       {text:'审核',cls:'x-btn-text-icon',icon:'/scmui/images/icons/audit.gif',action:'audit'},
+    		       {text:'反审核',cls:'x-btn-text-icon',icon:'/scmui/images/icons/unaudit.png',action:'unaudit'}],
 					region:'north'
                 },
                 {
@@ -63,6 +65,7 @@ Ext.define('SCM.view.PurchaseBill.ListUI' ,{
 							//\n
 							xtype: 'gridcolumn'
 																																			//\n
+							//\n
 							,dataIndex: 'myfield1'
 							,width:150
 							,groupable: false
@@ -75,6 +78,7 @@ Ext.define('SCM.view.PurchaseBill.ListUI' ,{
 							,trueText:'是'
 							,falseText:'否'
 														//\n
+							//\n
 							,dataIndex: 'myfield3'
 							,width:150
 							,groupable: false
@@ -94,10 +98,23 @@ Ext.define('SCM.view.PurchaseBill.ListUI' ,{
 							xtype: 'numbercolumn'
 							,format:'0'
 																												//\n
+							//\n
 							,dataIndex: 'myfield5'
 							,width:150
 							,groupable: false
                             ,text: '自定义字段5'
+                        }
+																		//\n
+						,{
+																																			//\n
+							//\n
+							xtype: 'gridcolumn'
+					        ,renderer:Ext.partner.basiccode.billStatusRenderer
+							//\n
+							,dataIndex: 'myField6'
+							,width:150
+							,groupable: false
+                            ,text: '自定义字段6'
                         }
 												 //\n
 
@@ -136,6 +153,7 @@ Ext.define('SCM.view.PurchaseBill.ListUI' ,{
 								  //\n
 								  xtype: 'gridcolumn'
 								  								  								  								  								  //\n
+								  //\n
 								  ,dataIndex:'myentryfield1'
 								  ,text: '自定义字段1'
 								  
@@ -145,6 +163,7 @@ Ext.define('SCM.view.PurchaseBill.ListUI' ,{
 								  								  								  								  								  //\n
 								  xtype: 'datecolumn'
 								  ,format:'Y-m-d'
+								  //\n
 								  //\n
 								  ,dataIndex:'myentryfield2'
 								  ,text: '自定义字段2'
@@ -157,6 +176,7 @@ Ext.define('SCM.view.PurchaseBill.ListUI' ,{
 								  ,trueText:'是'
 								  ,falseText:'否'
 								  								  //\n
+								  //\n
 								  ,dataIndex:'myentryfield3'
 								  ,text: '自定义字段3'
 								  
@@ -186,6 +206,7 @@ Ext.define('SCM.view.PurchaseBill.ListUI' ,{
 								  								  								  //\n
 								  xtype: 'numbercolumn'
 								  								  								  //\n
+								  //\n
 								  ,dataIndex:'myentryfield5'
 								  ,text: '自定义字段5'
 								  
@@ -196,8 +217,20 @@ Ext.define('SCM.view.PurchaseBill.ListUI' ,{
 								  xtype: 'numbercolumn'
 								  ,format:'0'
 								  								  								  								  //\n
+								  //\n
 								  ,dataIndex:'myentryfield6'
 								  ,text: '自定义字段6'
+								  
+								}
+																								//\n
+								,{
+								  								  								  								  								  //\n
+								  //\n
+								  xtype: 'gridcolumn'
+							      ,renderer:Ext.partner.basiccode.billStatusRenderer
+									//\n
+								  ,dataIndex:'myentryfield7'
+								  ,text: '自定义字段7'
 								  
 								}
 																 //\n

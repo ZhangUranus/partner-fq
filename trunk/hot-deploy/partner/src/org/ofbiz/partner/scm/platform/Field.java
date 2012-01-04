@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 字段类型是string,int,float,date,boolean,entity
+ * 字段类型是string,int,float,date,boolean,entity,enum
  * 字段类，记录一个字段的配置信息
  * @author Mark
  *
@@ -31,6 +31,10 @@ public class Field {
 	
 	//当字段类型是entity时，该字段记录关联的实体名称
 	private String relatedEntity=null;
+	
+	//当字段是enum是，该字段记录关联的store名称
+	private String enumStore=null;
+	private String enumRender=null;
 	
 	private Map<String, String> propertiesMap=new HashMap<String, String>();
 	public Field(String name) {
@@ -139,6 +143,26 @@ public class Field {
 
 	public void setRelatedEntity(String relatedEntity) {
 		this.relatedEntity = relatedEntity;
+		propertiesMap.put("entity", this.relatedEntity);
 	}
+
+	public String getEnumStore() {
+		return enumStore;
+	}
+
+	public void setEnumStore(String enumStore) {
+		this.enumStore = enumStore;
+		propertiesMap.put("enumStore", this.enumStore);
+	}
+
+	public String getEnumRender() {
+		return enumRender;
+	}
+
+	public void setEnumRender(String enumRender) {
+		this.enumRender = enumRender;
+		propertiesMap.put("enumRender", this.enumRender);
+	}
+	
 	
 }

@@ -8,7 +8,7 @@ Ext.define('SCM.model.${TemplateName}.${TemplateName}EditEntryModel', {
 			 ,{name: 'parentId',  type: 'string'}
 			 #foreach($entryfield in $EntryFields)
 			 #if($entryfield.type!='entity')//\n
-			 ,{name: '${entryfield.name}',type:'${entryfield.type}' #if(${entryfield.type}=='date'),dateFormat:'time',defaultValue:new Date(),convert: function(value, record) {return new Date(value);} #end #if(${entryfield.isPersis}==false),persist:false #end}
+			 ,{name: '${entryfield.name}'#if($entryfield.type=='enum'),type:'string' #else ,type:'$entryfield.type'#end #if(${entryfield.type}=='date'),dateFormat:'time',defaultValue:new Date(),convert: function(value, record) {return new Date(value);} #end #if(${entryfield.isPersis}==false),persist:false #end}
 			 #else//\n
 			 ,{name: '${entryfield.name}${entryfield.entity}Id',type:'string'  #if(${entryfield.isPersis}==false),persist:false #end}
 			 ,{name: '${entryfield.name}${entryfield.entity}Name',type:'string',persist:false }

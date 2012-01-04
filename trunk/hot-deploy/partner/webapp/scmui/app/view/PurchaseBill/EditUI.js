@@ -31,6 +31,7 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 						  bodyPadding:5,
 						  layout:'border',
 						  items: [
+						  //开始container
 						{
 							xtype: 'container',
 							height: 200,
@@ -60,6 +61,7 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 								  xtype: 'textfield'
 								  ,fieldLabel: '自定义字段1'
 								  								  								  								  								  //\n
+								   //\n
 								  ,name : 'myfield1'
 								  ,margin: 5
 								  
@@ -71,6 +73,7 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 								  ,format:'Y-m-d'
 								  ,fieldLabel: '自定义字段2'
 								  //\n
+								   //\n
 								  ,name : 'myfield2'
 								  ,margin: 5
 								  
@@ -83,6 +86,7 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 								  ,inputValue:true
 								  ,boxLabel:'自定义字段3'
 								  								  //\n
+								   //\n
 								  ,name : 'myfield3'
 								  ,margin: 5
 								  
@@ -104,7 +108,22 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 								  ,hideTrigger:true
 								  ,fieldLabel: '自定义字段5'
 								  								  								  								  //\n
+								   //\n
 								  ,name : 'myfield5'
+								  ,margin: 5
+								  
+								}
+																								//\n
+								,{
+								  								  								  								  								  //\n
+								   //\n
+								  xtype: 'combobox'
+								  ,fieldLabel: '自定义字段6'
+								  ,store:Ext.partner.basiccode.billStatusStore
+								  ,displayField:'name'
+								  ,valueField:'id'
+								  //\n
+								  ,name : 'myField6'
 								  ,margin: 5
 								  
 								}
@@ -123,6 +142,7 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 								}
 							]
 						},
+						//开始gridpanel
 						{
 							xtype: 'gridpanel',
 							region: 'center',
@@ -149,6 +169,7 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 											xtype: 'textfield'
 										}
 								  								  								  								  								  //\n
+								  //\n
 								  ,dataIndex:'myentryfield1'
 								  ,text: '自定义字段1'
 								  
@@ -159,10 +180,11 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 								  xtype: 'datecolumn'
 								  ,format:'Y-m-d'
 								  ,editor: {
-										xtype: 'datefield',
-										allowBlank: false,
-										format: 'Y-m-d'
+										xtype: 'datefield'
+										,allowBlank: false
+										,format: 'Y-m-d'
 								   }
+								  //\n
 								  //\n
 								  ,dataIndex:'myentryfield2'
 								  ,text: '自定义字段2'
@@ -177,6 +199,7 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 										,cls: 'x-grid-checkheader-editor'
 								  }
 								  								  //\n
+								  //\n
 								  ,dataIndex:'myentryfield3'
 								  ,text: '自定义字段3'
 								  
@@ -211,6 +234,7 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 											,hideTrigger:true
 										}
 								  								  								  //\n
+								  //\n
 								  ,dataIndex:'myentryfield5'
 								  ,text: '自定义字段5'
 								  
@@ -227,39 +251,88 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 											,hideTrigger:true
 										}
 								  								  								  								  //\n
+								  //\n
 								  ,dataIndex:'myentryfield6'
 								  ,text: '自定义字段6'
 								  
 								}
+																								//\n
+								,{
+								  								  								  								  								  //\n
+								  //\n
+								  xtype: 'gridcolumn'
+								  ,renderer:Ext.partner.basiccode.billStatusRenderer
+								  ,editor: {
+										xtype: 'combobox'
+										,store:Ext.partner.basiccode.billStatusStore
+										,displayField:'name'
+										,valueField:'id'
+								   }
+								  //\n
+								  ,dataIndex:'myentryfield7'
+								  ,text: '自定义字段7'
+								  
+								}
 																 //\n
-							],
+							],//end columns
 							viewConfig: {
 
 							},
 							plugins: [cellEditing],
+							//开始工具栏
 							dockedItems: [
 								{
 									xtype: 'toolbar',
 									dock: 'top',
 									items: [
 										{
-											xtype: 'button',
-											text: '分录新增',
-											action: 'addLine'
+											xtype: 'button'
+											,text: '分录新增'
+											,cls:'x-btn-text-icon'
+											,icon:'/scmui/images/icons/addline.gif'
+											,action: 'addLine'
 										},
 										{
-											xtype: 'button',
-											text: '分录删除',
-											action: 'deleteLine'
+											xtype: 'button'
+											,text: '分录删除'
+											,cls:'x-btn-text-icon'
+											,icon:'/scmui/images/icons/dline.gif'
+											,action: 'deleteLine'
 										}
 									]
 								}
-							]
+							]//end工具栏
+						}//end gridpanel
+	                    ,{
+							xtype: 'container',
+							height: 50,
+							layout: {
+								columns: 3,
+								type: 'table'
+								},
+							region: 'south',
+							items: [
+									
+							       {
+								  xtype: 'datefield',
+								  name : 'createdStamp',
+								  format:'Y-m-d H:i:s',
+								  disabled:true,
+								  margin: 5,
+								  fieldLabel: '创建时间'
+								}
+								,{
+								  xtype: 'datefield',
+								  name : 'lastUpdatedStamp',
+								  margin: 5,
+								  format:'Y-m-d H:i:s',
+								  disabled:true,
+								  fieldLabel: '最后更新时间'
+								}]
 						}
-	                      
 	                  ]
 	              }
-	          ];
+	          ];//结束items
     },
     
     //初始化工具栏

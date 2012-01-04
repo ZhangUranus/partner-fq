@@ -9,7 +9,8 @@ Ext.define('SCM.store.PurchaseBill.PurchaseBillEditStore', {
     proxy: {
         type: 'ajax',
 		api: {
-            read: '../../scm/control/requestJsonData?entity=PurchaseBillView'
+            read: '../../scm/control/requestJsonData?entity=PurchaseBillView',
+            destroy:'../../scm/control/deleteWithEntry?headEntity=PurchaseBill&entryEntity=PurchaseBillEntry'
         },
         reader: {
             type: 'json',

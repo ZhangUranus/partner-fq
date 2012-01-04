@@ -12,17 +12,21 @@ Ext.define('SCM.model.PurchaseBill.PurchaseBillEditModel', {
 				}
 			  }
 			 			 //\n
-			 ,{name: 'myfield1',type:'string'  }
+			 ,{name: 'myfield1' ,type:'string'  }
 			 			 			 //\n
-			 ,{name: 'myfield2',type:'date' ,dateFormat:'time',defaultValue:new Date(),convert: function(value, record) {return new Date(value);}  }
+			 ,{name: 'myfield2' ,type:'date' ,dateFormat:'time',defaultValue:new Date(),convert: function(value, record) {return new Date(value);}  }
 			 			 			 //\n
-			 ,{name: 'myfield3',type:'boolean'  }
+			 ,{name: 'myfield3' ,type:'boolean'  }
 			 			 			 //\n
 			 ,{name: 'myfield4UnitId',type:'string'  }
 			 ,{name: 'myfield4UnitName',type:'string',persist:false }
 			 			 			 //\n
-			 ,{name: 'myfield5',type:'int'  }
+			 ,{name: 'myfield5' ,type:'int'  }
+			 			 			 //\n
+			 ,{name: 'myField6',type:'string'   }
 			 			 //\n
+			 ,{name: 'createdStamp',  type: 'date',format:'time',convert: function(value, record) {return new Date(value);},persist:false}
+			 ,{name: 'lastUpdatedStamp',  type: 'date',format:'time',convert: function(value, record) {return new Date(value);},persist:false}
 			 ,{name: 'note',  type: 'string'}
     ],
     requires: ['Ext.data.UuidGenerator'],
