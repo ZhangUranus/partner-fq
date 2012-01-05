@@ -18,6 +18,9 @@ Ext.define('SCM.model.system.UserTreeModel', {
         type: 'jsonajax',
         api: {
             read: '../../scm/control/getUserTreeToJson'
-        }
+        },
+        reader: {
+			root: 'children'
+		}
     }
 });

@@ -55,8 +55,7 @@ Ext.define('SCM.view.basedata.unit.ListUI', {
 										text : '删除',
 										iconCls : 'system-delete',
 										action : 'delete'
-									}
-							]
+									}]
 						}, {
 							dock : 'bottom',
 							xtype : 'pagingtoolbar',
