@@ -16,6 +16,9 @@
 .system-search {
 	background-image: url( ../images/icons/search.png ) !important;
 }
+.system-save {
+	background-image: url( ../images/icons/save.png ) !important;
+}
 .main-index {
 	background-image: url( ../images/icons/main-index.png ) !important;
 }
