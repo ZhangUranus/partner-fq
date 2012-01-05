@@ -62,8 +62,7 @@ Ext.define('SCM.view.system.user.ListUI' ,{
 		                              fieldLabel: '登录名',
                                       allowBlank : false,
                                       minLength : 4,
-                                      maxLength : 32,
-                                      regex : ''
+                                      maxLength : 32
 		                          },
 		                          {
 		                              xtype: 'textfield',
@@ -73,7 +72,7 @@ Ext.define('SCM.view.system.user.ListUI' ,{
 		                              inputType: 'password',
                                       allowBlank : false,
                                       minLength : 6,
-                                      maxLength : 16
+                                      maxLength : 46
 		                          },
 		                          {
 		                              xtype: 'textfield',
@@ -83,7 +82,7 @@ Ext.define('SCM.view.system.user.ListUI' ,{
 		                              inputType: 'password',
                                       allowBlank : false,
                                       minLength : 6,
-                                      maxLength : 16
+                                      maxLength : 46
 		                          },
 		                          {
 		                              xtype: 'textfield',
@@ -92,8 +91,7 @@ Ext.define('SCM.view.system.user.ListUI' ,{
 		                              fieldLabel: '用户名',
                                       allowBlank : false,
                                       minLength : 4,
-                                      maxLength : 32,
-                                      regex : ''
+                                      maxLength : 32
 		                          },
 		                          {
 		                              xtype: 'combobox',
@@ -127,11 +125,11 @@ Ext.define('SCM.view.system.user.ListUI' ,{
 		                              name : 'phoneNumber',
 		                              fieldLabel: '手机号码',
                                       minLength : 11,
-                                      maxLength : 11,
-                                      regex : ''
+                                      maxLength : 11
 		                          },
 		                          {
-		                              xtype: 'email',
+		                              xtype: 'textfield',
+		                              vtype: 'email',
 		                              anchor: '80%',
 		                              name : 'email',
 		                              fieldLabel: '邮箱'
