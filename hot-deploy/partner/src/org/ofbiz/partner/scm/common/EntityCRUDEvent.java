@@ -501,8 +501,8 @@ public class EntityCRUDEvent {
 	}
 	
 	private static boolean checkNameUnique(HttpServletRequest request,String entityName,String nameValue,String pkField,String pkValue) throws GenericEntityException{
-		EntityCondition pkcondition = EntityCondition.makeCondition(pkField,pkValue);
-		List<GenericValue> nameList = CommonEvents.getDelegator(request).findList(entityName, pkcondition, null, null, null, true);
+		EntityCondition condition = EntityCondition.makeCondition(pkField,pkValue);
+		List<GenericValue> nameList = CommonEvents.getDelegator(request).findList(entityName, condition, null, null, null, true);
 		if(nameList.size()>0){//判断是否有修改name字段
 			if(nameList.get(0).getString("name").equals(nameValue)){
 				return true;
@@ -513,8 +513,8 @@ public class EntityCRUDEvent {
 	
 	private static boolean checkNameUnique(HttpServletRequest request,String entityName,String nameValue) throws GenericEntityException{
 		EntityCondition condition = EntityCondition.makeCondition("name",nameValue);
-		List<GenericValue> valueList = CommonEvents.getDelegator(request).findList(entityName, condition, null, null, null, true);
-		if(valueList.size()>0){
+		long count = CommonEvents.getDelegator(request).findCountByCondition(entityName, condition, null, null);
+		if(count>0){
 			return false;
 		}else{
 			return true;
