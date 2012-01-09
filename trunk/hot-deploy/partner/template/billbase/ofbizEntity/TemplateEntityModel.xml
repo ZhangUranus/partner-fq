@@ -128,54 +128,6 @@ under the License.
 			</view-link>
 			 -->
     </view-entity>
-    <!-- 列表界面视图 关联表头和分录-->
-    <view-entity entity-name="${TemplateName}ListView"
-            package-name="org.ofbiz.scm.basedata"
-            title="${TemplateName}ListView  Entity">
-      		<member-entity entity-alias="${TemplateName}V" entity-name="${TemplateName}"></member-entity>
-      		#foreach($headfield in $HeadFields)
-      		#if($headfield.isListVisible==true&&$headfield.type=="entity"&&$headfield.isPersis==true)<!-- \n -->
-			<member-entity entity-alias="${headfield.name}${headfield.entity}V" entity-name="${headfield.entity}"></member-entity>
-			#end 
-	  		#end <!-- \n -->
-            <member-entity entity-alias="${TemplateName}EntryV" entity-name="${TemplateName}Entry"></member-entity>
-            #foreach($entryfield in $EntryFields)
-      		#if($entryfield.isHidden==false&&$entryfield.type=="entity"&&$entryfield.isPersis==true)<!-- \n -->
-			<member-entity entity-alias="${entryfield.name}${entryfield.entity}V" entity-name="${entryfield.entity}"></member-entity>
-			#end 
-	  		#end <!-- 表头字段\n -->
-			<alias-all entity-alias="${TemplateName}V" ></alias-all>
-			#foreach($headfield in $HeadFields)
-      		#if($headfield.isListVisible==true&&$headfield.type=="entity"&&$headfield.isPersis==true)<!-- \n -->
-			<alias name="${headfield.name}${headfield.entity}Name" entity-alias="${headfield.name}${headfield.entity}V" field="name"></alias>	
-			#end 
-	  		#end <!-- 表体字段\n -->
-	  		<alias-all entity-alias="${TemplateName}EntryV" ><exclude field="id"/></alias-all>
-			<alias name="entryId" entity-alias="${TemplateName}EntryV" field="id"></alias>
-			#foreach($entryfield in $EntryFields)
-      		#if($entryfield.isHidden==false&&$entryfield.type=="entity"&&$entryfield.isPersis==true)<!-- \n -->
-			<alias name="${entryfield.name}${entryfield.entity}Name" entity-alias="${entryfield.name}${entryfield.entity}V" field="name"></alias>	
-			#end 
-	  		#end
-		
-			#foreach($headfield in $HeadFields)
-      		#if($headfield.isListVisible==true&&$headfield.type=="entity"&&$headfield.isPersis==true)<!-- \n -->
-			<view-link entity-alias="${TemplateName}V" rel-entity-alias="${headfield.name}${headfield.entity}V" rel-optional="true">
-				<key-map field-name="${headfield.name}${headfield.entity}Id" rel-field-name="id"/>
-			</view-link>
-			#end 
-	  		#end <!-- \n -->
-			<view-link entity-alias="${TemplateName}V" rel-entity-alias="${TemplateName}EntryV" rel-optional="true">
-				<key-map field-name="id" rel-field-name="parentId"/>
-			</view-link>
-			#foreach($entryfield in $EntryFields)
-      		#if($entryfield.isHidden==false&&$entryfield.type=="entity"&&$entryfield.isPersis==true)<!-- \n -->
-			<view-link entity-alias="${TemplateName}EntryV" rel-entity-alias="${entryfield.name}${entryfield.entity}V" rel-optional="true">
-				<key-map field-name="${entryfield.name}${entryfield.entity}Id" rel-field-name="id"/>
-			</view-link>
-			#end 
-	  		#end <!-- \n -->
-    </view-entity>
      
 </entitymodel>
     

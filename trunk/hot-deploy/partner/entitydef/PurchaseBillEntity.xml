@@ -132,41 +132,6 @@ under the License.
 			</view-link>
 			 -->
     </view-entity>
-    <!-- 列表界面视图 关联表头和分录-->
-    <view-entity entity-name="PurchaseBillListView"
-            package-name="org.ofbiz.scm.basedata"
-            title="PurchaseBillListView  Entity">
-      		<member-entity entity-alias="PurchaseBillV" entity-name="PurchaseBill"></member-entity>
-      		      			  		      			  		      			  		      		<!-- \n -->
-			<member-entity entity-alias="myfield4UnitV" entity-name="Unit"></member-entity>
-				  		      			  		      			  		 <!-- \n -->
-            <member-entity entity-alias="PurchaseBillEntryV" entity-name="PurchaseBillEntry"></member-entity>
-                  			  		      			  		      			  		      		<!-- \n -->
-			<member-entity entity-alias="myentryfield4UnitV" entity-name="Unit"></member-entity>
-				  		      			  		      			  		      			  		 <!-- 表头字段\n -->
-			<alias-all entity-alias="PurchaseBillV" ></alias-all>
-			      			  		      			  		      			  		      		<!-- \n -->
-			<alias name="myfield4UnitName" entity-alias="myfield4UnitV" field="name"></alias>	
-				  		      			  		      			  		 <!-- 表体字段\n -->
-	  		<alias-all entity-alias="PurchaseBillEntryV" ><exclude field="id"/></alias-all>
-			<alias name="entryId" entity-alias="PurchaseBillEntryV" field="id"></alias>
-			      			  		      			  		      			  		      		<!-- \n -->
-			<alias name="myentryfield4UnitName" entity-alias="myentryfield4UnitV" field="name"></alias>	
-				  		      			  		      			  		      			  				
-			      			  		      			  		      			  		      		<!-- \n -->
-			<view-link entity-alias="PurchaseBillV" rel-entity-alias="myfield4UnitV" rel-optional="true">
-				<key-map field-name="myfield4UnitId" rel-field-name="id"/>
-			</view-link>
-				  		      			  		      			  		 <!-- \n -->
-			<view-link entity-alias="PurchaseBillV" rel-entity-alias="PurchaseBillEntryV" rel-optional="true">
-				<key-map field-name="id" rel-field-name="parentId"/>
-			</view-link>
-			      			  		      			  		      			  		      		<!-- \n -->
-			<view-link entity-alias="PurchaseBillEntryV" rel-entity-alias="myentryfield4UnitV" rel-optional="true">
-				<key-map field-name="myentryfield4UnitId" rel-field-name="id"/>
-			</view-link>
-				  		      			  		      			  		      			  		 <!-- \n -->
-    </view-entity>
      
 </entitymodel>
     
