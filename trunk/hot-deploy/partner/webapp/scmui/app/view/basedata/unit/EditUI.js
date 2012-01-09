@@ -4,6 +4,8 @@ Ext.define('SCM.view.basedata.unit.EditUI', {
 
 			title : '计量单位',
 			layout : 'fit',
+			height: 80,
+            width: 280,
 			//autoShow: true,
 			modal : true,//背景变灰，不能编辑
 			uiStatus : 'AddNew',
@@ -50,6 +52,7 @@ Ext.define('SCM.view.basedata.unit.EditUI', {
 			initToolbar : function() {
 				this.dockedItems = [{
 							xtype : 'toolbar',
+							height: 28,
 							items : [{
 										text : '保存',
 										iconCls : 'system-save',
