@@ -96,6 +96,19 @@
            <event type="java" path="org.ofbiz.partner.scm.common.MultiEntryCRUDEvent" invoke="deleteEnityWithEntry"/>
            <response name="success" type="none"/>
        </request-map>
+       
+       <!-- exporter -->
+       <request-map uri="export">
+           <security https="false" auth="false"/>
+           <event type="java" path="org.ofbiz.partner.scm.export.ExportEvent" invoke="export"/>
+           <response name="success" type="none"/>
+       </request-map>
+       <request-map uri="download">
+           <security https="false" auth="false"/>
+           <event type="java" path="org.ofbiz.partner.scm.export.ExportEvent" invoke="download"/>
+           <response name="success" type="none"/>
+       </request-map>
+       <!-- exporter -->
     <!-- end of request mappings -->
     
     <!-- View Mappings -->

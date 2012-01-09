@@ -157,6 +157,7 @@ public class CommonEvents {
 	 * */
     public static void writeJsonDataToExt(HttpServletResponse response,String jsonStr) throws Exception {
     	Writer out;
+    	response.resetBuffer();
     	response.setContentType("application/x-json");
     	try {
 			response.setContentLength(jsonStr.getBytes("UTF8").length);
@@ -164,6 +165,9 @@ public class CommonEvents {
 	        out = response.getWriter();
 	        out.write(jsonStr);
 	        out.flush();
+	        if (out != null) {
+	        	out.close();
+			}
 		} catch (Exception e) {
 			Debug.logError(e, module);
 			throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "WriteJsonToWebException"));
