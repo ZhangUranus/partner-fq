@@ -32,9 +32,12 @@ Ext.define('SCM.controller.basedata.UnitController', {
 	        'unitlist button[action=delete]':{
 	        	click: this.deleteRecord
 	        },
-	        //列表刷新按钮
+	        //列表查询按钮
 	        'unitlist button[action=search]':{
 	        	click: this.refreshRecord
+	        },
+	        'unitlist button[action=export]':{
+	        	click: this.exportExcel
 	        },
 	        //编辑界面保存
 	        'unitedit button[action=save]':{
@@ -51,15 +54,15 @@ Ext.define('SCM.controller.basedata.UnitController', {
      * 页面初始化方法
      * @param {} grid 事件触发控件
      */
-    initComponent: function(grid){
-        this.listPanel = grid;
-        this.newButton = grid.down('button[action=addNew]');
-        this.deleteButton = grid.down('button[action=delete]');
-        this.editButton = grid.down('button[action=modify]');
-        this.searchText = grid.down('textfield[id=keyWord]');
+    initComponent: function(view){
+        this.listPanel = view;
+        this.newButton = view.down('button[action=addNew]');
+        this.deleteButton = view.down('button[action=delete]');
+        this.editButton = view.down('button[action=modify]');
+        this.searchText = view.down('textfield[id=keyWord]');
         this.initUnitedit();
         this.editForm = this.win.down('form');
-        this.fields = this.editForm.query("{isVisible()}");			//取所以显示的field
+        this.fields = this.editForm.query("textfield{isVisible()}");			//取所以显示的field
         this.saveButton = this.win.down('button[action=save]');
         this.searchText.focus(true,true);			//设置界面初始焦点到搜索输入框
         this.listPanel.store.proxy.addListener('afterRequest',this.afterRequest,this);		//监听所有请求回调
@@ -313,5 +316,61 @@ Ext.define('SCM.controller.basedata.UnitController', {
     		}
     	)
     	return valid;
+    },
+    
+    getParams: function(){
+    	var tempheader = this.listPanel.headerCt.query('{isVisible()}');
+    	var header = "";
+    	var dataIndex = "";
+    	Ext.each(tempheader,
+    		function(column,index,length){
+    			if(index!=0){
+    				header +=",";
+    				dataIndex +=",";
+    			}
+    			header += column.text;
+    			dataIndex += column.dataIndex;
+    		}
+    	)
+    	with(this.listPanel.store){
+	    	var params  = {
+	    		//Store参数
+	    		limit: pageSize,
+	    		page: currentPage,
+	    		start: (currentPage - 1) * pageSize,
+	    		sort: Ext.encode(getSorters()),
+	    		filter : Ext.encode(filters.items),
+	    		
+	    		//页面参数
+	    		entity: 'Unit',				//导出实体名称，一般为视图名称。
+		        title : '计量单位',			//sheet页名称
+		        header : header,			//表头
+		        dataIndex : dataIndex,		//数据引用
+		        type : 'EXCEL',
+		        whereStr : getProxy().extraParams.whereStr
+	    	}
+	    	return params ;
+    	}
+    	
+    },
+    
+    /**
+     * 导出表格数据
+     */
+    exportExcel: function(){
+    	Ext.Ajax.request({
+            url:'../scm/control/export',
+            params: this.getParams(),
+		    
+            success : function(response , option) {
+            	var result = Ext.decode(response.responseText);
+            	if(result.success){
+	            	window.location.href = '../scm/control/download?type=EXCEL&filename='+result.filename;
+            	}else{
+            		Ext.Msg.alert("错误",result.message);
+            	}
+            }
+        });
+    	
     }
 });
