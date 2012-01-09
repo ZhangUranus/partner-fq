@@ -19,6 +19,8 @@ Ext.define('SCM.model.system.UserModel', {
         {name: 'email', type: 'string', defaultValue: ''},
         {name: 'valid', type: 'string', defaultValue: 'Y'}
     ],
+    requires: ['Ext.data.UuidGenerator'],
+    idgen: 'uuid', //使用uuid生成记录id 每个模型必须要有id字段
     proxy: {
         type: 'jsonajax',
         api: {
@@ -27,6 +29,5 @@ Ext.define('SCM.model.system.UserModel', {
             update: '../../scm/control/updateJsonData?entity=TSystemUser',
             destroy: '../../scm/control/deleteJsonData?entity=TSystemUser'
         }
-    },
-    idgen: 'uuid' //使用uuid生成记录id 每个模型必须要有id字段
+    }
 });
