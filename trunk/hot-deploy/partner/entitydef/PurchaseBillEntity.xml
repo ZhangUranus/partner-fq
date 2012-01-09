@@ -50,6 +50,7 @@ under the License.
 	  <field name="myField6" type="value"></field>
 				   <!-- \n -->
       <field name="note" type="description"></field>
+      <field name="status" type="numeric"></field>
       <field name="createdStamp" type="date-time"></field>
       <field name="lastUpdatedStamp" type="date-time"></field>
       <prim-key field="id"/>

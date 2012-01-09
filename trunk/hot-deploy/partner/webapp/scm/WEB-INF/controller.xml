@@ -4,7 +4,6 @@
 	<include location="component://common/webcommon/WEB-INF/common-controller.xml"/>
     <description>SCM Controller</description>
     <handler name="java" type="request" class="org.ofbiz.webapp.event.JavaEventHandler"/>
-    
     <!-- Request Mappings -->
 	<request-map uri="checkLogin">
     	<security auth="false" />
@@ -39,6 +38,16 @@
     <request-map uri="getUserPermissions">
     	<security auth="false" />
         <event type="java" path="org.ofbiz.partner.scm.security.SecurityEvents" invoke="getUserPermissions"/>
+        <response name="success" type="none" />
+    </request-map>
+   <request-map uri="auditBill">
+    	<security auth="false" />
+        <event type="java" path="org.ofbiz.partner.scm.common.BillBaseEvent" invoke="auditBill"/>
+        <response name="success" type="none" />
+    </request-map>
+    <request-map uri="unauditBill">
+    	<security auth="false" />
+        <event type="java" path="org.ofbiz.partner.scm.common.BillBaseEvent" invoke="unauditBill"/>
         <response name="success" type="none" />
     </request-map>
     

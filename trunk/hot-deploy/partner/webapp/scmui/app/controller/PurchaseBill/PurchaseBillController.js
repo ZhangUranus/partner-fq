@@ -21,25 +21,43 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 	
     init: function() {
 		this.control({
+			
+	        //分录列表初始化后
+	        'PurchaseBilllist gridpanel[region=south]':{
+	        	afterrender: this.initPurchaseBilllistentry
+	        },
 			//列表新增按钮
 	        'PurchaseBilllist button[action=addNew]':{
 	        	click: this.addNewRecord
 	        },
-			//列表选择事件，显示明细
+			//列表事件
 	        'PurchaseBilllist gridpanel[region=center]': {
-	    		select: this.showDetail
+	        	afterrender: this.initPurchaseBilllist //列表初始化事件
+	    		,select: this.showDetail //列表选择事件，显示明细
 	        },
 	        //列表修改按钮
-	        'PurchaseBilllist  button[action=modify]':{
+	        'PurchaseBilllist button[action=modify]':{
 	        	click: this.editRecord
 	        },
 	        //列表删除按钮
-	        'PurchaseBilllist  button[action=delete]':{
+	        'PurchaseBilllist button[action=delete]':{
 	        	click: this.deleteRecord
 	        },
 			//列表界面刷新
 			'PurchaseBilllist button[action=refresh]':{
 	        	click: this.refresh
+	        },
+	        //列表审核按钮
+	        'PurchaseBilllist button[action=audit]':{
+	        	click: this.auditBill
+	        },
+	        //列表反审核按钮
+	        'PurchaseBilllist button[action=unaudit]':{
+	        	click: this.unauditBill
+	        },
+	        //列表打印按钮
+	        'PurchaseBilllist button[action=print]':{
+	        	click: this.print
 	        },
 			//编辑界面分录新增
 	        'PurchaseBilledit  gridpanel button[action=addLine]':{
@@ -77,7 +95,18 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 		}
 		);
     },
-
+	
+    //初始化列表
+    initPurchaseBilllist : function(grid){
+    	this.mainGrid=grid;
+    	//grid.store.proxy.addListener('afterRequest',this.afterRequest,this);		//监听所有请求回调
+    },
+    //初始化分录列表
+    initPurchaseBilllistentry : function(grid){
+    	this.entryGrid=grid;
+    	//grid.store.proxy.addListener('afterRequest',this.afterEntryRequest,this);		//监听所有请求回调
+    },
+    
 	//新增
     addNewRecord: function(button){
     	newRecord=Ext.create('PurchaseBillEditModel');//新增记录
@@ -97,24 +126,29 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 		
     	if(sm.hasSelection()){//判断是否选择行记录
     		record=sm.getLastSelected();
-			//根据选择的id加载编辑界面数据
-			var editStore=Ext.create('PurchaseBillEditStore');
-			editStore.filter([{property: "id", value: record.data.id}]);
-			editStore.load({
-				scope   : this,
-				callback: function(records, operation, success) {
-					
-					var editUI=Ext.widget('PurchaseBilledit');
-					editUI.uiStatus='Modify';
-					var form=editUI.down('form');
-					this.ajustId2Display(form,records[0]);
-    				form.loadRecord(records[0]);
-					var entryStore=editUI.down('gridpanel').store;
-					entryStore.removeAll();//清除记录
-					entryStore.filter([{property: "parentId", value: records[0].id}]);//过滤记录
-					entryStore.load();
-				}
-			});
+    		//如果单据状态是审核或者已经结算则不能修改
+    		if(record.data.status=='1'||record.data.status=='3'){
+    			showError('单据不能修改');
+    		}else{
+    			//根据选择的id加载编辑界面数据
+				var editStore=Ext.create('PurchaseBillEditStore');
+				editStore.filter([{property: "id", value: record.data.id}]);
+				editStore.load({
+					scope   : this,
+					callback: function(records, operation, success) {
+						
+						var editUI=Ext.widget('PurchaseBilledit');
+						editUI.uiStatus='Modify';
+						var form=editUI.down('form');
+						this.ajustId2Display(form,records[0]);
+	    				form.loadRecord(records[0]);
+						var entryStore=editUI.down('gridpanel').store;
+						entryStore.removeAll();//清除记录
+						entryStore.filter([{property: "parentId", value: records[0].id}]);//过滤记录
+						entryStore.load();
+					}
+				});
+    		}			
 		}else{
     		showError('请选择记录!');
     	}
@@ -144,7 +178,12 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
     	if(sm.hasSelection()){//判断是否选择行记录
     		//删除选择的记录
     		records=sm.getSelection();
-			
+    		for(i in records){
+    			if(records[i].data.status=='1'||records[i].data.status=='3'){
+    				showError('单据不能删除');
+    				return ;
+    			}
+    		}
     		listPanel.store.remove(records);
 			listPanel.store.proxy.afterRequest=function(request,success){
 				if(request.action=='destroy'){
@@ -166,6 +205,52 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
     	
     	var entryPanel=this.getPurchaseBilllistentry();
     	entryPanel.store.removeAll();
+	},
+	auditBill: function(button){
+		listPanel=this.getPurchaseBilllist();
+    	sm=listPanel.getSelectionModel();
+		
+    	if(sm.hasSelection()){//判断是否选择行记录
+    		record=sm.getLastSelected();
+			Ext.Ajax.request({
+			scope:this,
+		    url: '../../scm/control/auditBill?billId='+record.data.id+'&entity=PurchaseBill',
+		    success: function(response){
+		         this.refresh();
+		    }
+		});
+		}else{
+    		showError('请选择记录!');
+    	}
+		
+		
+	},
+	unauditBill: function(button){
+		listPanel=this.getPurchaseBilllist();
+    	sm=listPanel.getSelectionModel();
+		
+    	if(sm.hasSelection()){//判断是否选择行记录
+    		record=sm.getLastSelected();
+			Ext.Ajax.request({
+			scope:this,
+		    url: '../../scm/control/unauditBill?billId='+record.data.id+'&entity=PurchaseBill',
+		    success: function(response){
+		        this.refresh();
+		    }
+		});
+		}else{
+    		showError('请选择记录!');
+    	}
+	},
+	//打印单据
+	print : function(button){
+//		var printer=Ext.create('Ext.ux.PrintWindow');
+//		printer.show();
+		var printWin=window.open('','printwin');
+		printWin.document.write(this.getPrintContent());
+	    printWin.document.close();
+	    printWin.print();
+	    printWin.close();
 	},
     //保存记录
 	saveRecord: function(button){
@@ -258,7 +343,18 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 		var myfield4Unit=form.down('selectorfield[name=myfield4UnitId]');
 		myfield4Unit.displayValue=record.get('myfield4UnitName');
 												
-	}
+	},
 	
+	//列表请求回调
+	afterRequest: function(){
+		
+	},
+	//分录列表请求回调
+	afterEntryRequest: function(){
+		
+	},
+	getPrintContent: function(){
+		return 'test';
+	}
 
 });

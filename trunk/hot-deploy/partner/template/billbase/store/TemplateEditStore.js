@@ -5,7 +5,7 @@ Ext.define('SCM.store.${TemplateName}.${TemplateName}EditStore', {
     alias:'${TemplateName}EditStore',
     autoLoad: false,
     autoSync: false,
-
+	
     proxy: {
         type: 'ajax',
 		api: {
@@ -24,6 +24,7 @@ Ext.define('SCM.store.${TemplateName}.${TemplateName}EditStore', {
             encode: true //请求服务器时以param参数传进json数据
         },
 		remoteFilter:true,
+		
         listeners: {
             exception: function(proxy, response, operation){
                 Ext.MessageBox.show({
@@ -33,7 +34,7 @@ Ext.define('SCM.store.${TemplateName}.${TemplateName}EditStore', {
                     buttons: Ext.Msg.OK
                 });
             }
-    }
+    	}
 
     }
 });

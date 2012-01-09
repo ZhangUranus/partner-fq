@@ -22,12 +22,13 @@ Ext.define('SCM.view.PurchaseBill.ListUI' ,{
                 {
                    xtype:'toolbar',//工具栏
     				items:[
-				   {text:'新增',cls:'x-btn-text-icon',icon:'/scmui/images/icons/add.png',action:'addNew'},
-    		       {text:'修改',cls:'x-btn-text-icon',icon:'/scmui/images/icons/edit.png',action:'modify'},
-    		       {text:'删除',cls:'x-btn-text-icon',icon:'/scmui/images/icons/delete.png',action:'delete'},
-    		       {text:'刷新',cls:'x-btn-text-icon',icon:'/scmui/images/icons/refresh.png',action:'refresh'},
-    		       {text:'审核',cls:'x-btn-text-icon',icon:'/scmui/images/icons/audit.gif',action:'audit'},
-    		       {text:'反审核',cls:'x-btn-text-icon',icon:'/scmui/images/icons/unaudit.png',action:'unaudit'}],
+				   {text:'新增',cls:'x-btn-text-icon',icon:'/scmui/images/icons/add.png',action:'addNew'}
+    		       ,{text:'修改',cls:'x-btn-text-icon',icon:'/scmui/images/icons/edit.png',action:'modify'}
+    		       ,{text:'删除',cls:'x-btn-text-icon',icon:'/scmui/images/icons/delete.png',action:'delete'}
+    		       ,{text:'刷新',cls:'x-btn-text-icon',icon:'/scmui/images/icons/refresh.png',action:'refresh'}
+    		       ,{text:'审核',cls:'x-btn-text-icon',icon:'/scmui/images/icons/audit.gif',action:'audit'}
+    		       ,{text:'反审核',cls:'x-btn-text-icon',icon:'/scmui/images/icons/unaudit.gif',action:'unaudit'}
+    		       ,{text:'打印',cls:'x-btn-text-icon',icon:'/scmui/images/icons/printer.gif',action:'print'}],
 					region:'north'
                 },
                 {
@@ -59,6 +60,14 @@ Ext.define('SCM.view.PurchaseBill.ListUI' ,{
 							format : 'Y-m-d',
 							groupable: false,
                             text: '业务日期'
+                        }
+                        ,{
+							xtype: 'gridcolumn'
+					        ,renderer:Ext.partner.basiccode.billStatusRenderer
+							,dataIndex: 'status'
+							,width:150
+							,groupable: false
+                            ,text: '单据状态'
                         }
 												//\n
 						,{

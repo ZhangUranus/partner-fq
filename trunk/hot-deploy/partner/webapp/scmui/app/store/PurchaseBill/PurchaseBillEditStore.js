@@ -5,7 +5,7 @@ Ext.define('SCM.store.PurchaseBill.PurchaseBillEditStore', {
     alias:'PurchaseBillEditStore',
     autoLoad: false,
     autoSync: false,
-
+	
     proxy: {
         type: 'ajax',
 		api: {
@@ -24,6 +24,7 @@ Ext.define('SCM.store.PurchaseBill.PurchaseBillEditStore', {
             encode: true //请求服务器时以param参数传进json数据
         },
 		remoteFilter:true,
+		
         listeners: {
             exception: function(proxy, response, operation){
                 Ext.MessageBox.show({
@@ -33,7 +34,7 @@ Ext.define('SCM.store.PurchaseBill.PurchaseBillEditStore', {
                     buttons: Ext.Msg.OK
                 });
             }
-    }
+    	}
 
     }
 });
