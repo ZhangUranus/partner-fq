@@ -19,9 +19,10 @@ Ext.define('SCM.model.${TemplateName}.${TemplateName}EditModel', {
 			 ,{name: '${headfield.name}${headfield.entity}Name',type:'string',persist:false }
 			 #end
 			 #end//\n
-			 ,{name: 'createdStamp',  type: 'date',format:'time',convert: function(value, record) {return new Date(value);},persist:false}
-			 ,{name: 'lastUpdatedStamp',  type: 'date',format:'time',convert: function(value, record) {return new Date(value);},persist:false}
+			 ,{name: 'createdStamp', defaultValue:new Date(), type: 'date',format:'time',convert: function(value, record) {return new Date(value);},persist:false}
+			 ,{name: 'lastUpdatedStamp', defaultValue:new Date(), type: 'date',format:'time',convert: function(value, record) {return new Date(value);},persist:false}
 			 ,{name: 'note',  type: 'string'}
+			 ,{name: 'status',  type: 'int'}
     ],
     requires: ['Ext.data.UuidGenerator'],
     idgen: 'uuid' //使用uuid生成记录id 每个模型必须要有id字段

@@ -314,21 +314,32 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 							items: [
 									
 							       {
-								  xtype: 'datefield',
-								  name : 'createdStamp',
-								  format:'Y-m-d H:i:s',
-								  disabled:true,
-								  margin: 5,
-								  fieldLabel: '创建时间'
+								  xtype: 'datefield'
+								  ,name : 'createdStamp'
+								  ,format:'Y-m-d H:i:s'
+								  ,readOnly:true
+								  ,margin: 5
+								  ,fieldLabel: '创建时间'
 								}
 								,{
-								  xtype: 'datefield',
-								  name : 'lastUpdatedStamp',
-								  margin: 5,
-								  format:'Y-m-d H:i:s',
-								  disabled:true,
-								  fieldLabel: '最后更新时间'
-								}]
+								  xtype: 'datefield'
+								  ,name : 'lastUpdatedStamp'
+								  ,margin: 5
+								  ,format:'Y-m-d H:i:s'
+								  ,readOnly:true
+								  ,fieldLabel: '最后更新时间'
+								}
+								,{
+								  xtype: 'combobox'
+								  ,store:Ext.partner.basiccode.billStatusStore
+								  ,name : 'status'
+								  ,displayField:'name'
+								  ,margin: 5
+								  ,valueField:'id'
+								  ,readOnly:true
+								  ,fieldLabel:'单据状态'
+								}
+								]
 						}
 	                  ]
 	              }
@@ -339,7 +350,8 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
     initToolbar:function(){
     	this.dockedItems=[
 	    	{xtype:'toolbar',
-	    	items:[{xtye:'button',text:'保存',cls:'x-btn-text-icon',icon:'/scmui/images/icons/save.png',action:'save'}]
+	    	items:[{xtye:'button',text:'保存',cls:'x-btn-text-icon',icon:'/scmui/images/icons/save.png',action:'save'}
+	    			,{xtye:'button',text:'打印',cls:'x-btn-text-icon',icon:'/scmui/images/icons/printer.gif',action:'print'}]
 	    	}
     	];
     }
