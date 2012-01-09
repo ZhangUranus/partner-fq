@@ -61,8 +61,8 @@ Ext.define('SCM.view.system.user.ListUI' ,{
 		                              anchor: '80%',
 		                              fieldLabel: '登录名',
                                       allowBlank : false,
-                                      minLength : 4,
-                                      maxLength : 32
+                                      maxLength : 32,
+                                      unableEdit : true			//编辑状态下不可修改
 		                          },
 		                          {
 		                              xtype: 'textfield',
@@ -80,9 +80,8 @@ Ext.define('SCM.view.system.user.ListUI' ,{
 		                              name : 'passwordComfirm',
 		                              fieldLabel: '确认密码',
 		                              inputType: 'password',
-                                      allowBlank : false,
-                                      minLength : 6,
-                                      maxLength : 46
+		                              allowBlank : false,
+		                              maxLength : 46
 		                          },
 		                          {
 		                              xtype: 'textfield',
@@ -90,8 +89,8 @@ Ext.define('SCM.view.system.user.ListUI' ,{
 		                              name : 'userName',
 		                              fieldLabel: '用户名',
                                       allowBlank : false,
-                                      minLength : 4,
-                                      maxLength : 32
+                                      maxLength : 32,
+                                      unableEdit : true			//编辑状态下不可修改
 		                          },
 		                          {
 		                              xtype: 'combobox',

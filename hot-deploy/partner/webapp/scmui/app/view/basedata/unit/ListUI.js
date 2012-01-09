@@ -34,6 +34,7 @@ Ext.define('SCM.view.basedata.unit.ListUI', {
 			initToolBar : function() {
 				this.dockedItems = [{
 							xtype : 'toolbar',
+							height: 28,
 							items : [{
 										xtype : 'textfield',
 										name : 'keyWord',
@@ -55,6 +56,10 @@ Ext.define('SCM.view.basedata.unit.ListUI', {
 										text : '删除',
 										iconCls : 'system-delete',
 										action : 'delete'
+									}, {
+										text : '导出',
+										iconCls : 'system-export',
+										action : 'export'
 									}]
 						}, {
 							dock : 'bottom',
