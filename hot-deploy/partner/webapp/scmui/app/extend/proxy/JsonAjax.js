@@ -1,13 +1,16 @@
 Ext.define('SCM.extend.proxy.JsonAjax', {
     extend: 'Ext.data.proxy.Ajax',
     alias: 'proxy.jsonajax',
+    actionMethods: {//将read方法修改为POST提交，避免中文乱码
+        read   : 'POST'
+    },
     reader: {
 		type: 'json',
 		root: 'records',
 		successProperty: 'success',
 		messageProperty: 'message'
 	},
-		writer: {
+	writer: {
 		type: 'json',
 		root: 'records',
 		encode: true //请求服务器时以param参数传进json数据

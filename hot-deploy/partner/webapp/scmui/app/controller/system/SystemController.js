@@ -5,20 +5,22 @@ Ext.define('SCM.controller.system.SystemController', {
         'system.user.ListUI'
     ],
     stores:[
+    	'system.UserStore',
         'system.RoleStore',
         'system.UserTreeStore',
         'system.UserOfRoleStore'
     ],
-    models: ['system.UserTreeModel','system.UserModel'],
-    refs:[//定义引用，可以通过getXxxx()方法获取
-          {ref: 'usermanagement',selector: 'usermanagement'}
-    ],
-
+    models: ['system.UserTreeModel'],
+    
+    /**
+     * 初始化controller
+     * 增加事件监控
+     */
     init: function() {
 		this.control({
             //完成用户界面初始化后调用
             'usermanagement': {
-                afterrender: this.initList
+                afterrender: this.initComponent
             },
 			//树形节点单击事件
 	        'usermanagement treepanel': {
@@ -38,7 +40,8 @@ Ext.define('SCM.controller.system.SystemController', {
 	        	click: this.saveRecord
 	        },
             
-            'usermanagement form textfield':{
+	        //监听各field值变动事件，只监听可见控件
+            'usermanagement form textfield{isVisible()}':{
                 change: this.fieldchange
             },
             
@@ -49,10 +52,15 @@ Ext.define('SCM.controller.system.SystemController', {
 	    });
     },
     
-    initList: function(view){
+    /**
+     * 页面初始化方法
+     * @param {} grid 事件触发控件
+     */
+    initComponent: function(view){
         this.selectUser = false;
         this.userView = view;
         this.userForm = view.down('form');
+        this.fields = this.userForm.query("textfield{isVisible()}");			//取所以显示的field
         this.userGrid = view.down('gridpanel');
         this.userTree = view.down('treepanel');
         this.newButton = view.down('button[action=addNew]');
@@ -60,11 +68,15 @@ Ext.define('SCM.controller.system.SystemController', {
         this.saveButton = view.down('button[action=save]');
         var departmentCombobox = Ext.getCmp('user-department-combobox');
         departmentCombobox.store.load();
-        this.initButton();
+        this.initButtonByPermission();
         this.changeComponentsState();
     },
     
-    initButton: function(){
+    /**
+     * 根据用户权限初始化按钮状态
+     * 
+     */
+    initButtonByPermission: function(){
         if(this.userView.permission.add){
             this.newButton.setVisible(true);
         }else{
@@ -78,6 +90,10 @@ Ext.define('SCM.controller.system.SystemController', {
         }
     },
     
+    /**
+     * 用户操作触发改变界面控件状态
+     * 如：选中记录
+     */
     changeComponentsState: function(){
         if(this.selectUser){
             this.deleteButton.setDisabled(false);
@@ -87,79 +103,98 @@ Ext.define('SCM.controller.system.SystemController', {
         if(this.userForm.uiStatus=='AddNew'){
             this.saveButton.setVisible(true);
             this.userGrid.setDisabled(false);
-            this.userForm.getForm().findField('userId').setReadOnly(false);
-            this.changeFormFieldState(this.userForm,false);
+			Ext.each(this.fields,
+                function(item,index,length){
+                	item.setReadOnly(false);
+                }
+            )
         }else{
-            this.userForm.getForm().findField('userId').setReadOnly(true);
             if(this.userView.permission.edit){
                 this.saveButton.setVisible(true);
                 this.userGrid.setDisabled(false);
-                this.changeFormFieldState(this.userForm,false);
+                Ext.each(this.fields,
+                	function(item,index,length){
+                		if(item.unableEdit){
+                			item.setReadOnly(true);
+                		}else{
+                			item.setReadOnly(false);
+                		}
+                	}
+                )
             }else{
                 this.saveButton.setVisible(false);
                 this.userGrid.setDisabled(true);
-                this.changeFormFieldState(this.userForm,true);
+                Ext.each(this.fields,
+                	function(item,index,length){
+                		item.setReadOnly(true);
+                	}
+                )
             }
         }
     },
     
-    changeFormFieldState: function(form,readOnly){
-        form.getForm().findField('password').setReadOnly(readOnly);
-		form.getForm().findField('passwordComfirm').setReadOnly(readOnly);
-		form.getForm().findField('userName').setReadOnly(readOnly);
-		form.getForm().findField('sex').setReadOnly(readOnly);
-		form.getForm().findField('departmentId').setReadOnly(readOnly);
-		form.getForm().findField('position').setReadOnly(readOnly);
-		form.getForm().findField('phoneNumber').setReadOnly(readOnly);
-		form.getForm().findField('email').setReadOnly(readOnly);
-		form.getForm().findField('valid').setReadOnly(readOnly);
-    },
-    
+    /**
+     * 捕捉field控件的change事件，设置form的修改状态
+     * @param {} textField	当前控件
+     * @param {} newValue	新值
+     * @param {} oldValue	旧值
+     */
     fieldchange: function(textField,newValue,oldValue){
         if(this.userForm.inited && !this.userForm.modifyed){
             this.userForm.modifyed = true;
         }
+        if(textField.name =='password'){//修改密码是，修改确认密码的正则表达式
+        	var pc = this.userForm.query("textfield[name=passwordComfirm]");
+        	pc[0].regex = new RegExp('^'+textField.value+'$');
+        	pc[0].regexText = '密码和确认密码不一致！';
+        	pc[0].isValid();
+        }
     },
     
+    /**
+     * 捕捉grid控件的选中事件，设置grid的修改状态
+     */
     gridChange: function(){
         if(this.userGrid.inited && !this.userGrid.modifyed){
             this.userGrid.modifyed = true;
         }
     },
     
-    //点击树形节点编辑
+    /**
+     * 点击树形节点编辑
+     * @param {} node 选中节点
+     * @param {} record	节点数据
+     */
     selectUserNode: function(node, record){
-        this.selectUser = record.get('isUser');
         var me =this;
         if(this.userForm.modifyed || this.userGrid.modifyed){
             Ext.Msg.confirm('提示','确定退出当前用户编辑窗口？',confirmChange);
             function confirmChange(id){
                 if(id=='yes'){
-                    if(me.selectUser) {
-			            me.loadUserRecord(record);
-			        }
+					me.loadUserRecord(record);
                 }
             }
         }else{
-            if(me.selectUser) {
-                me.loadUserRecord(record);
-            }
+			me.loadUserRecord(record);
         }
         me.changeComponentsState();
     },
     
     loadUserRecord: function(record){
-        this.userForm.uiStatus='Modify';
-        this.initEditState();
-        Ext.widget('userModel').self.load(record.get('id'),{
-            scope: this,
-            params:{'whereStr':'id =\''+record.get('id')+'\''},
-            success: function(record, operation) {
-                this.userForm.getForm().loadRecord(record);
-                this.loadGridRecord(record);
-                this.userForm.inited = true;
-            }
-        });
+    	this.selectUser = record.get('isUser');
+    	if(this.selectUser) {
+	        this.userForm.uiStatus='Modify';
+	        this.initEditState();
+	        Ext.widget('userModel').self.load(record.get('id'),{
+	            scope: this,
+	            params:{'whereStr':'id =\''+record.get('id')+'\''},
+	            success: function(record, operation) {
+	                this.userForm.getForm().loadRecord(record);
+	                this.loadGridRecord(record);
+	                this.userForm.inited = true;
+	            }
+	        });
+    	}
     },
     
     initEditState: function(){
@@ -234,7 +269,6 @@ Ext.define('SCM.controller.system.SystemController', {
                     Ext.Msg.alert("提示","删除成功",callBack);
 			        function callBack(){
 			            Ext.getCmp('user-form-layout').getLayout().setActiveItem(0);
-                        me.initEditState();
 			            me.refreshTree();
 			        }
 	            }
@@ -245,6 +279,9 @@ Ext.define('SCM.controller.system.SystemController', {
     saveRecord: function(button){
         var me = this;
         var values=me.userForm.getValues();
+        if(!this.isValidate()){
+    		return ;
+    	}
         if(me.userForm.modifyed){
 	    	var record;
 	    	if(me.userForm.uiStatus=='Modify'){//修改记录
@@ -279,12 +316,36 @@ Ext.define('SCM.controller.system.SystemController', {
         Ext.Msg.alert("提示信息","保存成功",callBack);
         function callBack(){
             Ext.getCmp('user-form-layout').getLayout().setActiveItem(0);
-            me.initEditState();
             me.refreshTree();
         }
     },
     
+    /**
+     * 校验form所有field的输入值是否有效
+     * @return true 有效,false 无效
+     */
+    isValidate: function(){
+    	var valid = true;
+    	Ext.each(this.fields,
+    		function(item,index,length){
+    			var password = "";
+    			var passwordComfirm = "";
+    			if(item.name == 'password'){
+    				password = item.value;
+    			}
+    			if(item.name == 'passwordComfirm'){
+    				passwordComfirm = item.value;
+    			}
+    			if(!item.isValid()){
+    				valid = false;
+    			}
+    		}
+    	)
+    	return valid;
+    },
+    
     refreshTree : function(){
+    	this.initEditState();
         this.userTree.store.load();
     }
 
