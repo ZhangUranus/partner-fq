@@ -9,7 +9,7 @@ Ext.define('SCM.controller.Main', {
     models: ['MenuModel'],
     views : ['Header', 'Menu', 'South', 'TabPanel', 'Viewport', 'WelcomeIndex', 'PageError'],
     refs : [// 增加引用
-        {ref : 'menu',selector : 'menu'}, 
+        {ref : 'menutree',selector : 'menutree'}, 
         {ref : 'tabpanel',selector : 'tabpanel'},
         {ref : 'header',selector : 'header'}
     ],
@@ -33,7 +33,7 @@ Ext.define('SCM.controller.Main', {
         });
         
         me.control({
-            'menu':{
+            'menutree':{
                 show : this.initTreePanel
             },
 			'tabpanel' : {
@@ -96,7 +96,7 @@ Ext.define('SCM.controller.Main', {
                 }
             }
         });
-        this.getMenu().add(tempTree);
+        this.getMenutree().add(tempTree);
     },
     closeTab : function(tabPanel, tab) {// 关闭tab页
         this.getTabpanel().removeTab(tab);
