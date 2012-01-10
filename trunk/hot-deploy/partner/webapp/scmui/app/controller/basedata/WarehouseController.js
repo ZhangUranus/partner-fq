@@ -1,119 +1,97 @@
 Ext.define('SCM.controller.basedata.WarehouseController', {
-    extend: 'Ext.app.Controller',
-    
-	views: [
-        'basedata.warehouse.ListUI',
-        'basedata.warehouse.EditUI'
-    ],
-    stores:[
-        'basedata.WarehouseStore'
-    ],
-    refs:[
-          {ref: 'warehouseinfomaintaince',selector: 'warehouseinfomaintaince'}, //定义引用，可以通过getXxxx()方法获取
-          {ref: 'warehouseedit',selector: 'warehouseedit'}
-    ],
+			extend : 'Ext.app.Controller',
+			mixins : ['SCM.extend.exporter.Exporter', 'SCM.extend.controller.CommonGridController'],
+			views : ['basedata.warehouse.ListUI', 'basedata.warehouse.EditUI'],
+			stores : ['basedata.WarehouseStore'],
 
-    init: function() {
-		this.control({
-			//列表双击事件
-	        'warehouseinfomaintaince': {
-	    		itemdblclick: this.modifyRecord
-	        },
-	        //列表新增按钮
-	        'warehouseinfomaintaince button[action=addNew]':{
-	        	click: this.addNewRecord
-	        },
-	        //列表修改按钮
-	        'warehouseinfomaintaince button[action=modify]':{
-	        	click: this.editRecord
-	        },
-	        //列表删除按钮
-	        'warehouseinfomaintaince button[action=delete]':{
-	        	click: this.deleteRecord
-	        },
-	        //列表刷新按钮
-	        'warehouseinfomaintaince button[action=refresh]':{
-	        	click: this.refreshRecord
-	        },
-	        
-	        //编辑界面保存
-	        'warehouseedit button[action=save]':{
-	        	click: this.saveRecord
-	        }
-	        
-	    });
-    },
-    
-    //双击编辑
-    modifyRecord: function(grid, record){
-        var editui=Ext.widget('warehouseedit');
-        editui.uiStatus='Modify';
-    	editui.down('form').loadRecord(record);
+			gridTitle : '仓库',
+			gridName : 'warehouseinfomaintaince',
+			editName : 'warehouseedit',
+			modelName : 'WarehouseModel',
+			entityName : 'WarehouseView',
 
-		//****load完record后需要调整id字段的显示
-		editui.down('form').down('[name=wsTypeId]').setValue(record.get('warehouseTypeName'));
+			/**
+			 * 初始化controller 增加事件监控
+			 */
+			init : function() {
+				this.control({
+							'warehouseinfomaintaince' : {
+								afterrender : this.initComponent, // 在界面完成初始化后调用
+								itemdblclick : this.modifyRecord, // 双击列表，弹出编辑界面
+								itemclick : this.changeComponentsState
+								// 点击列表，改变修改、删除按钮状态
+							},
+							// 列表新增按钮
+							'warehouseinfomaintaince button[action=addNew]' : {
+								click : this.addNewRecord
+							},
+							// 列表修改按钮
+							'warehouseinfomaintaince button[action=modify]' : {
+								click : this.editRecord
+							},
+							// 列表删除按钮
+							'warehouseinfomaintaince button[action=delete]' : {
+								click : this.deleteRecord
+							},
+							// 列表查询按钮
+							'warehouseinfomaintaince button[action=search]' : {
+								click : this.refreshRecord
+							},
+							'warehouseinfomaintaince button[action=export]' : {
+								click : this.exportExcel
+							},
+							// 编辑界面保存
+							'warehouseedit button[action=save]' : {
+								click : this.saveRecord
+							},
+							// 编辑界面重填
+							'warehouseedit button[action=clear]' : {
+								click : this.clear
+							},
+							// 编辑界面取消
+							'warehouseedit button[action=cancel]' : {
+								click : this.cancel
+							},
+							// 监听各field值变动事件，只监听可见控件
+							'warehouseedit form textfield{isVisible()}' : {
+								change : this.fieldChange
+							}
+						});
+			},
+			/**
+			 * 增加this.wsTypeFeild的定义
+			 */
+			afterInitComponent : function() {
+				this.wsTypeFeild = this.editForm.down('[name=wsTypeId]');
+			},
+			/**
+			 * 编辑事件
+			 * 
+			 * @param {}
+			 *            grid 当前表格
+			 * @param {}
+			 *            record 选中记录
+			 */
+			modifyRecord : function(grid, record) {
+				this.win.uiStatus = 'Modify';
+				this.editForm.loadRecord(record);
+				this.wsTypeFeild.setValue(record.get('warehouseTypeName'));//load完record后需要调整id字段的显示
+				this.showEdit();
+			},
 
-    },
-    //修改
-    editRecord: function(button){
-    	listPanel=button.up('warehouseinfomaintaince');
-    	
-    	sm=listPanel.getSelectionModel();
-    	if(sm.hasSelection()){//判断是否选择行记录
-    		record=sm.getLastSelected();
-    		var editui=Ext.widget('warehouseedit');
-    		editui.uiStatus='Modify';
-        	editui.down('form').loadRecord(record);
-			
-			//****load完record后需要调整id字段的显示
-			editui.down('form').down('[name=wsTypeId]').setValue(record.get('warehouseTypeName'));
+			/**
+			 * 刷新页面数据
+			 * 
+			 * @param {} button 刷新按钮
+			 */
+			refreshRecord : function(button) {
+				if (this.searchText.getValue()) {
+					this.listPanel.store.getProxy().extraParams.whereStr = 'WarehouseV.name like \'%' + this.searchText.getValue() + '%\'';
+				} else {
+					this.listPanel.store.getProxy().extraParams.whereStr = '';
+				}
+				this.listPanel.store.load();
+				this.changeComponentsState();
+			}
 
-
-    	}
-    },
-    //新增
-    addNewRecord: function(button){
-    	newRecord=Ext.create('WarehouseModel');//新增记录
-    	var editui=Ext.widget('warehouseedit');
-    	editui.uiStatus='AddNew';
-    	editui.down('form').loadRecord(newRecord);
-    	
-    },
-    
-  //删除记录
-    deleteRecord: function(button){
-    	listPanel=button.up('warehouseinfomaintaince');
-    	sm=listPanel.getSelectionModel();
-    	if(sm.hasSelection()){//判断是否选择行记录
-    		//删除选择的记录
-    		records=sm.getSelection();
-    		listPanel.store.remove(records);
-    	}
-    },
-  //刷新
-    refreshRecord: function(button){
-    	listPanel=button.up("warehouseinfomaintaince");
-    	listPanel.store.load();
-    },
-    //保存记录
-    saveRecord: function(button){
-    	//取编辑界面
-    	var win=this.getWarehouseedit();
-    	//取表单
-    	form=win.down("form");
-    	values=form.getValues();
-    	var record;
-    	if(win.uiStatus=='Modify'){//修改记录
-    		record=form.getRecord();
-    		record.set(values);
-    	}else if(win.uiStatus=='AddNew'){//新增记录
-    		record=Ext.create('WarehouseModel');
-    		record.set(values);
-    		this.getWarehouseinfomaintaince().store.add(record);
-    	}
-    	
-    	win.close();
-    	//this.getWarehouseinfomaintaince().store.load();//保存后刷新页面
-    }
-
-});
+		});
