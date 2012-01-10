@@ -186,6 +186,7 @@ public class CommonEvents {
     	EntityConditionList<EntityCondition> condition = null;
     	List<EntityCondition> conds = FastList.newInstance();
     	conds.add(EntityCondition.makeCondition("parentId",parentId));
+    	conds.add(EntityCondition.makeCondition("display","1"));
     	conds.add(EntityCondition.makeCondition("userId",getUsername(request)));
     	condition = EntityCondition.makeCondition(conds);
     	
