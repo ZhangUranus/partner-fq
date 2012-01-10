@@ -1,64 +1,55 @@
 Ext.define('SCM.view.basedata.unit.EditUI', {
 			extend : 'Ext.window.Window',
+			requires : ['SCM.extend.toolbar.SaveToolbar'],
 			alias : 'widget.unitedit',
-
 			title : '计量单位',
 			layout : 'fit',
-			height: 80,
-            width: 280,
-			//autoShow: true,
-			modal : true,//背景变灰，不能编辑
+			width : 280,
+			modal : true,// 背景变灰，不能编辑
+			collapsible : true,
+			resizable : false,
 			uiStatus : 'AddNew',
-			inited : false, //初始化标识
-			modifyed : false, //修改标识
+			inited : false, // 初始化标识
+			modifyed : false, // 修改标识
 
 			initComponent : function() {
-				this.initForm();
-				this.initToolbar();
-				this.callParent(arguments);
+				var me = this;
+				Ext.applyIf(me, {
+							items : [{
+										xtype : 'form',
+										bodyPadding : '5 10 10 10',
+										border : 0,
+										defaults : {
+											xtype : 'textfield',
+											labelWidth : 40,
+											width : 240
+										},
+										items : [{
+													name : 'id',
+													fieldLabel : 'id',
+													hidden : true
+												}, {
+													name : 'number',
+													fieldLabel : '编码',
+													hidden : true
+												}, {
+													name : 'name',
+													fieldLabel : '名称',
+													allowBlank : false,
+													maxLength : 50
+												}]
+									}],
+							dockedItems : [{
+										xtype : 'savetoolbar',
+										dock : 'bottom'
+									}]
+						});
+				this.callParent();
 			},
 
 			close : function() {
 				this.hide();
 				this.inited = false;
 				this.modifyed = false;
-			},
-			//初始化表单
-			initForm : function() {
-				this.items = [{
-							xtype : 'form',
-							bodyPadding : 5,
-							items : [{
-										xtype : 'textfield',
-										name : 'id',
-										fieldLabel : 'id',
-										hidden : true
-									}, {
-										xtype : 'textfield',
-										name : 'number',
-										fieldLabel : '编码',
-										hidden : true
-									}, {
-										xtype : 'textfield',
-										name : 'name',
-										fieldLabel : '名称',
-										allowBlank : false,
-										maxLength : 50
-									}]
-						}];
-			},
-
-			//初始化工具栏
-			initToolbar : function() {
-				this.dockedItems = [{
-							xtype : 'toolbar',
-							height: 28,
-							items : [{
-										text : '保存',
-										iconCls : 'system-save',
-										action : 'save'
-									}]
-						}];
 			}
-
 		});
