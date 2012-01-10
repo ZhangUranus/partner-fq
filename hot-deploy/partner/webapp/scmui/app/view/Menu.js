@@ -5,7 +5,7 @@
  */
 Ext.define('SCM.view.Menu', {
 			extend : 'Ext.panel.Panel',
-			alias : 'widget.menu',
+			alias : 'widget.menutree',
 			initComponent : function() {
 				Ext.apply(this, {
 							id : 'main-tree',
@@ -14,7 +14,7 @@ Ext.define('SCM.view.Menu', {
 							layout : 'accordion',
 							region : 'west',
 							border : false,
-							enableDD : false,
+							enabled : false,
 							split : true,
 							width : 212,
 							minSize : 130,
