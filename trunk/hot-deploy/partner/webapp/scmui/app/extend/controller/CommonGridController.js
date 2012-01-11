@@ -39,9 +39,9 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 				this.initEnterEvent();
 				this.afterInitComponent();
 			},
-			
-			afterInitComponent:Ext.emptyFn,
-			
+
+			afterInitComponent : Ext.emptyFn,
+
 			/**
 			 * 初始化确定按钮事件
 			 */
@@ -67,7 +67,7 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 					this.win = Ext.widget(this.editName);
 				}
 			},
-			
+
 			/**
 			 * 捕捉提交后台的回调函数
 			 * 
@@ -85,6 +85,7 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 					} else if (request.action == 'update') {
 						this.refreshRecord();
 					} else if (request.action == 'destroy') {
+						this.refreshRecord();
 					}
 					if (this.win.isVisible()) {
 						this.win.close();
@@ -221,7 +222,7 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 				this.editForm.loadRecord(newRecord);
 				this.showEdit();
 			},
-			
+
 			/**
 			 * 点击删除按钮
 			 * 
@@ -233,12 +234,11 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 				if (sm.hasSelection()) {// 判断是否选择行记录
 					// 删除选择的记录
 					records = sm.getSelection();
-					Ext.Msg.confirm('提示', '确定删除该'+this.gridTitle+'？', confirmChange, this);
+					Ext.Msg.confirm('提示', '确定删除该' + this.gridTitle + '？', confirmChange, this);
 					function confirmChange(id) {
 						if (id == 'yes') {
 							this.listPanel.store.remove(records);
 							Ext.Msg.alert("提示", "删除成功");
-							this.refreshRecord();
 						}
 					}
 				}
@@ -266,7 +266,7 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 			 *            button 保存按钮
 			 */
 			saveRecord : function(button) {
-				values = this.editForm.getValues();
+				var values = this.editForm.getValues();
 				if (!this.isValidate()) {
 					return;
 				}
@@ -290,23 +290,23 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 				}
 				this.changeComponentsState();
 			},
-			
+
 			/**
 			 * 清理文本框内容
 			 */
-			clear : function(){
+			clear : function() {
 				Ext.each(this.fields, function(item, index, length) {
 							item.reset();
 						});
 			},
-			
+
 			/**
 			 * 取消编辑
 			 */
-			cancel : function(){
+			cancel : function() {
 				this.win.close();
 			},
-			
+
 			/**
 			 * 校验form所有field的输入值是否有效
 			 * 
