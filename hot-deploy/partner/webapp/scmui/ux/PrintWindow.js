@@ -5,10 +5,10 @@ Ext.define('Ext.ux.PrintWindow', {
     width: 617,
     title: '打印设置',
     maximized: true,
-
+	layout: 'absolute',
     initComponent: function() {
         var me = this;
-
+        
         me.callParent(arguments);
     }
     

@@ -6,7 +6,7 @@ Ext.define('SCM.view.PurchaseBill.ListUI' ,{
     extend: 'Ext.container.Container',
     alias : 'widget.PurchaseBilllist',
 
-    title : 'PurchaseBill',
+    title : '采购单查询',
 	height: 497,
     width: 718,
     layout: {
@@ -71,59 +71,38 @@ Ext.define('SCM.view.PurchaseBill.ListUI' ,{
                         }
 												//\n
 						,{
-							//\n
-							xtype: 'gridcolumn'
-																																			//\n
-							//\n
-							,dataIndex: 'myfield1'
+							xtype:'gridcolumn'
+							,dataIndex: 'supplierSupplierName'
 							,width:150
 							,groupable: false
-                            ,text: '自定义字段1'
-                        }
-																														//\n
-						,{
-																												//\n
-							xtype: 'booleancolumn'
-							,trueText:'是'
-							,falseText:'否'
-														//\n
-							//\n
-							,dataIndex: 'myfield3'
-							,width:150
-							,groupable: false
-                            ,text: '自定义字段3'
+                            ,text: '供应商'
                         }
 																		//\n
 						,{
 							xtype:'gridcolumn'
-							,dataIndex: 'myfield4UnitName'
+							,dataIndex: 'purchserTSystemUserName'
 							,width:150
 							,groupable: false
-                            ,text: '自定义字段4'
+                            ,text: '采购员'
                         }
 																		//\n
 						,{
-														//\n
+							xtype:'gridcolumn'
+							,dataIndex: 'auditerTSystemUserName'
+							,width:150
+							,groupable: false
+                            ,text: '审核员'
+                        }
+																		//\n
+						,{
+																					//\n
 							xtype: 'numbercolumn'
-							,format:'0'
-																												//\n
+																					//\n
 							//\n
-							,dataIndex: 'myfield5'
+							,dataIndex: 'totolAccount'
 							,width:150
 							,groupable: false
-                            ,text: '自定义字段5'
-                        }
-																		//\n
-						,{
-																																			//\n
-							//\n
-							xtype: 'gridcolumn'
-					        ,renderer:Ext.partner.basiccode.billStatusRenderer
-							//\n
-							,dataIndex: 'myField6'
-							,width:150
-							,groupable: false
-                            ,text: '自定义字段6'
+                            ,text: '总金额'
                         }
 												 //\n
 
@@ -159,54 +138,21 @@ Ext.define('SCM.view.PurchaseBill.ListUI' ,{
 								}
 																//\n
 								,{
-								  //\n
-								  xtype: 'gridcolumn'
-								  								  								  								  								  //\n
-								  //\n
-								  ,dataIndex:'myentryfield1'
-								  ,text: '自定义字段1'
-								  
-								}
-																								//\n
-								,{
-								  								  								  								  								  //\n
-								  xtype: 'datecolumn'
-								  ,format:'Y-m-d'
-								  //\n
-								  //\n
-								  ,dataIndex:'myentryfield2'
-								  ,text: '自定义字段2'
-								  
-								}
-																								//\n
-								,{
-								  								  								  								  //\n
-								  xtype: 'booleancolumn'
-								  ,trueText:'是'
-								  ,falseText:'否'
-								  								  //\n
-								  //\n
-								  ,dataIndex:'myentryfield3'
-								  ,text: '自定义字段3'
-								  
-								}
-																								//\n
-								,{
 									xtype: 'gridcolumn'
-									,dataIndex: 'myentryfield4UnitId'
-									,text: 'myentryfield4UnitId'
+									,dataIndex: 'materialMaterialId'
+									,text: 'materialMaterialId'
 									,hidden:true
 									
 								}
 								,{
 									xtype: 'gridcolumn',
-									dataIndex: 'myentryfield4UnitName',
-									text: '自定义字段4',
+									dataIndex: 'materialMaterialName',
+									text: '物料',
 									editor:{
 											  xtype: 'selectorfield',
-											  storeName:'UnitStore',//定义数据集名称
+											  storeName:'MaterialStore',//定义数据集名称
 											  parentFormName:'PurchaseBillform',
-											  name : 'myentryfield4UnitName'
+											  name : 'materialMaterialName'
 										   }
 									
 								}
@@ -216,30 +162,58 @@ Ext.define('SCM.view.PurchaseBill.ListUI' ,{
 								  xtype: 'numbercolumn'
 								  								  								  //\n
 								  //\n
-								  ,dataIndex:'myentryfield5'
-								  ,text: '自定义字段5'
+								  ,dataIndex:'amount'
+								  ,text: '数量'
 								  
 								}
 																								//\n
 								,{
-								  								  //\n
+									xtype: 'gridcolumn'
+									,dataIndex: 'unitUnitId'
+									,text: 'unitUnitId'
+									,hidden:true
+									
+								}
+								,{
+									xtype: 'gridcolumn',
+									dataIndex: 'unitUnitName',
+									text: '单位',
+									editor:{
+											  xtype: 'selectorfield',
+											  storeName:'UnitStore',//定义数据集名称
+											  parentFormName:'PurchaseBillform',
+											  name : 'unitUnitName'
+										   }
+									
+								}
+																								//\n
+								,{
+								  								  								  //\n
 								  xtype: 'numbercolumn'
-								  ,format:'0'
-								  								  								  								  //\n
+								  								  								  //\n
 								  //\n
-								  ,dataIndex:'myentryfield6'
-								  ,text: '自定义字段6'
+								  ,dataIndex:'price'
+								  ,text: '单价'
 								  
 								}
 																								//\n
 								,{
-								  								  								  								  								  //\n
+								  								  								  //\n
+								  xtype: 'numbercolumn'
+								  								  								  //\n
 								  //\n
-								  xtype: 'gridcolumn'
-							      ,renderer:Ext.partner.basiccode.billStatusRenderer
-									//\n
-								  ,dataIndex:'myentryfield7'
-								  ,text: '自定义字段7'
+								  ,dataIndex:'refPrice'
+								  ,text: '参考单价'
+								  
+								}
+																								//\n
+								,{
+								  								  								  //\n
+								  xtype: 'numbercolumn'
+								  								  								  //\n
+								  //\n
+								  ,dataIndex:'account'
+								  ,text: '金额'
 								  
 								}
 																 //\n

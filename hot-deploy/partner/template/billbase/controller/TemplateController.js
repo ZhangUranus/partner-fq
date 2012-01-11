@@ -327,7 +327,7 @@ Ext.define('SCM.controller.${TemplateName}.${TemplateName}Controller', {
 	}
 	#foreach($headfield in $HeadFields)
 	#if($headfield.isHidden==false&&$headfield.type=='entity')//\n
-	//表头选择框保存
+	//表头${headfield.alias}选择框保存
 	,select${headfield.name}${headfield.entity}:function(button){
 		var edit=this.get${TemplateName}edit();
 		var form=edit.down('form');
@@ -337,7 +337,7 @@ Ext.define('SCM.controller.${TemplateName}.${TemplateName}Controller', {
 	#end
 	#foreach($entryfield in $EntryFields)
 	#if($entryfield.isHidden==false&&$entryfield.type=='entity')//\n
-	//表头选择框保存
+	//表体${entryfield.alias}选择框保存
 	,select${entryfield.name}${entryfield.entity}:function(button){
 		var sr=this.getSelectedEntry();
 		selectValIdAName(button,'${entryfield.name}${entryfield.entity}Id','${entryfield.name}${entryfield.entity}Name',sr);

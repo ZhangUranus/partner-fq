@@ -57,6 +57,7 @@ under the License.
 	<TSystemMenu menuId='BOMBillInfoMaintaince' menuName='BOM单资料维护' menuType='1' parentId='basicSetting' sort='37' hyperlink='bombillinfomaintaince' styleName='BOM-bill-info-maintaince' display='1' description='BOM单资料维护' />
 	<TSystemMenu menuId='UnitMaintaince' menuName='计量单位维护' menuType='1' parentId='basicSetting' sort='38' hyperlink='unitlist' styleName='BOM-bill-info-maintaince' display='1' description='计量单位维护' />
 	<TSystemMenu menuId='WarehousetTypeMaintaince' menuName='仓库类型维护' menuType='1' parentId='basicSetting' sort='39' hyperlink='warehousetypelist' styleName='BOM-bill-info-maintaince' display='1' description='仓库类型维护' />
+	<TSystemMenu menuId='SupplierMaintaince' menuName='供应商管理' menuType='1' parentId='basicSetting' sort='40' hyperlink='Supplierlist' styleName='BOM-bill-info-maintaince' display='1' description='供应商管理' />
 	
 	<TSystemRole roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' roleName='管理员' description='系统管理员'/>
 	<TSystemRole roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' roleName='统计员' description='系统统计员'/>
@@ -111,7 +112,13 @@ under the License.
 	<TSystemMenuOfRole id='c1a3d0b0-4b61-47d0-bf2a-88de60742527' menuId='UnitMaintaince' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='V' />
 	<TSystemMenuOfRole id='906f3732-e563-44f1-a76a-baa0a9c33d89' menuId='UnitMaintaince' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='E' />
 	<TSystemMenuOfRole id='542bddc4-bdb5-40e4-adef-6a2c7050cb88' menuId='UnitMaintaince' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='D' />
-	<TSystemMenuOfRole id='f141d4f4-ea93-421b-81e1-3f87b4b6a5dd' menuId='UnitMaintaince' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='N' />
+	<TSystemMenuOfRole id='f141d4f4-ea93-421b-81e1-3f37b4b6a5dd' menuId='UnitMaintaince' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='N' />
+	<TSystemMenuOfRole id='cca3d0b0-4b61-41d0-bf2a-88ce60742527' menuId='SupplierMaintaince' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='V' />
+	<TSystemMenuOfRole id='9c6f3732-e563-41f1-a76a-bae0a9c33d89' menuId='SupplierMaintaince' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='E' />
+	<TSystemMenuOfRole id='5c2bddc4-bdb5-41e4-adef-6aec7050cb88' menuId='SupplierMaintaince' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='D' />
+	<TSystemMenuOfRole id='fc41d4f4-ea93-411b-81e1-3fc7b4b6a5dd' menuId='SupplierMaintaince' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='N' />
+
+	
 	<TSystemMenuOfRole id='fabb8689-d2b3-403e-876a-a2f7ba603dc2' menuId='WarehousetTypeMaintaince' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='V' />
 	<TSystemMenuOfRole id='6d0e9c82-e0bc-4c9c-8f21-6788c6d3280b' menuId='WarehousetTypeMaintaince' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='E' />
 	<TSystemMenuOfRole id='b69b9aa2-f128-4d70-baf2-1434b21ebb57' menuId='WarehousetTypeMaintaince' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='D' />

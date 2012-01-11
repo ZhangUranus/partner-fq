@@ -6,7 +6,7 @@ Ext.define('SCM.view.${TemplateName}.ListUI' ,{
     extend: 'Ext.container.Container',
     alias : 'widget.${TemplateName}list',
 
-    title : '${TemplateName}',
+    title : '${TemplateAlias}查询',
 	height: 497,
     width: 718,
     layout: {

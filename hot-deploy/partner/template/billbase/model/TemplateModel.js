@@ -26,6 +26,6 @@ Ext.define('SCM.model.${TemplateName}.${TemplateName}Model', {
 			 #end
 		#end //\n
 
-    ],
-	idProperty:'emptyId'//设置一个没用的id，这样才能支持显示多分录
+    ]
+    //,idProperty:'emptyId'//设置一个没用的id，这样才能支持显示多分录
 });

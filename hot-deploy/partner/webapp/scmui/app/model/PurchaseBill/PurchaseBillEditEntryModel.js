@@ -7,20 +7,19 @@ Ext.define('SCM.model.PurchaseBill.PurchaseBillEditEntryModel', {
              {name: 'id',  type: 'string'}
 			 ,{name: 'parentId',  type: 'string'}
 			 			 //\n
-			 ,{name: 'myentryfield1' ,type:'string'  }
+			 ,{name: 'materialMaterialId',type:'string'  }
+			 ,{name: 'materialMaterialName',type:'string',persist:false }
 			 			 			 //\n
-			 ,{name: 'myentryfield2' ,type:'date' ,dateFormat:'time',defaultValue:new Date(),convert: function(value, record) {return new Date(value);}  }
+			 ,{name: 'amount' ,type:'float'  }
 			 			 			 //\n
-			 ,{name: 'myentryfield3' ,type:'boolean'  }
+			 ,{name: 'unitUnitId',type:'string'  }
+			 ,{name: 'unitUnitName',type:'string',persist:false }
 			 			 			 //\n
-			 ,{name: 'myentryfield4UnitId',type:'string'  }
-			 ,{name: 'myentryfield4UnitName',type:'string',persist:false }
+			 ,{name: 'price' ,type:'float'  }
 			 			 			 //\n
-			 ,{name: 'myentryfield5' ,type:'float'  }
+			 ,{name: 'refPrice' ,type:'float'  }
 			 			 			 //\n
-			 ,{name: 'myentryfield6' ,type:'int'  }
-			 			 			 //\n
-			 ,{name: 'myentryfield7',type:'string'   }
+			 ,{name: 'account' ,type:'float'  }
 			 			 //\n
     ],
 
