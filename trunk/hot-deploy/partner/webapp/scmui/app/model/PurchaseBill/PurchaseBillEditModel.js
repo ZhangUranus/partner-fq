@@ -12,18 +12,16 @@ Ext.define('SCM.model.PurchaseBill.PurchaseBillEditModel', {
 				}
 			  }
 			 			 //\n
-			 ,{name: 'myfield1' ,type:'string'  }
+			 ,{name: 'supplierSupplierId',type:'string'  }
+			 ,{name: 'supplierSupplierName',type:'string',persist:false }
 			 			 			 //\n
-			 ,{name: 'myfield2' ,type:'date' ,dateFormat:'time',defaultValue:new Date(),convert: function(value, record) {return new Date(value);}  }
+			 ,{name: 'purchserTSystemUserId',type:'string'  }
+			 ,{name: 'purchserTSystemUserName',type:'string',persist:false }
 			 			 			 //\n
-			 ,{name: 'myfield3' ,type:'boolean'  }
+			 ,{name: 'auditerTSystemUserId',type:'string'  }
+			 ,{name: 'auditerTSystemUserName',type:'string',persist:false }
 			 			 			 //\n
-			 ,{name: 'myfield4UnitId',type:'string'  }
-			 ,{name: 'myfield4UnitName',type:'string',persist:false }
-			 			 			 //\n
-			 ,{name: 'myfield5' ,type:'int'  }
-			 			 			 //\n
-			 ,{name: 'myField6',type:'string'   }
+			 ,{name: 'totolAccount' ,type:'float'  }
 			 			 //\n
 			 ,{name: 'createdStamp', defaultValue:new Date(), type: 'date',format:'time',convert: function(value, record) {return new Date(value);},persist:false}
 			 ,{name: 'lastUpdatedStamp', defaultValue:new Date(), type: 'date',format:'time',convert: function(value, record) {return new Date(value);},persist:false}

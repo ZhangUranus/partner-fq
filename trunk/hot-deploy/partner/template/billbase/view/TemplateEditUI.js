@@ -4,7 +4,7 @@ Ext.define('SCM.view.${TemplateName}.EditUI', {
 
 	height: 550,
 	width: 815,
-    title : '${TemplateName}',
+    title : '${TemplateAlias}编辑',
     layout: 'fit',
     autoShow: true,
     modal:true,//背景变灰，不能编辑
@@ -107,7 +107,7 @@ Ext.define('SCM.view.${TemplateName}.EditUI', {
 								#end 
 								#end //\n
 								,{
-								  xtype: 'textareafield',
+								  xtype: 'textfield',
 								  name : 'note',
 								  margin: 5,
 								  fieldLabel: '备注'

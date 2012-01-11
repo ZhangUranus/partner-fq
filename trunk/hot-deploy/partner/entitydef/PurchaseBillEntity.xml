@@ -37,17 +37,13 @@ under the License.
       <field name="number" type="name"></field>
       <field name="bizDate" type="date-time"></field>
             		<!-- \n -->
-	  <field name="myfield1" type="value"></field>
+	  <field name="supplierSupplierId" type="id-long"></field>
 				        		<!-- \n -->
-	  <field name="myfield2" type="date-time"></field>
+	  <field name="purchserTSystemUserId" type="id-long"></field>
 				        		<!-- \n -->
-	  <field name="myfield3" type="boolean"></field>
+	  <field name="auditerTSystemUserId" type="id-long"></field>
 				        		<!-- \n -->
-	  <field name="myfield4UnitId" type="id-long"></field>
-				        		<!-- \n -->
-	  <field name="myfield5" type="numeric"></field>
-				        		<!-- \n -->
-	  <field name="myField6" type="value"></field>
+	  <field name="totolAccount" type="floating-point"></field>
 				   <!-- \n -->
       <field name="note" type="description"></field>
       <field name="status" type="numeric"></field>
@@ -63,19 +59,17 @@ under the License.
       <field name="id" type="id-long"></field>
       <field name="parentId" type="id-long"></field>
             <!-- \n -->
-	  <field name="myentryfield1" type="value"></field>
+	  <field name="materialMaterialId" type="id-long"></field>
 	  	        <!-- \n -->
-	  <field name="myentryfield2" type="date-time"></field>
+	  <field name="amount" type="floating-point"></field>
 	  	        <!-- \n -->
-	  <field name="myentryfield3" type="boolean"></field>
+	  <field name="unitUnitId" type="id-long"></field>
 	  	        <!-- \n -->
-	  <field name="myentryfield4UnitId" type="id-long"></field>
+	  <field name="price" type="floating-point"></field>
 	  	        <!-- \n -->
-	  <field name="myentryfield5" type="floating-point"></field>
+	  <field name="refPrice" type="floating-point"></field>
 	  	        <!-- \n -->
-	  <field name="myentryfield6" type="numeric"></field>
-	  	        <!-- \n -->
-	  <field name="myentryfield7" type="value"></field>
+	  <field name="account" type="floating-point"></field>
 	  	   <!-- \n -->
       <prim-key field="id"/>
     </entity>
@@ -85,35 +79,59 @@ under the License.
             package-name="org.ofbiz.scm.PurchaseBill"
             title="PurchaseBillView  Entity">
       		<member-entity entity-alias="PurchaseBillV" entity-name="PurchaseBill"></member-entity>
-      		      			  		      			  		      			  		      		<!-- \n -->
-			<member-entity entity-alias="myfield4UnitV" entity-name="Unit"></member-entity>
-				  		      			  		      			  		 <!-- \n -->
+      		      		<!-- \n -->
+			<member-entity entity-alias="supplierSupplierV" entity-name="Supplier"></member-entity>
+				  		      		<!-- \n -->
+			<member-entity entity-alias="purchserTSystemUserV" entity-name="TSystemUser"></member-entity>
+				  		      		<!-- \n -->
+			<member-entity entity-alias="auditerTSystemUserV" entity-name="TSystemUser"></member-entity>
+				  		      			  		 <!-- \n -->
             <alias-all entity-alias="PurchaseBillV" ></alias-all>
-                  			  		      			  		      			  		      		<!-- \n -->
-			<alias name="myfield4UnitName" entity-alias="myfield4UnitV" field="name"></alias>	
-				  		      			  		      			  			  		
-	  		      			  		      			  		      			  		      		<!-- \n -->
-			<view-link entity-alias="PurchaseBillV" rel-entity-alias="myfield4UnitV" rel-optional="true">
-				<key-map field-name="myfield4UnitId" rel-field-name="id"/>
+                  		<!-- \n -->
+			<alias name="supplierSupplierName" entity-alias="supplierSupplierV" field="name"></alias>	
+				  		      		<!-- \n -->
+			<alias name="purchserTSystemUserName" entity-alias="purchserTSystemUserV" field="name"></alias>	
+				  		      		<!-- \n -->
+			<alias name="auditerTSystemUserName" entity-alias="auditerTSystemUserV" field="name"></alias>	
+				  		      			  			  		
+	  		      		<!-- \n -->
+			<view-link entity-alias="PurchaseBillV" rel-entity-alias="supplierSupplierV" rel-optional="true">
+				<key-map field-name="supplierSupplierId" rel-field-name="id"/>
 			</view-link>
-				  		      			  		      			  		 <!-- \n -->
+				  		      		<!-- \n -->
+			<view-link entity-alias="PurchaseBillV" rel-entity-alias="purchserTSystemUserV" rel-optional="true">
+				<key-map field-name="purchserTSystemUserId" rel-field-name="id"/>
+			</view-link>
+				  		      		<!-- \n -->
+			<view-link entity-alias="PurchaseBillV" rel-entity-alias="auditerTSystemUserV" rel-optional="true">
+				<key-map field-name="auditerTSystemUserId" rel-field-name="id"/>
+			</view-link>
+				  		      			  		 <!-- \n -->
     </view-entity>
 	<!--表体视图  -->
     <view-entity entity-name="PurchaseBillEntryView"
             package-name="org.ofbiz.scm.PurchaseBill"
             title="PurchaseBillEntryView  Entity">
             <member-entity entity-alias="PurchaseBillEntryV" entity-name="PurchaseBillEntry"></member-entity>
-                  			  		      			  		      			  		      		<!-- \n -->
-			<member-entity entity-alias="myentryfield4UnitV" entity-name="Unit"></member-entity>
+                  		<!-- \n -->
+			<member-entity entity-alias="materialMaterialV" entity-name="Material"></member-entity>
+				  		      			  		      		<!-- \n -->
+			<member-entity entity-alias="unitUnitV" entity-name="Unit"></member-entity>
 				  		      			  		      			  		      			  		 <!-- \n -->
             
             <alias-all entity-alias="PurchaseBillEntryV" ></alias-all>
-                  			  		      			  		      			  		      		<!-- \n -->
-			<alias name="myentryfield4UnitName" entity-alias="myentryfield4UnitV" field="name"></alias>	
+                  		<!-- \n -->
+			<alias name="materialMaterialName" entity-alias="materialMaterialV" field="name"></alias>	
+				  		      			  		      		<!-- \n -->
+			<alias name="unitUnitName" entity-alias="unitUnitV" field="name"></alias>	
 				  		      			  		      			  		      			  		            
-                  			  		      			  		      			  		      		<!-- \n -->
-			<view-link entity-alias="PurchaseBillEntryV" rel-entity-alias="myentryfield4UnitV" rel-optional="true">
-				<key-map field-name="myentryfield4UnitId" rel-field-name="id"/>
+                  		<!-- \n -->
+			<view-link entity-alias="PurchaseBillEntryV" rel-entity-alias="materialMaterialV" rel-optional="true">
+				<key-map field-name="materialMaterialId" rel-field-name="id"/>
+			</view-link>
+				  		      			  		      		<!-- \n -->
+			<view-link entity-alias="PurchaseBillEntryV" rel-entity-alias="unitUnitV" rel-optional="true">
+				<key-map field-name="unitUnitId" rel-field-name="id"/>
 			</view-link>
 				  		      			  		      			  		      			  		 <!-- \n -->
             <!-- 实例代码

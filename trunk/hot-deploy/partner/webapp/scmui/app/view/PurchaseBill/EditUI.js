@@ -4,7 +4,7 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 
 	height: 550,
 	width: 815,
-    title : 'PurchaseBill',
+    title : '采购单编辑',
     layout: 'fit',
     autoShow: true,
     modal:true,//背景变灰，不能编辑
@@ -57,79 +57,46 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 								}
 																//\n
 								,{
-								  //\n
-								  xtype: 'textfield'
-								  ,fieldLabel: '自定义字段1'
-								  								  								  								  								  //\n
-								   //\n
-								  ,name : 'myfield1'
-								  ,margin: 5
-								  
-								}
-																								//\n
-								,{
-								  								  								  								  								  //\n
-								  xtype: 'datefield'
-								  ,format:'Y-m-d'
-								  ,fieldLabel: '自定义字段2'
-								  //\n
-								   //\n
-								  ,name : 'myfield2'
-								  ,margin: 5
-								  
-								}
-																								//\n
-								,{
-								  								  								  								  //\n
-								  xtype: 'checkboxfield'
-								  ,uncheckedValue:false
-								  ,inputValue:true
-								  ,boxLabel:'自定义字段3'
-								  								  //\n
-								   //\n
-								  ,name : 'myfield3'
-								  ,margin: 5
-								  
+								  xtype: 'selectorfield',
+								  storeName:'SupplierStore',//定义数据集名称
+								  parentFormName:'PurchaseBillform',
+								  name : 'supplierSupplierId',
+								  margin: 5,
+								  fieldLabel: '供应商'
 								}
 																								//\n
 								,{
 								  xtype: 'selectorfield',
-								  storeName:'UnitStore',//定义数据集名称
+								  storeName:'UserStore',//定义数据集名称
 								  parentFormName:'PurchaseBillform',
-								  name : 'myfield4UnitId',
+								  name : 'purchserTSystemUserId',
 								  margin: 5,
-								  fieldLabel: '自定义字段4'
+								  fieldLabel: '采购员'
 								}
 																								//\n
 								,{
-								  								  //\n
+								  xtype: 'selectorfield',
+								  storeName:'UserStore',//定义数据集名称
+								  parentFormName:'PurchaseBillform',
+								  name : 'auditerTSystemUserId',
+								  margin: 5,
+								  fieldLabel: '审核员'
+								}
+																								//\n
+								,{
+								  								  								  //\n
 								  xtype: 'numberfield'
-								  ,allowDecimals:false
 								  ,hideTrigger:true
-								  ,fieldLabel: '自定义字段5'
-								  								  								  								  //\n
+								  ,fieldLabel: '总金额'
+								  								  								  //\n
 								   //\n
-								  ,name : 'myfield5'
-								  ,margin: 5
-								  
-								}
-																								//\n
-								,{
-								  								  								  								  								  //\n
-								   //\n
-								  xtype: 'combobox'
-								  ,fieldLabel: '自定义字段6'
-								  ,store:Ext.partner.basiccode.billStatusStore
-								  ,displayField:'name'
-								  ,valueField:'id'
-								  //\n
-								  ,name : 'myField6'
+								  ,name : 'totolAccount'
 								  ,margin: 5
 								  
 								}
 																 //\n
 								,{
-								  xtype: 'textareafield',
+								  xtype: 'textfield',
 								  name : 'note',
 								  margin: 5,
 								  fieldLabel: '备注'
@@ -163,64 +130,21 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 								}
 																//\n
 								,{
-								  //\n
-								  xtype: 'gridcolumn'
-								  ,editor: {
-											xtype: 'textfield'
-										}
-								  								  								  								  								  //\n
-								  //\n
-								  ,dataIndex:'myentryfield1'
-								  ,text: '自定义字段1'
-								  
-								}
-																								//\n
-								,{
-								  								  								  								  								  //\n
-								  xtype: 'datecolumn'
-								  ,format:'Y-m-d'
-								  ,editor: {
-										xtype: 'datefield'
-										,allowBlank: false
-										,format: 'Y-m-d'
-								   }
-								  //\n
-								  //\n
-								  ,dataIndex:'myentryfield2'
-								  ,text: '自定义字段2'
-								  
-								}
-																								//\n
-								,{
-								  								  								  								  //\n
-								  xtype: 'checkcolumn'
-								  , editor: {
-										xtype: 'checkbox'
-										,cls: 'x-grid-checkheader-editor'
-								  }
-								  								  //\n
-								  //\n
-								  ,dataIndex:'myentryfield3'
-								  ,text: '自定义字段3'
-								  
-								}
-																								//\n
-								,{
 									xtype: 'gridcolumn'
-									,dataIndex: 'myentryfield4UnitId'
-									,text: 'myentryfield4UnitId'
+									,dataIndex: 'materialMaterialId'
+									,text: 'materialMaterialId'
 									,hidden:true
 									
 								}
 								,{
 									xtype: 'gridcolumn',
-									dataIndex: 'myentryfield4UnitName',
-									text: '自定义字段4',
+									dataIndex: 'materialMaterialName',
+									text: '物料',
 									editor:{
 											  xtype: 'selectorfield',
-											  storeName:'UnitStore',//定义数据集名称
+											  storeName:'MaterialStore',//定义数据集名称
 											  parentFormName:'PurchaseBillform',
-											  name : 'myentryfield4UnitName'
+											  name : 'materialMaterialName'
 										   }
 									
 								}
@@ -235,42 +159,73 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 										}
 								  								  								  //\n
 								  //\n
-								  ,dataIndex:'myentryfield5'
-								  ,text: '自定义字段5'
+								  ,dataIndex:'amount'
+								  ,text: '数量'
 								  
 								}
 																								//\n
 								,{
-								  								  //\n
+									xtype: 'gridcolumn'
+									,dataIndex: 'unitUnitId'
+									,text: 'unitUnitId'
+									,hidden:true
+									
+								}
+								,{
+									xtype: 'gridcolumn',
+									dataIndex: 'unitUnitName',
+									text: '单位',
+									editor:{
+											  xtype: 'selectorfield',
+											  storeName:'UnitStore',//定义数据集名称
+											  parentFormName:'PurchaseBillform',
+											  name : 'unitUnitName'
+										   }
+									
+								}
+																								//\n
+								,{
+								  								  								  //\n
 								  xtype: 'numbercolumn'
-								  ,format:'0'
-								  ,editor: {
+								   ,editor: {
 											xtype: 'numberfield'
-											,allowDecimals:false
 											,allowBlank: false
 											,hideTrigger:true
 										}
-								  								  								  								  //\n
+								  								  								  //\n
 								  //\n
-								  ,dataIndex:'myentryfield6'
-								  ,text: '自定义字段6'
+								  ,dataIndex:'price'
+								  ,text: '单价'
 								  
 								}
 																								//\n
 								,{
-								  								  								  								  								  //\n
+								  								  								  //\n
+								  xtype: 'numbercolumn'
+								   ,editor: {
+											xtype: 'numberfield'
+											,allowBlank: false
+											,hideTrigger:true
+										}
+								  								  								  //\n
 								  //\n
-								  xtype: 'gridcolumn'
-								  ,renderer:Ext.partner.basiccode.billStatusRenderer
-								  ,editor: {
-										xtype: 'combobox'
-										,store:Ext.partner.basiccode.billStatusStore
-										,displayField:'name'
-										,valueField:'id'
-								   }
+								  ,dataIndex:'refPrice'
+								  ,text: '参考单价'
+								  
+								}
+																								//\n
+								,{
+								  								  								  //\n
+								  xtype: 'numbercolumn'
+								   ,editor: {
+											xtype: 'numberfield'
+											,allowBlank: false
+											,hideTrigger:true
+										}
+								  								  								  //\n
 								  //\n
-								  ,dataIndex:'myentryfield7'
-								  ,text: '自定义字段7'
+								  ,dataIndex:'account'
+								  ,text: '金额'
 								  
 								}
 																 //\n

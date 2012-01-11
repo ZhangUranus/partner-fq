@@ -72,22 +72,49 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 			'PurchaseBilledit button[action=save]':{
 				click: this.saveRecord
 			}
-																								//\n
-			//编辑界面自定义字段4字段选择界面确定
-			,'#PurchaseBillform-myfield4UnitId-selWin button[name=btnSure]':{
-				click: this.selectmyfield4Unit
+						//\n
+			//编辑界面供应商字段选择界面确定
+			,'#PurchaseBillform-supplierSupplierId-selWin button[name=btnSure]':{
+				click: this.selectsupplierSupplier
 			}
-			//编辑界面自定义字段4字段选择界面取消
-			,'#PurchaseBillform-myfield4UnitId-selWin button[name=btnCancel]':{
+			//编辑界面供应商字段选择界面取消
+			,'#PurchaseBillform-supplierSupplierId-selWin button[name=btnCancel]':{
 				click: cancelSelWin
 			}
-																																										//\n
-			//编辑界面分录自定义字段4字段选择界面确定
-			,'#PurchaseBillform-myentryfield4UnitName-selWin button[name=btnSure]':{
-				click: this.selectmyentryfield4Unit
+									//\n
+			//编辑界面采购员字段选择界面确定
+			,'#PurchaseBillform-purchserTSystemUserId-selWin button[name=btnSure]':{
+				click: this.selectpurchserTSystemUser
 			}
-			//编辑界面分录自定义字段4字段选择界面取消
-			,'#PurchaseBillform-myentryfield4UnitName-selWin button[name=btnCancel]':{
+			//编辑界面采购员字段选择界面取消
+			,'#PurchaseBillform-purchserTSystemUserId-selWin button[name=btnCancel]':{
+				click: cancelSelWin
+			}
+									//\n
+			//编辑界面审核员字段选择界面确定
+			,'#PurchaseBillform-auditerTSystemUserId-selWin button[name=btnSure]':{
+				click: this.selectauditerTSystemUser
+			}
+			//编辑界面审核员字段选择界面取消
+			,'#PurchaseBillform-auditerTSystemUserId-selWin button[name=btnCancel]':{
+				click: cancelSelWin
+			}
+																		//\n
+			//编辑界面分录物料字段选择界面确定
+			,'#PurchaseBillform-materialMaterialName-selWin button[name=btnSure]':{
+				click: this.selectmaterialMaterial
+			}
+			//编辑界面分录物料字段选择界面取消
+			,'#PurchaseBillform-materialMaterialName-selWin button[name=btnCancel]':{
+				click: cancelSelWin
+			}
+															//\n
+			//编辑界面分录单位字段选择界面确定
+			,'#PurchaseBillform-unitUnitName-selWin button[name=btnSure]':{
+				click: this.selectunitUnit
+			}
+			//编辑界面分录单位字段选择界面取消
+			,'#PurchaseBillform-unitUnitName-selWin button[name=btnCancel]':{
 				click: cancelSelWin
 			}
 																								//\n
@@ -320,18 +347,38 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 			 return selMod.getLastSelected();
 		}
 	}
-								//\n
-	//表头选择框保存
-	,selectmyfield4Unit:function(button){
+		//\n
+	//表头供应商选择框保存
+	,selectsupplierSupplier:function(button){
 		var edit=this.getPurchaseBilledit();
 		var form=edit.down('form');
-		selectValwin(button,'myfield4UnitId',form);
+		selectValwin(button,'supplierSupplierId',form);
 	}
-														//\n
-	//表头选择框保存
-	,selectmyentryfield4Unit:function(button){
+			//\n
+	//表头采购员选择框保存
+	,selectpurchserTSystemUser:function(button){
+		var edit=this.getPurchaseBilledit();
+		var form=edit.down('form');
+		selectValwin(button,'purchserTSystemUserId',form);
+	}
+			//\n
+	//表头审核员选择框保存
+	,selectauditerTSystemUser:function(button){
+		var edit=this.getPurchaseBilledit();
+		var form=edit.down('form');
+		selectValwin(button,'auditerTSystemUserId',form);
+	}
+						//\n
+	//表体物料选择框保存
+	,selectmaterialMaterial:function(button){
 		var sr=this.getSelectedEntry();
-		selectValIdAName(button,'myentryfield4UnitId','myentryfield4UnitName',sr);
+		selectValIdAName(button,'materialMaterialId','materialMaterialName',sr);
+	}
+					//\n
+	//表体单位选择框保存
+	,selectunitUnit:function(button){
+		var sr=this.getSelectedEntry();
+		selectValIdAName(button,'unitUnitId','unitUnitName',sr);
 	}
 								//\n
 	//调整显示字段，将id字段值设置为displayValue字段值
@@ -339,10 +386,16 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 		//示例代码
 		//var material=form.down('selectorfield[name=materialId]');
 		//material.displayValue=record.get('materialName');//默认物料
-																//\n
-		var myfield4Unit=form.down('selectorfield[name=myfield4UnitId]');
-		myfield4Unit.displayValue=record.get('myfield4UnitName');
-												
+				//\n
+		var supplierSupplier=form.down('selectorfield[name=supplierSupplierId]');
+		supplierSupplier.displayValue=record.get('supplierSupplierName');
+						//\n
+		var purchserTSystemUser=form.down('selectorfield[name=purchserTSystemUserId]');
+		purchserTSystemUser.displayValue=record.get('purchserTSystemUserName');
+						//\n
+		var auditerTSystemUser=form.down('selectorfield[name=auditerTSystemUserId]');
+		auditerTSystemUser.displayValue=record.get('auditerTSystemUserName');
+								
 	},
 	
 	//列表请求回调

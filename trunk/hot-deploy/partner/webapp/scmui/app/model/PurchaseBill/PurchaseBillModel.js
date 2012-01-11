@@ -9,37 +9,34 @@ Ext.define('SCM.model.PurchaseBill.PurchaseBillModel', {
 			 ,{name: 'number',type:'string'}
              ,{name: 'bizDate',type:'date',dateFormat:'time'}
 					 //\n
-			 ,{name: 'myfield1'  ,type:'string'  }
+			 ,{name: 'supplierSupplierId',type:'string'  }
+			 ,{name: 'supplierSupplierName',type:'string' ,persist:false }
 			 					 //\n
-			 ,{name: 'myfield2'  ,type:'date' ,dateFormat:'time'  }
+			 ,{name: 'purchserTSystemUserId',type:'string'  }
+			 ,{name: 'purchserTSystemUserName',type:'string' ,persist:false }
 			 					 //\n
-			 ,{name: 'myfield3'  ,type:'boolean'  }
+			 ,{name: 'auditerTSystemUserId',type:'string'  }
+			 ,{name: 'auditerTSystemUserName',type:'string' ,persist:false }
 			 					 //\n
-			 ,{name: 'myfield4UnitId',type:'string'  }
-			 ,{name: 'myfield4UnitName',type:'string' ,persist:false }
-			 					 //\n
-			 ,{name: 'myfield5'  ,type:'int'  }
-			 					 //\n
-			 ,{name: 'myField6' ,type:'string'   }
+			 ,{name: 'totolAccount'  ,type:'float'  }
 			 		 //\n
 			 ,{name: 'entryId', type: 'string'}
 					 //\n
-			 ,{name: 'myentryfield1'  ,type:'string'   }
+			 ,{name: 'materialMaterialId',type:'string'  }
+			 ,{name: 'materialMaterialName',type:'string' ,persist:false }
 			 					 //\n
-			 ,{name: 'myentryfield2'  ,type:'date'  ,dateFormat:'time'  }
+			 ,{name: 'amount'  ,type:'float'   }
 			 					 //\n
-			 ,{name: 'myentryfield3'  ,type:'boolean'   }
+			 ,{name: 'unitUnitId',type:'string'  }
+			 ,{name: 'unitUnitName',type:'string' ,persist:false }
 			 					 //\n
-			 ,{name: 'myentryfield4UnitId',type:'string'  }
-			 ,{name: 'myentryfield4UnitName',type:'string' ,persist:false }
+			 ,{name: 'price'  ,type:'float'   }
 			 					 //\n
-			 ,{name: 'myentryfield5'  ,type:'float'   }
+			 ,{name: 'refPrice'  ,type:'float'   }
 			 					 //\n
-			 ,{name: 'myentryfield6'  ,type:'int'   }
-			 					 //\n
-			 ,{name: 'myentryfield7' ,type:'string'    }
+			 ,{name: 'account'  ,type:'float'   }
 			 		 //\n
 
-    ],
-	idProperty:'emptyId'//设置一个没用的id，这样才能支持显示多分录
+    ]
+    //,idProperty:'emptyId'//设置一个没用的id，这样才能支持显示多分录
 });
