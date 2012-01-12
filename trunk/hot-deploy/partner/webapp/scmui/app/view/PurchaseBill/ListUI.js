@@ -80,7 +80,7 @@ Ext.define('SCM.view.PurchaseBill.ListUI' ,{
 																		//\n
 						,{
 							xtype:'gridcolumn'
-							,dataIndex: 'purchserTSystemUserName'
+							,dataIndex: 'purchserSystemUserName'
 							,width:150
 							,groupable: false
                             ,text: '采购员'
@@ -88,7 +88,7 @@ Ext.define('SCM.view.PurchaseBill.ListUI' ,{
 																		//\n
 						,{
 							xtype:'gridcolumn'
-							,dataIndex: 'auditerTSystemUserName'
+							,dataIndex: 'auditerSystemUserName'
 							,width:150
 							,groupable: false
                             ,text: '审核员'

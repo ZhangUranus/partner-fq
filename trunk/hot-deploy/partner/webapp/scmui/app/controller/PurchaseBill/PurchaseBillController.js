@@ -83,20 +83,20 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 			}
 									//\n
 			//编辑界面采购员字段选择界面确定
-			,'#PurchaseBillform-purchserTSystemUserId-selWin button[name=btnSure]':{
-				click: this.selectpurchserTSystemUser
+			,'#PurchaseBillform-purchserSystemUserId-selWin button[name=btnSure]':{
+				click: this.selectpurchserSystemUser
 			}
 			//编辑界面采购员字段选择界面取消
-			,'#PurchaseBillform-purchserTSystemUserId-selWin button[name=btnCancel]':{
+			,'#PurchaseBillform-purchserSystemUserId-selWin button[name=btnCancel]':{
 				click: cancelSelWin
 			}
 									//\n
 			//编辑界面审核员字段选择界面确定
-			,'#PurchaseBillform-auditerTSystemUserId-selWin button[name=btnSure]':{
-				click: this.selectauditerTSystemUser
+			,'#PurchaseBillform-auditerSystemUserId-selWin button[name=btnSure]':{
+				click: this.selectauditerSystemUser
 			}
 			//编辑界面审核员字段选择界面取消
-			,'#PurchaseBillform-auditerTSystemUserId-selWin button[name=btnCancel]':{
+			,'#PurchaseBillform-auditerSystemUserId-selWin button[name=btnCancel]':{
 				click: cancelSelWin
 			}
 																		//\n
@@ -356,17 +356,17 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 	}
 			//\n
 	//表头采购员选择框保存
-	,selectpurchserTSystemUser:function(button){
+	,selectpurchserSystemUser:function(button){
 		var edit=this.getPurchaseBilledit();
 		var form=edit.down('form');
-		selectValwin(button,'purchserTSystemUserId',form);
+		selectValwin(button,'purchserSystemUserId',form);
 	}
 			//\n
 	//表头审核员选择框保存
-	,selectauditerTSystemUser:function(button){
+	,selectauditerSystemUser:function(button){
 		var edit=this.getPurchaseBilledit();
 		var form=edit.down('form');
-		selectValwin(button,'auditerTSystemUserId',form);
+		selectValwin(button,'auditerSystemUserId',form);
 	}
 						//\n
 	//表体物料选择框保存
@@ -390,11 +390,11 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 		var supplierSupplier=form.down('selectorfield[name=supplierSupplierId]');
 		supplierSupplier.displayValue=record.get('supplierSupplierName');
 						//\n
-		var purchserTSystemUser=form.down('selectorfield[name=purchserTSystemUserId]');
-		purchserTSystemUser.displayValue=record.get('purchserTSystemUserName');
+		var purchserSystemUser=form.down('selectorfield[name=purchserSystemUserId]');
+		purchserSystemUser.displayValue=record.get('purchserSystemUserName');
 						//\n
-		var auditerTSystemUser=form.down('selectorfield[name=auditerTSystemUserId]');
-		auditerTSystemUser.displayValue=record.get('auditerTSystemUserName');
+		var auditerSystemUser=form.down('selectorfield[name=auditerSystemUserId]');
+		auditerSystemUser.displayValue=record.get('auditerSystemUserName');
 								
 	},
 	

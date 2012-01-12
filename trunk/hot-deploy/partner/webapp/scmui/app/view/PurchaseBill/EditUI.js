@@ -67,18 +67,18 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 																								//\n
 								,{
 								  xtype: 'selectorfield',
-								  storeName:'UserStore',//定义数据集名称
+								  storeName:'SystemUserStore',//定义数据集名称
 								  parentFormName:'PurchaseBillform',
-								  name : 'purchserTSystemUserId',
+								  name : 'purchserSystemUserId',
 								  margin: 5,
 								  fieldLabel: '采购员'
 								}
 																								//\n
 								,{
 								  xtype: 'selectorfield',
-								  storeName:'UserStore',//定义数据集名称
+								  storeName:'SystemUserStore',//定义数据集名称
 								  parentFormName:'PurchaseBillform',
-								  name : 'auditerTSystemUserId',
+								  name : 'auditerSystemUserId',
 								  margin: 5,
 								  fieldLabel: '审核员'
 								}
