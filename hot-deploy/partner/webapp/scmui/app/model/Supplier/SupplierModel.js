@@ -5,9 +5,8 @@ Ext.define('SCM.model.Supplier.SupplierModel', {
     //字段
     fields: [
 			  {name: 'id',  type: 'string'}
-			 ,{name: 'emptyId',type:'string', persist:false}
-			 ,{name: 'number',type:'string'}
-             ,{name: 'bizDate',type:'date',dateFormat:'time'}
+			 ,{name: 'number',  type: 'string'}
+			 ,{name: 'name',  type: 'string'}
 					 //\n
 			 ,{name: 'phoneNum'  ,type:'string'  }
 			 					 //\n
@@ -16,6 +15,6 @@ Ext.define('SCM.model.Supplier.SupplierModel', {
 			 ,{name: 'entryId', type: 'string'}
 		 //\n
 
-    ],
-	idProperty:'emptyId'//设置一个没用的id，这样才能支持显示多分录
+    ]
+    //,idProperty:'emptyId'//设置一个没用的id，这样才能支持显示多分录
 });

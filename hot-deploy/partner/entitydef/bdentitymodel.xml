@@ -143,6 +143,12 @@ under the License.
       <field name="materialTypeId" type="id-long"></field>
       <prim-key field="id"/>
     </entity> 
+    <view-entity entity-name="Material"
+            package-name="org.ofbiz.scm.basedata"
+            title="MaterialView  Entity">
+      		<member-entity entity-alias="TMaterialV" entity-name="TMaterial"></member-entity>
+            <alias-all entity-alias="TMaterialV" ></alias-all>
+    </view-entity>
      <view-entity entity-name="TMaterialListView"
             package-name="org.ofbiz.scm.basedata"
             title="TMaterialListView  Entity">

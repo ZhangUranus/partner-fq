@@ -12,11 +12,11 @@ Ext.define('SCM.model.PurchaseBill.PurchaseBillModel', {
 			 ,{name: 'supplierSupplierId',type:'string'  }
 			 ,{name: 'supplierSupplierName',type:'string' ,persist:false }
 			 					 //\n
-			 ,{name: 'purchserTSystemUserId',type:'string'  }
-			 ,{name: 'purchserTSystemUserName',type:'string' ,persist:false }
+			 ,{name: 'purchserSystemUserId',type:'string'  }
+			 ,{name: 'purchserSystemUserName',type:'string' ,persist:false }
 			 					 //\n
-			 ,{name: 'auditerTSystemUserId',type:'string'  }
-			 ,{name: 'auditerTSystemUserName',type:'string' ,persist:false }
+			 ,{name: 'auditerSystemUserId',type:'string'  }
+			 ,{name: 'auditerSystemUserName',type:'string' ,persist:false }
 			 					 //\n
 			 ,{name: 'totolAccount'  ,type:'float'  }
 			 		 //\n

@@ -66,6 +66,12 @@ under the License.
 		<field name="valid" type="indicator"/>
 		<prim-key field="id"/>
 	</entity>
+	<view-entity entity-name="SystemUser" package-name="org.ofbiz.partner.system">
+		<member-entity entity-alias="TUser" entity-name="TSystemUser"/>
+		<alias name="id" entity-alias="TUser" field="id"></alias>
+		<alias name="number" entity-alias="TUser" field="userId"></alias>
+		<alias name="name" entity-alias="TUser" field="userName"></alias>
+	</view-entity>
 	<view-entity entity-name="VSystemUserTree" package-name="org.ofbiz.partner.system">
 		<member-entity entity-alias="TUser" entity-name="TSystemUser"/>
 		<alias name="id" entity-alias="TUser" field="id"></alias>

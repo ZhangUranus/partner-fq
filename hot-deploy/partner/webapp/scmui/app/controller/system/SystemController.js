@@ -6,6 +6,7 @@ Ext.define('SCM.controller.system.SystemController', {
     ],
     stores:[
     	'system.UserStore',
+    	'system.SystemUserStore',
         'system.RoleStore',
         'system.UserTreeStore',
         'system.UserOfRoleStore'
