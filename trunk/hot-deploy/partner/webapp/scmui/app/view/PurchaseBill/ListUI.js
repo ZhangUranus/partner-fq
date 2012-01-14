@@ -63,7 +63,7 @@ Ext.define('SCM.view.PurchaseBill.ListUI' ,{
                         }
                         ,{
 							xtype: 'gridcolumn'
-					        ,renderer:Ext.partner.basiccode.billStatusRenderer
+					        ,renderer:SCM.store.basiccode.billStatusRenderer
 							,dataIndex: 'status'
 							,width:150
 							,groupable: false

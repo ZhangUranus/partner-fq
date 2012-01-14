@@ -1,99 +1,115 @@
 Ext.define('SCM.view.basedata.material.EditUI', {
-    extend: 'Ext.window.Window',
-    alias : 'widget.materialedit',
+			extend : 'Ext.window.Window',
+			requires : ['SCM.extend.toolbar.SaveToolbar', 'SCM.ux.combobox.ComboGrid'],
+			alias : 'widget.materialedit',
+			title : '物料',
+			layout : 'fit',
+			width : SCM.MaxSize.WINDOW_WIDTH,
+			modal : true,// 背景变灰，不能编辑
+			collapsible : true,
+			resizable : false,
+			closeAction : 'hide',
+			uiStatus : 'AddNew',
+			inited : false, // 初始化标识
+			modifyed : false, // 修改标识
 
-    width:350,
-    title : '物料',
-    layout: 'fit',
-    autoShow: true,
-    modal:true,//背景变灰，不能编辑
-    uiStatus:'AddNew',
-    
-	requires: ['SCM.ux.SelectorField'],
-
-    initComponent: function() {
-		this.initForm();
-		this.initToolbar();
-        this.callParent(arguments);
-    },
-    
-	//初始化表单
-	initForm: function(){
-		
-    	this.items = [
-	              {
-	                  xtype: 'form',
-					  name:'materialform',
-	                  bodyPadding:5,
-	                  items: [
-						  {
-	                          xtype: 'selectorfield',
-							  storeName:'SCM.store.basedata.MaterialTypeStore',//定义数据集名称
-							  parentFormName:'materialform',
-	                          name : 'materialTypeId',
-	                          fieldLabel: '物料类别'
-	                          
-	                      },
-	                      {
-	                          xtype: 'textfield',
-	                          name : 'id',
-	                          fieldLabel: 'id',
-	                          hidden:true
-	                      },
-						  {
-	                          xtype: 'textfield',
-	                          name : 'number',
-	                          fieldLabel: '编码'
-	                          
-	                      },
-	                      {
-	                          xtype: 'textfield',
-	                          name : 'name',
-	                          fieldLabel: '名称'
-	                      },
-						  {
-	                          xtype: 'textfield',
-	                          name : 'model',
-	                          fieldLabel: '规格型号'
-	                      },
-						  {
-	                          xtype: 'numberfield',
-	                          name : 'defaultPrice',
-							  hideTrigger: true,
-	                          fieldLabel: '默认单价'
-	                      },
-						  {
-	                          xtype: 'textfield',
-	                          name : 'defaultSupplier',
-	                          fieldLabel: '默认供应商'
-	                      },
-						  {
-	                          xtype: 'numberfield',
-	                          name : 'safeStock',
-							  hideTrigger: true,
-	                          fieldLabel: '安全库存'
-	                      },
-						  {
-	                          xtype: 'selectorfield',
-							  storeName:'SCM.store.basedata.UnitStore',//定义数据集名称
-							  parentFormName:'materialform',
-	                          name : 'defaultUnitId',
-	                          fieldLabel: '默认计量单位'
-	                          
-	                      }
-	                      
-	                  ]
-	              }
-	          ];
-    },
-    
-    //初始化工具栏
-    initToolbar:function(){
-    	this.dockedItems=[
-	    	{xtype:'toolbar',
-	    	items:[{xtye:'button',text:'保存',cls:'x-btn-text-icon',icon:'/scmui/images/icons/save.png',action:'save'}]
-	    	}
-    	];
-    }
-
-});
+			initComponent : function() {
+				var me = this;
+				var materialType = Ext.create('MaterialTypeStore');
+				var unitStore = Ext.create('UnitStore');
+				Ext.applyIf(me, {
+							items : [{
+										xtype : 'form',
+										bodyPadding : '10 10 10 10',
+										border : 0,
+										defaults : {
+											xtype : 'textfield',
+											labelWidth : SCM.MaxSize.LABEL_WIDTH,
+											width : SCM.MaxSize.FIELD_WIDTH
+										},
+										items : [{
+													xtype : 'combogrid',
+													fieldLabel : '物料类别',
+													name : 'materialTypeId',
+													valueField : 'id',
+													displayField : 'name',
+													store : materialType,
+													listConfig : {
+														height : SCM.MaxSize.COMBOGRID_HEIGHT,
+														columns : [{
+																	header : '编码',
+																	dataIndex : 'number',
+																	width : 100,
+																	hideable : false
+																}, {
+																	header : '名称',
+																	dataIndex : 'name',
+																	width : 80,
+																	hideable : false
+																}]
+													}
+												}, {
+													name : 'id',
+													fieldLabel : 'id',
+													hidden : true
+												}, {
+													name : 'number',
+													fieldLabel : '编码',
+													hidden : true
+												}, {
+													name : 'name',
+													fieldLabel : '名称',
+													allowBlank : false,
+													maxLength : 50
+												}, {
+													name : 'model',
+													fieldLabel : '规格型号'
+												}, {
+													xtype : 'numberfield',
+													name : 'defaultPrice',
+													hideTrigger : true,
+													fieldLabel : '默认单价'
+												}, {
+													name : 'defaultSupplier',
+													fieldLabel : '默认供应商'
+												}, {
+													xtype : 'numberfield',
+													name : 'safeStock',
+													hideTrigger : true,
+													fieldLabel : '安全库存'
+												}, {
+													xtype : 'combogrid',
+													fieldLabel : '默认计量单位',
+													name : 'defaultUnitId',
+													valueField : 'id',
+													displayField : 'name',
+													store : unitStore,
+													listConfig : {
+														height : SCM.MaxSize.COMBOGRID_HEIGHT,
+														columns : [{
+																	header : '编码',
+																	dataIndex : 'number',
+																	width : 100,
+																	hideable : false
+																}, {
+																	header : '名称',
+																	dataIndex : 'name',
+																	width : 80,
+																	hideable : false
+																}]
+													}
+												}],
+										dockedItems : [{
+													xtype : 'savetoolbar',
+													dock : 'bottom'
+												}]
+									}]
+						});
+				this.callParent();
+			},
+			close : function() {
+				this.hide();
+				this.inited = false;
+				this.modifyed = false;
+			}
+		});

@@ -1,86 +1,77 @@
 Ext.define('SCM.view.basedata.department.EditUI', {
-    extend: 'Ext.window.Window',
-    alias : 'widget.departmentedit',
+			extend : 'Ext.window.Window',
+			requires : ['SCM.extend.toolbar.SaveToolbar', 'SCM.ux.combobox.ComboGrid'],
+			alias : 'widget.departmentedit',
+			title : '部门',
+			layout : 'fit',
+			width : SCM.DefaultSize.WINDOW_WIDTH,
+			modal : true,// 背景变灰，不能编辑
+			collapsible : true,
+			resizable : false,
+			closeAction : 'hide',
+			uiStatus : 'AddNew',
+			inited : false, // 初始化标识
+			modifyed : false, // 修改标识
 
-    width:350,
-    title : '部门',
-    layout: 'fit',
-    autoShow: true,
-    modal:true,//背景变灰，不能编辑
-    uiStatus:'AddNew',
-    
-	requires: ['SCM.ux.SelectorField'],
-
-    initComponent: function() {
-		this.initForm();
-		this.initToolbar();
-        this.callParent(arguments);
-    },
-    
-	//初始化表单
-	initForm: function(){
-		
-    	this.items = [
-	              {
-	                  xtype: 'form',
-					  name:'departmentForm',
-	                  bodyPadding:5,
-	                  items: [
-	                      {
-	                          xtype: 'textfield',
-	                          name : 'id',
-	                          fieldLabel: 'id',
-	                          hidden:true
-	                      },
-						  {
-	                          xtype: 'selectorfield',
-							  storeName:'SCM.store.basedata.DepartmentStore',//定义数据集名称
-							  selectorColumns: [//定义选择对话框的列
-												{
-													xtype: 'gridcolumn',
-													dataIndex: 'id',
-													text: 'id',
-													hidden:true
-												},
-												{
-													xtype: 'gridcolumn',
-														dataIndex: 'number',
-														text: '部门编号'
-													},
-													{
-														xtype: 'gridcolumn',
-														dataIndex: 'name',
-														text: '名称'
+			initComponent : function() {
+				var me = this;
+				var deportmentStore = Ext.create('DepartmentStore');
+				Ext.applyIf(me, {
+							items : [{
+										xtype : 'form',
+										bodyPadding : '10 10 10 10',
+										border : 0,
+										defaults : {
+											xtype : 'textfield',
+											labelWidth : SCM.DefaultSize.LABEL_WIDTH,
+											width : SCM.DefaultSize.FIELD_WIDTH
+										},
+										items : [{
+													name : 'id',
+													fieldLabel : 'id',
+													hidden : true
+												}, {
+													xtype : 'combogrid',
+													fieldLabel : '上级部门',
+													name : 'parentId',
+													valueField : 'id',
+													displayField : 'name',
+													store : deportmentStore,
+													listConfig : {
+														height : SCM.DefaultSize.COMBOGRID_HEIGHT,
+														columns : [{
+																	header : '编码',
+																	dataIndex : 'number',
+																	width : 100,
+																	hideable : false
+																}, {
+																	header : '名称',
+																	dataIndex : 'name',
+																	width : 80,
+																	hideable : false
+																}]
 													}
-												],
-							  parentFormName:'departmentForm',
-	                          name : 'parentId',
-	                          fieldLabel: '上级部门'
-	                          
-	                      },
-	                      {
-	                          xtype: 'textfield',
-	                          name : 'number',
-	                          fieldLabel: '编码'
-	                          
-	                      },
-	                      {
-	                          xtype: 'textfield',
-	                          name : 'name',
-	                          fieldLabel: '名称'
-	                      }
-	                  ]
-	              }
-	          ];
-    },
-    
-    //初始化工具栏
-    initToolbar:function(){
-    	this.dockedItems=[
-	    	{xtype:'toolbar',
-	    	items:[{xtye:'button',text:'保存',cls:'x-btn-text-icon',icon:'/scmui/images/icons/save.png',action:'save'}]
-	    	}
-    	];
-    }
-
-});
+												}, {
+													name : 'number',
+													fieldLabel : '编码',
+													hidden : true
+												}, {
+													name : 'name',
+													fieldLabel : '名称',
+													allowBlank : false,
+													maxLength : 50
+												}]
+									}],
+							dockedItems : [{
+										xtype : 'savetoolbar',
+										dock : 'bottom'
+									}]
+						});
+				this.callParent();
+			},
+			close : function() {
+				this.hide();
+				this.inited = false;
+				this.modifyed = false;
+			}
+		});

@@ -286,7 +286,7 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 								}
 								,{
 								  xtype: 'combobox'
-								  ,store:Ext.partner.basiccode.billStatusStore
+								  ,store:SCM.store.basiccode.billStatusStore
 								  ,name : 'status'
 								  ,displayField:'name'
 								  ,margin: 5

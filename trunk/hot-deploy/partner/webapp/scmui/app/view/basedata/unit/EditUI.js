@@ -4,10 +4,11 @@ Ext.define('SCM.view.basedata.unit.EditUI', {
 			alias : 'widget.unitedit',
 			title : '计量单位',
 			layout : 'fit',
-			width : 280,
+			width : SCM.MinSize.WINDOW_WIDTH,
 			modal : true,// 背景变灰，不能编辑
 			collapsible : true,
 			resizable : false,
+			closeAction : 'hide',
 			uiStatus : 'AddNew',
 			inited : false, // 初始化标识
 			modifyed : false, // 修改标识
@@ -17,12 +18,12 @@ Ext.define('SCM.view.basedata.unit.EditUI', {
 				Ext.applyIf(me, {
 							items : [{
 										xtype : 'form',
-										bodyPadding : '5 10 10 10',
+										bodyPadding : '10 10 10 10',
 										border : 0,
 										defaults : {
 											xtype : 'textfield',
-											labelWidth : 40,
-											width : 240
+											labelWidth : SCM.MinSize.LABEL_WIDTH,
+											width : SCM.MinSize.FIELD_WIDTH
 										},
 										items : [{
 													name : 'id',
@@ -46,7 +47,6 @@ Ext.define('SCM.view.basedata.unit.EditUI', {
 						});
 				this.callParent();
 			},
-
 			close : function() {
 				this.hide();
 				this.inited = false;
