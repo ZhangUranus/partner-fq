@@ -51,7 +51,7 @@ public class MultiEntryCRUDEvent {
 			GenericValue v = delegator.makeValue(headEntityName);// 新建一个值对象	
 			setGenValFromJsonObj(headRecord, v);
 			
-			String entityNumber = CommonEvents.getSerialNumber(request, headEntityName);
+			String entityNumber = CommonEvents.getSerialNumberHelper().getSerialNumber(request, headEntityName);
 			if(!"".equals(entityNumber)){//判断系统编码是否存在，存在的使用系统编码
 				if (v.getModelEntity().getField("number") != null) {
 					v.set("number", entityNumber);
