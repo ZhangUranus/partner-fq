@@ -56,45 +56,27 @@ Ext.define('SCM.controller.basedata.MaterialBomController', {
 							'materialbomedit form textfield{isVisible()}' : {
 								change : this.fieldChange
 							},
+							// 表格变动事件
+							'materialbomedit gridpanel' : {
+								itemclick : this.fieldChange
+							},
 							// 编辑界面分录新增
-							'materialbomedit  gridpanel button[action=addLine]' : {
+							'materialbomedit gridpanel button[action=addLine]' : {
 								click : this.addLine
 							},
 							// 编辑界面分录删除
-							'materialbomedit  gridpanel button[action=deleteLine]' : {
+							'materialbomedit gridpanel button[action=deleteLine]' : {
 								click : this.deleteLine
-							},
-							// 编辑界面物料类别字段选择界面确定
-							'#materialbomform-materialId-selWin button[name=btnSure]' : {
-								click : this.selectMaterial
-							},
-							// 编辑界面物料类别字段选择界面取消
-							'#materialbomform-materialId-selWin button[name=btnCancel]' : {
-								click : cancelSelWin
-							},
-							// //编辑界面分录物料字段选择界面确定
-							'#materialbomform-entryMaterialName-selWin button[name=btnSure]' : {
-								click : this.selectEntryMaterial
-							},
-							// 编辑界面分录物料字段选择界面取消
-							'#materialbomform-entryMaterialName-selWin button[name=btnCancel]' : {
-								click : cancelSelWin
-							},
-							// 编辑界面分录计量单位字段选择界面确定
-							'#materialbomform-entryUnitName-selWin button[name=btnSure]' : {
-								click : this.selectEntryUnit
-							},
-							// 编辑界面分录计量单位字段选择界面取消
-							'#materialbomform-entryUnitName-selWin button[name=btnCancel]' : {
-								click : cancelSelWin
 							}
 						});
 			},
 			/**
-			 * 保存原来方法，重写各方法
+			 * 重写空方法
 			 */
 			afterInitComponent : function() {
 				this.editGrid = this.win.down('gridpanel');
+				this.editForm.down('[name=materialId]').store.load(); // 初始物料下拉框数据
+				this.editForm.down('[name=unitId]').editor.store.load();// 初始计量单位下拉框数据
 			},
 
 			/**
@@ -106,11 +88,51 @@ Ext.define('SCM.controller.basedata.MaterialBomController', {
 			addNewRecord : function(button) {
 				newRecord = Ext.create(this.modelName);// 新增记录
 				this.win.uiStatus = 'AddNew';
-				this.editForm.loadRecord(newRecord);
+				this.editForm.getForm().loadRecord(newRecord);
 				// 清空分录
 				this.editGrid.store.removeAll(true);
 				this.editGrid.getView().refresh();
 				this.showEdit();
+			},
+
+			/**
+			 * 加载编辑界面表单数据
+			 * 
+			 * @param {}
+			 *            record
+			 */
+			loadFormRecord : function(record) {
+				this.win.uiStatus = 'Modify';
+				Ext.create('MaterialBomEditModel').self.load(record.get('id'), {
+							scope : this,
+							params : {
+								'whereStr' : 'MaterialBomV.ID =\'' + record.get('id') + '\''
+							},
+							success : function(record, operation) {
+								this.editForm.getForm().loadRecord(record);
+								this.loadGridRecord(record);
+							}
+						});
+			},
+
+			/**
+			 * 加载编辑界面表格数据
+			 * 
+			 * @param {}
+			 *            record
+			 */
+			loadGridRecord : function(record) {
+				var editStore = Ext.create('MaterialBomEditStore');
+				this.editGrid.store.load({
+							scope : this,
+							params : {
+								'whereStr' : 'MaterialBomEntryV.PARENT_ID =\'' + record.get('id') + '\''
+							},
+							callback : function(records, operation, success) {
+								this.editForm.inited = true;
+								this.showEdit();
+							}
+						});
 			},
 
 			/**
@@ -125,28 +147,7 @@ Ext.define('SCM.controller.basedata.MaterialBomController', {
 				sm = this.listPanel.getSelectionModel();
 				if (sm.hasSelection()) {// 判断是否选择行记录
 					record = sm.getLastSelected();
-					// 根据选择的id加载编辑界面数据
-					var editStore = Ext.create('MaterialBomEditStore');
-					editStore.filter([{
-								property : "id",
-								value : record.data.id
-							}]);
-					editStore.load({
-								scope : this,
-								callback : function(records, operation, success) {
-									this.win.uiStatus = 'Modify';
-									this.ajustId2Display(this.editForm, records[0]);
-									this.editForm.loadRecord(records[0]);
-									var entryStore = this.editGrid.store;
-									entryStore.removeAll();// 清除记录
-									entryStore.filter([{
-												property : "parentId",
-												value : records[0].id
-											}]);// 过滤记录
-									entryStore.load();
-								}
-							});
-					this.showEdit();
+					this.loadFormRecord(record);
 				}
 			},
 
@@ -242,45 +243,37 @@ Ext.define('SCM.controller.basedata.MaterialBomController', {
 				this.listPanel.store.load();
 				this.changeComponentsState();
 			},
-			// 表头物料选择框保存
-			selectMaterial : function(button) {
-				selectValwin(button, 'materialId', this.editForm);
-			},
-			// 分录物料选择框保存
-			selectEntryMaterial : function(button) {
-				var sr = this.getSelectedEntry();
-				selectValIdAName(button, 'entryMaterialId', 'entryMaterialName', sr);
-			},
-			// 分录计量单位选择框保存
-			selectEntryUnit : function(button) {
-				var sr = this.getSelectedEntry();
-				selectValIdAName(button, 'entryUnitId', 'entryUnitName', sr);
-			},
-			// 新增分录
+			/**
+			 * 新增分录
+			 * 
+			 * @param {}
+			 *            button
+			 */
 			addLine : function(button) {
 				var entryRecord = Ext.create('MaterialBomEditEntryModel');
-
 				// 设置父id
 				entryRecord.set('parentId', this.editForm.getValues().id);
 				this.editGrid.store.add(entryRecord);
-				this.fieldChange();
 			},
-			// 删除分录
+			/**
+			 * 删除分录
+			 * 
+			 * @param {}
+			 *            button
+			 */
 			deleteLine : function(button) {
 				this.editGrid.store.remove(this.getSelectedEntry());
 			},
-			// 获取选择的分录行
+			/**
+			 * 获取选择的分录行
+			 * 
+			 * @return {}
+			 */
 			getSelectedEntry : function() {
 				var selMod = this.editGrid.getSelectionModel();
 				if (selMod != null) {
 					return selMod.getLastSelected();
 				}
-				this.fieldChange();
-			},
-			// 调整显示字段，将id字段值设置为displayValue字段值
-			ajustId2Display : function(form, record) {
-				var material = form.down('selectorfield[name=materialId]');
-				material.displayValue = record.get('materialName');// 默认物料
 			}
 
 		});

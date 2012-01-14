@@ -62,21 +62,7 @@ Ext.define('SCM.controller.basedata.WarehouseController', {
 			 * 增加this.wsTypeFeild的定义
 			 */
 			afterInitComponent : function() {
-				this.wsTypeFeild = this.editForm.down('[name=wsTypeId]');
-			},
-			/**
-			 * 编辑事件
-			 * 
-			 * @param {}
-			 *            grid 当前表格
-			 * @param {}
-			 *            record 选中记录
-			 */
-			modifyRecord : function(grid, record) {
-				this.win.uiStatus = 'Modify';
-				this.editForm.loadRecord(record);
-				this.wsTypeFeild.setValue(record.get('warehouseTypeName'));//load完record后需要调整id字段的显示
-				this.showEdit();
+        		this.editForm.down('[name=wsTypeId]').store.load();		//初始下拉框数据
 			},
 
 			/**

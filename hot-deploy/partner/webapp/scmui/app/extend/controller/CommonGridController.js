@@ -1,17 +1,11 @@
 /**
- * 针对Grid编辑页面通用方法
- * 必须包括以下对象
+ * 针对Grid编辑页面通用方法 必须包括以下对象
  * 
- * this.listPanel	grid对象
- * this.newButton	新增按钮
- * this.deleteButton	删除按钮
- * this.editButton	编辑按钮
- * this.searchText	查找框
+ * this.listPanel grid对象 this.newButton 新增按钮 this.deleteButton 删除按钮
+ * this.editButton 编辑按钮 this.searchText 查找框
  * 
- * this.win	弹出window窗口
- * this.editForm	form对象
- * this.fields	所有可见field对象
- * this.saveButton	form保存按钮
+ * this.win 弹出window窗口 this.editForm form对象 this.fields 所有可见field对象
+ * this.saveButton form保存按钮
  * 
  * 如果只是方法不同，可以通过重写方式实现
  */
@@ -23,17 +17,19 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 			 *            grid 事件触发控件
 			 */
 			initComponent : function(view) {
-				this.listPanel = view;
+				this.listContainer = view;
+				if (this.listContainer.down('gridpanel')) {
+					this.listPanel = this.listContainer.down('gridpanel');
+				} else {
+					this.listPanel = view;
+				}
 				this.newButton = view.down('button[action=addNew]');
 				this.deleteButton = view.down('button[action=delete]');
 				this.editButton = view.down('button[action=modify]');
-				this.searchText = view.down('textfield[id=keyWord]');
-				this.initEdit();
-				this.editForm = this.win.down('form');
-				this.fields = this.editForm.query("textfield{isVisible()}"); // 取所以显示的field
-				this.saveButton = this.win.down('button[action=save]');
-				this.searchText.focus(true, true); // 设置界面初始焦点到搜索输入框
+				this.searchText = view.down('textfield[name=keyWord]');
+				this.getEdit();
 				this.listPanel.store.proxy.addListener('afterRequest', this.afterRequest, this); // 监听所有请求回调
+				this.listContainer.addListener('activate', this.focusSearchText, this); // 监听所有请求回调
 				this.initButtonByPermission();
 				this.changeComponentsState();
 				this.initEnterEvent();
@@ -62,10 +58,14 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 			/**
 			 * 初始化编辑框 只初始化一次，关闭时候隐藏
 			 */
-			initEdit : function() {
-				if (!this.win) {
+			getEdit : function() {
+				if (!this.win || this.win.isDestroyed) {
 					this.win = Ext.widget(this.editName);
+					this.editForm = this.win.down('form');
+					this.fields = this.editForm.query("textfield{isVisible()}"); // 取所以显示的field
+					this.saveButton = this.win.down('button[action=save]');
 				}
+				return this.win;
 			},
 
 			/**
@@ -100,17 +100,17 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 			 * 
 			 */
 			initButtonByPermission : function() {
-				if (this.listPanel.permission.add) {
+				if (this.listContainer.permission.add) {
 					this.newButton.setVisible(true);
 				} else {
 					this.newButton.setVisible(false);
 				}
-				if (this.listPanel.permission.edit) {
+				if (this.listContainer.permission.edit) {
 					this.editButton.setVisible(true);
 				} else {
 					this.editButton.setVisible(false);
 				}
-				if (this.listPanel.permission.remove) {
+				if (this.listContainer.permission.remove) {
 					this.deleteButton.setVisible(true);
 				} else {
 					this.deleteButton.setVisible(false);
@@ -132,7 +132,7 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 				if (this.win.uiStatus == 'AddNew') {
 					this.saveButton.setVisible(true);
 				} else {
-					if (this.listPanel.permission.edit) {
+					if (this.listContainer.permission.edit) {
 						this.saveButton.setVisible(true);
 						Ext.each(this.fields, function(item, index, length) {
 									item.setReadOnly(false);
@@ -192,8 +192,8 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 			 *            record 选中记录
 			 */
 			modifyRecord : function(grid, record) {
-				this.win.uiStatus = 'Modify';
-				this.editForm.loadRecord(record);
+				this.getEdit().uiStatus = 'Modify';
+				this.editForm.getForm().loadRecord(record);
 				this.showEdit();
 			},
 
@@ -218,8 +218,8 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 			 */
 			addNewRecord : function(button) {
 				newRecord = Ext.create(this.modelName);// 新增记录
-				this.win.uiStatus = 'AddNew';
-				this.editForm.loadRecord(newRecord);
+				this.getEdit().uiStatus = 'AddNew';
+				this.editForm.getForm().loadRecord(newRecord);
 				this.showEdit();
 			},
 
@@ -296,7 +296,7 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 			 */
 			clear : function() {
 				Ext.each(this.fields, function(item, index, length) {
-							item.reset();
+							item.setValue('');
 						});
 			},
 
@@ -322,6 +322,11 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 				return valid;
 			},
 
+			/**
+			 * 获取报表参数
+			 * 
+			 * @return {}
+			 */
 			getParams : function() {
 				var tempheader = this.listPanel.headerCt.query('{isVisible()}');
 				var header = "";
@@ -337,9 +342,6 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 				with (this.listPanel.store) {
 					var params = {
 						// Store参数
-						limit : pageSize,
-						page : currentPage,
-						start : (currentPage - 1) * pageSize,
 						sort : Ext.encode(getSorters()),
 						filter : Ext.encode(filters.items),
 
@@ -353,6 +355,14 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 					}
 					return params;
 				}
+			},
 
+			/**
+			 * 设置焦点为搜索输入框
+			 */
+			focusSearchText : function() {
+				if (this.searchText) {
+					this.searchText.focus(true, true)
+				}
 			}
 		})

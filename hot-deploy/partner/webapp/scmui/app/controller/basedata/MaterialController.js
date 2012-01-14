@@ -1,184 +1,126 @@
 Ext.define('SCM.controller.basedata.MaterialController', {
-    extend: 'Ext.app.Controller',
-    
-	views: [
-        'basedata.material.ListUI',
-		'basedata.material.EditUI'
-    ],
-	
-	stores:[
-		'basedata.MaterialTypeTreeStore',
-		'basedata.MaterialTypeStore',
-		'basedata.MaterialStore'
-	],
-	refs:[
-		{ref: 'materialgrid',selector: 'materialinfomaintaince gridpanel'},
-		{ref: 'materialedit',selector: 'materialedit'}
-	],
-	
-    init: function() {
-		this.control({
-			'materialinfomaintaince treepanel':{
-				select:this.selectNode
-		     },
-			//列表双击事件
-	        'materialinfomaintaince gridpanel': {
-	    		itemdblclick: this.modifyRecord
-	        },
-	        //列表新增按钮
-	        'materialinfomaintaince button[action=addNew]':{
-	        	click: this.addNewRecord
-	        },
-	        //列表修改按钮
-	        'materialinfomaintaince button[action=modify]':{
-	        	click: this.editRecord
-	        },
-	        //列表删除按钮
-	        'materialinfomaintaince button[action=delete]':{
-	        	click: this.deleteRecord
-	        },
-			//列表刷新按钮
-	        'materialinfomaintaince button[action=refresh]':{
-	        	click: this.refresh
-	        },
-			//编辑界面物料类别字段选择界面确定
-			'#materialform-materialTypeId-selWin button[name=btnSure]':{
-				click: this.selectMaterialType
+			extend : 'Ext.app.Controller',
+			mixins : ['SCM.extend.exporter.Exporter', 'SCM.extend.controller.CommonGridController'],
+			views : ['basedata.material.ListUI', 'basedata.material.EditUI'],
+			stores : ['basedata.MaterialTypeTreeStore', 'basedata.MaterialTypeStore', 'basedata.MaterialStore'],
+			models : ['basedata.MaterialTypeTreeModel'],
+			gridTitle : '料品资料',
+			gridName : 'materialinfomaintaince',
+			editName : 'materialedit',
+			modelName : 'MaterialModel',
+			entityName : 'TMaterialListView',
+
+			/**
+			 * 初始化controller 增加事件监控
+			 */
+			init : function() {
+				this.control({
+							// 列表事件
+							'materialinfomaintaince' : {
+								afterrender : this.initComponent
+							},
+							// 选择树形节点
+							'materialinfomaintaince treepanel' : {
+								select : this.selectNode
+							},
+							// 列表事件
+							'materialinfomaintaince gridpanel' : {
+								itemdblclick : this.modifyRecord, // 双击列表，弹出编辑界面
+								itemclick : this.changeComponentsState
+								// 点击列表，改变修改、删除按钮状态
+							},
+							// 列表新增按钮
+							'materialinfomaintaince button[action=addNew]' : {
+								click : this.addNewRecord
+							},
+							// 列表修改按钮
+							'materialinfomaintaince button[action=modify]' : {
+								click : this.editRecord
+							},
+							// 列表删除按钮
+							'materialinfomaintaince button[action=delete]' : {
+								click : this.deleteRecord
+							},
+							// 列表查询按钮
+							'materialinfomaintaince button[action=search]' : {
+								click : this.refreshRecord
+							},
+							'materialinfomaintaince button[action=export]' : {
+								click : this.exportExcel
+							},
+							// 编辑界面保存
+							'materialedit button[action=save]' : {
+								click : this.saveRecord
+							},
+							// 编辑界面重填
+							'materialedit button[action=clear]' : {
+								click : this.clear
+							},
+							// 编辑界面取消
+							'materialedit button[action=cancel]' : {
+								click : this.cancel
+							},
+							// 监听各field值变动事件，只监听可见控件
+							'materialedit form textfield{isVisible()}' : {
+								change : this.fieldChange
+							}
+						});
 			},
-			//编辑界面物料类别字段选择界面取消
-			'#materialform-materialTypeId-selWin button[name=btnCancel]':{
-				click: this.cancelSelWin
+
+			/**
+			 * 重写空方法
+			 */
+			afterInitComponent : function() {
+				this.editForm.down('[name=materialTypeId]').store.load(); // 初始物料下拉框数据
+				this.editForm.down('[name=defaultUnitId]').store.load();// 初始计量单位下拉框数据
 			},
-			//编辑界面默认计量单位字段选择界面确定
-			'#materialform-defaultUnitId-selWin button[name=btnSure]':{
-				click: this.selectDefaultUnit
+
+			/**
+			 * 选择树形节点时，更新列表数据
+			 * @param {} me
+			 * @param {} record
+			 * @param {} index
+			 * @param {} eOpts
+			 */
+			selectNode : function(me, record, index, eOpts) {
+				this.currentRecord = record;
+				this.listPanel.store.load({
+							params : {
+								'whereStr' : 'TMaterialV.material_Type_Id =\'' + record.data.id + '\''
+							}
+						});
 			},
-			//编辑界面默认计量单位字段选择界面取消
-			'#materialform-defaultUnitId-selWin button[name=btnCancel]':{
-				click: this.cancelSelWin
-			},
-			 //编辑界面保存
-	        'materialedit button[action=save]':{
-	        	click: this.saveRecord
-	        }
 			
-		}
-		);
-    },
-	//选择树形节点时，更新列表数据
-	selectNode: function(me, record, index, eOpts){
-		
-		var gridStore=this.getMaterialgrid().getStore();
-		gridStore.clearFilter();
-		//gridStore.filter([{property: "parentId", value: record.data.id}]);//该过滤方式只能进行全部与合并过滤，
-		
-		gridStore.load({params:{'whereStr':'TMaterialV.material_Type_Id =\''+record.data.id+'\''}});//使用where过滤字符串
-	},
-	
-	//双击编辑
-    modifyRecord: function(grid, record){
-        var editui=Ext.widget('materialedit');
-        editui.uiStatus='Modify';
-		var form=editui.down('form');
-		this.ajustId2Display(form,record);
-    	form.loadRecord(record);
-    },
-    //修改
-    editRecord: function(button){
-    	listPanel=this.getMaterialgrid();
-    	
-    	sm=listPanel.getSelectionModel();
-    	if(sm.hasSelection()){//判断是否选择行记录
-    		record=sm.getLastSelected();
-			//获取现在的记录id，通过id加载编辑页面数据
-    		var editui=Ext.widget('materialedit');
-    		editui.uiStatus='Modify';
-			var form=editui.down('form');
-			this.ajustId2Display(form,record);
-			form.loadRecord(record);
-    	}
-    },
-    //新增
-    addNewRecord: function(button){
-    	newRecord=Ext.create('MaterialModel');//新增记录
-    	var editui=Ext.widget('materialedit');
-    	editui.uiStatus='AddNew';
-    	editui.down('form').loadRecord(newRecord);
-    },
-	 //删除记录
-    deleteRecord: function(button){
-    	listPanel=this.getMaterialgrid();
-    	sm=listPanel.getSelectionModel();
-    	if(sm.hasSelection()){//判断是否选择行记录
-    		//删除选择的记录
-    		records=sm.getSelection();
-    		listPanel.store.remove(records);
-    	}
-		this.refresh();
-    },
-	//保存记录
-	saveRecord: function(button){
-		//取编辑界面
-    	var win=this.getMaterialedit();
-    	//取表单
-    	form=win.down('form');
-    	values=form.getValues();
+			/**
+			 * 刷新页面数据
+			 * 
+			 * @param {}
+			 *            button 刷新按钮
+			 */
+			refreshRecord : function(button) {
+				if (this.searchText.getValue()) {
+					this.listPanel.store.getProxy().extraParams.whereStr = 'TMaterialV.NAME like \'%' + this.searchText.getValue() + '%\'';
+				} else {
+					this.listPanel.store.getProxy().extraParams.whereStr = '';
+				}
+				this.listPanel.store.load();
+				this.treePanel.store.load();
+				this.changeComponentsState();
+			},
 
-    	var record;
-    	if(win.uiStatus=='Modify'){//修改记录
-    		record=form.getRecord();
-    		record.set(values);
-    	}else if(win.uiStatus=='AddNew'){//新增记录
-    		record=Ext.create('MaterialModel');
-    		record.set(values);
-    		this.getMaterialgrid().store.add(record);
-    	}
-    	
-    	win.close();
-		this.refresh();
-	},
-	//调整显示字段，将id字段值设置为displayValue字段值
-	ajustId2Display : function(form,record){
-		var defaultUnit=form.down('selectorfield[name=defaultUnitId]');
-		defaultUnit.displayValue=record.get('defaultUnitName');//默认计量单位
-	},
-	//刷新
-    refresh : function(button){
-		listPanel=this.getMaterialgrid();
-		listPanel.store.load();
-	},
-	//物料类别选择框保存
-	selectMaterialType:function(button){
-		var edit=this.getMaterialedit();
-		var form=edit.down('form')
-		this.selectValwin(button,'materialTypeId',form);
-	},
-	//默认计量单位选择框保存
-	selectDefaultUnit:function(button){
-		var edit=this.getMaterialedit();
-		var form=edit.down('form')
-		this.selectValwin(button,'defaultUnitId',form);
-	},
-	//选择框保存公共方法
-	selectValwin:function(button,fieldName,targetForm){
-		if(Ext.isEmpty(button)||Ext.isEmpty(fieldName)||Ext.isEmpty(targetForm)){
-			return;
-		}
-
-		var win=button.up('window');
-		var grid=win.down('gridpanel');
-		var records=grid.getSelectionModel().getSelection() ;
-
-		var parentField=targetForm.down('selectorfield[name='+fieldName+']');//查找编辑界面的上级部门控件
-		parentField.displayValue=records[0].get('name');//设置显示名称
-		parentField.setValue(records[0].get('id'));//设置value值
-		win.close();
-	},
-	//选择框取消公共方法
-	cancelSelWin:function(button){
-		var win=button.up('window');
-		win.close();
-	}
-	
-
-});
+			/**
+			 * 点击新增按钮
+			 * 
+			 * @param {}
+			 *            button 按钮控件
+			 */
+			addNewRecord : function(button) {
+				newRecord = Ext.create(this.modelName);// 新增记录
+				if (this.currentRecord) {
+					newRecord.set('materialTypeId', this.currentRecord.get('id'));
+				}
+				this.getEdit().uiStatus = 'AddNew';
+				this.editForm.getForm().loadRecord(newRecord);
+				this.showEdit();
+			}
+		});

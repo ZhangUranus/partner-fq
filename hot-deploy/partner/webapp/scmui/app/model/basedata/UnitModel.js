@@ -14,7 +14,6 @@ Ext.define('SCM.model.basedata.UnitModel', {
 						name : 'name',
 						type : 'string'
 					}],
-
 			idgen : 'uuid', // 使用uuid生成记录id 每个模型必须要有id字段
 			proxy : {
 				type : 'jsonajax',

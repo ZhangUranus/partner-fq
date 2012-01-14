@@ -1,14 +1,26 @@
-//定义数据模型
-Ext.define('SCM.model.basedata.MaterialTreeModel', {
-    extend: 'Ext.data.Model',
-    alias: 'MaterialTreeModel',
-    //字段
-    fields: [
-             {name: 'id',  type: 'string'},
-			 {name: 'parentId',  type: 'string'},
-             {name: 'number',   type: 'string'},
-             {name: 'name', type: 'string'}
-         ],
-    requires: ['Ext.data.UuidGenerator'],
-    idgen: 'uuid' //使用uuid生成记录id 每个模型必须要有id字段
-});
+// 定义数据模型
+Ext.define('SCM.model.basedata.MaterialTypeTreeModel', {
+			extend : 'Ext.data.Model',
+			requires : ['SCM.extend.proxy.JsonAjax'],
+			alias : 'MaterialTypeTreeModel',
+			fields : [{
+						name : 'id',
+						type : 'string'
+					}, {
+						name : 'text',
+						type : 'string'
+					}, {
+						name : 'leaf',
+						type : 'boolean',
+						defaultValue : true
+					}],
+			proxy : {
+				type : 'jsonajax',
+				api : {
+					read : '../../scm/control/requestTreeJsonData?entity=TMaterialType'
+				},
+				reader : {
+					root : 'children'
+				}
+			}
+		});
