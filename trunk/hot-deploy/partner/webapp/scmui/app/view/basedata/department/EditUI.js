@@ -15,7 +15,6 @@ Ext.define('SCM.view.basedata.department.EditUI', {
 
 			initComponent : function() {
 				var me = this;
-				var deportmentStore = Ext.create('DepartmentStore');
 				Ext.applyIf(me, {
 							items : [{
 										xtype : 'form',
@@ -36,7 +35,7 @@ Ext.define('SCM.view.basedata.department.EditUI', {
 													name : 'parentId',
 													valueField : 'id',
 													displayField : 'name',
-													store : deportmentStore,
+													store : 'basedata.DepartmentStore',
 													listConfig : {
 														height : SCM.DefaultSize.COMBOGRID_HEIGHT,
 														columns : [{
