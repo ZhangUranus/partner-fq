@@ -2,8 +2,7 @@ Ext.define('SCM.controller.basedata.WarehouseController', {
 			extend : 'Ext.app.Controller',
 			mixins : ['SCM.extend.exporter.Exporter', 'SCM.extend.controller.CommonGridController'],
 			views : ['basedata.warehouse.ListUI', 'basedata.warehouse.EditUI'],
-			stores : ['basedata.WarehouseStore'],
-
+			stores : ['basedata.WarehouseStore','basedata.WarehouseTypeStore'],
 			gridTitle : '仓库',
 			gridName : 'warehouseinfomaintaince',
 			editName : 'warehouseedit',
