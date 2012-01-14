@@ -15,8 +15,6 @@ Ext.define('SCM.view.basedata.material.EditUI', {
 
 			initComponent : function() {
 				var me = this;
-				var materialType = Ext.create('MaterialTypeStore');
-				var unitStore = Ext.create('UnitStore');
 				Ext.applyIf(me, {
 							items : [{
 										xtype : 'form',
@@ -33,7 +31,7 @@ Ext.define('SCM.view.basedata.material.EditUI', {
 													name : 'materialTypeId',
 													valueField : 'id',
 													displayField : 'name',
-													store : materialType,
+													store : 'basedata.MaterialTypeStore',
 													listConfig : {
 														height : SCM.MaxSize.COMBOGRID_HEIGHT,
 														columns : [{
@@ -83,7 +81,7 @@ Ext.define('SCM.view.basedata.material.EditUI', {
 													name : 'defaultUnitId',
 													valueField : 'id',
 													displayField : 'name',
-													store : unitStore,
+													store : 'basedata.UnitStore',
 													listConfig : {
 														height : SCM.MaxSize.COMBOGRID_HEIGHT,
 														columns : [{

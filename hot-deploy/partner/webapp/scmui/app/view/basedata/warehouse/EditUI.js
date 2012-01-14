@@ -15,7 +15,6 @@ Ext.define('SCM.view.basedata.warehouse.EditUI', {
 
 			initComponent : function() {
 				var me = this;
-				var warehouseType = Ext.create('WarehouseTypeStore');
 				Ext.applyIf(me, {
 							items : [{
 										xtype : 'form',
@@ -36,7 +35,7 @@ Ext.define('SCM.view.basedata.warehouse.EditUI', {
 													name : 'wsTypeId',
 													valueField : 'id',
 													displayField : 'name',
-													store : warehouseType,
+													store : 'basedata.WarehouseTypeStore',
 													listConfig : {
 														height : SCM.DefaultSize.COMBOGRID_HEIGHT,
 														columns : [{
