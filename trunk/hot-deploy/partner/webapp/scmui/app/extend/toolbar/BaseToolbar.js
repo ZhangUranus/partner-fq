@@ -6,11 +6,13 @@ Ext.define('SCM.extend.toolbar.BaseToolbar', {
 				Ext.applyIf(me, {
 							xtype : 'toolbar',
 							height : 28,
+							defaults : {
+								xtype : 'button'
+							},
 							items : [{
 										xtype : 'textfield',
 										name : 'keyWord',
-										emptyText : '请输入查询关键字',
-										id : 'keyWord'
+										emptyText : '请输入查询关键字'
 									}, {
 										text : '查询',
 										iconCls : 'system-search',
