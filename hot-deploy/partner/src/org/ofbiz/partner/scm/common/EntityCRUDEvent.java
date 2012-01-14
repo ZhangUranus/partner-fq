@@ -25,6 +25,7 @@ import org.ofbiz.entity.GenericEntityException;
 import org.ofbiz.entity.GenericValue;
 import org.ofbiz.entity.condition.EntityCondition;
 import org.ofbiz.entity.condition.EntityConditionList;
+import org.ofbiz.entity.condition.EntityOperator;
 import org.ofbiz.entity.model.ModelEntity;
 import org.ofbiz.entity.model.ModelField;
 
@@ -168,7 +169,7 @@ public class EntityCRUDEvent {
 				}
 			}
 			
-			String entityNumber = CommonEvents.getSerialNumber(request, entityName);
+			String entityNumber = CommonEvents.getSerialNumberHelper().getSerialNumber(request, entityName);
 			if(!"".equals(entityNumber)){//判断系统编码是否存在，存在的使用系统编码
 				ModelField vModelField = vModel.getField("number");
 				if (vModelField != null) {
@@ -398,6 +399,7 @@ public class EntityCRUDEvent {
 	 */
 	public static List<GenericValue> getValueList(HttpServletRequest request) throws Exception{
 		EntityConditionList<EntityCondition> condition = null;
+		List<EntityCondition> conds = FastList.newInstance();
 		if (request.getParameter("entity") == null ){
 			throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "EntityNameEmpty"));
 		}
@@ -406,24 +408,32 @@ public class EntityCRUDEvent {
 			//过滤字段，对字段做与方式过滤，obectMapper是静态变量，线程不安全
 			if(request.getParameter("filter") != null){
 				ObjectMapper objMapper = new ObjectMapper();//新建局部变量
-				List<EntityCondition> conds = FastList.newInstance();
 				List<LinkedHashMap<String, Object>> list = objMapper.readValue(request.getParameter("filter").toString(), List.class);
 				for (int i = 0; i < list.size(); i++){
 					conds.add(EntityCondition.makeCondition(list.get(i).get("property").toString(),list.get(i).get("value").toString()));
 				}
-				condition = EntityCondition.makeCondition(conds);
 			}
 			//处理whereStr过滤，覆盖filter条件
 			if(request.getParameter("whereStr")!=null && !"".equals(request.getParameter("whereStr"))){
 				EntityCondition whrCond=EntityCondition.makeConditionWhere(request.getParameter("whereStr"));
-				List<EntityCondition> conds = FastList.newInstance();
 				conds.add(whrCond);
-				condition=EntityCondition.makeCondition(conds);
 			}
+			//处理query查询请求，默认为name字段的模糊查询
+			if(request.getParameter("query")!=null && !"".equals(request.getParameter("query"))){
+				if(request.getParameter("queryField")!=null && !"".equals(request.getParameter("query"))){
+					String[] fieldArray = request.getParameter("queryField").split(",");
+					for(String field: fieldArray){
+						conds.add(EntityCondition.makeCondition(field, EntityOperator.LIKE, "%"+request.getParameter("query")+"%"));
+					}
+				}else{
+					conds.add(EntityCondition.makeCondition("name", EntityOperator.LIKE, "%"+request.getParameter("query")+"%"));
+				}
+			}
+			condition = EntityCondition.makeCondition(conds);
+			
 			List<String> orders = new ArrayList<String>();
 			if(request.getParameter("sort")!=null){
 				ObjectMapper objMapper = new ObjectMapper();//新建局部变量
-				List<EntityCondition> conds = FastList.newInstance();
 				List<LinkedHashMap<String, Object>> list = objMapper.readValue(request.getParameter("sort").toString(), List.class);
 				for (int i = 0; i < list.size(); i++){
 					String field = list.get(i).get("property").toString() + " " +list.get(i).get("direction").toString();
