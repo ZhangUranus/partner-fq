@@ -97,7 +97,7 @@ Ext.define('SCM.view.system.user.ListUI' ,{
 		                              anchor: '80%',
 		                              name : 'sex',//定义管理的model字段
 		                              fieldLabel: '性别',
-		                              store:Ext.partner.basiccode.sexStore,
+		                              store:SCM.store.basiccode.sexStore,
 		                              displayField:'name',//显示字段
 		                              valueField: 'id'//值字段，后台通过该字段传递
 		                          },
@@ -137,7 +137,7 @@ Ext.define('SCM.view.system.user.ListUI' ,{
 		                              anchor: '80%',
 		                              name : 'valid',//定义管理的model字段
 		                              fieldLabel: '是否有效',
-		                              store:Ext.partner.basiccode.validStore,
+		                              store:SCM.store.basiccode.validStore,
 		                              displayField:'name',//显示字段
 		                              valueField: 'id'//值字段，后台通过该字段传递
 		                        },{
@@ -175,7 +175,6 @@ Ext.define('SCM.view.system.user.ListUI' ,{
                     id : 'user-tree',
                     width : '200',
                     border : false,
-                    width : 212,
                     minSize : 130,
                     maxSize : 300,
                     rootVisible : false,

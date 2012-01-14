@@ -4,10 +4,11 @@ Ext.define('SCM.view.basedata.customer.EditUI', {
 			alias : 'widget.customeredit',
 			title : '客户',
 			layout : 'fit',
-			width : 300,
+			width : SCM.DefaultSize.WINDOW_WIDTH,
 			modal : true,// 背景变灰，不能编辑
 			collapsible : true,
 			resizable : false,
+			closeAction : 'hide',
 			uiStatus : 'AddNew',
 			inited : false, // 初始化标识
 			modifyed : false, // 修改标识
@@ -17,12 +18,12 @@ Ext.define('SCM.view.basedata.customer.EditUI', {
 				Ext.applyIf(me, {
 							items : [{
 										xtype : 'form',
-										bodyPadding : '5 10 10 10',
+										bodyPadding : '10 10 10 10',
 										border : 0,
 										defaults : {
 											xtype : 'textfield',
-											labelWidth : 60,
-											width : 240
+											labelWidth : SCM.DefaultSize.LABEL_WIDTH,
+											width : SCM.DefaultSize.FIELD_WIDTH
 										},
 										items : [{
 													name : 'id',
