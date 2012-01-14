@@ -71,6 +71,7 @@ Ext.define('SCM.controller.basedata.DepartmentController', {
 			 * 重写空方法
 			 */
 			afterInitComponent : function() {
+				this.editForm.down('[name=parentId]').store.load(); // 初始物料下拉框数据
 				this.treePanel = this.listContainer.down('treepanel');
 			},
 			
