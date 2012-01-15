@@ -4,14 +4,13 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 
 	height: 550,
 	width: 815,
-    title : '采购单编辑',
+    title : '采购单',
     layout: 'fit',
-    autoShow: true,
+    autoShow: false,
     modal:true,//背景变灰，不能编辑
     uiStatus:'AddNew',
-    
 	requires: ['SCM.ux.SelectorField','Ext.ux.CheckColumn'],
-
+	closeAction:'hide',
     initComponent: function() {
 		this.initForm();
 		this.initToolbar();
@@ -24,6 +23,7 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 			clicksToEdit: 1
 		});
 		var entryStore=Ext.create('PurchaseBillEditEntryStore');
+
     	this.items = [
 					  {
 						  xtype: 'form',
@@ -57,30 +57,81 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 								}
 																//\n
 								,{
-								  xtype: 'selectorfield',
-								  storeName:'SupplierStore',//定义数据集名称
-								  parentFormName:'PurchaseBillform',
-								  name : 'supplierSupplierId',
-								  margin: 5,
-								  fieldLabel: '供应商'
+								    xtype : 'combogrid',
+								    fieldLabel : '供应商',
+								    name : 'supplierSupplierId',
+									valueField : 'id',
+									displayField : 'name',
+									store : Ext.create('SupplierStore'),
+									margin: 5,
+									matchFieldWidth:false,
+									listConfig : {
+										width:185,
+										height : SCM.MaxSize.COMBOGRID_HEIGHT,
+										columns : [{
+													header : '编码',
+													dataIndex : 'number',
+													width : 100,
+													hideable : false
+													}, {
+													header : '名称',
+													dataIndex : 'name',
+													width : 80,
+													hideable : false
+													}]
+									}
 								}
 																								//\n
 								,{
-								  xtype: 'selectorfield',
-								  storeName:'SystemUserStore',//定义数据集名称
-								  parentFormName:'PurchaseBillform',
-								  name : 'purchserSystemUserId',
-								  margin: 5,
-								  fieldLabel: '采购员'
+								    xtype : 'combogrid',
+								    fieldLabel : '采购员',
+								    name : 'buyerSystemUserId',
+									valueField : 'id',
+									displayField : 'name',
+									store : Ext.create('SystemUserStore'),
+									margin: 5,
+									matchFieldWidth:false,
+									listConfig : {
+										width:185,
+										height : SCM.MaxSize.COMBOGRID_HEIGHT,
+										columns : [{
+													header : '编码',
+													dataIndex : 'number',
+													width : 100,
+													hideable : false
+													}, {
+													header : '名称',
+													dataIndex : 'name',
+													width : 80,
+													hideable : false
+													}]
+									}
 								}
 																								//\n
 								,{
-								  xtype: 'selectorfield',
-								  storeName:'SystemUserStore',//定义数据集名称
-								  parentFormName:'PurchaseBillform',
-								  name : 'auditerSystemUserId',
-								  margin: 5,
-								  fieldLabel: '审核员'
+								    xtype : 'combogrid',
+								    fieldLabel : '审核员',
+								    name : 'approverSystemUserId',
+									valueField : 'id',
+									displayField : 'name',
+									store : Ext.create('SystemUserStore'),
+									margin: 5,
+									matchFieldWidth:false,
+									listConfig : {
+										width:185,
+										height : SCM.MaxSize.COMBOGRID_HEIGHT,
+										columns : [{
+													header : '编码',
+													dataIndex : 'number',
+													width : 100,
+													hideable : false
+													}, {
+													header : '名称',
+													dataIndex : 'name',
+													width : 80,
+													hideable : false
+													}]
+									}
 								}
 																								//\n
 								,{
@@ -90,7 +141,7 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 								  ,fieldLabel: '总金额'
 								  								  								  //\n
 								   //\n
-								  ,name : 'totolAccount'
+								  ,name : 'totalsum'
 								  ,margin: 5
 								  
 								}
@@ -130,24 +181,42 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 								}
 																//\n
 								,{
-									xtype: 'gridcolumn'
-									,dataIndex: 'materialMaterialId'
-									,text: 'materialMaterialId'
-									,hidden:true
-									
+								xtype : 'gridcolumn'
+								,dataIndex : 'materialMaterialId'
+								,text : '物料'
+								,renderer : function(value,metaData,record) {
+									return record.get('materialMaterialName');
 								}
-								,{
-									xtype: 'gridcolumn',
-									dataIndex: 'materialMaterialName',
-									text: '物料',
-									editor:{
-											  xtype: 'selectorfield',
-											  storeName:'MaterialStore',//定义数据集名称
-											  parentFormName:'PurchaseBillform',
-											  name : 'materialMaterialName'
-										   }
+								,editor : {
+									xtype : 'combogrid',
+									valueField : 'id',
+									displayField : 'name',
+									store : Ext.create('MaterialStore'),
+									matchFieldWidth : false,
 									
+									listConfig : {
+										width : SCM.MaxSize.COMBOGRID_WIDTH,
+										height : SCM.MaxSize.COMBOGRID_HEIGHT,
+										columns : [{
+													header : '编码',
+													dataIndex : 'number',
+													width : 100,
+													hideable : false
+												}, {
+													header : '名称',
+													dataIndex : 'name',
+													width : 80,
+													hideable : false
+												}]
+									}
 								}
+							 }
+							 ,{
+								xtype : 'gridcolumn'
+								,dataIndex : 'materialMaterialName'
+								,text : '物料Name'
+								,hidden:true
+							 }
 																								//\n
 								,{
 								  								  								  //\n
@@ -159,30 +228,48 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 										}
 								  								  								  //\n
 								  //\n
-								  ,dataIndex:'amount'
+								  ,dataIndex:'volume'
 								  ,text: '数量'
 								  
 								}
 																								//\n
 								,{
-									xtype: 'gridcolumn'
-									,dataIndex: 'unitUnitId'
-									,text: 'unitUnitId'
-									,hidden:true
-									
+								xtype : 'gridcolumn'
+								,dataIndex : 'unitUnitId'
+								,text : '单位'
+								,renderer : function(value,metaData,record) {
+									return record.get('unitUnitName');
 								}
-								,{
-									xtype: 'gridcolumn',
-									dataIndex: 'unitUnitName',
-									text: '单位',
-									editor:{
-											  xtype: 'selectorfield',
-											  storeName:'UnitStore',//定义数据集名称
-											  parentFormName:'PurchaseBillform',
-											  name : 'unitUnitName'
-										   }
+								,editor : {
+									xtype : 'combogrid',
+									valueField : 'id',
+									displayField : 'name',
+									store : Ext.create('UnitStore'),
+									matchFieldWidth : false,
 									
+									listConfig : {
+										width : SCM.MaxSize.COMBOGRID_WIDTH,
+										height : SCM.MaxSize.COMBOGRID_HEIGHT,
+										columns : [{
+													header : '编码',
+													dataIndex : 'number',
+													width : 100,
+													hideable : false
+												}, {
+													header : '名称',
+													dataIndex : 'name',
+													width : 80,
+													hideable : false
+												}]
+									}
 								}
+							 }
+							 ,{
+								xtype : 'gridcolumn'
+								,dataIndex : 'unitUnitName'
+								,text : '单位Name'
+								,hidden:true
+							 }
 																								//\n
 								,{
 								  								  								  //\n
@@ -224,7 +311,7 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 										}
 								  								  								  //\n
 								  //\n
-								  ,dataIndex:'account'
+								  ,dataIndex:'entrysum'
 								  ,text: '金额'
 								  
 								}

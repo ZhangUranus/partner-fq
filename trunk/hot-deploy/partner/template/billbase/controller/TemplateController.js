@@ -1,6 +1,6 @@
 Ext.define('SCM.controller.${TemplateName}.${TemplateName}Controller', {
     extend: 'Ext.app.Controller',
-    
+    mixins:['SCM.extend.controller.BillCommonController'],
 	views: [
         '${TemplateName}.ListUI',
 		'${TemplateName}.EditUI'
@@ -18,13 +18,15 @@ Ext.define('SCM.controller.${TemplateName}.${TemplateName}Controller', {
 		{ref: '${TemplateName}editentry',selector: '${TemplateName}edit gridpanel'}
 	],
 	requires:['SCM.model.${TemplateName}.${TemplateName}ActionModel'],
+	editName:'${TemplateName}edit',
+	editStoreName:'${TemplateName}EditStore',
+	modelName:'${TemplateName}EditModel',
+	entryModelName:'${TemplateName}EditEntryModel',
 	
     init: function() {
 		this.control({
-			
-	        //分录列表初始化后
-	        '${TemplateName}list gridpanel[region=south]':{
-	        	afterrender: this.init${TemplateName}listentry
+			'${TemplateName}list':{
+	        	afterrender: this.initComponent
 	        },
 			//列表新增按钮
 	        '${TemplateName}list button[action=addNew]':{
@@ -32,8 +34,7 @@ Ext.define('SCM.controller.${TemplateName}.${TemplateName}Controller', {
 	        },
 			//列表事件
 	        '${TemplateName}list gridpanel[region=center]': {
-	        	afterrender: this.init${TemplateName}list //列表初始化事件
-	    		,select: this.showDetail //列表选择事件，显示明细
+	    		select: this.showDetail //列表选择事件，显示明细
 	        },
 	        //列表修改按钮
 	        '${TemplateName}list button[action=modify]':{
@@ -45,7 +46,7 @@ Ext.define('SCM.controller.${TemplateName}.${TemplateName}Controller', {
 	        },
 			//列表界面刷新
 			'${TemplateName}list button[action=refresh]':{
-	        	click: this.refresh
+	        	click: this.refreshRecord
 	        },
 	        //列表审核按钮
 	        '${TemplateName}list button[action=audit]':{
@@ -72,104 +73,10 @@ Ext.define('SCM.controller.${TemplateName}.${TemplateName}Controller', {
 			'${TemplateName}edit button[action=save]':{
 				click: this.saveRecord
 			}
-			#foreach($headfield in $HeadFields)
-			#if($headfield.isHidden==false&&$headfield.type=='entity')//\n
-			//编辑界面${headfield.alias}字段选择界面确定
-			,'#${TemplateName}form-${headfield.name}${headfield.entity}Id-selWin button[name=btnSure]':{
-				click: this.select${headfield.name}${headfield.entity}
-			}
-			//编辑界面${headfield.alias}字段选择界面取消
-			,'#${TemplateName}form-${headfield.name}${headfield.entity}Id-selWin button[name=btnCancel]':{
-				click: cancelSelWin
-			}
-			#end
-			#end
-			#foreach($entryfield in $EntryFields)
-			#if($entryfield.isHidden==false&&$entryfield.type=='entity')//\n
-			//编辑界面分录${entryfield.alias}字段选择界面确定
-			,'#${TemplateName}form-${entryfield.name}${entryfield.entity}Name-selWin button[name=btnSure]':{
-				click: this.select${entryfield.name}${entryfield.entity}
-			}
-			//编辑界面分录${entryfield.alias}字段选择界面取消
-			,'#${TemplateName}form-${entryfield.name}${entryfield.entity}Name-selWin button[name=btnCancel]':{
-				click: cancelSelWin
-			}
-			#end
-			#end//\n
-
 		}
 		);
     },
-	
-    //初始化列表
-    init${TemplateName}list : function(grid){
-    	this.mainGrid=grid;
-    	//grid.store.proxy.addListener('afterRequest',this.afterRequest,this);		//监听所有请求回调
-    },
-    //初始化分录列表
-    init${TemplateName}listentry : function(grid){
-    	this.entryGrid=grid;
-    	//grid.store.proxy.addListener('afterRequest',this.afterEntryRequest,this);		//监听所有请求回调
-    },
-    
-	//新增
-    addNewRecord: function(button){
-    	newRecord=Ext.create('${TemplateName}EditModel');//新增记录
-    	var editui=Ext.widget('${TemplateName}edit');
-    	editui.uiStatus='AddNew';
-		var form=editui.down('form');
-    	form.loadRecord(newRecord);
-		//清空分录
-		grid=form.down('gridpanel');
-		grid.store.removeAll(true);
 
-    },
-	//修改记录
-	editRecord: function(){
-		listPanel=this.get${TemplateName}list();
-    	sm=listPanel.getSelectionModel();
-		
-    	if(sm.hasSelection()){//判断是否选择行记录
-    		record=sm.getLastSelected();
-    		//如果单据状态是审核或者已经结算则不能修改
-    		if(record.data.status=='1'||record.data.status=='3'){
-    			showError('单据不能修改');
-    		}else{
-    			//根据选择的id加载编辑界面数据
-				var editStore=Ext.create('${TemplateName}EditStore');
-				editStore.filter([{property: "id", value: record.data.id}]);
-				editStore.load({
-					scope   : this,
-					callback: function(records, operation, success) {
-						
-						var editUI=Ext.widget('${TemplateName}edit');
-						editUI.uiStatus='Modify';
-						var form=editUI.down('form');
-						this.ajustId2Display(form,records[0]);
-	    				form.loadRecord(records[0]);
-						var entryStore=editUI.down('gridpanel').store;
-						entryStore.removeAll();//清除记录
-						entryStore.filter([{property: "parentId", value: records[0].id}]);//过滤记录
-						entryStore.load();
-					}
-				});
-    		}			
-		}else{
-    		showError('请选择记录!');
-    	}
-		
-	},
-	//显示分录信息
-	showDetail: function(me, record,index,eOpts){
-		if(record!=null&&record.get("id")!=null){
-			var entryStore=this.get${TemplateName}listentry().store;
-			if(entryStore!=null){
-				entryStore.clearFilter(true);
-				entryStore.filter([{property: "parentId", value: record.data.id}]);
-				entryStore.load();
-			}
-		}
-	},
 	//删除记录
 	deleteRecord: function(){
 		listPanel=this.get${TemplateName}list();
@@ -203,14 +110,7 @@ Ext.define('SCM.controller.${TemplateName}.${TemplateName}Controller', {
     		showError('请选择记录!');
     	}
 	},
-	//刷新
-	refresh: function(button){
-		var listPanel=this.get${TemplateName}list();
-    	listPanel.store.load();
-    	
-    	var entryPanel=this.get${TemplateName}listentry();
-    	entryPanel.store.removeAll();
-	},
+
 	auditBill: function(button){
 		listPanel=this.get${TemplateName}list();
     	sm=listPanel.getSelectionModel();
@@ -221,7 +121,7 @@ Ext.define('SCM.controller.${TemplateName}.${TemplateName}Controller', {
 			scope:this,
 		    url: '../../scm/control/auditBill?billId='+record.data.id+'&entity=${TemplateName}',
 		    success: function(response){
-		         this.refresh();
+		         this.refreshRecord();
 		    }
 		});
 		}else{
@@ -240,7 +140,7 @@ Ext.define('SCM.controller.${TemplateName}.${TemplateName}Controller', {
 			scope:this,
 		    url: '../../scm/control/unauditBill?billId='+record.data.id+'&entity=${TemplateName}',
 		    success: function(response){
-		        this.refresh();
+		        this.refreshRecord();
 		    }
 		});
 		}else{
@@ -298,72 +198,8 @@ Ext.define('SCM.controller.${TemplateName}.${TemplateName}Controller', {
     	}
     	
     	win.close();
-		this.refresh();
+		this.refreshRecord();
 		
-		
-	},
-	//新增分录
-	addLine:function(button){
-		var entryRecord=Ext.create('${TemplateName}EditEntryModel');
-		var grid=button.up('gridpanel');
-		var form=grid.up('form');
-
-		//设置父id
-		entryRecord.set('parentId',form.getValues().id);
-		grid.store.add(entryRecord);
-	},
-	//删除分录
-	deleteLine:function(button){
-		var grid=button.up('gridpanel');
-		grid.store.remove(this.getSelectedEntry());
-	},
-	//获取选择的分录行
-	getSelectedEntry: function(){
-		var grid=this.get${TemplateName}editentry();
-		var selMod= grid.getSelectionModel();
-		if(selMod!=null){
-			 return selMod.getLastSelected();
-		}
-	}
-	#foreach($headfield in $HeadFields)
-	#if($headfield.isHidden==false&&$headfield.type=='entity')//\n
-	//表头${headfield.alias}选择框保存
-	,select${headfield.name}${headfield.entity}:function(button){
-		var edit=this.get${TemplateName}edit();
-		var form=edit.down('form');
-		selectValwin(button,'${headfield.name}${headfield.entity}Id',form);
-	}
-	#end
-	#end
-	#foreach($entryfield in $EntryFields)
-	#if($entryfield.isHidden==false&&$entryfield.type=='entity')//\n
-	//表体${entryfield.alias}选择框保存
-	,select${entryfield.name}${entryfield.entity}:function(button){
-		var sr=this.getSelectedEntry();
-		selectValIdAName(button,'${entryfield.name}${entryfield.entity}Id','${entryfield.name}${entryfield.entity}Name',sr);
-	}
-	#end
-	#end//\n
-	//调整显示字段，将id字段值设置为displayValue字段值
-	,ajustId2Display : function(form,record){
-		//示例代码
-		//var material=form.down('selectorfield[name=materialId]');
-		//material.displayValue=record.get('materialName');//默认物料
-		#foreach($headfield in $HeadFields)
-		#if($headfield.isHidden==false&&$headfield.type=='entity')//\n
-		var ${headfield.name}${headfield.entity}=form.down('selectorfield[name=${headfield.name}${headfield.entity}Id]');
-		${headfield.name}${headfield.entity}.displayValue=record.get('${headfield.name}${headfield.entity}Name');
-		#end
-		#end
-
-	},
-	
-	//列表请求回调
-	afterRequest: function(){
-		
-	},
-	//分录列表请求回调
-	afterEntryRequest: function(){
 		
 	},
 	getPrintContent: function(){

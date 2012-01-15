@@ -1,5 +1,7 @@
 package org.ofbiz.partner.scm.pricemgr;
 
+import org.ofbiz.entity.Delegator;
+
 /**
  * 月结类
  * 提供系统月度结算功能，根据业务发生日期时间顺序，计算物料单价
@@ -8,6 +10,7 @@ package org.ofbiz.partner.scm.pricemgr;
  *
  */
 public class MonthlySettlement {
+	private static final String module=org.ofbiz.partner.scm.pricemgr.MonthlySettlement.class.getName();
 	private int year;//结算年度
 	private int month;//结算月份
 	//单实例模式
@@ -35,6 +38,7 @@ public class MonthlySettlement {
 	 * @return
 	 */
 	public boolean lockSystem() throws Exception{
+		//TODO 锁住系统
 		return false; 
 	}
 	
@@ -45,6 +49,18 @@ public class MonthlySettlement {
 	 * @throws Exception
 	 */
 	public boolean runCalculate() throws Exception{
+		//TODO 结算当期
+		return false;
+	}
+	
+	/**
+	 * 反结算当期，如果当期有审核的单据，则不能反结算
+	 * 当月操作年月设置为前一个月
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean rollBack() throws Exception{
+		//TODO 反结算当期
 		return false;
 	}
 	public int getYear() {

@@ -80,7 +80,7 @@ Ext.define('SCM.view.PurchaseBill.ListUI' ,{
 																		//\n
 						,{
 							xtype:'gridcolumn'
-							,dataIndex: 'purchserSystemUserName'
+							,dataIndex: 'buyerSystemUserName'
 							,width:150
 							,groupable: false
                             ,text: '采购员'
@@ -88,7 +88,7 @@ Ext.define('SCM.view.PurchaseBill.ListUI' ,{
 																		//\n
 						,{
 							xtype:'gridcolumn'
-							,dataIndex: 'auditerSystemUserName'
+							,dataIndex: 'approverSystemUserName'
 							,width:150
 							,groupable: false
                             ,text: '审核员'
@@ -99,7 +99,7 @@ Ext.define('SCM.view.PurchaseBill.ListUI' ,{
 							xtype: 'numbercolumn'
 																					//\n
 							//\n
-							,dataIndex: 'totolAccount'
+							,dataIndex: 'totalsum'
 							,width:150
 							,groupable: false
                             ,text: '总金额'
@@ -162,7 +162,7 @@ Ext.define('SCM.view.PurchaseBill.ListUI' ,{
 								  xtype: 'numbercolumn'
 								  								  								  //\n
 								  //\n
-								  ,dataIndex:'amount'
+								  ,dataIndex:'volume'
 								  ,text: '数量'
 								  
 								}
@@ -212,7 +212,7 @@ Ext.define('SCM.view.PurchaseBill.ListUI' ,{
 								  xtype: 'numbercolumn'
 								  								  								  //\n
 								  //\n
-								  ,dataIndex:'account'
+								  ,dataIndex:'entrysum'
 								  ,text: '金额'
 								  
 								}

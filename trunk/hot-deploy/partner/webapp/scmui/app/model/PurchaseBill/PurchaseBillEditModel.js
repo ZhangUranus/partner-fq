@@ -15,13 +15,13 @@ Ext.define('SCM.model.PurchaseBill.PurchaseBillEditModel', {
 			 ,{name: 'supplierSupplierId',type:'string'  }
 			 ,{name: 'supplierSupplierName',type:'string',persist:false }
 			 			 			 //\n
-			 ,{name: 'purchserSystemUserId',type:'string'  }
-			 ,{name: 'purchserSystemUserName',type:'string',persist:false }
+			 ,{name: 'buyerSystemUserId',type:'string'  }
+			 ,{name: 'buyerSystemUserName',type:'string',persist:false }
 			 			 			 //\n
-			 ,{name: 'auditerSystemUserId',type:'string'  }
-			 ,{name: 'auditerSystemUserName',type:'string',persist:false }
+			 ,{name: 'approverSystemUserId',type:'string'  }
+			 ,{name: 'approverSystemUserName',type:'string',persist:false }
 			 			 			 //\n
-			 ,{name: 'totolAccount' ,type:'float'  }
+			 ,{name: 'totalsum' ,type:'float'  }
 			 			 //\n
 			 ,{name: 'createdStamp', defaultValue:new Date(), type: 'date',format:'time',convert: function(value, record) {return new Date(value);},persist:false}
 			 ,{name: 'lastUpdatedStamp', defaultValue:new Date(), type: 'date',format:'time',convert: function(value, record) {return new Date(value);},persist:false}

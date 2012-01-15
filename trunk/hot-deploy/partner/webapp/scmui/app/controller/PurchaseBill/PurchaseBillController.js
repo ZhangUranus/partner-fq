@@ -1,6 +1,6 @@
 Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
     extend: 'Ext.app.Controller',
-    
+    mixins:['SCM.extend.controller.BillCommonController'],
 	views: [
         'PurchaseBill.ListUI',
 		'PurchaseBill.EditUI'
@@ -18,13 +18,15 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 		{ref: 'PurchaseBilleditentry',selector: 'PurchaseBilledit gridpanel'}
 	],
 	requires:['SCM.model.PurchaseBill.PurchaseBillActionModel'],
+	editName:'PurchaseBilledit',
+	editStoreName:'PurchaseBillEditStore',
+	modelName:'PurchaseBillEditModel',
+	entryModelName:'PurchaseBillEditEntryModel',
 	
     init: function() {
 		this.control({
-			
-	        //分录列表初始化后
-	        'PurchaseBilllist gridpanel[region=south]':{
-	        	afterrender: this.initPurchaseBilllistentry
+			'PurchaseBilllist':{
+	        	afterrender: this.initComponent
 	        },
 			//列表新增按钮
 	        'PurchaseBilllist button[action=addNew]':{
@@ -32,8 +34,7 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 	        },
 			//列表事件
 	        'PurchaseBilllist gridpanel[region=center]': {
-	        	afterrender: this.initPurchaseBilllist //列表初始化事件
-	    		,select: this.showDetail //列表选择事件，显示明细
+	    		select: this.showDetail //列表选择事件，显示明细
 	        },
 	        //列表修改按钮
 	        'PurchaseBilllist button[action=modify]':{
@@ -45,7 +46,7 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 	        },
 			//列表界面刷新
 			'PurchaseBilllist button[action=refresh]':{
-	        	click: this.refresh
+	        	click: this.refreshRecord
 	        },
 	        //列表审核按钮
 	        'PurchaseBilllist button[action=audit]':{
@@ -72,126 +73,10 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 			'PurchaseBilledit button[action=save]':{
 				click: this.saveRecord
 			}
-						//\n
-			//编辑界面供应商字段选择界面确定
-			,'#PurchaseBillform-supplierSupplierId-selWin button[name=btnSure]':{
-				click: this.selectsupplierSupplier
-			}
-			//编辑界面供应商字段选择界面取消
-			,'#PurchaseBillform-supplierSupplierId-selWin button[name=btnCancel]':{
-				click: cancelSelWin
-			}
-									//\n
-			//编辑界面采购员字段选择界面确定
-			,'#PurchaseBillform-purchserSystemUserId-selWin button[name=btnSure]':{
-				click: this.selectpurchserSystemUser
-			}
-			//编辑界面采购员字段选择界面取消
-			,'#PurchaseBillform-purchserSystemUserId-selWin button[name=btnCancel]':{
-				click: cancelSelWin
-			}
-									//\n
-			//编辑界面审核员字段选择界面确定
-			,'#PurchaseBillform-auditerSystemUserId-selWin button[name=btnSure]':{
-				click: this.selectauditerSystemUser
-			}
-			//编辑界面审核员字段选择界面取消
-			,'#PurchaseBillform-auditerSystemUserId-selWin button[name=btnCancel]':{
-				click: cancelSelWin
-			}
-																		//\n
-			//编辑界面分录物料字段选择界面确定
-			,'#PurchaseBillform-materialMaterialName-selWin button[name=btnSure]':{
-				click: this.selectmaterialMaterial
-			}
-			//编辑界面分录物料字段选择界面取消
-			,'#PurchaseBillform-materialMaterialName-selWin button[name=btnCancel]':{
-				click: cancelSelWin
-			}
-															//\n
-			//编辑界面分录单位字段选择界面确定
-			,'#PurchaseBillform-unitUnitName-selWin button[name=btnSure]':{
-				click: this.selectunitUnit
-			}
-			//编辑界面分录单位字段选择界面取消
-			,'#PurchaseBillform-unitUnitName-selWin button[name=btnCancel]':{
-				click: cancelSelWin
-			}
-																								//\n
-
 		}
 		);
     },
-	
-    //初始化列表
-    initPurchaseBilllist : function(grid){
-    	this.mainGrid=grid;
-    	//grid.store.proxy.addListener('afterRequest',this.afterRequest,this);		//监听所有请求回调
-    },
-    //初始化分录列表
-    initPurchaseBilllistentry : function(grid){
-    	this.entryGrid=grid;
-    	//grid.store.proxy.addListener('afterRequest',this.afterEntryRequest,this);		//监听所有请求回调
-    },
-    
-	//新增
-    addNewRecord: function(button){
-    	newRecord=Ext.create('PurchaseBillEditModel');//新增记录
-    	var editui=Ext.widget('PurchaseBilledit');
-    	editui.uiStatus='AddNew';
-		var form=editui.down('form');
-    	form.loadRecord(newRecord);
-		//清空分录
-		grid=form.down('gridpanel');
-		grid.store.removeAll(true);
 
-    },
-	//修改记录
-	editRecord: function(){
-		listPanel=this.getPurchaseBilllist();
-    	sm=listPanel.getSelectionModel();
-		
-    	if(sm.hasSelection()){//判断是否选择行记录
-    		record=sm.getLastSelected();
-    		//如果单据状态是审核或者已经结算则不能修改
-    		if(record.data.status=='1'||record.data.status=='3'){
-    			showError('单据不能修改');
-    		}else{
-    			//根据选择的id加载编辑界面数据
-				var editStore=Ext.create('PurchaseBillEditStore');
-				editStore.filter([{property: "id", value: record.data.id}]);
-				editStore.load({
-					scope   : this,
-					callback: function(records, operation, success) {
-						
-						var editUI=Ext.widget('PurchaseBilledit');
-						editUI.uiStatus='Modify';
-						var form=editUI.down('form');
-						this.ajustId2Display(form,records[0]);
-	    				form.loadRecord(records[0]);
-						var entryStore=editUI.down('gridpanel').store;
-						entryStore.removeAll();//清除记录
-						entryStore.filter([{property: "parentId", value: records[0].id}]);//过滤记录
-						entryStore.load();
-					}
-				});
-    		}			
-		}else{
-    		showError('请选择记录!');
-    	}
-		
-	},
-	//显示分录信息
-	showDetail: function(me, record,index,eOpts){
-		if(record!=null&&record.get("id")!=null){
-			var entryStore=this.getPurchaseBilllistentry().store;
-			if(entryStore!=null){
-				entryStore.clearFilter(true);
-				entryStore.filter([{property: "parentId", value: record.data.id}]);
-				entryStore.load();
-			}
-		}
-	},
 	//删除记录
 	deleteRecord: function(){
 		listPanel=this.getPurchaseBilllist();
@@ -225,14 +110,7 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
     		showError('请选择记录!');
     	}
 	},
-	//刷新
-	refresh: function(button){
-		var listPanel=this.getPurchaseBilllist();
-    	listPanel.store.load();
-    	
-    	var entryPanel=this.getPurchaseBilllistentry();
-    	entryPanel.store.removeAll();
-	},
+
 	auditBill: function(button){
 		listPanel=this.getPurchaseBilllist();
     	sm=listPanel.getSelectionModel();
@@ -243,7 +121,7 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 			scope:this,
 		    url: '../../scm/control/auditBill?billId='+record.data.id+'&entity=PurchaseBill',
 		    success: function(response){
-		         this.refresh();
+		         this.refreshRecord();
 		    }
 		});
 		}else{
@@ -262,7 +140,7 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 			scope:this,
 		    url: '../../scm/control/unauditBill?billId='+record.data.id+'&entity=PurchaseBill',
 		    success: function(response){
-		        this.refresh();
+		        this.refreshRecord();
 		    }
 		});
 		}else{
@@ -320,90 +198,8 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
     	}
     	
     	win.close();
-		this.refresh();
+		this.refreshRecord();
 		
-		
-	},
-	//新增分录
-	addLine:function(button){
-		var entryRecord=Ext.create('PurchaseBillEditEntryModel');
-		var grid=button.up('gridpanel');
-		var form=grid.up('form');
-
-		//设置父id
-		entryRecord.set('parentId',form.getValues().id);
-		grid.store.add(entryRecord);
-	},
-	//删除分录
-	deleteLine:function(button){
-		var grid=button.up('gridpanel');
-		grid.store.remove(this.getSelectedEntry());
-	},
-	//获取选择的分录行
-	getSelectedEntry: function(){
-		var grid=this.getPurchaseBilleditentry();
-		var selMod= grid.getSelectionModel();
-		if(selMod!=null){
-			 return selMod.getLastSelected();
-		}
-	}
-		//\n
-	//表头供应商选择框保存
-	,selectsupplierSupplier:function(button){
-		var edit=this.getPurchaseBilledit();
-		var form=edit.down('form');
-		selectValwin(button,'supplierSupplierId',form);
-	}
-			//\n
-	//表头采购员选择框保存
-	,selectpurchserSystemUser:function(button){
-		var edit=this.getPurchaseBilledit();
-		var form=edit.down('form');
-		selectValwin(button,'purchserSystemUserId',form);
-	}
-			//\n
-	//表头审核员选择框保存
-	,selectauditerSystemUser:function(button){
-		var edit=this.getPurchaseBilledit();
-		var form=edit.down('form');
-		selectValwin(button,'auditerSystemUserId',form);
-	}
-						//\n
-	//表体物料选择框保存
-	,selectmaterialMaterial:function(button){
-		var sr=this.getSelectedEntry();
-		selectValIdAName(button,'materialMaterialId','materialMaterialName',sr);
-	}
-					//\n
-	//表体单位选择框保存
-	,selectunitUnit:function(button){
-		var sr=this.getSelectedEntry();
-		selectValIdAName(button,'unitUnitId','unitUnitName',sr);
-	}
-								//\n
-	//调整显示字段，将id字段值设置为displayValue字段值
-	,ajustId2Display : function(form,record){
-		//示例代码
-		//var material=form.down('selectorfield[name=materialId]');
-		//material.displayValue=record.get('materialName');//默认物料
-				//\n
-		var supplierSupplier=form.down('selectorfield[name=supplierSupplierId]');
-		supplierSupplier.displayValue=record.get('supplierSupplierName');
-						//\n
-		var purchserSystemUser=form.down('selectorfield[name=purchserSystemUserId]');
-		purchserSystemUser.displayValue=record.get('purchserSystemUserName');
-						//\n
-		var auditerSystemUser=form.down('selectorfield[name=auditerSystemUserId]');
-		auditerSystemUser.displayValue=record.get('auditerSystemUserName');
-								
-	},
-	
-	//列表请求回调
-	afterRequest: function(){
-		
-	},
-	//分录列表请求回调
-	afterEntryRequest: function(){
 		
 	},
 	getPrintContent: function(){

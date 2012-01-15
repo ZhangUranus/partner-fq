@@ -39,11 +39,11 @@ under the License.
             		<!-- \n -->
 	  <field name="supplierSupplierId" type="id-long"></field>
 				        		<!-- \n -->
-	  <field name="purchserSystemUserId" type="id-long"></field>
+	  <field name="buyerSystemUserId" type="id-long"></field>
 				        		<!-- \n -->
-	  <field name="auditerSystemUserId" type="id-long"></field>
+	  <field name="approverSystemUserId" type="id-long"></field>
 				        		<!-- \n -->
-	  <field name="totolAccount" type="floating-point"></field>
+	  <field name="totalsum" type="fixed-point"></field>
 				   <!-- \n -->
       <field name="note" type="description"></field>
       <field name="status" type="numeric"></field>
@@ -61,15 +61,15 @@ under the License.
             <!-- \n -->
 	  <field name="materialMaterialId" type="id-long"></field>
 	  	        <!-- \n -->
-	  <field name="amount" type="floating-point"></field>
+	  <field name="volume" type="fixed-point"></field>
 	  	        <!-- \n -->
 	  <field name="unitUnitId" type="id-long"></field>
 	  	        <!-- \n -->
-	  <field name="price" type="floating-point"></field>
+	  <field name="price" type="fixed-point"></field>
 	  	        <!-- \n -->
-	  <field name="refPrice" type="floating-point"></field>
+	  <field name="refPrice" type="fixed-point"></field>
 	  	        <!-- \n -->
-	  <field name="account" type="floating-point"></field>
+	  <field name="entrysum" type="fixed-point"></field>
 	  	   <!-- \n -->
       <prim-key field="id"/>
     </entity>
@@ -82,29 +82,29 @@ under the License.
       		      		<!-- \n -->
 			<member-entity entity-alias="supplierSupplierV" entity-name="Supplier"></member-entity>
 				  		      		<!-- \n -->
-			<member-entity entity-alias="purchserSystemUserV" entity-name="SystemUser"></member-entity>
+			<member-entity entity-alias="buyerSystemUserV" entity-name="SystemUser"></member-entity>
 				  		      		<!-- \n -->
-			<member-entity entity-alias="auditerSystemUserV" entity-name="SystemUser"></member-entity>
+			<member-entity entity-alias="approverSystemUserV" entity-name="SystemUser"></member-entity>
 				  		      			  		 <!-- \n -->
             <alias-all entity-alias="PurchaseBillV" ></alias-all>
                   		<!-- \n -->
 			<alias name="supplierSupplierName" entity-alias="supplierSupplierV" field="name"></alias>	
 				  		      		<!-- \n -->
-			<alias name="purchserSystemUserName" entity-alias="purchserSystemUserV" field="name"></alias>	
+			<alias name="buyerSystemUserName" entity-alias="buyerSystemUserV" field="name"></alias>	
 				  		      		<!-- \n -->
-			<alias name="auditerSystemUserName" entity-alias="auditerSystemUserV" field="name"></alias>	
+			<alias name="approverSystemUserName" entity-alias="approverSystemUserV" field="name"></alias>	
 				  		      			  			  		
 	  		      		<!-- \n -->
 			<view-link entity-alias="PurchaseBillV" rel-entity-alias="supplierSupplierV" rel-optional="true">
 				<key-map field-name="supplierSupplierId" rel-field-name="id"/>
 			</view-link>
 				  		      		<!-- \n -->
-			<view-link entity-alias="PurchaseBillV" rel-entity-alias="purchserSystemUserV" rel-optional="true">
-				<key-map field-name="purchserSystemUserId" rel-field-name="id"/>
+			<view-link entity-alias="PurchaseBillV" rel-entity-alias="buyerSystemUserV" rel-optional="true">
+				<key-map field-name="buyerSystemUserId" rel-field-name="id"/>
 			</view-link>
 				  		      		<!-- \n -->
-			<view-link entity-alias="PurchaseBillV" rel-entity-alias="auditerSystemUserV" rel-optional="true">
-				<key-map field-name="auditerSystemUserId" rel-field-name="id"/>
+			<view-link entity-alias="PurchaseBillV" rel-entity-alias="approverSystemUserV" rel-optional="true">
+				<key-map field-name="approverSystemUserId" rel-field-name="id"/>
 			</view-link>
 				  		      			  		 <!-- \n -->
     </view-entity>
