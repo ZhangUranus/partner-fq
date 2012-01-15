@@ -104,7 +104,9 @@ Ext.define('SCM.controller.basedata.MaterialController', {
 					this.listPanel.store.getProxy().extraParams.whereStr = '';
 				}
 				this.listPanel.store.load();
-				this.treePanel.store.load();
+				if(this.treePanel){
+					this.treePanel.store.load();
+				}
 				this.changeComponentsState();
 			},
 
