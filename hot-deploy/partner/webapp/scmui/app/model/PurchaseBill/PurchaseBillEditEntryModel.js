@@ -10,7 +10,7 @@ Ext.define('SCM.model.PurchaseBill.PurchaseBillEditEntryModel', {
 			 ,{name: 'materialMaterialId',type:'string'  }
 			 ,{name: 'materialMaterialName',type:'string',persist:false }
 			 			 			 //\n
-			 ,{name: 'amount' ,type:'float'  }
+			 ,{name: 'volume' ,type:'float'  }
 			 			 			 //\n
 			 ,{name: 'unitUnitId',type:'string'  }
 			 ,{name: 'unitUnitName',type:'string',persist:false }
@@ -19,7 +19,7 @@ Ext.define('SCM.model.PurchaseBill.PurchaseBillEditEntryModel', {
 			 			 			 //\n
 			 ,{name: 'refPrice' ,type:'float'  }
 			 			 			 //\n
-			 ,{name: 'account' ,type:'float'  }
+			 ,{name: 'entrysum' ,type:'float'  }
 			 			 //\n
     ],
 

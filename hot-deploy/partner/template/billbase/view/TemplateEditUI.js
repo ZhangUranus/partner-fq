@@ -4,14 +4,13 @@ Ext.define('SCM.view.${TemplateName}.EditUI', {
 
 	height: 550,
 	width: 815,
-    title : '${TemplateAlias}编辑',
+    title : '${TemplateAlias}',
     layout: 'fit',
-    autoShow: true,
+    autoShow: false,
     modal:true,//背景变灰，不能编辑
     uiStatus:'AddNew',
-    
 	requires: ['SCM.ux.SelectorField','Ext.ux.CheckColumn'],
-
+	closeAction:'hide',
     initComponent: function() {
 		this.initForm();
 		this.initToolbar();
@@ -24,6 +23,7 @@ Ext.define('SCM.view.${TemplateName}.EditUI', {
 			clicksToEdit: 1
 		});
 		var entryStore=Ext.create('${TemplateName}EditEntryStore');
+
     	this.items = [
 					  {
 						  xtype: 'form',
@@ -97,12 +97,29 @@ Ext.define('SCM.view.${TemplateName}.EditUI', {
 								}
 								#elseif($headfield.isHidden==false&&$headfield.type=='entity')//\n
 								,{
-								  xtype: 'selectorfield',
-								  storeName:'${headfield.entity}Store',//定义数据集名称
-								  parentFormName:'${TemplateName}form',
-								  name : '${headfield.name}${headfield.entity}Id',
-								  margin: 5,
-								  fieldLabel: '${headfield.alias}'
+								    xtype : 'combogrid',
+								    fieldLabel : '${headfield.alias}',
+								    name : '${headfield.name}${headfield.entity}Id',
+									valueField : 'id',
+									displayField : 'name',
+									store : Ext.create('${headfield.entity}Store'),
+									margin: 5,
+									matchFieldWidth:false,
+									listConfig : {
+										width:185,
+										height : SCM.MaxSize.COMBOGRID_HEIGHT,
+										columns : [{
+													header : '编码',
+													dataIndex : 'number',
+													width : 100,
+													hideable : false
+													}, {
+													header : '名称',
+													dataIndex : 'name',
+													width : 80,
+													hideable : false
+													}]
+									}
 								}
 								#end 
 								#end //\n
@@ -198,24 +215,42 @@ Ext.define('SCM.view.${TemplateName}.EditUI', {
 								}
 								#elseif($entryfield.isHidden==false&&$entryfield.type=='entity')//\n
 								,{
-									xtype: 'gridcolumn'
-									,dataIndex: '${entryfield.name}${entryfield.entity}Id'
-									,text: '${entryfield.name}${entryfield.entity}Id'
-									,hidden:true
-									
+								xtype : 'gridcolumn'
+								,dataIndex : '${entryfield.name}${entryfield.entity}Id'
+								,text : '$entryfield.alias'
+								,renderer : function(value,metaData,record) {
+									return record.get('${entryfield.name}${entryfield.entity}Name');
 								}
-								,{
-									xtype: 'gridcolumn',
-									dataIndex: '${entryfield.name}${entryfield.entity}Name',
-									text: '$entryfield.alias',
-									editor:{
-											  xtype: 'selectorfield',
-											  storeName:'${entryfield.entity}Store',//定义数据集名称
-											  parentFormName:'${TemplateName}form',
-											  name : '${entryfield.name}${entryfield.entity}Name'
-										   }
+								,editor : {
+									xtype : 'combogrid',
+									valueField : 'id',
+									displayField : 'name',
+									store : Ext.create('${entryfield.entity}Store'),
+									matchFieldWidth : false,
 									
+									listConfig : {
+										width : SCM.MaxSize.COMBOGRID_WIDTH,
+										height : SCM.MaxSize.COMBOGRID_HEIGHT,
+										columns : [{
+													header : '编码',
+													dataIndex : 'number',
+													width : 100,
+													hideable : false
+												}, {
+													header : '名称',
+													dataIndex : 'name',
+													width : 80,
+													hideable : false
+												}]
+									}
 								}
+							 }
+							 ,{
+								xtype : 'gridcolumn'
+								,dataIndex : '${entryfield.name}${entryfield.entity}Name'
+								,text : '${entryfield.alias}Name'
+								,hidden:true
+							 }
 								#end 
 								#end //\n
 							],//end columns
@@ -275,7 +310,7 @@ Ext.define('SCM.view.${TemplateName}.EditUI', {
 								}
 								,{
 								  xtype: 'combobox'
-								  ,store:Ext.partner.basiccode.billStatusStore
+								  ,store:SCM.store.basiccode.billStatusStore
 								  ,name : 'status'
 								  ,displayField:'name'
 								  ,margin: 5

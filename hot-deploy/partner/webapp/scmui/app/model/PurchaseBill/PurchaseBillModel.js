@@ -12,20 +12,20 @@ Ext.define('SCM.model.PurchaseBill.PurchaseBillModel', {
 			 ,{name: 'supplierSupplierId',type:'string'  }
 			 ,{name: 'supplierSupplierName',type:'string' ,persist:false }
 			 					 //\n
-			 ,{name: 'purchserSystemUserId',type:'string'  }
-			 ,{name: 'purchserSystemUserName',type:'string' ,persist:false }
+			 ,{name: 'buyerSystemUserId',type:'string'  }
+			 ,{name: 'buyerSystemUserName',type:'string' ,persist:false }
 			 					 //\n
-			 ,{name: 'auditerSystemUserId',type:'string'  }
-			 ,{name: 'auditerSystemUserName',type:'string' ,persist:false }
+			 ,{name: 'approverSystemUserId',type:'string'  }
+			 ,{name: 'approverSystemUserName',type:'string' ,persist:false }
 			 					 //\n
-			 ,{name: 'totolAccount'  ,type:'float'  }
+			 ,{name: 'totalsum'  ,type:'float'  }
 			 		 //\n
 			 ,{name: 'entryId', type: 'string'}
 					 //\n
 			 ,{name: 'materialMaterialId',type:'string'  }
 			 ,{name: 'materialMaterialName',type:'string' ,persist:false }
 			 					 //\n
-			 ,{name: 'amount'  ,type:'float'   }
+			 ,{name: 'volume'  ,type:'float'   }
 			 					 //\n
 			 ,{name: 'unitUnitId',type:'string'  }
 			 ,{name: 'unitUnitName',type:'string' ,persist:false }
@@ -34,7 +34,7 @@ Ext.define('SCM.model.PurchaseBill.PurchaseBillModel', {
 			 					 //\n
 			 ,{name: 'refPrice'  ,type:'float'   }
 			 					 //\n
-			 ,{name: 'account'  ,type:'float'   }
+			 ,{name: 'entrysum'  ,type:'float'   }
 			 		 //\n
 
     ]
