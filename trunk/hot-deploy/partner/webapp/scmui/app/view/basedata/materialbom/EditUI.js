@@ -19,9 +19,6 @@ Ext.define('SCM.view.basedata.materialbom.EditUI', {
 				var cellEditing = Ext.create('Ext.grid.plugin.CellEditing', {
 							clicksToEdit : 1
 						});
-				var entryStore = Ext.create('MaterialBomEditEntryStore');
-				var materialStore = Ext.create('MaterialStore');
-				var unitStore = Ext.create('UnitStore');
 				Ext.applyIf(me, {
 							items : [{
 										xtype : 'form',
@@ -49,11 +46,11 @@ Ext.define('SCM.view.basedata.materialbom.EditUI', {
 																hidden : true
 															}, {
 																xtype : 'combogrid',
-																fieldLabel : '仓库类型',
+																fieldLabel : '物料名称',
 																name : 'materialId',
 																valueField : 'id',
 																displayField : 'name',
-																store : materialStore,
+																store : 'basedata.MaterialStore',
 																listConfig : {
 																	height : SCM.MaxSize.COMBOGRID_HEIGHT,
 																	columns : [{
@@ -72,7 +69,7 @@ Ext.define('SCM.view.basedata.materialbom.EditUI', {
 												}, {
 													xtype : 'gridpanel',
 													region : 'center',
-													store : entryStore,
+													store : 'basedata.MaterialBomEditEntryStore',
 													columns : [{
 																xtype : 'gridcolumn',
 																dataIndex : 'id',
@@ -88,20 +85,16 @@ Ext.define('SCM.view.basedata.materialbom.EditUI', {
 																xtype : 'gridcolumn',
 																dataIndex : 'entryMaterialId',
 																text : '物料编码',
-																renderer : function(value) {
-																	if (!Ext.isEmpty(value)) {
-																		var record = materialStore.getById(value);
-																		return record.get('name');
-																	} else {
-																		return "";
-																	}
+																renderer : function(value,metaData,record) {
+																	return record.get('entryMaterialName');
 																},
 																editor : {
 																	xtype : 'combogrid',
 																	valueField : 'id',
 																	displayField : 'name',
-																	store : materialStore,
+																	store : 'basedata.MaterialStore',
 																	matchFieldWidth : false,
+																	
 																	listConfig : {
 																		width : SCM.MaxSize.COMBOGRID_WIDTH,
 																		height : SCM.MaxSize.COMBOGRID_HEIGHT,
@@ -133,19 +126,14 @@ Ext.define('SCM.view.basedata.materialbom.EditUI', {
 																name : 'unitId',
 																dataIndex : 'entryUnitId',
 																text : '计量单位',
-																renderer : function(value) {
-																	if (!Ext.isEmpty(value)) {
-																		var record = unitStore.getById(value);
-																		return record.get('name');
-																	} else {
-																		return "";
-																	}
+																renderer : function(value,metaData,record) {
+																	return record.get('entryUnitName');
 																},
 																editor : {
 																	xtype : 'combogrid',
 																	valueField : 'id',
 																	displayField : 'name',
-																	store : unitStore,
+																	store : Ext.create('SCM.store.basedata.UnitStore'),
 																	matchFieldWidth : false,
 																	listConfig : {
 																		width : SCM.MaxSize.COMBOGRID_WIDTH,
