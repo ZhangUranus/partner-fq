@@ -1,10 +1,28 @@
 Ext.define('SCM.ux.combobox.ComboGrid', {
 			extend : 'Ext.form.ComboBox',
-			requires : ['Ext.grid.Panel'],
+			requires : ['SCM.ux.combobox.BoundGrid'],
 			alias : ['widget.combogrid'],
 			queryMode : 'remote',
 			minChars : 1,
 			typeAhead : true,
+			autoSelect : false,
+
+			/**
+			 * @private
+			 * If the autoSelect config is true, and the picker is open, highlights the first item.
+			 */
+			doAutoSelect : function() {
+				var me = this, picker = me.picker, lastSelected, itemNode;
+				if (picker && me.autoSelect && me.store.getCount() > 0) {
+					// Highlight the last selected item and scroll it into view
+					lastSelected = picker.getSelectionModel().lastSelected;
+					itemNode = picker.getNode(lastSelected || 0);
+					if (itemNode) {
+						picker.highlightItem(itemNode);
+						//picker.listEl.scrollChildIntoView(itemNode, false);
+					}
+				}
+			},
 
 			// copied from ComboBox 
 			createPicker : function() {
@@ -22,14 +40,7 @@ Ext.define('SCM.ux.combobox.ComboGrid', {
 							pageSize : me.pageSize
 						}, me.listConfig, me.defaultListConfig);
 
-				// NOTE: we simply use a grid panel
-				//picker = me.picker = Ext.create('Ext.view.BoundList', opts);
-				picker = me.picker = Ext.create('Ext.grid.Panel', opts);
-
-				// hack: pass getNode() to the view
-				picker.getNode = function() {
-					picker.getView().getNode(arguments);
-				};
+				picker = me.picker = Ext.create('SCM.ux.combobox.BoundGrid', opts);
 
 				me.mon(picker, {
 							itemclick : me.onItemClick,
