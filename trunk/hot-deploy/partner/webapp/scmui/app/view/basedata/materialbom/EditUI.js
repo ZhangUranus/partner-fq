@@ -1,6 +1,6 @@
 Ext.define('SCM.view.basedata.materialbom.EditUI', {
 			extend : 'Ext.window.Window',
-			requires : ['SCM.ux.SelectorField', 'SCM.extend.toolbar.SaveToolbar', 'SCM.ux.combobox.ComboGrid'],
+			requires : ['SCM.ux.SelectorField', 'SCM.extend.toolbar.SaveToolbar', 'SCM.ux.combobox.ComboGrid', 'SCM.ux.grid.ComboColumn'],
 			alias : 'widget.materialbomedit',
 			title : '物料BOM',
 			layout : 'fit',
@@ -50,7 +50,7 @@ Ext.define('SCM.view.basedata.materialbom.EditUI', {
 																name : 'materialId',
 																valueField : 'id',
 																displayField : 'name',
-																store : 'basedata.MaterialStore',
+																store : Ext.create('SCM.store.basedata.MaterialStore'),
 																listConfig : {
 																	height : SCM.MaxSize.COMBOGRID_HEIGHT,
 																	columns : [{
@@ -68,6 +68,7 @@ Ext.define('SCM.view.basedata.materialbom.EditUI', {
 															}]
 												}, {
 													xtype : 'gridpanel',
+													id : 'material-bom-edit-grid',
 													region : 'center',
 													store : 'basedata.MaterialBomEditEntryStore',
 													columns : [{
@@ -82,17 +83,15 @@ Ext.define('SCM.view.basedata.materialbom.EditUI', {
 																hidden : true
 
 															}, {
-																xtype : 'gridcolumn',
+																xtype : 'combocolumn',
 																dataIndex : 'entryMaterialId',
 																text : '物料编码',
-																renderer : function(value,metaData,record) {
-																	return record.get('entryMaterialName');
-																},
+																gridId : 'material-bom-edit-grid',
 																editor : {
 																	xtype : 'combogrid',
 																	valueField : 'id',
 																	displayField : 'name',
-																	store : 'basedata.MaterialStore',
+																	store : Ext.create('SCM.store.basedata.MaterialStore'),
 																	matchFieldWidth : false,
 																	
 																	listConfig : {
@@ -122,13 +121,11 @@ Ext.define('SCM.view.basedata.materialbom.EditUI', {
 
 																}
 															}, {
-																xtype : 'gridcolumn',
+																xtype : 'combocolumn',
 																name : 'unitId',
 																dataIndex : 'entryUnitId',
 																text : '计量单位',
-																renderer : function(value,metaData,record) {
-																	return record.get('entryUnitName');
-																},
+																gridId : 'material-bom-edit-grid',
 																editor : {
 																	xtype : 'combogrid',
 																	valueField : 'id',
