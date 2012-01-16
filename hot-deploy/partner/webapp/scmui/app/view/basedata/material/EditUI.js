@@ -68,8 +68,26 @@ Ext.define('SCM.view.basedata.material.EditUI', {
 													hideTrigger : true,
 													fieldLabel : '默认单价'
 												}, {
-													name : 'defaultSupplier',
-													fieldLabel : '默认供应商'
+													xtype : 'combogrid',
+													fieldLabel : '默认供应商',
+													name : 'defaultSupplierId',
+													valueField : 'id',
+													displayField : 'name',
+													store : 'Supplier.SupplierStore',
+													listConfig : {
+														height : SCM.MaxSize.COMBOGRID_HEIGHT,
+														columns : [{
+																	header : '编码',
+																	dataIndex : 'number',
+																	width : 100,
+																	hideable : false
+																}, {
+																	header : '名称',
+																	dataIndex : 'name',
+																	width : 80,
+																	hideable : false
+																}]
+													}
 												}, {
 													xtype : 'numberfield',
 													name : 'safeStock',

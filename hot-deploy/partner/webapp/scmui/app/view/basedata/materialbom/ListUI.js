@@ -22,6 +22,10 @@ Ext.define('SCM.view.basedata.materialbom.ListUI', {
 				Ext.applyIf(me, {
 							features : [groupingFeature],
 							columns : [{
+										header : '序号',
+										xtype : 'rownumberer',
+										width : 40
+									}, {
 										xtype : 'gridcolumn',
 										dataIndex : 'id',
 										text : 'id',

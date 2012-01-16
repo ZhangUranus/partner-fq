@@ -17,12 +17,16 @@ Ext.define('SCM.view.basedata.department.ListUI', {
 							items : [{
 										xtype : 'basetoolbar',
 										region : 'north'
-									},{
+									}, {
 										xtype : 'gridpanel',
 										title : '',
 										region : 'center',
 										store : 'basedata.DepartmentStore',// 列表型store
 										columns : [{
+													header : '序号',
+													xtype : 'rownumberer',
+													width : 40
+												}, {
 													xtype : 'gridcolumn',
 													dataIndex : 'id',
 													text : 'id',

@@ -1,11 +1,11 @@
 Ext.define('SCM.ux.combobox.ComboGrid', {
 			extend : 'Ext.form.ComboBox',
-			requires : ['SCM.ux.combobox.BoundGrid'],
+			requires : ['SCM.ux.combobox.BoundGrid', 'SCM.ux.combobox.BoundGridKeyNav'],
 			alias : ['widget.combogrid'],
 			queryMode : 'remote',
 			minChars : 1,
 			typeAhead : true,
-			autoSelect : false,
+			autoSelect : false,//暂时没有实现自动选中功能该值不允许为true;
 
 			/**
 			 * @private
@@ -19,7 +19,7 @@ Ext.define('SCM.ux.combobox.ComboGrid', {
 					itemNode = picker.getNode(lastSelected || 0);
 					if (itemNode) {
 						picker.highlightItem(itemNode);
-						//picker.listEl.scrollChildIntoView(itemNode, false);
+						//picker.listEl.scrollChildIntoView(itemNode, false);	//暂时没有实现自动选中功能
 					}
 				}
 			},
@@ -54,5 +54,33 @@ Ext.define('SCM.ux.combobox.ComboGrid', {
 						});
 
 				return picker;
+			},
+
+			onExpand : function() {
+				var me = this, keyNav = me.listKeyNav, selectOnTab = me.selectOnTab, picker = me.getPicker();
+
+				if (keyNav) {
+					keyNav.enable();
+				} else {
+					keyNav = me.listKeyNav = Ext.create('SCM.ux.combobox.BoundGridKeyNav', this.inputEl, {
+								boundList : picker,
+								forceKeyDown : true,
+								tab : function(e) {
+									if (selectOnTab) {
+										this.selectHighlighted(e);
+										me.triggerBlur();
+									}
+
+									return true;
+								}
+							});
+				}
+
+				if (selectOnTab) {
+					me.ignoreMonitorTab = true;
+				}
+
+				Ext.defer(keyNav.enable, 1, keyNav);
+				me.inputEl.focus();
 			}
 		});

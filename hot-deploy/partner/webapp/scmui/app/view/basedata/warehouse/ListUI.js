@@ -11,6 +11,10 @@ Ext.define('SCM.view.basedata.warehouse.ListUI', {
 				var me = this;
 				Ext.applyIf(me, {
 							columns : [{
+										header : '序号',
+										xtype : 'rownumberer',
+										width : 40
+									}, {
 										header : 'id',
 										dataIndex : 'id',
 										width : 200,

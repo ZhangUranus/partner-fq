@@ -34,29 +34,23 @@ Ext.define('SCM.view.basedata.material.ListUI', {
 										region : 'center',
 										store : 'basedata.MaterialStore',
 										columns : [{
-													xtype : 'gridcolumn',
-													dataIndex : 'materialTypeId',
-													text : 'id',
-													hidden : true
+													header : '序号',
+													xtype : 'rownumberer',
+													width : 40
 												}, {
-													xtype : 'gridcolumn',
 													dataIndex : 'materialTypeName',
 													text : '物料类别'
 												}, {
-													xtype : 'gridcolumn',
 													dataIndex : 'id',
 													text : 'id',
 													hidden : true
 												}, {
-													xtype : 'gridcolumn',
 													dataIndex : 'number',
 													text : '编码'
 												}, {
-													xtype : 'gridcolumn',
 													dataIndex : 'name',
 													text : '名称'
 												}, {
-													xtype : 'gridcolumn',
 													dataIndex : 'model',
 													text : '规格型号'
 												}, {
@@ -64,20 +58,13 @@ Ext.define('SCM.view.basedata.material.ListUI', {
 													dataIndex : 'defaultPrice',
 													text : '默认单价'
 												}, {
-													xtype : 'gridcolumn',
-													dataIndex : 'defaultSupplier',
+													dataIndex : 'defaultSupplierName',
 													text : '默认供应商'
 												}, {
 													xtype : 'numbercolumn',
 													dataIndex : 'safeStock',
 													text : '安全库存'
 												}, {
-													xtype : 'gridcolumn',
-													dataIndex : 'defaultUnitId',
-													text : '默认计量单位id',
-													hidden : true
-												}, {
-													xtype : 'gridcolumn',
 													dataIndex : 'defaultUnitName',
 													text : '默认计量单位'
 												}

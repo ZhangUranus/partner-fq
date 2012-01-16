@@ -1,6 +1,12 @@
 Ext.define('SCM.ux.combobox.BoundGrid', {
 			extend : 'Ext.grid.Panel',
-			
+
+			initComponent : function() {
+				var me = this;
+				me.callParent();
+				me.all = me.getView().all;
+				me.indexOf = me.getView().indexOf;
+			},
 			/**
 			 * Highlights a given item in the DataView. This is called by the
 			 * mouseover handler if {@link #overItemCls} and {@link #trackOver}
@@ -11,7 +17,7 @@ Ext.define('SCM.ux.combobox.BoundGrid', {
 			 * @param {HTMLElement}
 			 *            item The item to highlight
 			 */
-			
+
 			highlightItem : function(item) {
 				var me = this;
 				me.clearHighlight();
