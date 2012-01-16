@@ -76,7 +76,6 @@ Ext.define('SCM.controller.basedata.MaterialBomController', {
 			afterInitComponent : function() {
 				this.editGrid = this.win.down('gridpanel');
 				this.editForm.down('[name=materialId]').store.load(); // 初始物料下拉框数据
-				this.editForm.down('[name=unitId]').editor.store.load();// 初始计量单位下拉框数据
 			},
 
 			/**

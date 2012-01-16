@@ -1,3 +1,8 @@
+/**
+ * @Purpose 下拉表格控件
+ * @author jeff-liu
+ * @Date 2012-01-16
+ */
 Ext.define('SCM.ux.combobox.ComboGrid', {
 			extend : 'Ext.form.ComboBox',
 			requires : ['SCM.ux.combobox.BoundGrid', 'SCM.ux.combobox.BoundGridKeyNav'],

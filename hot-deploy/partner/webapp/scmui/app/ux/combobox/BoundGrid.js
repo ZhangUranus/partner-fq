@@ -1,3 +1,8 @@
+/**
+ * @Purpose 下拉表格
+ * @author jeff-liu
+ * @Date 2012-01-16
+ */
 Ext.define('SCM.ux.combobox.BoundGrid', {
 			extend : 'Ext.grid.Panel',
 
