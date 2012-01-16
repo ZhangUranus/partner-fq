@@ -1,0 +1,2 @@
+1.ServerHitBin.saveHit()方法中关于MySql允许错误的解释（https://issues.apache.org/jira/browse/OFBIZ-2208）
+	解决办法：修改ServerHitBin.saveHit()方法，捕获serverHit.create();抛出的异常，再修改时间。
