@@ -331,13 +331,17 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 				var tempheader = this.listPanel.headerCt.query('{isVisible()}');
 				var header = "";
 				var dataIndex = "";
+				var count = 0;
 				Ext.each(tempheader, function(column, index, length) {
-							if (index != 0) {
-								header += ",";
-								dataIndex += ",";
+							if(column.xtype != 'rownumberer'){
+								if (count != 0) {
+									header += ",";
+									dataIndex += ",";
+								}
+								header += column.text;
+								dataIndex += column.dataIndex;
+								count++;
 							}
-							header += column.text;
-							dataIndex += column.dataIndex;
 						})
 				with (this.listPanel.store) {
 					var params = {
