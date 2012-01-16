@@ -1,87 +1,61 @@
 Ext.define('SCM.view.Supplier.EditUI', {
-    extend: 'Ext.window.Window',
-    alias : 'widget.Supplieredit',
+			extend : 'Ext.window.Window',
+			requires : ['SCM.extend.toolbar.SaveToolbar'],
+			alias : 'widget.Supplieredit',
+			title : '供应商编辑',
+			layout : 'fit',
+			width : SCM.MaxSize.WINDOW_WIDTH,
+			modal : true,// 背景变灰，不能编辑
+			collapsible : true,
+			resizable : false,
+			closeAction : 'hide',
+			uiStatus : 'AddNew',
+			inited : false, // 初始化标识
+			modifyed : false, // 修改标识
 
-    width: 290,
-    title : '供应商编辑',
-    layout: 'fit',
-    autoShow: false,
-    modal:true,//背景变灰，不能编辑
-    inited : false, //初始化标识
-	modifyed : false, //修改标识
-    uiStatus:'AddNew',
-    
-	requires: ['SCM.ux.SelectorField'],
-
-    initComponent: function() {
-		this.initForm();
-		this.initToolbar();
-        this.callParent(arguments);
-    },
-    close : function() {
+			initComponent : function() {
+				var me = this;
+				Ext.applyIf(me, {
+							items : [{
+										xtype : 'form',
+										bodyPadding : '10 10 10 10',
+										border : 0,
+										defaults : {
+											xtype : 'textfield',
+											labelWidth : SCM.MaxSize.LABEL_WIDTH,
+											width : SCM.MaxSize.FIELD_WIDTH
+										},
+										items : [{
+													name : 'id',
+													fieldLabel : 'id',
+													hidden : true
+												}, {
+													name : 'number',
+													fieldLabel : '编码',
+													hidden : true
+												}, {
+													name : 'name',
+													fieldLabel : '名称',
+													allowBlank : false,
+													maxLength : 50
+												}, {
+													fieldLabel : '供应商电话',
+													name : 'phoneNum'
+												}, {
+													fieldLabel : '供应商地址',
+													name : 'address'
+												}]
+									}],
+							dockedItems : [{
+										xtype : 'savetoolbar',
+										dock : 'bottom'
+									}]
+						});
+				this.callParent();
+			},
+			close : function() {
 				this.hide();
 				this.inited = false;
 				this.modifyed = false;
-	},
-	//初始化表单
-	initForm: function(){
-		this.items = [{
-							xtype : 'form',
-							bodyPadding : 5,
-							items : [{
-										xtype : 'textfield',
-										name : 'id',
-										fieldLabel : 'id',
-										hidden : true
-									}, {
-										xtype : 'textfield',
-										name : 'number',
-										fieldLabel : '编码',
-										margin: 5,
-										hidden : true
-									}, {
-										xtype : 'textfield',
-										name : 'name',
-										fieldLabel : '名称',
-										margin: 5,
-										allowBlank : false,
-										maxLength : 50
-									}
-																	//\n
-								,{
-								  //\n
-								  xtype: 'textfield'
-								  ,fieldLabel: '供应商电话'
-								  								  								  								  								  //\n
-								   //\n
-								  ,name : 'phoneNum'
-								  ,margin: 5
-								  
-								}
-																								//\n
-								,{
-								  //\n
-								  xtype: 'textfield'
-								  ,fieldLabel: '供应商地址'
-								  								  								  								  								  //\n
-								   //\n
-								  ,name : 'address'
-								  ,margin: 5
-								  
-								}
-																 //\n
-								]
-						}];
-    },
-    
-    //初始化工具栏
-    initToolbar:function(){
-    	this.dockedItems=[
-	    	{xtype:'toolbar',
-	    	items:[{xtye:'button',text:'保存',cls:'x-btn-text-icon',icon:'/scmui/images/icons/save.png',action:'save'}
-	    			,{xtye:'button',text:'打印',cls:'x-btn-text-icon',icon:'/scmui/images/icons/printer.gif',action:'print'}]
-	    	}
-    	];
-    }
-
-});
+			}
+		});

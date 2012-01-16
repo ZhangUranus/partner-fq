@@ -22,6 +22,10 @@
 .system-export {
 	background-image: url( ../images/icons/export.gif ) !important;
 }
+.system-print{
+	background-image: url( ../images/icons/printer.gif ) !important;
+}
+
 .main-index {
 	background-image: url( ../images/icons/main-index.png ) !important;
 }
