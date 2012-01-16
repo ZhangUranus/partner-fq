@@ -7,15 +7,20 @@ Ext.define('SCM.extend.toolbar.SaveToolbar', {
 							xtype : 'toolbar',
 							height : 28,
 							minWidth : 100,
-							items : ['->',{
+							items : ['->', {
 										text : '保存',
 										iconCls : 'system-save',
 										action : 'save'
-									},{
+									}, {
 										text : '重填',
 										iconCls : 'system-clear',
 										action : 'clear'
-									},{
+									}, {
+										xtye : 'button',
+										text : '打印',
+										iconCls : 'system-print',
+										action : 'print'
+									}, {
 										text : '取消',
 										iconCls : 'system-delete',
 										action : 'cancel'

@@ -3,7 +3,7 @@ Ext.define('SCM.controller.basedata.MaterialBomController', {
 			mixins : ['SCM.extend.exporter.Exporter', 'SCM.extend.controller.CommonGridController'],
 			views : ['basedata.materialbom.ListUI', 'basedata.materialbom.EditUI'],
 			stores : ['basedata.MaterialBomStore', 'basedata.MaterialBomEditStore', 'basedata.MaterialBomEditEntryStore'],
-			requires : ['SCM.model.basedata.MaterialBomActionModel', 'SCM.model.basedata.UnitModel'],
+			requires : ['SCM.model.basedata.MaterialBomActionModel'],
 			gridTitle : 'BOM单',
 			gridName : 'bombillinfomaintaince',
 			editName : 'materialbomedit',
@@ -202,6 +202,10 @@ Ext.define('SCM.controller.basedata.MaterialBomController', {
 					var newed = this.editGrid.store.getNewRecords();
 					if (record.dirty || removed.length > 0 || updated.length > 0 || newed.length > 0) {
 						this.commitSave(record, this.editGrid.store);
+					}else{
+						if (this.win.isVisible()) {
+							this.win.close();
+						}
 					}
 				} else if (this.win.uiStatus == 'AddNew') {// 新增记录
 					record = Ext.create(this.modelName);

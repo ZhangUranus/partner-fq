@@ -20,9 +20,12 @@ Ext.define('SCM.model.basedata.MaterialModel', {
 						name : 'defaultPrice',
 						type : 'float'
 					}, {
-						name : 'defaultSupplier',
+						name : 'defaultSupplierId',
 						type : 'string'
 					}, {
+						name : 'defaultSupplierName',
+						type : 'string'
+					},{
 						name : 'safeStock',
 						type : 'float'
 					}, {
