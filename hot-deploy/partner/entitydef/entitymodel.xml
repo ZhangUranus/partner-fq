@@ -78,6 +78,7 @@ under the License.
 		<alias name="name" entity-alias="TUser" field="userName"></alias>
 		<alias name="parentId" entity-alias="TUser" field="departmentId"></alias>
 		<alias name="valid" entity-alias="TUser" field="valid"></alias>
+		<alias name="userId" entity-alias="TUser" field="userId"></alias>
 	</view-entity>
 	<view-entity entity-name="VSystemUserOfRole" package-name="org.ofbiz.partner.system">
 		<member-entity entity-alias="Role" entity-name="TSystemRole"/>
