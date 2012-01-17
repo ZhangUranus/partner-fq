@@ -50,10 +50,10 @@ public class CommonEvents {
 	 * 
 	 * */
 	public static String getUsername(HttpServletRequest request) {
-		if(request.getSession().getAttribute("username") == null){
+		if(request.getSession().getAttribute("USERNAME") == null){
 			return "";
 		}else{
-			return request.getSession().getAttribute("username").toString();
+			return request.getSession().getAttribute("USERNAME").toString();
 		}
     }
 	
@@ -63,11 +63,11 @@ public class CommonEvents {
 	 * */
     public static void setUsername(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
-        setAttributeToSession(request, "username", request.getParameter("username"));
+        setAttributeToSession(request, "USERNAME", request.getParameter("USERNAME"));
         String domain = UtilProperties.getPropertyValue("url.properties", "cookie.domain");
         synchronized (session) {
             if (UtilValidate.isEmpty(getUsername(request))) {
-                Cookie cookie = new Cookie(usernameCookieName, request.getParameter("username"));
+                Cookie cookie = new Cookie(usernameCookieName, request.getParameter("USERNAME"));
                 cookie.setMaxAge(60 * 60 * 24 * 365);
                 cookie.setPath("/");
                 cookie.setDomain(domain);
