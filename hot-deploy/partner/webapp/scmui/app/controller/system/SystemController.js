@@ -60,6 +60,7 @@ Ext.define('SCM.controller.system.SystemController', {
 				this.deleteButton = view.down('button[action=delete]');
 				this.saveButton = view.down('button[action=save]');
 				this.userTree.store.proxy.addListener('afterRequest', this.afterRequest, this); // 监听所有请求回调
+				Ext.create('SCM.store.system.UserStore').proxy.addListener('afterRequest', this.afterRequest, this); // 监听所有请求回调
 				var departmentCombobox = Ext.getCmp('user-department-combobox');
 				departmentCombobox.store.load();
 				this.initButtonByPermission();
@@ -317,11 +318,12 @@ Ext.define('SCM.controller.system.SystemController', {
 					
 					var roles = me.userGrid.getSelectionModel().getSelection();
 					var roleString = "";
+					var uuidGenerator = new Ext.data.UuidGenerator();
 					Ext.each(roles, function(item, index, length) {
 							if(index != 0){
 								roleString += ";"
 							}
-							roleString += item.id;
+							roleString += uuidGenerator.generate();
 							roleString += "#";
 							roleString += item.get("roleId")
 						})
