@@ -49,15 +49,18 @@ Ext.define('SCM.model.system.UserModel', {
 						name : 'valid',
 						type : 'string',
 						defaultValue : 'Y'
+					}, {//存储角色列表
+						name : 'roles',
+						type : 'string'
 					}],
 			idgen : 'uuid', // 使用uuid生成记录id 每个模型必须要有id字段
 			proxy : {
 				type : 'jsonajax',
 				api : {
 					read : '../../scm/control/requestRecordJson?entity=TSystemUser',
-					create : '../../scm/control/addnewJsonData?entity=TSystemUser',
-					update : '../../scm/control/updateJsonData?entity=TSystemUser',
-					destroy : '../../scm/control/deleteJsonData?entity=TSystemUser'
+					create : '../../scm/control/createUserLogin',
+					update : '../../scm/control/updateUserLogin',
+					destroy : '../../scm/control/deleteUserLogin'
 				}
 			}
 		});

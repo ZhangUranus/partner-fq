@@ -24,6 +24,9 @@ Ext.define('SCM.model.system.UserTreeModel', {
 						name : 'isUser',
 						type : 'boolean',
 						defaultValue : true
+					}, {
+						name : 'userId',
+						type : 'string'
 					}],
 			proxy : {
 				type : 'jsonajax',
