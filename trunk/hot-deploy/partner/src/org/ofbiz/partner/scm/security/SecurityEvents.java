@@ -2,7 +2,9 @@ package org.ofbiz.partner.scm.security;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,13 +17,19 @@ import org.ofbiz.base.crypto.HashCrypt;
 import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilProperties;
 import org.ofbiz.common.login.LoginServices;
+import org.ofbiz.entity.Delegator;
+import org.ofbiz.entity.GenericEntityException;
 import org.ofbiz.entity.GenericValue;
 import org.ofbiz.entity.condition.EntityCondition;
 import org.ofbiz.entity.condition.EntityConditionList;
+import org.ofbiz.entity.transaction.TransactionUtil;
 import org.ofbiz.entity.util.EntityFindOptions;
 import org.ofbiz.partner.scm.common.CommonEvents;
+import org.ofbiz.partner.scm.common.EntityCRUDEvent;
 import org.ofbiz.partner.scm.common.TreeNode;
 import org.ofbiz.partner.scm.common.TreeOprCommon;
+import org.ofbiz.service.LocalDispatcher;
+import org.ofbiz.webapp.control.LoginWorker;
 
 /**
  * 用户安全事件类
@@ -32,31 +40,216 @@ import org.ofbiz.partner.scm.common.TreeOprCommon;
 public class SecurityEvents {
 	public static final String module = SecurityEvents.class.getName();
     
+	public static String createUserLogin(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		Map<String, String> userMap = new HashMap<String, String>();			//用户信息
+		
+		if(request.getParameter("records") == null){
+			throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "RecordsEmpty"));
+		}
+		List records = CommonEvents.getRecordsFromRequest(request);
+
+		// 循环每个记录新增
+		String entityName = "TSystemUser";
+		String roleEntityName = "TSystemUserOfRole";
+		for (Object r : records) {
+			JSONObject record = (JSONObject) r;// 单条记录
+			GenericValue v = delegator.makeValue(entityName);// 新建一个值对象
+			if(EntityCRUDEvent.checkFieldUnique(request,entityName,"userId",record.get("userId").toString())){
+				v.set("userId", record.get("userId"));
+				userMap.put("userLoginId", record.get("userId").toString());
+			}else{
+				throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "UserIdIsExist"));
+			}
+			if(EntityCRUDEvent.checkFieldUnique(request,entityName,"userName",record.get("userName").toString())){
+				v.set("userName", record.get("userName").toString());
+			}else{
+				throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "NameIsExist"));
+			}
+			
+			v.set("password", HashCrypt.getDigestHash(record.get("password").toString(), LoginServices.getHashType()));
+			v.set("id",record.get("id"));
+			v.set("sex",record.get("sex"));
+			v.set("departmentId",record.get("departmentId"));
+			v.set("position",record.get("position"));
+			v.set("phoneNumber",record.get("phoneNumber"));
+			v.set("email",record.get("email"));
+			v.set("valid",record.get("valid"));
+			
+			userMap.put("currentPassword", record.get("password").toString());
+			userMap.put("currentPasswordVerify", record.get("password").toString());		//由于前端已经判断了确认密码信息，此处保证不会出错
+			userMap.put("enabled", record.get("valid").toString());
+			boolean beganTransaction = false;		//增加事务控制
+			try {
+				beganTransaction = TransactionUtil.begin();
+				delegator.removeByCondition(roleEntityName, EntityCondition.makeCondition("userId", record.getString("userId")));
+				if(!"".equals(record.getString("roles"))){
+					String[] roles = record.getString("roles").split(";");
+					for(String role : roles){
+						String[] roleArr = role.split("#");
+						GenericValue rv = delegator.makeValue(roleEntityName);// 新建一个值对象
+						rv.set("id", roleArr[0]);
+						rv.set("roleId", roleArr[1]);
+						rv.set("userId", record.getString("userId"));
+						delegator.create(rv);
+					}
+				}
+				dispatcher.runAsync("createUserLogin", userMap);	//增加系统用户
+				delegator.create(v);		//增加项目用户
+			} catch (GenericEntityException e) {
+				try {
+					TransactionUtil.rollback(beganTransaction, UtilProperties.getPropertyValue("ErrorCode_zh_CN", "AddUserFromDBEntityException"), e);
+	            } catch (GenericEntityException e2) {
+	            	throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "RollbackAddUserTransactionException"));
+	            }
+				throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "AddUserFromDBEntityException"));
+			} finally {
+	            TransactionUtil.commit(beganTransaction);
+	        }
+		}
+		return "success";
+	}
+	
+	public static String updateUserLogin(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		
+		if(request.getParameter("records") == null){
+			throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "RecordsEmpty"));
+		}
+		List records = CommonEvents.getRecordsFromRequest(request);
+
+		// 循环每个记录新增
+		String entityName = "TSystemUser";
+		String systemEntityName = "UserLogin";
+		String roleEntityName = "TSystemUserOfRole";
+		for (Object r : records) {
+			JSONObject record = (JSONObject) r;// 单条记录
+			GenericValue v = delegator.makeValue(entityName);// 新建一个值对象
+			GenericValue sv = delegator.makeValue(systemEntityName);// 新建一个值对象
+			if(EntityCRUDEvent.checkFieldUnique(request,entityName,"userId",record.get("userId").toString(),"id",record.get("id").toString())){
+				v.set("userId", record.get("userId"));
+				sv.set("userLoginId", record.get("userId"));
+			}else{
+				throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "UserIdIsExist"));
+			}
+			if(EntityCRUDEvent.checkFieldUnique(request,entityName,"userName",record.get("userName").toString(),"id",record.get("id").toString())){
+				v.set("userName", record.get("userName").toString());
+			}else{
+				throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "NameIsExist"));
+			}
+			if(!record.get("password").toString().startsWith("{SHA}")){
+				v.set("password", HashCrypt.getDigestHash(record.get("password").toString(), LoginServices.getHashType()));
+				sv.set("currentPassword", HashCrypt.getDigestHash(record.get("password").toString(), LoginServices.getHashType()));
+			}else{
+				v.set("password",record.get("password"));
+				sv.set("currentPassword",record.get("password"));
+			}
+			
+			v.set("id",record.get("id"));
+			v.set("sex",record.get("sex"));
+			v.set("departmentId",record.get("departmentId"));
+			v.set("position",record.get("position"));
+			v.set("phoneNumber",record.get("phoneNumber"));
+			v.set("email",record.get("email"));
+			v.set("valid",record.get("valid"));
+			sv.set("enabled",record.get("valid"));
+			boolean beganTransaction = false;		//增加事务控制
+			try {
+				beganTransaction = TransactionUtil.begin();
+				delegator.removeByCondition(roleEntityName, EntityCondition.makeCondition("userId", record.getString("userId")));
+				if(!"".equals(record.getString("roles"))){
+					String[] roles = record.getString("roles").split(";");
+					for(String role : roles){
+						String[] roleArr = role.split("#");
+						GenericValue rv = delegator.makeValue(roleEntityName);// 新建一个值对象
+						rv.set("id", roleArr[0]);
+						rv.set("roleId", roleArr[1]);
+						rv.set("userId", record.getString("userId"));
+						delegator.create(rv);
+					}
+				}
+				delegator.store(v);		//修改项目用户
+				delegator.store(sv);	//修改系统用户
+			} catch (GenericEntityException e) {
+				try {
+					TransactionUtil.rollback(beganTransaction, UtilProperties.getPropertyValue("ErrorCode_zh_CN", "UpdateUserFromDBEntityException"), e);
+	            } catch (GenericEntityException e2) {
+	            	throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "RollbackUpdateUserTransactionException"));
+	            }
+				throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "UpdateUserFromDBEntityException"));
+			} finally {
+	            TransactionUtil.commit(beganTransaction);
+	        }
+		}
+		return "success";
+	}
+	
+	public static String deleteUserLogin(HttpServletRequest request, HttpServletResponse response)throws Exception {
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		if(request.getParameter("records") == null){
+			throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "RecordsEmpty"));
+		}
+		List records = CommonEvents.getRecordsFromRequest(request);
+		
+		// 循环每个记录删除
+		String entityName = "TSystemUser";
+		String systemEntityName = "UserLogin";
+		String roleEntityName = "TSystemUserOfRole";
+		for (Object r : records) {
+			JSONObject record = (JSONObject) r;// 单条记录
+			GenericValue v = delegator.makeValue(entityName);// 新建一个值对象
+			GenericValue sv = delegator.makeValue(systemEntityName);// 新建一个值对象
+			GenericValue rv = delegator.makeValue(roleEntityName);// 新建一个值对象
+			
+			v.set("id", record.get("id"));
+			sv.set("userLoginId", record.get("userId"));
+			rv.set("userId", record.get("userId"));
+			boolean beganTransaction = false;		//增加事务控制
+			try {
+				beganTransaction = TransactionUtil.begin();
+				delegator.removeValue(v);
+				delegator.removeValue(sv);
+				delegator.removeValue(rv);
+			} catch (GenericEntityException e) {
+				try {
+					TransactionUtil.rollback(beganTransaction, UtilProperties.getPropertyValue("ErrorCode_zh_CN", "DeleteUserFromDBEntityException"), e);
+	            } catch (GenericEntityException e2) {
+	            	throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "RollbackDeleteUserTransactionException"));
+	            }
+				throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "DeleteUserFromDBEntityException"));
+			} finally {
+	            TransactionUtil.commit(beganTransaction);
+	        }
+		}
+		return "success";
+	}
+	
     /**
      * 检查用户名密码
      * @throws Exception 
      */
 	public static String checkLogin(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		//String responseString = LoginWorker.checkLogin(request, response);
-		String responseString = "success";
-		List<GenericValue> recordList = FastList.newInstance();
-		String password = request.getParameter("password");
-		String username = request.getParameter("username");
+		String responseString = LoginWorker.checkLogin(request, response);
 		
-		EntityConditionList<EntityCondition> condition = null;
-		List<EntityCondition> conds = FastList.newInstance();
-		conds.add(EntityCondition.makeCondition("password",HashCrypt.getDigestHash(password, LoginServices.getHashType())));
-		conds.add(EntityCondition.makeCondition("userId",username));
-		condition = EntityCondition.makeCondition(conds);
-		try {
-			recordList =  CommonEvents.getDelegator(request).findList("TSystemUser", condition, null, null, null, true);
-		} catch (Exception e) {
-			Debug.logError(e, module);
-			throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "GetEntityListException"));
-		}
-		if (recordList == null || recordList.size() < 1) {
-			responseString = "fail";
-		}
+//		String responseString = "success";
+//		List<GenericValue> recordList = FastList.newInstance();
+//		String password = request.getParameter("password");
+//		String username = request.getParameter("username");
+//		EntityConditionList<EntityCondition> condition = null;
+//		List<EntityCondition> conds = FastList.newInstance();
+//		conds.add(EntityCondition.makeCondition("password",HashCrypt.getDigestHash(password, LoginServices.getHashType())));
+//		conds.add(EntityCondition.makeCondition("userId",username));
+//		condition = EntityCondition.makeCondition(conds);
+//		try {
+//			recordList =  CommonEvents.getDelegator(request).findList("TSystemUser", condition, null, null, null, true);
+//		} catch (Exception e) {
+//			Debug.logError(e, module);
+//			throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "GetEntityListException"));
+//		}
+//		if (recordList == null || recordList.size() < 1) {
+//			responseString = "fail";
+//		}
 		
 		JSONObject jsonStr = new JSONObject();
 		if (!"success".equals(responseString)) {
@@ -82,7 +275,7 @@ public class SecurityEvents {
 	}
 	
 	public static String logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		CommonEvents.removeAttributeFromSession(request, "username");
+		CommonEvents.removeAttributeFromSession(request, "USERNAME");
 		CommonEvents.writeJsonDataToExt(response, "{'success': true}");
 		return "success";
 	}
