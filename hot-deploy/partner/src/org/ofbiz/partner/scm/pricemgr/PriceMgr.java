@@ -1,19 +1,34 @@
 package org.ofbiz.partner.scm.pricemgr;
 
-import java.util.List;
+import java.util.Date;
 
 /**
- * 单价管理类，单价类只影响当期未结算月份物料单价
+ * 单价管理类
  * @author Mark
  *
  */
 public class PriceMgr {
 	private static final String module=org.ofbiz.partner.scm.pricemgr.PriceMgr.class.getName();
+	private int year ,month ;//当期年月
+	//单实例模式
+	private static PriceMgr instance=null;
+	public static PriceMgr getInstance(){
+		if(instance==null){
+			instance=new PriceMgr();
+		}
+		return instance;
+	}
+	private PriceMgr(){
+		//获取当前系统操作年月
+		Date curDate=Utils.getCurDate();
+		year=curDate.getYear();
+		month=curDate.getMonth();
+	}
 	/**
-	 * 根据list的顺序计算当前
-	 * @param calItemList
+	 * 计算单价 更新存货余额表
+	 * @throws Exception
 	 */
-	public void calPrice(List<PriceCalItem> calItemList)throws Exception{
-		throw new Exception();
+	public synchronized void calPrice(PriceCalItem item) throws Exception{
+		
 	}
 }
