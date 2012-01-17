@@ -5,6 +5,21 @@
     <description>SCM Controller</description>
     <handler name="java" type="request" class="org.ofbiz.webapp.event.JavaEventHandler"/>
     <!-- Request Mappings -->
+    <request-map uri="createUserLogin">
+    	<security auth="false" />
+        <event type="java" path="org.ofbiz.partner.scm.security.SecurityEvents" invoke="createUserLogin"/>
+        <response name="success" type="none" />
+    </request-map>
+    <request-map uri="updateUserLogin">
+    	<security auth="false" />
+        <event type="java" path="org.ofbiz.partner.scm.security.SecurityEvents" invoke="updateUserLogin"/>
+        <response name="success" type="none" />
+    </request-map>
+    <request-map uri="deleteUserLogin">
+    	<security auth="false" />
+        <event type="java" path="org.ofbiz.partner.scm.security.SecurityEvents" invoke="deleteUserLogin"/>
+        <response name="success" type="none" />
+    </request-map>
 	<request-map uri="checkLogin">
     	<security auth="false" />
         <event type="java" path="org.ofbiz.partner.scm.security.SecurityEvents" invoke="checkLogin"/>
