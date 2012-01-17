@@ -21,10 +21,7 @@ Ext.define('SCM.model.system.UserOfRoleModel', {
 			proxy : {
 				type : 'jsonajax',
 				api : {
-					read : '../../scm/control/requestJsonData?entity=TSystemUserOfRole',
-					create : '../../scm/control/addnewJsonData?entity=TSystemUserOfRole',
-					update : '../../scm/control/updateJsonData?entity=TSystemUserOfRole',
-					destroy : '../../scm/control/deleteJsonData?entity=TSystemUserOfRole'
+					read : '../../scm/control/requestJsonData?entity=TSystemUserOfRole'
 				}
 			}
 		});
