@@ -37,10 +37,8 @@ Ext.define('SCM.view.system.user.ListUI', {
 																dock : 'top',
 																height : 28,
 																items : [{
-																			id : 'user-save',
 																			text : '保存',
-																			cls : 'x-btn-text-icon',
-																			icon : '/scmui/images/icons/save.png',
+																			iconCls : 'system-save',
 																			action : 'save'
 																		}]
 															}],
@@ -136,8 +134,6 @@ Ext.define('SCM.view.system.user.ListUI', {
 																store : 'system.RoleStore',
 																anchor : '80% 30%',
 																layout : 'column',
-																inited : false,
-																modifyed : false,
 																frame : true,
 																columns : [{
 																			xtype : 'gridcolumn',
@@ -168,16 +164,12 @@ Ext.define('SCM.view.system.user.ListUI', {
 										xtype : 'toolbar',// 工具栏
 										height : 28,
 										items : [{
-													id : 'user-new',
 													text : '新增',
-													cls : 'x-btn-text-icon',
-													icon : '/scmui/images/icons/add.png',
+													iconCls : 'system-add',
 													action : 'addNew'
 												}, {
-													id : 'user-delete',
 													text : '删除',
-													cls : 'x-btn-text-icon',
-													icon : '/scmui/images/icons/delete.png',
+													iconCls : 'system-delete',
 													action : 'delete'
 												}],
 										region : 'north'
