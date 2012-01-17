@@ -19,6 +19,7 @@ under the License.
 -->
 <entity-engine-xml>
 	<TSystemUser id='18f85a5d-1c39-44f4-9f2f-e7d64056ff7b' userId='admin' userName='系统管理员' password='{SHA}40bd001563085fc35165329ea1ff5c5ecbdbbeef' sex='0' departmentId='2c2f37d4-33ac-4026-9ec0-3f8571e8a4a4' position='管理员' phoneNumber='13800000000' email='admin@21cn.com' valid='Y' />
+	<UserLogin userLoginId="admin" enabled="N" isSystem="Y" currentPassword="{SHA}40bd001563085fc35165329ea1ff5c5ecbdbbeef" />
 	<TSystemUserOfRole id='1e58762d-7192-4a42-a59b-4eff792f922e' userId='admin' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' />
 	<Department id='2c2f37d4-33ac-4026-9ec0-3f8571e8a4a4' number='systemManagement' name='系统管理' />
 	
