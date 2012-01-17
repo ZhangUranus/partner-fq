@@ -27,7 +27,7 @@ Ext.define('SCM.controller.Main', {
 	                if(!win){
 	                    win = Ext.create('SCM.view.Login').show();
 	                }
-                    win.down('form').getForm().findField('username').focus(true,true);
+                    win.down('form').getForm().findField('USERNAME').focus(true,true);
                 } 
             }
         });
