@@ -20,8 +20,8 @@ Ext.define('SCM.view.Login',{
                 xtype: 'textfield',
                 fieldLabel: '用户名',
                 blankText : '用户名不能为空',
-                name:'username',
-                id:'username',
+                name:'USERNAME',
+                id:'USERNAME',
                 allowBlank: false,
                 width:240
             },{
@@ -29,8 +29,8 @@ Ext.define('SCM.view.Login',{
                 fieldLabel: '密   码',
                 allowBlank: false,
                 blankText : '密码不能为空',
-                name:'password',
-                id:'password',
+                name:'PASSWORD',
+                id:'PASSWORD',
                 width:240,
                 inputType : 'password' 
             },{
