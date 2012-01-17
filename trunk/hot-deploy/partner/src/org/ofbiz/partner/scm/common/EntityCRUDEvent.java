@@ -155,10 +155,8 @@ public class EntityCRUDEvent {
 				// TODO 现在只判断相同名称的字段是否存在，以后是否要考虑字段类型等
 				ModelField vModelField = vModel.getField(fieldName);
 				if (vModelField != null) {//如果是密码，需要做加密保存处理
-					if(fieldName.equals("password") && !record.get(fieldName).toString().startsWith("{SHA}")){
-						v.set(fieldName, HashCrypt.getDigestHash(record.get(fieldName).toString(), LoginServices.getHashType()));
-					}else if(fieldName.equals("name")){
-						if(checkNameUnique(request,entityName,record.get(fieldName).toString())){
+					if(fieldName.equals("name")){
+						if(checkFieldUnique(request,entityName,fieldName,record.get(fieldName).toString())){
 							v.set(fieldName, record.get(fieldName));
 						}else{
 							throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "NameIsExist"));
@@ -225,10 +223,8 @@ public class EntityCRUDEvent {
 				ModelField vModelField = vModel.getField(fieldName);
 				
 				if (vModelField != null) {//如果是密码，需要做加密保存处理
-					if(fieldName.equals("password") && !record.get(fieldName).toString().startsWith("{SHA}")){
-						v.set(fieldName, HashCrypt.getDigestHash(record.get(fieldName).toString(), LoginServices.getHashType()));
-					}else if(fieldName.equals("name")){
-						if(checkNameUnique(request,entityName,record.get(fieldName).toString(),pkField,pkValue)){
+					if(fieldName.equals("name")){
+						if(checkFieldUnique(request,entityName,fieldName,record.get(fieldName).toString(),pkField,pkValue)){
 							v.set(fieldName, record.get(fieldName));
 						}else{
 							throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "NameIsExist"));
@@ -510,19 +506,19 @@ public class EntityCRUDEvent {
 		
 	}
 	
-	private static boolean checkNameUnique(HttpServletRequest request,String entityName,String nameValue,String pkField,String pkValue) throws GenericEntityException{
+	public static boolean checkFieldUnique(HttpServletRequest request,String entityName,String fieldName, String fieldValue,String pkField,String pkValue) throws GenericEntityException{
 		EntityCondition condition = EntityCondition.makeCondition(pkField,pkValue);
 		List<GenericValue> nameList = CommonEvents.getDelegator(request).findList(entityName, condition, null, null, null, true);
 		if(nameList.size()>0){//判断是否有修改name字段
-			if(nameList.get(0).getString("name").equals(nameValue)){
+			if(nameList.get(0).getString(fieldName).equals(fieldValue)){
 				return true;
 			}
 		}
-		return checkNameUnique(request,entityName,nameValue);
+		return checkFieldUnique(request,entityName,fieldName,fieldValue);
 	}
 	
-	private static boolean checkNameUnique(HttpServletRequest request,String entityName,String nameValue) throws GenericEntityException{
-		EntityCondition condition = EntityCondition.makeCondition("name",nameValue);
+	public static boolean checkFieldUnique(HttpServletRequest request,String entityName,String fieldName, String fieldValue) throws GenericEntityException{
+		EntityCondition condition = EntityCondition.makeCondition(fieldName,fieldValue);
 		long count = CommonEvents.getDelegator(request).findCountByCondition(entityName, condition, null, null);
 		if(count>0){
 			return false;
