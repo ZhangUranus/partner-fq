@@ -94,7 +94,6 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 					// 不需要处理，由服务器抛出异常即可
 				}
 			},
-
 			/**
 			 * 根据用户权限初始化按钮状态
 			 * 
