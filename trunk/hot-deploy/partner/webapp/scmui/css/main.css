@@ -25,6 +25,12 @@
 .system-print{
 	background-image: url( ../images/icons/printer.gif ) !important;
 }
+.system-audit{
+	background-image: url( ../images/icons/audit.gif ) !important;
+}
+.system-unaudit{
+	background-image: url( ../images/icons/unaudit.gif ) !important;
+}
 
 .main-index {
 	background-image: url( ../images/icons/main-index.png ) !important;
