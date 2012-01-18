@@ -25,11 +25,14 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 			 *            grid 事件触发控件
 			 */
 			initComponent : function(view) {
+				this.listContainer = view;
 				this.listPanel = view.down('gridpanel[region=center]');//表头列表
 				this.detailPanel=view.down('gridpanel[region=south]');//明细列表
 				this.newButton = view.down('button[action=addNew]');//新增按钮
 				this.deleteButton = view.down('button[action=delete]');//删除按钮
 				this.editButton = view.down('button[action=modify]');//编辑按钮
+				this.auditButton = view.down('button[action=audit]');//审核按钮
+				this.unauditButton = view.down('button[action=unaudit]');//反审核按钮
 				
 				this.getEdit();
 				this.initButtonByPermission();
@@ -44,12 +47,12 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 			 * 初始化确定按钮事件
 			 */
 			initEnterEvent : function() {
-//				var pageMap = new Ext.util.KeyMap(Ext.getDoc(), [// 当前页面注册确定按钮事件
-//						{
-//									scope : this,
-//									key : Ext.EventObject.ENTER,
-//									fn : this.clickEnter
-//								}]);
+				var pageMap = new Ext.util.KeyMap(Ext.getDoc(), [// 当前页面注册确定按钮事件
+						{
+									scope : this,
+									key : Ext.EventObject.ENTER,
+									fn : this.clickEnter
+								}]);
 //				var searchMap = new Ext.util.KeyMap(this.searchText.getEl(), [// 搜索框需要单独注册确定按钮事件
 //						{
 //									scope : this,
@@ -102,50 +105,60 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 			 * 
 			 */
 			initButtonByPermission : function() {
-//				if (this.listPanel.permission.add) {
-//					this.newButton.setVisible(true);
-//				} else {
-//					this.newButton.setVisible(false);
-//				}
-//				if (this.listPanel.permission.edit) {
-//					this.editButton.setVisible(true);
-//				} else {
-//					this.editButton.setVisible(false);
-//				}
-//				if (this.listPanel.permission.remove) {
-//					this.deleteButton.setVisible(true);
-//				} else {
-//					this.deleteButton.setVisible(false);
-//				}
-
+				if (this.listContainer.permission.add) {
+					this.newButton.setVisible(true);
+				} else {
+					this.newButton.setVisible(false);
+				}
+				if (this.listContainer.permission.edit) {
+					this.editButton.setVisible(true);
+				} else {
+					this.editButton.setVisible(false);
+				}
+				if (this.listContainer.permission.remove) {
+					this.deleteButton.setVisible(true);
+				} else {
+					this.deleteButton.setVisible(false);
+				}
+				if (this.listContainer.permission.audit) {
+					this.auditButton.setVisible(true);
+					this.unauditButton.setVisible(true);
+				} else {
+					this.auditButton.setVisible(false);
+					this.unauditButton.setVisible(false);
+				}
 			},
 
 			/**
 			 * 用户操作触发改变界面控件状态 如：选中记录
 			 */
 			changeComponentsState : function() {
-//				if (this.listPanel.getSelectionModel().hasSelection()) {
-//					this.deleteButton.setDisabled(false);
-//					this.editButton.setDisabled(false);
-//				} else {
-//					this.deleteButton.setDisabled(true);
-//					this.editButton.setDisabled(true);
-//				}
-//				if (this.win.uiStatus == 'AddNew') {
-//					this.saveButton.setVisible(true);
-//				} else {
-//					if (this.listPanel.permission.edit) {
-//						this.saveButton.setVisible(true);
-//						Ext.each(this.fields, function(item, index, length) {
-//									item.setReadOnly(false);
-//								})
-//					} else {
-//						this.saveButton.setVisible(false);
-//						Ext.each(this.fields, function(item, index, length) {
-//									item.setReadOnly(true);
-//								})
-//					}
-//				}
+				if (this.listPanel.getSelectionModel().hasSelection()) {
+					this.deleteButton.setDisabled(false);
+					this.editButton.setDisabled(false);
+					this.auditButton.setDisabled(false);
+					this.unauditButton.setDisabled(false);
+				} else {
+					this.deleteButton.setDisabled(true);
+					this.editButton.setDisabled(true);
+					this.auditButton.setDisabled(true);
+					this.unauditButton.setDisabled(true);
+				}
+				if (this.win.uiStatus == 'AddNew') {
+					this.saveButton.setVisible(true);
+				} else {
+					if (this.listContainer.permission.edit) {
+						this.saveButton.setVisible(true);
+						Ext.each(this.fields, function(item, index, length) {
+									item.setReadOnly(false);
+								})
+					} else {
+						this.saveButton.setVisible(false);
+						Ext.each(this.fields, function(item, index, length) {
+									item.setReadOnly(true);
+								})
+					}
+				}
 			},
 
 			/**
@@ -231,10 +244,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 		    			record = sm.getLastSelected();
 						this.modifyRecord(this.listPanel, record);	
 		    		}
-				}else{
-		    		showError('请选择记录!');
-		    	}
-				
+				}
 			},
 			/**
 			 * 点击新增按钮
@@ -278,9 +288,6 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 								this.listPanel.store.sync();
 							}
 						}
-		    		
-		    	}else{
-		    		showError('请选择记录!');
 		    	}
 			},
 			/**
@@ -306,11 +313,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				         this.refreshRecord();
 				    }
 				});
-				}else{
-		    		showError('请选择记录!');
-		    	}
-				
-				
+				}
 			},
 			//反审核单据
 			unauditBill: function(button){
@@ -325,9 +328,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				        this.refreshRecord();
 				    }
 				});
-				}else{
-		    		showError('请选择记录!');
-		    	}
+				}
 			},
 			/**
 			 * 保存事件
@@ -369,7 +370,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 					oneEntryModel.save({scope:this,callback:function(){this.refreshRecord();}});
 		
 		    	}
-				this.win.close();
+		    	this.changeComponentsState();
 			},
 
 			/**
@@ -405,6 +406,11 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				return valid;
 			},
 
+			/**
+			 * 获取报表参数
+			 * 
+			 * @return {}
+			 */
 			getParams : function() {
 				var tempheader = this.listPanel.headerCt.query('{isVisible()}');
 				var header = "";
