@@ -57,7 +57,7 @@ Ext.define('SCM.model.system.UserModel', {
 			proxy : {
 				type : 'jsonajax',
 				api : {
-					read : '../../scm/control/requestRecordJson?entity=TSystemUser',
+					read : '../../scm/control/requestJsonData?entity=TSystemUser',
 					create : '../../scm/control/createUserLogin',
 					update : '../../scm/control/updateUserLogin',
 					destroy : '../../scm/control/deleteUserLogin'
