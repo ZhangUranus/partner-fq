@@ -157,12 +157,12 @@ Ext.define('SCM.view.basedata.materialbom.EditUI', {
 																xtype : 'toolbar',
 																dock : 'top',
 																items : [{
-																			xtype : 'button',
 																			text : '分录新增',
+																			iconCls : 'bill-addline',
 																			action : 'addLine'
 																		}, {
-																			xtype : 'button',
 																			text : '分录删除',
+																			iconCls : 'bill-dline',
 																			action : 'deleteLine'
 																		}]
 															}]
