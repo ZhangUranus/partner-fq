@@ -30,6 +30,7 @@ Ext.define('SCM.view.${TemplateName}.ListUI' ,{
 					store:'${TemplateName}.${TemplateName}EditStore',
                     columns: [
 						{
+							 header : '序号',
                              xtype: 'rownumberer',
 							 width: 40
                         }
@@ -117,6 +118,7 @@ Ext.define('SCM.view.${TemplateName}.ListUI' ,{
 					store:entryStore,
 					columns: [
 								{
+									 header : '序号',
 									 xtype: 'rownumberer',
 									 width: 40
 								}
