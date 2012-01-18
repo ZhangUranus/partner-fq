@@ -143,4 +143,10 @@
     background: url(../images/header.png) repeat-x;
 }
 
+.bill-addline {
+	background: url(../images/addline.gif) repeat-x;
+}
+.bill-dline {
+	background: url(../images/dline.gif) repeat-x;
+}
 
