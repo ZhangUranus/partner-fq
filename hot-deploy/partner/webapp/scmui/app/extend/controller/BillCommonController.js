@@ -31,13 +31,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				this.deleteButton = view.down('button[action=delete]');//删除按钮
 				this.editButton = view.down('button[action=modify]');//编辑按钮
 				
-				
-				this.initEdit();
-				this.editForm = this.win.down('form');
-				this.editEntry= this.win.down('gridpanel');
-				this.fields = this.editForm.query("textfield{isVisible()}"); // 取所以显示的field
-				this.saveButton = this.win.down('button[action=save]');
-		
+				this.getEdit();
 				this.initButtonByPermission();
 				this.changeComponentsState();
 				this.initEnterEvent();
@@ -66,10 +60,15 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 			/**
 			 * 初始化编辑框 只初始化一次，关闭时候隐藏
 			 */
-			initEdit : function() {
-				if (!this.win) {
+			getEdit : function() {
+				if (!this.win || this.win.isDestroyed) {
 					this.win = Ext.widget(this.editName);
+					this.editForm = this.win.down('form');
+					this.editEntry= this.win.down('gridpanel');
+					this.fields = this.editForm.query("textfield{isVisible()}"); // 取所以显示的field
+					this.saveButton = this.win.down('button[action=save]');
 				}
+				return this.win;
 			},
 
 			/**
@@ -195,8 +194,8 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 			 *            record 选中记录
 			 */
 			modifyRecord : function(grid, record) {
-				this.win.uiStatus = 'Modify';
-				this.editForm.loadRecord(record);
+				this.getEdit().uiStatus = 'Modify';
+				this.editForm.getForm().loadRecord(record);
 				//根据选择的id加载编辑界面数据
 				var editStore=Ext.create(this.editStoreName);
 				editStore.filter([{property: "id", value: record.data.id}]);
@@ -245,9 +244,9 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 			 */
 			addNewRecord : function(button) {
 				var newRecord=Ext.create(this.modelName);//新增记录
-		    	this.win.uiStatus.uiStatus='AddNew';
+		    	this.getEdit().uiStatus='AddNew';
 		    	
-		    	this.editForm.loadRecord(newRecord);
+		    	this.editForm.getForm().loadRecord(newRecord);
 				//清空分录
 				grid=this.editForm.down('gridpanel');
 				grid.store.removeAll();
@@ -378,8 +377,10 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 			 */
 			clear : function() {
 				Ext.each(this.fields, function(item, index, length) {
-							item.reset();
-						});
+							if(!item.readOnly)
+								item.setValue('');
+							}
+						);
 			},
 
 			/**
@@ -408,20 +409,21 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				var tempheader = this.listPanel.headerCt.query('{isVisible()}');
 				var header = "";
 				var dataIndex = "";
+				var count = 0;
 				Ext.each(tempheader, function(column, index, length) {
-							if (index != 0) {
-								header += ",";
-								dataIndex += ",";
+							if(column.xtype != 'rownumberer'){
+								if (count != 0) {
+									header += ",";
+									dataIndex += ",";
+								}
+								header += column.text;
+								dataIndex += column.dataIndex;
+								count++;
 							}
-							header += column.text;
-							dataIndex += column.dataIndex;
 						})
 				with (this.listPanel.store) {
 					var params = {
 						// Store参数
-						limit : pageSize,
-						page : currentPage,
-						start : (currentPage - 1) * pageSize,
 						sort : Ext.encode(getSorters()),
 						filter : Ext.encode(filters.items),
 
@@ -435,7 +437,6 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 					}
 					return params;
 				}
-
 			},
 			
 			//新增分录
@@ -452,8 +453,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 			},
 			//获取选择的分录行
 			getSelectedEntry: function(){
-				var grid=this.editEntry;
-				var selMod= grid.getSelectionModel();
+				var selMod= this.editEntry.getSelectionModel();
 				if(selMod!=null){
 					 return selMod.getLastSelected();
 				}
@@ -482,5 +482,4 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 			getPrintContent: function(){
 				return 'test';
 			}
-			
 		})
