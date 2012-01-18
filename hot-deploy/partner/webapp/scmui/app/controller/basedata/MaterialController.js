@@ -60,6 +60,10 @@ Ext.define('SCM.controller.basedata.MaterialController', {
 							'materialedit button[action=cancel]' : {
 								click : this.cancel
 							},
+							//列表打印按钮
+							'materialedit button[action=print]' : {
+								click : this.print
+							},
 							// 监听各field值变动事件，只监听可见控件
 							'materialedit form textfield{isVisible()}' : {
 								change : this.fieldChange
