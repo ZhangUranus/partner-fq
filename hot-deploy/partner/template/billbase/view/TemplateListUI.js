@@ -4,8 +4,8 @@
  */
 Ext.define('SCM.view.${TemplateName}.ListUI' ,{
     extend: 'Ext.container.Container',
+    requires: ['SCM.extend.toolbar.BillBaseToolbar'],
     alias : 'widget.${TemplateName}list',
-
     title : '${TemplateAlias}查询',
 	height: 497,
     width: 718,
@@ -20,15 +20,7 @@ Ext.define('SCM.view.${TemplateName}.ListUI' ,{
         Ext.applyIf(me, {
             items: [
                 {
-                   xtype:'toolbar',//工具栏
-    				items:[
-				   {text:'新增',cls:'x-btn-text-icon',icon:'/scmui/images/icons/add.png',action:'addNew'}
-    		       ,{text:'修改',cls:'x-btn-text-icon',icon:'/scmui/images/icons/edit.png',action:'modify'}
-    		       ,{text:'删除',cls:'x-btn-text-icon',icon:'/scmui/images/icons/delete.png',action:'delete'}
-    		       ,{text:'刷新',cls:'x-btn-text-icon',icon:'/scmui/images/icons/refresh.png',action:'refresh'}
-    		       ,{text:'审核',cls:'x-btn-text-icon',icon:'/scmui/images/icons/audit.gif',action:'audit'}
-    		       ,{text:'反审核',cls:'x-btn-text-icon',icon:'/scmui/images/icons/unaudit.gif',action:'unaudit'}
-    		       ,{text:'打印',cls:'x-btn-text-icon',icon:'/scmui/images/icons/printer.gif',action:'print'}],
+                	xtype:'billbasetoolbar',//工具栏
 					region:'north'
                 },
                 {
