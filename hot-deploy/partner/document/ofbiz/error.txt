@@ -10,3 +10,5 @@
 		if (UtilValidate.isNotEmpty(partyId)) {
         	userLoginToCreate.set("partyId", partyId);
         }
+        
+4.在文件fieldtypemysql.xml中增加相应的类型。
