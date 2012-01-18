@@ -1,7 +1,7 @@
 Ext.define('SCM.view.PurchaseBill.EditUI', {
     extend: 'Ext.window.Window',
+    requires: ['SCM.extend.toolbar.SaveToolbar','SCM.extend.toolbar.GridEditToolbar', 'SCM.ux.combobox.ComboGrid', 'SCM.ux.grid.ComboColumn'],
     alias : 'widget.PurchaseBilledit',
-
 	height: 550,
 	width: 815,
     title : '采购单',
@@ -9,7 +9,6 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
     autoShow: false,
     modal:true,//背景变灰，不能编辑
     uiStatus:'AddNew',
-	requires: ['SCM.ux.SelectorField','Ext.ux.CheckColumn'],
 	closeAction:'hide',
     initComponent: function() {
 		this.initForm();
@@ -163,6 +162,7 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 						//开始gridpanel
 						{
 							xtype: 'gridpanel',
+							id : 'PurchaseBill-edit-grid',
 							region: 'center',
 							store: entryStore,
 							columns: [
@@ -181,12 +181,10 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 								}
 																//\n
 								,{
-								xtype : 'gridcolumn'
+								xtype : 'combocolumn'
 								,dataIndex : 'materialMaterialId'
 								,text : '物料'
-								,renderer : function(value,metaData,record) {
-									return record.get('materialMaterialName');
-								}
+								,gridId : 'PurchaseBill-edit-grid'
 								,editor : {
 									xtype : 'combogrid',
 									valueField : 'id',
@@ -234,12 +232,10 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 								}
 																								//\n
 								,{
-								xtype : 'gridcolumn'
+								xtype : 'combocolumn'
 								,dataIndex : 'unitUnitId'
 								,text : '单位'
-								,renderer : function(value,metaData,record) {
-									return record.get('unitUnitName');
-								}
+								,gridId : 'PurchaseBill-edit-grid'
 								,editor : {
 									xtype : 'combogrid',
 									valueField : 'id',
@@ -324,24 +320,8 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 							//开始工具栏
 							dockedItems: [
 								{
-									xtype: 'toolbar',
-									dock: 'top',
-									items: [
-										{
-											xtype: 'button'
-											,text: '分录新增'
-											,cls:'x-btn-text-icon'
-											,icon:'/scmui/images/icons/addline.gif'
-											,action: 'addLine'
-										},
-										{
-											xtype: 'button'
-											,text: '分录删除'
-											,cls:'x-btn-text-icon'
-											,icon:'/scmui/images/icons/dline.gif'
-											,action: 'deleteLine'
-										}
-									]
+									xtype : 'gridedittoolbar',
+									dock : 'top'
 								}
 							]//end工具栏
 						}//end gridpanel
@@ -390,12 +370,10 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
     
     //初始化工具栏
     initToolbar:function(){
-    	this.dockedItems=[
-	    	{xtype:'toolbar',
-	    	items:[{xtye:'button',text:'保存',cls:'x-btn-text-icon',icon:'/scmui/images/icons/save.png',action:'save'}
-	    			,{xtye:'button',text:'打印',cls:'x-btn-text-icon',icon:'/scmui/images/icons/printer.gif',action:'print'}]
-	    	}
-    	];
+    	this.dockedItems=[{
+						xtype : 'savetoolbar',
+						dock : 'bottom'
+					}];
     }
 
 });
