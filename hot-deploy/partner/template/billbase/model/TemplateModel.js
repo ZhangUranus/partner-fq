@@ -1,6 +1,7 @@
 //定义数据模型
 Ext.define('SCM.model.${TemplateName}.${TemplateName}Model', {
-    extend: 'Ext.data.Model',
+	extend: 'Ext.data.Model',
+    requires: ['SCM.extend.proxy.JsonAjax'],
     alias: '${TemplateName}Model',
     //字段
     fields: [
@@ -26,6 +27,14 @@ Ext.define('SCM.model.${TemplateName}.${TemplateName}Model', {
 			 #end
 		#end //\n
 
-    ]
+    ],
     //,idProperty:'emptyId'//设置一个没用的id，这样才能支持显示多分录
+    proxy: {
+        type: 'jsonajax',
+		api: {
+            read: '../../scm/control/requestJsonData?entity=${TemplateName}View',
+			destroy:'../../scm/control/deleteWithEntry?headEntity=${TemplateName}&entryEntity=${TemplateName}Entry'
+        },
+		remoteFilter:true
+    }
 });
