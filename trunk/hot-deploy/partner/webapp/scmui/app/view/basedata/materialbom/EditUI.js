@@ -1,6 +1,6 @@
 Ext.define('SCM.view.basedata.materialbom.EditUI', {
 			extend : 'Ext.window.Window',
-			requires : ['SCM.ux.SelectorField', 'SCM.extend.toolbar.SaveToolbar', 'SCM.ux.combobox.ComboGrid', 'SCM.ux.grid.ComboColumn'],
+			requires : ['SCM.extend.toolbar.GridEditToolbar', 'SCM.extend.toolbar.SaveToolbar', 'SCM.ux.combobox.ComboGrid', 'SCM.ux.grid.ComboColumn'],
 			alias : 'widget.materialbomedit',
 			title : '物料BOM',
 			layout : 'fit',
@@ -154,17 +154,8 @@ Ext.define('SCM.view.basedata.materialbom.EditUI', {
 													},
 													plugins : [cellEditing],
 													dockedItems : [{
-																xtype : 'toolbar',
-																dock : 'top',
-																items : [{
-																			text : '分录新增',
-																			iconCls : 'bill-addline',
-																			action : 'addLine'
-																		}, {
-																			text : '分录删除',
-																			iconCls : 'bill-dline',
-																			action : 'deleteLine'
-																		}]
+																xtype : 'gridedittoolbar',
+																dock : 'top'
 															}]
 												}
 
