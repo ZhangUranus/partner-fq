@@ -52,6 +52,10 @@ Ext.define('SCM.controller.basedata.MaterialBomController', {
 							'materialbomedit button[action=cancel]' : {
 								click : this.cancel
 							},
+							//列表打印按钮
+							'materialbomedit button[action=print]' : {
+								click : this.print
+							},
 							// 监听各field值变动事件，只监听可见控件
 							'materialbomedit form textfield{isVisible()}' : {
 								change : this.fieldChange
@@ -201,7 +205,7 @@ Ext.define('SCM.controller.basedata.MaterialBomController', {
 					var newed = this.editGrid.store.getNewRecords();
 					if (record.dirty || removed.length > 0 || updated.length > 0 || newed.length > 0) {
 						this.commitSave(record, this.editGrid.store);
-					}else{
+					} else {
 						if (this.win.isVisible()) {
 							this.win.close();
 						}
