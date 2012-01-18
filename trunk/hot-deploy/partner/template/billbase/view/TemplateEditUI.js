@@ -1,5 +1,6 @@
 Ext.define('SCM.view.${TemplateName}.EditUI', {
     extend: 'Ext.window.Window',
+    requires: ['SCM.extend.toolbar.SaveToolbar','SCM.extend.toolbar.GridEditToolbar'],
     alias : 'widget.${TemplateName}edit',
 
 	height: 550,
@@ -9,7 +10,6 @@ Ext.define('SCM.view.${TemplateName}.EditUI', {
     autoShow: false,
     modal:true,//背景变灰，不能编辑
     uiStatus:'AddNew',
-	requires: ['SCM.ux.SelectorField','Ext.ux.CheckColumn'],
 	closeAction:'hide',
     initComponent: function() {
 		this.initForm();
@@ -261,24 +261,8 @@ Ext.define('SCM.view.${TemplateName}.EditUI', {
 							//开始工具栏
 							dockedItems: [
 								{
-									xtype: 'toolbar',
-									dock: 'top',
-									items: [
-										{
-											xtype: 'button'
-											,text: '分录新增'
-											,cls:'x-btn-text-icon'
-											,icon:'/scmui/images/icons/addline.gif'
-											,action: 'addLine'
-										},
-										{
-											xtype: 'button'
-											,text: '分录删除'
-											,cls:'x-btn-text-icon'
-											,icon:'/scmui/images/icons/dline.gif'
-											,action: 'deleteLine'
-										}
-									]
+									xtype : 'gridedittoolbar',
+									dock : 'top'
 								}
 							]//end工具栏
 						}//end gridpanel
@@ -327,12 +311,10 @@ Ext.define('SCM.view.${TemplateName}.EditUI', {
     
     //初始化工具栏
     initToolbar:function(){
-    	this.dockedItems=[
-	    	{xtype:'toolbar',
-	    	items:[{xtye:'button',text:'保存',cls:'x-btn-text-icon',icon:'/scmui/images/icons/save.png',action:'save'}
-	    			,{xtye:'button',text:'打印',cls:'x-btn-text-icon',icon:'/scmui/images/icons/printer.gif',action:'print'}]
-	    	}
-    	];
+    	this.dockedItems=[{
+						xtype : 'savetoolbar',
+						dock : 'bottom'
+					}];
     }
 
 });
