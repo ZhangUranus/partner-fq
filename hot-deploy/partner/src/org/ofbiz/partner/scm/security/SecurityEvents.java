@@ -200,17 +200,15 @@ public class SecurityEvents {
 			JSONObject record = (JSONObject) r;// 单条记录
 			GenericValue v = delegator.makeValue(entityName);// 新建一个值对象
 			GenericValue sv = delegator.makeValue(systemEntityName);// 新建一个值对象
-			GenericValue rv = delegator.makeValue(roleEntityName);// 新建一个值对象
 			
 			v.set("id", record.get("id"));
 			sv.set("userLoginId", record.get("userId"));
-			rv.set("userId", record.get("userId"));
 			boolean beganTransaction = false;		//增加事务控制
 			try {
 				beganTransaction = TransactionUtil.begin();
+				delegator.removeByCondition(roleEntityName, EntityCondition.makeCondition("userId", record.getString("userId")));
 				delegator.removeValue(v);
 				delegator.removeValue(sv);
-				delegator.removeValue(rv);
 			} catch (GenericEntityException e) {
 				try {
 					TransactionUtil.rollback(beganTransaction, UtilProperties.getPropertyValue("ErrorCode_zh_CN", "DeleteUserFromDBEntityException"), e);
@@ -264,10 +262,11 @@ public class SecurityEvents {
 	
 	public static String isLogin(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		JSONObject jsonStr = new JSONObject();
-		if("".equals(CommonEvents.getUsername(request))){
-			
+		String username = CommonEvents.getUsername(request);
+		if("".equals(username)){
 			jsonStr.put("success", false);
 		}else{
+			jsonStr.put("username", username);
 			jsonStr.put("success", true);
 		}
 		CommonEvents.writeJsonDataToExt(response, jsonStr.toString());
