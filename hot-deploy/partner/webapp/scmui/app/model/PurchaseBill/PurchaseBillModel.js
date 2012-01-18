@@ -1,6 +1,7 @@
 //定义数据模型
 Ext.define('SCM.model.PurchaseBill.PurchaseBillModel', {
-    extend: 'Ext.data.Model',
+	extend: 'Ext.data.Model',
+    requires: ['SCM.extend.proxy.JsonAjax'],
     alias: 'PurchaseBillModel',
     //字段
     fields: [
@@ -37,6 +38,14 @@ Ext.define('SCM.model.PurchaseBill.PurchaseBillModel', {
 			 ,{name: 'entrysum'  ,type:'float'   }
 			 		 //\n
 
-    ]
+    ],
     //,idProperty:'emptyId'//设置一个没用的id，这样才能支持显示多分录
+    proxy: {
+        type: 'jsonajax',
+		api: {
+            read: '../../scm/control/requestJsonData?entity=PurchaseBillView',
+			destroy:'../../scm/control/deleteWithEntry?headEntity=PurchaseBill&entryEntity=PurchaseBillEntry'
+        },
+		remoteFilter:true
+    }
 });
