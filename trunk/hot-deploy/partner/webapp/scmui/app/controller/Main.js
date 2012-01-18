@@ -20,6 +20,7 @@ Ext.define('SCM.controller.Main', {
             success : function(response , option) {
                 var result = Ext.decode(response.responseText)
                 if(result.success){
+                	Ext.getCmp("current-user-label").setText(result.username);
 	                Ext.getCmp('main-tree').show();
 	                Ext.getCmp('main-content').show();
                 }else{

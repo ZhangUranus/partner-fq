@@ -50,6 +50,12 @@ Ext.define('SCM.view.system.user.ListUI', {
 																hidden : true
 															}, {
 																xtype : 'textfield',
+																name : 'roles',
+																anchor : '80%',
+																fieldLabel : 'id',
+																hidden : true
+															}, {
+																xtype : 'textfield',
 																name : 'userId',
 																anchor : '80%',
 																fieldLabel : '登录名',

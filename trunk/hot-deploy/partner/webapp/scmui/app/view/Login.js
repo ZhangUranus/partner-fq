@@ -57,7 +57,7 @@ Ext.define('SCM.view.Login',{
             title: '用户登陆',
             closeAction: 'hide',
             closable : false, 
-            iconCls: 'win',
+            iconCls: 'tree-user',
             layout: 'fit',
             modal : true, 
             plain : true,
@@ -80,11 +80,13 @@ Ext.define('SCM.view.Login',{
                             waitTitle:'正在验证登录',
                             url:'../scm/control/checkLogin',
                             success: function(form, action) {
+                            	Ext.getCmp("current-user-label").setText(form.findField('USERNAME').value);
                                 win.hide();
                                 Ext.getCmp('main-tree').show();
                                 Ext.getCmp('main-content').show();
                             },
                             failure: function(form, action) {
+                            	Ext.getCmp("current-user-label").setText("未登录");
                                 Ext.MessageBox.show({
                                     width:150,
                                     title:"登录失败",
