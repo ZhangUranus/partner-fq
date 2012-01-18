@@ -339,7 +339,6 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 			saveRecord : function(button) {
 				// 取表单
 				values = this.editForm.getValues();
-
 				var head;
 				if (this.win.uiStatus == 'Modify') {// 修改记录
 					head = this.editForm.getRecord();
@@ -364,13 +363,13 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 
 				} else if (this.win.uiStatus == 'AddNew') {// 新增记录
 
-					head = Ext.create(this.editStoreName);
+					head = Ext.create(this.modelName);
 					head.set(values);
 
 					// 新建一个复合model
 					var oneEntryModel = Ext.create(this.actionModelName);
 
-					oneEntryModel = processOneEntryModel(oneEntryModel, head, this.editEntry().store);
+					oneEntryModel = processOneEntryModel(oneEntryModel, head, this.editEntry.store);
 
 					oneEntryModel.save({
 								scope : this,
