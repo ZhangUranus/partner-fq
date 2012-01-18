@@ -1,8 +1,7 @@
 Ext.define('SCM.view.${TemplateName}.EditUI', {
     extend: 'Ext.window.Window',
-    requires: ['SCM.extend.toolbar.SaveToolbar','SCM.extend.toolbar.GridEditToolbar'],
+    requires: ['SCM.extend.toolbar.SaveToolbar','SCM.extend.toolbar.GridEditToolbar', 'SCM.ux.combobox.ComboGrid', 'SCM.ux.grid.ComboColumn'],
     alias : 'widget.${TemplateName}edit',
-
 	height: 550,
 	width: 815,
     title : '${TemplateAlias}',
@@ -140,6 +139,7 @@ Ext.define('SCM.view.${TemplateName}.EditUI', {
 						//开始gridpanel
 						{
 							xtype: 'gridpanel',
+							id : '${TemplateName}-edit-grid',
 							region: 'center',
 							store: entryStore,
 							columns: [
@@ -215,12 +215,10 @@ Ext.define('SCM.view.${TemplateName}.EditUI', {
 								}
 								#elseif($entryfield.isHidden==false&&$entryfield.type=='entity')//\n
 								,{
-								xtype : 'gridcolumn'
+								xtype : 'combocolumn'
 								,dataIndex : '${entryfield.name}${entryfield.entity}Id'
 								,text : '$entryfield.alias'
-								,renderer : function(value,metaData,record) {
-									return record.get('${entryfield.name}${entryfield.entity}Name');
-								}
+								,gridId : '${TemplateName}-edit-grid'
 								,editor : {
 									xtype : 'combogrid',
 									valueField : 'id',
