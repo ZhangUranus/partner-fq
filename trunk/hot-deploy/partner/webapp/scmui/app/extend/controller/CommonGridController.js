@@ -296,8 +296,10 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 			 */
 			clear : function() {
 				Ext.each(this.fields, function(item, index, length) {
-							item.setValue('');
-						});
+							if(!item.readOnly)
+								item.setValue('');
+							}
+						);
 			},
 
 			/**
@@ -368,5 +370,17 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 				if (this.searchText) {
 					this.searchText.focus(true, true)
 				}
+			},
+			
+			//打印单据
+			print : function(button){
+				var printWin=window.open('','printwin');
+				printWin.document.write(this.getPrintContent());
+			    printWin.document.close();
+			    printWin.print();
+			    printWin.close();
+			},
+			getPrintContent: function(){
+				return 'test';
 			}
 		})
