@@ -53,7 +53,8 @@ Ext.define('SCM.view.basedata.warehouse.EditUI', {
 												}, {
 													name : 'number',
 													fieldLabel : '编码',
-													hidden : true
+													emptyText : '保存时系统自动生成',
+													readOnly : true
 												}, {
 													name : 'name',
 													fieldLabel : '名称',
