@@ -1,7 +1,7 @@
 Ext.define('SCM.store.PurchaseBill.PurchaseBillEditStore', {
-    extend: 'Ext.data.Store',
-    model: 'SCM.model.PurchaseBill.PurchaseBillEditModel',
-    alias:'PurchaseBillEditStore',
-    autoLoad: false,
-    autoSync: false
-});
+			extend : 'Ext.data.Store',
+			model : 'SCM.model.PurchaseBill.PurchaseBillEditModel',
+			alias : 'PurchaseBillEditStore',
+			autoLoad : false,
+			autoSync : false
+		});
