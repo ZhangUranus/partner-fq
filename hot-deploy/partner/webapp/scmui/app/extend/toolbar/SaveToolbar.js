@@ -6,7 +6,10 @@ Ext.define('SCM.extend.toolbar.SaveToolbar', {
 				Ext.applyIf(me, {
 							xtype : 'toolbar',
 							height : 28,
-							minWidth : 100,
+							defaults : {
+								margin : '0 5 0 0',
+								xtype : 'button'
+							},
 							items : ['->', {
 										text : '保存',
 										iconCls : 'system-save',
