@@ -1,6 +1,4 @@
 1.ServerHitBin.saveHit()方法中关于MySql允许错误的解释（https://issues.apache.org/jira/browse/OFBIZ-2208）
-	解决办法：修改文件framework\webapp\entitydef\entitymodel.xml，为模型ServerHit增加主键runningTimeMillis，尽量避免主键重复情况。
-
 	20120118：重新修改该问题，新增id字段，修改类ServerHitBin.saveHit()方法，增加serverHit.set("id", UUID.randomUUID().toString());。
 				修改文件framework\webapp\entitydef\entitymodel.xml，增加id字段，并设置为主键。
 
