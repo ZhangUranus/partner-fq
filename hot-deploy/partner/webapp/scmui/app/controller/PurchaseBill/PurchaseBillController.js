@@ -18,7 +18,8 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 							// 列表事件
 							'PurchaseBilllist gridpanel' : {
 								itemdblclick : this.modifyRecord, // 双击列表，弹出编辑界面
-								itemclick : this.changeComponentsState // 点击列表，改变修改、删除按钮状态
+								itemclick : this.changeComponentsState
+								// 点击列表，改变修改、删除按钮状态
 							},
 							// 列表新增按钮
 							'PurchaseBilllist button[action=addNew]' : {
