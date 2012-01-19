@@ -155,9 +155,9 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				} else {
 					if (this.listContainer.permission.edit) {
 						this.saveButton.setVisible(true);
-						Ext.each(this.fields, function(item, index, length) {
-									item.setReadOnly(false);
-								})
+//						Ext.each(this.fields, function(item, index, length) {由初始化状态决定
+//									item.setReadOnly(false);
+//								})
 					} else {
 						this.saveButton.setVisible(false);
 						Ext.each(this.fields, function(item, index, length) {
@@ -201,7 +201,12 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				this.win.show();
 				this.changeComponentsState();
 				this.win.inited = true;
-				this.fields[0].focus(true, true);
+				Ext.each(this.fields, function(item, index, length) {
+							if (!item.readOnly) {
+								item.focus(true, true);
+								return false;		//跳出循环
+							}
+						});
 			},
 
 			/**
