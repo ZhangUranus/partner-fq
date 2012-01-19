@@ -6,24 +6,22 @@ Ext.define('SCM.view.${TemplateName}.EditUI', {
 	width: 815,
     title : '${TemplateAlias}',
     layout: 'fit',
-    autoShow: false,
     modal:true,//背景变灰，不能编辑
-    uiStatus:'AddNew',
+    collapsible : true,
+	resizable : false,
 	closeAction:'hide',
+	uiStatus:'AddNew',
+	inited : false,
+	modifyed : false,
     initComponent: function() {
-		this.initForm();
-		this.initToolbar();
-        this.callParent(arguments);
-    },
-    
-	//初始化表单
-	initForm: function(){
-		var cellEditing = Ext.create('Ext.grid.plugin.CellEditing', {
+    	var me = this;
+    	var cellEditing = Ext.create('Ext.grid.plugin.CellEditing', {
 			clicksToEdit: 1
 		});
 		var entryStore=Ext.create('${TemplateName}EditEntryStore');
-
-    	this.items = [
+		
+		Ext.applyIf(me, {
+					items : [
 					  {
 						  xtype: 'form',
 						  name:'${TemplateName}form',
@@ -304,15 +302,19 @@ Ext.define('SCM.view.${TemplateName}.EditUI', {
 						}
 	                  ]
 	              }
-	          ];//结束items
-    },
-    
-    //初始化工具栏
-    initToolbar:function(){
-    	this.dockedItems=[{
+	          ],
+	    dockedItems : [{
 						xtype : 'savetoolbar',
 						dock : 'bottom'
-					}];
-    }
+					}]
+		});
+    	
+        this.callParent(arguments);
+    },
+    close : function() {
+				this.hide();
+				this.inited = false;
+				this.modifyed = false;
+			}
 
 });

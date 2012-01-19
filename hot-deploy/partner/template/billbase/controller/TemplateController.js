@@ -4,6 +4,7 @@ Ext.define('SCM.controller.${TemplateName}.${TemplateName}Controller', {
 			views : ['${TemplateName}.ListUI', '${TemplateName}.EditUI'],
 			stores : ['${TemplateName}.${TemplateName}Store', '${TemplateName}.${TemplateName}EditStore', '${TemplateName}.${TemplateName}EditEntryStore'],
 			requires : ['SCM.model.${TemplateName}.${TemplateName}ActionModel'],
+			gridTitle : '${TemplateAlias}',
 			editName : '${TemplateName}edit',
 			editStoreName : '${TemplateName}EditStore',
 			entityName : '${TemplateName}',
@@ -15,20 +16,14 @@ Ext.define('SCM.controller.${TemplateName}.${TemplateName}Controller', {
 							'${TemplateName}list' : {
 								afterrender : this.initComponent
 							},
-							// 列表事件
-							'${TemplateName}list gridpanel' : {
-								itemdblclick : this.modifyRecord, // 双击列表，弹出编辑界面
-								itemclick : this.changeComponentsState
-								// 点击列表，改变修改、删除按钮状态
-							},
 							// 列表新增按钮
 							'${TemplateName}list button[action=addNew]' : {
 								click : this.addNewRecord
 							},
 							// 列表事件
 							'${TemplateName}list gridpanel[region=center]' : {
-								select : this.showDetail
-								// 列表选择事件，显示明细
+								select : this.showDetail,
+								itemdblclick : this.modifyRecord
 							},
 							// 列表修改按钮
 							'${TemplateName}list button[action=modify]' : {
@@ -78,6 +73,14 @@ Ext.define('SCM.controller.${TemplateName}.${TemplateName}Controller', {
 							// 编辑界面取消
 							'${TemplateName}edit button[action=cancel]' : {
 								click : this.cancel
+							},
+							// 监听各field值变动事件，只监听可见控件
+							'${TemplateName}edit form textfield{isVisible()}' : {
+								change : this.fieldChange
+							},
+							// 角色列表更新事件
+							'${TemplateName}edit grid' : {
+								selectionchange : this.fieldChange
 							}
 						});
 			}
