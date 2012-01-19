@@ -26,7 +26,9 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				this.editButton = view.down('button[action=modify]');// 编辑按钮
 				this.auditButton = view.down('button[action=audit]');// 审核按钮
 				this.unauditButton = view.down('button[action=unaudit]');// 反审核按钮
-
+				
+				this.listPanel.store.proxy.addListener('afterRequest', this.afterRequest, this); // 监听所有请求回调
+				
 				this.getEdit();
 				this.initButtonByPermission();
 				this.changeComponentsState();
@@ -77,18 +79,28 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 			 *            success : true,false
 			 */
 			afterRequest : function(request, success) {
+				var me = this;
 				if (success && request.operation.success) {
 					if (request.action == 'read') {
-						this.changeComponentsState();
+						me.changeComponentsState();
 					} else if (request.action == 'create') {
-						this.refreshRecord();
+						Ext.Msg.alert("提示", "新增成功！", callBack);
+						function callBack() {
+							me.refreshRecord();
+						}
 					} else if (request.action == 'update') {
-						this.refreshRecord();
+						Ext.Msg.alert("提示", "更新成功！", callBack);
+						function callBack() {
+							me.refreshRecord();
+						}
 					} else if (request.action == 'destroy') {
-						this.refreshRecord();
+						Ext.Msg.alert("提示", "删除成功！", callBack);
+						function callBack() {
+							me.refreshRecord();
+						}
 					}
-					if (this.win.isVisible()) {
-						this.win.close();
+					if (request.action != 'read' && me.win.isVisible()) {
+						me.win.close();
 					}
 				} else {
 					// 不需要处理，由服务器抛出异常即可
@@ -154,7 +166,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 					}
 				}
 			},
-
+			
 			/**
 			 * 页面Enter键事件捕捉
 			 */
@@ -255,11 +267,11 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 			addNewRecord : function(button) {
 				var newRecord = Ext.create(this.modelName);// 新增记录
 				this.getEdit().uiStatus = 'AddNew';
-
+				
 				this.editForm.getForm().loadRecord(newRecord);
 				// 清空分录
-				grid = this.editForm.down('gridpanel');
-				grid.store.removeAll();
+				this.editEntry.store.removeAll();
+				this.editEntry.getView().refresh();
 				this.showEdit();
 			},
 
@@ -276,7 +288,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 					records = sm.getSelection();
 					for (i in records) {
 						if (records[i].data.status == '1' || records[i].data.status == '3') {
-							showError('单据不能删除');
+							showError('单据为已审核（或已结算）状态，不允许删除！');
 							return;
 						}
 					}
@@ -306,13 +318,22 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 
 				if (sm.hasSelection()) {// 判断是否选择行记录
 					record = sm.getLastSelected();
-					Ext.Ajax.request({
+					if (record.get('status') != '0') {
+						showError('单据已审核！');
+						return;
+					}
+					Ext.Msg.confirm('提示', '确定审核该' + this.gridTitle + '？', confirmChange, this);
+					function confirmChange(id) {
+						if (id == 'yes') {
+							Ext.Ajax.request({
 								scope : this,
-								url : '../../scm/control/auditBill?billId=' + record.data.id + '&entity=' + this.entityName,
+								url : '../../scm/control/auditBill?billId=' + record.get('id') + '&entity=' + this.entityName,
 								success : function(response) {
 									this.refreshRecord();
 								}
 							});
+						}
+					}
 				}
 			},
 			// 反审核单据
@@ -321,13 +342,23 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 
 				if (sm.hasSelection()) {// 判断是否选择行记录
 					record = sm.getLastSelected();
-					Ext.Ajax.request({
+					if (record.get('status') == '0') {
+						showError('单据未审核！');
+						return;
+					}
+					Ext.Msg.confirm('提示', '确定反审核该' + this.gridTitle + '？', confirmChange, this);
+					function confirmChange(id) {
+						if (id == 'yes') {
+							Ext.Ajax.request({
 								scope : this,
-								url : '../../scm/control/unauditBill?billId=' + record.data.id + '&entity=' + this.entityName,
+								url : '../../scm/control/unauditBill?billId=' + record.get('id') + '&entity=' + this.entityName,
 								success : function(response) {
 									this.refreshRecord();
 								}
 							});
+						}
+					}
+					
 				}
 			},
 			/**
@@ -337,51 +368,56 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 			 *            button 保存按钮
 			 */
 			saveRecord : function(button) {
-				// 取表单
-				values = this.editForm.getValues();
-				var head;
-				if (this.win.uiStatus == 'Modify') {// 修改记录
-					head = this.editForm.getRecord();
-					head.set(values);
-					var entryStore = this.editEntry.store;
-
-					// 新建一个复合model
-					var oneEntryModel = Ext.create(this.actionModelName);
-
+				var me = this;
+				var values = me.editForm.getValues();
+				if (!me.win.modifyed) {// 用户未做任何修改，直接关闭编辑框
+					Ext.Msg.alert("提示信息", "未做任何修改！");
+					return;
+				}
+				if (!this.isValidate()) {
+					return;
+				}
+				
+				var record;
+				if (me.win.uiStatus == 'Modify') {// 修改记录
+					record = me.editForm.getRecord();
+					record.set(values);
+					var entryStore = me.editEntry.store;
+					
 					var removed = entryStore.getRemovedRecords();
 					var updated = entryStore.getUpdatedRecords();
 					var newed = entryStore.getNewRecords();
-					if (head.dirty || removed.length > 0 || updated.length > 0 || newed.length > 0) {
-						oneEntryModel = processOneEntryModel(oneEntryModel, head, entryStore);
-						oneEntryModel.save({
-									scope : this,
-									callback : function() {
-										this.refreshRecord();
-									}
-								});
+					if (record.dirty || removed.length > 0 || updated.length > 0 || newed.length > 0) {
+						me.commitSave(record,entryStore);
+					} else {
+						if (me.win.isVisible()) {
+							me.win.close();
+						}
 					}
-
-				} else if (this.win.uiStatus == 'AddNew') {// 新增记录
-
-					head = Ext.create(this.modelName);
-					head.set(values);
-
-					// 新建一个复合model
-					var oneEntryModel = Ext.create(this.actionModelName);
-
-					oneEntryModel = processOneEntryModel(oneEntryModel, head, this.editEntry.store);
-
-					oneEntryModel.save({
-								scope : this,
-								callback : function() {
-									this.refreshRecord();
-								}
-							});
-
+				} else if (me.win.uiStatus == 'AddNew') {// 新增记录
+					record = Ext.create(me.modelName);
+					record.set(values);
+					
+					me.commitSave(record,me.editEntry.store);
 				}
-				this.changeComponentsState();
+				me.changeComponentsState();
 			},
-
+			
+			/**
+			 * 提交保存
+			 * 
+			 * @param {}
+			 *            record
+			 * @param {}
+			 *            store
+			 */
+			commitSave : function(record, store) {
+				var oneEntryModel = Ext.create(this.actionModelName);
+				oneEntryModel.proxy.addListener('afterRequest', this.afterRequest, this); // 监听请求回调
+				oneEntryModel = processOneEntryModel(oneEntryModel, record, store);
+				oneEntryModel.save();
+			},
+			
 			/**
 			 * 清理文本框内容
 			 */
@@ -486,6 +522,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 						entryStore.load();
 					}
 				}
+				this.changeComponentsState();
 			},
 
 			// 打印单据
