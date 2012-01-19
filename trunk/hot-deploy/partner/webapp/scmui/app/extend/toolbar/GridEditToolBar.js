@@ -6,7 +6,10 @@ Ext.define('SCM.extend.toolbar.GridEditToolbar', {
 				Ext.applyIf(me, {
 							xtype : 'toolbar',
 							height : 28,
-							minWidth : 50,
+							defaults : {
+								margin : '0 5 0 0',
+								xtype : 'button'
+							},
 							items : [{
 										text : '分录新增',
 										iconCls : 'bill-addline',
