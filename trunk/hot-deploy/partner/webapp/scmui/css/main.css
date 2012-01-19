@@ -156,3 +156,10 @@
 	background-image: url( ../images/icons/dline.gif ) !important;
 }
 
+.x-form-readonly {
+	filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50 );
+	opacity: 0.5
+}
+.x-ie6 .x-form-readonly {
+	filter: none
+}
