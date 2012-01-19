@@ -43,14 +43,17 @@ Ext.define('SCM.view.${TemplateName}.EditUI', {
 								  xtype: 'textfield',
 								  name : 'number',
 								  margin: 5,
-								  fieldLabel: '编码'
+								  fieldLabel: '编码',
+								  emptyText : '保存时系统自动生成',
+								  readOnly : true
 								 }
 								,{
 								  xtype: 'datefield',
 								  name : 'bizDate',
 								  margin: 5,
 								  format:'Y-m-d',
-								  fieldLabel: '日期'
+								  fieldLabel: '日期',
+								  allowBlank : false
 								}
 								#foreach($headfield in $HeadFields)
 								#if($headfield.isHidden==false&&$headfield.type!='entity')//\n
@@ -124,7 +127,8 @@ Ext.define('SCM.view.${TemplateName}.EditUI', {
 								  xtype: 'textfield',
 								  name : 'note',
 								  margin: 5,
-								  fieldLabel: '备注'
+								  fieldLabel: '备注',
+								  maxLength : 50
 								}
 								,{
 								  xtype: 'textfield',
