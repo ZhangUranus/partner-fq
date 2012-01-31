@@ -79,6 +79,7 @@ under the License.
             package-name="org.ofbiz.scm.PurchaseBill"
             title="PurchaseBillView  Entity">
       		<member-entity entity-alias="PurchaseBillV" entity-name="PurchaseBill"></member-entity>
+      		<member-entity entity-alias="PurchaseBillEntryV" entity-name="PurchaseBillEntry"></member-entity>
       		      		<!-- \n -->
 			<member-entity entity-alias="supplierSupplierV" entity-name="Supplier"></member-entity>
 				  		      		<!-- \n -->
@@ -87,6 +88,7 @@ under the License.
 			<member-entity entity-alias="approverSystemUserV" entity-name="SystemUser"></member-entity>
 				  		      			  		 <!-- \n -->
             <alias-all entity-alias="PurchaseBillV" ></alias-all>
+            <alias name="materialMaterialId" entity-alias="PurchaseBillEntryV" field="materialMaterialId"></alias>
                   		<!-- \n -->
 			<alias name="supplierSupplierName" entity-alias="supplierSupplierV" field="name"></alias>	
 				  		      		<!-- \n -->
@@ -94,6 +96,9 @@ under the License.
 				  		      		<!-- \n -->
 			<alias name="approverSystemUserName" entity-alias="approverSystemUserV" field="name"></alias>	
 				  		      			  			  		
+	  		<view-link entity-alias="PurchaseBillV" rel-entity-alias="PurchaseBillEntryV" rel-optional="true">
+				<key-map field-name="id" rel-field-name="parentId"/>
+			</view-link>
 	  		      		<!-- \n -->
 			<view-link entity-alias="PurchaseBillV" rel-entity-alias="supplierSupplierV" rel-optional="true">
 				<key-map field-name="supplierSupplierId" rel-field-name="id"/>
