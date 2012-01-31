@@ -131,7 +131,7 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 				this.listPanel.store.load();
 				this.detailPanel.store.removeAll();
 				this.changeComponentsState();
-			}
+			},
 			
 			/**
 			 * 当用户编辑grid时，同步更新相关表单数据
