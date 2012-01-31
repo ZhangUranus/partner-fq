@@ -4,7 +4,8 @@ Ext.define('SCM.extend.toolbar.BillBaseToolbar', {
 			initComponent : function() {
 				var me = this;
 				var tools = [];
-
+				var today = new Date();
+				var startDay = new Date(today.getFullYear(),today.getMonth(),1);
 				// 增加日期条件
 				tools.push([{
 							xtype : 'datefield',
@@ -14,6 +15,7 @@ Ext.define('SCM.extend.toolbar.BillBaseToolbar', {
 							labelWidth : 35,
 							fieldLabel : '日期',
 							margin : '0 0 0 0',
+							value : startDay,
 							editable : false
 						}, {
 							xtype : 'datefield',
@@ -23,6 +25,7 @@ Ext.define('SCM.extend.toolbar.BillBaseToolbar', {
 							labelWidth : 15,
 							fieldLabel : '至',
 							labelSeparator : '',
+							value : today,
 							editable : false
 						}, {
 							xtype : 'combobox',
