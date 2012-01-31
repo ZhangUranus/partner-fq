@@ -34,7 +34,7 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 								click : this.deleteRecord
 							},
 							// 列表界面刷新
-							'PurchaseBilllist button[action=refresh]' : {
+							'PurchaseBilllist button[action=search]' : {
 								click : this.refreshRecord
 							},
 							// 列表审核按钮
