@@ -91,8 +91,8 @@ Ext.define('SCM.controller.${TemplateName}.${TemplateName}Controller', {
 			afterInitComponent : function() {
 				this.searchStartDate = this.listContainer.down('datefield[name=searchStartDate]');
 				this.searchEndDate = this.listContainer.down('datefield[name=searchEndDate]');
-				this.searchMaterialId = this.listContainer.down('combobox[name=searchMaterialId]');
-				this.searchCustId = this.listContainer.down('combobox[name=searchCustId]');
+				this.searchMaterialId = this.listContainer.down('combogrid[name=searchMaterialId]');
+				this.searchCustId = this.listContainer.down('combogrid[name=searchCustId]');
 			},
 			
 			/**
