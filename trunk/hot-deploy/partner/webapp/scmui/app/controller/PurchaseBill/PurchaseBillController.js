@@ -93,6 +93,7 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 				this.searchEndDate = this.listContainer.down('datefield[name=searchEndDate]');
 				this.searchMaterialId = this.listContainer.down('combogrid[name=searchMaterialId]');
 				this.searchCustId = this.listContainer.down('combogrid[name=searchCustId]');
+				this.totalFields = this.editForm.down('textfield[name=totalsum]');
 			},
 			
 			/**
@@ -130,6 +131,30 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 				this.listPanel.store.load();
 				this.detailPanel.store.removeAll();
 				this.changeComponentsState();
+			}
+			
+			/**
+			 * 当用户编辑grid时，同步更新相关表单数据
+			 * @param {} editor
+			 * @param {} e
+			 */
+			initMaterialInfo : function(editor,e){
+				if(e.field == 'materialMaterialId'){
+					var record = this.searchMaterialId.store.findRecord('id',e.value);
+					if(record){
+						e.record.set('price',record.get('defaultPrice'));
+						e.record.set('refPrice',record.get('defaultPrice'));
+						e.record.set('unitUnitId',record.get('defaultUnitId'));
+						e.record.set('unitUnitName',record.get('defaultUnitName'));
+					}
+				}
+				e.record.set('entrysum',e.record.get('price')*e.record.get('volume'));
+				var count = e.grid.store.getCount();
+				var sum = 0;
+				for(var i =0;i<count;i++){
+					sum += e.grid.store.getAt(i).get('entrysum');
+				}
+				this.totalFields.setValue(sum);
 			}
 
 		});
