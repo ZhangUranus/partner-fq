@@ -106,6 +106,10 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 				}
 				if(this.searchEndDate.getValue()){
 					if(tempString != ''){
+						if(this.searchStartDate.getRawValue()>this.searchEndDate.getRawValue()){
+							showWarning('开始日期不允许大于结束日期，请重新选择！');
+							return ;
+						}
 						tempString += ' and ';
 					}
 					tempString += 'PurchaseBillV.biz_date <= \'' + this.searchEndDate.getRawValue() + ' 23:59:59\'';
