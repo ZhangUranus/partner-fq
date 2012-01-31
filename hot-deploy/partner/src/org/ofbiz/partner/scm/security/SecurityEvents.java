@@ -254,6 +254,10 @@ public class SecurityEvents {
 			jsonStr.put("success", false);
         }else{
         	CommonEvents.setUsername(request, response);
+        	String username = request.getParameter("USERNAME");
+        	List<GenericValue> recordList =  CommonEvents.getDelegator(request).findList("TSystemUser", EntityCondition.makeCondition("userId",username), null, null, null, true);
+        	String uid = recordList.get(0).getString("id");
+        	CommonEvents.setAttributeToSession(request, "uid", uid);
 			jsonStr.put("success", true);
         }
 		CommonEvents.writeJsonDataToExt(response, jsonStr.toString());

@@ -31,6 +31,7 @@ public class BillBaseEvent {
 			//更新状态字段
 			Map<String,Object> fieldSet=new HashMap<String, Object>();
 			fieldSet.put("status", 1);//设置为审核状态
+			fieldSet.put("approverSystemUserId", CommonEvents.getAttributeToSession(request, "uid"));
 			delegator.storeByCondition(entity, fieldSet, EntityCondition.makeConditionWhere("id='"+billId+"'"));
 			return "sucess";
 		}else{
@@ -52,6 +53,7 @@ public class BillBaseEvent {
 			//更新状态字段
 			Map<String,Object> fieldSet=new HashMap<String, Object>();
 			fieldSet.put("status", 0);//设置为保存状态
+			fieldSet.put("approverSystemUserId", CommonEvents.getAttributeToSession(request, "uid"));
 			delegator.storeByCondition(entity, fieldSet, EntityCondition.makeConditionWhere("id='"+billId+"'"));
 			return "sucess";
 		}else{
