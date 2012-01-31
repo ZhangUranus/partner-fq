@@ -219,6 +219,6 @@ Ext.define('SCM.view.PurchaseBill.ListUI' ,{
         });
         me.callParent(arguments);
 
-		me.down('gridpanel').store.load();
+		//me.down('gridpanel').store.load();
     }
 });
