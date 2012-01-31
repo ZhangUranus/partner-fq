@@ -21,6 +21,8 @@ Ext.define('SCM.view.${TemplateName}.ListUI' ,{
             items: [
                 {
                 	xtype:'billbasetoolbar',//工具栏
+                	audit: false,
+                	custType : 'customer',
 					region:'north'
                 },
                 {

@@ -83,6 +83,49 @@ Ext.define('SCM.controller.${TemplateName}.${TemplateName}Controller', {
 								selectionchange : this.fieldChange
 							}
 						});
+			},
+			
+			/**
+			 * 重新方法，增加查询条件控件的引用
+			 */
+			afterInitComponent : function() {
+				this.searchStartDate = this.listContainer.down('datefield[name=searchStartDate]');
+				this.searchEndDate = this.listContainer.down('datefield[name=searchEndDate]');
+				this.searchMaterialId = this.listContainer.down('combobox[name=searchMaterialId]');
+				this.searchCustId = this.listContainer.down('combobox[name=searchCustId]');
+			},
+			
+			/**
+			 * 重写刷新方法
+			 * 
+			 */
+			refreshRecord : function() {
+				var tempString = '';
+				if(this.searchStartDate.getValue()){
+					tempString += '${TemplateName}V.biz_date >= \'' + this.searchStartDate.getRawValue() + ' 00:00:00\'';
+				}
+				if(this.searchEndDate.getValue()){
+					if(tempString != ''){
+						tempString += ' and ';
+					}
+					tempString += '${TemplateName}V.biz_date <= \'' + this.searchEndDate.getRawValue() + ' 23:59:59\'';
+				}
+				if(this.searchMaterialId.getValue() && this.searchMaterialId.getValue() != ''){
+					if(tempString != ''){
+						tempString += ' and ';
+					}
+					tempString += '${TemplateName}EntryV.material_material_id = \'' + this.searchMaterialId.getValue() + '\'';
+				}
+				if(this.searchCustId.getValue() && this.searchCustId.getValue() != ''){
+					if(tempString != ''){
+						tempString += ' and ';
+					}
+					tempString += '${TemplateName}V.supplier_supplier_id = \'' + this.searchCustId.getValue() + '\'';
+				}
+				this.listPanel.store.getProxy().extraParams.whereStr = tempString;
+				this.listPanel.store.load();
+				this.detailPanel.store.removeAll();
+				this.changeComponentsState();
 			}
 
 		});
