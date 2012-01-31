@@ -21,6 +21,8 @@ Ext.define('SCM.view.PurchaseBill.ListUI' ,{
             items: [
                 {
                 	xtype:'billbasetoolbar',//工具栏
+                	audit: true,
+                	custType : 'supplier',
 					region:'north'
                 },
                 {
