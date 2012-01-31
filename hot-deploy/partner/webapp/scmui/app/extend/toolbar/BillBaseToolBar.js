@@ -5,7 +5,7 @@ Ext.define('SCM.extend.toolbar.BillBaseToolbar', {
 				var me = this;
 				var tools = [];
 				var today = new Date();
-				var startDay = new Date(today.getFullYear(),today.getMonth(),1);
+				var startDay = new Date(today.getFullYear(), today.getMonth(), 1);
 				// 增加日期条件
 				tools.push([{
 							xtype : 'datefield',
@@ -28,14 +28,30 @@ Ext.define('SCM.extend.toolbar.BillBaseToolbar', {
 							value : today,
 							editable : false
 						}, {
-							xtype : 'combobox',
+							xtype : 'combogrid',
 							name : 'searchMaterialId',
 							width : 145,
 							labelWidth : 35,
 							fieldLabel : '物料',
-							store : Ext.create('MaterialStore'),
 							valueField : 'id',
-							displayField : 'name'
+							displayField : 'name',
+							store : Ext.create('MaterialStore'),
+							matchFieldWidth : false,
+							listConfig : {
+								width : SCM.MaxSize.COMBOGRID_WIDTH,
+								height : SCM.MaxSize.COMBOGRID_HEIGHT,
+								columns : [{
+											header : '编码',
+											dataIndex : 'number',
+											width : 100,
+											hideable : false
+										}, {
+											header : '名称',
+											dataIndex : 'name',
+											width : 80,
+											hideable : false
+										}]
+							}
 						}]);
 
 				// 增加供应商/车间/加工商/客户等条件
@@ -61,14 +77,30 @@ Ext.define('SCM.extend.toolbar.BillBaseToolbar', {
 					}
 
 					tools.push([{
-								xtype : 'combobox',
+								xtype : 'combogrid',
 								name : 'searchCustId',
 								width : 110 + labelWidth,
 								labelWidth : labelWidth,
 								fieldLabel : label,
-								store : custStore,
 								valueField : 'id',
-								displayField : 'name'
+								displayField : 'name',
+								store : custStore,
+								matchFieldWidth : false,
+								listConfig : {
+									width : SCM.MaxSize.COMBOGRID_WIDTH,
+									height : SCM.MaxSize.COMBOGRID_HEIGHT,
+									columns : [{
+												header : '编码',
+												dataIndex : 'number',
+												width : 100,
+												hideable : false
+											}, {
+												header : '名称',
+												dataIndex : 'name',
+												width : 80,
+												hideable : false
+											}]
+								}
 							}]);
 				}
 
