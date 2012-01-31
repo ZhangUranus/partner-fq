@@ -95,3 +95,12 @@ showError= function(msg){
                     buttons: Ext.Msg.OK
                 });
 };
+
+showWarning= function(msg){
+	Ext.MessageBox.show({
+                    title: '警告',
+                    msg: msg,
+                    icon: Ext.MessageBox.WARNING,
+                    buttons: Ext.Msg.OK
+                });
+};

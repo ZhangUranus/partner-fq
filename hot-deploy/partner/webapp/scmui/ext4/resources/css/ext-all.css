@@ -103,8 +103,8 @@ input,textarea,select {
 }
 
 .x-item-disabled {
-	filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=30 );
-	opacity: 0.3
+	filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100 );
+	opacity: 1
 }
 
 .x-ie6 .x-item-disabled {
