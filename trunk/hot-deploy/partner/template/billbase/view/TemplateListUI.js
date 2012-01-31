@@ -195,6 +195,6 @@ Ext.define('SCM.view.${TemplateName}.ListUI' ,{
         });
         me.callParent(arguments);
 
-		me.down('gridpanel').store.load();
+		//me.down('gridpanel').store.load();
     }
 });
