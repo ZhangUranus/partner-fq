@@ -34,7 +34,7 @@ Ext.define('SCM.controller.${TemplateName}.${TemplateName}Controller', {
 								click : this.deleteRecord
 							},
 							// 列表界面刷新
-							'${TemplateName}list button[action=refresh]' : {
+							'${TemplateName}list button[action=search]' : {
 								click : this.refreshRecord
 							},
 							// 列表审核按钮
