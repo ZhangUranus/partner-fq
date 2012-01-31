@@ -35,6 +35,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				this.initEnterEvent();
 				this.afterInitComponent();
 				this.refreshRecord();
+				this.searchMaterialId.store.load();			//初始化物料列表
 			},
 
 			afterInitComponent : Ext.emptyFn,
@@ -68,9 +69,17 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 					this.fields = this.editForm.query("textfield{isVisible()}[readOnly=false]"); // 取所以显示的field
 					this.saveButton = this.win.down('button[action=save]');
 					this.clearButton = this.win.down('button[action=clear]');
+					this.editEntry.addListener('edit', this.initMaterialInfo, this); // 监控列表编辑事件
 				}
 				return this.win;
 			},
+			
+			/**
+			 * 当用户编辑grid时，同步更新相关表单数据
+			 * @param {} editor
+			 * @param {} e
+			 */
+			initMaterialInfo : Ext.emptyFn,
 
 			/**
 			 * 捕捉提交后台的回调函数
