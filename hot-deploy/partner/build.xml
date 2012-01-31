@@ -88,7 +88,7 @@
     <!-- ================================================================== -->               
 
     <target name="classes" depends="prepare,classpath">
-    	<javac debug="on" deprecation="on" destdir="${build.dir}/classes" includeantruntime="on" >
+    	<javac debug="on" deprecation="on" destdir="${build.dir}/classes" includeantruntime="on" encoding="utf-8" >
             <classpath>
                 <path refid="local.class.path"/>                
             </classpath>
