@@ -25,7 +25,9 @@ Ext.define('SCM.ux.grid.ComboColumn', {
 
 				return function(value) {
 					//如果store没有值，载入后重新刷新页面
-					if (combo.store && combo.store.getCount() == 0 && gridId) {
+					var loadCount = 0;
+					if (combo.store && combo.store.getCount() == 0 && gridId && loadCount==0) {
+						loadCount ++;
 						combo.store.load({
 									callback : function() {
 										var grid = Ext.getCmp(gridId);
