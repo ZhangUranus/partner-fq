@@ -7,7 +7,7 @@ Ext.define('SCM.extend.toolbar.BaseToolbar', {
 							xtype : 'toolbar',
 							height : 28,
 							defaults : {
-								margin : '0 5 0 0',
+								margin : '0 3 0 0',
 								xtype : 'button'
 							},
 							items : [{
