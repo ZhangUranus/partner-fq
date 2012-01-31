@@ -4,9 +4,11 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,6 +30,7 @@ import org.ofbiz.entity.condition.EntityConditionList;
 import org.ofbiz.entity.condition.EntityOperator;
 import org.ofbiz.entity.model.ModelEntity;
 import org.ofbiz.entity.model.ModelField;
+import org.ofbiz.entity.util.EntityFindOptions;
 
 /**
  * 实体CRUD 操作事件公共类
@@ -416,7 +419,7 @@ public class EntityCRUDEvent {
 			}
 			//处理query查询请求，默认为name字段的模糊查询
 			if(request.getParameter("query")!=null && !"".equals(request.getParameter("query"))){
-				if(request.getParameter("queryField")!=null && !"".equals(request.getParameter("query"))){
+				if(request.getParameter("queryField")!=null && !"".equals(request.getParameter("queryField"))){
 					String[] fieldArray = request.getParameter("queryField").split(",");
 					for(String field: fieldArray){
 						conds.add(EntityCondition.makeCondition(field, EntityOperator.LIKE, "%"+request.getParameter("query")+"%"));
@@ -424,6 +427,21 @@ public class EntityCRUDEvent {
 				}else{
 					conds.add(EntityCondition.makeCondition("name", EntityOperator.LIKE, "%"+request.getParameter("query")+"%"));
 				}
+			}
+			//处理查询字段选择，默认为全部字段
+			Set<String> fields = null;
+			if(request.getParameter("fields")!=null && !"".equals(request.getParameter("fields"))){
+				String[] fieldArray = request.getParameter("fields").split(",");
+				fields = new HashSet<String>();
+				for(String field: fieldArray){
+					fields.add(field);
+				}
+			}
+			//处理是否去重，默认为不去重
+			EntityFindOptions findOptions = null;
+			if(request.getParameter("distinct")!=null && !"".equals(request.getParameter("distinct"))){
+				findOptions = new EntityFindOptions();
+				findOptions.setDistinct(true);
 			}
 			condition = EntityCondition.makeCondition(conds);
 			
@@ -436,7 +454,7 @@ public class EntityCRUDEvent {
 					orders.add(field);		//增加排序字段
 				}
 			}
-			List<GenericValue> valueList = CommonEvents.getDelegator(request).findList(entityName, condition, null, orders, null, false);
+			List<GenericValue> valueList = CommonEvents.getDelegator(request).findList(entityName, condition, fields, orders, findOptions, false);
 			return valueList;
 		} catch (Exception e) {
 			Debug.logError(e, module);
