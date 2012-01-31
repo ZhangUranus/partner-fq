@@ -34,6 +34,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				this.changeComponentsState();
 				this.initEnterEvent();
 				this.afterInitComponent();
+				this.refreshRecord();
 			},
 
 			afterInitComponent : Ext.emptyFn,
