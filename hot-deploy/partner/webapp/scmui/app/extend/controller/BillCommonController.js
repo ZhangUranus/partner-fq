@@ -308,14 +308,10 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				}
 			},
 			/**
-			 * 刷新页面数据
+			 * 刷新页面数据(必须重写该方法)
 			 * 
 			 */
-			refreshRecord : function() {
-				this.listPanel.store.load();
-				this.detailPanel.store.removeAll();
-				this.changeComponentsState();
-			},
+			refreshRecord : Ext.emptyFn,
 
 			// 审核单据
 			auditBill : function(button) {
