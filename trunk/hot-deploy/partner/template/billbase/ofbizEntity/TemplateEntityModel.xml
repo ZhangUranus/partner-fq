@@ -67,18 +67,23 @@ under the License.
             package-name="org.ofbiz.scm.${TemplateName}"
             title="${TemplateName}View  Entity">
       		<member-entity entity-alias="${TemplateName}V" entity-name="${TemplateName}"></member-entity>
+      		<member-entity entity-alias="${TemplateName}EntryV" entity-name="${TemplateName}Entry"></member-entity>
       		#foreach($headfield in $HeadFields)
       		#if($headfield.isHidden==false&&$headfield.type=="entity"&&$headfield.isPersis==true)<!-- \n -->
 			<member-entity entity-alias="${headfield.name}${headfield.entity}V" entity-name="${headfield.entity}"></member-entity>
 			#end 
 	  		#end <!-- \n -->
             <alias-all entity-alias="${TemplateName}V" ></alias-all>
+            <alias name="materialMaterialId" entity-alias="${TemplateName}EntryV" field="materialMaterialId"></alias>
             #foreach($headfield in $HeadFields)
       		#if($headfield.isHidden==false&&$headfield.type=="entity"&&$headfield.isPersis==true)<!-- \n -->
 			<alias name="${headfield.name}${headfield.entity}Name" entity-alias="${headfield.name}${headfield.entity}V" field="name"></alias>	
 			#end 
 	  		#end 
 	  		
+	  		<view-link entity-alias="${TemplateName}V" rel-entity-alias="${TemplateName}EntryV" rel-optional="true">
+				<key-map field-name="id" rel-field-name="parentId"/>
+			</view-link>
 	  		#foreach($headfield in $HeadFields)
       		#if($headfield.isHidden==false&&$headfield.type=="entity"&&$headfield.isPersis==true)<!-- \n -->
 			<view-link entity-alias="${TemplateName}V" rel-entity-alias="${headfield.name}${headfield.entity}V" rel-optional="true">
