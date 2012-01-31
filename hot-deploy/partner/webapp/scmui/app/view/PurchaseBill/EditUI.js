@@ -19,7 +19,10 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 			clicksToEdit: 1
 		});
 		var entryStore=Ext.create('PurchaseBillEditEntryStore');
-		
+		var materialStore = Ext.create('MaterialStore');
+		materialStore.load();
+		var unitStore = Ext.create('UnitStore');
+		unitStore.load();
 		Ext.applyIf(me, {
 					items : [
 					  {
@@ -193,9 +196,8 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 									xtype : 'combogrid',
 									valueField : 'id',
 									displayField : 'name',
-									store : Ext.create('MaterialStore'),
+									store : materialStore,
 									matchFieldWidth : false,
-									
 									listConfig : {
 										width : SCM.MaxSize.COMBOGRID_WIDTH,
 										height : SCM.MaxSize.COMBOGRID_HEIGHT,
@@ -244,24 +246,8 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 									xtype : 'combogrid',
 									valueField : 'id',
 									displayField : 'name',
-									store : Ext.create('UnitStore'),
-									matchFieldWidth : false,
-									readOnly : true,
-									listConfig : {
-										width : SCM.MaxSize.COMBOGRID_WIDTH,
-										height : SCM.MaxSize.COMBOGRID_HEIGHT,
-										columns : [{
-													header : '编码',
-													dataIndex : 'number',
-													width : 100,
-													hideable : false
-												}, {
-													header : '名称',
-													dataIndex : 'name',
-													width : 80,
-													hideable : false
-												}]
-									}
+									store : unitStore,
+									readOnly : true
 								}
 							 }
 							 ,{
