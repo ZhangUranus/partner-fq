@@ -140,6 +140,7 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 								  xtype: 'numberfield'
 								  ,hideTrigger:true
 								  ,fieldLabel: '总金额'
+								  ,readOnly:true
 								  								  								  //\n
 								   //\n
 								  ,name : 'totalsum'
@@ -245,7 +246,7 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 									displayField : 'name',
 									store : Ext.create('UnitStore'),
 									matchFieldWidth : false,
-									
+									readOnly : true,
 									listConfig : {
 										width : SCM.MaxSize.COMBOGRID_WIDTH,
 										height : SCM.MaxSize.COMBOGRID_HEIGHT,
@@ -288,11 +289,7 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 								,{
 								  								  								  //\n
 								  xtype: 'numbercolumn'
-								   ,editor: {
-											xtype: 'numberfield'
-											,allowBlank: false
-											,hideTrigger:true
-										}
+								  
 								  								  								  //\n
 								  //\n
 								  ,dataIndex:'refPrice'
@@ -303,11 +300,7 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 								,{
 								  								  								  //\n
 								  xtype: 'numbercolumn'
-								   ,editor: {
-											xtype: 'numberfield'
-											,allowBlank: false
-											,hideTrigger:true
-										}
+								  
 								  								  								  //\n
 								  //\n
 								  ,dataIndex:'entrysum'
