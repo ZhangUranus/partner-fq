@@ -14,6 +14,7 @@ Ext.define('SCM.ux.grid.ComboColumn', {
 				};
 			},
 			comboBoxRenderer : function(combo, gridId) {
+				var loadCount = 0;
 				var getValue = function(value) {
 					var idx = combo.store.find(combo.valueField, value);
 					var rec = combo.store.getAt(idx);
@@ -25,7 +26,6 @@ Ext.define('SCM.ux.grid.ComboColumn', {
 
 				return function(value) {
 					//如果store没有值，载入后重新刷新页面
-					var loadCount = 0;
 					if (combo.store && combo.store.getCount() == 0 && gridId && loadCount==0) {
 						loadCount ++;
 						combo.store.load({
