@@ -69809,9 +69809,9 @@ Ext.define('Ext.form.field.Trigger', {
             i;
 
         
-        
-        
-        
+        if (me.readOnly) {
+            me.setReadOnly(true);
+        }
         if (!me.trigger1Cls) {
             me.trigger1Cls = me.triggerCls;
         }
@@ -69920,6 +69920,7 @@ Ext.define('Ext.form.field.Trigger', {
 
     
     setReadOnly: function(readOnly) {
+        this[readOnly ? 'addCls' : 'removeCls'](this.readOnlyCls);
         if (readOnly != this.readOnly) {
             this.readOnly = readOnly;
             this.updateEditState();
