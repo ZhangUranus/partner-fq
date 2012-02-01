@@ -126,10 +126,6 @@ Ext.define('SCM.view.PurchaseBill.ListUI', {
 													text : '单价'
 												}, {
 													xtype : 'numbercolumn',
-													dataIndex : 'refPrice',
-													text : '参考单价'
-												}, {
-													xtype : 'numbercolumn',
 													dataIndex : 'entrysum',
 													text : '金额'
 												}]
