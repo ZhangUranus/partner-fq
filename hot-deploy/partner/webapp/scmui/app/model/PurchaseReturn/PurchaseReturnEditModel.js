@@ -63,7 +63,7 @@ Ext.define('SCM.model.PurchaseReturn.PurchaseReturnEditModel', {
 			proxy : {
 				type : 'jsonajax',
 				api : {
-					read : '../../scm/control/requestJsonData?entity=PurchaseReturnView',
+					read : '../../scm/control/requestJsonData?entity=PurchaseReturnView&distinct=true&fields=id,number,bizDate,supplierSupplierId,supplierSupplierName,returnerSystemUserId,returnerSystemUserName,totalsum,createdStamp,lastUpdatedStamp,note,status',
 					destroy : '../../scm/control/deleteWithEntry?headEntity=PurchaseReturn&entryEntity=PurchaseReturnEntry'
 				},
 				remoteFilter : true
