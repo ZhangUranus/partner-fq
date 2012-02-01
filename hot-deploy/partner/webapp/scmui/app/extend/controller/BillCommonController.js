@@ -319,8 +319,11 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 					// 删除选择的记录
 					records = sm.getSelection();
 					for (i in records) {
-						if (records[i].data.status == '1' || records[i].data.status == '3') {
-							showWarning('单据为已审核（或已结算）状态，不允许删除！');
+						if (records[i].data.status == '1') {
+							showWarning('单据为已审核状态，不允许删除！');
+							return;
+						}else if(records[i].data.status == '3'){
+							showWarning('单据为已结算状态，不允许删除！');
 							return;
 						}
 					}
