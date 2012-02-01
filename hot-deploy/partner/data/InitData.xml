@@ -27,7 +27,7 @@ under the License.
 	<TSystemMenu menuId='purchaseManagement' menuName='采购管理' menuType='0' parentId='warehouseManagement' sort='11' hyperlink='' styleName='purchase-management' display='1' description='采购管理' />
 	<TSystemMenu menuId='purchaseBillManagement' menuName='采购单管理' menuType='1' parentId='purchaseManagement' sort='111' hyperlink='PurchaseBilllist' styleName='purchase-bill-management' display='1' description='采购单管理' />
 	<TSystemMenu menuId='purchaseWarehousing' menuName='采购入库' menuType='1' parentId='purchaseManagement' sort='112' hyperlink='PurchaseWarehousinglist' styleName='purchase-warehousing' display='1' description='采购入库' />
-	<TSystemMenu menuId='purchaseReturn' menuName='采购退货' menuType='1' parentId='purchaseManagement' sort='113' hyperlink='purchasereturn' styleName='purchase-return' display='1' description='采购退货' />
+	<TSystemMenu menuId='purchaseReturn' menuName='采购退货' menuType='1' parentId='purchaseManagement' sort='113' hyperlink='PurchaseReturnlist' styleName='purchase-return' display='1' description='采购退货' />
 	<TSystemMenu menuId='consignProcess' menuName='委外加工' menuType='0' parentId='warehouseManagement' sort='12' hyperlink='' styleName='consign-process' display='1' description='委外加工' />
 	<TSystemMenu menuId='consignDrawMaterial' menuName='委外领料' menuType='1' parentId='consignProcess' sort='121' hyperlink='consigndrawmaterial' styleName='consign-draw-material' display='1' description='委外领料' />
 	<TSystemMenu menuId='consignReturnMaterial' menuName='委外退料' menuType='1' parentId='consignProcess' sort='122' hyperlink='consignreturnmaterial' styleName='consign-return-material' display='1' description='委外退料' />
@@ -236,4 +236,5 @@ under the License.
 	<TSystemSerialNumber id='e77cbcf6-4ccb-46b9-9806-7f1e8f9563f6' serialDate='20120101' entityName='Department' prefix='DPM' serialNumber='100001' initNumber='100001' description='部门编号' hasDate='0' />
 	<TSystemSerialNumber id='53db06e9-6884-41b2-8951-7123021fc5a9' serialDate='20120101' entityName='PurchaseBill' prefix='PUR' serialNumber='100001' initNumber='100001' description='采购单编号' hasDate='1' />
 	<TSystemSerialNumber id='b6b1b810-720f-417d-9fb8-2b3f3a9eaee3' serialDate='20120101' entityName='PurchaseWarehousing' prefix='PWS' serialNumber='100001' initNumber='100001' description='采购入库单编号' hasDate='1' />
+	<TSystemSerialNumber id='524bf427-1631-4c15-96c9-952215e11ac2' serialDate='20120101' entityName='PurchaseReturn' prefix='PRT' serialNumber='100001' initNumber='100001' description='采购退货单编号' hasDate='1' />
 </entity-engine-xml>
