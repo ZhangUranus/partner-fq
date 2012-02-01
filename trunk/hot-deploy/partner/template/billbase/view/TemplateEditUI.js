@@ -245,12 +245,6 @@ Ext.define('SCM.view.${TemplateName}.EditUI', {
 									}
 								}
 							 }
-							 ,{
-								xtype : 'gridcolumn'
-								,dataIndex : '${entryfield.name}${entryfield.entity}Name'
-								,text : '${entryfield.alias}Name'
-								,hidden:true
-							 }
 								#end 
 								#end //\n
 							],//end columns

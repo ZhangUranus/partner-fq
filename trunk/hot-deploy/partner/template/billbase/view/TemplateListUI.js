@@ -21,7 +21,7 @@ Ext.define('SCM.view.${TemplateName}.ListUI' ,{
             items: [
                 {
                 	xtype:'billbasetoolbar',//工具栏
-                	audit: false,
+                	audit: true,
                 	custType : 'customer',
 					region:'north'
                 },
@@ -169,23 +169,9 @@ Ext.define('SCM.view.${TemplateName}.ListUI' ,{
 								}
 								#elseif($entryfield.isHidden==false&&$entryfield.type=='entity')//\n
 								,{
-									xtype: 'gridcolumn'
-									,dataIndex: '${entryfield.name}${entryfield.entity}Id'
-									,text: '${entryfield.name}${entryfield.entity}Id'
-									,hidden:true
-									
-								}
-								,{
 									xtype: 'gridcolumn',
 									dataIndex: '${entryfield.name}${entryfield.entity}Name',
-									text: '$entryfield.alias',
-									editor:{
-											  xtype: 'selectorfield',
-											  storeName:'${entryfield.entity}Store',//定义数据集名称
-											  parentFormName:'${TemplateName}form',
-											  name : '${entryfield.name}${entryfield.entity}Name'
-										   }
-									
+									text: '$entryfield.alias'
 								}
 								#end 
 								#end //\n
