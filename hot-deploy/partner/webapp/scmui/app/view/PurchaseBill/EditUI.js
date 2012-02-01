@@ -205,7 +205,7 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 																text : '单位',
 																gridId : 'PurchaseBill-edit-grid',
 																editor : {
-																	xtype : 'combogrid',
+																	xtype : 'combobox',
 																	valueField : 'id',
 																	displayField : 'name',
 																	store : unitStore,
@@ -276,7 +276,6 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 										dock : 'bottom'
 									}]
 						});
-
 				this.callParent(arguments);
 			},
 			close : function() {

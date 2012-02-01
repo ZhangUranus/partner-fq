@@ -132,7 +132,6 @@ Ext.define('SCM.view.PurchaseBill.ListUI', {
 													xtype : 'numbercolumn',
 													dataIndex : 'entrysum',
 													text : '金额'
-
 												}]
 									}]
 						});
