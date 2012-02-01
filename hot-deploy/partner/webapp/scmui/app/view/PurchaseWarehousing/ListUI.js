@@ -84,7 +84,7 @@ Ext.define('SCM.view.PurchaseWarehousing.ListUI', {
 										viewConfig : {
 
 										}
-									} , {
+									}, {
 										xtype : 'gridpanel',
 										title : '',
 										region : 'south',
