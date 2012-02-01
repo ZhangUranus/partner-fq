@@ -4,8 +4,7 @@
  * @Date 2011-11-24
  */
 /*
- * 系统默认加载path为: 'Ext', '.'
- * application增加path为：'SCM', './app'
+ * 系统默认加载path为: 'Ext', '.' application增加path为：'SCM', './app'
  */
 Ext.Loader.setConfig({
 			enabled : true
@@ -16,12 +15,13 @@ Ext.application({
 			appFolder : 'app',
 			controllers : [// 载入系统controller
 			'Main', 'basedata.UnitController', 'basedata.WarehouseTypeController', 'basedata.WarehouseController', 'basedata.CustomerController', 'basedata.DepartmentController',
-					'basedata.MaterialController', 'basedata.MaterialBomController', 'PurchaseBill.PurchaseBillController','Supplier.SupplierController',  'system.SystemController'],
+					'basedata.MaterialController', 'basedata.MaterialBomController', 'PurchaseBill.PurchaseBillController', 'Supplier.SupplierController', 'system.SystemController',
+					'PurchaseWarehousing.PurchaseWarehousingController'],
 			launch : function() {
 				var viewport = Ext.create('SCM.view.Viewport');
 				viewport.doLayout(); // 刷新布局
 
-				//修正treestoreload的bug
+				// 修正treestoreload的bug
 				Ext.override(Ext.data.TreeStore, {
 							load : function(options) {
 								options = options || {};
@@ -29,7 +29,9 @@ Ext.application({
 
 								var me = this, node = options.node || me.tree.getRootNode(), root;
 
-								// If there is not a node it means the user hasnt defined a rootnode yet. In this case lets just
+								// If there is not a node it means the user
+								// hasnt defined a rootnode yet. In this case
+								// lets just
 								// create one for them.
 								if (!node) {
 									node = me.setRootNode({
@@ -38,7 +40,7 @@ Ext.application({
 								}
 
 								if (me.clearOnLoad) {
-									// this is what we changed.  added false
+									// this is what we changed. added false
 									node.removeAll(false);
 								}
 
