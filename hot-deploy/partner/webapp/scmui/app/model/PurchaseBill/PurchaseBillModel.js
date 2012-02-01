@@ -18,36 +18,63 @@ Ext.define('SCM.model.PurchaseBill.PurchaseBillModel', {
 						name : 'bizDate',
 						type : 'date',
 						dateFormat : 'time'
-					}
-											 //\n
-						 ,{name: 'supplierSupplierId',type:'string'  }
-						 ,{name: 'supplierSupplierName',type:'string' ,persist:false }
-						 											 //\n
-						 ,{name: 'buyerSystemUserId',type:'string'  }
-						 ,{name: 'buyerSystemUserName',type:'string' ,persist:false }
-						 											 //\n
-						 ,{name: 'approverSystemUserId',type:'string'  }
-						 ,{name: 'approverSystemUserName',type:'string' ,persist:false }
-						 											 //\n
-						 ,{name: 'totalsum'  ,type:'float'  }
-						 					 //\n
-						 ,{name: 'entryId', type: 'string'}
-											 //\n
-						 ,{name: 'materialMaterialId',type:'string'  }
-						 ,{name: 'materialMaterialName',type:'string' ,persist:false }
-						 											 //\n
-						 ,{name: 'volume'  ,type:'float'   }
-						 											 //\n
-						 ,{name: 'unitUnitId',type:'string'  }
-						 ,{name: 'unitUnitName',type:'string' ,persist:false }
-						 											 //\n
-						 ,{name: 'price'  ,type:'float'   }
-						 											 //\n
-						 ,{name: 'refPrice'  ,type:'float'   }
-						 											 //\n
-						 ,{name: 'entrysum'  ,type:'float'   }
-						 					 //\n
-			],
+					}, {
+						name : 'supplierSupplierId',
+						type : 'string'
+					}, {
+						name : 'supplierSupplierName',
+						type : 'string',
+						persist : false
+					}, {
+						name : 'buyerSystemUserId',
+						type : 'string'
+					}, {
+						name : 'buyerSystemUserName',
+						type : 'string',
+						persist : false
+					}, {
+						name : 'approverSystemUserId',
+						type : 'string'
+					}, {
+						name : 'approverSystemUserName',
+						type : 'string',
+						persist : false
+					}, {
+						name : 'totalsum',
+						type : 'float'
+					}, {
+						name : 'entryId',
+						type : 'string'
+					}, {
+						name : 'materialMaterialId',
+						type : 'string'
+					}, {
+						name : 'materialMaterialName',
+						type : 'string',
+						persist : false
+					}, {
+						name : 'materialMaterialModel',
+						type : 'string'
+					}, {
+						name : 'volume',
+						type : 'float'
+					}, {
+						name : 'unitUnitId',
+						type : 'string'
+					}, {
+						name : 'unitUnitName',
+						type : 'string',
+						persist : false
+					}, {
+						name : 'price',
+						type : 'float'
+					}, {
+						name : 'refPrice',
+						type : 'float'
+					}, {
+						name : 'entrysum',
+						type : 'float'
+					}],
 			// ,idProperty:'emptyId'//设置一个没用的id，这样才能支持显示多分录
 			proxy : {
 				type : 'jsonajax',
