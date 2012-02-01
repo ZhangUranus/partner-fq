@@ -111,6 +111,23 @@
            <event type="java" path="org.ofbiz.partner.scm.common.MultiEntryCRUDEvent" invoke="deleteEnityWithEntry"/>
            <response name="success" type="none"/>
        </request-map>
+      
+      <!-- business request-->
+      <!-- 验收单审核-->
+      <request-map uri="auditInspective">
+           <security https="false" auth="false"/>
+           <event type="java" path="org.ofbiz.partner.scm.stock.InspectiveBizEvents" invoke="auditBill"/>
+           <response name="success" type="none"/>
+       </request-map>
+       <!-- 验收单反审核-->
+       <request-map uri="unauditInspective">
+           <security https="false" auth="false"/>
+           <event type="java" path="org.ofbiz.partner.scm.stock.InspectiveBizEvents" invoke="unauditBill"/>
+           <response name="success" type="none"/>
+       </request-map>
+      
+      
+      
        
        <!-- exporter -->
        <request-map uri="export">
