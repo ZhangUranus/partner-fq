@@ -138,6 +138,10 @@ Ext.define('SCM.extend.toolbar.BillBaseToolbar', {
 
 				// 增加打印按钮
 				tools.push([{
+							text : '导出',
+							iconCls : 'system-export',
+							action : 'export'
+						}, {
 							text : '打印',
 							iconCls : 'system-print',
 							action : 'print'
