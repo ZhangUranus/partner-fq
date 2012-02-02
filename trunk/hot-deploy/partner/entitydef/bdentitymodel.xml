@@ -231,10 +231,13 @@ under the License.
 
 			<alias name="id" entity-alias="MaterialBomV" field="id"></alias>
 			<alias name="number" entity-alias="MaterialBomV" field="number"></alias>
+			<alias name="materialId" entity-alias="TMaterialV" field="id"></alias>
 			<alias name="materialName" entity-alias="TMaterialV" field="name"></alias>
-			<alias name="bomMaterialNum" entity-alias="TEntryMaterialV" field="name"></alias>
+			<alias name="bomMaterialId" entity-alias="TEntryMaterialV" field="id"></alias>
+			<alias name="bomMaterialName" entity-alias="TEntryMaterialV" field="name"></alias>
 			<alias name="bomMaterialModel" entity-alias="TEntryMaterialV" field="model"></alias>
 			<alias name="volume" entity-alias="MaterialBomEntryV" field="volume"></alias>
+			<alias name="unitId" entity-alias="UnitV" field="id"></alias>
 			<alias name="unitName" entity-alias="UnitV" field="name"></alias>
 			
 			<view-link entity-alias="MaterialBomV" rel-entity-alias="TMaterialV" rel-optional="true">

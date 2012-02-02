@@ -43,7 +43,7 @@ Ext.define('SCM.view.basedata.materialbom.ListUI', {
 										text : '物料名称'
 									}, {
 										xtype : 'gridcolumn',
-										dataIndex : 'bomMaterialNum',
+										dataIndex : 'bomMaterialName',
 										width : 150,
 										groupable : false,
 										text : 'BOM物料名称'
