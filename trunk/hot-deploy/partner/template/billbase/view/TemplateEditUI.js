@@ -26,6 +26,7 @@ Ext.define('SCM.view.${TemplateName}.EditUI', {
 						  xtype: 'form',
 						  name:'${TemplateName}form',
 						  bodyPadding:5,
+						  border : 0,
 						  layout:'border',
 						  items: [
 						  //开始container
@@ -124,11 +125,13 @@ Ext.define('SCM.view.${TemplateName}.EditUI', {
 								#end 
 								#end //\n
 								,{
-								  xtype: 'textfield',
+								  xtype: 'textarea',
 								  name : 'note',
 								  margin: 5,
 								  fieldLabel: '备注',
-								  maxLength : 50
+								  maxLength : 50,
+								  colspan : 3,
+								  width : 785
 								}
 								,{
 								  xtype: 'textfield',
