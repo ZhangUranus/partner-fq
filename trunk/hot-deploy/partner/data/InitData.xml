@@ -29,10 +29,10 @@ under the License.
 	<TSystemMenu menuId='purchaseWarehousing' menuName='采购入库' menuType='1' parentId='purchaseManagement' sort='112' hyperlink='PurchaseWarehousinglist' styleName='purchase-warehousing' display='1' description='采购入库' />
 	<TSystemMenu menuId='purchaseReturn' menuName='采购退货' menuType='1' parentId='purchaseManagement' sort='113' hyperlink='PurchaseReturnlist' styleName='purchase-return' display='1' description='采购退货' />
 	<TSystemMenu menuId='consignProcess' menuName='委外加工' menuType='0' parentId='warehouseManagement' sort='12' hyperlink='' styleName='consign-process' display='1' description='委外加工' />
-	<TSystemMenu menuId='consignDrawMaterial' menuName='委外领料' menuType='1' parentId='consignProcess' sort='121' hyperlink='consigndrawmaterial' styleName='consign-draw-material' display='1' description='委外领料' />
-	<TSystemMenu menuId='consignReturnMaterial' menuName='委外退料' menuType='1' parentId='consignProcess' sort='122' hyperlink='consignreturnmaterial' styleName='consign-return-material' display='1' description='委外退料' />
-	<TSystemMenu menuId='consignWarehousing' menuName='委外入库' menuType='1' parentId='consignProcess' sort='123' hyperlink='consignwarehousing' styleName='consign-warehousing' display='1' description='委外入库' />
-	<TSystemMenu menuId='consignReturnProduct' menuName='委外退货' menuType='1' parentId='consignProcess' sort='124' hyperlink='consignreturnproduct' styleName='consign-return-product' display='1' description='委外退货' />
+	<TSystemMenu menuId='consignDrawMaterial' menuName='委外领料' menuType='1' parentId='consignProcess' sort='121' hyperlink='ConsignDrawMateriallist' styleName='consign-draw-material' display='1' description='委外领料' />
+	<TSystemMenu menuId='consignReturnMaterial' menuName='委外退料' menuType='1' parentId='consignProcess' sort='122' hyperlink='ConsignReturnMateriallist' styleName='consign-return-material' display='1' description='委外退料' />
+	<TSystemMenu menuId='consignWarehousing' menuName='委外入库' menuType='1' parentId='consignProcess' sort='123' hyperlink='ConsignWarehousinglist' styleName='consign-warehousing' display='1' description='委外入库' />
+	<TSystemMenu menuId='consignReturnProduct' menuName='委外退货' menuType='1' parentId='consignProcess' sort='124' hyperlink='ConsignReturnProductlist' styleName='consign-return-product' display='1' description='委外退货' />
 	<TSystemMenu menuId='workshopManufacture' menuName='车间制造' menuType='0' parentId='warehouseManagement' sort='13' hyperlink='' styleName='workshop-manufacture' display='1' description='车间制造' />
 	<TSystemMenu menuId='workshopDrawMaterial' menuName='制造领料' menuType='1' parentId='workshopManufacture' sort='131' hyperlink='workshopdrawmaterial' styleName='workshop-draw-material' display='1' description='制造领料' />
 	<TSystemMenu menuId='workshopReturnMaterial' menuName='制造退料' menuType='1' parentId='workshopManufacture' sort='132' hyperlink='workshopreturnmaterial' styleName='workshop-return-material' display='1' description='制造退料' />
@@ -237,4 +237,8 @@ under the License.
 	<TSystemSerialNumber id='53db06e9-6884-41b2-8951-7123021fc5a9' serialDate='20120101' entityName='PurchaseBill' prefix='PUR' serialNumber='100001' initNumber='100001' description='采购单编号' hasDate='1' />
 	<TSystemSerialNumber id='b6b1b810-720f-417d-9fb8-2b3f3a9eaee3' serialDate='20120101' entityName='PurchaseWarehousing' prefix='PWS' serialNumber='100001' initNumber='100001' description='采购入库单编号' hasDate='1' />
 	<TSystemSerialNumber id='524bf427-1631-4c15-96c9-952215e11ac2' serialDate='20120101' entityName='PurchaseReturn' prefix='PRT' serialNumber='100001' initNumber='100001' description='采购退货单编号' hasDate='1' />
+	<TSystemSerialNumber id='6ba4b25e-c6e3-4d84-9332-5f221c4faade' serialDate='20120101' entityName='ConsignDrawMaterial' prefix='CDM' serialNumber='100001' initNumber='100001' description='委外领料单编号' hasDate='1' />
+	<TSystemSerialNumber id='51745dc3-6d24-41d8-ba7e-592b7bdad7c0' serialDate='20120101' entityName='ConsignReturnMaterial' prefix='CRM' serialNumber='100001' initNumber='100001' description='委外退料单编号' hasDate='1' />
+	<TSystemSerialNumber id='38b28c40-0f27-488a-9a4d-1e2a2dc5b2ce' serialDate='20120101' entityName='ConsignWarehousing' prefix='CWS' serialNumber='100001' initNumber='100001' description='委外入库单编号' hasDate='1' />
+	<TSystemSerialNumber id='a90708bf-8ee8-484e-a2ae-076e1f81e38a' serialDate='20120101' entityName='ConsignReturnProduct' prefix='CRP' serialNumber='100001' initNumber='100001' description='委外退货单编号' hasDate='1' />
 </entity-engine-xml>
