@@ -133,6 +133,7 @@ Ext.define('SCM.view.basedata.materialbom.EditUI', {
 																	displayField : 'name',
 																	store : Ext.create('SCM.store.basedata.UnitStore'),
 																	matchFieldWidth : false,
+																	readOnly : true,
 																	listConfig : {
 																		width : SCM.MaxSize.COMBOGRID_WIDTH,
 																		height : SCM.MaxSize.COMBOGRID_HEIGHT,
