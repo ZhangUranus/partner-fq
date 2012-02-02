@@ -28,6 +28,7 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 										xtype : 'form',
 										name : 'PurchaseBillform',
 										bodyPadding : 5,
+										border : 0,
 										layout : 'border',
 										items : [{
 													xtype : 'container',
@@ -133,11 +134,13 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 																name : 'totalsum',
 																margin : 5
 															}, {
-																xtype : 'textfield',
+																xtype : 'textarea',
 																name : 'note',
 																margin : 5,
 																fieldLabel : '备注',
-																maxLength : 50
+																maxLength : 50,
+																colspan : 3,
+																width : 785
 															}, {
 																xtype : 'textfield',
 																name : 'id',

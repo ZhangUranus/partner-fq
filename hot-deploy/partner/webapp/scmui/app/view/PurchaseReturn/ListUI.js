@@ -25,6 +25,7 @@ Ext.define('SCM.view.PurchaseReturn.ListUI', {
 										region : 'north'
 									}, {
 										xtype : 'gridpanel',
+										margin : '1 0 0 0',
 										title : '',
 										region : 'center',
 										store : 'PurchaseReturn.PurchaseReturnEditStore',
