@@ -48,6 +48,7 @@ under the License.
       <field name="id" type="id-long"></field>
       <field name="year" type="int"></field>
       <field name="month" type="int"></field>
+      <field name="warehouseId" type="id-long"></field>
       <field name="materialId" type="id-long"></field>
       <field name="beginvolume" type="floating-point"></field>
       <field name="beginsum" type="floating-point"></field>
@@ -62,6 +63,7 @@ under the License.
       <field name="id" type="id-long"></field>
       <field name="year" type="int"></field>
       <field name="month" type="int"></field>
+      <field name="warehouseId" type="id-long"></field>
       <field name="materialId" type="id-long"></field>
       <field name="beginvolume" type="floating-point"></field>
       <field name="beginsum" type="floating-point"></field>
