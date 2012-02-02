@@ -1,6 +1,6 @@
 Ext.define('SCM.controller.ConsignDrawMaterial.ConsignDrawMaterialController', {
 			extend : 'Ext.app.Controller',
-			mixins : ['SCM.extend.controller.BillCommonController'],
+			mixins : ['SCM.extend.exporter.Exporter', 'SCM.extend.controller.BillCommonController'],
 			views : ['ConsignDrawMaterial.ListUI', 'ConsignDrawMaterial.EditUI'],
 			stores : ['ConsignDrawMaterial.ConsignDrawMaterialStore', 'ConsignDrawMaterial.ConsignDrawMaterialEditStore', 'ConsignDrawMaterial.ConsignDrawMaterialEditEntryStore'],
 			requires : ['SCM.model.ConsignDrawMaterial.ConsignDrawMaterialActionModel'],
@@ -48,6 +48,10 @@ Ext.define('SCM.controller.ConsignDrawMaterial.ConsignDrawMaterialController', {
 							// 列表打印按钮
 							'ConsignDrawMateriallist button[action=print]' : {
 								click : this.print
+							},
+							//列表导出
+							'ConsignDrawMateriallist button[action=export]' : {
+								click : this.exportExcel
 							},
 							// 编辑界面分录新增
 							'ConsignDrawMaterialedit  gridpanel button[action=addLine]' : {

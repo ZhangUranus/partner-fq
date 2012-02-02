@@ -1,6 +1,6 @@
 Ext.define('SCM.controller.PurchaseReturn.PurchaseReturnController', {
 			extend : 'Ext.app.Controller',
-			mixins : ['SCM.extend.controller.BillCommonController'],
+			mixins : ['SCM.extend.exporter.Exporter', 'SCM.extend.controller.BillCommonController'],
 			views : ['PurchaseReturn.ListUI', 'PurchaseReturn.EditUI'],
 			stores : ['PurchaseReturn.PurchaseReturnStore', 'PurchaseReturn.PurchaseReturnEditStore', 'PurchaseReturn.PurchaseReturnEditEntryStore'],
 			requires : ['SCM.model.PurchaseReturn.PurchaseReturnActionModel'],
@@ -48,6 +48,10 @@ Ext.define('SCM.controller.PurchaseReturn.PurchaseReturnController', {
 							// 列表打印按钮
 							'PurchaseReturnlist button[action=print]' : {
 								click : this.print
+							},
+							//列表导出
+							'PurchaseReturnlist button[action=export]' : {
+								click : this.exportExcel
 							},
 							// 编辑界面分录新增
 							'PurchaseReturnedit  gridpanel button[action=addLine]' : {

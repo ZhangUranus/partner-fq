@@ -1,6 +1,6 @@
 Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 			extend : 'Ext.app.Controller',
-			mixins : ['SCM.extend.controller.BillCommonController'],
+			mixins : ['SCM.extend.exporter.Exporter', 'SCM.extend.controller.BillCommonController'],
 			views : ['PurchaseBill.ListUI', 'PurchaseBill.EditUI'],
 			stores : ['PurchaseBill.PurchaseBillStore', 'PurchaseBill.PurchaseBillEditStore', 'PurchaseBill.PurchaseBillEditEntryStore'],
 			requires : ['SCM.model.PurchaseBill.PurchaseBillActionModel'],
@@ -48,6 +48,10 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 							// 列表打印按钮
 							'PurchaseBilllist button[action=print]' : {
 								click : this.print
+							},
+							//列表导出
+							'PurchaseBilllist button[action=export]' : {
+								click : this.exportExcel
 							},
 							// 编辑界面分录新增
 							'PurchaseBilledit  gridpanel button[action=addLine]' : {
