@@ -79,9 +79,26 @@ Ext.define('SCM.controller.basedata.MaterialBomController', {
 			 */
 			afterInitComponent : function() {
 				this.editGrid = this.win.down('gridpanel');
-				this.editForm.down('[name=materialId]').store.load(); // 初始物料下拉框数据
+				this.editGrid.addListener('edit', this.initMaterialInfo, this); // 监控列表编辑事件
+				this.editGridMaterial = this.editForm.down('[name=materialId]');
+				this.editGridMaterial.store.load(); // 初始物料下拉框数据
 			},
-
+			
+			/**
+			 * 当用户编辑grid时，同步更新相关表单数据
+			 * @param {} editor
+			 * @param {} e
+			 */
+			initMaterialInfo : function(editor, e) {
+				if (e.field == 'entryMaterialId') {
+					var record = this.editGridMaterial.store.findRecord('id', e.value);
+					if (record) {
+						e.record.set('entryUnitId', record.get('defaultUnitId'));
+						e.record.set('entryUnitName', record.get('defaultUnitName'));
+					}
+				}
+			},
+			
 			/**
 			 * 点击新增按钮
 			 * 
