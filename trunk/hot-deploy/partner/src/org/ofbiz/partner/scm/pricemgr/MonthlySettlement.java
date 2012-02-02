@@ -1,5 +1,7 @@
 package org.ofbiz.partner.scm.pricemgr;
 
+import java.util.Date;
+
 import org.ofbiz.entity.Delegator;
 
 /**
@@ -22,11 +24,15 @@ public class MonthlySettlement {
 		return instance;
 	}
 	private MonthlySettlement(){
-		//获取当前系统操作年月，设置为结算年月
+		//获取当前系统操作年月
+		//获取当前系统操作年月
+		Date curDate=Utils.getCurDate();
+		year=curDate.getYear();
+		month=curDate.getMonth();
 	}
 	
 	/**
-	 * 判断是否能够进行月度结算操作
+	 * 判断是否满足月结前所有条件，能够进行月度结算操作
 	 * @return
 	 */
 	private boolean canRun() {
@@ -50,6 +56,34 @@ public class MonthlySettlement {
 	 */
 	public boolean runCalculate() throws Exception{
 		//TODO 结算当期
+		//获取业务单据分录信息
+		
+		//采购入库单
+		
+		//采购退货
+		
+		//委外领料
+		
+		//委外退料
+		
+		//委外入库  合并加工费
+		
+		//委外退库
+		
+		//车间领料
+		
+		//车间退料
+		
+		//车间入库 
+		
+		//车间退库
+		
+		
+		
+		/*对分录根据时间排序 ，对分录安装时间顺序进行单价计算处理*/
+		
+		//计算成功后，更新当前操作期间为下一个月份
+		
 		return false;
 	}
 	
