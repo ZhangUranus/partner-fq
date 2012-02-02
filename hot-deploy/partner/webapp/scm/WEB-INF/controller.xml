@@ -113,6 +113,19 @@
        </request-map>
       
       <!-- business request-->
+      <!-- 采购申请单审核-->
+      <request-map uri="auditPurchaseBill">
+           <security https="false" auth="false"/>
+           <event type="java" path="org.ofbiz.partner.scm.stock.PurchaseBillBizEvents" invoke="auditBill"/>
+           <response name="success" type="none"/>
+       </request-map>
+       <!-- 采购申请单反审核-->
+       <request-map uri="unauditPurchaseBill">
+           <security https="false" auth="false"/>
+           <event type="java" path="org.ofbiz.partner.scm.stock.PurchaseBillBizEvents" invoke="unauditBill"/>
+           <response name="success" type="none"/>
+       </request-map>
+      
       <!-- 验收单审核-->
       <request-map uri="auditInspective">
            <security https="false" auth="false"/>
