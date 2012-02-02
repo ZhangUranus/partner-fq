@@ -30,6 +30,7 @@ Ext.define('SCM.view.PurchaseReturn.EditUI', {
 										xtype : 'form',
 										name : 'PurchaseReturnform',
 										bodyPadding : 5,
+										border : 0,
 										layout : 'border',
 										items : [{
 													xtype : 'container',
@@ -111,11 +112,15 @@ Ext.define('SCM.view.PurchaseReturn.EditUI', {
 																name : 'totalsum',
 																margin : 5
 															}, {
-																xtype : 'textfield',
+																xtype : 'label'
+															}, {
+																xtype : 'textarea',
 																name : 'note',
 																margin : 5,
-																fieldLabel : '备注',
-																maxLength : 50
+																fieldLabel : '退货原因',
+																maxLength : 50,
+																colspan : 3,
+																width : 785
 															}, {
 																xtype : 'textfield',
 																name : 'id',
