@@ -28,6 +28,7 @@ Ext.define('SCM.view.${TemplateName}.ListUI' ,{
                 {
                     xtype: 'gridpanel',
                     title: '',
+                    margin : '1 0 0 0',
                     region: 'center',
 					store:'${TemplateName}.${TemplateName}EditStore',
                     columns: [
