@@ -10,6 +10,7 @@ import java.util.Date;
 public class PriceMgr {
 	private static final String module=org.ofbiz.partner.scm.pricemgr.PriceMgr.class.getName();
 	private int year ,month ;//当期年月
+	private IPriceCal priceCal;
 	//单实例模式
 	private static PriceMgr instance=null;
 	public static PriceMgr getInstance(){
@@ -23,12 +24,19 @@ public class PriceMgr {
 		Date curDate=Utils.getCurDate();
 		year=curDate.getYear();
 		month=curDate.getMonth();
+		
+		//初始化具体单价计算接口
+		priceCal=PriceCalImpFactory.getPriceCalImp(PriceCalType.WeightedMovingAverage);
 	}
 	/**
 	 * 计算单价 更新存货余额表
 	 * @throws Exception
 	 */
 	public synchronized void calPrice(PriceCalItem item) throws Exception{
-		
+		if(priceCal!=null){
+			priceCal.calPrice(item);
+		}else{
+			throw new Exception("单价计算类实现为空");
+		}
 	}
 }
