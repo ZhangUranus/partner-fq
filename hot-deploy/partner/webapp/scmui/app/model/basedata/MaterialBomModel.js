@@ -14,10 +14,16 @@ Ext.define('SCM.model.basedata.MaterialBomModel', {
 						name : 'number',
 						type : 'string'
 					}, {
+						name : 'materialId',
+						type : 'string'
+					}, {
 						name : 'materialName',
 						type : 'string'
 					}, {
-						name : 'bomMaterialNum',
+						name : 'bomMaterialId',
+						type : 'string'
+					}, {
+						name : 'bomMaterialName',
 						type : 'string'
 					}, {
 						name : 'bomMaterialModel',
@@ -25,6 +31,9 @@ Ext.define('SCM.model.basedata.MaterialBomModel', {
 					}, {
 						name : 'volume',
 						type : 'float'
+					}, {
+						name : 'unitId',
+						type : 'string'
 					}, {
 						name : 'unitName',
 						type : 'string'
