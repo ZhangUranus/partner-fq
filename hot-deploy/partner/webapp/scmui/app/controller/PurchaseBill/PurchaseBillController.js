@@ -1,4 +1,4 @@
-Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
+﻿Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 			extend : 'Ext.app.Controller',
 			mixins : ['SCM.extend.exporter.Exporter', 'SCM.extend.controller.BillCommonController'],
 			views : ['PurchaseBill.ListUI', 'PurchaseBill.EditUI'],
@@ -160,6 +160,56 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 					sum += e.grid.store.getAt(i).get('entrysum');
 				}
 				this.totalFields.setValue(sum);
+			},
+			// 审核单据
+			auditBill : function(button) {
+				sm = this.listPanel.getSelectionModel();
+
+				if (sm.hasSelection()) {// 判断是否选择行记录
+					record = sm.getLastSelected();
+					if (record.get('status') != '0') {
+						showError('单据已审核！');
+						return;
+					}
+					Ext.Msg.confirm('提示', '确定审核该' + this.gridTitle + '？', confirmChange, this);
+					function confirmChange(id) {
+						if (id == 'yes') {
+							Ext.Ajax.request({
+								scope : this,
+								url : '../../scm/control/auditPurchaseBill?billId=' + record.get('id') + '&entity=' + this.entityName,
+								success : function(response) {
+									this.refreshRecord();
+								}
+							});
+						}
+					}
+				}
+			},
+			// 反审核单据
+			unauditBill : function(button) {
+				sm = this.listPanel.getSelectionModel();
+
+				if (sm.hasSelection()) {// 判断是否选择行记录
+					record = sm.getLastSelected();
+					if (record.get('status') == '0') {
+						showError('单据未审核！');
+						return;
+					}
+					Ext.Msg.confirm('提示', '确定反审核该' + this.gridTitle + '？', confirmChange, this);
+					function confirmChange(id) {
+						if (id == 'yes') {
+							Ext.Ajax.request({
+								scope : this,
+								url : '../../scm/control/unauditPurchaseBill?billId=' + record.get('id') + '&entity=' + this.entityName,
+								success : function(response) {
+									this.refreshRecord();
+								}
+							});
+						}
+					}
+					
+				}
 			}
+
 
 		});
