@@ -40,6 +40,13 @@ Ext.define('SCM.model.PurchaseWarehousing.PurchaseWarehousingModel', {
 						type : 'string',
 						persist : false
 					}, {
+						name : 'approverSystemUserId',
+						type : 'string'
+					}, {
+						name : 'approverSystemUserName',
+						type : 'string',
+						persist : false
+					}, {
 						name : 'totalsum',
 						type : 'float'
 					}, {

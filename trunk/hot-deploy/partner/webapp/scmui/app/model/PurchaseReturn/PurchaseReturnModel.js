@@ -33,6 +33,13 @@ Ext.define('SCM.model.PurchaseReturn.PurchaseReturnModel', {
 						type : 'string',
 						persist : false
 					}, {
+						name : 'approverSystemUserId',
+						type : 'string'
+					}, {
+						name : 'approverSystemUserName',
+						type : 'string',
+						persist : false
+					}, {
 						name : 'totalsum',
 						type : 'float'
 					}, {

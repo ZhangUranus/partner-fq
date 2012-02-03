@@ -86,6 +86,7 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 																store : Ext.create('SystemUserStore'),
 																margin : 5,
 																matchFieldWidth : false,
+																allowBlank : false,
 																listConfig : {
 																	width : 185,
 																	height : SCM.MaxSize.COMBOGRID_HEIGHT,

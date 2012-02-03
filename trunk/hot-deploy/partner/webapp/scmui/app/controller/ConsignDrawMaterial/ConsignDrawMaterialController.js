@@ -214,6 +214,6 @@ Ext.define('SCM.controller.ConsignDrawMaterial.ConsignDrawMaterialController', {
 					tempRecord.set('volume', materialVolume * tempRecord.get('perVolume'));
 					tempRecord.set('entrysum',tempRecord.get('price') * tempRecord.get('volume'));
 				}
-				this.changeMaterialPrice(me.editEntry.store);
+				me.changeMaterialPrice(me.editEntry.store);
 			}
 });

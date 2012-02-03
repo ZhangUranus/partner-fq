@@ -1,6 +1,6 @@
 Ext.define('SCM.controller.${TemplateName}.${TemplateName}Controller', {
 			extend : 'Ext.app.Controller',
-			mixins : ['SCM.extend.controller.BillCommonController'],
+			mixins : ['SCM.extend.exporter.Exporter', 'SCM.extend.controller.BillCommonController'],
 			views : ['${TemplateName}.ListUI', '${TemplateName}.EditUI'],
 			stores : ['${TemplateName}.${TemplateName}Store', '${TemplateName}.${TemplateName}EditStore', '${TemplateName}.${TemplateName}EditEntryStore'],
 			requires : ['SCM.model.${TemplateName}.${TemplateName}ActionModel'],
@@ -48,6 +48,10 @@ Ext.define('SCM.controller.${TemplateName}.${TemplateName}Controller', {
 							// 列表打印按钮
 							'${TemplateName}list button[action=print]' : {
 								click : this.print
+							},
+							//列表导出
+							'${TemplateName}list button[action=export]' : {
+								click : this.exportExcel
 							},
 							// 编辑界面分录新增
 							'${TemplateName}edit  gridpanel button[action=addLine]' : {

@@ -105,14 +105,37 @@ Ext.define('SCM.view.PurchaseReturn.EditUI', {
 																			}]
 																}
 															}, {
+																xtype : 'combogrid',
+																fieldLabel : '审核员',
+																name : 'approverSystemUserId',
+																valueField : 'id',
+																displayField : 'name',
+																store : Ext.create('SystemUserStore'),
+																margin : 5,
+																matchFieldWidth : false,
+																readOnly : true,
+																listConfig : {
+																	width : 185,
+																	height : SCM.MaxSize.COMBOGRID_HEIGHT,
+																	columns : [{
+																				header : '编码',
+																				dataIndex : 'number',
+																				width : 100,
+																				hideable : false
+																			}, {
+																				header : '名称',
+																				dataIndex : 'name',
+																				width : 80,
+																				hideable : false
+																			}]
+																}
+															}, {
 																xtype : 'numberfield',
 																hideTrigger : true,
 																fieldLabel : '总金额',
 																readOnly : true,
 																name : 'totalsum',
 																margin : 5
-															}, {
-																xtype : 'label'
 															}, {
 																xtype : 'textarea',
 																name : 'note',

@@ -37,6 +37,14 @@ Ext.define('SCM.controller.PurchaseWarehousing.PurchaseWarehousingController', {
 							'PurchaseWarehousinglist button[action=search]' : {
 								click : this.refreshRecord
 							},
+							// 列表审核按钮
+							'PurchaseWarehousinglist button[action=audit]' : {
+								click : this.auditBill
+							},
+							// 列表反审核按钮
+							'PurchaseWarehousinglist button[action=unaudit]' : {
+								click : this.unauditBill
+							},
 							// 列表打印按钮
 							'PurchaseWarehousinglist button[action=print]' : {
 								click : this.print

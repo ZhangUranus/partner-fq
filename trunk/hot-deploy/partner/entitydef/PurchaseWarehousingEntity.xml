@@ -22,6 +22,7 @@
 		<field name="supplierSupplierId" type="id-long"></field>
 		<field name="buyerSystemUserId" type="id-long"></field>
 		<field name="checkerSystemUserId" type="id-long"></field>
+		<field name="approverSystemUserId" type="id-long"></field>
 		<field name="totalsum" type="fixed-point"></field>
 		<field name="note" type="description"></field>
 		<field name="status" type="numeric"></field>
@@ -53,11 +54,13 @@
 		<member-entity entity-alias="supplierSupplierV" entity-name="Supplier"></member-entity>
 		<member-entity entity-alias="buyerSystemUserV" entity-name="SystemUser"></member-entity>
 		<member-entity entity-alias="checkerSystemUserV" entity-name="SystemUser"></member-entity>
+		<member-entity entity-alias="approverSystemUserV" entity-name="SystemUser"></member-entity>
 		<alias-all entity-alias="PurchaseWarehousingV"></alias-all>
 		<alias name="materialMaterialId" entity-alias="PurchaseWarehousingEntryV" field="materialMaterialId"></alias>
 		<alias name="supplierSupplierName" entity-alias="supplierSupplierV" field="name"></alias>
 		<alias name="buyerSystemUserName" entity-alias="buyerSystemUserV" field="name"></alias>
 		<alias name="checkerSystemUserName" entity-alias="checkerSystemUserV" field="name"></alias>
+		<alias name="approverSystemUserName" entity-alias="approverSystemUserV" field="name"></alias>
 		<view-link entity-alias="PurchaseWarehousingV" rel-entity-alias="PurchaseWarehousingEntryV" rel-optional="true">
 			<key-map field-name="id" rel-field-name="parentId" />
 		</view-link>
@@ -69,6 +72,9 @@
 		</view-link>
 		<view-link entity-alias="PurchaseWarehousingV" rel-entity-alias="checkerSystemUserV" rel-optional="true">
 			<key-map field-name="checkerSystemUserId" rel-field-name="id" />
+		</view-link>
+		<view-link entity-alias="PurchaseWarehousingV" rel-entity-alias="approverSystemUserV" rel-optional="true">
+			<key-map field-name="approverSystemUserId" rel-field-name="id" />
 		</view-link>
 	</view-entity>
 	<!--表体视图 -->

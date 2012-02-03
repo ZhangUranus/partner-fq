@@ -39,6 +39,13 @@ Ext.define('SCM.model.PurchaseWarehousing.PurchaseWarehousingEditModel', {
 						type : 'string',
 						persist : false
 					}, {
+						name : 'approverSystemUserId',
+						type : 'string'
+					}, {
+						name : 'approverSystemUserName',
+						type : 'string',
+						persist : false
+					}, {
 						name : 'totalsum',
 						type : 'float'
 					}, {
@@ -72,7 +79,7 @@ Ext.define('SCM.model.PurchaseWarehousing.PurchaseWarehousingEditModel', {
 			proxy : {
 				type : 'jsonajax',
 				api : {
-					read : '../../scm/control/requestJsonData?entity=PurchaseWarehousingView&distinct=true&fields=id,number,bizDate,supplierSupplierId,supplierSupplierName,buyerSystemUserId,buyerSystemUserName,checkerSystemUserId,checkerSystemUserName,totalsum,createdStamp,lastUpdatedStamp,note,status',
+					read : '../../scm/control/requestJsonData?entity=PurchaseWarehousingView&distinct=true&fields=id,number,bizDate,supplierSupplierId,supplierSupplierName,buyerSystemUserId,buyerSystemUserName,checkerSystemUserId,checkerSystemUserName,approverSystemUserId,approverSystemUserName,totalsum,createdStamp,lastUpdatedStamp,note,status',
 					destroy : '../../scm/control/deleteWithEntry?headEntity=PurchaseWarehousing&entryEntity=PurchaseWarehousingEntry'
 				},
 				remoteFilter : true

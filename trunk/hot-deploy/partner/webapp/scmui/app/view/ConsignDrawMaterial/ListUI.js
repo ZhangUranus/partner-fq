@@ -65,9 +65,15 @@ Ext.define('SCM.view.ConsignDrawMaterial.ListUI', {
 												}, {
 													xtype : 'gridcolumn',
 													dataIndex : 'issuerSystemUserName',
-													width : 150,
+													width : 80,
 													groupable : false,
 													text : '发货员'
+												}, {
+													xtype : 'gridcolumn',
+													dataIndex : 'approverSystemUserName',
+													width : 80,
+													groupable : false,
+													text : '审核员'
 												}, {
 													xtype : 'gridcolumn',
 													dataIndex : 'processedMaterialMaterialName',
