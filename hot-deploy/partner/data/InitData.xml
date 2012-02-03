@@ -34,10 +34,10 @@ under the License.
 	<TSystemMenu menuId='consignWarehousing' menuName='委外入库' menuType='1' parentId='consignProcess' sort='123' hyperlink='ConsignWarehousinglist' styleName='consign-warehousing' display='1' description='委外入库' />
 	<TSystemMenu menuId='consignReturnProduct' menuName='委外退货' menuType='1' parentId='consignProcess' sort='124' hyperlink='ConsignReturnProductlist' styleName='consign-return-product' display='1' description='委外退货' />
 	<TSystemMenu menuId='workshopManufacture' menuName='车间制造' menuType='0' parentId='warehouseManagement' sort='13' hyperlink='' styleName='workshop-manufacture' display='1' description='车间制造' />
-	<TSystemMenu menuId='workshopDrawMaterial' menuName='制造领料' menuType='1' parentId='workshopManufacture' sort='131' hyperlink='workshopdrawmaterial' styleName='workshop-draw-material' display='1' description='制造领料' />
-	<TSystemMenu menuId='workshopReturnMaterial' menuName='制造退料' menuType='1' parentId='workshopManufacture' sort='132' hyperlink='workshopreturnmaterial' styleName='workshop-return-material' display='1' description='制造退料' />
-	<TSystemMenu menuId='workshopWarehousing' menuName='制造入库' menuType='1' parentId='workshopManufacture' sort='133' hyperlink='workshopwarehousing' styleName='workshop-warehousing' display='1' description='制造入库' />
-	<TSystemMenu menuId='workshopReturnProduct' menuName='制造退货' menuType='1' parentId='workshopManufacture' sort='134' hyperlink='workshopreturnproduct' styleName='workshop-return-product' display='1' description='制造退货' />
+	<TSystemMenu menuId='workshopDrawMaterial' menuName='制造领料' menuType='1' parentId='workshopManufacture' sort='131' hyperlink='WorkshopDrawMateriallist' styleName='workshop-draw-material' display='1' description='制造领料' />
+	<TSystemMenu menuId='workshopReturnMaterial' menuName='制造退料' menuType='1' parentId='workshopManufacture' sort='132' hyperlink='WorkshopReturnMateriallist' styleName='workshop-return-material' display='1' description='制造退料' />
+	<TSystemMenu menuId='workshopWarehousing' menuName='制造入库' menuType='1' parentId='workshopManufacture' sort='133' hyperlink='WorkshopWarehousinglist' styleName='workshop-warehousing' display='1' description='制造入库' />
+	<TSystemMenu menuId='workshopReturnProduct' menuName='制造退货' menuType='1' parentId='workshopManufacture' sort='134' hyperlink='WorkshopReturnProductlist' styleName='workshop-return-product' display='1' description='制造退货' />
 	<TSystemMenu menuId='productionPlan' menuName='生产计划' menuType='1' parentId='workshopManufacture' sort='135' hyperlink='productionplan' styleName='production-plan' display='1' description='生产计划' />
 	<TSystemMenu menuId='analyticStatistics' menuName='分析统计' menuType='0' parentId='warehouseManagement' sort='14' hyperlink='' styleName='analytic-statistics' display='1' description='分析统计' />
 	<TSystemMenu menuId='stockDetail' menuName='库存情况' menuType='1' parentId='analyticStatistics' sort='141' hyperlink='stockdetail' styleName='stock-detail' display='1' description='库存情况' />
@@ -58,7 +58,8 @@ under the License.
 	<TSystemMenu menuId='BOMBillInfoMaintaince' menuName='BOM单资料维护' menuType='1' parentId='basicSetting' sort='37' hyperlink='bombillinfomaintaince' styleName='BOM-bill-info-maintaince' display='1' description='BOM单资料维护' />
 	<TSystemMenu menuId='UnitMaintaince' menuName='计量单位维护' menuType='1' parentId='basicSetting' sort='38' hyperlink='unitlist' styleName='BOM-bill-info-maintaince' display='1' description='计量单位维护' />
 	<TSystemMenu menuId='WarehousetTypeMaintaince' menuName='仓库类型维护' menuType='1' parentId='basicSetting' sort='39' hyperlink='warehousetypelist' styleName='BOM-bill-info-maintaince' display='1' description='仓库类型维护' />
-	<TSystemMenu menuId='SupplierMaintaince' menuName='供应商管理' menuType='1' parentId='basicSetting' sort='40' hyperlink='Supplierlist' styleName='BOM-bill-info-maintaince' display='1' description='供应商管理' />
+	<TSystemMenu menuId='SupplierMaintaince' menuName='供应商资料维护' menuType='1' parentId='basicSetting' sort='40' hyperlink='Supplierlist' styleName='BOM-bill-info-maintaince' display='1' description='供应商管理' />
+	<TSystemMenu menuId='WorkshopMaintaince' menuName='车间资料维护' menuType='1' parentId='basicSetting' sort='41' hyperlink='workshoplist' styleName='BOM-bill-info-maintaince' display='1' description='车间管理' />
 	
 	<TSystemRole roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' roleName='管理员' description='系统管理员'/>
 	<TSystemRole roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' roleName='统计员' description='系统统计员'/>
@@ -118,6 +119,14 @@ under the License.
 	<TSystemMenuOfRole id='6d0e9c82-e0bc-4c9c-8f21-6788c6d3280b' menuId='WarehousetTypeMaintaince' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='E' />
 	<TSystemMenuOfRole id='b69b9aa2-f128-4d70-baf2-1434b21ebb57' menuId='WarehousetTypeMaintaince' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='D' />
 	<TSystemMenuOfRole id='c4660c20-91f2-495b-998a-ab813a5f695b' menuId='WarehousetTypeMaintaince' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='N' />
+	<TSystemMenuOfRole id='9c6f3732-e563-41f1-a76a-bae0a9c33d89' menuId='SupplierMaintaince' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='V' />
+	<TSystemMenuOfRole id='cca3d0b0-4b61-41d0-bf2a-88ce60742527' menuId='SupplierMaintaince' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='E' />
+	<TSystemMenuOfRole id='5c2bddc4-bdb5-41e4-adef-6aec7050cb88' menuId='SupplierMaintaince' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='D' />
+	<TSystemMenuOfRole id='fc41d4f4-ea93-411b-81e1-3fc7b4b6a5dd' menuId='SupplierMaintaince' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='N' />
+	<TSystemMenuOfRole id='f04ff492-e5ee-4e8b-80ff-a785476949b5' menuId='WorkshopMaintaince' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='V' />
+	<TSystemMenuOfRole id='d491eb7b-3ca6-40d7-8d68-a9445d954418' menuId='WorkshopMaintaince' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='E' />
+	<TSystemMenuOfRole id='686ec56b-3af9-4298-aa86-9db3fe3e5808' menuId='WorkshopMaintaince' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='D' />
+	<TSystemMenuOfRole id='94fd8955-ddf9-4cd4-bdbe-db76c74afb2d' menuId='WorkshopMaintaince' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='N' />
 	<TSystemMenuOfRole id='069a2a1b-c7c2-4b2a-9fea-e7be637eee1e' menuId='purchaseBillManagement' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='V' />
 	<TSystemMenuOfRole id='9d16dc94-c8a4-4202-ba41-82fb4993593c' menuId='purchaseBillManagement' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='E' />
 	<TSystemMenuOfRole id='f217f24a-c1df-4f01-806e-be0a4ca0096c' menuId='purchaseBillManagement' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='D' />
@@ -247,4 +256,8 @@ under the License.
 	<TSystemSerialNumber id='51745dc3-6d24-41d8-ba7e-592b7bdad7c0' serialDate='20120101' entityName='ConsignReturnMaterial' prefix='CRM' serialNumber='100001' initNumber='100001' description='委外退料单编号' hasDate='1' />
 	<TSystemSerialNumber id='38b28c40-0f27-488a-9a4d-1e2a2dc5b2ce' serialDate='20120101' entityName='ConsignWarehousing' prefix='CWS' serialNumber='100001' initNumber='100001' description='委外入库单编号' hasDate='1' />
 	<TSystemSerialNumber id='a90708bf-8ee8-484e-a2ae-076e1f81e38a' serialDate='20120101' entityName='ConsignReturnProduct' prefix='CRP' serialNumber='100001' initNumber='100001' description='委外退货单编号' hasDate='1' />
+	<TSystemSerialNumber id='b4e936f8-41a1-4200-90ed-8c7dc389e71a' serialDate='20120101' entityName='WorkshopDrawMaterial' prefix='WDM' serialNumber='100001' initNumber='100001' description='制造领料单编号' hasDate='1' />
+	<TSystemSerialNumber id='caca485d-3e34-412e-bac7-5d6377e91d74' serialDate='20120101' entityName='WorkshopReturnMaterial' prefix='WRM' serialNumber='100001' initNumber='100001' description='制造退料单编号' hasDate='1' />
+	<TSystemSerialNumber id='2b5a51ce-e920-47c0-990a-1976843a856b' serialDate='20120101' entityName='WorkshopWarehousing' prefix='WWS' serialNumber='100001' initNumber='100001' description='制造入库单编号' hasDate='1' />
+	<TSystemSerialNumber id='d6549ba2-c2b8-457b-bb87-437787b38624' serialDate='20120101' entityName='WorkshopReturnProduct' prefix='WRP' serialNumber='100001' initNumber='100001' description='制造退货单编号' hasDate='1' />
 </entity-engine-xml>
