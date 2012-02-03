@@ -33,6 +33,13 @@ Ext.define('SCM.model.ConsignDrawMaterial.ConsignDrawMaterialModel', {
 						type : 'string',
 						persist : false
 					}, {
+						name : 'approverSystemUserId',
+						type : 'string'
+					}, {
+						name : 'approverSystemUserName',
+						type : 'string',
+						persist : false
+					}, {
 						name : 'processedMaterialMaterialId',
 						type : 'string'
 					}, {

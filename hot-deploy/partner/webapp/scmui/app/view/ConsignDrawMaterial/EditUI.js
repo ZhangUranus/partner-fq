@@ -108,6 +108,31 @@ Ext.define('SCM.view.ConsignDrawMaterial.EditUI', {
 																}
 															}, {
 																xtype : 'combogrid',
+																fieldLabel : '审核员',
+																name : 'approverSystemUserId',
+																valueField : 'id',
+																displayField : 'name',
+																store : Ext.create('SystemUserStore'),
+																margin : 5,
+																matchFieldWidth : false,
+																readOnly : true,
+																listConfig : {
+																	width : 185,
+																	height : SCM.MaxSize.COMBOGRID_HEIGHT,
+																	columns : [{
+																				header : '编码',
+																				dataIndex : 'number',
+																				width : 100,
+																				hideable : false
+																			}, {
+																				header : '名称',
+																				dataIndex : 'name',
+																				width : 80,
+																				hideable : false
+																			}]
+																}
+															}, {
+																xtype : 'combogrid',
 																fieldLabel : '加工件',
 																name : 'processedMaterialMaterialId',
 																valueField : 'materialId',
@@ -146,8 +171,6 @@ Ext.define('SCM.view.ConsignDrawMaterial.EditUI', {
 																readOnly : true,
 																name : 'totalsum',
 																margin : 5
-															}, {
-																xtype : 'label'
 															}, {
 																xtype : 'label'
 															}, {
@@ -272,9 +295,7 @@ Ext.define('SCM.view.ConsignDrawMaterial.EditUI', {
 														type : 'table'
 													},
 													region : 'south',
-													items : [
-
-													{
+													items : [{
 																xtype : 'datefield',
 																name : 'createdStamp',
 																format : 'Y-m-d H:i:s',
