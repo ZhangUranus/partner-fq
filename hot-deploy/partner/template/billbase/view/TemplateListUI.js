@@ -52,7 +52,7 @@ Ext.define('SCM.view.${TemplateName}.ListUI' ,{
 						,{
                             xtype: 'datecolumn',
                             dataIndex: 'bizDate',
-							width:150,
+							width:120,
 							format : 'Y-m-d',
 							groupable: false,
                             text: '业务日期'
@@ -61,7 +61,7 @@ Ext.define('SCM.view.${TemplateName}.ListUI' ,{
 							xtype: 'gridcolumn'
 					        ,renderer:SCM.store.basiccode.billStatusRenderer
 							,dataIndex: 'status'
-							,width:150
+							,width:80
 							,groupable: false
                             ,text: '单据状态'
                         }
