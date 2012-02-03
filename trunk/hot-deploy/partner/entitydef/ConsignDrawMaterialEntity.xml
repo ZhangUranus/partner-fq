@@ -17,7 +17,7 @@
 		<field name="id" type="id-long"></field>
 		<field name="number" type="name"></field>
 		<field name="bizDate" type="date-time"></field>
-		<field name="processorCustomerId" type="id-long"></field>
+		<field name="processorSupplierId" type="id-long"></field>
 		<field name="issuerSystemUserId" type="id-long"></field>
 		<field name="processedMaterialMaterialId" type="id-long"></field>
 		<field name="materialVolume" type="fixed-point"></field>
@@ -47,19 +47,19 @@
 	<view-entity entity-name="ConsignDrawMaterialView" package-name="org.ofbiz.scm.ConsignDrawMaterial" title="ConsignDrawMaterialView  Entity">
 		<member-entity entity-alias="ConsignDrawMaterialV" entity-name="ConsignDrawMaterial"></member-entity>
 		<member-entity entity-alias="ConsignDrawMaterialEntryV" entity-name="ConsignDrawMaterialEntry"></member-entity>
-		<member-entity entity-alias="processorCustomerV" entity-name="Customer"></member-entity>
+		<member-entity entity-alias="processorSupplierV" entity-name="Supplier"></member-entity>
 		<member-entity entity-alias="issuerSystemUserV" entity-name="SystemUser"></member-entity>
 		<member-entity entity-alias="processedMaterialMaterialV" entity-name="Material"></member-entity>
 		<alias-all entity-alias="ConsignDrawMaterialV"></alias-all>
 		<alias name="materialMaterialId" entity-alias="ConsignDrawMaterialEntryV" field="materialMaterialId"></alias>
-		<alias name="processorCustomerName" entity-alias="processorCustomerV" field="name"></alias>
+		<alias name="processorSupplierName" entity-alias="processorSupplierV" field="name"></alias>
 		<alias name="issuerSystemUserName" entity-alias="issuerSystemUserV" field="name"></alias>
 		<alias name="processedMaterialMaterialName" entity-alias="processedMaterialMaterialV" field="name"></alias>
 		<view-link entity-alias="ConsignDrawMaterialV" rel-entity-alias="ConsignDrawMaterialEntryV" rel-optional="true">
 			<key-map field-name="id" rel-field-name="parentId" />
 		</view-link>
-		<view-link entity-alias="ConsignDrawMaterialV" rel-entity-alias="processorCustomerV" rel-optional="true">
-			<key-map field-name="processorCustomerId" rel-field-name="id" />
+		<view-link entity-alias="ConsignDrawMaterialV" rel-entity-alias="processorSupplierV" rel-optional="true">
+			<key-map field-name="processorSupplierId" rel-field-name="id" />
 		</view-link>
 		<view-link entity-alias="ConsignDrawMaterialV" rel-entity-alias="issuerSystemUserV" rel-optional="true">
 			<key-map field-name="issuerSystemUserId" rel-field-name="id" />

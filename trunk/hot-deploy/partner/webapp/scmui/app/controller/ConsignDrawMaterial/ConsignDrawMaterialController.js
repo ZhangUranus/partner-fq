@@ -134,7 +134,7 @@ Ext.define('SCM.controller.ConsignDrawMaterial.ConsignDrawMaterialController', {
 					if (tempString != '') {
 						tempString += ' and ';
 					}
-					tempString += 'ConsignDrawMaterialV.processor_customer_id = \'' + this.searchCustId.getValue() + '\'';
+					tempString += 'ConsignDrawMaterialV.processor_supplier_id = \'' + this.searchCustId.getValue() + '\'';
 				}
 				this.listPanel.store.getProxy().extraParams.whereStr = tempString;
 				this.listPanel.store.load();
