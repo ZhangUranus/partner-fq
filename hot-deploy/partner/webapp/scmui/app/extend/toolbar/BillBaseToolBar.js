@@ -66,6 +66,7 @@ Ext.define('SCM.extend.toolbar.BillBaseToolbar', {
 					} else if (me.custType == 'workshop') {
 						label = '车间';
 						labelWidth = 35;
+						custStore = Ext.create('WorkshopStore');
 					} else if (me.custType == 'processor') {
 						label = '加工商';
 						labelWidth = 45;
