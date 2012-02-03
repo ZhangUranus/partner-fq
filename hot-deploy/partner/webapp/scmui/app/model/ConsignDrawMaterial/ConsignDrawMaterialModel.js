@@ -19,10 +19,10 @@ Ext.define('SCM.model.ConsignDrawMaterial.ConsignDrawMaterialModel', {
 						type : 'date',
 						dateFormat : 'time'
 					}, {
-						name : 'processorCustomerId',
+						name : 'processorSupplierId',
 						type : 'string'
 					}, {
-						name : 'processorCustomerName',
+						name : 'processorSupplierName',
 						type : 'string',
 						persist : false
 					}, {

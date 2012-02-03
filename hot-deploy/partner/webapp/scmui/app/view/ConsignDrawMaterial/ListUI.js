@@ -58,7 +58,7 @@ Ext.define('SCM.view.ConsignDrawMaterial.ListUI', {
 													text : '单据状态'
 												}, {
 													xtype : 'gridcolumn',
-													dataIndex : 'processorCustomerName',
+													dataIndex : 'processorSupplierName',
 													width : 150,
 													groupable : false,
 													text : '加工商'

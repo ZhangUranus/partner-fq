@@ -59,10 +59,10 @@ Ext.define('SCM.view.ConsignDrawMaterial.EditUI', {
 															}, {
 																xtype : 'combogrid',
 																fieldLabel : '加工商',
-																name : 'processorCustomerId',
+																name : 'processorSupplierId',
 																valueField : 'id',
 																displayField : 'name',
-																store : Ext.create('CustomerStore'),
+																store : Ext.create('SupplierStore'),
 																margin : 5,
 																matchFieldWidth : false,
 																allowBlank : false,

@@ -18,10 +18,10 @@ Ext.define('SCM.model.ConsignDrawMaterial.ConsignDrawMaterialEditModel', {
 							return new Date(value);
 						}
 					}, {
-						name : 'processorCustomerId',
+						name : 'processorSupplierId',
 						type : 'string'
 					}, {
-						name : 'processorCustomerName',
+						name : 'processorSupplierName',
 						type : 'string',
 						persist : false
 					}, {
@@ -73,7 +73,7 @@ Ext.define('SCM.model.ConsignDrawMaterial.ConsignDrawMaterialEditModel', {
 			proxy : {
 				type : 'jsonajax',
 				api : {
-					read : '../../scm/control/requestJsonData?entity=ConsignDrawMaterialView&distinct=true&fields=id,number,bizDate,processorCustomerId,processorCustomerName,issuerSystemUserId,issuerSystemUserName,processedMaterialMaterialId,processedMaterialMaterialName,materialVolume,totalsum,createdStamp,lastUpdatedStamp,note,status',
+					read : '../../scm/control/requestJsonData?entity=ConsignDrawMaterialView&distinct=true&fields=id,number,bizDate,processorSupplierId,processorSupplierName,issuerSystemUserId,issuerSystemUserName,processedMaterialMaterialId,processedMaterialMaterialName,materialVolume,totalsum,createdStamp,lastUpdatedStamp,note,status',
 					destroy : '../../scm/control/deleteWithEntry?headEntity=ConsignDrawMaterial&entryEntity=ConsignDrawMaterialEntry'
 				},
 				remoteFilter : true
