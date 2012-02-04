@@ -43,7 +43,7 @@ Ext.define('SCM.view.Supplier.ListUI', {
 									}, {
 										dock : 'bottom',
 										xtype : 'pagingtoolbar',
-										store : 'basedata.UnitStore',
+										store : 'Supplier.SupplierEditStore',
 										displayInfo : true
 									}]
 						});
