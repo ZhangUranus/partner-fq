@@ -4,6 +4,6 @@ Ext.define('SCM.store.basedata.WorkshopStore', {
 			alias : 'WorkshopStore',
 			pageSize : 20, //每页行数
 			remoteSort : true, //服务器排序
-			autoLoad : false,
-			autoSync : true
+			autoLoad : true,
+			autoSync : false
 		});
