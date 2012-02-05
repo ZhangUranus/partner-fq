@@ -170,54 +170,53 @@ Ext.define('SCM.controller.PurchaseWarehousing.PurchaseWarehousingController', {
 				}
 				this.totalFields.setValue(sum);
 			},
-			// 审核单据
-			auditBill : function(button) {
+			// 提交单据
+			submitBill : function(button) {
 				sm = this.listPanel.getSelectionModel();
 
 				if (sm.hasSelection()) {// 判断是否选择行记录
 					record = sm.getLastSelected();
 					if (record.get('status') != '0') {
-						showError('单据已审核！');
+						showWarning('单据已提交！');
 						return;
 					}
-					Ext.Msg.confirm('提示', '确定审核该' + this.gridTitle + '？', confirmChange, this);
+					Ext.Msg.confirm('提示', '确定提交该' + this.gridTitle + '？', confirmChange, this);
 					function confirmChange(id) {
 						if (id == 'yes') {
 							Ext.Ajax.request({
-								scope : this,
-								url : '../../scm/control/auditInspective?billId=' + record.get('id') + '&entity=' + this.entityName,
-								success : function(response) {
-									this.refreshRecord();
-								}
-							});
+										scope : this,
+										url : '../../scm/control/submitInspective?billId=' + record.get('id') + '&entity=' + this.entityName,
+										success : function(response) {
+											this.refreshRecord();
+										}
+									});
 						}
 					}
 				}
 			},
-			// 反审核单据
-			unauditBill : function(button) {
+			// 撤销单据
+			rollbackBill : function(button) {
 				sm = this.listPanel.getSelectionModel();
 
 				if (sm.hasSelection()) {// 判断是否选择行记录
 					record = sm.getLastSelected();
 					if (record.get('status') == '0') {
-						showError('单据未审核！');
+						showWarning('单据未提交！');
 						return;
 					}
-					Ext.Msg.confirm('提示', '确定反审核该' + this.gridTitle + '？', confirmChange, this);
+					Ext.Msg.confirm('提示', '确定撤销该' + this.gridTitle + '？', confirmChange, this);
 					function confirmChange(id) {
 						if (id == 'yes') {
 							Ext.Ajax.request({
-								scope : this,
-								url : '../../scm/control/unauditInspective?billId=' + record.get('id') + '&entity=' + this.entityName,
-								success : function(response) {
-									
-									this.refreshRecord();
-								}
-							});
+										scope : this,
+										url : '../../scm/control/rollbackInspective?billId=' + record.get('id') + '&entity=' + this.entityName,
+										success : function(response) {
+											this.refreshRecord();
+										}
+									});
 						}
 					}
-					
+
 				}
 			}
 
