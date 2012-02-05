@@ -31,6 +31,12 @@
 .system-unaudit{
 	background-image: url( ../images/icons/unaudit.gif ) !important;
 }
+.system-submit{
+	background-image: url( ../images/icons/submit.png ) !important;
+}
+.system-rollback{
+	background-image: url( ../images/icons/rollback.png ) !important;
+}
 
 .main-index {
 	background-image: url( ../images/icons/main-index.png ) !important;
