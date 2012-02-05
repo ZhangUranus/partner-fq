@@ -1,6 +1,7 @@
 package org.ofbiz.partner.scm.stock;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,13 +36,18 @@ public class InspectiveBizEvents {
 		boolean beganTransaction = false;
 		try {
 	            beganTransaction = TransactionUtil.begin();
-
-				BillBaseEvent.auditBill(request, response);//更新单据状态
 				
 				Delegator delegator=(Delegator)request.getAttribute("delegator");
 				String billId=request.getParameter("billId");//单据id
 				if(delegator!=null&&billId!=null){
 					Debug.log("入库单审核:"+billId, module);
+					GenericValue  billHead=delegator.findOne("PurchaseWarehousing", UtilMisc.toMap("id", billId), false);
+					if(billHead==null&&billHead.get("bizDate")==null){
+						throw new Exception("can`t find PurchaseWarehousing bill or bizdate is null");
+					}
+					
+					//注意不能使用billHead.getDate方法，出产生castException异常
+					Date bizDate=(Date) billHead.get("bizDate");
 					//获取单据id分录条目
 					List<GenericValue> entryList=delegator.findByAnd("PurchaseWarehousingEntry", UtilMisc.toMap("parentId", billId));
 					
@@ -52,9 +58,12 @@ public class InspectiveBizEvents {
 						BigDecimal  sum =v.getBigDecimal("entrysum");//金额
 						Debug.log("采购入库单价计算:物料id"+materialId+";数量"+volume+";金额"+sum, module);
 						//构建计算条目
-						PriceCalItem item=new PriceCalItem(null,warehouseId,materialId,volume,sum,BillType.PurchaseWarehouse,billId);
+						PriceCalItem item=new PriceCalItem(bizDate,warehouseId,materialId,volume,sum,BillType.PurchaseWarehouse,billId);
 						PriceMgr.getInstance().calPrice(item);
 					}
+
+				BillBaseEvent.auditBill(request, response);//更新单据状态
+
 		}} catch (GenericTransactionException e) {
             Debug.logError(e, module);
             try {
@@ -80,6 +89,52 @@ public class InspectiveBizEvents {
 	 * @throws Exception
 	 */
 	public static String unauditBill(HttpServletRequest request,HttpServletResponse response) throws Exception{
-		return BillBaseEvent.unauditBill(request, response);
+		boolean beganTransaction = false;
+		try {
+	            beganTransaction = TransactionUtil.begin();
+
+				Delegator delegator=(Delegator)request.getAttribute("delegator");
+				String billId=request.getParameter("billId");//单据id
+				if(delegator!=null&&billId!=null){
+					Debug.log("入库单审核:"+billId, module);
+					GenericValue  billHead=delegator.findOne("PurchaseWarehousing", UtilMisc.toMap("id", billId), false);
+					if(billHead==null&&billHead.get("bizDate")==null){
+						throw new Exception("can`t find PurchaseWarehousing bill or bizdate is null");
+					}
+					
+					//注意不能使用billHead.getDate方法，出产生castException异常
+					Date bizDate=(Date) billHead.get("bizDate");
+					
+					//获取单据id分录条目
+					List<GenericValue> entryList=delegator.findByAnd("PurchaseWarehousingEntry", UtilMisc.toMap("parentId", billId));
+					
+					for(GenericValue v:entryList){
+						String warehouseId=v.getString("warehouseWarehouseId");//仓库id
+						String materialId=v.getString("materialMaterialId");//物料id
+						BigDecimal  volume=BigDecimal.ZERO.subtract(v.getBigDecimal("volume"));//负数量
+						BigDecimal  sum =BigDecimal.ZERO.subtract(v.getBigDecimal("entrysum"));//负金额
+						Debug.log("反审核采购入库单价计算:物料id"+materialId+";数量"+volume+";金额"+sum, module);
+						//构建计算条目
+						PriceCalItem item=new PriceCalItem(bizDate,warehouseId,materialId,volume,sum,BillType.PurchaseWarehouse,billId);
+						PriceMgr.getInstance().calPrice(item);
+					}
+				}
+				
+				BillBaseEvent.unauditBill(request, response);//反审核单据
+		} catch (GenericTransactionException e) {
+            Debug.logError(e, module);
+            try {
+                TransactionUtil.rollback(beganTransaction, e.getMessage(), e);
+            } catch (GenericTransactionException e2) {
+                Debug.logError(e2, "Unable to rollback transaction", module);
+            }
+        } finally {
+            try {
+                TransactionUtil.commit(beganTransaction);
+            } catch (GenericTransactionException e) {
+                Debug.logError(e, "Unable to commit transaction", module);
+            }
+        }
+		return "success";
 	}
 }
