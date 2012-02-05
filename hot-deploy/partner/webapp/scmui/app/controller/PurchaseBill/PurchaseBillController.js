@@ -178,7 +178,12 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 						if (id == 'yes') {
 							Ext.Ajax.request({
 								scope : this,
-								url : '../../scm/control/auditPurchaseBill?billId=' + record.get('id') + '&entity=' + this.entityName,
+								params: {
+					                billId: record.get('id'),
+					                entity : this.entityName,
+					                approverNote : '同意'
+					            },
+								url : '../../scm/control/auditPurchaseBill',
 								success : function(response) {
 									this.refreshRecord();
 								}
