@@ -311,6 +311,7 @@ public class SecurityEvents {
 		//tempObject.put("view", false);
 		tempObject.put("remove", false);
 		tempObject.put("audit", false);
+		tempObject.put("submit", false);
 		for (GenericValue node: permissionList) {
 //			if("V".equals(node.get("operateType"))){//view权限只在取菜单时使用，所以不需要列入考虑
 //				tempObject.put("view", true);
@@ -323,6 +324,8 @@ public class SecurityEvents {
 				tempObject.put("remove", true);
 			}else if("A".equals(node.get("operateType"))){
 				tempObject.put("audit", true);
+			}else if("S".equals(node.get("operateType"))){
+				tempObject.put("submit", true);
 			}
 		}
 		CommonEvents.writeJsonDataToExt(response, tempObject.toString());
