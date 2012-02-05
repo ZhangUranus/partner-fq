@@ -19,7 +19,7 @@
 		<field name="bizDate" type="date-time"></field>
 		<field name="workshopWorkshopId" type="id-long"></field>
 		<field name="issuerSystemUserId" type="id-long"></field>
-		<field name="approverSystemUserId" type="id-long"></field>
+		<field name="submitterSystemUserId" type="id-long"></field>
 		<field name="totalsum" type="fixed-point"></field>
 		<field name="note" type="description"></field>
 		<field name="status" type="numeric"></field>
@@ -47,12 +47,12 @@
 		<member-entity entity-alias="WorkshopDrawMaterialEntryV" entity-name="WorkshopDrawMaterialEntry"></member-entity>
 		<member-entity entity-alias="workshopWorkshopV" entity-name="Workshop"></member-entity>
 		<member-entity entity-alias="issuerSystemUserV" entity-name="SystemUser"></member-entity>
-		<member-entity entity-alias="approverSystemUserV" entity-name="SystemUser"></member-entity>
+		<member-entity entity-alias="submitterSystemUserV" entity-name="SystemUser"></member-entity>
 		<alias-all entity-alias="WorkshopDrawMaterialV"></alias-all>
 		<alias name="materialMaterialId" entity-alias="WorkshopDrawMaterialEntryV" field="materialMaterialId"></alias>
 		<alias name="workshopWorkshopName" entity-alias="workshopWorkshopV" field="name"></alias>
 		<alias name="issuerSystemUserName" entity-alias="issuerSystemUserV" field="name"></alias>
-		<alias name="approverSystemUserName" entity-alias="approverSystemUserV" field="name"></alias>
+		<alias name="submitterSystemUserName" entity-alias="submitterSystemUserV" field="name"></alias>
 		<view-link entity-alias="WorkshopDrawMaterialV" rel-entity-alias="WorkshopDrawMaterialEntryV" rel-optional="true">
 			<key-map field-name="id" rel-field-name="parentId" />
 		</view-link>
@@ -62,8 +62,8 @@
 		<view-link entity-alias="WorkshopDrawMaterialV" rel-entity-alias="issuerSystemUserV" rel-optional="true">
 			<key-map field-name="issuerSystemUserId" rel-field-name="id" />
 		</view-link>
-		<view-link entity-alias="WorkshopDrawMaterialV" rel-entity-alias="approverSystemUserV" rel-optional="true">
-			<key-map field-name="approverSystemUserId" rel-field-name="id" />
+		<view-link entity-alias="WorkshopDrawMaterialV" rel-entity-alias="submitterSystemUserV" rel-optional="true">
+			<key-map field-name="submitterSystemUserId" rel-field-name="id" />
 		</view-link>
 	</view-entity>
 	<!--表体视图 -->
