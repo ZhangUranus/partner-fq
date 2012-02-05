@@ -137,12 +137,23 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				} else {
 					this.deleteButton.setVisible(false);
 				}
-				if (this.listContainer.permission.audit) {
-					this.submitButton.setVisible(true);
-					this.rollbackButton.setVisible(true);
-				} else {
-					this.submitButton.setVisible(false);
-					this.rollbackButton.setVisible(false);
+				if(this.auditButton){
+					if (this.listContainer.permission.audit) {
+						this.auditButton.setVisible(true);
+						this.unauditButton.setVisible(true);
+					} else {
+						this.auditButton.setVisible(false);
+						this.unauditButton.setVisible(false);
+					}
+				}
+				if(this.submitButton){
+					if (this.listContainer.permission.submit) {
+						this.submitButton.setVisible(true);
+						this.rollbackButton.setVisible(true);
+					} else {
+						this.submitButton.setVisible(false);
+						this.rollbackButton.setVisible(false);
+					}
 				}
 			},
 
@@ -153,13 +164,25 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				if (this.listPanel.getSelectionModel().hasSelection()) {
 					this.deleteButton.setDisabled(false);
 					this.editButton.setDisabled(false);
-					this.submitButton.setDisabled(false);
-					this.rollbackButton.setDisabled(false);
+					if(this.auditButton){
+						this.auditButton.setDisabled(false);
+						this.unauditButton.setDisabled(false);
+					}
+					if(this.submitButton){
+						this.submitButton.setDisabled(false);
+						this.rollbackButton.setDisabled(false);
+					}
 				} else {
 					this.deleteButton.setDisabled(true);
 					this.editButton.setDisabled(true);
-					this.submitButton.setDisabled(true);
-					this.rollbackButton.setDisabled(true);
+					if(this.auditButton){
+						this.auditButton.setDisabled(true);
+						this.unauditButton.setDisabled(false);
+					}
+					if(this.submitButton){
+						this.submitButton.setDisabled(true);
+						this.rollbackButton.setDisabled(true);
+					}
 				}
 				if (this.win.uiStatus == 'AddNew') {
 					this.saveButton.setVisible(true);
