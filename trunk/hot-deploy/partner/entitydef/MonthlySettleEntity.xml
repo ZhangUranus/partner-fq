@@ -50,10 +50,10 @@ under the License.
       <field name="month" type="int"></field>
       <field name="warehouseId" type="id-long"></field>
       <field name="materialId" type="id-long"></field>
-      <field name="beginvolume" type="floating-point"></field>
-      <field name="beginsum" type="floating-point"></field>
-      <field name="endvolume" type="floating-point"></field>
-      <field name="endsum" type="floating-point"></field>
+      <field name="beginvolume" type="fixed-point"></field>
+      <field name="beginsum" type="fixed-point"></field>
+      <field name="endvolume" type="fixed-point"></field>
+      <field name="endsum" type="fixed-point"></field>
       <prim-key field="id" />
     </entity>
     <!-- 当前存货余额表 -->
@@ -65,10 +65,10 @@ under the License.
       <field name="month" type="int"></field>
       <field name="warehouseId" type="id-long"></field>
       <field name="materialId" type="id-long"></field>
-      <field name="beginvolume" type="floating-point"></field>
-      <field name="beginsum" type="floating-point"></field>
-      <field name="volume" type="floating-point"></field>
-      <field name="totalSum" type="floating-point"></field>
+      <field name="beginvolume" type="fixed-point"></field>
+      <field name="beginsum" type="fixed-point"></field>
+      <field name="volume" type="fixed-point"></field>
+      <field name="totalSum" type="fixed-point"></field>
       <prim-key field="id" />
     </entity>
     <!-- 委外入库退料，加工商、物料加权单价表-->
@@ -77,8 +77,8 @@ under the License.
             title="ConsignPrice Entity">
       <field name="supplierId" type="id-long"></field>
       <field name="materialId" type="id-long"></field>
-      <field name="volume" type="floating-point"></field>
-      <field name="totalsum" type="floating-point"></field>
+      <field name="volume" type="fixed-point"></field>
+      <field name="totalsum" type="fixed-point"></field>
       <prim-key field="supplierId" />
       <prim-key field="materialId" />
     </entity>
@@ -89,7 +89,7 @@ under the License.
             title="ConsignPriceDetail Entity">
       <field name="parentId" type="id-long"></field>
       <field name="materialId" type="id-long"></field>
-      <field name="price" type="floating-point"></field>
+      <field name="price" type="fixed-point"></field>
       <prim-key field="parentId" />
       <prim-key field="parentMaterialId" />
     </entity>
@@ -100,8 +100,8 @@ under the License.
             title="WorkshopPrice Entity">
       <field name="workshopId" type="id-long"></field>
       <field name="materialId" type="id-long"></field>
-      <field name="volume" type="floating-point"></field>
-      <field name="totalsum" type="floating-point"></field>
+      <field name="volume" type="fixed-point"></field>
+      <field name="totalsum" type="fixed-point"></field>
       <prim-key field="workshopId" />
       <prim-key field="materialId" />
     </entity>
@@ -111,7 +111,7 @@ under the License.
             title="WorkshopPriceDetail Entity">
       <field name="parentId" type="id-long"></field>
       <field name="materialId" type="id-long"></field>
-      <field name="price" type="floating-point"></field>
+      <field name="price" type="fixed-point"></field>
       <prim-key field="parentId" />
       <prim-key field="parentMaterialId" />
     </entity>
@@ -122,8 +122,8 @@ under the License.
             title="ConsignPrice Entity">
       <field name="customerId" type="id-long"></field>
       <field name="materialId" type="id-long"></field>
-      <field name="volume" type="floating-point"></field>
-      <field name="totalsum" type="floating-point"></field>
+      <field name="volume" type="fixed-point"></field>
+      <field name="totalsum" type="fixed-point"></field>
       <prim-key field="customerId" />
       <prim-key field="materialId" />
     </entity>

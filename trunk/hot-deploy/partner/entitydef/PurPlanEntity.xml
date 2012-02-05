@@ -35,7 +35,7 @@ under the License.
             title="PurPlanBalance Entity">
       <field name="supplierId" type="id-long"></field>
       <field name="materialId" type="id-long"></field>
-      <field name="balance" type="floating-point"></field>
+      <field name="balance" type="fixed-point"></field>
       <prim-key field="supplierId" />
       <prim-key field="materialId" />
     </entity>
