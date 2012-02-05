@@ -75,6 +75,12 @@ Ext.define('SCM.view.PurchaseBill.ListUI', {
 													groupable : false,
 													text : '审核员'
 												}, {
+													xtype : 'gridcolumn',
+													dataIndex : 'approverNote',
+													width : 150,
+													groupable : false,
+													text : '审核意见'
+												}, {
 													xtype : 'numbercolumn',
 													dataIndex : 'totalsum',
 													width : 100,
