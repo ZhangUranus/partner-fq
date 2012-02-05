@@ -384,7 +384,11 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 						if (id == 'yes') {
 							Ext.Ajax.request({
 										scope : this,
-										url : '../../scm/control/auditBill?billId=' + record.get('id') + '&entity=' + this.entityName,
+										params : {
+											billId : record.get('id'),
+											entity : this.entityName
+										},
+										url : '../../scm/control/auditBill',
 										success : function(response) {
 											this.refreshRecord();
 										}
@@ -408,7 +412,11 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 						if (id == 'yes') {
 							Ext.Ajax.request({
 										scope : this,
-										url : '../../scm/control/unauditBill?billId=' + record.get('id') + '&entity=' + this.entityName,
+										params : {
+											billId : record.get('id'),
+											entity : this.entityName
+										},
+										url : '../../scm/control/unauditBill',
 										success : function(response) {
 											this.refreshRecord();
 										}
