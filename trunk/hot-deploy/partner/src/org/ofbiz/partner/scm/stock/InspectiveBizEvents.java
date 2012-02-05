@@ -26,13 +26,13 @@ import org.ofbiz.partner.scm.pricemgr.PriceMgr;
 public class InspectiveBizEvents {
 	private static final String module=org.ofbiz.partner.scm.stock.InspectiveBizEvents.class.getName();
 	/**
-	 * 采购入库审核
+	 * 采购入库提交
 	 * @param request
 	 * @param response
 	 * @return
 	 * @throws Exception
 	 */
-	public static String auditBill(HttpServletRequest request,HttpServletResponse response) throws Exception{
+	public static String submitBill(HttpServletRequest request,HttpServletResponse response) throws Exception{
 		boolean beganTransaction = false;
 		try {
 	            beganTransaction = TransactionUtil.begin();
@@ -62,7 +62,7 @@ public class InspectiveBizEvents {
 						PriceMgr.getInstance().calPrice(item);
 					}
 
-				BillBaseEvent.auditBill(request, response);//更新单据状态
+				BillBaseEvent.submitBill(request, response);//更新单据状态
 
 		}} catch (GenericTransactionException e) {
             Debug.logError(e, module);
@@ -82,13 +82,13 @@ public class InspectiveBizEvents {
 	}
 	
 	/**
-	 * 验收单反审核
+	 * 验收单撤销
 	 * @param request
 	 * @param response
 	 * @return
 	 * @throws Exception
 	 */
-	public static String unauditBill(HttpServletRequest request,HttpServletResponse response) throws Exception{
+	public static String rollbackBill(HttpServletRequest request,HttpServletResponse response) throws Exception{
 		boolean beganTransaction = false;
 		try {
 	            beganTransaction = TransactionUtil.begin();
@@ -96,7 +96,7 @@ public class InspectiveBizEvents {
 				Delegator delegator=(Delegator)request.getAttribute("delegator");
 				String billId=request.getParameter("billId");//单据id
 				if(delegator!=null&&billId!=null){
-					Debug.log("入库单审核:"+billId, module);
+					Debug.log("入库单撤销:"+billId, module);
 					GenericValue  billHead=delegator.findOne("PurchaseWarehousing", UtilMisc.toMap("id", billId), false);
 					if(billHead==null&&billHead.get("bizDate")==null){
 						throw new Exception("can`t find PurchaseWarehousing bill or bizdate is null");
@@ -113,14 +113,14 @@ public class InspectiveBizEvents {
 						String materialId=v.getString("materialMaterialId");//物料id
 						BigDecimal  volume=BigDecimal.ZERO.subtract(v.getBigDecimal("volume"));//负数量
 						BigDecimal  sum =BigDecimal.ZERO.subtract(v.getBigDecimal("entrysum"));//负金额
-						Debug.log("反审核采购入库单价计算:物料id"+materialId+";数量"+volume+";金额"+sum, module);
+						Debug.log("撤销采购入库单价计算:物料id"+materialId+";数量"+volume+";金额"+sum, module);
 						//构建计算条目
 						PriceCalItem item=new PriceCalItem(bizDate,warehouseId,materialId,volume,sum,BillType.PurchaseWarehouse,billId);
 						PriceMgr.getInstance().calPrice(item);
 					}
 				}
 				
-				BillBaseEvent.unauditBill(request, response);//反审核单据
+				BillBaseEvent.rollbackBill(request, response);//撤销单据
 		} catch (GenericTransactionException e) {
             Debug.logError(e, module);
             try {

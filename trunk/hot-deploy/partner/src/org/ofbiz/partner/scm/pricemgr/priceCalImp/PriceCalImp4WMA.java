@@ -63,7 +63,7 @@ public class PriceCalImp4WMA implements IPriceCal{
 		
 		
 		//取库存余额表
-		List<GenericValue> curValueList=delegator.findByAnd("CurMaterialBalance", UtilMisc.toMap("warehouseId",item.getWarehouseId(),"materialId", item.getMaterialId()));
+		List<GenericValue> curValueList=delegator.findByAnd("CurMaterialBalance", UtilMisc.toMap("year",new Integer(year),"month",new Integer(month),"warehouseId",item.getWarehouseId(),"materialId", item.getMaterialId()));
 		GenericValue curValue=null;
 		if(curValueList!=null&&curValueList.size()>0){
 			//取第一条匹配记录
