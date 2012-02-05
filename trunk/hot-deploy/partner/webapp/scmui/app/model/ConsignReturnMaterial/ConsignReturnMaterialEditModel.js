@@ -32,10 +32,10 @@ Ext.define('SCM.model.ConsignReturnMaterial.ConsignReturnMaterialEditModel', {
 				type : 'string',
 				persist : false
 			}, {
-				name : 'approverSystemUserId',
+				name : 'submitterSystemUserId',
 				type : 'string'
 			}, {
-				name : 'approverSystemUserName',
+				name : 'submitterSystemUserName',
 				type : 'string',
 				persist : false
 			}, {
@@ -70,7 +70,7 @@ Ext.define('SCM.model.ConsignReturnMaterial.ConsignReturnMaterialEditModel', {
 	proxy : {
 		type : 'jsonajax',
 		api : {
-			read : '../../scm/control/requestJsonData?entity=ConsignReturnMaterialView&distinct=true&fields=id,number,bizDate,processorSupplierId,processorSupplierName,checkerSystemUserId,checkerSystemUserName,approverSystemUserId,approverSystemUserName,totalsum,createdStamp,lastUpdatedStamp,note,status',
+			read : '../../scm/control/requestJsonData?entity=ConsignReturnMaterialView&distinct=true&fields=id,number,bizDate,processorSupplierId,processorSupplierName,checkerSystemUserId,checkerSystemUserName,submitterSystemUserId,submitterSystemUserName,totalsum,createdStamp,lastUpdatedStamp,note,status',
 			destroy : '../../scm/control/deleteWithEntry?headEntity=ConsignReturnMaterial&entryEntity=ConsignReturnMaterialEntry'
 		},
 		remoteFilter : true

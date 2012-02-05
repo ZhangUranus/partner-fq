@@ -32,10 +32,10 @@ Ext.define('SCM.model.WorkshopDrawMaterial.WorkshopDrawMaterialEditModel', {
 				type : 'string',
 				persist : false
 			}, {
-				name : 'approverSystemUserId',
+				name : 'submitterSystemUserId',
 				type : 'string'
 			}, {
-				name : 'approverSystemUserName',
+				name : 'submitterSystemUserName',
 				type : 'string',
 				persist : false
 			}, {
@@ -70,7 +70,7 @@ Ext.define('SCM.model.WorkshopDrawMaterial.WorkshopDrawMaterialEditModel', {
 	proxy : {
 		type : 'jsonajax',
 		api : {
-			read : '../../scm/control/requestJsonData?entity=WorkshopDrawMaterialView&distinct=true&fields=id,number,bizDate,workshopWorkshopId,workshopWorkshopName,issuerSystemUserId,issuerSystemUserName,approverSystemUserId,approverSystemUserName,totalsum,createdStamp,lastUpdatedStamp,note,status',
+			read : '../../scm/control/requestJsonData?entity=WorkshopDrawMaterialView&distinct=true&fields=id,number,bizDate,workshopWorkshopId,workshopWorkshopName,issuerSystemUserId,issuerSystemUserName,submitterSystemUserId,submitterSystemUserName,totalsum,createdStamp,lastUpdatedStamp,note,status',
 			destroy : '../../scm/control/deleteWithEntry?headEntity=WorkshopDrawMaterial&entryEntity=WorkshopDrawMaterialEntry'
 		},
 		remoteFilter : true

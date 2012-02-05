@@ -39,10 +39,10 @@ Ext.define('SCM.model.PurchaseWarehousing.PurchaseWarehousingEditModel', {
 						type : 'string',
 						persist : false
 					}, {
-						name : 'approverSystemUserId',
+						name : 'submitterSystemUserId',
 						type : 'string'
 					}, {
-						name : 'approverSystemUserName',
+						name : 'submitterSystemUserName',
 						type : 'string',
 						persist : false
 					}, {
@@ -79,7 +79,7 @@ Ext.define('SCM.model.PurchaseWarehousing.PurchaseWarehousingEditModel', {
 			proxy : {
 				type : 'jsonajax',
 				api : {
-					read : '../../scm/control/requestJsonData?entity=PurchaseWarehousingView&distinct=true&fields=id,number,bizDate,supplierSupplierId,supplierSupplierName,buyerSystemUserId,buyerSystemUserName,checkerSystemUserId,checkerSystemUserName,approverSystemUserId,approverSystemUserName,totalsum,createdStamp,lastUpdatedStamp,note,status',
+					read : '../../scm/control/requestJsonData?entity=PurchaseWarehousingView&distinct=true&fields=id,number,bizDate,supplierSupplierId,supplierSupplierName,buyerSystemUserId,buyerSystemUserName,checkerSystemUserId,checkerSystemUserName,submitterSystemUserId,submitterSystemUserName,totalsum,createdStamp,lastUpdatedStamp,note,status',
 					destroy : '../../scm/control/deleteWithEntry?headEntity=PurchaseWarehousing&entryEntity=PurchaseWarehousingEntry'
 				},
 				remoteFilter : true
