@@ -38,12 +38,12 @@ Ext.define('SCM.controller.${TemplateName}.${TemplateName}Controller', {
 								click : this.refreshRecord
 							},
 							// 列表审核按钮
-							'${TemplateName}list button[action=audit]' : {
-								click : this.auditBill
+							'${TemplateName}list button[action=submit]' : {
+								click : this.submitBill
 							},
 							// 列表反审核按钮
-							'${TemplateName}list button[action=unaudit]' : {
-								click : this.unauditBill
+							'${TemplateName}list button[action=rollback]' : {
+								click : this.rollbackBill
 							},
 							// 列表打印按钮
 							'${TemplateName}list button[action=print]' : {
