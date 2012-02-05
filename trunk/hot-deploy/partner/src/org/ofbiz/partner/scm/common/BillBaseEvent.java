@@ -26,11 +26,13 @@ public class BillBaseEvent {
 	public static String auditBill(HttpServletRequest request,HttpServletResponse response) throws Exception{
 		String billId=request.getParameter("billId");
 		String entity=request.getParameter("entity");
+		String approverNote=request.getParameter("approverNote");
 		if(entity!=null&&billId!=null){
 			Delegator delegator = (Delegator) request.getAttribute("delegator");
 			//更新状态字段
 			Map<String,Object> fieldSet=new HashMap<String, Object>();
 			fieldSet.put("status", 1);//设置为审核状态
+			fieldSet.put("approverNote", approverNote!=null ? approverNote : "");//设置审核意见
 			fieldSet.put("approverSystemUserId", CommonEvents.getAttributeToSession(request, "uid"));
 			delegator.storeByCondition(entity, fieldSet, EntityCondition.makeConditionWhere("id='"+billId+"'"));
 			return "sucess";
@@ -48,11 +50,13 @@ public class BillBaseEvent {
 	public static String auditBillNotPass(HttpServletRequest request,HttpServletResponse response) throws Exception{
 		String billId=request.getParameter("billId");
 		String entity=request.getParameter("entity");
+		String approverNote=request.getParameter("approverNote");
 		if(entity!=null&&billId!=null){
 			Delegator delegator = (Delegator) request.getAttribute("delegator");
 			//更新状态字段
 			Map<String,Object> fieldSet=new HashMap<String, Object>();
 			fieldSet.put("status", 2);//设置为审核不通过状态
+			fieldSet.put("approverNote", approverNote!=null ? approverNote : "");//设置审核意见
 			fieldSet.put("approverSystemUserId", CommonEvents.getAttributeToSession(request, "uid"));
 			delegator.storeByCondition(entity, fieldSet, EntityCondition.makeConditionWhere("id='"+billId+"'"));
 			return "sucess";
@@ -75,6 +79,7 @@ public class BillBaseEvent {
 			//更新状态字段
 			Map<String,Object> fieldSet=new HashMap<String, Object>();
 			fieldSet.put("status", 0);//设置为保存状态
+			fieldSet.put("approverNote", "");//设置审核意见
 			fieldSet.put("approverSystemUserId", CommonEvents.getAttributeToSession(request, "uid"));
 			delegator.storeByCondition(entity, fieldSet, EntityCondition.makeConditionWhere("id='"+billId+"'"));
 			return "sucess";
@@ -90,7 +95,7 @@ public class BillBaseEvent {
 	 * @return
 	 * @throws Exception
 	 */
-	public static String commitBill(HttpServletRequest request,HttpServletResponse response) throws Exception{
+	public static String submitBill(HttpServletRequest request,HttpServletResponse response) throws Exception{
 		String billId=request.getParameter("billId");
 		String entity=request.getParameter("entity");
 		if(entity!=null&&billId!=null){
@@ -113,7 +118,7 @@ public class BillBaseEvent {
 	 * @return
 	 * @throws Exception
 	 */
-	public static String uncommitBill(HttpServletRequest request,HttpServletResponse response) throws Exception{
+	public static String rollbackBill(HttpServletRequest request,HttpServletResponse response) throws Exception{
 		String billId=request.getParameter("billId");
 		String entity=request.getParameter("entity");
 		if(entity!=null&&billId!=null){
