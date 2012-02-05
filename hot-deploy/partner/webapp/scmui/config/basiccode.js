@@ -53,6 +53,20 @@ SCM.store.basiccode.billStatusRenderer = function(value){
 		
 };
 
+SCM.store.basiccode.approverStore = new Ext.data.Store({
+	fields: ['id', 'name'],
+	data : [
+		{'id':'1', 'name':'通过'},
+		{'id':'2', 'name':'不通过'}
+	]
+});
+SCM.store.basiccode.approverRenderer = function(value){
+	if(value=="1"){
+		return "通过";
+	}else 
+		return "不通过"
+};
+
 /**  
  * 用于处理提交数据  封装表头标题数据
  */  
