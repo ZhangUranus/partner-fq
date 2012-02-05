@@ -63,6 +63,9 @@ Ext.define('SCM.model.PurchaseBill.PurchaseBillEditModel', {
 				name : 'note',
 				type : 'string'
 			}, {
+				name : 'approverNote',
+				type : 'string'
+			}, {
 				name : 'status',
 				type : 'int'
 			}],
@@ -70,7 +73,7 @@ Ext.define('SCM.model.PurchaseBill.PurchaseBillEditModel', {
 	proxy : {
 		type : 'jsonajax',
 		api : {
-			read : '../../scm/control/requestJsonData?entity=PurchaseBillView&distinct=true&fields=id,number,bizDate,supplierSupplierId,supplierSupplierName,buyerSystemUserId,buyerSystemUserName,approverSystemUserId,approverSystemUserName,totalsum,createdStamp,lastUpdatedStamp,note,status',
+			read : '../../scm/control/requestJsonData?entity=PurchaseBillView&distinct=true&fields=id,number,bizDate,supplierSupplierId,supplierSupplierName,buyerSystemUserId,buyerSystemUserName,approverSystemUserId,approverSystemUserName,totalsum,createdStamp,lastUpdatedStamp,note,approverNote,status',
 			destroy : '../../scm/control/deleteWithEntry?headEntity=PurchaseBill&entryEntity=PurchaseBillEntry'
 		},
 		remoteFilter : true
