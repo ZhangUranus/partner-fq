@@ -26,36 +26,13 @@ public class BillBaseEvent {
 	public static String auditBill(HttpServletRequest request,HttpServletResponse response) throws Exception{
 		String billId=request.getParameter("billId");
 		String entity=request.getParameter("entity");
+		String status=request.getParameter("status");
 		String approverNote=request.getParameter("approverNote");
 		if(entity!=null&&billId!=null){
 			Delegator delegator = (Delegator) request.getAttribute("delegator");
 			//更新状态字段
 			Map<String,Object> fieldSet=new HashMap<String, Object>();
-			fieldSet.put("status", 1);//设置为审核状态
-			fieldSet.put("approverNote", approverNote!=null ? approverNote : "");//设置审核意见
-			fieldSet.put("approverSystemUserId", CommonEvents.getAttributeToSession(request, "uid"));
-			delegator.storeByCondition(entity, fieldSet, EntityCondition.makeConditionWhere("id='"+billId+"'"));
-			return "sucess";
-		}else{
-			throw new Exception("empty billId or null entity");
-		}
-	}
-	/**
-	 * 审核不通过
-	 * @param request
-	 * @param response
-	 * @return
-	 * @throws Exception
-	 */
-	public static String auditBillNotPass(HttpServletRequest request,HttpServletResponse response) throws Exception{
-		String billId=request.getParameter("billId");
-		String entity=request.getParameter("entity");
-		String approverNote=request.getParameter("approverNote");
-		if(entity!=null&&billId!=null){
-			Delegator delegator = (Delegator) request.getAttribute("delegator");
-			//更新状态字段
-			Map<String,Object> fieldSet=new HashMap<String, Object>();
-			fieldSet.put("status", 2);//设置为审核不通过状态
+			fieldSet.put("status", status!=null ? Integer.parseInt(status) : 1);//设置为审核状态
 			fieldSet.put("approverNote", approverNote!=null ? approverNote : "");//设置审核意见
 			fieldSet.put("approverSystemUserId", CommonEvents.getAttributeToSession(request, "uid"));
 			delegator.storeByCondition(entity, fieldSet, EntityCondition.makeConditionWhere("id='"+billId+"'"));
