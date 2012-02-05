@@ -1,5 +1,6 @@
 package org.ofbiz.partner.scm.pricemgr;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import org.ofbiz.entity.Delegator;
@@ -27,8 +28,10 @@ public class MonthlySettlement {
 		//获取当前系统操作年月
 		//获取当前系统操作年月
 		Date curDate=Utils.getCurDate();
-		year=curDate.getYear();
-		month=curDate.getMonth();
+		Calendar   cal   =   Calendar.getInstance();
+		cal.setTime(curDate);
+		year=cal.get(Calendar.YEAR);
+		month=cal.get(Calendar.MONTH)+1;
 	}
 	
 	/**

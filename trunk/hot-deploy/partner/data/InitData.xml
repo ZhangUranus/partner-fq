@@ -260,4 +260,6 @@ under the License.
 	<TSystemSerialNumber id='caca485d-3e34-412e-bac7-5d6377e91d74' serialDate='20120101' entityName='WorkshopReturnMaterial' prefix='WRM' serialNumber='100001' initNumber='100001' description='制造退料单编号' hasDate='1' />
 	<TSystemSerialNumber id='2b5a51ce-e920-47c0-990a-1976843a856b' serialDate='20120101' entityName='WorkshopWarehousing' prefix='WWS' serialNumber='100001' initNumber='100001' description='制造入库单编号' hasDate='1' />
 	<TSystemSerialNumber id='d6549ba2-c2b8-457b-bb87-437787b38624' serialDate='20120101' entityName='WorkshopReturnProduct' prefix='WRP' serialNumber='100001' initNumber='100001' description='制造退货单编号' hasDate='1' />
+	
+	<PriceMgrParamters id='001'  value='2012-02-01 00:00:00.000'/>
 </entity-engine-xml>
