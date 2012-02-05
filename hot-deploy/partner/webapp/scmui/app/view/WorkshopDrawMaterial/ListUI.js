@@ -71,10 +71,10 @@ Ext.define('SCM.view.WorkshopDrawMaterial.ListUI', {
 													text : '发货员'
 												}, {
 													xtype : 'gridcolumn',
-													dataIndex : 'approverSystemUserName',
+													dataIndex : 'submitterSystemUserName',
 													width : 80,
 													groupable : false,
-													text : '审核员'
+													text : '提交人'
 												}, {
 													xtype : 'numbercolumn',
 													dataIndex : 'totalsum',

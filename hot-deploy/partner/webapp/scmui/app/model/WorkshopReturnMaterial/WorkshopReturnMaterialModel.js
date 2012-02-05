@@ -33,10 +33,10 @@ Ext.define('SCM.model.WorkshopReturnMaterial.WorkshopReturnMaterialModel', {
 						type : 'string',
 						persist : false
 					}, {
-						name : 'approverSystemUserId',
+						name : 'submitterSystemUserId',
 						type : 'string'
 					}, {
-						name : 'approverSystemUserName',
+						name : 'submitterSystemUserName',
 						type : 'string',
 						persist : false
 					}, {

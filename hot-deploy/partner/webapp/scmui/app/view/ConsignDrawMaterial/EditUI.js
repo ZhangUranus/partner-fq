@@ -108,8 +108,8 @@ Ext.define('SCM.view.ConsignDrawMaterial.EditUI', {
 																}
 															}, {
 																xtype : 'combogrid',
-																fieldLabel : '审核员',
-																name : 'approverSystemUserId',
+																fieldLabel : '提交人',
+																name : 'submitterSystemUserId',
 																valueField : 'id',
 																displayField : 'name',
 																store : Ext.create('SystemUserStore'),

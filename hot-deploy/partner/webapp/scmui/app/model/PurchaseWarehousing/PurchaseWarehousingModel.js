@@ -40,10 +40,10 @@ Ext.define('SCM.model.PurchaseWarehousing.PurchaseWarehousingModel', {
 						type : 'string',
 						persist : false
 					}, {
-						name : 'approverSystemUserId',
+						name : 'submitterSystemUserId',
 						type : 'string'
 					}, {
-						name : 'approverSystemUserName',
+						name : 'submitterSystemUserName',
 						type : 'string',
 						persist : false
 					}, {
