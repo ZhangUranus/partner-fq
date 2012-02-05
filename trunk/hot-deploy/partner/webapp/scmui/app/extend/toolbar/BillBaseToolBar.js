@@ -136,6 +136,19 @@ Ext.define('SCM.extend.toolbar.BillBaseToolbar', {
 								action : 'unaudit'
 							}]);
 				}
+				
+				// 增加提交按钮
+				if(me.submit){
+					tools.push([{
+								text : '提交',
+								iconCls : 'system-submit',
+								action : 'submit'
+							}, {
+								text : '撤销',
+								iconCls : 'system-rollback',
+								action : 'rollback'
+							}]);
+				}
 
 				// 增加打印按钮
 				tools.push([{

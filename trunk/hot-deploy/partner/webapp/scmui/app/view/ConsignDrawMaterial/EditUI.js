@@ -323,6 +323,7 @@ Ext.define('SCM.view.ConsignDrawMaterial.EditUI', {
 									}],
 							dockedItems : [{
 										xtype : 'savetoolbar',
+										type : 'bill',
 										dock : 'bottom'
 									}]
 						});

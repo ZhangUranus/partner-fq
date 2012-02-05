@@ -34,7 +34,8 @@ SCM.store.basiccode.billStatusStore = new Ext.data.Store({
 		{'id':'0', 'name':'保存'},
 		{'id':'1', 'name':'已审核'},
 		{'id':'2', 'name':'审核不通过'},
-		{'id':'3', 'name':'已结算'}
+		{'id':'3', 'name':'已结算'},
+		{'id':'4', 'name':'已提交'}
 	]
 });
 SCM.store.basiccode.billStatusRenderer = function(value){

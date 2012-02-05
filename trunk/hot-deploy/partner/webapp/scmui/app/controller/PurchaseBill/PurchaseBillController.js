@@ -1,4 +1,4 @@
-﻿Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
+Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 			extend : 'Ext.app.Controller',
 			mixins : ['SCM.extend.exporter.Exporter', 'SCM.extend.controller.BillCommonController'],
 			views : ['PurchaseBill.ListUI', 'PurchaseBill.EditUI'],
@@ -90,6 +90,33 @@
 			},
 			
 			/**
+			 * 页面初始化方法
+			 * 
+			 * @param {}
+			 *            grid 事件触发控件
+			 */
+			initComponent : function(view) {
+				this.listContainer = view;
+				this.listPanel = view.down('gridpanel[region=center]');// 表头列表
+				this.detailPanel = view.down('gridpanel[region=south]');// 明细列表
+				this.newButton = view.down('button[action=addNew]');// 新增按钮
+				this.deleteButton = view.down('button[action=delete]');// 删除按钮
+				this.editButton = view.down('button[action=modify]');// 编辑按钮
+				this.auditButton = view.down('button[action=audit]');// 提交按钮
+				this.unauditButton = view.down('button[action=unaudit]');// 反审核按钮
+
+				this.listPanel.store.proxy.addListener('afterRequest', this.afterRequest, this); // 监听所有请求回调
+
+				this.getEdit();
+				this.initButtonByPermission();
+				this.changeComponentsState();
+				this.initEnterEvent();
+				this.afterInitComponent();
+				this.refreshRecord();
+				this.searchMaterialId.store.load();			//初始化物料列表
+			},
+			
+			/**
 			 * 重新方法，增加查询条件控件的引用
 			 */
 			afterInitComponent : function() {
@@ -98,6 +125,66 @@
 				this.searchMaterialId = this.listContainer.down('combogrid[name=searchMaterialId]');
 				this.searchCustId = this.listContainer.down('combogrid[name=searchCustId]');
 				this.totalFields = this.editForm.down('textfield[name=totalsum]');
+			},
+			
+			/**
+			 * 根据用户权限初始化按钮状态
+			 * 
+			 */
+			initButtonByPermission : function() {
+				if (this.listContainer.permission.add) {
+					this.newButton.setVisible(true);
+				} else {
+					this.newButton.setVisible(false);
+				}
+				if (this.listContainer.permission.edit) {
+					this.editButton.setVisible(true);
+				} else {
+					this.editButton.setVisible(false);
+				}
+				if (this.listContainer.permission.remove) {
+					this.deleteButton.setVisible(true);
+				} else {
+					this.deleteButton.setVisible(false);
+				}
+				if (this.listContainer.permission.audit) {
+					this.auditButton.setVisible(true);
+					this.unauditButton.setVisible(true);
+				} else {
+					this.auditButton.setVisible(false);
+					this.unauditButton.setVisible(false);
+				}
+			},
+			
+			/**
+			 * 用户操作触发改变界面控件状态 如：选中记录
+			 */
+			changeComponentsState : function() {
+				if (this.listPanel.getSelectionModel().hasSelection()) {
+					this.deleteButton.setDisabled(false);
+					this.editButton.setDisabled(false);
+					this.auditButton.setDisabled(false);
+					this.unauditButton.setDisabled(false);
+				} else {
+					this.deleteButton.setDisabled(true);
+					this.editButton.setDisabled(true);
+					this.auditButton.setDisabled(true);
+					this.unauditButton.setDisabled(true);
+				}
+				if (this.win.uiStatus == 'AddNew') {
+					this.saveButton.setVisible(true);
+				} else {
+					if (this.listContainer.permission.edit) {
+						this.saveButton.setVisible(true);
+						// Ext.each(this.fields, function(item, index, length)
+						// {由初始化状态决定
+						// item.setReadOnly(false);
+						// })
+					} else {
+						this.saveButton.setVisible(false);
+						this.setFieldsReadOnly(true);
+					}
+				}
 			},
 			
 			/**

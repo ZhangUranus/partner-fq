@@ -299,6 +299,7 @@ Ext.define('SCM.view.WorkshopReturnMaterial.EditUI', {
 									}],
 							dockedItems : [{
 										xtype : 'savetoolbar',
+										type : 'bill',
 										dock : 'bottom'
 									}]
 						});
