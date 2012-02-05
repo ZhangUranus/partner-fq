@@ -65,6 +65,16 @@
         <event type="java" path="org.ofbiz.partner.scm.common.BillBaseEvent" invoke="unauditBill"/>
         <response name="success" type="none" />
     </request-map>
+    <request-map uri="submitBill">
+    	<security auth="false" />
+        <event type="java" path="org.ofbiz.partner.scm.common.BillBaseEvent" invoke="submitBill"/>
+        <response name="success" type="none" />
+    </request-map>
+    <request-map uri="rollbackBill">
+    	<security auth="false" />
+        <event type="java" path="org.ofbiz.partner.scm.common.BillBaseEvent" invoke="rollbackBill"/>
+        <response name="success" type="none" />
+    </request-map>
     
     <request-map uri="requestJsonData">
            <security https="false" auth="false"/>
