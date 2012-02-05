@@ -47,6 +47,8 @@ SCM.store.basiccode.billStatusRenderer = function(value){
 		return '审核不通过';
 	}else if(value=='3'){
 		return '已结算';
+	}else if(value=='4'){
+		return '已提交';
 	}
 		
 };
