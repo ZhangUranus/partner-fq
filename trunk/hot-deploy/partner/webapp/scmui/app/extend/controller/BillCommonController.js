@@ -25,7 +25,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				this.deleteButton = view.down('button[action=delete]');// 删除按钮
 				this.editButton = view.down('button[action=modify]');// 编辑按钮
 				this.submitButton = view.down('button[action=submit]');// 提交按钮
-				this.rollbackButton = view.down('button[action=rollback]');// 反审核按钮
+				this.rollbackButton = view.down('button[action=rollback]');// 撤销按钮
 
 				this.listPanel.store.proxy.addListener('afterRequest', this.afterRequest, this); // 监听所有请求回调
 
