@@ -136,16 +136,16 @@
            <response name="success" type="none"/>
        </request-map>
       
-      <!-- 验收单审核-->
-      <request-map uri="auditInspective">
+      <!-- 验收单提交-->
+      <request-map uri="submitInspective">
            <security https="false" auth="false"/>
-           <event type="java" path="org.ofbiz.partner.scm.stock.InspectiveBizEvents" invoke="auditBill"/>
+           <event type="java" path="org.ofbiz.partner.scm.stock.InspectiveBizEvents" invoke="submitBill"/>
            <response name="success" type="none"/>
        </request-map>
-       <!-- 验收单反审核-->
-       <request-map uri="unauditInspective">
+       <!-- 验收单撤销-->
+       <request-map uri="rollbackInspective">
            <security https="false" auth="false"/>
-           <event type="java" path="org.ofbiz.partner.scm.stock.InspectiveBizEvents" invoke="unauditBill"/>
+           <event type="java" path="org.ofbiz.partner.scm.stock.InspectiveBizEvents" invoke="rollbackBill"/>
            <response name="success" type="none"/>
        </request-map>
       
