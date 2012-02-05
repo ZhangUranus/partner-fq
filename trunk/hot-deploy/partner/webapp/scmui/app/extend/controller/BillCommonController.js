@@ -268,7 +268,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 			 *            record 选中记录
 			 */
 			modifyRecord : function(grid, record) {
-				if (record.data.status == '1' || record.data.status == '3') {
+				if (record.data.status == '1' || record.data.status == '2' || record.data.status == '3' || record.data.status == '4') {
 					this.changeEditStatus(true);
 				} else {
 					this.changeEditStatus(false);
@@ -342,7 +342,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 					// 删除选择的记录
 					records = sm.getSelection();
 					for (i in records) {
-						if (records[i].data.status == '1') {
+						if (records[i].data.status == '1' || records[i].data.status == '2') {
 							showWarning('单据为已审核状态，不允许删除！');
 							return;
 						}else if(records[i].data.status == '3'){
@@ -399,8 +399,8 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 
 				if (sm.hasSelection()) {// 判断是否选择行记录
 					record = sm.getLastSelected();
-					if (record.get('status') == '0') {
-						showWarning('单据未提交！');
+					if (record.get('status') != '4') {
+						showWarning('单据非已提交状态！');
 						return;
 					}
 					Ext.Msg.confirm('提示', '确定撤销该' + this.gridTitle + '？', confirmChange, this);
