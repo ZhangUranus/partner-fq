@@ -37,13 +37,13 @@ Ext.define('SCM.controller.ConsignDrawMaterial.ConsignDrawMaterialController', {
 							'ConsignDrawMateriallist button[action=search]' : {
 								click : this.refreshRecord
 							},
-							// 列表审核按钮
-							'ConsignDrawMateriallist button[action=audit]' : {
-								click : this.auditBill
+							// 列表提交按钮
+							'ConsignDrawMateriallist button[action=submit]' : {
+								click : this.submitBill
 							},
-							// 列表反审核按钮
-							'ConsignDrawMateriallist button[action=unaudit]' : {
-								click : this.unauditBill
+							// 列表撤销按钮
+							'ConsignDrawMateriallist button[action=rollback]' : {
+								click : this.rollbackBill
 							},
 							// 列表打印按钮
 							'ConsignDrawMateriallist button[action=print]' : {

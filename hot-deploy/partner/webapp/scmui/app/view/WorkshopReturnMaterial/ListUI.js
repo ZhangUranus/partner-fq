@@ -19,7 +19,7 @@ Ext.define('SCM.view.WorkshopReturnMaterial.ListUI', {
 				Ext.applyIf(me, {
 							items : [{
 										xtype : 'billbasetoolbar',// 工具栏
-										audit : true,
+										submit : true,
 										custType : 'workshop',
 										region : 'north'
 									}, {

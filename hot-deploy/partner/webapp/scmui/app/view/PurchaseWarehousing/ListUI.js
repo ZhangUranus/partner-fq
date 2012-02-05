@@ -20,7 +20,7 @@ Ext.define('SCM.view.PurchaseWarehousing.ListUI', {
 				Ext.applyIf(me, {
 							items : [{
 										xtype : 'billbasetoolbar',//工具栏
-										audit : true,			//保留审核功能，通过权限屏蔽
+										submit : true,			//保留审核功能，通过权限屏蔽
 										custType : 'supplier',
 										region : 'north'
 									}, {

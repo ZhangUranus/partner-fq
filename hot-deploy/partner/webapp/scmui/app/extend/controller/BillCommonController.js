@@ -24,8 +24,8 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				this.newButton = view.down('button[action=addNew]');// 新增按钮
 				this.deleteButton = view.down('button[action=delete]');// 删除按钮
 				this.editButton = view.down('button[action=modify]');// 编辑按钮
-				this.auditButton = view.down('button[action=audit]');// 审核按钮
-				this.unauditButton = view.down('button[action=unaudit]');// 反审核按钮
+				this.submitButton = view.down('button[action=submit]');// 提交按钮
+				this.rollbackButton = view.down('button[action=rollback]');// 反审核按钮
 
 				this.listPanel.store.proxy.addListener('afterRequest', this.afterRequest, this); // 监听所有请求回调
 
@@ -138,11 +138,11 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 					this.deleteButton.setVisible(false);
 				}
 				if (this.listContainer.permission.audit) {
-					this.auditButton.setVisible(true);
-					this.unauditButton.setVisible(true);
+					this.submitButton.setVisible(true);
+					this.rollbackButton.setVisible(true);
 				} else {
-					this.auditButton.setVisible(false);
-					this.unauditButton.setVisible(false);
+					this.submitButton.setVisible(false);
+					this.rollbackButton.setVisible(false);
 				}
 			},
 
@@ -153,13 +153,13 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				if (this.listPanel.getSelectionModel().hasSelection()) {
 					this.deleteButton.setDisabled(false);
 					this.editButton.setDisabled(false);
-					this.auditButton.setDisabled(false);
-					this.unauditButton.setDisabled(false);
+					this.submitButton.setDisabled(false);
+					this.rollbackButton.setDisabled(false);
 				} else {
 					this.deleteButton.setDisabled(true);
 					this.editButton.setDisabled(true);
-					this.auditButton.setDisabled(true);
-					this.unauditButton.setDisabled(true);
+					this.submitButton.setDisabled(true);
+					this.rollbackButton.setDisabled(true);
 				}
 				if (this.win.uiStatus == 'AddNew') {
 					this.saveButton.setVisible(true);
@@ -286,7 +286,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 
 				if (sm.hasSelection()) {// 判断是否选择行记录
 					record = sm.getLastSelected();
-					// 如果单据状态是审核或者已经结算则不能修改
+					// 如果单据状态是已提交、已审核或者已经结算则不能修改
 					this.modifyRecord(this.listPanel, record);
 				}
 			},
@@ -325,6 +325,9 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 						}else if(records[i].data.status == '3'){
 							showWarning('单据为已结算状态，不允许删除！');
 							return;
+						}else if(records[i].data.status == '4'){
+							showWarning('单据为已提交状态，不允许删除！');
+							return;
 						}
 					}
 
@@ -343,17 +346,17 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 			 */
 			refreshRecord : Ext.emptyFn,
 
-			// 审核单据
-			auditBill : function(button) {
+			// 提交单据
+			submitBill : function(button) {
 				sm = this.listPanel.getSelectionModel();
 
 				if (sm.hasSelection()) {// 判断是否选择行记录
 					record = sm.getLastSelected();
 					if (record.get('status') != '0') {
-						showWarning('单据已审核！');
+						showWarning('单据已提交！');
 						return;
 					}
-					Ext.Msg.confirm('提示', '确定审核该' + this.gridTitle + '？', confirmChange, this);
+					Ext.Msg.confirm('提示', '确定提交该' + this.gridTitle + '？', confirmChange, this);
 					function confirmChange(id) {
 						if (id == 'yes') {
 							Ext.Ajax.request({
@@ -367,17 +370,17 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 					}
 				}
 			},
-			// 反审核单据
-			unauditBill : function(button) {
+			// 撤销单据
+			rollbackBill : function(button) {
 				sm = this.listPanel.getSelectionModel();
 
 				if (sm.hasSelection()) {// 判断是否选择行记录
 					record = sm.getLastSelected();
 					if (record.get('status') == '0') {
-						showWarning('单据未审核！');
+						showWarning('单据未提交！');
 						return;
 					}
-					Ext.Msg.confirm('提示', '确定反审核该' + this.gridTitle + '？', confirmChange, this);
+					Ext.Msg.confirm('提示', '确定撤销该' + this.gridTitle + '？', confirmChange, this);
 					function confirmChange(id) {
 						if (id == 'yes') {
 							Ext.Ajax.request({

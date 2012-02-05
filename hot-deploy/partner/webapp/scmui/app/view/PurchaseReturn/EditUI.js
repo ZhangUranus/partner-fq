@@ -316,6 +316,7 @@ Ext.define('SCM.view.PurchaseReturn.EditUI', {
 									}],
 							dockedItems : [{
 										xtype : 'savetoolbar',
+										type : 'bill',
 										dock : 'bottom'
 									}]
 						});
