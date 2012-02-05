@@ -1,7 +1,7 @@
 Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 			extend : 'Ext.app.Controller',
 			mixins : ['SCM.extend.exporter.Exporter', 'SCM.extend.controller.BillCommonController'],
-			views : ['PurchaseBill.ListUI', 'PurchaseBill.EditUI'],
+			views : ['PurchaseBill.ListUI', 'PurchaseBill.EditUI', 'PurchaseBill.ApproverEditUI'],
 			stores : ['PurchaseBill.PurchaseBillStore', 'PurchaseBill.PurchaseBillEditStore', 'PurchaseBill.PurchaseBillEditEntryStore'],
 			requires : ['SCM.model.PurchaseBill.PurchaseBillActionModel'],
 			gridTitle : '采购单',
@@ -49,7 +49,7 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 							'PurchaseBilllist button[action=print]' : {
 								click : this.print
 							},
-							//列表导出
+							// 列表导出
 							'PurchaseBilllist button[action=export]' : {
 								click : this.exportExcel
 							},
@@ -85,10 +85,18 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 							// 角色列表更新事件
 							'PurchaseBilledit grid' : {
 								selectionchange : this.fieldChange
+							},
+							// 审批界面保存事件
+							'purchasebillapproveredit button[action=save]' : {
+								click : this.approverSave
+							},
+							// 审批界面取消事件
+							'purchasebillapproveredit button[action=cancel]' : {
+								click : this.approverCancel
 							}
 						});
 			},
-			
+
 			/**
 			 * 重新方法，增加查询条件控件的引用
 			 */
@@ -100,35 +108,40 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 				this.totalFields = this.editForm.down('textfield[name=totalsum]');
 				this.auditButton = this.listContainer.down('button[action=audit]');// 审核按钮
 				this.unauditButton = this.listContainer.down('button[action=unaudit]');// 反审核按钮
+
+				this.approverWin = Ext.widget('purchasebillapproveredit');
+				this.approverStatus = this.approverWin.down('combobox[name=status]');
+				this.approverNote = this.approverWin.down('textarea[name=approverNote]');
+				
 			},
-			
+
 			/**
 			 * 重写刷新方法
 			 * 
 			 */
 			refreshRecord : function() {
 				var tempString = '';
-				if(this.searchStartDate.getValue()){
+				if (this.searchStartDate.getValue()) {
 					tempString += 'PurchaseBillV.biz_date >= \'' + this.searchStartDate.getRawValue() + ' 00:00:00\'';
 				}
-				if(this.searchEndDate.getValue()){
-					if(tempString != ''){
-						if(this.searchStartDate.getRawValue()>this.searchEndDate.getRawValue()){
+				if (this.searchEndDate.getValue()) {
+					if (tempString != '') {
+						if (this.searchStartDate.getRawValue() > this.searchEndDate.getRawValue()) {
 							showWarning('开始日期不允许大于结束日期，请重新选择！');
-							return ;
+							return;
 						}
 						tempString += ' and ';
 					}
 					tempString += 'PurchaseBillV.biz_date <= \'' + this.searchEndDate.getRawValue() + ' 23:59:59\'';
 				}
-				if(this.searchMaterialId.getValue() && this.searchMaterialId.getValue() != ''){
-					if(tempString != ''){
+				if (this.searchMaterialId.getValue() && this.searchMaterialId.getValue() != '') {
+					if (tempString != '') {
 						tempString += ' and ';
 					}
 					tempString += 'PurchaseBillEntryV.material_material_id = \'' + this.searchMaterialId.getValue() + '\'';
 				}
-				if(this.searchCustId.getValue() && this.searchCustId.getValue() != ''){
-					if(tempString != ''){
+				if (this.searchCustId.getValue() && this.searchCustId.getValue() != '') {
+					if (tempString != '') {
 						tempString += ' and ';
 					}
 					tempString += 'PurchaseBillV.supplier_supplier_id = \'' + this.searchCustId.getValue() + '\'';
@@ -138,27 +151,30 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 				this.detailPanel.store.removeAll();
 				this.changeComponentsState();
 			},
-			
+
 			/**
 			 * 当用户编辑grid时，同步更新相关表单数据
-			 * @param {} editor
-			 * @param {} e
+			 * 
+			 * @param {}
+			 *            editor
+			 * @param {}
+			 *            e
 			 */
-			initMaterialInfo : function(editor,e){
-				if(e.field == 'materialMaterialId'){
-					var record = this.searchMaterialId.store.findRecord('id',e.value);
-					if(record){
-						e.record.set('materialMaterialModel',record.get('model'));
-						e.record.set('price',record.get('defaultPrice'));
-						e.record.set('refPrice',record.get('defaultPrice'));
-						e.record.set('unitUnitId',record.get('defaultUnitId'));
-						e.record.set('unitUnitName',record.get('defaultUnitName'));
+			initMaterialInfo : function(editor, e) {
+				if (e.field == 'materialMaterialId') {
+					var record = this.searchMaterialId.store.findRecord('id', e.value);
+					if (record) {
+						e.record.set('materialMaterialModel', record.get('model'));
+						e.record.set('price', record.get('defaultPrice'));
+						e.record.set('refPrice', record.get('defaultPrice'));
+						e.record.set('unitUnitId', record.get('defaultUnitId'));
+						e.record.set('unitUnitName', record.get('defaultUnitName'));
 					}
 				}
-				e.record.set('entrysum',e.record.get('price')*e.record.get('volume'));
+				e.record.set('entrysum', e.record.get('price') * e.record.get('volume'));
 				var count = e.grid.store.getCount();
 				var sum = 0;
-				for(var i =0;i<count;i++){
+				for (var i = 0; i < count; i++) {
 					sum += e.grid.store.getAt(i).get('entrysum');
 				}
 				this.totalFields.setValue(sum);
@@ -173,23 +189,8 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 						showError('单据已审核！');
 						return;
 					}
-					Ext.Msg.confirm('提示', '确定审核该' + this.gridTitle + '？', confirmChange, this);
-					function confirmChange(id) {
-						if (id == 'yes') {
-							Ext.Ajax.request({
-								scope : this,
-								params: {
-					                billId: record.get('id'),
-					                entity : this.entityName,
-					                approverNote : '同意'
-					            },
-								url : '../../scm/control/auditPurchaseBill',
-								success : function(response) {
-									this.refreshRecord();
-								}
-							});
-						}
-					}
+					this.approverWin.show();
+					this.approverWin.billId = record.get('id');
 				}
 			},
 			// 反审核单据
@@ -198,25 +199,56 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 
 				if (sm.hasSelection()) {// 判断是否选择行记录
 					record = sm.getLastSelected();
-					if (record.get('status') == '0') {
-						showError('单据未审核！');
+					if (record.get('status') != '1' || record.get('status') != '2') {
+						showError('单据非已审核！');
 						return;
 					}
 					Ext.Msg.confirm('提示', '确定反审核该' + this.gridTitle + '？', confirmChange, this);
 					function confirmChange(id) {
 						if (id == 'yes') {
 							Ext.Ajax.request({
-								scope : this,
-								url : '../../scm/control/unauditPurchaseBill?billId=' + record.get('id') + '&entity=' + this.entityName,
-								success : function(response) {
-									this.refreshRecord();
-								}
-							});
+										scope : this,
+										url : '../../scm/control/unauditPurchaseBill?billId=' + record.get('id') + '&entity=' + this.entityName,
+										success : function(response) {
+											this.refreshRecord();
+										}
+									});
 						}
 					}
-					
-				}
-			}
 
+				}
+			},
+
+			/**
+			 * 审批界面保存
+			 */
+			approverSave : function() {
+				if(!this.approverNote.isValid() || !this.approverStatus.isValid()){
+					return ;
+				}
+				Ext.Ajax.request({
+							scope : this,
+							params : {
+								billId : this.approverWin.billId,
+								entity : this.entityName,
+								approverNote : this.approverNote.getValue(),
+								status : this.approverStatus.getValue()
+							},
+							url : '../../scm/control/auditPurchaseBill',
+							success : function(response) {
+								this.refreshRecord();
+								this.approverCancel();
+							}
+						});
+			},
+
+			/**
+			 * 审批界面取消
+			 */
+			approverCancel : function() {
+				this.approverNote.setValue('');
+				this.approverStatus.setValue('');
+				this.approverWin.close();
+			}
 
 		});
