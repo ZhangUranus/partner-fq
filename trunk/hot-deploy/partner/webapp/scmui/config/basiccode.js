@@ -67,6 +67,24 @@ SCM.store.basiccode.approverRenderer = function(value){
 		return "不通过"
 };
 
+SCM.store.basiccode.checkStatusStore = new Ext.data.Store({
+	fields: ['id', 'name'],
+	data : [
+		{'id':'0', 'name':'未验收'},
+		{'id':'1', 'name':'验收中'},
+		{'id':'2', 'name':'已完成'}
+	]
+});
+SCM.store.basiccode.checkStatusRenderer = function(value){
+	if(value=='0'){
+		return '未验收';
+	}else if(value=='1'){
+		return '验收中';
+	}else if(value=='2'){
+		return '已完成';
+	}
+};
+
 /**  
  * 用于处理提交数据  封装表头标题数据
  */  
