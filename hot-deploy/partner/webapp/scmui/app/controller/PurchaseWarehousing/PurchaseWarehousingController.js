@@ -185,7 +185,11 @@ Ext.define('SCM.controller.PurchaseWarehousing.PurchaseWarehousingController', {
 						if (id == 'yes') {
 							Ext.Ajax.request({
 										scope : this,
-										url : '../../scm/control/submitInspective?billId=' + record.get('id') + '&entity=' + this.entityName,
+										params : {
+											billId : record.get('id'),
+											entity : this.entityName
+										},
+										url : '../../scm/control/submitInspective',
 										success : function(response) {
 											this.refreshRecord();
 										}
@@ -194,13 +198,14 @@ Ext.define('SCM.controller.PurchaseWarehousing.PurchaseWarehousingController', {
 					}
 				}
 			},
+			
 			// 撤销单据
 			rollbackBill : function(button) {
 				sm = this.listPanel.getSelectionModel();
 
 				if (sm.hasSelection()) {// 判断是否选择行记录
 					record = sm.getLastSelected();
-					if (record.get('status') == '0') {
+					if (record.get('status') != '4') {
 						showWarning('单据未提交！');
 						return;
 					}
@@ -209,7 +214,11 @@ Ext.define('SCM.controller.PurchaseWarehousing.PurchaseWarehousingController', {
 						if (id == 'yes') {
 							Ext.Ajax.request({
 										scope : this,
-										url : '../../scm/control/rollbackInspective?billId=' + record.get('id') + '&entity=' + this.entityName,
+										params : {
+											billId : record.get('id'),
+											entity : this.entityName
+										},
+										url : '../../scm/control/rollbackInspective',
 										success : function(response) {
 											this.refreshRecord();
 										}
