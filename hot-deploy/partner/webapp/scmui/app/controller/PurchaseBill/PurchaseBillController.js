@@ -208,7 +208,12 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 						if (id == 'yes') {
 							Ext.Ajax.request({
 										scope : this,
-										url : '../../scm/control/unauditPurchaseBill?billId=' + record.get('id') + '&entity=' + this.entityName,
+										params : {
+											billId : record.get('id'),
+											entity : this.entityName,
+											isValid : record.get('status')=='1'? true:false
+										},
+										url : '../../scm/control/unauditPurchaseBill',
 										success : function(response) {
 											this.refreshRecord();
 										}
@@ -232,7 +237,8 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 								billId : this.approverWin.billId,
 								entity : this.entityName,
 								approverNote : this.approverNote.getValue(),
-								status : this.approverStatus.getValue()
+								status : this.approverStatus.getValue(),
+								isValid : this.approverStatus.getValue()=='1' ? true:false
 							},
 							url : '../../scm/control/auditPurchaseBill',
 							success : function(response) {
@@ -241,7 +247,7 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 							}
 						});
 			},
-
+			
 			/**
 			 * 审批界面取消
 			 */
