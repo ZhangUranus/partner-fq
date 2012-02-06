@@ -55,7 +55,12 @@
         <event type="java" path="org.ofbiz.partner.scm.security.SecurityEvents" invoke="getUserPermissions"/>
         <response name="success" type="none" />
     </request-map>
-   <request-map uri="auditBill">
+   <request-map uri="getCurDate">
+    	<security auth="false" />
+        <event type="java" path="org.ofbiz.partner.scm.pricemgr.Utils" invoke="getCurDate"/>
+        <response name="success" type="none" />
+    </request-map>
+    <request-map uri="auditBill">
     	<security auth="false" />
         <event type="java" path="org.ofbiz.partner.scm.common.BillBaseEvent" invoke="auditBill"/>
         <response name="success" type="none" />
