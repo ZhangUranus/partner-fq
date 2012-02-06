@@ -1,5 +1,6 @@
 package org.ofbiz.partner.scm.pricemgr;
 
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -38,9 +39,9 @@ public class PriceMgr {
 	 * 计算单价 更新存货余额表
 	 * @throws Exception
 	 */
-	public synchronized void calPrice(PriceCalItem item) throws Exception{
+	public synchronized BigDecimal calPrice(PriceCalItem item) throws Exception{
 		if(priceCal!=null){
-			priceCal.calPrice(item);
+			return priceCal.calPrice(item);
 		}else{
 			throw new Exception("单价计算类实现为空");
 		}
