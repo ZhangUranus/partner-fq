@@ -81,6 +81,7 @@ Ext.define('SCM.view.Login',{
                             url:'../scm/control/checkLogin',
                             success: function(form, action) {
                             	Ext.getCmp("current-user-label").setText(form.findField('USERNAME').value);
+                            	Ext.getCmp("current-date-label").setText(action.result.currentYear+"年"+action.result.currentMonth+"月");
                                 win.hide();
                                 Ext.getCmp('main-tree').show();
                                 Ext.getCmp('main-content').show();

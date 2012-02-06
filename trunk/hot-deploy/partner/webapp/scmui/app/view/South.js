@@ -12,14 +12,24 @@ Ext.define('SCM.view.South', {
 							// frame:true,
 							region : 'south',
 							height : 23,
-							items : ["当前用户：",{
+							items : ["当前用户：", {
 										xtype : 'label',
 										id : 'current-user-label',
 										text : '未登录',
+										margin : '0 15 0 0',
 										style : {
-											'text-decoration': 'underline',
-											'font-weight': 'bold',
-											'color': 'blue'
+											'text-decoration' : 'underline',
+											'font-weight' : 'bold',
+											'color' : 'blue'
+										}
+									}, "系统期间：", {
+										xtype : 'label',
+										id : 'current-date-label',
+										text : '无',
+										style : {
+											'font-weight' : 'bold',
+											'font-size' : 12,
+											'color' : 'blue'
 										}
 									}, '->', "Partner 2012 copyright"]
 						});

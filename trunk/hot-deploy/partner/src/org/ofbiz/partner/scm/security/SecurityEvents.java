@@ -1,6 +1,7 @@
 package org.ofbiz.partner.scm.security;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -28,6 +29,7 @@ import org.ofbiz.partner.scm.common.CommonEvents;
 import org.ofbiz.partner.scm.common.EntityCRUDEvent;
 import org.ofbiz.partner.scm.common.TreeNode;
 import org.ofbiz.partner.scm.common.TreeOprCommon;
+import org.ofbiz.partner.scm.pricemgr.Utils;
 import org.ofbiz.service.LocalDispatcher;
 import org.ofbiz.webapp.control.LoginWorker;
 
@@ -253,11 +255,15 @@ public class SecurityEvents {
 		if (!"success".equals(responseString)) {
 			jsonStr.put("success", false);
         }else{
+        	Calendar calendar = Calendar.getInstance();
+			calendar.setTime(Utils.getCurDate());
         	CommonEvents.setUsername(request, response);
         	String username = request.getParameter("USERNAME");
         	List<GenericValue> recordList =  CommonEvents.getDelegator(request).findList("TSystemUser", EntityCondition.makeCondition("userId",username), null, null, null, true);
         	String uid = recordList.get(0).getString("id");
         	CommonEvents.setAttributeToSession(request, "uid", uid);
+			jsonStr.put("currentYear", calendar.get(Calendar.YEAR));
+			jsonStr.put("currentMonth", calendar.get(Calendar.MONTH));
 			jsonStr.put("success", true);
         }
 		CommonEvents.writeJsonDataToExt(response, jsonStr.toString());
@@ -270,7 +276,11 @@ public class SecurityEvents {
 		if("".equals(username)){
 			jsonStr.put("success", false);
 		}else{
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(Utils.getCurDate());
 			jsonStr.put("username", username);
+			jsonStr.put("currentYear", calendar.get(Calendar.YEAR));
+			jsonStr.put("currentMonth", calendar.get(Calendar.MONTH));
 			jsonStr.put("success", true);
 		}
 		CommonEvents.writeJsonDataToExt(response, jsonStr.toString());
