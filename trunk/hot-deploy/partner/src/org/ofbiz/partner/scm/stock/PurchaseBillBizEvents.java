@@ -39,6 +39,11 @@ public class PurchaseBillBizEvents {
 
 				BillBaseEvent.auditBill(request, response);//更新单据状态
 				
+				//如果单据状态为不通过，不影响库存
+				if(request.getParameter("isValid").equals("false")){
+					return "success";
+				}
+				
 				//根据单据每条记录更新供应商可入库总申请数量
 				Delegator delegator=(Delegator)request.getAttribute("delegator");
 				String billId=request.getParameter("billId");//单据id
@@ -86,6 +91,11 @@ public class PurchaseBillBizEvents {
 
 	            BillBaseEvent.unauditBill(request, response);//更新单据状态
 				
+	            //如果单据状态为不通过，不影响库存
+	            if(request.getParameter("isValid").equals("false")){
+					return "success";
+				}
+	            
 				//根据单据每条记录更新供应商可入库总申请数量
 				Delegator delegator=(Delegator)request.getAttribute("delegator");
 				String billId=request.getParameter("billId");//单据id
