@@ -16,9 +16,11 @@
 	<entity-resource type="model" reader-name="main" loader="main" location="entitydef/PurPlanEntity.xml"/>
 	<entity-resource type="model" reader-name="main" loader="main" location="entitydef/ConsignDrawMaterialEntity.xml"/>
 	<entity-resource type="model" reader-name="main" loader="main" location="entitydef/ConsignReturnMaterialEntity.xml"/>
+	<entity-resource type="model" reader-name="main" loader="main" location="entitydef/ConsignWarehousingEntity.xml"/>
 	
 	<entity-resource type="model" reader-name="main" loader="main" location="entitydef/WorkshopDrawMaterialEntity.xml"/>
 	<entity-resource type="model" reader-name="main" loader="main" location="entitydef/WorkshopReturnMaterialEntity.xml"/>
+	<entity-resource type="model" reader-name="main" loader="main" location="entitydef/WorkshopWarehousingEntity.xml"/>
     <entity-resource type="data" reader-name="seed" loader="main" location="data/ContentTypeData.xml"/>
     <entity-resource type="data" reader-name="seed" loader="main" location="data/InitData.xml"/>
 	<webapp name="scm" 

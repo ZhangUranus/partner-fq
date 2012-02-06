@@ -15,9 +15,10 @@ Ext.application({
 			appFolder : 'app',
 			controllers : [// 载入系统controller
 			'Main', 'basedata.UnitController', 'basedata.WarehouseTypeController', 'basedata.WarehouseController', 'basedata.CustomerController', 'basedata.DepartmentController',
-					'basedata.MaterialController', 'basedata.MaterialBomController', 'basedata.WorkshopController', 'PurchaseBill.PurchaseBillController', 'Supplier.SupplierController', 'system.SystemController',
-					'PurchaseWarehousing.PurchaseWarehousingController', 'PurchaseReturn.PurchaseReturnController', 'ConsignDrawMaterial.ConsignDrawMaterialController',
-					'ConsignReturnMaterial.ConsignReturnMaterialController', 'WorkshopDrawMaterial.WorkshopDrawMaterialController', 'WorkshopReturnMaterial.WorkshopReturnMaterialController'],
+					'basedata.MaterialController', 'basedata.MaterialBomController', 'basedata.WorkshopController', 'PurchaseBill.PurchaseBillController', 'Supplier.SupplierController',
+					'system.SystemController', 'PurchaseWarehousing.PurchaseWarehousingController', 'PurchaseReturn.PurchaseReturnController', 'ConsignDrawMaterial.ConsignDrawMaterialController',
+					'ConsignReturnMaterial.ConsignReturnMaterialController', 'WorkshopDrawMaterial.WorkshopDrawMaterialController', 'WorkshopReturnMaterial.WorkshopReturnMaterialController',
+					'ConsignWarehousing.ConsignWarehousingController', 'WorkshopWarehousing.WorkshopWarehousingController'],
 			launch : function() {
 				var viewport = Ext.create('SCM.view.Viewport');
 				viewport.doLayout(); // 刷新布局
