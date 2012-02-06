@@ -318,6 +318,16 @@ Ext.define('SCM.view.ConsignDrawMaterial.EditUI', {
 																valueField : 'id',
 																readOnly : true,
 																fieldLabel : '单据状态'
+															}, {
+																xtype : 'label',
+																text : '注意：物料单价、金额、单据总金额在单据提交后才能显示！',
+																margin : 5,
+																colspan : 3,
+																style : {
+																	'font-weight': 'bold',
+																	'color': 'red',
+																	'font-size':12
+																}
 															}]
 												}]
 									}],

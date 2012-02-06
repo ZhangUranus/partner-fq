@@ -153,24 +153,24 @@ Ext.define('SCM.controller.ConsignDrawMaterial.ConsignDrawMaterialController', {
 			initMaterialInfo : function(editor, e) {
 				if (e.field == 'warehouseWarehouseId') {
 					e.record.set('stockVolume', 100);
-					e.record.set('price', 10);
+//					e.record.set('price', 10);
 				}
-				e.record.set('entrysum', e.record.get('price') * e.record.get('volume'));
-				this.changeMaterialPrice(e.grid.store);
+//				e.record.set('entrysum', e.record.get('price') * e.record.get('volume'));
+//				this.changeMaterialPrice(e.grid.store);
 			},
 			
-			/**
-			 * 计算总金额
-			 * @param {} store
-			 */
-			changeMaterialPrice : function (store){
-				var count = store.getCount();
-				var sum = 0;
-				for (var i = 0; i < count; i++) {
-					sum += store.getAt(i).get('entrysum');
-				}
-				this.totalFields.setValue(sum);
-			},
+//			/**
+//			 * 计算总金额
+//			 * @param {} store
+//			 */
+//			changeMaterialPrice : function (store){
+//				var count = store.getCount();
+//				var sum = 0;
+//				for (var i = 0; i < count; i++) {
+//					sum += store.getAt(i).get('entrysum');
+//				}
+//				this.totalFields.setValue(sum);
+//			},
 			
 			/**
 			 * 选择加工件时，初始化物料列表
@@ -212,8 +212,8 @@ Ext.define('SCM.controller.ConsignDrawMaterial.ConsignDrawMaterialController', {
 				for(var i = 0;i<count;i++ ){
 					var tempRecord = me.editEntry.store.getAt(i);
 					tempRecord.set('volume', materialVolume * tempRecord.get('perVolume'));
-					tempRecord.set('entrysum',tempRecord.get('price') * tempRecord.get('volume'));
+//					tempRecord.set('entrysum',tempRecord.get('price') * tempRecord.get('volume'));
 				}
-				me.changeMaterialPrice(me.editEntry.store);
+//				me.changeMaterialPrice(me.editEntry.store);
 			}
 });
