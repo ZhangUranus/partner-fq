@@ -24,6 +24,7 @@
 	<entity-resource type="model" reader-name="main" loader="main" location="entitydef/WorkshopReturnProductEntity.xml"/>
     <entity-resource type="data" reader-name="seed" loader="main" location="data/ContentTypeData.xml"/>
     <entity-resource type="data" reader-name="seed" loader="main" location="data/InitData.xml"/>
+    <entity-resource type="data" reader-name="seed" loader="main" location="data/InitDataBase.xml"/>
 	<webapp name="scm" 
 		title="SCM" 
 		server="default-server" 
