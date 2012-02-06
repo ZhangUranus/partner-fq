@@ -199,8 +199,8 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 
 				if (sm.hasSelection()) {// 判断是否选择行记录
 					record = sm.getLastSelected();
-					if (record.get('status') != '1' || record.get('status') != '2') {
-						showError('单据非已审核！');
+					if (!(record.get('status') == '1' || record.get('status') == '2')) {
+						showError('单据未审核！');
 						return;
 					}
 					Ext.Msg.confirm('提示', '确定反审核该' + this.gridTitle + '？', confirmChange, this);

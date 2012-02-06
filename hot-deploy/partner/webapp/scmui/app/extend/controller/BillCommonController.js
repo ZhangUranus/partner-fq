@@ -320,6 +320,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 			 *            button 按钮控件
 			 */
 			addNewRecord : function(button) {
+				this.changeEditStatus(false);
 				var newRecord = Ext.create(this.modelName);// 新增记录
 				this.getEdit().uiStatus = 'AddNew';
 
@@ -388,7 +389,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 											billId : record.get('id'),
 											entity : this.entityName
 										},
-										url : '../../scm/control/auditBill',
+										url : '../../scm/control/submitBill',
 										success : function(response) {
 											this.refreshRecord();
 										}
@@ -404,7 +405,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				if (sm.hasSelection()) {// 判断是否选择行记录
 					record = sm.getLastSelected();
 					if (record.get('status') != '4') {
-						showWarning('单据非已提交状态！');
+						showWarning('单据未提交！');
 						return;
 					}
 					Ext.Msg.confirm('提示', '确定撤销该' + this.gridTitle + '？', confirmChange, this);
@@ -416,7 +417,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 											billId : record.get('id'),
 											entity : this.entityName
 										},
-										url : '../../scm/control/unauditBill',
+										url : '../../scm/control/rollbackBill',
 										success : function(response) {
 											this.refreshRecord();
 										}

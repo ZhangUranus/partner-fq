@@ -99,7 +99,7 @@ Ext.define('SCM.controller.WorkshopReturnMaterial.WorkshopReturnMaterialControll
 				this.searchCustId = this.listContainer.down('combogrid[name=searchCustId]');
 				this.totalFields = this.editForm.down('textfield[name=totalsum]');
 				this.workshopFields = this.editForm.down('combogrid[name=workshopWorkshopId]');
-				this.workshopFields.addListener('change', this.changeWorkshop, this);
+//				this.workshopFields.addListener('change', this.changeWorkshop, this);
 			},
 
 			/**
@@ -152,41 +152,41 @@ Ext.define('SCM.controller.WorkshopReturnMaterial.WorkshopReturnMaterialControll
 					var record = this.searchMaterialId.store.findRecord('id', e.value);
 					if (record) {
 						e.record.set('materialMaterialModel', record.get('model'));
-						e.record.set('price', this.getAveragePrice());
+//						e.record.set('price', this.getAveragePrice());
 						e.record.set('unitUnitId', record.get('defaultUnitId'));
 						e.record.set('unitUnitName', record.get('defaultUnitName'));
 						
 					}
 				}
-				e.record.set('entrysum', e.record.get('price') * e.record.get('volume'));
-				this.changeMaterialPrice(e.grid.store);
-			},
-			
-			/**
-			 * 计算总金额
-			 * @param {} store
-			 */
-			changeMaterialPrice : function (store){
-				var count = store.getCount();
-				var sum = 0;
-				for (var i = 0; i < count; i++) {
-					sum += store.getAt(i).get('entrysum');
-				}
-				this.totalFields.setValue(sum);
-			},
-			
-			changeWorkshop: function(field, newValue, oldValue){
-				var me = this;
-				var count = me.editEntry.store.getCount();
-				for(var i = 0;i<count;i++ ){
-					var tempRecord = me.editEntry.store.getAt(i);
-					tempRecord.set('price', this.getAveragePrice());
-					tempRecord.set('entrysum', tempRecord.get('price') * tempRecord.get('volume'));
-				}
-				me.changeMaterialPrice(me.editEntry.store);
-			},
-			
-			getAveragePrice : function(){
-				return 10;
+//				e.record.set('entrysum', e.record.get('price') * e.record.get('volume'));
+//				this.changeMaterialPrice(e.grid.store);
 			}
+			
+//			/**
+//			 * 计算总金额
+//			 * @param {} store
+//			 */
+//			changeMaterialPrice : function (store){
+//				var count = store.getCount();
+//				var sum = 0;
+//				for (var i = 0; i < count; i++) {
+//					sum += store.getAt(i).get('entrysum');
+//				}
+//				this.totalFields.setValue(sum);
+//			},
+			
+//			changeWorkshop: function(field, newValue, oldValue){
+//				var me = this;
+//				var count = me.editEntry.store.getCount();
+//				for(var i = 0;i<count;i++ ){
+//					var tempRecord = me.editEntry.store.getAt(i);
+//					tempRecord.set('price', this.getAveragePrice());
+//					tempRecord.set('entrysum', tempRecord.get('price') * tempRecord.get('volume'));
+//				}
+//				me.changeMaterialPrice(me.editEntry.store);
+//			},
+			
+//			getAveragePrice : function(){
+//				return 10;
+//			}
 		});

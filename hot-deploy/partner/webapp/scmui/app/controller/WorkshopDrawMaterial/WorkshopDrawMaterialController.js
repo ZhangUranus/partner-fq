@@ -152,7 +152,6 @@ Ext.define('SCM.controller.WorkshopDrawMaterial.WorkshopDrawMaterialController',
 						e.record.set('materialMaterialModel', record.get('model'));
 						e.record.set('unitUnitId', record.get('defaultUnitId'));
 						e.record.set('unitUnitName', record.get('defaultUnitName'));
-						e.record.set('price', this.getAveragePrice());
 						e.record.set('stockVolume',100);
 					}
 				} else if (e.field == 'volume') {
@@ -161,27 +160,26 @@ Ext.define('SCM.controller.WorkshopDrawMaterial.WorkshopDrawMaterialController',
 						e.record.set('volume', 0);
 					}
 				} else if (e.field == 'warehouseWarehouseId'){
-					e.record.set('price', this.getAveragePrice());
 					e.record.set('stockVolume',100);
 				}
-				e.record.set('entrysum', e.record.get('price') * e.record.get('volume'));
-				this.changeMaterialPrice(e.grid.store);
-			},
-			
-			/**
-			 * 计算总金额
-			 * @param {} store
-			 */
-			changeMaterialPrice : function (store){
-				var count = store.getCount();
-				var sum = 0;
-				for (var i = 0; i < count; i++) {
-					sum += store.getAt(i).get('entrysum');
-				}
-				this.totalFields.setValue(sum);
-			},
-			
-			getAveragePrice : function(){
-				return 10;
+//				e.record.set('entrysum', e.record.get('price') * e.record.get('volume'));
+//				this.changeMaterialPrice(e.grid.store);
 			}
+			
+//			/**
+//			 * 计算总金额
+//			 * @param {} store
+//			 */
+//			changeMaterialPrice : function (store){
+//				var count = store.getCount();
+//				var sum = 0;
+//				for (var i = 0; i < count; i++) {
+//					sum += store.getAt(i).get('entrysum');
+//				}
+//				this.totalFields.setValue(sum);
+//			},
+//			
+//			getAveragePrice : function(){
+//				return 10;
+//			}
 		});

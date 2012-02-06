@@ -25,7 +25,7 @@ Ext.define('SCM.view.PurchaseBill.ApproverEditUI', {
 										items : [{
 													xtype : 'combobox',
 													name : 'status',// 定义管理的model字段
-													fieldLabel : '审批类型',
+													fieldLabel : '审核类型',
 													store : SCM.store.basiccode.approverStore,
 													allowBlank : false,
 													editable : false,
@@ -33,7 +33,7 @@ Ext.define('SCM.view.PurchaseBill.ApproverEditUI', {
 													valueField : 'id'// 值字段，后台通过该字段传递
 												}, {
 													xtype : 'textarea',
-													fieldLabel : '审批意见',
+													fieldLabel : '审核意见',
 													name : 'approverNote',
 													maxLength : 126,
 													allowBlank : false
