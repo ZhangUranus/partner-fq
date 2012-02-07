@@ -1,7 +1,7 @@
-package org.ofbiz.partner.scm.stock;
+﻿package org.ofbiz.partner.scm.stock;
 
 import java.math.BigDecimal;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +20,7 @@ import org.ofbiz.partner.scm.common.CommonEvents;
 import org.ofbiz.partner.scm.pricemgr.BillType;
 import org.ofbiz.partner.scm.pricemgr.PriceCalItem;
 import org.ofbiz.partner.scm.pricemgr.PriceMgr;
+import org.ofbiz.partner.scm.pricemgr.Utils;
 import org.ofbiz.partner.scm.purplan.PurPlanBalance;
 
 /**
@@ -54,6 +55,12 @@ public class PurchaseBillBizEvents {
 				if(delegator!=null&&billId!=null){
 					Debug.log("采购申请单审核:"+billId, module);
 					GenericValue  billHead=delegator.findOne("PurchaseBill", UtilMisc.toMap("id", billId), false);
+					
+					Date bizDate=(Date) billHead.get("bizDate");
+					if(bizDate==null||!Utils.isCurPeriod(bizDate)){
+						throw new Exception("单据业务日期不在当前系统期间");
+					}
+					
 					if(billHead==null&&billHead.getString("supplierSupplierId")==null){
 						throw new Exception("can`t find purchase bill or supplier is null");
 					}
@@ -64,7 +71,8 @@ public class PurchaseBillBizEvents {
 					for(GenericValue v:entryList){
 						PurPlanBalance.getInstance().updateInWarehouse(supplierId, v.getString("materialMaterialId"), v.getBigDecimal("volume"));
 					}
-		}} catch (GenericTransactionException e) {
+				}
+		} catch (Exception e) {
             Debug.logError(e, module);
             try {
                 TransactionUtil.rollback(beganTransaction, e.getMessage(), e);
@@ -106,6 +114,10 @@ public class PurchaseBillBizEvents {
 				if(delegator!=null&&billId!=null){
 					Debug.log("采购申请单审核:"+billId, module);
 					GenericValue  billHead=delegator.findOne("PurchaseBill", UtilMisc.toMap("id", billId), false);
+					Date bizDate=(Date) billHead.get("bizDate");
+					if(bizDate==null||!Utils.isCurPeriod(bizDate)){
+						throw new Exception("单据业务日期不在当前系统期间");
+					}
 					if(billHead==null&&billHead.getString("supplierSupplierId")==null){
 						throw new Exception("can`t find purchase bill or supplier is null");
 					}
@@ -117,7 +129,7 @@ public class PurchaseBillBizEvents {
 						//每个记录入库数量需要转换为负数
 						PurPlanBalance.getInstance().updateInWarehouse(supplierId, v.getString("materialMaterialId"), BigDecimal.ZERO.subtract(v.getBigDecimal("volume")));
 					}
-		}} catch (GenericTransactionException e) {
+		}} catch (Exception e) {
             Debug.logError(e, module);
             try {
                 TransactionUtil.rollback(beganTransaction, e.getMessage(), e);

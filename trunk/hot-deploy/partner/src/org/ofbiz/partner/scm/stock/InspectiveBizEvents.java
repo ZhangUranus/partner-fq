@@ -17,6 +17,8 @@ import org.ofbiz.partner.scm.common.BillBaseEvent;
 import org.ofbiz.partner.scm.pricemgr.BillType;
 import org.ofbiz.partner.scm.pricemgr.PriceCalItem;
 import org.ofbiz.partner.scm.pricemgr.PriceMgr;
+import org.ofbiz.partner.scm.pricemgr.Utils;
+import org.ofbiz.partner.scm.purplan.PurPlanBalance;
 
 /**
  * 验收单业务事件类
@@ -48,8 +50,18 @@ public class InspectiveBizEvents {
 					
 					//注意不能使用billHead.getDate方法，出产生castException异常
 					Date bizDate=(Date) billHead.get("bizDate");
+					if(bizDate==null||!Utils.isCurPeriod(bizDate)){
+						throw new Exception("单据业务日期不在当前系统期间");
+					}
+					//供应商id
+					String supplierId=billHead.getString("supplierSupplierId");
+					if(supplierId==null&&supplierId.length()<1){
+						throw new Exception("采购入库单供应商为空！！！");
+					}
+					
 					//获取单据id分录条目
 					List<GenericValue> entryList=delegator.findByAnd("PurchaseWarehousingEntry", UtilMisc.toMap("parentId", billId));
+					
 					
 					for(GenericValue v:entryList){
 						String warehouseId=v.getString("warehouseWarehouseId");//仓库id
@@ -57,14 +69,18 @@ public class InspectiveBizEvents {
 						BigDecimal  volume=v.getBigDecimal("volume");//数量
 						BigDecimal  sum =v.getBigDecimal("entrysum");//金额
 						Debug.log("采购入库单价计算:物料id"+materialId+";数量"+volume+";金额"+sum, module);
+						
+						//更新供应商可入库数量
+						PurPlanBalance.getInstance().updateInWarehouse(supplierId, materialId, volume.negate());
+						
 						//构建计算条目
-						PriceCalItem item=new PriceCalItem(bizDate,warehouseId,materialId,volume,sum,BillType.PurchaseWarehouse,billId);
+						PriceCalItem item=new PriceCalItem(bizDate,warehouseId,materialId,volume,sum,BillType.PurchaseWarehouse,billId,false);
 						PriceMgr.getInstance().calPrice(item);
 					}
 
 				BillBaseEvent.submitBill(request, response);//更新单据状态
 
-		}} catch (GenericTransactionException e) {
+		}} catch (Exception e) {
             Debug.logError(e, module);
             try {
                 TransactionUtil.rollback(beganTransaction, e.getMessage(), e);
@@ -104,24 +120,36 @@ public class InspectiveBizEvents {
 					
 					//注意不能使用billHead.getDate方法，出产生castException异常
 					Date bizDate=(Date) billHead.get("bizDate");
-					
+					if(bizDate==null||!Utils.isCurPeriod(bizDate)){
+						throw new Exception("单据业务日期不在当前系统期间");
+					}
+					//供应商id
+					String supplierId=billHead.getString("supplierSupplierId");
+					if(supplierId==null&&supplierId.length()<1){
+						throw new Exception("采购入库单供应商为空！！！");
+					}
 					//获取单据id分录条目
 					List<GenericValue> entryList=delegator.findByAnd("PurchaseWarehousingEntry", UtilMisc.toMap("parentId", billId));
 					
 					for(GenericValue v:entryList){
 						String warehouseId=v.getString("warehouseWarehouseId");//仓库id
 						String materialId=v.getString("materialMaterialId");//物料id
-						BigDecimal  volume=BigDecimal.ZERO.subtract(v.getBigDecimal("volume"));//负数量
-						BigDecimal  sum =BigDecimal.ZERO.subtract(v.getBigDecimal("entrysum"));//负金额
+						BigDecimal  volume=v.getBigDecimal("volume").negate();//负数量
+						BigDecimal  sum =v.getBigDecimal("entrysum").negate();//负金额
 						Debug.log("撤销采购入库单价计算:物料id"+materialId+";数量"+volume+";金额"+sum, module);
+						
+						//更新供应商可入库数量
+						PurPlanBalance.getInstance().updateInWarehouse(supplierId, materialId, volume.negate());
 						//构建计算条目
-						PriceCalItem item=new PriceCalItem(bizDate,warehouseId,materialId,volume,sum,BillType.PurchaseWarehouse,billId);
+						PriceCalItem item=new PriceCalItem(bizDate,warehouseId,materialId,volume,sum,BillType.PurchaseWarehouse,billId,true);
 						PriceMgr.getInstance().calPrice(item);
+						
+						
 					}
 				}
 				
 				BillBaseEvent.rollbackBill(request, response);//撤销单据
-		} catch (GenericTransactionException e) {
+		} catch (Exception e) {
             Debug.logError(e, module);
             try {
                 TransactionUtil.rollback(beganTransaction, e.getMessage(), e);

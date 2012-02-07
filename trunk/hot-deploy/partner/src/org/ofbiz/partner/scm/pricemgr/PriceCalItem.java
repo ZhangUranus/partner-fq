@@ -16,8 +16,9 @@ public class PriceCalItem {
 	private BigDecimal sum=null;//金额
 	private BillType billType=null;//单据类型
 	private String billId=null;
+	private boolean isOut=false;//是否出库操作
 	public PriceCalItem(Date biz,String warehouseId,String materialId, BigDecimal amount, BigDecimal sum,
-			BillType billType,String billId) {
+			BillType billType,String billId,boolean isOut) {
 		super();
 		this.bizTime=biz;
 		this.warehouseId = warehouseId;
@@ -26,6 +27,7 @@ public class PriceCalItem {
 		this.sum = sum;
 		this.billType = billType;
 		this.billId=billId;
+		this.isOut=isOut;
 	}
 	public Date getBizTime() {
 		return bizTime;
@@ -47,6 +49,9 @@ public class PriceCalItem {
 	}
 	public String getWarehouseId() {
 		return warehouseId;
+	}
+	public boolean isOut() {
+		return isOut;
 	}
 	
 	
