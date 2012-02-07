@@ -35,7 +35,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				this.initEnterEvent();
 				this.afterInitComponent();
 				this.refreshRecord();
-				this.searchMaterialId.store.load();			//初始化物料列表
+				this.searchMaterialId.store.load(); //初始化物料列表
 			},
 
 			afterInitComponent : Ext.emptyFn,
@@ -67,13 +67,14 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 					this.editForm = this.win.down('form');
 					this.editEntry = this.win.down('gridpanel');
 					this.fields = this.editForm.query("textfield{isVisible()}[readOnly=false]"); // 取所以显示的field
+					this.submitEditButton = this.win.down('button[action=submit]');
 					this.saveButton = this.win.down('button[action=save]');
 					this.clearButton = this.win.down('button[action=clear]');
 					this.editEntry.addListener('edit', this.initMaterialInfo, this); // 监控列表编辑事件
 				}
 				return this.win;
 			},
-			
+
 			/**
 			 * 当用户编辑grid时，同步更新相关表单数据
 			 * @param {} editor
@@ -95,18 +96,20 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 					if (request.action == 'read') {
 						me.changeComponentsState();
 					} else if (request.action == 'create') {
-						Ext.Msg.alert("提示", "新增成功！", callBack);
-						function callBack() {
+						Ext.Msg.alert("提示", "新增成功！", createCallBack);
+						function createCallBack() {
+							me.doSubmitBill();
 							me.refreshRecord();
 						}
 					} else if (request.action == 'update') {
-						Ext.Msg.alert("提示", "更新成功！", callBack);
-						function callBack() {
+						Ext.Msg.alert("提示", "更新成功！", updateCallBack);
+						function updateCallBack() {
+							me.doSubmitBill();
 							me.refreshRecord();
 						}
 					} else if (request.action == 'destroy') {
-						Ext.Msg.alert("提示", "删除成功！", callBack);
-						function callBack() {
+						Ext.Msg.alert("提示", "删除成功！", destroyCallBack);
+						function destroyCallBack() {
 							me.refreshRecord();
 						}
 					}
@@ -137,7 +140,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				} else {
 					this.deleteButton.setVisible(false);
 				}
-				if(this.auditButton){
+				if (this.auditButton) {
 					if (this.listContainer.permission.audit) {
 						this.auditButton.setVisible(true);
 						this.unauditButton.setVisible(true);
@@ -146,7 +149,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 						this.unauditButton.setVisible(false);
 					}
 				}
-				if(this.submitButton){
+				if (this.submitButton) {
 					if (this.listContainer.permission.submit) {
 						this.submitButton.setVisible(true);
 						this.rollbackButton.setVisible(true);
@@ -164,22 +167,22 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				if (this.listPanel.getSelectionModel().hasSelection()) {
 					this.deleteButton.setDisabled(false);
 					this.editButton.setDisabled(false);
-					if(this.auditButton){
+					if (this.auditButton) {
 						this.auditButton.setDisabled(false);
 						this.unauditButton.setDisabled(false);
 					}
-					if(this.submitButton){
+					if (this.submitButton) {
 						this.submitButton.setDisabled(false);
 						this.rollbackButton.setDisabled(false);
 					}
 				} else {
 					this.deleteButton.setDisabled(true);
 					this.editButton.setDisabled(true);
-					if(this.auditButton){
+					if (this.auditButton) {
 						this.auditButton.setDisabled(true);
 						this.unauditButton.setDisabled(false);
 					}
-					if(this.submitButton){
+					if (this.submitButton) {
 						this.submitButton.setDisabled(true);
 						this.rollbackButton.setDisabled(true);
 					}
@@ -257,6 +260,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				this.editEntry.setDisabled(isReadOnly);
 				this.saveButton.setDisabled(isReadOnly);
 				this.clearButton.setDisabled(isReadOnly);
+				this.submitEditButton.setDisabled(isReadOnly);
 			},
 
 			/**
@@ -268,6 +272,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 			 *            record 选中记录
 			 */
 			modifyRecord : function(grid, record) {
+				this.currentRecord = record;
 				if (record.data.status == '1' || record.data.status == '2' || record.data.status == '3' || record.data.status == '4') {
 					this.changeEditStatus(true);
 				} else {
@@ -305,13 +310,9 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 			 *            button 按钮控件
 			 */
 			editRecord : function(button) {
-				sm = this.listPanel.getSelectionModel();
-
-				if (sm.hasSelection()) {// 判断是否选择行记录
-					record = sm.getLastSelected();
-					// 如果单据状态是已提交、已审核或者已经结算则不能修改
-					this.modifyRecord(this.listPanel, record);
-				}
+				record = this.getSelectRecord();
+				// 如果单据状态是已提交、已审核或者已经结算则不能修改
+				this.modifyRecord(this.listPanel, record);
 			},
 			/**
 			 * 点击新增按钮
@@ -321,7 +322,9 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 			 */
 			addNewRecord : function(button) {
 				this.changeEditStatus(false);
+				this.listPanel.getSelectionModel().deselectAll();
 				var newRecord = Ext.create(this.modelName);// 新增记录
+				this.currentRecord = newRecord;
 				this.getEdit().uiStatus = 'AddNew';
 
 				this.editForm.getForm().loadRecord(newRecord);
@@ -338,29 +341,23 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 			 *            button 按钮控件
 			 */
 			deleteRecord : function(button) {
-				sm = this.listPanel.getSelectionModel();
-				if (sm.hasSelection()) {// 判断是否选择行记录
-					// 删除选择的记录
-					records = sm.getSelection();
-					for (i in records) {
-						if (records[i].data.status == '1' || records[i].data.status == '2') {
-							showWarning('单据为已审核状态，不允许删除！');
-							return;
-						}else if(records[i].data.status == '3'){
-							showWarning('单据为已结算状态，不允许删除！');
-							return;
-						}else if(records[i].data.status == '4'){
-							showWarning('单据为已提交状态，不允许删除！');
-							return;
-						}
-					}
+				record = this.getSelectRecord();
+				if (record.get('status') == '1' || record.get('status') == '2') {
+					showWarning('单据为已审核状态，不允许删除！');
+					return;
+				} else if (record.get('status') == '3') {
+					showWarning('单据为已结算状态，不允许删除！');
+					return;
+				} else if (record.get('status') == '4') {
+					showWarning('单据为已提交状态，不允许删除！');
+					return;
+				}
 
-					Ext.Msg.confirm('提示', '确定删除该' + this.gridTitle + '？', confirmChange, this);
-					function confirmChange(id) {
-						if (id == 'yes') {
-							this.listPanel.store.remove(records);
-							this.listPanel.store.sync();
-						}
+				Ext.Msg.confirm('提示', '确定删除该' + this.gridTitle + '？', confirmChange, this);
+				function confirmChange(id) {
+					if (id == 'yes') {
+						this.listPanel.store.remove(record);
+						this.listPanel.store.sync();
 					}
 				}
 			},
@@ -372,61 +369,78 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 
 			// 提交单据
 			submitBill : function(button) {
-				sm = this.listPanel.getSelectionModel();
-
-				if (sm.hasSelection()) {// 判断是否选择行记录
-					record = sm.getLastSelected();
-					if (record.get('status') != '0') {
-						showWarning('单据已提交！');
-						return;
-					}
-					Ext.Msg.confirm('提示', '确定提交该' + this.gridTitle + '？', confirmChange, this);
-					function confirmChange(id) {
-						if (id == 'yes') {
-							Ext.Ajax.request({
-										scope : this,
-										params : {
-											billId : record.get('id'),
-											entity : this.entityName
-										},
-										url : '../../scm/control/submitBill',
-										success : function(response) {
-											this.refreshRecord();
-										}
-									});
-						}
+				record = this.getSelectRecord();
+				if (record.get('status') != '0') {
+					showWarning('单据已提交！');
+					return;
+				}
+				Ext.Msg.confirm('提示', '确定提交该' + this.gridTitle + '？', confirmChange, this);
+				function confirmChange(id) {
+					if (id == 'yes') {
+						Ext.Ajax.request({
+									scope : this,
+									params : {
+										billId : record.get('id'),
+										entity : this.entityName
+									},
+									url : '../../scm/control/submitBill',
+									success : function(response) {
+										this.refreshRecord();
+									}
+								});
 					}
 				}
 			},
 			// 撤销单据
 			rollbackBill : function(button) {
-				sm = this.listPanel.getSelectionModel();
+				record = this.getSelectRecord();
+				if (record.get('status') != '4') {
+					showWarning('单据未提交！');
+					return;
+				}
+				Ext.Msg.confirm('提示', '确定撤销该' + this.gridTitle + '？', confirmChange, this);
+				function confirmChange(id) {
+					if (id == 'yes') {
+						Ext.Ajax.request({
+									scope : this,
+									params : {
+										billId : record.get('id'),
+										entity : this.entityName
+									},
+									url : '../../scm/control/rollbackBill',
+									success : function(response) {
+										this.refreshRecord();
+									}
+								});
+					}
+				}
 
+			},
+
+			getSelectRecord : function() {
+				var sm = this.listPanel.getSelectionModel();
 				if (sm.hasSelection()) {// 判断是否选择行记录
-					record = sm.getLastSelected();
-					if (record.get('status') != '4') {
-						showWarning('单据未提交！');
-						return;
-					}
-					Ext.Msg.confirm('提示', '确定撤销该' + this.gridTitle + '？', confirmChange, this);
-					function confirmChange(id) {
-						if (id == 'yes') {
-							Ext.Ajax.request({
-										scope : this,
-										params : {
-											billId : record.get('id'),
-											entity : this.entityName
-										},
-										url : '../../scm/control/rollbackBill',
-										success : function(response) {
-											this.refreshRecord();
-										}
-									});
-						}
-					}
-
+					return sm.getLastSelected();
+				} else {
+					return this.currentRecord;
 				}
 			},
+
+			doSubmitBill : function() {
+				if (this.isSubmitWhenSave) {
+					this.submitBill();
+					this.isSubmitWhenSave = false;
+				}
+			},
+
+			/**
+			 * 直接保存并提交单据
+			 */
+			saveAndSubmitRecord : function() {
+				this.isSubmitWhenSave = true;
+				this.saveRecord();
+			},
+
 			/**
 			 * 保存事件
 			 * 
@@ -437,7 +451,10 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				var me = this;
 				var values = me.editForm.getValues();
 				if (!me.win.modifyed) {// 用户未做任何修改，直接关闭编辑框
-					Ext.Msg.alert("提示信息", "未做任何修改！");
+					this.doSubmitBill();
+					if (me.win.isVisible()) {
+						me.win.close();
+					}
 					return;
 				}
 				if (!this.isValidate()) {
@@ -543,7 +560,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 						filter : Ext.encode(filters.items),
 
 						// 页面参数
-						entity : this.entityName+'View', // 导出实体名称，一般为视图名称。
+						entity : this.entityName + 'View', // 导出实体名称，一般为视图名称。
 						title : this.gridTitle, // sheet页名称
 						header : header, // 表头
 						dataIndex : dataIndex, // 数据引用
