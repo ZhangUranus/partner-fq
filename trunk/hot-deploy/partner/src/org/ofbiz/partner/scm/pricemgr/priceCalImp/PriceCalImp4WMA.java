@@ -110,7 +110,7 @@ public class PriceCalImp4WMA implements IPriceCal{
 			
 			delegator.create(curValue);//新增条目
 		}
-		if(curAmount!=null||curAmount.compareTo(BigDecimal.ZERO)!=0)
+		if(curAmount!=null&&curAmount.compareTo(BigDecimal.ZERO)!=0)
 			return curSum.divide(curAmount, 4, BigDecimal.ROUND_HALF_UP);//返回当前物料单价
 		else
 			return null;
