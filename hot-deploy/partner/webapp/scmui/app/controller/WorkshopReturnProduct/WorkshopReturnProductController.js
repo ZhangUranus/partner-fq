@@ -62,6 +62,10 @@ Ext.define('SCM.controller.WorkshopReturnProduct.WorkshopReturnProductController
 								click : this.deleteLine
 							},
 
+							// 编辑界面直接提交
+							'WorkshopReturnProductedit button[action=submit]' : {
+								click : this.saveAndSubmitRecord
+							},
 							// 编辑界面保存
 							'WorkshopReturnProductedit button[action=save]' : {
 								click : this.saveRecord

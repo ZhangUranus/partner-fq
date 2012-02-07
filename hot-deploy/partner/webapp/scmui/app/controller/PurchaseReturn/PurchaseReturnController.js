@@ -61,7 +61,11 @@ Ext.define('SCM.controller.PurchaseReturn.PurchaseReturnController', {
 							'PurchaseReturnedit  gridpanel button[action=deleteLine]' : {
 								click : this.deleteLine
 							},
-
+							
+							// 编辑界面直接提交
+							'PurchaseReturnedit button[action=submit]' : {
+								click : this.saveAndSubmitRecord
+							},
 							// 编辑界面保存
 							'PurchaseReturnedit button[action=save]' : {
 								click : this.saveRecord

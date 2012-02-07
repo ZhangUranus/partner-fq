@@ -49,7 +49,7 @@ Ext.define('SCM.controller.ConsignDrawMaterial.ConsignDrawMaterialController', {
 							'ConsignDrawMateriallist button[action=print]' : {
 								click : this.print
 							},
-							//列表导出
+							// 列表导出
 							'ConsignDrawMateriallist button[action=export]' : {
 								click : this.exportExcel
 							},
@@ -62,6 +62,10 @@ Ext.define('SCM.controller.ConsignDrawMaterial.ConsignDrawMaterialController', {
 								click : this.deleteLine
 							},
 
+							// 编辑界面直接提交
+							'ConsignDrawMaterialedit button[action=submit]' : {
+								click : this.saveAndSubmitRecord
+							},
 							// 编辑界面保存
 							'ConsignDrawMaterialedit button[action=save]' : {
 								click : this.saveRecord
@@ -153,30 +157,35 @@ Ext.define('SCM.controller.ConsignDrawMaterial.ConsignDrawMaterialController', {
 			initMaterialInfo : function(editor, e) {
 				if (e.field == 'warehouseWarehouseId') {
 					e.record.set('stockVolume', 100);
-//					e.record.set('price', 10);
+					// e.record.set('price', 10);
 				}
-//				e.record.set('entrysum', e.record.get('price') * e.record.get('volume'));
-//				this.changeMaterialPrice(e.grid.store);
+				// e.record.set('entrysum', e.record.get('price') *
+				// e.record.get('volume'));
+				// this.changeMaterialPrice(e.grid.store);
 			},
-			
-//			/**
-//			 * 计算总金额
-//			 * @param {} store
-//			 */
-//			changeMaterialPrice : function (store){
-//				var count = store.getCount();
-//				var sum = 0;
-//				for (var i = 0; i < count; i++) {
-//					sum += store.getAt(i).get('entrysum');
-//				}
-//				this.totalFields.setValue(sum);
-//			},
-			
+
+			// /**
+			// * 计算总金额
+			// * @param {} store
+			// */
+			// changeMaterialPrice : function (store){
+			// var count = store.getCount();
+			// var sum = 0;
+			// for (var i = 0; i < count; i++) {
+			// sum += store.getAt(i).get('entrysum');
+			// }
+			// this.totalFields.setValue(sum);
+			// },
+
 			/**
 			 * 选择加工件时，初始化物料列表
-			 * @param {} field
-			 * @param {} newValue
-			 * @param {} oldValue
+			 * 
+			 * @param {}
+			 *            field
+			 * @param {}
+			 *            newValue
+			 * @param {}
+			 *            oldValue
 			 */
 			initMaterialGrid : function(field, newValue, oldValue) {
 				var me = this;
@@ -201,19 +210,20 @@ Ext.define('SCM.controller.ConsignDrawMaterial.ConsignDrawMaterialController', {
 							}
 						});
 			},
-			
+
 			/**
 			 * 修改加工件数量时，刷新表格数据
 			 */
-			materialVolumeChange : function(field, newValue, oldValue){
+			materialVolumeChange : function(field, newValue, oldValue) {
 				var me = this;
 				var count = me.editEntry.store.getCount();
 				var materialVolume = newValue ? newValue : 0;
-				for(var i = 0;i<count;i++ ){
+				for (var i = 0; i < count; i++) {
 					var tempRecord = me.editEntry.store.getAt(i);
 					tempRecord.set('volume', materialVolume * tempRecord.get('perVolume'));
-//					tempRecord.set('entrysum',tempRecord.get('price') * tempRecord.get('volume'));
+					// tempRecord.set('entrysum',tempRecord.get('price') *
+					// tempRecord.get('volume'));
 				}
-//				me.changeMaterialPrice(me.editEntry.store);
+				// me.changeMaterialPrice(me.editEntry.store);
 			}
-});
+		});

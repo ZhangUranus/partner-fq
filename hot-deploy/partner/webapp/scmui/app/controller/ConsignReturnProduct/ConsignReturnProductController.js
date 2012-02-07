@@ -62,6 +62,10 @@ Ext.define('SCM.controller.ConsignReturnProduct.ConsignReturnProductController',
 								click : this.deleteLine
 							},
 
+							// 编辑界面直接提交
+							'ConsignReturnProductedit button[action=submit]' : {
+								click : this.saveAndSubmitRecord
+							},
 							// 编辑界面保存
 							'ConsignReturnProductedit button[action=save]' : {
 								click : this.saveRecord
@@ -135,7 +139,7 @@ Ext.define('SCM.controller.ConsignReturnProduct.ConsignReturnProductController',
 				this.detailPanel.store.removeAll();
 				this.changeComponentsState();
 			},
-			
+
 			/**
 			 * 当用户编辑grid时，同步更新相关表单数据
 			 * 

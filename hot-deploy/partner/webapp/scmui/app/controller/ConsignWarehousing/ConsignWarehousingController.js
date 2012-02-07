@@ -62,6 +62,10 @@ Ext.define('SCM.controller.ConsignWarehousing.ConsignWarehousingController', {
 								click : this.deleteLine
 							},
 
+							// 编辑界面直接提交
+							'ConsignWarehousingedit button[action=submit]' : {
+								click : this.saveAndSubmitRecord
+							},
 							// 编辑界面保存
 							'ConsignWarehousingedit button[action=save]' : {
 								click : this.saveRecord

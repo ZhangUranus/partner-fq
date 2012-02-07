@@ -49,7 +49,7 @@ Ext.define('SCM.controller.PurchaseWarehousing.PurchaseWarehousingController', {
 							'PurchaseWarehousinglist button[action=print]' : {
 								click : this.print
 							},
-							//列表导出
+							// 列表导出
 							'PurchaseWarehousinglist button[action=export]' : {
 								click : this.exportExcel
 							},
@@ -62,6 +62,10 @@ Ext.define('SCM.controller.PurchaseWarehousing.PurchaseWarehousingController', {
 								click : this.deleteLine
 							},
 
+							// 编辑界面直接提交
+							'PurchaseWarehousingedit button[action=submit]' : {
+								click : this.saveAndSubmitRecord
+							},
 							// 编辑界面保存
 							'PurchaseWarehousingedit button[action=save]' : {
 								click : this.saveRecord
@@ -98,7 +102,8 @@ Ext.define('SCM.controller.PurchaseWarehousing.PurchaseWarehousingController', {
 				this.searchMaterialId = this.listContainer.down('combogrid[name=searchMaterialId]');
 				this.searchCustId = this.listContainer.down('combogrid[name=searchCustId]');
 				this.totalFields = this.editForm.down('textfield[name=totalsum]');
-				
+				this.supplierFields = this.editForm.down('textfield[name=supplierSupplierId]');
+				this.supplierFields.addListener('change', this.supplierChange, this);
 			},
 
 			/**
@@ -156,77 +161,138 @@ Ext.define('SCM.controller.PurchaseWarehousing.PurchaseWarehousingController', {
 						e.record.set('unitUnitId', record.get('defaultUnitId'));
 						e.record.set('unitUnitName', record.get('defaultUnitName'));
 					}
+					this.setScheduleVolume(e.record, this.supplierFields.getValue(), e.value);
 				} else if (e.field == 'volume') {
 					if (e.record.get('scheduleVolume') < e.record.get('volume')) {
-						showWarning('数量不能大于待验收数量，请重新输入！');
-						e.record.set('volume', 0);
+						showWarning('数量大于待验收数量！');
 					}
 				}
 				e.record.set('entrysum', e.record.get('price') * e.record.get('volume'));
-				var count = e.grid.store.getCount();
+				this.changeMaterialPrice(e.grid.store);
+			},
+
+			/**
+			 * 计算总金额
+			 * 
+			 * @param {}
+			 *            store
+			 */
+			changeMaterialPrice : function(store) {
+				var count = store.getCount();
 				var sum = 0;
 				for (var i = 0; i < count; i++) {
-					sum += e.grid.store.getAt(i).get('entrysum');
+					sum += store.getAt(i).get('entrysum');
 				}
 				this.totalFields.setValue(sum);
 			},
-			// 提交单据
-			submitBill : function(button) {
-				sm = this.listPanel.getSelectionModel();
 
-				if (sm.hasSelection()) {// 判断是否选择行记录
-					record = sm.getLastSelected();
-					if (record.get('status') != '0') {
-						showWarning('单据已提交！');
-						return;
-					}
-					Ext.Msg.confirm('提示', '确定提交该' + this.gridTitle + '？', confirmChange, this);
-					function confirmChange(id) {
-						if (id == 'yes') {
-							Ext.Ajax.request({
-										scope : this,
-										params : {
-											billId : record.get('id'),
-											entity : this.entityName
-										},
-										url : '../../scm/control/submitInspective',
-										success : function(response) {
-											this.refreshRecord();
-										}
-									});
+			/**
+			 * 供应商下拉框选择事件
+			 * 
+			 * @param {}
+			 *            field
+			 * @param {}
+			 *            newValue
+			 * @param {}
+			 *            oldValue
+			 */
+			supplierChange : function(field, newValue, oldValue) {
+				var me = this;
+				var count = me.editEntry.store.getCount();
+				var sum = 0;
+				for (var i = 0; i < count; i++) {
+					var tempRecord = me.editEntry.store.getAt(i);
+					me.setScheduleVolume(tempRecord, newValue, tempRecord.get('materialMaterialId'))
+				}
+			},
+
+			/**
+			 * 获取某供应商计划采购物料数量
+			 * 
+			 * @param {}
+			 *            record
+			 * @param {}
+			 *            supplierId
+			 * @param {}
+			 *            materialId
+			 */
+			setScheduleVolume : function(record, supplierId, materialId) {
+				if (!Ext.isEmpty(supplierId) && !Ext.isEmpty(materialId)) {
+					Ext.Ajax.request({// 判断用户是否已经登录
+						scope : this,
+						params : {
+							supplierId : supplierId,
+							materialId : materialId
+						},
+						url : '../../scm/control/getPlanBalance',
+						success : function(response, option) {
+							var result = Ext.decode(response.responseText)
+							record.set('scheduleVolume', result.count);
+							if (record.get('scheduleVolume') < record.get('volume')) {
+								showWarning('数量大于待验收数量！');
+							}
 						}
+					});
+				}
+			},
+
+			/**
+			 * 提交单据
+			 * 
+			 * @param {}
+			 *            button
+			 */
+			submitBill : function(button) {
+				record = this.getSelectRecord();
+				if (record.get('status') != '0') {
+					showWarning('单据已提交！');
+					return;
+				}
+				Ext.Msg.confirm('提示', '确定提交该' + this.gridTitle + '？', confirmChange, this);
+				function confirmChange(id) {
+					if (id == 'yes') {
+						Ext.Ajax.request({
+									scope : this,
+									params : {
+										billId : record.get('id'),
+										entity : this.entityName
+									},
+									url : '../../scm/control/submitInspective',
+									success : function(response) {
+										this.refreshRecord();
+									}
+								});
 					}
 				}
 			},
-			
-			// 撤销单据
+
+			/**
+			 * 撤销单据
+			 * 
+			 * @param {}
+			 *            button
+			 */
 			rollbackBill : function(button) {
-				sm = this.listPanel.getSelectionModel();
-
-				if (sm.hasSelection()) {// 判断是否选择行记录
-					record = sm.getLastSelected();
-					if (record.get('status') != '4') {
-						showWarning('单据未提交！');
-						return;
+				record = this.getSelectRecord();
+				if (record.get('status') != '4') {
+					showWarning('单据未提交！');
+					return;
+				}
+				Ext.Msg.confirm('提示', '确定撤销该' + this.gridTitle + '？', confirmChange, this);
+				function confirmChange(id) {
+					if (id == 'yes') {
+						Ext.Ajax.request({
+									scope : this,
+									params : {
+										billId : record.get('id'),
+										entity : this.entityName
+									},
+									url : '../../scm/control/rollbackInspective',
+									success : function(response) {
+										this.refreshRecord();
+									}
+								});
 					}
-					Ext.Msg.confirm('提示', '确定撤销该' + this.gridTitle + '？', confirmChange, this);
-					function confirmChange(id) {
-						if (id == 'yes') {
-							Ext.Ajax.request({
-										scope : this,
-										params : {
-											billId : record.get('id'),
-											entity : this.entityName
-										},
-										url : '../../scm/control/rollbackInspective',
-										success : function(response) {
-											this.refreshRecord();
-										}
-									});
-						}
-					}
-
 				}
 			}
-
 		});
