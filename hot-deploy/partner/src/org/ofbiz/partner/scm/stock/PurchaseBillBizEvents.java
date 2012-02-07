@@ -1,10 +1,13 @@
 package org.ofbiz.partner.scm.stock;
 
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import net.sf.json.JSONObject;
 
 import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilMisc;
@@ -13,6 +16,7 @@ import org.ofbiz.entity.GenericValue;
 import org.ofbiz.entity.transaction.GenericTransactionException;
 import org.ofbiz.entity.transaction.TransactionUtil;
 import org.ofbiz.partner.scm.common.BillBaseEvent;
+import org.ofbiz.partner.scm.common.CommonEvents;
 import org.ofbiz.partner.scm.pricemgr.BillType;
 import org.ofbiz.partner.scm.pricemgr.PriceCalItem;
 import org.ofbiz.partner.scm.pricemgr.PriceMgr;
@@ -127,6 +131,28 @@ public class PurchaseBillBizEvents {
                 Debug.logError(e, "Unable to commit transaction", module);
             }
         }
+		return "success";
+	}
+	
+	/**
+	 * 获取计划采购物料数量
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public static String getPlanBalance(HttpServletRequest request,HttpServletResponse response) throws Exception{
+		String supplierId = request.getParameter("supplierId");
+		String materialId = request.getParameter("materialId");
+		BigDecimal balance = PurPlanBalance.getInstance().getBalance(supplierId, materialId);
+		JSONObject jsonStr = new JSONObject();
+		jsonStr.put("success", true);
+		if(balance==null){
+			jsonStr.put("count", 0);
+		}else{
+			jsonStr.put("count", balance);
+		}
+		CommonEvents.writeJsonDataToExt(response, jsonStr.toString());
 		return "success";
 	}
 }
