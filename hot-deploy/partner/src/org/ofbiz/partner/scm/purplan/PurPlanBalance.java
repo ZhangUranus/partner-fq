@@ -66,12 +66,19 @@ public class PurPlanBalance {
 			GenericValue gv=delegator.findOne("PurPlanBalance", UtilMisc.toMap("supplierId", supplierId, "materialId", materialId), false);
 			if(gv!=null){
 				BigDecimal balance=gv.getBigDecimal("balance");
-				gv.set("balance", balance.add(volume));
+				BigDecimal result=balance.add(volume);
+				if(result.compareTo(BigDecimal.ZERO)<0){
+					throw new Exception("供应商可入库数量不能为负数！");
+				}
+				gv.set("balance", result);
 				delegator.store(gv);
 			}else{//新增记录
 				gv=delegator.makeValue("PurPlanBalance");
 				gv.set("supplierId", supplierId);
 				gv.set("materialId", materialId);
+				if(volume.compareTo(BigDecimal.ZERO)<0){
+					throw new Exception("供应商可入库数量不能为负数！");
+				}
 				gv.set("balance", volume);
 				delegator.create(gv);
 			}

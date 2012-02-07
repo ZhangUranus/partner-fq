@@ -37,6 +37,11 @@ public class PriceMgr {
 	}
 	/**
 	 * 计算单价 更新存货余额表
+	 * 当isOut=true 时，表示出库计算
+	 * 
+	 * @param item
+	 * @param isOut 出库标识
+	 * @return 
 	 * @throws Exception
 	 */
 	public synchronized BigDecimal calPrice(PriceCalItem item) throws Exception{

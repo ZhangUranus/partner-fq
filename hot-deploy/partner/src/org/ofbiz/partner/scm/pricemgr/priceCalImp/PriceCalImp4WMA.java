@@ -1,6 +1,7 @@
 package org.ofbiz.partner.scm.pricemgr.priceCalImp;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -65,23 +66,30 @@ public class PriceCalImp4WMA implements IPriceCal{
 		//取库存余额表
 		List<GenericValue> curValueList=delegator.findByAnd("CurMaterialBalance", UtilMisc.toMap("year",new Integer(year),"month",new Integer(month),"warehouseId",item.getWarehouseId(),"materialId", item.getMaterialId()));
 		GenericValue curValue=null;
+		BigDecimal curAmount=null;//当前数量
+		BigDecimal curSum=null;//当前金额
+		BigDecimal calAmount=null;//计算后数量
+		BigDecimal calSum=null;//计算后金额
 		if(curValueList!=null&&curValueList.size()>0){
 			//取第一条匹配记录
 			curValue=curValueList.get(0);
 			Debug.logInfo("计算前物料数量单价"+curValue.getString("volume")+";"+curValue.getString("totalSum"),module);
+			curAmount=curValue.getBigDecimal("volume");//设置当前数量
+			curSum=curValue.getBigDecimal("totalSum");//设置当前金额
+			
 			BigDecimal amount=item.getAmount()==null?BigDecimal.ZERO:item.getAmount();//数量
-			BigDecimal sum=item.getSum()==null?BigDecimal.ZERO:item.getSum();//金额
+			BigDecimal sum=item.getSum();//金额
+			if(sum==null){//金额为空取物料当前单价
+				BigDecimal curPrice=curSum.divide(curAmount,4,RoundingMode.HALF_UP);//当前物料单价
+				sum=amount.multiply(curPrice);
+			}
+			calAmount=curAmount.add(amount);//计算后数量
+			calSum=curSum.add(sum);//计算后金额
 			
-			BigDecimal curAmount=curValue.getBigDecimal("volume");//当前数量
-			BigDecimal curSum=curValue.getBigDecimal("totalSum");//当前金额
-			
-			curValue.set("volume", curAmount.add(amount));
-			curValue.set("totalSum", curSum.add(sum));
+			curValue.set("volume", calAmount);
+			curValue.set("totalSum", calSum);
 			
 			delegator.store(curValue);//更新当前库存表
-			
-			BigDecimal result=curValue.getBigDecimal("totalSum").divide(curValue.getBigDecimal("volume"), 4, BigDecimal.ROUND_HALF_UP); 
-			return result;
 		}else{
 			Debug.logInfo("库存余额表不存在物料"+item.getMaterialId()+"，添加该物料记录！", module);
 			//如果库存余额表没有改物料，则新增
@@ -94,9 +102,19 @@ public class PriceCalImp4WMA implements IPriceCal{
 			curValue.set("beginsum", BigDecimal.ZERO);
 			curValue.set("volume", item.getAmount());
 			curValue.set("totalSum", item.getSum());
-			delegator.create(curValue);
-			return item.getSum().divide(item.getAmount(), 4, BigDecimal.ROUND_HALF_UP);
+			
+			curAmount=BigDecimal.ZERO;//设置当前数量
+			curSum=BigDecimal.ZERO;//设置当前金额
+			calAmount=item.getAmount();//计算后数量
+			calSum=item.getSum();//计算后金额
+			
+			delegator.create(curValue);//新增条目
 		}
+		if(curAmount!=null||curAmount.compareTo(BigDecimal.ZERO)!=0)
+			return curSum.divide(curAmount, 4, BigDecimal.ROUND_HALF_UP);//返回当前物料单价
+		else
+			return null;
+		
 	}
 	
 }

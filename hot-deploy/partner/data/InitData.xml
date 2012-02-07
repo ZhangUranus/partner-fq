@@ -48,6 +48,8 @@ under the License.
 	<TSystemMenu menuId='systemManagement' menuName='系统管理' menuType='0' parentId='-1' sort='2' hyperlink='' styleName='system-management' display='1' description='系统管理模块' />
 	<TSystemMenu menuId='userManagement' menuName='用户管理' menuType='1' parentId='systemManagement' sort='21' hyperlink='usermanagement' styleName='user-management' display='1' description='用户管理页面' />
 	<TSystemMenu menuId='logManagement' menuName='日志管理' menuType='1' parentId='systemManagement' sort='22' hyperlink='rolemanagement' styleName='log-management' display='1' description='角色管理页面' />
+	<TSystemMenu menuId='stockSettle' menuName='存货核算' menuType='1' parentId='systemManagement' sort='23' hyperlink='stockSettle' styleName='log-management' display='1' description='角色管理页面' />
+	
 	<TSystemMenu menuId='basicSetting' menuName='基础设置' menuType='0' parentId='-1' sort='3' hyperlink='' styleName='basic-setting' display='1' description='基础设置模块' />
 	<TSystemMenu menuId='basicCodingMaintaince' menuName='基础代码维护' menuType='1' parentId='basicSetting' sort='31' hyperlink='basiccodingmaintaince' styleName='basic-coding-maintaince' display='0' description='基础代码维护模块' />
 	<TSystemMenu menuId='custInfoMaintaince' menuName='客户资料维护' menuType='1' parentId='basicSetting' sort='32' hyperlink='custinfomaintaince' styleName='cust-info-maintaince' display='1' description='客户资料维护页面' />
@@ -83,6 +85,11 @@ under the License.
 	<TSystemMenuOfRole id='b66e79c7-c672-45b0-9801-37976d2146ca' menuId='logManagement' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='E' />
 	<TSystemMenuOfRole id='13f97447-1b25-4a25-8dea-07055cfba6c9' menuId='logManagement' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='D' />
 	<TSystemMenuOfRole id='fd930c6c-9fe0-48c0-a9c7-83eb9900640a' menuId='logManagement' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='N' />
+	<TSystemMenuOfRole id='52f5b934-4bd1-46ac-80ab-059100130833' menuId='stockSettle' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='V' />
+	<TSystemMenuOfRole id='b66f79c7-c672-45b0-9801-37976d2146ca' menuId='stockSettle' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='E' />
+	<TSystemMenuOfRole id='14397447-1b25-4a25-8dea-07055ceba6c9' menuId='stockSettle' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='D' />
+	<TSystemMenuOfRole id='fc930c6c-9fe0-48c0-a9c7-83eb9980640a' menuId='stockSettle' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='N' />
+	
 	<TSystemMenuOfRole id='25d96330-7e2a-4427-b197-ccf4734dd6ee' menuId='basicCodingMaintaince' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='V' />
 	<TSystemMenuOfRole id='0fc966c5-2387-4f88-8920-896fae68f2c0' menuId='basicCodingMaintaince' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='E' />
 	<TSystemMenuOfRole id='1392be16-58fd-43ae-add8-51fed4fdb875' menuId='basicCodingMaintaince' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='D' />
