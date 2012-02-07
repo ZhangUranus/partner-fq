@@ -140,6 +140,12 @@
            <event type="java" path="org.ofbiz.partner.scm.stock.PurchaseBillBizEvents" invoke="unauditBill"/>
            <response name="success" type="none"/>
        </request-map>
+       <!-- 获取供应商某物料的计划采购数量 -->
+       <request-map uri="getPlanBalance">
+           <security https="false" auth="false"/>
+           <event type="java" path="org.ofbiz.partner.scm.stock.PurchaseBillBizEvents" invoke="getPlanBalance"/>
+           <response name="success" type="none"/>
+       </request-map>
       
       <!-- 验收单提交-->
       <request-map uri="submitInspective">
