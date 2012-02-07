@@ -4,5 +4,9 @@ Ext.define('SCM.store.PurchaseBill.PurchaseBillStore', {
 			alias : 'PurchaseBillStore',
 			autoLoad : false,
 			autoSync : false,
-			groupField : 'number'
+			groupField : 'number',
+			sorters : [{// 根据number字段排序
+				property : 'number',
+				direction : 'ASC'
+			}]
 		});

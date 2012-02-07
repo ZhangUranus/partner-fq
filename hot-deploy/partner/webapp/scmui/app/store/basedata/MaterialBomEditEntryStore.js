@@ -3,5 +3,9 @@ Ext.define('SCM.store.basedata.MaterialBomEditEntryStore', {
 			model : 'SCM.model.basedata.MaterialBomEditEntryModel',
 			alias : 'MaterialBomEditEntryStore',
 			autoLoad : false,
-			autoSync : false
+			autoSync : false,
+			sorters : [{// 根据number字段排序
+				property : 'entryMaterialName',
+				direction : 'ASC'
+			}]
 		});

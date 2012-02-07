@@ -3,5 +3,9 @@ Ext.define('SCM.store.WorkshopDrawMaterial.WorkshopDrawMaterialEditStore', {
 			model : 'SCM.model.WorkshopDrawMaterial.WorkshopDrawMaterialEditModel',
 			alias : 'WorkshopDrawMaterialEditStore',
 			autoLoad : false,
-			autoSync : false
+			autoSync : false,
+			sorters : [{// 根据number字段排序
+				property : 'number',
+				direction : 'ASC'
+			}]
 		});

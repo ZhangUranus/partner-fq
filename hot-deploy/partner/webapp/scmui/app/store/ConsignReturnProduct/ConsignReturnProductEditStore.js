@@ -3,5 +3,9 @@ Ext.define('SCM.store.ConsignReturnProduct.ConsignReturnProductEditStore', {
 			model : 'SCM.model.ConsignReturnProduct.ConsignReturnProductEditModel',
 			alias : 'ConsignReturnProductEditStore',
 			autoLoad : false,
-			autoSync : false
+			autoSync : false,
+			sorters : [{// 根据number字段排序
+				property : 'number',
+				direction : 'ASC'
+			}]
 		});

@@ -3,5 +3,9 @@ Ext.define('SCM.store.WorkshopWarehousing.WorkshopWarehousingEditStore', {
 			model : 'SCM.model.WorkshopWarehousing.WorkshopWarehousingEditModel',
 			alias : 'WorkshopWarehousingEditStore',
 			autoLoad : false,
-			autoSync : false
+			autoSync : false,
+			sorters : [{// 根据number字段排序
+				property : 'number',
+				direction : 'ASC'
+			}]
 		});
