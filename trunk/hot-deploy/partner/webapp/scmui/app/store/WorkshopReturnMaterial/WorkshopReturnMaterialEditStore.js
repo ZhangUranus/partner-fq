@@ -3,5 +3,9 @@ Ext.define('SCM.store.WorkshopReturnMaterial.WorkshopReturnMaterialEditStore', {
 			model : 'SCM.model.WorkshopReturnMaterial.WorkshopReturnMaterialEditModel',
 			alias : 'WorkshopReturnMaterialEditStore',
 			autoLoad : false,
-			autoSync : false
+			autoSync : false,
+			sorters : [{// 根据number字段排序
+				property : 'number',
+				direction : 'ASC'
+			}]
 		});

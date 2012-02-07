@@ -3,5 +3,9 @@ Ext.define('SCM.store.PurchaseWarehousing.PurchaseWarehousingEditStore', {
 			model : 'SCM.model.PurchaseWarehousing.PurchaseWarehousingEditModel',
 			alias : 'PurchaseWarehousingEditStore',
 			autoLoad : false,
-			autoSync : false
+			autoSync : false,
+			sorters : [{// 根据number字段排序
+				property : 'number',
+				direction : 'ASC'
+			}]
 		});
