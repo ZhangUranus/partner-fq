@@ -32,7 +32,6 @@ Ext.define('SCM.model.PurchaseWarehousing.PurchaseWarehousingEditEntryModel', {
 						type : 'float'
 					}, {
 						name : 'scheduleVolume',
-						defaultValue : 100,		//暂时使用默认值
 						type : 'float'
 					}, {
 						name : 'unitUnitId',
