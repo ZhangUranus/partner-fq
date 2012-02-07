@@ -1,4 +1,4 @@
-﻿package org.ofbiz.partner.scm.stock;
+package org.ofbiz.partner.scm.stock;
 
 import java.math.BigDecimal;
 import java.util.Date;
