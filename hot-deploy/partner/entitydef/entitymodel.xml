@@ -130,4 +130,29 @@ under the License.
 		<field name="hasDate" type="indicator"/>
 		<prim-key field="id"/>
 	</entity>
+	<entity entity-name="TSystemLogType" package-name="org.ofbiz.partner.system" title="system log type">
+		<field name="id" type="id-uuid-ne"/>
+		<field name="number" type="name"/>
+		<field name="name" type="name"/>
+		<field name="operateType" type="name"/>
+		<field name="keyWord" type="value"/>
+		<field name="valid" type="indicator"/>
+		<prim-key field="id"/>
+	</entity>
+	<view-entity entity-name="VSystemLog" package-name="org.ofbiz.partner.system">
+		<member-entity entity-alias="ServerHit" entity-name="ServerHit"/>
+		<member-entity entity-alias="TSystemLogType" entity-name="TSystemLogType"/>
+		<alias name="id" entity-alias="ServerHit" field="id"></alias>
+		<alias name="hitTime" entity-alias="ServerHit" field="hitStartDateTime"></alias>
+		<alias name="hitType" entity-alias="ServerHit" field="hitTypeId"></alias>
+		<alias name="runningTime" entity-alias="ServerHit" field="runningTimeMillis"></alias>
+		<alias name="userId" entity-alias="ServerHit" field="userLoginId"></alias>
+		<alias name="url" entity-alias="ServerHit" field="requestUrl"></alias>
+		<alias name="ipAddress" entity-alias="ServerHit" field="serverIpAddress"></alias>
+		<alias name="hostName" entity-alias="ServerHit" field="serverHostName"></alias>
+		<alias name="name" entity-alias="TSystemLogType" field="name"></alias>
+		<alias name="operateType" entity-alias="TSystemLogType" field="operateType"></alias>
+		<alias name="keyWord" entity-alias="TSystemLogType" field="keyWord"></alias>
+		<alias name="valid" entity-alias="TSystemLogType" field="valid"></alias>
+	</view-entity>
 </entitymodel>
