@@ -47,7 +47,7 @@ under the License.
 	<TSystemMenu menuId='productReport' menuName='成品报表' menuType='1' parentId='analyticStatistics' sort='145' hyperlink='productreport' styleName='product-report' display='1' description='成品报表' />
 	<TSystemMenu menuId='systemManagement' menuName='系统管理' menuType='0' parentId='-1' sort='2' hyperlink='' styleName='system-management' display='1' description='系统管理模块' />
 	<TSystemMenu menuId='userManagement' menuName='用户管理' menuType='1' parentId='systemManagement' sort='21' hyperlink='usermanagement' styleName='user-management' display='1' description='用户管理页面' />
-	<TSystemMenu menuId='logManagement' menuName='日志管理' menuType='1' parentId='systemManagement' sort='22' hyperlink='rolemanagement' styleName='log-management' display='1' description='角色管理页面' />
+	<TSystemMenu menuId='logManagement' menuName='日志管理' menuType='1' parentId='systemManagement' sort='22' hyperlink='logmanagement' styleName='log-management' display='1' description='日志管理页面' />
 	<TSystemMenu menuId='stockSettle' menuName='存货核算' menuType='1' parentId='systemManagement' sort='23' hyperlink='stockSettle' styleName='log-management' display='1' description='角色管理页面' />
 	
 	<TSystemMenu menuId='basicSetting' menuName='基础设置' menuType='0' parentId='-1' sort='3' hyperlink='' styleName='basic-setting' display='1' description='基础设置模块' />
@@ -269,4 +269,47 @@ under the License.
 	<TSystemSerialNumber id='d6549ba2-c2b8-457b-bb87-437787b38624' serialDate='20120101' entityName='WorkshopReturnProduct' prefix='WRP' serialNumber='100001' initNumber='100001' description='制造退货单编号' hasDate='1' />
 	
 	<PriceMgrParamters id='001'  value='2012-02-01 00:00:00.000'/>
+	
+	<TSystemLogType id='50de6816-ac9d-476b-8300-b71563c64812' number='LOG100001' name='仓库管理' operateType='登录' keyWord='checkLogin' valid='1' />
+	<TSystemLogType id='fcbd8c0a-b171-43de-a4b9-515b0897699c' number='LOG100002' name='仓库管理' operateType='注销' keyWord='logout' valid='1' />
+	<TSystemLogType id='e37ffadd-104f-40b4-9b26-3f06663f26c0' number='LOG100003' name='客户资料维护' operateType='查看' keyWord='getUserPermissions?menuId=custInfoMaintaince' valid='0' />
+	<TSystemLogType id='f365ec16-8425-48f9-a40e-05449855e006' number='LOG100004' name='客户资料维护' operateType='修改' keyWord='updateJsonData?entity=Customer' valid='1' />
+	<TSystemLogType id='0b15e189-2ac8-44c6-9232-3c8d3b332c33' number='LOG100005' name='客户资料维护' operateType='新增' keyWord='addnewJsonData?entity=Customer' valid='1' />
+	<TSystemLogType id='843e163d-d6d3-4424-9067-4cbeb9b52bc7' number='LOG100006' name='客户资料维护' operateType='删除' keyWord='deleteJsonData?entity=Customer' valid='1' />
+	<TSystemLogType id='646c14b6-35f5-455d-9062-7fe03b53b87a' number='LOG100007' name='仓库资料维护' operateType='查看' keyWord='getUserPermissions?menuId=warehouseInfoMaintaince' valid='0' />
+	<TSystemLogType id='94de3cba-a2af-4769-9a43-3358ffa782cf' number='LOG100008' name='仓库资料维护' operateType='修改' keyWord='updateJsonData?entity=Warehouse' valid='1' />
+	<TSystemLogType id='2174d93a-ae09-4e5d-9820-ee3fbc08cfed' number='LOG100009' name='仓库资料维护' operateType='新增' keyWord='addnewJsonData?entity=Warehouse' valid='1' />
+	<TSystemLogType id='eeb6dd65-694a-4650-a3e3-c910f824ecd7' number='LOG100010' name='仓库资料维护' operateType='删除' keyWord='deleteJsonData?entity=Warehouse' valid='1' />
+	<TSystemLogType id='1e115805-7778-411b-a6a7-5d1b51979eb7' number='LOG100011' name='料品资料维护' operateType='查看' keyWord='getUserPermissions?menuId=materialInfoMaintaince' valid='0' />
+	<TSystemLogType id='a6d0f392-ac1a-4897-89a0-c37c099a6310' number='LOG100012' name='料品资料维护' operateType='修改' keyWord='updateJsonData?entity=TMaterial' valid='1' />
+	<TSystemLogType id='463a1426-0033-4d8a-8c2b-5a02041f8c15' number='LOG100013' name='料品资料维护' operateType='新增' keyWord='addnewJsonData?entity=TMaterial' valid='1' />
+	<TSystemLogType id='84779f64-06df-44b0-ad97-4e4211e2ac7a' number='LOG100014' name='料品资料维护' operateType='删除' keyWord='deleteJsonData?entity=TMaterial' valid='1' />
+	<TSystemLogType id='6e7e1f96-bfd1-45d0-b937-0a2e57a80927' number='LOG100015' name='部门资料维护' operateType='查看' keyWord='getUserPermissions?menuId=departmentInfoMaintaince' valid='0' />
+	<TSystemLogType id='58ec0648-5c47-40c6-8fb5-35a101d5ae6c' number='LOG100016' name='部门资料维护' operateType='修改' keyWord='updateJsonData?entity=Department' valid='1' />
+	<TSystemLogType id='88104be3-0ac3-435d-9d35-7ce1628dd6ad' number='LOG100017' name='部门资料维护' operateType='新增' keyWord='addnewJsonData?entity=Department' valid='1' />
+	<TSystemLogType id='b543c2ec-a73d-4b92-b822-5b519da0160e' number='LOG100018' name='部门资料维护' operateType='删除' keyWord='deleteJsonData?entity=Department' valid='1' />
+	<TSystemLogType id='074ee937-5165-4e45-b837-eceee6b55631' number='LOG100019' name='BOM单资料维护' operateType='查看' keyWord='getUserPermissions?menuId=BOMBillInfoMaintaince' valid='0' />
+	<TSystemLogType id='23839713-cb31-4040-a0c7-7b59a286412b' number='LOG100020' name='BOM单资料维护' operateType='修改' keyWord='updateWithEntry?headEntity=MaterialBom&amp;entryEntity=MaterialBomEntry' valid='1' />
+	<TSystemLogType id='0d175f5a-cd33-4844-b99d-4d5230554800' number='LOG100021' name='BOM单资料维护' operateType='新增' keyWord='createWithEntry?headEntity=MaterialBom&amp;entryEntity=MaterialBomEntry' valid='1' />
+	<TSystemLogType id='98b50b06-0aa7-4a9d-9c44-07ec2bf61060' number='LOG100022' name='BOM单资料维护' operateType='删除' keyWord='deleteWithEntry?headEntity=MaterialBom&amp;entryEntity=MaterialBomEntry' valid='1' />
+	<TSystemLogType id='f16b7434-2cec-46c8-ab6f-d5645f24d104' number='LOG100023' name='计量单位维护' operateType='查看' keyWord='getUserPermissions?menuId=UnitMaintaince' valid='0' />
+	<TSystemLogType id='516f53f8-3799-4819-b9cc-69d27cfdbaba' number='LOG100024' name='计量单位维护' operateType='修改' keyWord='updateJsonData?entity=Unit' valid='1' />
+	<TSystemLogType id='2a43d1ea-cc50-485f-9a2f-fe0193acddd2' number='LOG100025' name='计量单位维护' operateType='新增' keyWord='addnewJsonData?entity=Unit' valid='1' />
+	<TSystemLogType id='e428c9d7-2e3f-45eb-8425-3aff55c1e5b0' number='LOG100026' name='计量单位维护' operateType='删除' keyWord='deleteJsonData?entity=Unit' valid='1' />
+	<TSystemLogType id='0c102c8b-b03d-4c68-b089-2a852d6d3792' number='LOG100027' name='仓库类型维护' operateType='查看' keyWord='getUserPermissions?menuId=WarehousetTypeMaintaince' valid='0' />
+	<TSystemLogType id='ab6ceee7-9701-4fee-b0ea-8756a3431652' number='LOG100028' name='仓库类型维护' operateType='修改' keyWord='updateJsonData?entity=WarehouseType' valid='1' />
+	<TSystemLogType id='40d86b34-09e2-4c74-aad1-e4f96a5403ff' number='LOG100029' name='仓库类型维护' operateType='新增' keyWord='addnewJsonData?entity=WarehouseType' valid='1' />
+	<TSystemLogType id='a6aef9a7-1d86-4e30-8f55-27283fa7d4fb' number='LOG100030' name='仓库类型维护' operateType='删除' keyWord='deleteJsonData?entity=WarehouseType' valid='1' />
+	<TSystemLogType id='5012f2db-090e-47eb-97e8-258eacc3536e' number='LOG100031' name='供应商资料维护' operateType='查看' keyWord='getUserPermissions?menuId=SupplierMaintaince' valid='0' />
+	<TSystemLogType id='a8f6f519-5617-41fc-a54a-442dce3e2fbf' number='LOG100032' name='供应商资料维护' operateType='修改' keyWord='updateJsonData?entity=Supplier' valid='1' />
+	<TSystemLogType id='cfe4af86-e417-4edf-b27a-d4e0339cfced' number='LOG100033' name='供应商资料维护' operateType='新增' keyWord='addnewJsonData?entity=Supplier' valid='1' />
+	<TSystemLogType id='51fb6a69-9293-411a-9e27-f7fe47075dee' number='LOG100034' name='供应商资料维护' operateType='删除' keyWord='deleteJsonData?entity=Supplier' valid='1' />
+	<TSystemLogType id='cc9e9958-79f3-4fbe-ab44-096ebd86e269' number='LOG100035' name='车间资料维护' operateType='查看' keyWord='getUserPermissions?menuId=WorkshopMaintaince' valid='0' />
+	<TSystemLogType id='2acc2298-5c48-4d93-8526-f1db1823dc0a' number='LOG100036' name='车间资料维护' operateType='修改' keyWord='updateJsonData?entity=Workshop' valid='1' />
+	<TSystemLogType id='d2eb571b-bd8a-4842-9d78-4818c672d859' number='LOG100037' name='车间资料维护' operateType='新增' keyWord='addnewJsonData?entity=Workshop' valid='1' />
+	<TSystemLogType id='1cc982b1-04ae-401f-b97e-2f6eaf3a2a48' number='LOG100038' name='车间资料维护' operateType='删除' keyWord='deleteJsonData?entity=Workshop' valid='1' />
+	<TSystemLogType id='14de8128-fa17-43b6-8c12-1f28916216bb' number='LOG100039' name='用户管理' operateType='查看' keyWord='getUserPermissions?menuId=userManagement' valid='0' />
+	<TSystemLogType id='39594cdd-b4da-499d-9f6f-1680e02e8066' number='LOG100040' name='用户管理' operateType='新增' keyWord='createUserLogin' valid='1' />
+	<TSystemLogType id='0fcaf6f3-37ca-4d59-a63e-6253217e14b2' number='LOG100041' name='用户管理' operateType='修改' keyWord='updateUserLogin' valid='1' />
+	<TSystemLogType id='5dd87d47-7b29-441c-81fc-272d26b8c96d' number='LOG100042' name='用户管理' operateType='删除' keyWord='deleteUserLogin' valid='1' />
 </entity-engine-xml>
