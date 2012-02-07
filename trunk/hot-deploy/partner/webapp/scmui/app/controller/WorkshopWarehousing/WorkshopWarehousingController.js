@@ -62,6 +62,10 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 								click : this.deleteLine
 							},
 
+							// 编辑界面直接提交
+							'WorkshopWarehousingedit button[action=submit]' : {
+								click : this.saveAndSubmitRecord
+							},
 							// 编辑界面保存
 							'WorkshopWarehousingedit button[action=save]' : {
 								click : this.saveRecord
