@@ -102,6 +102,7 @@ Ext.define('SCM.controller.PurchaseReturn.PurchaseReturnController', {
 				this.searchMaterialId = this.listContainer.down('combogrid[name=searchMaterialId]');
 				this.searchCustId = this.listContainer.down('combogrid[name=searchCustId]');
 				this.totalFields = this.editForm.down('textfield[name=totalsum]');
+				this.editEntry.store.proxy.addListener('afterRequest', this.changeStockVolume, this);
 			},
 
 			/**
@@ -171,14 +172,27 @@ Ext.define('SCM.controller.PurchaseReturn.PurchaseReturnController', {
 				}
 				this.totalFields.setValue(sum);
 			},
-
+			
 			/**
-			 * 获取某供应商计划采购物料数量
+			 * 修改库存
+			 */
+			changeStockVolume : function() {
+				var me = this;
+				var count = me.editEntry.store.getCount();
+				var sum = 0;
+				for (var i = 0; i < count; i++) {
+					var tempRecord = me.editEntry.store.getAt(i);
+					me.setStockVolume(tempRecord, tempRecord.get('warehouseWarehouseId'), tempRecord.get('materialMaterialId'))
+				}
+			},
+			
+			/**
+			 * 获取某仓库某物料数量
 			 * 
 			 * @param {}
 			 *            record
 			 * @param {}
-			 *            supplierId
+			 *            warehouseId
 			 * @param {}
 			 *            materialId
 			 */
