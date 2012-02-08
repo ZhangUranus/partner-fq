@@ -53,6 +53,30 @@ public class PriceCalItem {
 	public boolean isOut() {
 		return isOut;
 	}
+	public void setBizTime(Date bizTime) {
+		this.bizTime = bizTime;
+	}
+	public void setWarehouseId(String warehouseId) {
+		this.warehouseId = warehouseId;
+	}
+	public void setMaterialId(String materialId) {
+		this.materialId = materialId;
+	}
+	public void setAmount(BigDecimal amount) {
+		this.amount = amount;
+	}
+	public void setSum(BigDecimal sum) {
+		this.sum = sum;
+	}
+	public void setBillType(BillType billType) {
+		this.billType = billType;
+	}
+	public void setBillId(String billId) {
+		this.billId = billId;
+	}
+	public void setOut(boolean isOut) {
+		this.isOut = isOut;
+	}
 	
 	
 }
