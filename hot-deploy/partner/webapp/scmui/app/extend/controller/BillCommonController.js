@@ -518,16 +518,15 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 					var newed = entryStore.getNewRecords();
 					if (record.dirty || removed.length > 0 || updated.length > 0 || newed.length > 0) {
 						me.commitSave(record, entryStore);
-					} else {
-						if (me.win.isVisible()) {
-							me.win.close();
-						}
 					}
 				} else if (me.win.uiStatus == 'AddNew') {// 新增记录
 					record = Ext.create(me.modelName);
 					record.set(values);
 
 					me.commitSave(record, me.editEntry.store);
+				}
+				if (me.win.isVisible()) {
+					me.win.close();
 				}
 				me.changeComponentsState();
 			},
