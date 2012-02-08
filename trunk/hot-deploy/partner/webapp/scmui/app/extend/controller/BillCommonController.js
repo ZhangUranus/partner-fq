@@ -254,7 +254,11 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 							return false; // 跳出循环
 						});
 			},
-
+			
+			/**
+			 * 根据状态设置编辑界面状态
+			 * @param {} isReadOnly
+			 */
 			changeEditStatus : function(isReadOnly) {
 				this.setFieldsReadOnly(isReadOnly);
 				this.editEntry.setDisabled(isReadOnly);
@@ -367,7 +371,10 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 			 */
 			refreshRecord : Ext.emptyFn,
 
-			// 提交单据
+			/**
+			 * 提交单据
+			 * @param {} button
+			 */ 
 			submitBill : function(button) {
 				record = this.getSelectRecord();
 				if (record.get('status') != '0') {
@@ -383,7 +390,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 										billId : record.get('id'),
 										entity : this.entityName
 									},
-									url : '../../scm/control/submitBill',
+									url : this.getSubmitBillUrl(),
 									success : function(response) {
 										this.refreshRecord();
 									}
@@ -391,7 +398,19 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 					}
 				}
 			},
-			// 撤销单据
+			
+			/**
+			 * 获取单据提交URL
+			 */
+			getSubmitBillUrl : function(){
+				return '../../scm/control/submitBill';
+			},
+			
+			
+			/**
+			 * 撤销单据
+			 * @param {} button
+			 */ 
 			rollbackBill : function(button) {
 				record = this.getSelectRecord();
 				if (record.get('status') != '4') {
@@ -407,16 +426,26 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 										billId : record.get('id'),
 										entity : this.entityName
 									},
-									url : '../../scm/control/rollbackBill',
+									url : this.getRollbackBillUrl(),
 									success : function(response) {
 										this.refreshRecord();
 									}
 								});
 					}
 				}
-
 			},
-
+			
+			/**
+			 * 获取单据撤销URL
+			 */
+			getRollbackBillUrl : function(){
+				return '../../scm/control/rollbackBill';
+			},
+			
+			/**
+			 * 获取当前操作的Record
+			 * @return {}
+			 */
 			getSelectRecord : function() {
 				var sm = this.listPanel.getSelectionModel();
 				if (sm.hasSelection()) {// 判断是否选择行记录
@@ -425,7 +454,10 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 					return this.currentRecord;
 				}
 			},
-
+			
+			/**
+			 * 保存时提交单据
+			 */
 			doSubmitBill : function() {
 				if (this.isSubmitWhenSave) {
 					this.submitBill();
