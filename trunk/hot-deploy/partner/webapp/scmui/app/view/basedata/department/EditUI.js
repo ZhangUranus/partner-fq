@@ -35,7 +35,7 @@ Ext.define('SCM.view.basedata.department.EditUI', {
 													name : 'parentId',
 													valueField : 'id',
 													displayField : 'name',
-													store : 'basedata.DepartmentStore',
+													store : Ext.create('SCM.store.basedata.DepartmentStore'),
 													listConfig : {
 														height : SCM.DefaultSize.COMBOGRID_HEIGHT,
 														columns : [{
