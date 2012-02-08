@@ -3,19 +3,14 @@ package org.ofbiz.partner.scm.pricemgr.priceCalImp;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.entity.Delegator;
-import org.ofbiz.entity.DelegatorFactory;
 import org.ofbiz.entity.GenericValue;
-import org.ofbiz.entity.condition.EntityCondition;
-import org.ofbiz.entity.sql.EntityViewPlan;
 import org.ofbiz.partner.scm.pricemgr.IPriceCal;
 import org.ofbiz.partner.scm.pricemgr.PriceCalItem;
-import org.ofbiz.partner.scm.pricemgr.Utils;
 
 /**
  * 移动加权平均法实现类
@@ -113,27 +108,26 @@ public class PriceCalImp4WMA implements IPriceCal {
 
 			delegator.create(curValue);// 新增条目
 		}
-		if (curAmount != null && curAmount.compareTo(BigDecimal.ZERO) != 0)
-			return curSum.divide(curAmount, 4, BigDecimal.ROUND_HALF_UP);// 返回当前物料单价
-		else
-			return null;
-
+		//返回入库后单价
+		return calSum.divide(calAmount,4,RoundingMode.HALF_UP);
 	}
-	
 	/**
-	 * 根据仓库编码和物料编码获取记录
-	 * @param warehouseId
-	 * @param materialId
-	 * @return
-	 * @throws Exception
+	 * 返回当前单价
+	 * @see IPriceCal
 	 */
-	public GenericValue getCurMaterialBalanceValue(String warehouseId, String materialId) throws Exception {
-		// 取库存余额表
-		List<GenericValue> curValueList = delegator.findByAnd("CurMaterialBalance", UtilMisc.toMap("year", new Integer(year), "month", new Integer(month), "warehouseId", warehouseId, "materialId", materialId));
-		if (curValueList != null && curValueList.size() > 0) {
-			return curValueList.get(0);
-		} else {
-			return null;
+	public BigDecimal getCurPrice(String warehouseId, String materialId)
+			throws Exception {
+		if(warehouseId==null||materialId==null){
+			throw new Exception("仓库id或者物料id为空！");
 		}
+		GenericValue v=delegator.findByPrimaryKey("CurMaterialBalance", UtilMisc.toMap("year",new Integer(year),"month",new Integer(month),"warehouseId",warehouseId,"materialId", materialId));
+
+		if(v!=null){
+			BigDecimal volume=v.getBigDecimal("volume");
+			if(volume!=null&&volume.compareTo(BigDecimal.ZERO)!=0){
+				return v.getBigDecimal("totalSum").divide(volume, 4, RoundingMode.HALF_UP);	
+			}
+		}
+		return null;
 	}
 }
