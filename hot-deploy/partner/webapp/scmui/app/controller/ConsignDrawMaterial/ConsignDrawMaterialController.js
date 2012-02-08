@@ -107,6 +107,7 @@ Ext.define('SCM.controller.ConsignDrawMaterial.ConsignDrawMaterialController', {
 				this.materialVolumeFields = this.editForm.down('numberfield[name=materialVolume]');
 				this.materialVolumeFields.addListener('change', this.materialVolumeChange, this);
 				this.MaterialStore = Ext.create('SCM.store.basedata.MaterialBomStore');
+				this.editEntry.store.proxy.addListener('afterRequest', this.changeStockVolume, this);
 			},
 
 			/**
@@ -156,27 +157,50 @@ Ext.define('SCM.controller.ConsignDrawMaterial.ConsignDrawMaterialController', {
 			 */
 			initMaterialInfo : function(editor, e) {
 				if (e.field == 'warehouseWarehouseId') {
-					e.record.set('stockVolume', 100);
-					// e.record.set('price', 10);
+					this.setStockVolume(e.record, e.value, e.record.get('materialMaterialId'));
 				}
-				// e.record.set('entrysum', e.record.get('price') *
-				// e.record.get('volume'));
-				// this.changeMaterialPrice(e.grid.store);
 			},
-
-			// /**
-			// * 计算总金额
-			// * @param {} store
-			// */
-			// changeMaterialPrice : function (store){
-			// var count = store.getCount();
-			// var sum = 0;
-			// for (var i = 0; i < count; i++) {
-			// sum += store.getAt(i).get('entrysum');
-			// }
-			// this.totalFields.setValue(sum);
-			// },
-
+			
+			/**
+			 * 修改库存
+			 */
+			changeStockVolume : function() {
+				var me = this;
+				var count = me.editEntry.store.getCount();
+				var sum = 0;
+				for (var i = 0; i < count; i++) {
+					var tempRecord = me.editEntry.store.getAt(i);
+					me.setStockVolume(tempRecord, tempRecord.get('warehouseWarehouseId'), tempRecord.get('materialMaterialId'))
+				}
+			},
+			
+			/**
+			 * 获取某仓库某物料数量
+			 * 
+			 * @param {}
+			 *            record
+			 * @param {}
+			 *            warehouseId
+			 * @param {}
+			 *            materialId
+			 */
+			setStockVolume : function(record, warehouseId, materialId) {
+				if (!Ext.isEmpty(warehouseId) && !Ext.isEmpty(materialId)) {
+					Ext.Ajax.request({
+								scope : this,
+								params : {
+									warehouseId : warehouseId,
+									materialId : materialId
+								},
+								url : '../../scm/control/getCurMaterialBalanceValue',
+								success : function(response, option) {
+									var result = Ext.decode(response.responseText)
+									record.set('stockVolume', result.stockVolume);
+								}
+							});
+				}
+			},
+			
 			/**
 			 * 选择加工件时，初始化物料列表
 			 * 
@@ -221,9 +245,20 @@ Ext.define('SCM.controller.ConsignDrawMaterial.ConsignDrawMaterialController', {
 				for (var i = 0; i < count; i++) {
 					var tempRecord = me.editEntry.store.getAt(i);
 					tempRecord.set('volume', materialVolume * tempRecord.get('perVolume'));
-					// tempRecord.set('entrysum',tempRecord.get('price') *
-					// tempRecord.get('volume'));
 				}
-				// me.changeMaterialPrice(me.editEntry.store);
+			},
+			
+			/**
+			 * 获取单据提交URL
+			 */
+			getSubmitBillUrl : function(){
+				return '../../scm/control/submitConsignDramMaterial';
+			},
+			
+			/**
+			 * 获取单据撤销URL
+			 */
+			getRollbackBillUrl : function(){
+				return '../../scm/control/rollbackConsignDramMaterial';
 			}
 		});
