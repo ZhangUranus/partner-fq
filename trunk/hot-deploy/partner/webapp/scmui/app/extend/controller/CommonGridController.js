@@ -133,9 +133,10 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 				} else {
 					if (this.listContainer.permission.edit) {
 						this.saveButton.setVisible(true);
-//						Ext.each(this.fields, function(item, index, length) {由初始化状态决定
-//									item.setReadOnly(false);
-//								})
+						// Ext.each(this.fields, function(item, index, length)
+						// {由初始化状态决定
+						// item.setReadOnly(false);
+						// })
 					} else {
 						this.saveButton.setVisible(false);
 						Ext.each(this.fields, function(item, index, length) {
@@ -182,7 +183,7 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 				Ext.each(this.fields, function(item, index, length) {
 							if (!item.readOnly) {
 								item.focus(true, true);
-								return false;		//跳出循环
+								return false; // 跳出循环
 							}
 						});
 			},
@@ -292,6 +293,9 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 					this.listPanel.store.add(record);
 
 				}
+				if (this.win.isVisible()) {
+					this.win.close();
+				}
 				this.changeComponentsState();
 			},
 
@@ -300,10 +304,9 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 			 */
 			clear : function() {
 				Ext.each(this.fields, function(item, index, length) {
-							if(!item.readOnly)
+							if (!item.readOnly)
 								item.setValue('');
-							}
-						);
+						});
 			},
 
 			/**
@@ -339,7 +342,7 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 				var dataIndex = "";
 				var count = 0;
 				Ext.each(tempheader, function(column, index, length) {
-							if(column.xtype != 'rownumberer'){
+							if (column.xtype != 'rownumberer') {
 								if (count != 0) {
 									header += ",";
 									dataIndex += ",";
@@ -375,16 +378,16 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 					this.searchText.focus(true, true)
 				}
 			},
-			
-			//打印单据
-			print : function(button){
-				var printWin=window.open('','printwin');
+
+			// 打印单据
+			print : function(button) {
+				var printWin = window.open('', 'printwin');
 				printWin.document.write(this.getPrintContent());
-			    printWin.document.close();
-			    printWin.print();
-			    printWin.close();
+				printWin.document.close();
+				printWin.print();
+				printWin.close();
 			},
-			getPrintContent: function(){
+			getPrintContent : function() {
 				return 'test';
 			}
 		})
