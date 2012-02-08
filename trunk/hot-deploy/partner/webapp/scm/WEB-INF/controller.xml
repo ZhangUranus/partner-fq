@@ -160,7 +160,24 @@
            <response name="success" type="none"/>
        </request-map>
       
-      
+      <!-- 采购退货单审核-->
+      <request-map uri="submitPurchaseReturn">
+           <security https="false" auth="false"/>
+           <event type="java" path="org.ofbiz.partner.scm.stock.PurchaseReturnEvents" invoke="submitBill"/>
+           <response name="success" type="none"/>
+       </request-map>
+       <!-- 采购退货单反审核-->
+       <request-map uri="rollbackPurchaseReturn">
+           <security https="false" auth="false"/>
+           <event type="java" path="org.ofbiz.partner.scm.stock.PurchaseReturnEvents" invoke="rollbackBill"/>
+           <response name="success" type="none"/>
+       </request-map>
+       <!-- 获取仓库某物料的库存量、加权平均单价 -->
+       <request-map uri="getCurMaterialBalanceValue">
+           <security https="false" auth="false"/>
+           <event type="java" path="org.ofbiz.partner.scm.stock.PurchaseReturnEvents" invoke="getCurMaterialBalanceValue"/>
+           <response name="success" type="none"/>
+       </request-map>
       
        
        <!-- exporter -->

@@ -49,7 +49,7 @@ Ext.define('SCM.controller.PurchaseReturn.PurchaseReturnController', {
 							'PurchaseReturnlist button[action=print]' : {
 								click : this.print
 							},
-							//列表导出
+							// 列表导出
 							'PurchaseReturnlist button[action=export]' : {
 								click : this.exportExcel
 							},
@@ -61,7 +61,7 @@ Ext.define('SCM.controller.PurchaseReturn.PurchaseReturnController', {
 							'PurchaseReturnedit  gridpanel button[action=deleteLine]' : {
 								click : this.deleteLine
 							},
-							
+
 							// 编辑界面直接提交
 							'PurchaseReturnedit button[action=submit]' : {
 								click : this.saveAndSubmitRecord
@@ -92,7 +92,7 @@ Ext.define('SCM.controller.PurchaseReturn.PurchaseReturnController', {
 							}
 						});
 			},
-			
+
 			/**
 			 * 重新方法，增加查询条件控件的引用
 			 */
@@ -103,34 +103,34 @@ Ext.define('SCM.controller.PurchaseReturn.PurchaseReturnController', {
 				this.searchCustId = this.listContainer.down('combogrid[name=searchCustId]');
 				this.totalFields = this.editForm.down('textfield[name=totalsum]');
 			},
-			
+
 			/**
 			 * 重写刷新方法
 			 * 
 			 */
 			refreshRecord : function() {
 				var tempString = '';
-				if(this.searchStartDate.getValue()){
+				if (this.searchStartDate.getValue()) {
 					tempString += 'PurchaseReturnV.biz_date >= \'' + this.searchStartDate.getRawValue() + ' 00:00:00\'';
 				}
-				if(this.searchEndDate.getValue()){
-					if(tempString != ''){
-						if(this.searchStartDate.getRawValue()>this.searchEndDate.getRawValue()){
+				if (this.searchEndDate.getValue()) {
+					if (tempString != '') {
+						if (this.searchStartDate.getRawValue() > this.searchEndDate.getRawValue()) {
 							showWarning('开始日期不允许大于结束日期，请重新选择！');
-							return ;
+							return;
 						}
 						tempString += ' and ';
 					}
 					tempString += 'PurchaseReturnV.biz_date <= \'' + this.searchEndDate.getRawValue() + ' 23:59:59\'';
 				}
-				if(this.searchMaterialId.getValue() && this.searchMaterialId.getValue() != ''){
-					if(tempString != ''){
+				if (this.searchMaterialId.getValue() && this.searchMaterialId.getValue() != '') {
+					if (tempString != '') {
 						tempString += ' and ';
 					}
 					tempString += 'PurchaseReturnEntryV.material_material_id = \'' + this.searchMaterialId.getValue() + '\'';
 				}
-				if(this.searchCustId.getValue() && this.searchCustId.getValue() != ''){
-					if(tempString != ''){
+				if (this.searchCustId.getValue() && this.searchCustId.getValue() != '') {
+					if (tempString != '') {
 						tempString += ' and ';
 					}
 					tempString += 'PurchaseReturnV.supplier_supplier_id = \'' + this.searchCustId.getValue() + '\'';
@@ -140,7 +140,7 @@ Ext.define('SCM.controller.PurchaseReturn.PurchaseReturnController', {
 				this.detailPanel.store.removeAll();
 				this.changeComponentsState();
 			},
-			
+
 			/**
 			 * 当用户编辑grid时，同步更新相关表单数据
 			 * 
@@ -159,11 +159,9 @@ Ext.define('SCM.controller.PurchaseReturn.PurchaseReturnController', {
 						e.record.set('unitUnitId', record.get('defaultUnitId'));
 						e.record.set('unitUnitName', record.get('defaultUnitName'));
 					}
-				} else if (e.field == 'volume') {
-					if (e.record.get('stockVolume') < e.record.get('volume')) {
-						showWarning('退货数量不能大于库存数量，请重新输入！');
-						e.record.set('volume', 0);
-					}
+					this.setStockVolume(e.record, e.record.get('warehouseWarehouseId'), e.value);
+				} else if (e.field == 'warehouseWarehouseId') {
+					this.setStockVolume(e.record, e.value, e.record.get('materialMaterialId'));
 				}
 				e.record.set('entrysum', e.record.get('price') * e.record.get('volume'));
 				var count = e.grid.store.getCount();
@@ -172,5 +170,46 @@ Ext.define('SCM.controller.PurchaseReturn.PurchaseReturnController', {
 					sum += e.grid.store.getAt(i).get('entrysum');
 				}
 				this.totalFields.setValue(sum);
+			},
+
+			/**
+			 * 获取某供应商计划采购物料数量
+			 * 
+			 * @param {}
+			 *            record
+			 * @param {}
+			 *            supplierId
+			 * @param {}
+			 *            materialId
+			 */
+			setStockVolume : function(record, warehouseId, materialId) {
+				if (!Ext.isEmpty(warehouseId) && !Ext.isEmpty(materialId)) {
+					Ext.Ajax.request({
+								scope : this,
+								params : {
+									warehouseId : warehouseId,
+									materialId : materialId
+								},
+								url : '../../scm/control/getCurMaterialBalanceValue',
+								success : function(response, option) {
+									var result = Ext.decode(response.responseText)
+									record.set('stockVolume', result.stockVolume);
+								}
+							});
+				}
+			},
+			
+			/**
+			 * 获取单据提交URL
+			 */
+			getSubmitBillUrl : function(){
+				return '../../scm/control/submitPurchaseReturn';
+			},
+			
+			/**
+			 * 获取单据撤销URL
+			 */
+			getRollbackBillUrl : function(){
+				return '../../scm/control/rollbackPurchaseReturn';
 			}
 		});
