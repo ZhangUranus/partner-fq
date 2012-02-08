@@ -1,7 +1,7 @@
 Ext.define('SCM.controller.system.SystemController', {
 			extend : 'Ext.app.Controller',
 
-			views : ['system.user.ListUI'],
+			views : ['system.user.ListUI','system.monthlySettlement.StockSettle'],
 			stores : ['system.UserStore', 'system.SystemUserStore', 'system.RoleStore', 'system.UserTreeStore', 'system.UserOfRoleStore'],
 			models : ['system.UserTreeModel'],
 

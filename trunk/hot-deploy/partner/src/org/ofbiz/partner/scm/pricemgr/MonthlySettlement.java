@@ -2,8 +2,15 @@ package org.ofbiz.partner.scm.pricemgr;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.ofbiz.base.util.Debug;
 import org.ofbiz.entity.Delegator;
+import org.ofbiz.entity.transaction.GenericTransactionException;
+import org.ofbiz.entity.transaction.TransactionUtil;
 
 /**
  * 月结类
@@ -38,27 +45,71 @@ public class MonthlySettlement {
 	 * 判断是否满足月结前所有条件，能够进行月度结算操作
 	 * @return
 	 */
-	private boolean canRun() {
-		return false ;
+	private void checkCanSettle() throws Exception{
+		//TODO 判断是否
 	}
 	
 	/**
 	 * 锁住系统，用户不能进行编辑系统单据
 	 * @return
 	 */
-	public boolean lockSystem() throws Exception{
+	private void lockSystem() throws Exception{
 		//TODO 锁住系统
-		return false; 
+		
+		throw new Exception("not supported");
+		 
 	}
-	
+	/**
+	 * 释放系统，用户可以进行编辑系统单据
+	 * @return
+	 */
+	private void unlockSystem() throws Exception{
+		//TODO 释放系统
+		throw new Exception("not supported");
+	}
 	/**
 	 * 结算当月，计算所有物料出库单价
 	 * 当月操作年月设置为一下月
+	 * @param response 
+	 * @param request 
 	 * @return
 	 * @throws Exception
 	 */
-	public boolean runCalculate() throws Exception{
+	public synchronized boolean monthlySettle(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		//TODO 结算当期
+		boolean beganTransaction = false;
+		try {
+	            beganTransaction = TransactionUtil.begin();
+	            
+	            //锁住系统
+	            lockSystem();
+	            
+	            
+	            //获取系统本期所有业务单据，按提交时间升序排序
+//	            List<PriceCalItem> seqCalItem=getSeqCalItem();
+	            
+	            
+	            //按业务日期
+//	            processCalItem(seqCalItem);
+	            
+	            
+	            
+		} catch (Exception e) {
+            Debug.logError(e, module);
+            try {
+                TransactionUtil.rollback(beganTransaction, e.getMessage(), e);
+            } catch (GenericTransactionException e2) {
+                Debug.logError(e2, "Unable to rollback transaction", module);
+            }
+        } finally {
+            try {
+                TransactionUtil.commit(beganTransaction);
+            } catch (GenericTransactionException e) {
+                Debug.logError(e, "Unable to commit transaction", module);
+            }
+        }
+		
+		
 		//获取业务单据分录信息
 		
 		//采购入库单
@@ -93,10 +144,12 @@ public class MonthlySettlement {
 	/**
 	 * 反结算当期，如果当期有审核的单据，则不能反结算
 	 * 当月操作年月设置为前一个月
+	 * @param response 
+	 * @param request 
 	 * @return
 	 * @throws Exception
 	 */
-	public boolean rollBack() throws Exception{
+	public synchronized boolean rollbackSettle(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		//TODO 反结算当期
 		return false;
 	}
