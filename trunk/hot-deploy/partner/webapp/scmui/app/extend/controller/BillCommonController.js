@@ -391,13 +391,20 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 										entity : this.entityName
 									},
 									url : this.getSubmitBillUrl(),
-									success : function(response) {
+									success : function(response, option) {
+										this.submitBillSuccess(response, option);
 										this.refreshRecord();
 									}
 								});
 					}
 				}
 			},
+			
+			/**
+			 * 提交成功后处理方法
+			 * @type 
+			 */
+			submitBillSuccess : Ext.emptyFn,
 			
 			/**
 			 * 获取单据提交URL
@@ -427,13 +434,20 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 										entity : this.entityName
 									},
 									url : this.getRollbackBillUrl(),
-									success : function(response) {
+									success : function(response, option) {
+										this.rollbackBillSuccess(response, option);
 										this.refreshRecord();
 									}
 								});
 					}
 				}
 			},
+			
+			/**
+			 * 撤销提交成功后处理方法
+			 * @type 
+			 */
+			rollbackBillSuccess : Ext.emptyFn,
 			
 			/**
 			 * 获取单据撤销URL
