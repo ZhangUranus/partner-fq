@@ -3,14 +3,19 @@ package org.ofbiz.partner.scm.pricemgr.priceCalImp;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.entity.Delegator;
+import org.ofbiz.entity.DelegatorFactory;
 import org.ofbiz.entity.GenericValue;
+import org.ofbiz.entity.condition.EntityCondition;
+import org.ofbiz.entity.sql.EntityViewPlan;
 import org.ofbiz.partner.scm.pricemgr.IPriceCal;
 import org.ofbiz.partner.scm.pricemgr.PriceCalItem;
+import org.ofbiz.partner.scm.pricemgr.Utils;
 
 /**
  * 移动加权平均法实现类
@@ -52,6 +57,14 @@ public class PriceCalImp4WMA implements IPriceCal {
 			Debug.logError("计算条目业务日期不是当前期间", module);
 			throw new Exception("计算条目业务日期不是当前期间");
 		}
+		if (item.getAmount() == null) {
+			Debug.logError("数量为空", module);
+			throw new Exception("数量为空");
+		}
+		if (item.getSum() == null) {
+			Debug.logError("金额为空", module);
+			throw new Exception("金额为空");
+		}
 
 		// 记录计算的信息
 		StringBuffer strbuf = new StringBuffer();
@@ -75,12 +88,9 @@ public class PriceCalImp4WMA implements IPriceCal {
 			curAmount = curValue.getBigDecimal("volume");// 设置当前数量
 			curSum = curValue.getBigDecimal("totalSum");// 设置当前金额
 
-			BigDecimal amount = item.getAmount() == null ? BigDecimal.ZERO : item.getAmount();// 数量
+			BigDecimal amount = item.getAmount();// 数量
 			BigDecimal sum = item.getSum();// 金额
-			if (sum == null) {// 金额为空取物料当前单价
-				BigDecimal curPrice = curSum.divide(curAmount, 4, RoundingMode.HALF_UP);// 当前物料单价
-				sum = amount.multiply(curPrice);
-			}
+			
 			calAmount = curAmount.add(amount);// 计算后数量
 			calSum = curSum.add(sum);// 计算后金额
 
@@ -101,8 +111,6 @@ public class PriceCalImp4WMA implements IPriceCal {
 			curValue.set("volume", item.getAmount());
 			curValue.set("totalSum", item.getSum());
 
-			curAmount = BigDecimal.ZERO;// 设置当前数量
-			curSum = BigDecimal.ZERO;// 设置当前金额
 			calAmount = item.getAmount();// 计算后数量
 			calSum = item.getSum();// 计算后金额
 
@@ -110,24 +118,23 @@ public class PriceCalImp4WMA implements IPriceCal {
 		}
 		//返回入库后单价
 		return calSum.divide(calAmount,4,RoundingMode.HALF_UP);
-	}
-	/**
-	 * 返回当前单价
-	 * @see IPriceCal
-	 */
-	public BigDecimal getCurPrice(String warehouseId, String materialId)
-			throws Exception {
-		if(warehouseId==null||materialId==null){
-			throw new Exception("仓库id或者物料id为空！");
-		}
-		GenericValue v=delegator.findByPrimaryKey("CurMaterialBalance", UtilMisc.toMap("year",new Integer(year),"month",new Integer(month),"warehouseId",warehouseId,"materialId", materialId));
 
-		if(v!=null){
-			BigDecimal volume=v.getBigDecimal("volume");
-			if(volume!=null&&volume.compareTo(BigDecimal.ZERO)!=0){
-				return v.getBigDecimal("totalSum").divide(volume, 4, RoundingMode.HALF_UP);	
-			}
+	}
+	
+	/**
+	 * 根据仓库编码和物料编码获取记录
+	 * @param warehouseId
+	 * @param materialId
+	 * @return
+	 * @throws Exception
+	 */
+	public GenericValue getCurMaterialBalanceValue(String warehouseId, String materialId) throws Exception {
+		// 取库存余额表
+		List<GenericValue> curValueList = delegator.findByAnd("CurMaterialBalance", UtilMisc.toMap("year", new Integer(year), "month", new Integer(month), "warehouseId", warehouseId, "materialId", materialId));
+		if (curValueList != null && curValueList.size() > 0) {
+			return curValueList.get(0);
+		} else {
+			return null;
 		}
-		return null;
 	}
 }
