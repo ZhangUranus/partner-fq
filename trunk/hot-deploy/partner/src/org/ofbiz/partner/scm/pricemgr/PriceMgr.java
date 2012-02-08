@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.ofbiz.entity.GenericValue;
+
 /**
  * 单价管理类
  * @author Mark
@@ -47,6 +49,21 @@ public class PriceMgr {
 	public synchronized BigDecimal calPrice(PriceCalItem item) throws Exception{
 		if(priceCal!=null){
 			return priceCal.calPrice(item);
+		}else{
+			throw new Exception("单价计算类实现为空");
+		}
+	}
+	
+	/**
+	 * 根据仓库编码和物料编码获取记录
+	 * @param warehouseId
+	 * @param materialId
+	 * @return
+	 * @throws Exception
+	 */
+	public GenericValue getCurMaterialBalanceValue(String warehouseId, String materialId) throws Exception {
+		if(priceCal!=null){
+			return priceCal.getCurMaterialBalanceValue(warehouseId, materialId);
 		}else{
 			throw new Exception("单价计算类实现为空");
 		}
