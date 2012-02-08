@@ -32,7 +32,6 @@ Ext.define('SCM.model.PurchaseReturn.PurchaseReturnEditEntryModel', {
 						type : 'float'
 					}, {
 						name : 'stockVolume',
-						defaultValue : 100,		//暂时使用默认值
 						type : 'float'
 					}, {
 						name : 'unitUnitId',
