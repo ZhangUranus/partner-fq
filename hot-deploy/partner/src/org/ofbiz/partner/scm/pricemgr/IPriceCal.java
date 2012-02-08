@@ -2,7 +2,6 @@ package org.ofbiz.partner.scm.pricemgr;
 
 import java.math.BigDecimal;
 
-import org.ofbiz.entity.GenericValue;
 
 /**
  * 计价法接口
@@ -13,6 +12,7 @@ import org.ofbiz.entity.GenericValue;
 public interface IPriceCal {
 	// 根据一次业务计算单价
 	public BigDecimal calPrice(PriceCalItem item) throws Exception;
-
-	public GenericValue getCurMaterialBalanceValue(String warehouseId, String materialId) throws Exception;
+	
+	//获取当前单价
+	public BigDecimal getCurPrice(String warehouseId,String materialId) throws Exception;
 }
