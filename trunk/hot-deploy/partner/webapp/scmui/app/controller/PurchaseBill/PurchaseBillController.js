@@ -114,7 +114,18 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 				this.approverNote = this.approverWin.down('textarea[name=approverNote]');
 				
 			},
-
+			
+			/**
+			 * 根据状态设置编辑界面状态
+			 * @param {} isReadOnly
+			 */
+			changeEditStatus : function(isReadOnly) {
+				this.setFieldsReadOnly(isReadOnly);
+				this.editEntry.setDisabled(isReadOnly);
+				this.saveButton.setDisabled(isReadOnly);
+				this.clearButton.setDisabled(isReadOnly);
+			},
+			
 			/**
 			 * 重写刷新方法
 			 * 
