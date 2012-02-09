@@ -9,9 +9,9 @@ import org.ofbiz.partner.scm.pricemgr.PriceCalItem;
 import org.ofbiz.partner.scm.pricemgr.PriceMgr;
 
 public class ConsignDrawMaterialBizImp implements IBizStock {
-	private Delegator delegator = org.ofbiz.partner.scm.common.Utils.getDefaultDelegator();;
+	private Delegator delegator = org.ofbiz.partner.scm.common.Utils.getDefaultDelegator();
 	
-	public void updateStock(GenericValue billValue) throws Exception {
+	public void updateStock(GenericValue billValue, boolean isOut) throws Exception {
 //		//返填单价、金额、总金额
 //		String billId = this.setPriceToBillEntry(calItem);
 //		this.setTotalSumToBillByEntryId(calItem, billId);

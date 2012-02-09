@@ -6,7 +6,7 @@ import org.ofbiz.partner.scm.pricemgr.PriceCalItem;
 
 public class WorkshopWarehousingBizImp implements IBizStock {
 
-	public void updateStock(GenericValue billValue) throws Exception {
+	public void updateStock(GenericValue billValue, boolean isOut) throws Exception {
 		// TODO Auto-generated method stub
 
 	}
