@@ -56,7 +56,7 @@ public class ConsignPriceMgr {
 		Delegator delegator = org.ofbiz.partner.scm.common.Utils.getDefaultDelegator();
 		GenericValue gv = delegator.findOne("CurConsignPrice", UtilMisc.toMap("year", new Integer(year), "month", new Integer(month), "supplierId", supplierId, "materialId", materialId), false);
 		if (gv != null) {
-			if (gv.getBigDecimal("volume").equals(BigDecimal.ZERO)) {
+			if (gv.getBigDecimal("volume").compareTo(BigDecimal.ZERO) == 0) {
 				return BigDecimal.ZERO;
 			} else {
 				return gv.getBigDecimal("totalsum").divide(gv.getBigDecimal("volume"), 4, RoundingMode.HALF_UP);

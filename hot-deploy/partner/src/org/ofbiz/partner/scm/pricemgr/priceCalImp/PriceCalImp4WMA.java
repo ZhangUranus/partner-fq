@@ -117,8 +117,11 @@ public class PriceCalImp4WMA implements IPriceCal {
 			delegator.create(curValue);// 新增条目
 		}
 		//返回入库后单价
-		return calSum.divide(calAmount,4,RoundingMode.HALF_UP);
-
+		if(calAmount.compareTo(BigDecimal.ZERO) == 0){
+			return BigDecimal.ZERO;
+		}else{
+			return calSum.divide(calAmount,4,RoundingMode.HALF_UP);
+		}
 	}
 	
 	/**
@@ -146,7 +149,7 @@ public class PriceCalImp4WMA implements IPriceCal {
 		if(value==null){
 			return BigDecimal.ZERO;
 		}else{
-			if(value.getBigDecimal("volume").equals(BigDecimal.ZERO)){
+			if(value.getBigDecimal("volume").compareTo(BigDecimal.ZERO) == 0){
 				return BigDecimal.ZERO;
 			}else{
 				return value.getBigDecimal("totalSum").divide(value.getBigDecimal("volume"),4,RoundingMode.HALF_UP);
