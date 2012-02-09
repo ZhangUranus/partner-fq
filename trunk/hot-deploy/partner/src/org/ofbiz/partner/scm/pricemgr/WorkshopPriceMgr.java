@@ -2,6 +2,7 @@ package org.ofbiz.partner.scm.pricemgr;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Calendar;
 
 import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.entity.Delegator;
@@ -19,9 +20,14 @@ public class WorkshopPriceMgr {
 	private Object updateLock = new Object();// 余额表更新锁
 
 	private static WorkshopPriceMgr instance = null;
+	
+	private int year ,month ;//当期年月
 
 	private WorkshopPriceMgr() {
-
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(Utils.getCurDate());
+		year = calendar.get(Calendar.YEAR);
+		month = calendar.get(Calendar.MONTH)+1;
 	}
 
 	public static WorkshopPriceMgr getInstance() {
@@ -45,7 +51,7 @@ public class WorkshopPriceMgr {
 			throw new Exception("workshopId or materialId is null");
 		}
 		Delegator delegator = org.ofbiz.partner.scm.common.Utils.getDefaultDelegator();
-		GenericValue gv = delegator.findOne("CurWorkshopPrice", UtilMisc.toMap("workshopId", workshopId, "materialId", materialId), false);
+		GenericValue gv = delegator.findOne("CurWorkshopPrice", UtilMisc.toMap("year", new Integer(year), "month", new Integer(month), "workshopId", workshopId, "materialId", materialId), false);
 		if (gv != null) {
 			if (gv.getBigDecimal("volume").equals(BigDecimal.ZERO)) {
 				return BigDecimal.ZERO;
@@ -72,7 +78,7 @@ public class WorkshopPriceMgr {
 				throw new Exception("supplierId or materialId or volume or totalsum  is null");
 			}
 			Delegator delegator = org.ofbiz.partner.scm.common.Utils.getDefaultDelegator();
-			GenericValue gv = delegator.findOne("CurWorkshopPrice", UtilMisc.toMap("workshopId", workshopId, "materialId", materialId), false);
+			GenericValue gv = delegator.findOne("CurWorkshopPrice", UtilMisc.toMap("year", new Integer(year), "month", new Integer(month), "workshopId", workshopId, "materialId", materialId), false);
 			if (gv != null) {
 				BigDecimal oldVolume = gv.getBigDecimal("volume");
 				BigDecimal oldSum = gv.getBigDecimal("totalsum");
