@@ -34,4 +34,7 @@
          <servlet-name>ControlServlet</servlet-name>
          <url-pattern>/control/*</url-pattern>
     </servlet-mapping>
+    	<session-config>
+		<session-timeout>30</session-timeout><!-- in minutes -->
+	</session-config>
 </web-app>
