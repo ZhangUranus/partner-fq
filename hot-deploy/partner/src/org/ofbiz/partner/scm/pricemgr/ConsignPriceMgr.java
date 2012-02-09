@@ -157,7 +157,7 @@ public class ConsignPriceMgr {
 				gv.set("totalsum", oldSum.add(totalsum));
 				delegator.store(gv);
 			} else {// 新增记录
-				gv = delegator.makeValue("ConsignPrice");
+				gv = delegator.makeValue("CurConsignPrice");
 				gv.set("year", year);
 				gv.set("month", month);
 				gv.set("supplierId", supplierId);
