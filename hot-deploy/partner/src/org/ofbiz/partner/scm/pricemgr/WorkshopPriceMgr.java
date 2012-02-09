@@ -68,7 +68,7 @@ public static final String module = WorkshopPriceMgr.class.getName();
 				gv.set("totalsum", oldSum.add(totalsum));
 				delegator.store(gv);
 			}else{//新增记录
-				gv=delegator.makeValue("ConsignPrice");
+				gv=delegator.makeValue("WorkshopPrice");
 				gv.set("workshopId", workshopId);
 				gv.set("materialId", materialId);
 				gv.set("volume", volume);
