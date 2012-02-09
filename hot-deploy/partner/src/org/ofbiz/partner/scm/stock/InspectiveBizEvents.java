@@ -16,8 +16,6 @@ import org.ofbiz.entity.transaction.TransactionUtil;
 import org.ofbiz.partner.scm.common.BillBaseEvent;
 import org.ofbiz.partner.scm.pricemgr.BillType;
 import org.ofbiz.partner.scm.pricemgr.BizStockImpFactory;
-import org.ofbiz.partner.scm.pricemgr.PriceCalItem;
-import org.ofbiz.partner.scm.pricemgr.PriceMgr;
 import org.ofbiz.partner.scm.pricemgr.Utils;
 import org.ofbiz.partner.scm.purplan.PurPlanBalance;
 
@@ -63,16 +61,16 @@ public class InspectiveBizEvents {
 				}
 				// 获取单据id分录条目
 				List<GenericValue> entryList = delegator.findByAnd("PurchaseWarehousingEntry", UtilMisc.toMap("parentId", billHead.getString("id")));
-				
+
 				for (GenericValue v : entryList) {
 					String materialId = v.getString("materialMaterialId");// 物料id
 					BigDecimal volume = v.getBigDecimal("volume");// 数量
-					
+
 					// 更新供应商可入库数量
 					PurPlanBalance.getInstance().updateInWarehouse(supplierId, materialId, volume.negate());
 				}
-				
-				BizStockImpFactory.getBizStockImp(BillType.PurchaseWarehouse).updateStock(billHead,false);
+
+				BizStockImpFactory.getBizStockImp(BillType.PurchaseWarehouse).updateStock(billHead, false);
 
 				BillBaseEvent.submitBill(request, response);// 更新单据状态
 
@@ -125,22 +123,22 @@ public class InspectiveBizEvents {
 				if (supplierId == null && supplierId.length() < 1) {
 					throw new Exception("采购入库单供应商为空！！！");
 				}
-				
+
 				// 获取单据id分录条目
 				List<GenericValue> entryList = delegator.findByAnd("PurchaseWarehousingEntry", UtilMisc.toMap("parentId", billId));
-				
+
 				for (GenericValue v : entryList) {
 					String materialId = v.getString("materialMaterialId");// 物料id
 					BigDecimal volume = v.getBigDecimal("volume");// 数量
-					
+
 					// 更新供应商可入库数量
 					PurPlanBalance.getInstance().updateInWarehouse(supplierId, materialId, volume);
 				}
-				
-				BizStockImpFactory.getBizStockImp(BillType.PurchaseWarehouse).updateStock(billHead,true);
-			}
 
-			BillBaseEvent.rollbackBill(request, response);// 撤销单据
+				BizStockImpFactory.getBizStockImp(BillType.PurchaseWarehouse).updateStock(billHead, true);
+				
+				BillBaseEvent.rollbackBill(request, response);// 撤销单据
+			}
 		} catch (Exception e) {
 			Debug.logError(e, module);
 			try {
