@@ -201,6 +201,18 @@
 		<event type="java" path="org.ofbiz.partner.scm.stock.ConsignReturnMaterialEvents" invoke="rollbackBill" />
 		<response name="success" type="none" />
 	</request-map>
+	<!-- 委外入库单提交 -->
+	<request-map uri="submitConsignWarehousing">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ConsignWarehousingEvents" invoke="submitBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 委外入库单撤销 -->
+	<request-map uri="rollbackConsignWarehousing">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ConsignWarehousingEvents" invoke="rollbackBill" />
+		<response name="success" type="none" />
+	</request-map>
 	
 	<!-- 制造领料单提交 -->
 	<request-map uri="submitWorkshopDramMaterial">
