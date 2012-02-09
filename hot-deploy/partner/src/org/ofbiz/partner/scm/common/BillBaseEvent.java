@@ -1,5 +1,6 @@
 package org.ofbiz.partner.scm.common;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -81,6 +82,7 @@ public class BillBaseEvent {
 			Map<String,Object> fieldSet=new HashMap<String, Object>();
 			fieldSet.put("status", 4);//设置为已提交状态
 			fieldSet.put("submitterSystemUserId", CommonEvents.getAttributeToSession(request, "uid"));
+			fieldSet.put("submitStamp", new Date());
 			delegator.storeByCondition(entity, fieldSet, EntityCondition.makeConditionWhere("id='"+billId+"'"));
 			return "sucess";
 		}else{
