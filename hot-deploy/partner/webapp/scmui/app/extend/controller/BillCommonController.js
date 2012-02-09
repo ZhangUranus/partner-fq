@@ -164,6 +164,9 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 			 * 用户操作触发改变界面控件状态 如：选中记录
 			 */
 			changeComponentsState : function() {
+				if(!this.listContainer.permission.view){
+					Ext.Msg.alert("提示","Session过期，请重新登录！",new Function("window.location = window.location;"));
+				}
 				if (this.listPanel.getSelectionModel().hasSelection()) {
 					this.deleteButton.setDisabled(false);
 					this.editButton.setDisabled(false);

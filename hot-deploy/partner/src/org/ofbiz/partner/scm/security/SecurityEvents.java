@@ -318,14 +318,14 @@ public class SecurityEvents {
 		JSONObject tempObject = new JSONObject();
 		tempObject.put("edit", false);
 		tempObject.put("add", false);
-		//tempObject.put("view", false);
+		tempObject.put("view", false);
 		tempObject.put("remove", false);
 		tempObject.put("audit", false);
 		tempObject.put("submit", false);
 		for (GenericValue node: permissionList) {
-//			if("V".equals(node.get("operateType"))){//view权限只在取菜单时使用，所以不需要列入考虑
-//				tempObject.put("view", true);
-//			} 
+			if("V".equals(node.get("operateType"))){//view权限只在取菜单时使用，所以不需要列入考虑
+				tempObject.put("view", true);
+			} 
 			if("E".equals(node.get("operateType"))){
 				tempObject.put("edit", true);
 			}else if("N".equals(node.get("operateType"))){
