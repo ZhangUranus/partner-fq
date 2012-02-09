@@ -190,6 +190,19 @@
 		<response name="success" type="none" />
 	</request-map>
 	
+	<!-- 制造领料单提交 -->
+	<request-map uri="submitWorkshopDramMaterial">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.WorkshopDrawMaterialEvents" invoke="submitBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 制造领料单撤销 -->
+	<request-map uri="rollbackWorkshopDramMaterial">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.WorkshopDrawMaterialEvents" invoke="rollbackBill" />
+		<response name="success" type="none" />
+	</request-map>
+	
 	<!-- exporter -->
 	<request-map uri="export">
 		<security https="false" auth="false" />
