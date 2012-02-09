@@ -18,6 +18,7 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 			 */
 			initComponent : function(view) {
 				this.listContainer = view;
+				this.checkSession();
 				if (this.listContainer.down('gridpanel')) {
 					this.listPanel = this.listContainer.down('gridpanel');
 				} else {
@@ -116,14 +117,20 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 				}
 
 			},
-
+			
+			/**
+			 * 检查Session是否过期，如果过期弹出登录页面
+			 */
+			checkSession : function(){
+				if(!this.listContainer.permission.view){
+					Ext.Msg.alert("提示","Session过期，请重新登录！",new Function("window.location = window.location;"));
+				}
+			},
+			
 			/**
 			 * 用户操作触发改变界面控件状态 如：选中记录
 			 */
 			changeComponentsState : function() {
-				if(!this.listContainer.permission.view){
-					Ext.Msg.alert("提示","Session过期，请重新登录！",new Function("window.location = window.location;"));
-				}
 				if (this.listPanel.getSelectionModel().hasSelection()) {
 					this.deleteButton.setDisabled(false);
 					this.editButton.setDisabled(false);
@@ -180,6 +187,7 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 			 * 弹出编辑框事件
 			 */
 			showEdit : function() {
+				this.checkSession();
 				this.win.show();
 				this.changeComponentsState();
 				this.win.inited = true;

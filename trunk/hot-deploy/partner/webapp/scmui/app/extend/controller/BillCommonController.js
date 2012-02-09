@@ -19,6 +19,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 			 */
 			initComponent : function(view) {
 				this.listContainer = view;
+				this.checkSession();
 				this.listPanel = view.down('gridpanel[region=center]');// 表头列表
 				this.detailPanel = view.down('gridpanel[region=south]');// 明细列表
 				this.newButton = view.down('button[action=addNew]');// 新增按钮
@@ -159,14 +160,20 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 					}
 				}
 			},
-
+			
+			/**
+			 * 检查Session是否过期，如果过期弹出登录页面
+			 */
+			checkSession : function(){
+				if(!this.listContainer.permission.view){
+					Ext.Msg.alert("提示","Session过期，请重新登录！",new Function("window.location = window.location;"));
+				}
+			},
+			
 			/**
 			 * 用户操作触发改变界面控件状态 如：选中记录
 			 */
 			changeComponentsState : function() {
-				if(!this.listContainer.permission.view){
-					Ext.Msg.alert("提示","Session过期，请重新登录！",new Function("window.location = window.location;"));
-				}
 				if (this.listPanel.getSelectionModel().hasSelection()) {
 					this.deleteButton.setDisabled(false);
 					this.editButton.setDisabled(false);
@@ -249,6 +256,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 			 * 弹出编辑框事件
 			 */
 			showEdit : function() {
+				this.checkSession();
 				this.win.show();
 				this.changeComponentsState();
 				this.win.inited = true;
