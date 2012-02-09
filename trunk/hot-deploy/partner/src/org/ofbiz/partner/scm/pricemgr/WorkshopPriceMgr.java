@@ -45,7 +45,7 @@ public class WorkshopPriceMgr {
 			throw new Exception("workshopId or materialId is null");
 		}
 		Delegator delegator = org.ofbiz.partner.scm.common.Utils.getDefaultDelegator();
-		GenericValue gv = delegator.findOne("WorkshopPrice", UtilMisc.toMap("workshopId", workshopId, "materialId", materialId), false);
+		GenericValue gv = delegator.findOne("CurWorkshopPrice", UtilMisc.toMap("workshopId", workshopId, "materialId", materialId), false);
 		if (gv != null) {
 			if (gv.getBigDecimal("volume").equals(BigDecimal.ZERO)) {
 				return BigDecimal.ZERO;
@@ -72,7 +72,7 @@ public class WorkshopPriceMgr {
 				throw new Exception("supplierId or materialId or volume or totalsum  is null");
 			}
 			Delegator delegator = org.ofbiz.partner.scm.common.Utils.getDefaultDelegator();
-			GenericValue gv = delegator.findOne("WorkshopPrice", UtilMisc.toMap("workshopId", workshopId, "materialId", materialId), false);
+			GenericValue gv = delegator.findOne("CurWorkshopPrice", UtilMisc.toMap("workshopId", workshopId, "materialId", materialId), false);
 			if (gv != null) {
 				BigDecimal oldVolume = gv.getBigDecimal("volume");
 				BigDecimal oldSum = gv.getBigDecimal("totalsum");
@@ -80,7 +80,7 @@ public class WorkshopPriceMgr {
 				gv.set("totalsum", oldSum.add(totalsum));
 				delegator.store(gv);
 			} else {// 新增记录
-				gv = delegator.makeValue("WorkshopPrice");
+				gv = delegator.makeValue("CurWorkshopPrice");
 				gv.set("workshopId", workshopId);
 				gv.set("materialId", materialId);
 				gv.set("volume", volume);

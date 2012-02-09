@@ -40,7 +40,7 @@ public static final String module = ProductPriceMgr.class.getName();
 		}
 		
 		Delegator delegator=org.ofbiz.partner.scm.common.Utils.getDefaultDelegator();
-		GenericValue gv=delegator.findOne("WorkshopPrice", UtilMisc.toMap("workshopId", workshopId, "materialId", materialId), false);
+		GenericValue gv=delegator.findOne("CurProductPrice", UtilMisc.toMap("workshopId", workshopId, "materialId", materialId), false);
 		if(gv!=null){
 			return gv.getBigDecimal("totalsum").divide(gv.getBigDecimal("volume"), 4, RoundingMode.HALF_UP);
 		}
@@ -60,7 +60,7 @@ public static final String module = ProductPriceMgr.class.getName();
 				throw new Exception("customerId or materialId or volume or totalsum  is null");
 			}
 			Delegator delegator=org.ofbiz.partner.scm.common.Utils.getDefaultDelegator();
-			GenericValue gv=delegator.findOne("ProductPrice", UtilMisc.toMap("customerId", customerId, "materialId", materialId), false);
+			GenericValue gv=delegator.findOne("CurProductPrice", UtilMisc.toMap("customerId", customerId, "materialId", materialId), false);
 			if(gv!=null){
 				BigDecimal oldVolume=gv.getBigDecimal("volume");
 				BigDecimal oldSum=gv.getBigDecimal("totalsum");
@@ -68,7 +68,7 @@ public static final String module = ProductPriceMgr.class.getName();
 				gv.set("totalsum", oldSum.add(totalsum));
 				delegator.store(gv);
 			}else{//新增记录
-				gv=delegator.makeValue("ProductPrice");
+				gv=delegator.makeValue("CurProductPrice");
 				gv.set("customerId", customerId);
 				gv.set("materialId", materialId);
 				gv.set("volume", volume);
