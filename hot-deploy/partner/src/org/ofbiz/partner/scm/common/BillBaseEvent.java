@@ -1,5 +1,7 @@
 package org.ofbiz.partner.scm.common;
 
+import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.condition.EntityCondition;
+import org.ofbiz.entity.transaction.TransactionUtil;
 
 /**
  * 基础单据业务操作
@@ -82,7 +85,7 @@ public class BillBaseEvent {
 			Map<String,Object> fieldSet=new HashMap<String, Object>();
 			fieldSet.put("status", 4);//设置为已提交状态
 			fieldSet.put("submitterSystemUserId", CommonEvents.getAttributeToSession(request, "uid"));
-			fieldSet.put("submitStamp", new Date());
+			fieldSet.put("submitStamp", new Timestamp(System.currentTimeMillis()));
 			delegator.storeByCondition(entity, fieldSet, EntityCondition.makeConditionWhere("id='"+billId+"'"));
 			return "sucess";
 		}else{
