@@ -157,5 +157,19 @@ Ext.define('SCM.controller.ConsignWarehousing.ConsignWarehousingController', {
 						e.record.set('unitUnitName', record.get('defaultUnitName'));
 					}
 				}
+			},
+			
+			/**
+			 * 获取单据提交URL
+			 */
+			getSubmitBillUrl : function() {
+				return '../../scm/control/submitConsignWarehousing';
+			},
+
+			/**
+			 * 获取单据撤销URL
+			 */
+			getRollbackBillUrl : function() {
+				return '../../scm/control/rollbackConsignWarehousing';
 			}
 		});
