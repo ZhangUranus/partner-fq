@@ -39,7 +39,7 @@ public class WorkshopReturnMaterialBizImp implements IBizStock {
 			String materialId = v.getString("materialMaterialId");// 物料id
 			BigDecimal volume = v.getBigDecimal("volume");// 数量
 			BigDecimal sum = null;
-			if (isOut) {
+			if (!isOut) {
 				BigDecimal price = WorkshopPriceMgr.getInstance().getPrice(workshopId, materialId); // 物料单价
 				sum = price.multiply(volume); // 物料金额
 
@@ -48,12 +48,12 @@ public class WorkshopReturnMaterialBizImp implements IBizStock {
 				v.set("entrysum", sum);
 				// 将金额加到总金额中
 				totalSum = totalSum.add(sum);
+			} else {
+				sum = v.getBigDecimal("entrysum");// 金额
 
 				// 如果是出库业务，数量、金额转换为负数
 				volume = volume.negate();
 				sum = sum.negate();
-			} else {
-				sum = v.getBigDecimal("entrysum");// 金额
 
 				// 将单价、金额返填为零
 				v.set("price", BigDecimal.ZERO);
