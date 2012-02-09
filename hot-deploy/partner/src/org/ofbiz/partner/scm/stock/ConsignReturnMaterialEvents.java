@@ -1,6 +1,7 @@
 package org.ofbiz.partner.scm.stock;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 import java.util.List;
 
@@ -19,6 +20,7 @@ import org.ofbiz.partner.scm.common.BillBaseEvent;
 import org.ofbiz.partner.scm.common.CommonEvents;
 import org.ofbiz.partner.scm.pricemgr.BillType;
 import org.ofbiz.partner.scm.pricemgr.BizStockImpFactory;
+import org.ofbiz.partner.scm.pricemgr.ConsignPriceMgr;
 import org.ofbiz.partner.scm.pricemgr.PriceCalItem;
 import org.ofbiz.partner.scm.pricemgr.PriceMgr;
 import org.ofbiz.partner.scm.pricemgr.Utils;
@@ -29,42 +31,11 @@ import org.ofbiz.partner.scm.purplan.PurPlanBalance;
  * @author Mark
  *
  */
-public class PurchaseReturnEvents {
-	private static final String module=org.ofbiz.partner.scm.stock.PurchaseReturnEvents.class.getName();
+public class ConsignReturnMaterialEvents {
+	private static final String module=org.ofbiz.partner.scm.stock.ConsignReturnMaterialEvents.class.getName();
 	
 	/**
-	 * 获取仓库物料数量、加权平均单价
-	 * @param request
-	 * @param response
-	 * @return
-	 * @throws Exception
-	 */
-	public static String getCurMaterialBalanceValue(HttpServletRequest request,HttpServletResponse response) throws Exception{
-		String warehouseId = request.getParameter("warehouseId");
-		String materialId = request.getParameter("materialId");
-		GenericValue value = PriceMgr.getInstance().getCurMaterialBalanceValue(warehouseId, materialId);
-		JSONObject jsonStr = new JSONObject();
-		jsonStr.put("success", true);
-		BigDecimal curAmount = null;// 当前数量
-		BigDecimal curSum = null;// 当前金额
-		if(value==null){
-			jsonStr.put("stockVolume", 0);
-			jsonStr.put("price", 0);
-		}else{
-			curAmount = value.getBigDecimal("volume");
-			curSum = value.getBigDecimal("totalSum");
-			jsonStr.put("stockVolume", curAmount);
-			if (curAmount != null && curAmount.compareTo(BigDecimal.ZERO) != 0)
-				jsonStr.put("price", curSum.divide(curAmount, 4, BigDecimal.ROUND_HALF_UP));
-			else
-				jsonStr.put("price", 0);
-		}
-		CommonEvents.writeJsonDataToExt(response, jsonStr.toString());
-		return "success";
-	}
-	
-	/**
-	 * 采购退货提交
+	 * 委外退料提交
 	 * @param request
 	 * @param response
 	 * @return
@@ -78,8 +49,8 @@ public class PurchaseReturnEvents {
 				Delegator delegator=(Delegator)request.getAttribute("delegator");
 				String billId=request.getParameter("billId");//单据id
 				if(delegator!=null&&billId!=null){
-					Debug.log("出库单审核:"+billId, module);
-					GenericValue  billHead=delegator.findOne("PurchaseReturn", UtilMisc.toMap("id", billId), false);
+					Debug.log("入库单提交:"+billId, module);
+					GenericValue  billHead=delegator.findOne("ConsignReturnMaterial", UtilMisc.toMap("id", billId), false);
 					if(billHead==null&&billHead.get("bizDate")==null){
 						throw new Exception("can`t find PurchaseWarehousing bill or bizdate is null");
 					}
@@ -90,32 +61,41 @@ public class PurchaseReturnEvents {
 						throw new Exception("单据业务日期不在当前系统期间");
 					}
 					//供应商id
-					String supplierId=billHead.getString("supplierSupplierId");
-					if(supplierId==null&&supplierId.length()<1){
-						throw new Exception("采购退货单供应商为空！！！");
+					String processorId=billHead.getString("processorSupplierId");
+					if(processorId==null&&processorId.length()<1){
+						throw new Exception("委外退料单加工商为空！！！");
 					}
 					
 					//获取单据id分录条目
-					List<GenericValue> entryList=delegator.findByAnd("PurchaseReturnEntry", UtilMisc.toMap("parentId", billId));
+					List<GenericValue> entryList=delegator.findByAnd("ConsignReturnMaterialEntry", UtilMisc.toMap("parentId", billId));
 					
-					
+					BigDecimal totalSum = BigDecimal.ZERO;
 					for(GenericValue v:entryList){
 						String warehouseId=v.getString("warehouseWarehouseId");//仓库id
 						String materialId=v.getString("materialMaterialId");//物料id
 						BigDecimal volume=v.getBigDecimal("volume");//数量
-						BigDecimal sum =v.getBigDecimal("entrysum");//金额
-						Debug.log("采购退货单价计算:物料id"+materialId+";数量"+volume+";金额"+sum, module);
-						
-						//更新供应商可入库数量
-						PurPlanBalance.getInstance().updateInWarehouse(supplierId, materialId, volume);
+						BigDecimal price = ConsignPriceMgr.getInstance().getPrice(processorId, materialId);	//物料单价
+						BigDecimal sum = price.multiply(volume);	//物料金额
+						Debug.log("委外退料单价计算:物料id"+materialId+";数量"+volume+";", module);
 						
 						//构建计算条目
-						PriceCalItem item=new PriceCalItem(bizDate,warehouseId,materialId,volume,sum,BillType.PurchaseReturn,billId,true,null);
+						PriceCalItem item=new PriceCalItem(bizDate,warehouseId,materialId,volume,sum,BillType.ConsignReturnMaterial,v.getString("id"),false,processorId);
 						//调用业务处理实现
-//						BizStockImpFactory.getBizStockImp(BillType.PurchaseReturn).updateStock(item);
+//						BizStockImpFactory.getBizStockImp(BillType.ConsignReturnMaterial).updateStock(item);
+						
+						//返填单价和金额
+						v.set("price", price);
+						v.set("entrysum", sum);
+						v.store();
+						
+						//将金额加到总金额中
+						totalSum = totalSum.add(sum);
 					}
-
-				BillBaseEvent.submitBill(request, response);//更新单据状态
+					//返填总金额
+					billHead.set("totalsum", totalSum);
+					billHead.store();
+					
+					BillBaseEvent.submitBill(request, response);//更新单据状态
 
 		}} catch (Exception e) {
             Debug.logError(e, module);
@@ -135,7 +115,7 @@ public class PurchaseReturnEvents {
 	}
 	
 	/**
-	 * 采购退货单撤销
+	 * 委外退料单撤销
 	 * @param request
 	 * @param response
 	 * @return
@@ -149,8 +129,8 @@ public class PurchaseReturnEvents {
 				Delegator delegator=(Delegator)request.getAttribute("delegator");
 				String billId=request.getParameter("billId");//单据id
 				if(delegator!=null&&billId!=null){
-					Debug.log("出库单撤销:"+billId, module);
-					GenericValue  billHead=delegator.findOne("PurchaseReturn", UtilMisc.toMap("id", billId), false);
+					Debug.log("入库单撤销:"+billId, module);
+					GenericValue  billHead=delegator.findOne("ConsignReturnMaterial", UtilMisc.toMap("id", billId), false);
 					if(billHead==null&&billHead.get("bizDate")==null){
 						throw new Exception("can`t find PurchaseWarehousing bill or bizdate is null");
 					}
@@ -161,28 +141,33 @@ public class PurchaseReturnEvents {
 						throw new Exception("单据业务日期不在当前系统期间");
 					}
 					//供应商id
-					String supplierId=billHead.getString("supplierSupplierId");
-					if(supplierId==null&&supplierId.length()<1){
-						throw new Exception("采购退货单供应商为空！！！");
+					String processorId=billHead.getString("processorSupplierId");
+					if(processorId==null&&processorId.length()<1){
+						throw new Exception("委外退料单加工商为空！！！");
 					}
 					//获取单据id分录条目
-					List<GenericValue> entryList=delegator.findByAnd("PurchaseReturnEntry", UtilMisc.toMap("parentId", billId));
+					List<GenericValue> entryList=delegator.findByAnd("ConsignReturnMaterialEntry", UtilMisc.toMap("parentId", billId));
 					
 					for(GenericValue v:entryList){
 						String warehouseId=v.getString("warehouseWarehouseId");//仓库id
 						String materialId=v.getString("materialMaterialId");//物料id
-						BigDecimal  volume=v.getBigDecimal("volume");//数量
-						BigDecimal  sum =v.getBigDecimal("entrysum");//金额
-						Debug.log("撤销采购退货单价计算:物料id"+materialId+";数量"+volume+";金额"+sum, module);
-						
-						//更新供应商可入库数量
-						PurPlanBalance.getInstance().updateInWarehouse(supplierId, materialId, volume);
+						BigDecimal volume=v.getBigDecimal("volume");//数量
+						BigDecimal sum =v.getBigDecimal("entrysum");//金额
+						Debug.log("撤销委外退料单价计算:物料id"+materialId+";数量"+volume+";金额"+sum, module);
 						
 						//构建计算条目
-						PriceCalItem item=new PriceCalItem(bizDate,warehouseId,materialId,volume,sum,BillType.PurchaseReturn,billId,false,null);
+						PriceCalItem item=new PriceCalItem(bizDate,warehouseId,materialId,volume,sum,BillType.ConsignReturnMaterial,v.getString("id"),true,processorId);
 						//调用业务处理实现
-//						BizStockImpFactory.getBizStockImp(BillType.PurchaseReturn).updateStock(item);
+//						BizStockImpFactory.getBizStockImp(BillType.ConsignReturnMaterial).updateStock(item);
+						
+						//将单价、金额返填为零
+						v.set("price", BigDecimal.ZERO);
+						v.set("entrysum", BigDecimal.ZERO);
+						v.store();
 					}
+					//将总金额返填为零
+					billHead.set("totalsum", BigDecimal.ZERO);
+					billHead.store();
 				}
 				
 				BillBaseEvent.rollbackBill(request, response);//撤销单据

@@ -82,7 +82,7 @@ public class WorkshopDrawMaterialEvents {
 						//构建计算条目
 						PriceCalItem item=new PriceCalItem(bizDate,warehouseId,materialId,volume,sum,BillType.WorkshopDrawMaterial,v.getString("id"),true,workshopId);
 						//调用业务处理实现
-						BizStockImpFactory.getBizStockImp(BillType.WorkshopDrawMaterial).updateStock(item);
+//						BizStockImpFactory.getBizStockImp(BillType.WorkshopDrawMaterial).updateStock(item);
 						
 						//返填单价和金额
 						v.set("price", price);
@@ -160,7 +160,7 @@ public class WorkshopDrawMaterialEvents {
 						//构建计算条目
 						PriceCalItem item=new PriceCalItem(bizDate,warehouseId,materialId,volume,sum,BillType.WorkshopDrawMaterial,v.getString("id"),false,workshopId);
 						//调用业务处理实现
-						BizStockImpFactory.getBizStockImp(BillType.WorkshopDrawMaterial).updateStock(item);
+//						BizStockImpFactory.getBizStockImp(BillType.WorkshopDrawMaterial).updateStock(item);
 						
 						//将单价、金额返填为零
 						v.set("price", BigDecimal.ZERO);

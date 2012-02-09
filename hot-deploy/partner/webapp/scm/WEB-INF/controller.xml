@@ -189,17 +189,29 @@
 		<event type="java" path="org.ofbiz.partner.scm.stock.ConsignDrawMaterialEvents" invoke="rollbackBill" />
 		<response name="success" type="none" />
 	</request-map>
-	
-	<!-- 制造领料单提交 -->
-	<request-map uri="submitWorkshopDramMaterial">
+	<!-- 委外退料单提交 -->
+	<request-map uri="submitConsignReturnMaterial">
 		<security https="false" auth="false" />
-		<event type="java" path="org.ofbiz.partner.scm.stock.WorkshopDrawMaterialEvents" invoke="submitBill" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ConsignReturnMaterialEvents" invoke="submitBill" />
 		<response name="success" type="none" />
 	</request-map>
-	<!-- 制造领料单撤销 -->
-	<request-map uri="rollbackWorkshopDramMaterial">
+	<!-- 委外退料单撤销 -->
+	<request-map uri="rollbackConsignReturnMaterial">
 		<security https="false" auth="false" />
-		<event type="java" path="org.ofbiz.partner.scm.stock.WorkshopDrawMaterialEvents" invoke="rollbackBill" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ConsignReturnMaterialEvents" invoke="rollbackBill" />
+		<response name="success" type="none" />
+	</request-map>
+	
+	<!-- 制造退料单提交 -->
+	<request-map uri="submitWorkshopReturnMaterial">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.WorkshopReturnMaterialEvents" invoke="submitBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 制造退料单撤销 -->
+	<request-map uri="rollbackWorkshopReturnMaterial">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.WorkshopReturnMaterialEvents" invoke="rollbackBill" />
 		<response name="success" type="none" />
 	</request-map>
 	

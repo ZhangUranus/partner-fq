@@ -77,7 +77,7 @@ public class InspectiveBizEvents {
 						//构建计算条目
 						PriceCalItem item=new PriceCalItem(bizDate,warehouseId,materialId,volume,sum,BillType.PurchaseWarehouse,v.getString("id"),false,null);
 						//调用业务处理实现
-						BizStockImpFactory.getBizStockImp(BillType.PurchaseWarehouse).updateStock(item);
+//						BizStockImpFactory.getBizStockImp(BillType.PurchaseWarehouse).updateStock(item);
 					}
 
 				BillBaseEvent.submitBill(request, response);//更新单据状态
@@ -145,7 +145,7 @@ public class InspectiveBizEvents {
 						//构建计算条目
 						PriceCalItem item=new PriceCalItem(bizDate,warehouseId,materialId,volume,sum,BillType.PurchaseWarehouse,billId,true,null);
 						//调用业务处理实现
-						BizStockImpFactory.getBizStockImp(BillType.PurchaseWarehouse).updateStock(item);
+//						BizStockImpFactory.getBizStockImp(BillType.PurchaseWarehouse).updateStock(item);
 						
 					}
 				}
