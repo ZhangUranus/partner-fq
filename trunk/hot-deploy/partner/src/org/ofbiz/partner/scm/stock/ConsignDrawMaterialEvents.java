@@ -81,7 +81,7 @@ public class ConsignDrawMaterialEvents {
 						//构建计算条目
 						PriceCalItem item=new PriceCalItem(bizDate,warehouseId,materialId,volume,sum,BillType.ConsignDrawMaterial,v.getString("id"),true,processorId);
 						//调用业务处理实现
-						BizStockImpFactory.getBizStockImp(BillType.ConsignDrawMaterial).updateStock(item);
+//						BizStockImpFactory.getBizStockImp(BillType.ConsignDrawMaterial).updateStock(item);
 						
 						//返填单价和金额
 						v.set("price", price);
@@ -158,7 +158,7 @@ public class ConsignDrawMaterialEvents {
 						//构建计算条目
 						PriceCalItem item=new PriceCalItem(bizDate,warehouseId,materialId,volume,sum,BillType.ConsignDrawMaterial,v.getString("id"),false,processorId);
 						//调用业务处理实现
-						BizStockImpFactory.getBizStockImp(BillType.ConsignDrawMaterial).updateStock(item);
+//						BizStockImpFactory.getBizStockImp(BillType.ConsignDrawMaterial).updateStock(item);
 						
 						//将单价、金额返填为零
 						v.set("price", BigDecimal.ZERO);

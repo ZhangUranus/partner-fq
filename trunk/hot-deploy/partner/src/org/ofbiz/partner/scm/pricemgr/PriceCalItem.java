@@ -15,11 +15,11 @@ public class PriceCalItem {
 	private BigDecimal amount=null;//数量
 	private BigDecimal sum=null;//金额
 	private BillType billType=null;//单据类型
-	private String billId=null;
+	private String billEntryId=null;
 	private boolean isOut=false;//是否出库操作
 	private String extendParam = null;//扩展参数，不需要用到可以传null值
 	public PriceCalItem(Date biz,String warehouseId,String materialId, BigDecimal amount, BigDecimal sum,
-			BillType billType,String billId,boolean isOut,String extendParam) {
+			BillType billType,String billEntryId,boolean isOut,String extendParam) {
 		super();
 		this.bizTime=biz;
 		this.warehouseId = warehouseId;
@@ -27,7 +27,7 @@ public class PriceCalItem {
 		this.amount = amount;
 		this.sum = sum;
 		this.billType = billType;
-		this.billId=billId;
+		this.billEntryId=billEntryId;
 		this.isOut=isOut;
 		this.extendParam = extendParam;
 	}
@@ -46,8 +46,8 @@ public class PriceCalItem {
 	public BillType getBillType() {
 		return billType;
 	}
-	public String getBillId() {
-		return billId;
+	public String getBillEntryId() {
+		return billEntryId;
 	}
 	public String getWarehouseId() {
 		return warehouseId;
@@ -76,8 +76,8 @@ public class PriceCalItem {
 	public void setBillType(BillType billType) {
 		this.billType = billType;
 	}
-	public void setBillId(String billId) {
-		this.billId = billId;
+	public void setBillEntryId(String billEntryId) {
+		this.billEntryId = billEntryId;
 	}
 	public void setOut(boolean isOut) {
 		this.isOut = isOut;
