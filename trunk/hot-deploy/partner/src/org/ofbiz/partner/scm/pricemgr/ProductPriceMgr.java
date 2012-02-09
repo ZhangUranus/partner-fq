@@ -42,9 +42,13 @@ public static final String module = ProductPriceMgr.class.getName();
 		Delegator delegator=org.ofbiz.partner.scm.common.Utils.getDefaultDelegator();
 		GenericValue gv=delegator.findOne("CurProductPrice", UtilMisc.toMap("workshopId", workshopId, "materialId", materialId), false);
 		if(gv!=null){
-			return gv.getBigDecimal("totalsum").divide(gv.getBigDecimal("volume"), 4, RoundingMode.HALF_UP);
+			if(gv.getBigDecimal("volume").compareTo(BigDecimal.ZERO) == 0){
+				return BigDecimal.ZERO;
+			}else{
+				return gv.getBigDecimal("totalsum").divide(gv.getBigDecimal("volume"), 4, RoundingMode.HALF_UP);
+			}
 		}
-		return null;
+		return BigDecimal.ZERO;
 	}
 	/**
 	 * 更新累计金额数量
