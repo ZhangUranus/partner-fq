@@ -137,4 +137,20 @@ public class PriceCalImp4WMA implements IPriceCal {
 			return null;
 		}
 	}
+	
+	/**
+	 * 获取物料加权平均单价
+	 */
+	public BigDecimal getPrice(String warehouseId, String materialId) throws Exception {
+		GenericValue value = this.getCurMaterialBalanceValue(warehouseId, materialId);
+		if(value==null){
+			return BigDecimal.ZERO;
+		}else{
+			if(value.getBigDecimal("volume").equals(BigDecimal.ZERO)){
+				return BigDecimal.ZERO;
+			}else{
+				return value.getBigDecimal("totalSum").divide(value.getBigDecimal("volume"),4,RoundingMode.HALF_UP);
+			}
+		}
+	}
 }

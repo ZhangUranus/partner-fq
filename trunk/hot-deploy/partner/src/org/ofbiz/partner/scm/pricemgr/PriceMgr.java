@@ -68,4 +68,15 @@ public class PriceMgr {
 			throw new Exception("单价计算类实现为空");
 		}
 	}
+	
+	/**
+	 * 获取物料加权平均单价
+	 */
+	public BigDecimal getPrice(String warehouseId, String materialId) throws Exception {
+		if(priceCal!=null){
+			return priceCal.getPrice(warehouseId, materialId);
+		}else{
+			throw new Exception("单价计算类实现为空");
+		}
+	}
 }
