@@ -75,7 +75,7 @@ public class InspectiveBizEvents {
 						PurPlanBalance.getInstance().updateInWarehouse(supplierId, materialId, volume.negate());
 						
 						//构建计算条目
-						PriceCalItem item=new PriceCalItem(bizDate,warehouseId,materialId,volume,sum,BillType.PurchaseWarehouse,v.getString("id"),false);
+						PriceCalItem item=new PriceCalItem(bizDate,warehouseId,materialId,volume,sum,BillType.PurchaseWarehouse,v.getString("id"),false,null);
 						//调用业务处理实现
 						BizStockImpFactory.getBizStockImp(BillType.PurchaseWarehouse).updateStock(item);
 					}
@@ -143,7 +143,7 @@ public class InspectiveBizEvents {
 						//更新供应商可入库数量
 						PurPlanBalance.getInstance().updateInWarehouse(supplierId, materialId, volume);
 						//构建计算条目
-						PriceCalItem item=new PriceCalItem(bizDate,warehouseId,materialId,volume,sum,BillType.PurchaseWarehouse,billId,true);
+						PriceCalItem item=new PriceCalItem(bizDate,warehouseId,materialId,volume,sum,BillType.PurchaseWarehouse,billId,true,null);
 						//调用业务处理实现
 						BizStockImpFactory.getBizStockImp(BillType.PurchaseWarehouse).updateStock(item);
 						

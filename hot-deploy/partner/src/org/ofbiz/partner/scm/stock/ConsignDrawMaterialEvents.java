@@ -19,6 +19,7 @@ import org.ofbiz.entity.transaction.TransactionUtil;
 import org.ofbiz.partner.scm.common.BillBaseEvent;
 import org.ofbiz.partner.scm.common.CommonEvents;
 import org.ofbiz.partner.scm.pricemgr.BillType;
+import org.ofbiz.partner.scm.pricemgr.BizStockImpFactory;
 import org.ofbiz.partner.scm.pricemgr.ConsignPriceMgr;
 import org.ofbiz.partner.scm.pricemgr.PriceCalItem;
 import org.ofbiz.partner.scm.pricemgr.PriceMgr;
@@ -48,7 +49,7 @@ public class ConsignDrawMaterialEvents {
 				Delegator delegator=(Delegator)request.getAttribute("delegator");
 				String billId=request.getParameter("billId");//单据id
 				if(delegator!=null&&billId!=null){
-					Debug.log("出库单审核:"+billId, module);
+					Debug.log("出库单提交:"+billId, module);
 					GenericValue  billHead=delegator.findOne("ConsignDrawMaterial", UtilMisc.toMap("id", billId), false);
 					if(billHead==null&&billHead.get("bizDate")==null){
 						throw new Exception("can`t find PurchaseWarehousing bill or bizdate is null");
@@ -72,32 +73,25 @@ public class ConsignDrawMaterialEvents {
 					for(GenericValue v:entryList){
 						String warehouseId=v.getString("warehouseWarehouseId");//仓库id
 						String materialId=v.getString("materialMaterialId");//物料id
-						BigDecimal volume=v.getBigDecimal("volume").negate();//数量
-						BigDecimal price = null;	//物料单价
-						BigDecimal sum = null;	//物料金额
-						Debug.log("采购退货单价计算:物料id"+materialId+";数量"+volume+";", module);
-						
-						GenericValue value = PriceMgr.getInstance().getCurMaterialBalanceValue(warehouseId, materialId);
-						if(value==null){
-							price = BigDecimal.ZERO;
-						}else{
-							price = value.getBigDecimal("totalSum").divide(value.getBigDecimal("volume"),4,RoundingMode.HALF_UP);
-						}
-						sum = price.multiply(volume);
+						BigDecimal volume=v.getBigDecimal("volume");//数量
+						BigDecimal price = PriceMgr.getInstance().getPrice(warehouseId, materialId);	//物料单价
+						BigDecimal sum = price.multiply(volume);	//物料金额
+						Debug.log("委外领料单价计算:物料id"+materialId+";数量"+volume+";", module);
 						
 						//构建计算条目
-						PriceCalItem item=new PriceCalItem(bizDate,warehouseId,materialId,volume,sum,BillType.ConsignDrawMaterial,billId,true);
-						price = PriceMgr.getInstance().calPrice(item);
+						PriceCalItem item=new PriceCalItem(bizDate,warehouseId,materialId,volume,sum,BillType.ConsignDrawMaterial,v.getString("id"),true,processorId);
+						//调用业务处理实现
+						BizStockImpFactory.getBizStockImp(BillType.ConsignDrawMaterial).updateStock(item);
 						
+						//返填单价和金额
 						v.set("price", price);
-						
-						//更新加工商库存表
-						ConsignPriceMgr.getInstance().update(processorId, materialId, volume.negate(), sum.negate());
-						
-						totalSum = totalSum.add(sum.negate());
-						v.set("entrysum", sum.negate());
+						v.set("entrysum", sum);
 						v.store();
+						
+						//将金额加到总金额中
+						totalSum = totalSum.add(sum);
 					}
+					//返填总金额
 					billHead.set("totalsum", totalSum);
 					billHead.store();
 					
@@ -157,22 +151,21 @@ public class ConsignDrawMaterialEvents {
 					for(GenericValue v:entryList){
 						String warehouseId=v.getString("warehouseWarehouseId");//仓库id
 						String materialId=v.getString("materialMaterialId");//物料id
-						BigDecimal  volume=v.getBigDecimal("volume");//数量
-						BigDecimal  sum =v.getBigDecimal("entrysum");//金额
-						Debug.log("撤销采购退货单价计算:物料id"+materialId+";数量"+volume+";金额"+sum, module);
-						
+						BigDecimal volume=v.getBigDecimal("volume");//数量
+						BigDecimal sum =v.getBigDecimal("entrysum");//金额
+						Debug.log("撤销委外领料单价计算:物料id"+materialId+";数量"+volume+";金额"+sum, module);
 						
 						//构建计算条目
-						PriceCalItem item=new PriceCalItem(bizDate,warehouseId,materialId,volume,sum,BillType.ConsignDrawMaterial,billId,false);
-						PriceMgr.getInstance().calPrice(item);
+						PriceCalItem item=new PriceCalItem(bizDate,warehouseId,materialId,volume,sum,BillType.ConsignDrawMaterial,v.getString("id"),false,processorId);
+						//调用业务处理实现
+						BizStockImpFactory.getBizStockImp(BillType.ConsignDrawMaterial).updateStock(item);
 						
-						//更新加工商库存表
-						ConsignPriceMgr.getInstance().update(processorId, materialId, volume.negate(), sum.negate());
-						
+						//将单价、金额返填为零
 						v.set("price", BigDecimal.ZERO);
 						v.set("entrysum", BigDecimal.ZERO);
 						v.store();
 					}
+					//将总金额返填为零
 					billHead.set("totalsum", BigDecimal.ZERO);
 					billHead.store();
 				}
