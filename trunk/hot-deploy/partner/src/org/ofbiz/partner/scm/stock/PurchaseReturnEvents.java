@@ -18,6 +18,7 @@ import org.ofbiz.entity.transaction.TransactionUtil;
 import org.ofbiz.partner.scm.common.BillBaseEvent;
 import org.ofbiz.partner.scm.common.CommonEvents;
 import org.ofbiz.partner.scm.pricemgr.BillType;
+import org.ofbiz.partner.scm.pricemgr.BizStockImpFactory;
 import org.ofbiz.partner.scm.pricemgr.PriceCalItem;
 import org.ofbiz.partner.scm.pricemgr.PriceMgr;
 import org.ofbiz.partner.scm.pricemgr.Utils;
@@ -101,16 +102,17 @@ public class PurchaseReturnEvents {
 					for(GenericValue v:entryList){
 						String warehouseId=v.getString("warehouseWarehouseId");//仓库id
 						String materialId=v.getString("materialMaterialId");//物料id
-						BigDecimal volume=v.getBigDecimal("volume").negate();//数量
-						BigDecimal sum =v.getBigDecimal("entrysum").negate();//金额
+						BigDecimal volume=v.getBigDecimal("volume");//数量
+						BigDecimal sum =v.getBigDecimal("entrysum");//金额
 						Debug.log("采购退货单价计算:物料id"+materialId+";数量"+volume+";金额"+sum, module);
 						
 						//更新供应商可入库数量
-						PurPlanBalance.getInstance().updateInWarehouse(supplierId, materialId, volume.negate());
+						PurPlanBalance.getInstance().updateInWarehouse(supplierId, materialId, volume);
 						
 						//构建计算条目
-						PriceCalItem item=new PriceCalItem(bizDate,warehouseId,materialId,volume,sum,BillType.PurchaseReturn,billId,true);
-						PriceMgr.getInstance().calPrice(item);
+						PriceCalItem item=new PriceCalItem(bizDate,warehouseId,materialId,volume,sum,BillType.PurchaseReturn,billId,true,null);
+						//调用业务处理实现
+						BizStockImpFactory.getBizStockImp(BillType.PurchaseReturn).updateStock(item);
 					}
 
 				BillBaseEvent.submitBill(request, response);//更新单据状态
@@ -174,12 +176,12 @@ public class PurchaseReturnEvents {
 						Debug.log("撤销采购退货单价计算:物料id"+materialId+";数量"+volume+";金额"+sum, module);
 						
 						//更新供应商可入库数量
-						PurPlanBalance.getInstance().updateInWarehouse(supplierId, materialId, volume.negate());
+						PurPlanBalance.getInstance().updateInWarehouse(supplierId, materialId, volume);
+						
 						//构建计算条目
-						PriceCalItem item=new PriceCalItem(bizDate,warehouseId,materialId,volume,sum,BillType.PurchaseWarehouse,billId,false);
-						PriceMgr.getInstance().calPrice(item);
-						
-						
+						PriceCalItem item=new PriceCalItem(bizDate,warehouseId,materialId,volume,sum,BillType.PurchaseReturn,billId,false,null);
+						//调用业务处理实现
+						BizStockImpFactory.getBizStockImp(BillType.PurchaseReturn).updateStock(item);
 					}
 				}
 				
