@@ -29,7 +29,7 @@ public class ConsignPriceMgr {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(Utils.getCurDate());
 		year = calendar.get(Calendar.YEAR);
-		month = calendar.get(Calendar.MONTH);
+		month = calendar.get(Calendar.MONTH)+1;
 	}
 
 	public static ConsignPriceMgr getInstance() {
