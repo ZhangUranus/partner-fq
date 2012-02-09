@@ -8,7 +8,7 @@ import org.ofbiz.partner.scm.pricemgr.WorkshopPriceMgr;
 
 public class WorkshopReturnMaterialBizImp implements IBizStock {
 
-	public void updateStock(GenericValue billValue) throws Exception {
+	public void updateStock(GenericValue billValue, boolean isOut) throws Exception {
 //		if (calItem.isOut()) {
 //			// 如果是出库业务，数量、金额转换为负数
 //			calItem.setAmount(calItem.getAmount().negate());

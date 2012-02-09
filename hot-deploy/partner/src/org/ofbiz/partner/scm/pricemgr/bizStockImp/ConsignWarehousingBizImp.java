@@ -11,7 +11,7 @@ import org.ofbiz.partner.scm.pricemgr.PriceMgr;
 
 public class ConsignWarehousingBizImp implements IBizStock {
 
-	public void updateStock(GenericValue billValue) throws Exception {
+	public void updateStock(GenericValue billValue, boolean isOut) throws Exception {
 //		if (calItem.getSum() == null) {
 //			BigDecimal price = ConsignPriceMgr.getInstance().CreateConsignPriceDetailList(calItem.getExtendParam(), calItem.getMaterialId(), calItem.getBillEntryId());
 //			calItem.setSum(price.multiply(calItem.getAmount()));
