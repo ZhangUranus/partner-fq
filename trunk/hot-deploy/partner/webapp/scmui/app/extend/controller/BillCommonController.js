@@ -160,16 +160,16 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 					}
 				}
 			},
-			
+
 			/**
 			 * 检查Session是否过期，如果过期弹出登录页面
 			 */
-			checkSession : function(){
-				if(!this.listContainer.permission.view){
-					Ext.Msg.alert("提示","Session过期，请重新登录！",new Function("window.location = window.location;"));
+			checkSession : function() {
+				if (!this.listContainer.permission.view) {
+					Ext.Msg.alert("提示", "Session过期，请重新登录！", new Function("window.location = window.location;"));
 				}
 			},
-			
+
 			/**
 			 * 用户操作触发改变界面控件状态 如：选中记录
 			 */
@@ -265,17 +265,25 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 							return false; // 跳出循环
 						});
 			},
-			
+
 			/**
 			 * 根据状态设置编辑界面状态
 			 * @param {} isReadOnly
 			 */
-			changeEditStatus : function(isReadOnly) {
-				this.setFieldsReadOnly(isReadOnly);
-				this.editEntry.setDisabled(isReadOnly);
-				this.saveButton.setDisabled(isReadOnly);
-				this.clearButton.setDisabled(isReadOnly);
-				this.submitEditButton.setDisabled(isReadOnly);
+			changeEditStatus : function(record) {
+				if (record.get('status') == '0') {
+					this.setFieldsReadOnly(false);
+					this.editEntry.setDisabled(false);
+					this.saveButton.setDisabled(false);
+					this.clearButton.setDisabled(false);
+					this.submitEditButton.setDisabled(false);
+				} else {
+					this.setFieldsReadOnly(true);
+					this.editEntry.setDisabled(true);
+					this.saveButton.setDisabled(true);
+					this.clearButton.setDisabled(true);
+					this.submitEditButton.setDisabled(true);
+				}
 			},
 
 			/**
@@ -288,11 +296,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 			 */
 			modifyRecord : function(grid, record) {
 				this.currentRecord = record;
-				if (record.data.status == '1' || record.data.status == '2' || record.data.status == '3' || record.data.status == '4') {
-					this.changeEditStatus(true);
-				} else {
-					this.changeEditStatus(false);
-				}
+				this.changeEditStatus(record);
 				this.getEdit().uiStatus = 'Modify';
 				this.editForm.getForm().loadRecord(record);
 				// 根据选择的id加载编辑界面数据
@@ -336,10 +340,10 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 			 *            button 按钮控件
 			 */
 			addNewRecord : function(button) {
-				this.changeEditStatus(false);
 				this.listPanel.getSelectionModel().deselectAll();
 				var newRecord = Ext.create(this.modelName);// 新增记录
 				this.currentRecord = newRecord;
+				this.changeEditStatus(newRecord);
 				this.getEdit().uiStatus = 'AddNew';
 
 				this.editForm.getForm().loadRecord(newRecord);
@@ -383,13 +387,25 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 			refreshRecord : Ext.emptyFn,
 
 			/**
-			 * 提交单据
-			 * @param {} button
-			 */ 
-			submitBill : function(button) {
-				record = this.getSelectRecord();
+			 * 是否可以提交
+			 * @return {Boolean}
+			 */
+			isSubmitAble : function(record) {
 				if (record.get('status') != '0') {
 					showWarning('单据已提交！');
+					return false;
+				} else {
+					return true;
+				}
+			},
+
+			/**
+			 * 提交单据
+			 * @param {} button
+			 */
+			submitBill : function(button) {
+				record = this.getSelectRecord();
+				if (!this.isSubmitAble(record)) {
 					return;
 				}
 				Ext.Msg.confirm('提示', '确定提交该' + this.gridTitle + '？', confirmChange, this);
@@ -410,29 +426,40 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 					}
 				}
 			},
-			
+
 			/**
 			 * 提交成功后处理方法
 			 * @type 
 			 */
 			submitBillSuccess : Ext.emptyFn,
-			
+
 			/**
 			 * 获取单据提交URL
 			 */
-			getSubmitBillUrl : function(){
+			getSubmitBillUrl : function() {
 				return '../../scm/control/submitBill';
 			},
-			
-			
+
+			/**
+			 * 是否可以撤销提交
+			 * @param {} record
+			 */
+			isRollbackBillAble : function(record) {
+				if (record.get('status') != '4') {
+					showWarning('单据未提交！');
+					return false;
+				} else {
+					return true;
+				}
+			},
+
 			/**
 			 * 撤销单据
 			 * @param {} button
-			 */ 
+			 */
 			rollbackBill : function(button) {
 				record = this.getSelectRecord();
-				if (record.get('status') != '4') {
-					showWarning('单据未提交！');
+				if (!this.isRollbackBillAble(record)) {
 					return;
 				}
 				Ext.Msg.confirm('提示', '确定撤销该' + this.gridTitle + '？', confirmChange, this);
@@ -453,20 +480,20 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 					}
 				}
 			},
-			
+
 			/**
 			 * 撤销提交成功后处理方法
 			 * @type 
 			 */
 			rollbackBillSuccess : Ext.emptyFn,
-			
+
 			/**
 			 * 获取单据撤销URL
 			 */
-			getRollbackBillUrl : function(){
+			getRollbackBillUrl : function() {
 				return '../../scm/control/rollbackBill';
 			},
-			
+
 			/**
 			 * 获取当前操作的Record
 			 * @return {}
@@ -479,7 +506,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 					return this.currentRecord;
 				}
 			},
-			
+
 			/**
 			 * 保存时提交单据
 			 */

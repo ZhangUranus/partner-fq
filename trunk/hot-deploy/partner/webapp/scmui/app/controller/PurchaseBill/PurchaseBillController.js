@@ -120,10 +120,17 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 			 * @param {} isReadOnly
 			 */
 			changeEditStatus : function(isReadOnly) {
-				this.setFieldsReadOnly(isReadOnly);
-				this.editEntry.setDisabled(isReadOnly);
-				this.saveButton.setDisabled(isReadOnly);
-				this.clearButton.setDisabled(isReadOnly);
+				if(record.get('status')=='0'){
+					this.setFieldsReadOnly(false);
+					this.editEntry.setDisabled(false);
+					this.saveButton.setDisabled(false);
+					this.clearButton.setDisabled(false);
+				}else{
+					this.setFieldsReadOnly(true);
+					this.editEntry.setDisabled(true);
+					this.saveButton.setDisabled(true);
+					this.clearButton.setDisabled(true);
+				}
 			},
 			
 			/**
