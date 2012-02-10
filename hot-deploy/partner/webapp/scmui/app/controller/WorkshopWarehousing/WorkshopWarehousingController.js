@@ -155,8 +155,21 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 						e.record.set('materialMaterialModel', record.get('model'));
 						e.record.set('unitUnitId', record.get('defaultUnitId'));
 						e.record.set('unitUnitName', record.get('defaultUnitName'));
-
 					}
 				}
+			},
+			
+			/**
+			 * 获取单据提交URL
+			 */
+			getSubmitBillUrl : function() {
+				return '../../scm/control/submitWorkshopWarehousing';
+			},
+
+			/**
+			 * 获取单据撤销URL
+			 */
+			getRollbackBillUrl : function() {
+				return '../../scm/control/rollbackWorkshopWarehousing';
 			}
 		});
