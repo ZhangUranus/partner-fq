@@ -238,6 +238,18 @@
 		<event type="java" path="org.ofbiz.partner.scm.stock.WorkshopReturnMaterialEvents" invoke="rollbackBill" />
 		<response name="success" type="none" />
 	</request-map>
+	<!-- 制造入库单提交 -->
+	<request-map uri="submitWorkshopWarehousing">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.WorkshopWarehousingEvents" invoke="submitBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 制造入库单撤销 -->
+	<request-map uri="rollbackWorkshopWarehousing">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.WorkshopWarehousingEvents" invoke="rollbackBill" />
+		<response name="success" type="none" />
+	</request-map>
 	
 	<!-- exporter -->
 	<request-map uri="export">
