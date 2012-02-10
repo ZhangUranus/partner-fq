@@ -1,5 +1,7 @@
 package org.ofbiz.partner.scm.stock;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -12,17 +14,18 @@ import org.ofbiz.entity.transaction.TransactionUtil;
 import org.ofbiz.partner.scm.common.BillBaseEvent;
 import org.ofbiz.partner.scm.pricemgr.BillType;
 import org.ofbiz.partner.scm.pricemgr.BizStockImpFactory;
+import org.ofbiz.partner.scm.pricemgr.Utils;
 /**
  * 验收单业务事件类
  * 
  * @author Mark
  * 
  */
-public class ConsignWarehousingEvents {
-	private static final String module = org.ofbiz.partner.scm.stock.ConsignWarehousingEvents.class.getName();
+public class ConsignReturnProductEvents {
+	private static final String module = org.ofbiz.partner.scm.stock.ConsignReturnProductEvents.class.getName();
 
 	/**
-	 * 委外入库提交
+	 * 委外退货提交
 	 * 
 	 * @param request
 	 * @param response
@@ -37,15 +40,26 @@ public class ConsignWarehousingEvents {
 			Delegator delegator = (Delegator) request.getAttribute("delegator");
 			String billId = request.getParameter("billId");// 单据id
 			if (delegator != null && billId != null) {
-				Debug.log("入库单提交:" + billId, module);
-				GenericValue billHead = delegator.findOne("ConsignWarehousing", UtilMisc.toMap("id", billId), false);
+				Debug.log("出库单提交:" + billId, module);
+				GenericValue billHead = delegator.findOne("ConsignReturnProduct", UtilMisc.toMap("id", billId), false);
 				if (billHead == null && billHead.get("bizDate") == null) {
-					throw new Exception("can`t find ConsignWarehousing bill or bizdate is null");
+					throw new Exception("can`t find ConsignReturnProduct bill or bizdate is null");
 				}
 
-				BizStockImpFactory.getBizStockImp(BillType.ConsignWarehousing).updateStock(billHead, false);
-
-				BillBaseEvent.submitBill(request, response);// 更新单据状态
+				BizStockImpFactory.getBizStockImp(BillType.ConsignReturnProduct).updateStock(billHead, true);
+				
+				if(billHead.getLong("status") == 0){
+					BillBaseEvent.submitBill(request, response);// 更新单据状态
+					billHead.set("checkStatus", 1);//设置验收状态为验收中
+					billHead.store();
+				}else{
+					// 获取单据id分录条目
+					List<GenericValue> entryList = delegator.findByAnd("ConsignReturnProductEntry", UtilMisc.toMap("parentId", billHead.getString("id")));
+					if(Utils.isFinishCheck(entryList)){
+						billHead.set("checkStatus", 2);
+						billHead.store();
+					}
+				}
 			}
 		} catch (Exception e) {
 			Debug.logError(e, module);
@@ -65,7 +79,7 @@ public class ConsignWarehousingEvents {
 	}
 
 	/**
-	 * 委外入库单撤销
+	 * 委外领料单撤销
 	 * 
 	 * @param request
 	 * @param response
@@ -80,15 +94,17 @@ public class ConsignWarehousingEvents {
 			Delegator delegator = (Delegator) request.getAttribute("delegator");
 			String billId = request.getParameter("billId");// 单据id
 			if (delegator != null && billId != null) {
-				Debug.log("入库单撤销:" + billId, module);
-				GenericValue billHead = delegator.findOne("ConsignWarehousing", UtilMisc.toMap("id", billId), false);
+				Debug.log("出库单撤销:" + billId, module);
+				GenericValue billHead = delegator.findOne("ConsignReturnProduct", UtilMisc.toMap("id", billId), false);
 				if (billHead == null && billHead.get("bizDate") == null) {
-					throw new Exception("can`t find ConsignWarehousing bill or bizdate is null");
+					throw new Exception("can`t find ConsignReturnProduct bill or bizdate is null");
 				}
 
-				BizStockImpFactory.getBizStockImp(BillType.ConsignWarehousing).updateStock(billHead, true);
+				BizStockImpFactory.getBizStockImp(BillType.ConsignReturnProduct).updateStock(billHead, false);
 
 				BillBaseEvent.rollbackBill(request, response);// 撤销单据
+				billHead.set("checkStatus", 0);//设置验收状态为未验收
+				billHead.store();
 			}
 		} catch (Exception e) {
 			Debug.logError(e, module);
