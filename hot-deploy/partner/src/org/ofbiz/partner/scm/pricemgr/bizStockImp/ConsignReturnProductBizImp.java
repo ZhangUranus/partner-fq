@@ -24,14 +24,9 @@ public class ConsignReturnProductBizImp implements IBizStock {
 		if (bizDate == null || !Utils.isCurPeriod(bizDate)) {
 			throw new Exception("单据业务日期不在当前系统期间");
 		}
-		// 供应商id
-		String processorId = billValue.getString("processorSupplierId");
-		if (processorId == null && processorId.length() < 1) {
-			throw new Exception("委外退货单加工商为空！！！");
-		}
 		//是否处于验收状态
 		boolean isChecking = false;
-		if(billValue.getLong("status") == 4 && billValue.getLong("checkStatus") == 1){
+		if(billValue.getLong("status").equals(new Long(4)) && !billValue.getLong("checkStatus").equals(new Long(2))){
 			isChecking = true;
 		}
 
@@ -51,7 +46,7 @@ public class ConsignReturnProductBizImp implements IBizStock {
 					BigDecimal checkedVolume = v.getBigDecimal("checkedVolume");// 数量
 					sum = price.multiply(volume);
 					
-					//返填当次验收数量、已验收数量
+					//返填已验收数量
 					v.set("checkedVolume", checkedVolume.add(volume));
 				} else {
 					BigDecimal price = PriceMgr.getInstance().getPrice(warehouseId, materialId); // 物料单价
@@ -78,6 +73,7 @@ public class ConsignReturnProductBizImp implements IBizStock {
 				v.set("checkedVolume", BigDecimal.ZERO);
 			}
 			v.set("currentCheckVolume", BigDecimal.ZERO);
+			v.store();
 			Debug.log("委外退货单价计算:物料id" + materialId + ";数量" + volume + ";金额" + sum, "ConsignReturnProductBizImp");
 
 			// 构建计算条目
@@ -91,12 +87,12 @@ public class ConsignReturnProductBizImp implements IBizStock {
 			 */
 //			// 更新加工商库存表
 //			ConsignPriceMgr.getInstance().update(processorId, materialId, volume.negate(), sum.negate());
-
-			v.store();
 		}
 		// 返填总金额
-		billValue.set("totalsum", totalSum);
-		billValue.store();
+		if(!isChecking){
+			billValue.set("totalsum", totalSum);
+			billValue.store();
+		}
 	}
 
 }

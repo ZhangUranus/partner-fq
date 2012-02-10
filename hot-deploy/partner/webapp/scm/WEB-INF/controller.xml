@@ -213,6 +213,18 @@
 		<event type="java" path="org.ofbiz.partner.scm.stock.ConsignWarehousingEvents" invoke="rollbackBill" />
 		<response name="success" type="none" />
 	</request-map>
+	<!-- 委外退货单提交 -->
+	<request-map uri="submitConsignReturnProduct">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ConsignReturnProductEvents" invoke="submitBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 委外退货单撤销 -->
+	<request-map uri="rollbackConsignReturnProduct">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ConsignReturnProductEvents" invoke="rollbackBill" />
+		<response name="success" type="none" />
+	</request-map>
 	
 	<!-- 制造领料单提交 -->
 	<request-map uri="submitWorkshopDramMaterial">
@@ -248,6 +260,18 @@
 	<request-map uri="rollbackWorkshopWarehousing">
 		<security https="false" auth="false" />
 		<event type="java" path="org.ofbiz.partner.scm.stock.WorkshopWarehousingEvents" invoke="rollbackBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 制造退货单提交 -->
+	<request-map uri="submitWorkshopReturnProduct">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.WorkshopReturnProductEvents" invoke="submitBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 制造退货单撤销 -->
+	<request-map uri="rollbackWorkshopReturnProduct">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.WorkshopReturnProductEvents" invoke="rollbackBill" />
 		<response name="success" type="none" />
 	</request-map>
 	

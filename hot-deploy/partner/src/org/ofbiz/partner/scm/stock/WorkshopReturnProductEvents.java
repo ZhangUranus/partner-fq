@@ -23,11 +23,11 @@ import org.ofbiz.partner.scm.pricemgr.Utils;
  * @author Mark
  * 
  */
-public class ConsignReturnProductEvents {
-	private static final String module = org.ofbiz.partner.scm.stock.ConsignReturnProductEvents.class.getName();
+public class WorkshopReturnProductEvents {
+	private static final String module = org.ofbiz.partner.scm.stock.WorkshopReturnProductEvents.class.getName();
 
 	/**
-	 * 委外退货提交
+	 * 制造退货提交
 	 * 
 	 * @param request
 	 * @param response
@@ -43,18 +43,18 @@ public class ConsignReturnProductEvents {
 			String billId = request.getParameter("billId");// 单据id
 			if (delegator != null && billId != null) {
 				Debug.log("出库单提交:" + billId, module);
-				GenericValue billHead = delegator.findOne("ConsignReturnProduct", UtilMisc.toMap("id", billId), false);
+				GenericValue billHead = delegator.findOne("WorkshopReturnProduct", UtilMisc.toMap("id", billId), false);
 				if (billHead == null && billHead.get("bizDate") == null) {
-					throw new Exception("can`t find ConsignReturnProduct bill or bizdate is null");
+					throw new Exception("can`t find WorkshopReturnProduct bill or bizdate is null");
 				}
 
-				BizStockImpFactory.getBizStockImp(BillType.ConsignReturnProduct).updateStock(billHead, true);
+				BizStockImpFactory.getBizStockImp(BillType.WorkshopReturnProduct).updateStock(billHead, true);
 
 				if (billHead.getLong("status").equals(new Long(0))) {
 					BillBaseEvent.submitBill(request, response);// 更新单据状态
 				} else {
 					// 获取单据id分录条目
-					List<GenericValue> entryList = delegator.findByAnd("ConsignReturnProductEntry", UtilMisc.toMap("parentId", billHead.getString("id")));
+					List<GenericValue> entryList = delegator.findByAnd("WorkshopReturnProductEntry", UtilMisc.toMap("parentId", billHead.getString("id")));
 					if (Utils.isFinishCheck(entryList)) {
 						billHead.set("checkStatus", new Long(2));
 					} else {
@@ -82,7 +82,7 @@ public class ConsignReturnProductEvents {
 	}
 
 	/**
-	 * 委外退货单撤销
+	 * 制造退货单撤销
 	 * 
 	 * @param request
 	 * @param response
@@ -98,12 +98,12 @@ public class ConsignReturnProductEvents {
 			String billId = request.getParameter("billId");// 单据id
 			if (delegator != null && billId != null) {
 				Debug.log("出库单撤销:" + billId, module);
-				GenericValue billHead = delegator.findOne("ConsignReturnProduct", UtilMisc.toMap("id", billId), false);
+				GenericValue billHead = delegator.findOne("WorkshopReturnProduct", UtilMisc.toMap("id", billId), false);
 				if (billHead == null && billHead.get("bizDate") == null) {
-					throw new Exception("can`t find ConsignReturnProduct bill or bizdate is null");
+					throw new Exception("can`t find WorkshopReturnProduct bill or bizdate is null");
 				}
 
-				BizStockImpFactory.getBizStockImp(BillType.ConsignReturnProduct).updateStock(billHead, false);
+				BizStockImpFactory.getBizStockImp(BillType.WorkshopReturnProduct).updateStock(billHead, false);
 
 				billHead.set("checkStatus", new Long(0));// 设置验收状态为未验收
 				billHead.store();

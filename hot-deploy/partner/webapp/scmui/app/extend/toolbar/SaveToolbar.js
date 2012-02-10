@@ -7,6 +7,11 @@ Ext.define('SCM.extend.toolbar.SaveToolbar', {
 				tools.push(['->']);
 				if (me.type == 'bill') {
 					tools.push([{
+								text : '验收',
+								iconCls : 'system-submit',
+								hidden : true,
+								action : 'check'
+							}, {
 								text : '直接提交',
 								iconCls : 'system-submit',
 								action : 'submit'

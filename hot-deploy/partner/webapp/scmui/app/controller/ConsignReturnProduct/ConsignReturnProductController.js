@@ -82,6 +82,10 @@ Ext.define('SCM.controller.ConsignReturnProduct.ConsignReturnProductController',
 							'ConsignReturnProductedit button[action=cancel]' : {
 								click : this.cancel
 							},
+							// 编辑界面验收
+							'ConsignReturnProductedit button[action=check]' : {
+								click : this.saveAndCheckRecord
+							},
 							// 监听各field值变动事件，只监听可见控件
 							'ConsignReturnProductedit form textfield{isVisible()}' : {
 								change : this.fieldChange
@@ -101,6 +105,52 @@ Ext.define('SCM.controller.ConsignReturnProduct.ConsignReturnProductController',
 				this.searchEndDate = this.listContainer.down('datefield[name=searchEndDate]');
 				this.searchMaterialId = this.listContainer.down('combogrid[name=searchMaterialId]');
 				this.searchCustId = this.listContainer.down('combogrid[name=searchCustId]');
+				this.currentCheckVolumeColumn = this.editEntry.down('numbercolumn[dataIndex=currentCheckVolume]');
+				this.volumeColumn = this.editEntry.down('numbercolumn[dataIndex=volume]');
+				this.warehouseColumn = this.editEntry.down('combocolumn[dataIndex=warehouseWarehouseId]');
+				this.marterialColumn = this.editEntry.down('combocolumn[dataIndex=materialMaterialId]');
+				this.checkButton = this.win.down('button[action=check]');
+				this.checkBill = false;
+
+				this.numberEditor = {
+					xtype : 'numberfield',
+					allowBlank : false,
+					hideTrigger : true
+				};
+			},
+
+			/**
+			 * 根据状态设置编辑界面状态
+			 * @param {} isReadOnly
+			 */
+			changeEditStatus : function(record) {
+				if (record.get('status') == '0') {
+					this.setFieldsReadOnly(false);
+					this.editEntry.setDisabled(false);
+					this.saveButton.setDisabled(false);
+					this.clearButton.setDisabled(false);
+					this.submitEditButton.setDisabled(false);
+					this.volumeColumn.setEditor(this.numberEditor);
+					this.warehouseColumn.getEditor().setDisabled(false);
+					this.marterialColumn.getEditor().setDisabled(false);
+					this.checkButton.setVisible(false);
+				} else if (record.get('status') == '4' && record.get('checkStatus') != '2') {
+					this.setFieldsReadOnly(true);
+					this.saveButton.setDisabled(true);
+					this.clearButton.setDisabled(true);
+					this.submitEditButton.setDisabled(true);
+					this.checkButton.setVisible(true);
+					this.currentCheckVolumeColumn.setEditor(this.numberEditor);
+					this.warehouseColumn.getEditor().setDisabled(true);
+					this.marterialColumn.getEditor().setDisabled(true);
+				} else {
+					this.setFieldsReadOnly(true);
+					this.editEntry.setDisabled(true);
+					this.saveButton.setDisabled(true);
+					this.clearButton.setDisabled(true);
+					this.submitEditButton.setDisabled(true);
+					this.checkButton.setVisible(false);
+				}
 			},
 
 			/**
@@ -157,6 +207,81 @@ Ext.define('SCM.controller.ConsignReturnProduct.ConsignReturnProductController',
 						e.record.set('unitUnitName', record.get('defaultUnitName'));
 					}
 				}
-			}
+			},
 
+			/**
+			 * 直接保存并提交单据
+			 */
+			saveAndCheckRecord : function() {
+				this.isSubmitWhenSave = true;
+				this.checkBill = true;
+				this.win.modifyed = true;
+				this.saveRecord();
+			},
+
+			/**
+			 * 保存时提交单据
+			 */
+			doSubmitBill : function() {
+				if (this.isSubmitWhenSave) {
+					this.submitBill();
+					this.isSubmitWhenSave = false;
+					this.checkBill = false;
+				}
+			},
+
+			/**
+			 * 是否可以提交
+			 * @return {Boolean}
+			 */
+			isSubmitAble : function(record) {
+				if (this.checkBill) {
+					if (record.get('checkStatus') == '2') {
+						showWarning('单据已完成验收！');
+						return false;
+					} else {
+						return true;
+					}
+				} else {
+					if (record.get('status') != '0') {
+						showWarning('单据已提交！');
+						return false;
+					} else {
+						return true;
+					}
+				}
+			},
+
+			/**
+			 * 是否可以撤销提交
+			 * @param {} record
+			 */
+			isRollbackBillAble : function(record) {
+				if (record.get('status') != '4') {
+					showWarning('单据未提交！');
+					return false;
+				} else if (record.get('status') == '4' && record.get('checkStatus') == '1') {
+					showWarning('单据验收中，不可撤销！');
+					return false;
+				} else if (record.get('status') == '4' && record.get('checkStatus') == '2') {
+					showWarning('单据已验收，不可撤销！');
+					return false;
+				} else {
+					return true;
+				}
+			},
+
+			/**
+			 * 获取单据提交URL
+			 */
+			getSubmitBillUrl : function() {
+				return '../../scm/control/submitConsignReturnProduct';
+			},
+
+			/**
+			 * 获取单据撤销URL
+			 */
+			getRollbackBillUrl : function() {
+				return '../../scm/control/rollbackConsignReturnProduct';
+			}
 		});

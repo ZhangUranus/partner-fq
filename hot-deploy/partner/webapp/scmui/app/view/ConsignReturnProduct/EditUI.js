@@ -261,12 +261,6 @@ Ext.define('SCM.view.ConsignReturnProduct.EditUI', {
 																text : '规格型号'
 															}, {
 																xtype : 'numbercolumn',
-																editor : {
-																	xtype : 'numberfield',
-																	allowBlank : false,
-																	hideTrigger : true,
-																	readOnly : true
-																},
 																dataIndex : 'currentCheckVolume',
 																text : '本次验收数量',
 																width : 80
@@ -277,11 +271,6 @@ Ext.define('SCM.view.ConsignReturnProduct.EditUI', {
 																width : 80
 															}, {
 																xtype : 'numbercolumn',
-																editor : {
-																	xtype : 'numberfield',
-																	allowBlank : false,
-																	hideTrigger : true
-																},
 																dataIndex : 'volume',
 																text : '退货数量',
 																width : 80
