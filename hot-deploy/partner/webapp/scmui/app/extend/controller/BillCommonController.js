@@ -36,7 +36,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				this.initEnterEvent();
 				this.afterInitComponent();
 				this.refreshRecord();
-				this.searchMaterialId.store.load(); //初始化物料列表
+				this.searchMaterialId.store.load(); // 初始化物料列表
 			},
 
 			afterInitComponent : Ext.emptyFn,
@@ -78,8 +78,11 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 
 			/**
 			 * 当用户编辑grid时，同步更新相关表单数据
-			 * @param {} editor
-			 * @param {} e
+			 * 
+			 * @param {}
+			 *            editor
+			 * @param {}
+			 *            e
 			 */
 			initMaterialInfo : Ext.emptyFn,
 
@@ -268,7 +271,9 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 
 			/**
 			 * 根据状态设置编辑界面状态
-			 * @param {} isReadOnly
+			 * 
+			 * @param {}
+			 *            isReadOnly
 			 */
 			changeEditStatus : function(record) {
 				if (record.get('status') == '0') {
@@ -388,6 +393,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 
 			/**
 			 * 是否可以提交
+			 * 
 			 * @return {Boolean}
 			 */
 			isSubmitAble : function(record) {
@@ -401,7 +407,9 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 
 			/**
 			 * 提交单据
-			 * @param {} button
+			 * 
+			 * @param {}
+			 *            button
 			 */
 			submitBill : function(button) {
 				record = this.getSelectRecord();
@@ -429,7 +437,8 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 
 			/**
 			 * 提交成功后处理方法
-			 * @type 
+			 * 
+			 * @type
 			 */
 			submitBillSuccess : Ext.emptyFn,
 
@@ -442,7 +451,9 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 
 			/**
 			 * 是否可以撤销提交
-			 * @param {} record
+			 * 
+			 * @param {}
+			 *            record
 			 */
 			isRollbackBillAble : function(record) {
 				if (record.get('status') != '4') {
@@ -455,7 +466,9 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 
 			/**
 			 * 撤销单据
-			 * @param {} button
+			 * 
+			 * @param {}
+			 *            button
 			 */
 			rollbackBill : function(button) {
 				record = this.getSelectRecord();
@@ -483,7 +496,8 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 
 			/**
 			 * 撤销提交成功后处理方法
-			 * @type 
+			 * 
+			 * @type
 			 */
 			rollbackBillSuccess : Ext.emptyFn,
 
@@ -496,6 +510,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 
 			/**
 			 * 获取当前操作的Record
+			 * 
 			 * @return {}
 			 */
 			getSelectRecord : function() {
@@ -556,6 +571,8 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 					var newed = entryStore.getNewRecords();
 					if (record.dirty || removed.length > 0 || updated.length > 0 || newed.length > 0) {
 						me.commitSave(record, entryStore);
+					} else {
+						this.doSubmitBill();
 					}
 				} else if (me.win.uiStatus == 'AddNew') {// 新增记录
 					record = Ext.create(me.modelName);

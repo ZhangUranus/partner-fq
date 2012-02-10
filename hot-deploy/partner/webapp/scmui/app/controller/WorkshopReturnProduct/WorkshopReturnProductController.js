@@ -130,19 +130,22 @@ Ext.define('SCM.controller.WorkshopReturnProduct.WorkshopReturnProductController
 					this.saveButton.setDisabled(false);
 					this.clearButton.setDisabled(false);
 					this.submitEditButton.setDisabled(false);
-					this.volumeColumn.setEditor(this.numberEditor);
-					this.warehouseColumn.getEditor().readOnly = false;
-					this.marterialColumn.getEditor().readOnly = false;
 					this.checkButton.setVisible(false);
+					this.volumeColumn.setEditor(this.numberEditor);
+					this.currentCheckVolumeColumn.setEditor(null);
+					this.warehouseColumn.getEditor().setDisabled(false);
+					this.marterialColumn.getEditor().setDisabled(false);
 				} else if (record.get('status') == '4' && record.get('checkStatus') != '2') {
 					this.setFieldsReadOnly(true);
+					this.editEntry.setDisabled(false);
 					this.saveButton.setDisabled(true);
 					this.clearButton.setDisabled(true);
 					this.submitEditButton.setDisabled(true);
 					this.checkButton.setVisible(true);
+					this.volumeColumn.setEditor(null);
 					this.currentCheckVolumeColumn.setEditor(this.numberEditor);
-					this.warehouseColumn.getEditor().readOnly = true;
-					this.marterialColumn.getEditor().readOnly = true;
+					this.warehouseColumn.getEditor().setDisabled(true);
+					this.marterialColumn.getEditor().setDisabled(true);
 				} else {
 					this.setFieldsReadOnly(true);
 					this.editEntry.setDisabled(true);
