@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilMisc;
@@ -60,5 +61,21 @@ public class Utils {
 		}
 		return false;
 
+	}
+	
+	/**
+	 * 获取委外、制造退货的验收状态
+	 * @param entryList
+	 * @return
+	 */
+	public static boolean isFinishCheck(List<GenericValue> entryList){
+		boolean result = true;
+		for(GenericValue gv: entryList){
+			if(gv.getBigDecimal("volume").compareTo(gv.getBigDecimal("checkedVolume"))!=0){
+				result = false;
+				break;
+			}
+		}
+		return result;
 	}
 }

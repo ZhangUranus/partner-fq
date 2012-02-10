@@ -41,7 +41,7 @@ public class WorkshopReturnMaterialEvents {
 				Debug.log("入库单提交:" + billId, module);
 				GenericValue billHead = delegator.findOne("WorkshopReturnMaterial", UtilMisc.toMap("id", billId), false);
 				if (billHead == null && billHead.get("bizDate") == null) {
-					throw new Exception("can`t find PurchaseWarehousing bill or bizdate is null");
+					throw new Exception("can`t find WorkshopReturnMaterial bill or bizdate is null");
 				}
 
 				BizStockImpFactory.getBizStockImp(BillType.WorkshopReturnMaterial).updateStock(billHead, false);
@@ -84,7 +84,7 @@ public class WorkshopReturnMaterialEvents {
 				Debug.log("入库单撤销:" + billId, module);
 				GenericValue billHead = delegator.findOne("WorkshopReturnMaterial", UtilMisc.toMap("id", billId), false);
 				if (billHead == null && billHead.get("bizDate") == null) {
-					throw new Exception("can`t find PurchaseWarehousing bill or bizdate is null");
+					throw new Exception("can`t find WorkshopReturnMaterial bill or bizdate is null");
 				}
 
 				BizStockImpFactory.getBizStockImp(BillType.WorkshopReturnMaterial).updateStock(billHead, true);

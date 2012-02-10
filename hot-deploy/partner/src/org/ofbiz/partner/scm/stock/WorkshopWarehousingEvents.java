@@ -18,11 +18,11 @@ import org.ofbiz.partner.scm.pricemgr.BizStockImpFactory;
  * @author Mark
  * 
  */
-public class ConsignWarehousingEvents {
-	private static final String module = org.ofbiz.partner.scm.stock.ConsignWarehousingEvents.class.getName();
+public class WorkshopWarehousingEvents {
+	private static final String module = org.ofbiz.partner.scm.stock.WorkshopWarehousingEvents.class.getName();
 
 	/**
-	 * 委外入库提交
+	 * 制造入库提交
 	 * 
 	 * @param request
 	 * @param response
@@ -38,12 +38,12 @@ public class ConsignWarehousingEvents {
 			String billId = request.getParameter("billId");// 单据id
 			if (delegator != null && billId != null) {
 				Debug.log("入库单提交:" + billId, module);
-				GenericValue billHead = delegator.findOne("ConsignWarehousing", UtilMisc.toMap("id", billId), false);
+				GenericValue billHead = delegator.findOne("WorkshopWarehousing", UtilMisc.toMap("id", billId), false);
 				if (billHead == null && billHead.get("bizDate") == null) {
-					throw new Exception("can`t find ConsignWarehousing bill or bizdate is null");
+					throw new Exception("can`t find WorkshopWarehousing bill or bizdate is null");
 				}
 
-				BizStockImpFactory.getBizStockImp(BillType.ConsignWarehousing).updateStock(billHead, false);
+				BizStockImpFactory.getBizStockImp(BillType.WorkshopWarehousing).updateStock(billHead, false);
 
 				BillBaseEvent.submitBill(request, response);// 更新单据状态
 			}
@@ -65,7 +65,7 @@ public class ConsignWarehousingEvents {
 	}
 
 	/**
-	 * 委外入库单撤销
+	 * 制造入库单撤销
 	 * 
 	 * @param request
 	 * @param response
@@ -81,12 +81,12 @@ public class ConsignWarehousingEvents {
 			String billId = request.getParameter("billId");// 单据id
 			if (delegator != null && billId != null) {
 				Debug.log("入库单撤销:" + billId, module);
-				GenericValue billHead = delegator.findOne("ConsignWarehousing", UtilMisc.toMap("id", billId), false);
+				GenericValue billHead = delegator.findOne("WorkshopWarehousing", UtilMisc.toMap("id", billId), false);
 				if (billHead == null && billHead.get("bizDate") == null) {
-					throw new Exception("can`t find ConsignWarehousing bill or bizdate is null");
+					throw new Exception("can`t find WorkshopWarehousing bill or bizdate is null");
 				}
 
-				BizStockImpFactory.getBizStockImp(BillType.ConsignWarehousing).updateStock(billHead, true);
+				BizStockImpFactory.getBizStockImp(BillType.WorkshopWarehousing).updateStock(billHead, true);
 
 				BillBaseEvent.rollbackBill(request, response);// 撤销单据
 			}

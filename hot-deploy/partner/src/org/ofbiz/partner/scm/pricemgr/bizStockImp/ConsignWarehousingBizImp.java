@@ -41,7 +41,7 @@ public class ConsignWarehousingBizImp implements IBizStock {
 			BigDecimal sum = null;
 			if (!isOut) {
 				BigDecimal price = ConsignPriceMgr.getInstance().CreateConsignPriceDetailList(processorId, materialId, v.getString("id"));
-				sum = price.multiply(volume);
+				sum = price.add(v.getBigDecimal("processPrice")).multiply(volume);
 
 				// 返填单价和金额
 				v.set("price", price);
@@ -49,6 +49,7 @@ public class ConsignWarehousingBizImp implements IBizStock {
 				// 将金额加到总金额中
 				totalSum = totalSum.add(sum);
 			} else {
+				ConsignPriceMgr.getInstance().removeMaterialList(v.getString("id"));
 				sum = v.getBigDecimal("entrysum");// 金额
 
 				// 如果是出库业务，数量、金额转换为负数
@@ -71,11 +72,12 @@ public class ConsignWarehousingBizImp implements IBizStock {
 			List<List> materialList = ConsignPriceMgr.getInstance().getMaterialList(v.getString("id"));
 			for (List element : materialList) {
 				String bomMaterialId = (String) element.get(0);
-				BigDecimal bomAmount = (BigDecimal) element.get(1);
-				BigDecimal bomSum = (BigDecimal) element.get(2);
+				//取出的耗料数量、金额只是单个加工件的，需要乘于加工件数量
+				BigDecimal bomAmount = volume.multiply((BigDecimal) element.get(1));
+				BigDecimal bomSum = volume.multiply((BigDecimal) element.get(2));
 				if (!isOut) {
-					bomAmount.negate();
-					bomSum.negate();
+					bomAmount = bomAmount.negate();
+					bomSum = bomSum.negate();
 				}
 				ConsignPriceMgr.getInstance().update(processorId, bomMaterialId, bomAmount, bomSum);
 			}

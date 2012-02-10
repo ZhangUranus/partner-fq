@@ -19,6 +19,8 @@ import org.ofbiz.entity.GenericValue;
 public class ConsignPriceMgr {
 	public static final String module = ConsignPriceMgr.class.getName();
 
+	Delegator delegator = null;
+
 	private Object updateLock = new Object();// 余额表更新锁
 
 	private static ConsignPriceMgr instance = null;
@@ -30,6 +32,7 @@ public class ConsignPriceMgr {
 		calendar.setTime(Utils.getCurDate());
 		year = calendar.get(Calendar.YEAR);
 		month = calendar.get(Calendar.MONTH)+1;
+		delegator = org.ofbiz.partner.scm.common.Utils.getDefaultDelegator();
 	}
 
 	public static ConsignPriceMgr getInstance() {
@@ -53,7 +56,6 @@ public class ConsignPriceMgr {
 			throw new Exception("supplierId or materialId is null");
 		}
 		// 查找加工商物料入库单价
-		Delegator delegator = org.ofbiz.partner.scm.common.Utils.getDefaultDelegator();
 		GenericValue gv = delegator.findOne("CurConsignPrice", UtilMisc.toMap("year", new Integer(year), "month", new Integer(month), "supplierId", supplierId, "materialId", materialId), false);
 		if (gv != null) {
 			if (gv.getBigDecimal("volume").compareTo(BigDecimal.ZERO) == 0) {
@@ -80,14 +82,12 @@ public class ConsignPriceMgr {
 			throw new Exception("supplierId or materialId is null");
 		}
 		// 根据入库加工件，获取耗料列表
-		Delegator delegator = org.ofbiz.partner.scm.common.Utils.getDefaultDelegator();
 		List<GenericValue> entryList = delegator.findByAnd("MaterialBomListView", UtilMisc.toMap("materialId", materialId));
 		BigDecimal totalSum = BigDecimal.ZERO;
 		for(GenericValue value:entryList){
 			String bomMaterialId = value.getString("bomMaterialId");
 			BigDecimal price = this.getPrice(supplierId, bomMaterialId);
 			BigDecimal volume =  value.getBigDecimal("volume");
-			BigDecimal sum = null;
 			GenericValue gv = delegator.findOne("ConsignPriceDetail", UtilMisc.toMap("parentId", entryId, "materialId", bomMaterialId), false);
 			if (gv != null) {
 				gv.set("volume", volume);
@@ -101,30 +101,48 @@ public class ConsignPriceMgr {
 				gv.set("price", price);
 				gv.create();
 			}
-			sum = price.multiply(volume);
 			totalSum = totalSum.add(price.multiply(volume));
 		}
 		return totalSum;
 	}
 	
+	/**
+	 * 根据分录编码删除耗料列表
+	 * @param entryId
+	 * @throws Exception
+	 */
+	public void removeMaterialList(String entryId) throws Exception {
+		delegator.removeByAnd("ConsignPriceDetail", UtilMisc.toMap("parentId", entryId));
+	}
+	
+	/**
+	 * 根据分录编码获取耗料列表
+	 * @param entryId
+	 * @return
+	 * @throws Exception
+	 */
 	public List<List> getMaterialList(String entryId) throws Exception {
 		// 根据入库加工件，获取耗料列表
-		Delegator delegator = org.ofbiz.partner.scm.common.Utils.getDefaultDelegator();
 		List<GenericValue> entryList = delegator.findByAnd("ConsignPriceDetail", UtilMisc.toMap("parentId", entryId));
 		List<List> result = new ArrayList<List>();
 		for(GenericValue value:entryList){
 			List<Object> element = new ArrayList<Object>();
 			element.add(value.getString("materialId"));
-			element.add(value.getBigDecimal("volume"));
-			element.add(value.getBigDecimal("volume").multiply(value.getBigDecimal("price")));
+			element.add(value.getBigDecimal("volume"));		//每个加工件耗料
+			element.add(value.getBigDecimal("volume").multiply(value.getBigDecimal("price")));	//每个加工件金额
 			result.add(element);
 		}
 		return result;
 	}
 	
+	/**
+	 * 根据分录编码获取耗料金额
+	 * @param entryId
+	 * @return
+	 * @throws Exception
+	 */
 	public BigDecimal getMaterialCostPrice(String entryId) throws Exception {
 		// 根据入库加工件，获取耗料列表
-		Delegator delegator = org.ofbiz.partner.scm.common.Utils.getDefaultDelegator();
 		List<GenericValue> entryList = delegator.findByAnd("ConsignPriceDetail", UtilMisc.toMap("parentId", entryId));
 		BigDecimal totalSum = BigDecimal.ZERO;
 		for(GenericValue value:entryList){
@@ -148,7 +166,6 @@ public class ConsignPriceMgr {
 				throw new Exception("supplierId or materialId or volume or totalsum  is null");
 			}
 			// 查找供应商可入库余额表
-			Delegator delegator = org.ofbiz.partner.scm.common.Utils.getDefaultDelegator();
 			GenericValue gv = delegator.findOne("CurConsignPrice", UtilMisc.toMap("year", new Integer(year), "month", new Integer(month), "supplierId", supplierId, "materialId", materialId), false);
 			if (gv != null) {
 				BigDecimal oldVolume = gv.getBigDecimal("volume");

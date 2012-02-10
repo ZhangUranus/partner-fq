@@ -40,7 +40,7 @@ public class ConsignDrawMaterialEvents {
 				Debug.log("出库单提交:" + billId, module);
 				GenericValue billHead = delegator.findOne("ConsignDrawMaterial", UtilMisc.toMap("id", billId), false);
 				if (billHead == null && billHead.get("bizDate") == null) {
-					throw new Exception("can`t find PurchaseWarehousing bill or bizdate is null");
+					throw new Exception("can`t find ConsignDrawMaterial bill or bizdate is null");
 				}
 
 				BizStockImpFactory.getBizStockImp(BillType.ConsignDrawMaterial).updateStock(billHead, true);
@@ -83,7 +83,7 @@ public class ConsignDrawMaterialEvents {
 				Debug.log("出库单撤销:" + billId, module);
 				GenericValue billHead = delegator.findOne("ConsignDrawMaterial", UtilMisc.toMap("id", billId), false);
 				if (billHead == null && billHead.get("bizDate") == null) {
-					throw new Exception("can`t find PurchaseWarehousing bill or bizdate is null");
+					throw new Exception("can`t find ConsignDrawMaterial bill or bizdate is null");
 				}
 
 				BizStockImpFactory.getBizStockImp(BillType.ConsignDrawMaterial).updateStock(billHead, false);

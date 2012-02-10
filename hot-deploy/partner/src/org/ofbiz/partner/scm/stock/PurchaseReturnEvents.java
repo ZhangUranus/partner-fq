@@ -83,7 +83,7 @@ public class PurchaseReturnEvents {
 				Debug.log("出库单审核:" + billId, module);
 				GenericValue billHead = delegator.findOne("PurchaseReturn", UtilMisc.toMap("id", billId), false);
 				if (billHead == null && billHead.get("bizDate") == null) {
-					throw new Exception("can`t find PurchaseWarehousing bill or bizdate is null");
+					throw new Exception("can`t find PurchaseReturn bill or bizdate is null");
 				}
 				// 注意不能使用billHead.getDate方法，出产生castException异常
 				Date bizDate = (Date) billHead.get("bizDate");
@@ -147,7 +147,7 @@ public class PurchaseReturnEvents {
 				Debug.log("出库单撤销:" + billId, module);
 				GenericValue billHead = delegator.findOne("PurchaseReturn", UtilMisc.toMap("id", billId), false);
 				if (billHead == null && billHead.get("bizDate") == null) {
-					throw new Exception("can`t find PurchaseWarehousing bill or bizdate is null");
+					throw new Exception("can`t find PurchaseReturn bill or bizdate is null");
 				}
 				// 注意不能使用billHead.getDate方法，出产生castException异常
 				Date bizDate = (Date) billHead.get("bizDate");
