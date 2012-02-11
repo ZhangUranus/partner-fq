@@ -100,22 +100,19 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 					if (request.action == 'read') {
 						me.changeComponentsState();
 					} else if (request.action == 'create') {
-						Ext.Msg.alert("提示", "新增成功！", createCallBack);
-						function createCallBack() {
-							me.doSubmitBill();
-							me.refreshRecord();
+						if(!me.isSubmitWhenSave){
+							Ext.Msg.alert("提示", "新增成功！");
 						}
+						me.doSubmitBill();
+						me.refreshRecord();
 					} else if (request.action == 'update') {
-						Ext.Msg.alert("提示", "更新成功！", updateCallBack);
-						function updateCallBack() {
-							me.doSubmitBill();
-							me.refreshRecord();
+						if(!me.isSubmitWhenSave){
+							Ext.Msg.alert("提示", "更新成功！");
 						}
+						me.doSubmitBill();
+						me.refreshRecord();
 					} else if (request.action == 'destroy') {
-						Ext.Msg.alert("提示", "删除成功！", destroyCallBack);
-						function destroyCallBack() {
-							me.refreshRecord();
-						}
+						Ext.Msg.alert("提示", "删除成功！", this.refreshRecord);
 					}
 					if (request.action != 'read' && me.win.isVisible()) {
 						me.win.close();
@@ -412,23 +409,28 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 			 *            button
 			 */
 			submitBill : function(button) {
-				record = this.getSelectRecord();
-				if (!this.isSubmitAble(record)) {
+				var me = this;
+				record = me.getSelectRecord();
+				if (!me.isSubmitAble(record)) {
 					return;
 				}
-				Ext.Msg.confirm('提示', '确定提交该' + this.gridTitle + '？', confirmChange, this);
+				if(!me.isSubmitWhenSave){//如果是直接提交触发，不需要确认
+					Ext.Msg.confirm('提示', '确定提交该' + me.gridTitle + '？', confirmChange, me);
+				}else{
+					confirmChange('yes');
+				}
 				function confirmChange(id) {
 					if (id == 'yes') {
 						Ext.Ajax.request({
-									scope : this,
+									scope : me,
 									params : {
 										billId : record.get('id'),
-										entity : this.entityName
+										entity : me.entityName
 									},
-									url : this.getSubmitBillUrl(),
+									url : me.getSubmitBillUrl(),
 									success : function(response, option) {
-										this.submitBillSuccess(response, option);
-										this.refreshRecord();
+										me.submitBillSuccess(response, option);
+										Ext.Msg.alert("提示", "处理成功！", me.refreshRecord);
 									}
 								});
 					}
@@ -487,7 +489,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 									url : this.getRollbackBillUrl(),
 									success : function(response, option) {
 										this.rollbackBillSuccess(response, option);
-										this.refreshRecord();
+										Ext.Msg.alert("提示", "撤销成功！", this.refreshRecord);
 									}
 								});
 					}
