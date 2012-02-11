@@ -23,12 +23,6 @@ public class WorkshopReturnProductBizImp implements IBizStock {
 		if (bizDate == null || !Utils.isCurPeriod(bizDate)) {
 			throw new Exception("单据业务日期不在当前系统期间");
 		}
-		
-		// 是否处于验收状态
-		boolean isChecking = false;
-		if (billValue.getLong("status").equals(new Long(4)) && !billValue.getLong("checkStatus").equals(new Long(2))) {
-			isChecking = true;
-		}
 
 		// 获取单据id分录条目
 		List<GenericValue> entryList = delegator.findByAnd("WorkshopReturnProductEntry", UtilMisc.toMap("parentId", billValue.getString("id")));
@@ -40,30 +34,19 @@ public class WorkshopReturnProductBizImp implements IBizStock {
 			BigDecimal volume = v.getBigDecimal("volume");// 数量
 			BigDecimal sum = null;
 			if (isOut) {
-				if (isChecking) {
-					BigDecimal price = v.getBigDecimal("price");
-					volume = v.getBigDecimal("currentCheckVolume");// 数量
-					BigDecimal checkedVolume = v.getBigDecimal("checkedVolume");// 数量
-					sum = price.multiply(volume);
+				BigDecimal price = PriceMgr.getInstance().getPrice(warehouseId, materialId); // 物料单价
+				sum = price.multiply(volume); // 物料金额
 
-					// 返填已验收数量
-					v.set("checkedVolume", checkedVolume.add(volume));
-				} else {
-					BigDecimal price = PriceMgr.getInstance().getPrice(warehouseId, materialId); // 物料单价
-					sum = price.multiply(volume); // 物料金额
+				// 返填单价和金额
+				v.set("price", price);
+				v.set("entrysum", sum);
+				v.set("checkedVolume", BigDecimal.ZERO);
+				// 将金额加到总金额中
+				totalSum = totalSum.add(sum);
 
-					// 返填单价和金额
-					v.set("price", price);
-					v.set("entrysum", sum);
-					v.set("checkedVolume", BigDecimal.ZERO);
-					// 将金额加到总金额中
-					totalSum = totalSum.add(sum);
-
-					// 如果是出库业务，数量、金额转换为负数
-					volume = volume.negate();
-					sum = sum.negate();
-				}
-
+				// 如果是出库业务，数量、金额转换为负数
+				volume = volume.negate();
+				sum = sum.negate();
 			} else {
 				sum = v.getBigDecimal("entrysum");// 金额
 
@@ -77,7 +60,7 @@ public class WorkshopReturnProductBizImp implements IBizStock {
 			Debug.log("委外退货单价计算:物料id" + materialId + ";数量" + volume + ";金额" + sum, "WorkshopReturnProductBizImp");
 
 			// 构建计算条目
-			PriceCalItem item = new PriceCalItem(bizDate, warehouseId, materialId, volume, sum, BillType.WorkshopReturnProduct, v.getString("id"), isChecking ? false : isOut, null);
+			PriceCalItem item = new PriceCalItem(bizDate, warehouseId, materialId, volume, sum, BillType.WorkshopReturnProduct, v.getString("id"), isOut, null);
 
 			// 计算分录单价
 			PriceMgr.getInstance().calPrice(item);
@@ -90,10 +73,8 @@ public class WorkshopReturnProductBizImp implements IBizStock {
 			// volume.negate(), sum.negate());
 		}
 		// 返填总金额
-		if (!isChecking) {
-			billValue.set("totalsum", totalSum);
-			billValue.store();
-		}
+		billValue.set("totalsum", totalSum);
+		billValue.store();
 	}
 
 }
