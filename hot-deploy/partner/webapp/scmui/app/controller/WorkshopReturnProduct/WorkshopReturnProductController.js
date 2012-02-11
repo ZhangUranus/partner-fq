@@ -109,6 +109,7 @@ Ext.define('SCM.controller.WorkshopReturnProduct.WorkshopReturnProductController
 				this.volumeColumn = this.editEntry.down('numbercolumn[dataIndex=volume]');
 				this.warehouseColumn = this.editEntry.down('combocolumn[dataIndex=warehouseWarehouseId]');
 				this.marterialColumn = this.editEntry.down('combocolumn[dataIndex=materialMaterialId]');
+				this.gridToolBar = this.editEntry.down('gridedittoolbar');
 				this.checkButton = this.win.down('button[action=check]');
 				this.checkBill = false;
 
@@ -135,6 +136,7 @@ Ext.define('SCM.controller.WorkshopReturnProduct.WorkshopReturnProductController
 					this.currentCheckVolumeColumn.setEditor(null);
 					this.warehouseColumn.getEditor().setDisabled(false);
 					this.marterialColumn.getEditor().setDisabled(false);
+					this.gridToolBar.setVisible(true);
 				} else if (record.get('status') == '4' && record.get('checkStatus') != '2') {
 					this.setFieldsReadOnly(true);
 					this.editEntry.setDisabled(false);
@@ -146,6 +148,7 @@ Ext.define('SCM.controller.WorkshopReturnProduct.WorkshopReturnProductController
 					this.currentCheckVolumeColumn.setEditor(this.numberEditor);
 					this.warehouseColumn.getEditor().setDisabled(true);
 					this.marterialColumn.getEditor().setDisabled(true);
+					this.gridToolBar.setVisible(false);
 				} else {
 					this.setFieldsReadOnly(true);
 					this.editEntry.setDisabled(true);
@@ -153,6 +156,7 @@ Ext.define('SCM.controller.WorkshopReturnProduct.WorkshopReturnProductController
 					this.clearButton.setDisabled(true);
 					this.submitEditButton.setDisabled(true);
 					this.checkButton.setVisible(false);
+					this.gridToolBar.setVisible(true);
 				}
 			},
 
