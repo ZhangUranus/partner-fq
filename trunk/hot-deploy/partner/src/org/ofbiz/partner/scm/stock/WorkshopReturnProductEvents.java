@@ -1,5 +1,6 @@
 package org.ofbiz.partner.scm.stock;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -48,17 +49,35 @@ public class WorkshopReturnProductEvents {
 					throw new Exception("can`t find WorkshopReturnProduct bill or bizdate is null");
 				}
 
-				BizStockImpFactory.getBizStockImp(BillType.WorkshopReturnProduct).updateStock(billHead, true);
-
 				if (billHead.getLong("status").equals(new Long(0))) {
+					BizStockImpFactory.getBizStockImp(BillType.WorkshopReturnProduct).updateStock(billHead, true);
 					BillBaseEvent.submitBill(request, response);// 更新单据状态
 				} else {
 					// 获取单据id分录条目
 					List<GenericValue> entryList = delegator.findByAnd("WorkshopReturnProductEntry", UtilMisc.toMap("parentId", billHead.getString("id")));
-					if (Utils.isFinishCheck(entryList)) {
-						billHead.set("checkStatus", new Long(2));
-					} else {
+					boolean isFinish = true;
+					for(GenericValue entryValue : entryList){
+						BigDecimal checkedVolume = entryValue.getBigDecimal("checkedVolume");
+						BigDecimal currentCheckVolume = entryValue.getBigDecimal("currentCheckVolume");
+						BigDecimal volume = entryValue.getBigDecimal("volume");
+						entryValue.set("checkedVolume", checkedVolume.add(currentCheckVolume));
+						entryValue.set("currentCheckVolume", BigDecimal.ZERO);
+						if(volume.compareTo(entryValue.getBigDecimal("checkedVolume"))!=0){
+							isFinish = false;
+						}
+						entryValue.store();
+					}
+					
+					//当状态为未验收时，创建进货单，并置状态为验收中
+					if(billHead.getLong("checkStatus").equals(new Long(0))){
+						Utils.createReturnProductWarehousingBill(billHead,request);	//创建进货单
 						billHead.set("checkStatus", new Long(1));// 设置验收状态为验收中
+					}
+					
+					//当所有物料都完成验收时，将状态改为完成验收，并提交进货单
+					if (isFinish) {
+						Utils.submitReturnProductWarehousing(billHead,request);	//提交
+						billHead.set("checkStatus", new Long(2));
 					}
 					billHead.set("checkerSystemUserId", CommonEvents.getAttributeToSession(request, "uid"));
 					billHead.store();
@@ -105,11 +124,7 @@ public class WorkshopReturnProductEvents {
 
 				BizStockImpFactory.getBizStockImp(BillType.WorkshopReturnProduct).updateStock(billHead, false);
 
-				billHead.set("checkStatus", new Long(0));// 设置验收状态为未验收
-				billHead.store();
-
 				BillBaseEvent.rollbackBill(request, response);// 撤销单据
-
 			}
 		} catch (Exception e) {
 			Debug.logError(e, module);
