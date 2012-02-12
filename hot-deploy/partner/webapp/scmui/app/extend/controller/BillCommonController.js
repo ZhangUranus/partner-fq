@@ -102,15 +102,15 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 					} else if (request.action == 'create') {
 						if(!me.isSubmitWhenSave){
 							Ext.Msg.alert("提示", "新增成功！");
+							me.refreshRecord();
 						}
 						me.doSubmitBill();
-						me.refreshRecord();
 					} else if (request.action == 'update') {
 						if(!me.isSubmitWhenSave){
 							Ext.Msg.alert("提示", "更新成功！");
+							me.refreshRecord();
 						}
 						me.doSubmitBill();
-						me.refreshRecord();
 					} else if (request.action == 'destroy') {
 						Ext.Msg.alert("提示", "删除成功！", this.refreshRecord);
 					}
@@ -422,7 +422,6 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				function confirmChange(id) {
 					if (id == 'yes') {
 						Ext.Ajax.request({
-									scope : me,
 									params : {
 										billId : record.get('id'),
 										entity : me.entityName
@@ -430,7 +429,8 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 									url : me.getSubmitBillUrl(),
 									success : function(response, option) {
 										me.submitBillSuccess(response, option);
-										Ext.Msg.alert("提示", "处理成功！", me.refreshRecord);
+										Ext.Msg.alert("提示", "处理成功！");
+										me.refreshRecord();
 									}
 								});
 					}
