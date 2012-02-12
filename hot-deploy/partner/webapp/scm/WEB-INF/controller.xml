@@ -288,6 +288,15 @@
 		<response name="success" type="none" />
 	</request-map>
 	
+	
+	
+	<!-- 报表 -->
+	<request-map uri="testRpt">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="fetchData" />
+		<response name="success" type="none" />
+	</request-map>
+	
 	<!-- exporter -->
 	<request-map uri="export">
 		<security https="false" auth="false" />
