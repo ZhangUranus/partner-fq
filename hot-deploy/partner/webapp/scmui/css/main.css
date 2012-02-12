@@ -152,7 +152,9 @@
 }
 
 #main-top {
-    background: url(../images/header.png) repeat-x;
+    background: #4b85b3 url( ../images/header-img.png) no-repeat;
+    background-position-x:left;
+    background-position-y:center;
 }
 
 .bill-addline{
