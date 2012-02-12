@@ -253,11 +253,6 @@ Ext.define('SCM.view.WorkshopWarehousing.EditUI', {
 																width : 80
 															}, {
 																xtype : 'numbercolumn',
-																editor : {
-																	xtype : 'numberfield',
-																	allowBlank : false,
-																	hideTrigger : true
-																},
 																dataIndex : 'entrysum',
 																text : '金额',
 																width : 80
