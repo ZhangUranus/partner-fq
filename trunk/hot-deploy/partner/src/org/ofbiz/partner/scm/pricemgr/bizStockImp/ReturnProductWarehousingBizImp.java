@@ -13,6 +13,7 @@ import org.ofbiz.partner.scm.pricemgr.IBizStock;
 import org.ofbiz.partner.scm.pricemgr.PriceCalItem;
 import org.ofbiz.partner.scm.pricemgr.PriceMgr;
 import org.ofbiz.partner.scm.pricemgr.Utils;
+import org.ofbiz.partner.scm.pricemgr.WorkshopPriceMgr;
 
 public class ReturnProductWarehousingBizImp implements IBizStock {
 	private Delegator delegator = org.ofbiz.partner.scm.common.Utils.getDefaultDelegator();
@@ -31,6 +32,10 @@ public class ReturnProductWarehousingBizImp implements IBizStock {
 			String materialId = v.getString("materialMaterialId");// 物料id
 			BigDecimal volume = v.getBigDecimal("volume");// 数量
 			BigDecimal sum = v.getBigDecimal("entrysum");
+			
+			//增加额外耗料金额
+			BigDecimal extraSum = WorkshopPriceMgr.getInstance().updateMaterialExtra(v);
+			sum = sum.add(extraSum);
 			
 			Debug.log("退货入库库单价计算:物料id" + materialId + ";数量" + volume + ";金额" + sum, "ReturnProductWarehousingBizImp");
 

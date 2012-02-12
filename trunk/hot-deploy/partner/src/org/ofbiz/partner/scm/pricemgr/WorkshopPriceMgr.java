@@ -24,14 +24,15 @@ public class WorkshopPriceMgr {
 	private Object updateLock = new Object();// 余额表更新锁
 
 	private static WorkshopPriceMgr instance = null;
-	
-	private int year ,month ;//当期年月
+
+	private int year, month;// 当期年月
 
 	private WorkshopPriceMgr() {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(Utils.getCurDate());
+		calendar.add(Calendar.MONTH, 1);
 		year = calendar.get(Calendar.YEAR);
-		month = calendar.get(Calendar.MONTH)+1;
+		month = calendar.get(Calendar.MONTH);
 		delegator = org.ofbiz.partner.scm.common.Utils.getDefaultDelegator();
 	}
 
@@ -67,7 +68,7 @@ public class WorkshopPriceMgr {
 			return BigDecimal.ZERO;
 		}
 	}
-	
+
 	/**
 	 * 创建加工件耗料详细列表
 	 * 
@@ -84,16 +85,16 @@ public class WorkshopPriceMgr {
 		// 根据入库加工件，获取耗料列表
 		List<GenericValue> entryList = delegator.findByAnd("MaterialBomListView", UtilMisc.toMap("materialId", materialId));
 		BigDecimal totalSum = BigDecimal.ZERO;
-		for(GenericValue value:entryList){
+		for (GenericValue value : entryList) {
 			String bomMaterialId = value.getString("bomMaterialId");
 			BigDecimal price = this.getPrice(workshopId, bomMaterialId);
-			BigDecimal volume =  value.getBigDecimal("volume");
+			BigDecimal volume = value.getBigDecimal("volume");
 			GenericValue gv = delegator.findOne("WorkshopPriceDetail", UtilMisc.toMap("parentId", entryId, "materialId", bomMaterialId), false);
 			if (gv != null) {
 				gv.set("volume", volume);
 				gv.set("price", price);
 				gv.store();
-			}else{
+			} else {
 				gv = delegator.makeValue("WorkshopPriceDetail");// 新建一个值对象
 				gv.set("parentId", entryId);
 				gv.set("materialId", bomMaterialId);
@@ -105,18 +106,20 @@ public class WorkshopPriceMgr {
 		}
 		return totalSum;
 	}
-	
+
 	/**
 	 * 根据分录编码删除耗料列表
+	 * 
 	 * @param entryId
 	 * @throws Exception
 	 */
 	public void removeMaterialList(String entryId) throws Exception {
 		delegator.removeByAnd("WorkshopPriceDetail", UtilMisc.toMap("parentId", entryId));
 	}
-	
+
 	/**
 	 * 根据分录编码获取耗料列表
+	 * 
 	 * @param entryId
 	 * @return
 	 * @throws Exception
@@ -125,18 +128,19 @@ public class WorkshopPriceMgr {
 		// 根据入库加工件，获取耗料列表
 		List<GenericValue> entryList = delegator.findByAnd("WorkshopPriceDetail", UtilMisc.toMap("parentId", entryId));
 		List<List> result = new ArrayList<List>();
-		for(GenericValue value:entryList){
+		for (GenericValue value : entryList) {
 			List<Object> element = new ArrayList<Object>();
 			element.add(value.getString("materialId"));
-			element.add(value.getBigDecimal("volume"));		//每个加工件耗料
-			element.add(value.getBigDecimal("volume").multiply(value.getBigDecimal("price")));	//每个加工件金额
+			element.add(value.getBigDecimal("volume")); // 每个加工件耗料
+			element.add(value.getBigDecimal("volume").multiply(value.getBigDecimal("price"))); // 每个加工件金额
 			result.add(element);
 		}
 		return result;
 	}
-	
+
 	/**
 	 * 根据分录编码获取耗料金额
+	 * 
 	 * @param entryId
 	 * @return
 	 * @throws Exception
@@ -145,10 +149,30 @@ public class WorkshopPriceMgr {
 		// 根据入库加工件，获取耗料列表
 		List<GenericValue> entryList = delegator.findByAnd("WorkshopPriceDetail", UtilMisc.toMap("parentId", entryId));
 		BigDecimal totalSum = BigDecimal.ZERO;
-		for(GenericValue value:entryList){
+		for (GenericValue value : entryList) {
 			totalSum = totalSum.add(value.getBigDecimal("volume").multiply(value.getBigDecimal("price")));
 		}
 		return totalSum;
+	}
+
+	/**
+	 * 获取额外耗料金额（并返填耗料的单价、金额到额外耗料金额）
+	 */
+	public BigDecimal updateMaterialExtra(GenericValue value) throws Exception {
+		List<GenericValue> entryList = delegator.findByAnd("ReturnProductWarehousingEntryExtra", UtilMisc.toMap("entryId", value.getString("id")));
+		BigDecimal sum = BigDecimal.ZERO;
+		for (GenericValue entryValue : entryList) {
+			BigDecimal price = this.getPrice(value.getString("warehouseWarehouseId"), entryValue.getString("materialMaterialId"));
+			BigDecimal volume = entryValue.getBigDecimal("volume");
+			entryValue.set("price", price);
+			sum = volume.multiply(price);
+			entryValue.set("entrysum", sum);
+			entryValue.store();
+			
+			// 更新车间库存表，车间物料出库
+			this.update(value.getString("warehouseWarehouseId"), entryValue.getString("materialMaterialId"), volume.negate(), sum.negate());
+		}
+		return sum;
 	}
 
 	/**

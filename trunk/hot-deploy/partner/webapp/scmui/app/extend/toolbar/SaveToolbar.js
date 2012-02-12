@@ -21,16 +21,20 @@ Ext.define('SCM.extend.toolbar.SaveToolbar', {
 							text : '保存',
 							iconCls : 'system-save',
 							action : 'save'
-						}, {
-							text : '重填',
-							iconCls : 'system-clear',
-							action : 'clear'
-						}, {
-							xtye : 'button',
-							text : '打印',
-							iconCls : 'system-print',
-							action : 'print'
-						}, {
+						}]);
+				if (me.type != 'simple') {
+					tools.push([{
+								text : '重填',
+								iconCls : 'system-clear',
+								action : 'clear'
+							}, {
+								xtye : 'button',
+								text : '打印',
+								iconCls : 'system-print',
+								action : 'print'
+							}]);
+				}
+				tools.push([{
 							text : '取消',
 							iconCls : 'system-delete',
 							action : 'cancel'

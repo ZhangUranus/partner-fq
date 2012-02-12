@@ -37,6 +37,12 @@
 .system-rollback{
 	background-image: url( ../images/icons/rollback.png ) !important;
 }
+.detail{
+	background-image: url( ../images/icons/detail.png ) !important;
+}
+.detail-edit{
+	background-image: url( ../images/icons/detail-edit.png ) !important;
+}
 
 .main-index {
 	background-image: url( ../images/icons/main-index.png ) !important;

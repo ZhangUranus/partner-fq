@@ -49,8 +49,9 @@ public class MonthlySettlement {
 		Date curDate=Utils.getCurDate();
 		Calendar   cal   =   Calendar.getInstance();
 		cal.setTime(curDate);
+		cal.add(Calendar.MONTH, 1);
 		year=cal.get(Calendar.YEAR);
-		month=cal.get(Calendar.MONTH)+1;
+		month=cal.get(Calendar.MONTH);
 		delegator=org.ofbiz.partner.scm.common.Utils.getDefaultDelegator();
 	}
 	

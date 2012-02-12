@@ -18,6 +18,16 @@ Ext.define('SCM.extend.toolbar.GridEditToolbar', {
 										text : '分录删除',
 										iconCls : 'bill-dline',
 										action : 'deleteLine'
+									}, {
+										text : '查看耗料明细',
+										iconCls : 'detail',
+										hidden : true,
+										action : 'viewDetail'
+									}, {
+										text : '编辑额外耗料',
+										iconCls : 'detail-edit',
+										hidden : true,
+										action : 'editDetail'
 									}]
 						});
 				me.callParent();
