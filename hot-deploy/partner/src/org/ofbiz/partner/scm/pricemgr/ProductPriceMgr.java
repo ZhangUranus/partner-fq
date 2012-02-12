@@ -2,6 +2,7 @@ package org.ofbiz.partner.scm.pricemgr;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Calendar;
 
 import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.entity.Delegator;
@@ -16,10 +17,13 @@ public class ProductPriceMgr {
 public static final String module = ProductPriceMgr.class.getName();
 	
 	private Object updateLock=new Object();//余额表更新锁
-	
+	private int year, month;// 当期年月
 	private static ProductPriceMgr instance=null;
 	private ProductPriceMgr(){
-		
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(Utils.getCurDate());
+		year = calendar.get(Calendar.YEAR);
+		month = calendar.get(Calendar.MONTH)+1;
 	}
 	public static ProductPriceMgr getInstance(){
 		if(instance==null){
@@ -72,9 +76,19 @@ public static final String module = ProductPriceMgr.class.getName();
 				gv.set("totalsum", oldSum.add(totalsum));
 				delegator.store(gv);
 			}else{//新增记录
+				//取上一个月库存信息
+				GenericValue preMonthValue=delegator.findOne("HisProductPrice", UtilMisc.toMap("year", Utils.getYearOfPreMonth(year, month), "month", Utils.getMonthOfPreMonth(year, month), "customerId", customerId, "materialId", materialId), false);
+				BigDecimal beginVolume=BigDecimal.ZERO;//月初数量
+				BigDecimal beginSum=BigDecimal.ZERO;//月初金额
+				if(preMonthValue!=null){
+					beginVolume=preMonthValue.getBigDecimal("beginVolume").add(preMonthValue.getBigDecimal("volume"));
+					beginSum=preMonthValue.getBigDecimal("beginsum").add(preMonthValue.getBigDecimal("totalSum"));
+				}
 				gv=delegator.makeValue("CurProductPrice");
 				gv.set("customerId", customerId);
 				gv.set("materialId", materialId);
+				gv.set("beginvolume", beginVolume);
+				gv.set("beginsum", beginSum);
 				gv.set("volume", volume);
 				gv.set("totalsum", totalsum);
 				delegator.create(gv);

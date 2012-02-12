@@ -13,28 +13,38 @@ import org.ofbiz.partner.scm.pricemgr.bizStockImp.WorkshopReturnProductBizImp;
 import org.ofbiz.partner.scm.pricemgr.bizStockImp.WorkshopWarehousingBizImp;
 
 public class BizStockImpFactory {
+	private static IBizStock inspectiveBizImp =new InspectiveBizImp();
+	private static IBizStock purchaseReturnBizImp =new PurchaseReturnBizImp();
+	private static IBizStock consignDrawMaterialBizImp =new ConsignDrawMaterialBizImp();
+	private static IBizStock consignReturnProductBizImp =new ConsignReturnProductBizImp();
+	private static IBizStock consignReturnMaterialBizImp =new ConsignReturnMaterialBizImp();
+	private static IBizStock consignWarehousingBizImp =new ConsignWarehousingBizImp();
+	private static IBizStock workshopDrawMaterialBizImp =new WorkshopDrawMaterialBizImp();
+	private static IBizStock workshopReturnMaterialBizImp =new WorkshopReturnMaterialBizImp();
+	private static IBizStock workshopReturnProductBizImp =new WorkshopReturnProductBizImp();
+	private static IBizStock workshopWarehousingBizImp =new WorkshopWarehousingBizImp();
 	public static IBizStock getBizStockImp(BillType billType) throws Exception{
 		switch (billType) {
 		case PurchaseWarehouse:
-			return new InspectiveBizImp();
+			return inspectiveBizImp;
 		case PurchaseReturn:
-			return new PurchaseReturnBizImp();
+			return purchaseReturnBizImp;
 		case ConsignDrawMaterial:
-			return new ConsignDrawMaterialBizImp();
+			return  consignDrawMaterialBizImp;
 		case ConsignReturnProduct:
-			return new ConsignReturnProductBizImp();
+			return  consignReturnProductBizImp;
 		case ConsignReturnMaterial:
-			return new ConsignReturnMaterialBizImp();
+			return  consignReturnMaterialBizImp;
 		case ConsignWarehousing:
-			return new ConsignWarehousingBizImp();
+			return  consignWarehousingBizImp;
 		case WorkshopDrawMaterial:
-			return new WorkshopDrawMaterialBizImp();
+			return  workshopDrawMaterialBizImp;
 		case WorkshopReturnMaterial:
-			return new WorkshopReturnMaterialBizImp();
+			return  workshopReturnMaterialBizImp;
 		case WorkshopReturnProduct:
-			return new WorkshopReturnProductBizImp();
+			return  workshopReturnProductBizImp;
 		case WorkshopWarehousing:
-			return new WorkshopWarehousingBizImp();
+			return  workshopWarehousingBizImp;
 		case ReturnProductWarehousing:
 			return new ReturnProductWarehousingBizImp();
 		default:

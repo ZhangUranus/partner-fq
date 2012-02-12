@@ -51,8 +51,8 @@ under the License.
       <field name="materialId" type="id-long"></field>
       <field name="beginvolume" type="fixed-point"></field>
       <field name="beginsum" type="fixed-point"></field>
-      <field name="endvolume" type="fixed-point"></field>
-      <field name="endsum" type="fixed-point"></field>
+      <field name="volume" type="fixed-point"></field>
+      <field name="totalSum" type="fixed-point"></field>
       <prim-key field="year" />
       <prim-key field="month" />
       <prim-key field="warehouseId" />

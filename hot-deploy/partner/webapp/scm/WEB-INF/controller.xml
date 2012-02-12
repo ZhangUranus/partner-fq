@@ -275,6 +275,19 @@
 		<response name="success" type="none" />
 	</request-map>
 	
+	
+	<!-- 系统结算 -->
+	<request-map uri="monthlySettle">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.MonthlySettleEvents" invoke="monthlySettle" />
+		<response name="success" type="none" />
+	</request-map>
+	<request-map uri="rollbackSettle">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.MonthlySettleEvents" invoke="rollbackSettle" />
+		<response name="success" type="none" />
+	</request-map>
+	
 	<!-- exporter -->
 	<request-map uri="export">
 		<security https="false" auth="false" />

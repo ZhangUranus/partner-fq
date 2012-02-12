@@ -77,6 +77,8 @@ public class BillBaseEvent {
 	 * @throws Exception
 	 */
 	public static String submitBill(HttpServletRequest request,HttpServletResponse response) throws Exception{
+		if(SystemLock.isLock())throw new Exception("系统已经被锁定，不能进行提交");
+		
 		String billId=request.getParameter("billId");
 		String entity=request.getParameter("entity");
 		if(entity!=null&&billId!=null){
