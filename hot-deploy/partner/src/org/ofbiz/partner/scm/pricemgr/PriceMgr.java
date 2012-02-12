@@ -32,8 +32,9 @@ public class PriceMgr {
 		Date curDate=Utils.getCurDate();
 		Calendar   cal   =   Calendar.getInstance();
 		cal.setTime(curDate);
+		cal.add(Calendar.MONTH, 1);
 		year=cal.get(Calendar.YEAR);
-		month=cal.get(Calendar.MONTH)+1;
+		month=cal.get(Calendar.MONTH);
 		//初始化具体单价计算接口
 		priceCal=PriceCalImpFactory.getPriceCalImp(PriceCalType.WeightedMovingAverage,year,month);
 	}

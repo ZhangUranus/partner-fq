@@ -77,12 +77,14 @@ public class Utils {
 
 		Date curDate = getCurDate();// 获取当前系统期间
 		cal.setTime(curDate);
+		cal.add(Calendar.MONTH, 1);
 		int curYear = cal.get(Calendar.YEAR);
-		int curMonth = cal.get(Calendar.MONTH) + 1;
+		int curMonth = cal.get(Calendar.MONTH);
 
 		cal.setTime(date);
+		cal.add(Calendar.MONTH, 1);
 		int year = cal.get(Calendar.YEAR);
-		int month = cal.get(Calendar.MONTH) + 1;
+		int month = cal.get(Calendar.MONTH);
 
 		if (curYear == year && curMonth == month) {
 			return true;
@@ -135,14 +137,16 @@ public class Utils {
 	public static void submitReturnProductWarehousing(GenericValue billValue, HttpServletRequest request) throws Exception {
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
 		GenericValue billHead = delegator.findOne("ReturnProductWarehousing", UtilMisc.toMap("id", billValue.getString("id")), false);
-
-		BizStockImpFactory.getBizStockImp(BillType.ReturnProductWarehousing).updateStock(billHead, false);
-
-		if (billHead != null) {
-			billHead.set("status", new Long(4));
-			billHead.set("submitterSystemUserId", CommonEvents.getAttributeToSession(request, "uid"));
-			billHead.set("submitStamp", new Timestamp(System.currentTimeMillis()));
-			billHead.store();
+		
+		if(billHead != null){
+			BizStockImpFactory.getBizStockImp(BillType.ReturnProductWarehousing).updateStock(billHead, false);
+	
+			if (billHead != null) {
+				billHead.set("status", new Long(4));
+				billHead.set("submitterSystemUserId", CommonEvents.getAttributeToSession(request, "uid"));
+				billHead.set("submitStamp", new Timestamp(System.currentTimeMillis()));
+				billHead.store();
+			}
 		}
 	}
 	/**

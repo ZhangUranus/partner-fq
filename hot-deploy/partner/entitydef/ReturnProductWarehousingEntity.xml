@@ -36,4 +36,16 @@
 		<field name="entrysum" type="fixed-point"></field>
 		<prim-key field="id" />
 	</entity>
+	<!-- 额外耗料表 -->
+	<entity entity-name="ReturnProductWarehousingEntryExtra" package-name="org.ofbiz.scm.ReturnProductWarehousing" title="ReturnProductWarehousingEntryExtra Entity">
+		<field name="id" type="id-long"></field>
+		<field name="entryId" type="id-long"></field>
+		<field name="materialMaterialId" type="id-long"></field>
+		<field name="materialMaterialModel" type="value"></field>
+		<field name="volume" type="fixed-point"></field>
+		<field name="unitUnitId" type="id-long"></field>
+		<field name="price" type="fixed-point"></field>
+		<field name="entrysum" type="fixed-point"></field>
+		<prim-key field="id" />
+	</entity>
 </entitymodel>

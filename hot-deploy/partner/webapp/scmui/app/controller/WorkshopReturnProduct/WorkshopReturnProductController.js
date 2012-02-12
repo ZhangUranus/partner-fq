@@ -1,9 +1,10 @@
 Ext.define('SCM.controller.WorkshopReturnProduct.WorkshopReturnProductController', {
 			extend : 'Ext.app.Controller',
 			mixins : ['SCM.extend.exporter.Exporter', 'SCM.extend.controller.BillCommonController'],
-			views : ['WorkshopReturnProduct.ListUI', 'WorkshopReturnProduct.EditUI'],
-			stores : ['WorkshopReturnProduct.WorkshopReturnProductStore', 'WorkshopReturnProduct.WorkshopReturnProductEditStore', 'WorkshopReturnProduct.WorkshopReturnProductEditEntryStore'],
-			requires : ['SCM.model.WorkshopReturnProduct.WorkshopReturnProductActionModel'],
+			views : ['WorkshopReturnProduct.ListUI', 'WorkshopReturnProduct.EditUI', 'WorkshopReturnProduct.DetailEditUI'],
+			stores : ['WorkshopReturnProduct.WorkshopReturnProductStore', 'WorkshopReturnProduct.WorkshopReturnProductEditStore', 'WorkshopReturnProduct.WorkshopReturnProductEditEntryStore',
+					'WorkshopReturnProduct.WorkshopReturnProductDetailStore'],
+			requires : ['SCM.model.WorkshopReturnProduct.WorkshopReturnProductActionModel', 'SCM.model.WorkshopReturnProduct.WorkshopReturnProductDetailModel'],
 			gridTitle : '制造退货单',
 			editName : 'WorkshopReturnProductedit',
 			editStoreName : 'WorkshopReturnProductEditStore',
@@ -54,12 +55,32 @@ Ext.define('SCM.controller.WorkshopReturnProduct.WorkshopReturnProductController
 								click : this.exportExcel
 							},
 							// 编辑界面分录新增
-							'WorkshopReturnProductedit  gridpanel button[action=addLine]' : {
+							'WorkshopReturnProductedit gridpanel button[action=addLine]' : {
 								click : this.addLine
 							},
 							// 编辑界面分录删除
-							'WorkshopReturnProductedit  gridpanel button[action=deleteLine]' : {
+							'WorkshopReturnProductedit gridpanel button[action=deleteLine]' : {
 								click : this.deleteLine
+							},
+							// 编辑界面分录额外耗料明细
+							'WorkshopReturnProductedit gridpanel button[action=editDetail]' : {
+								click : this.editDetailRecord
+							},
+							// 编辑额外耗料明细界面分录新增
+							'WorkshopReturnProductdetailedit gridpanel button[action=addLine]' : {
+								click : this.addDetailLine
+							},
+							// 编辑额外耗料明细界面分录删除
+							'WorkshopReturnProductdetailedit gridpanel button[action=deleteLine]' : {
+								click : this.deleteDetailLine
+							},
+							// 编辑额外耗料明细界面取消
+							'WorkshopReturnProductdetailedit button[action=cancel]' : {
+								click : this.cancelDetail
+							},
+							// 编辑额外耗料明细界面保存
+							'WorkshopReturnProductdetailedit button[action=save]' : {
+								click : this.saveDetailRecord
 							},
 
 							// 编辑界面直接提交
@@ -111,7 +132,15 @@ Ext.define('SCM.controller.WorkshopReturnProduct.WorkshopReturnProductController
 				this.marterialColumn = this.editEntry.down('combocolumn[dataIndex=materialMaterialId]');
 				this.gridToolBar = this.editEntry.down('gridedittoolbar');
 				this.checkButton = this.win.down('button[action=check]');
+				this.addLineButton = this.win.down('gridpanel button[action=addLine]');
+				this.deleteLineButton = this.win.down('gridpanel button[action=deleteLine]');
+				this.editDetailButton = this.win.down('gridpanel button[action=editDetail]');
 				this.checkBill = false;
+
+				// 额外耗料明细页面
+				this.detailWin = Ext.widget('WorkshopReturnProductdetailedit');
+				this.detailEntry = this.detailWin.down('gridpanel');
+				this.detailEntry.addListener('edit', this.initDetailList, this); // 监控列表编辑事件
 
 				this.numberEditor = {
 					xtype : 'numberfield',
@@ -122,7 +151,9 @@ Ext.define('SCM.controller.WorkshopReturnProduct.WorkshopReturnProductController
 
 			/**
 			 * 根据状态设置编辑界面状态
-			 * @param {} isReadOnly
+			 * 
+			 * @param {}
+			 *            isReadOnly
 			 */
 			changeEditStatus : function(record) {
 				if (record.get('status') == '0') {
@@ -136,7 +167,9 @@ Ext.define('SCM.controller.WorkshopReturnProduct.WorkshopReturnProductController
 					this.currentCheckVolumeColumn.setEditor(null);
 					this.warehouseColumn.getEditor().setDisabled(false);
 					this.marterialColumn.getEditor().setDisabled(false);
-					this.gridToolBar.setVisible(true);
+					this.addLineButton.setDisabled(false);
+					this.deleteLineButton.setDisabled(false);
+					this.editDetailButton.setVisible(false);
 				} else if (record.get('status') == '4' && record.get('checkStatus') != '2') {
 					this.setFieldsReadOnly(true);
 					this.editEntry.setDisabled(false);
@@ -148,7 +181,9 @@ Ext.define('SCM.controller.WorkshopReturnProduct.WorkshopReturnProductController
 					this.currentCheckVolumeColumn.setEditor(this.numberEditor);
 					this.warehouseColumn.getEditor().setDisabled(true);
 					this.marterialColumn.getEditor().setDisabled(true);
-					this.gridToolBar.setVisible(false);
+					this.addLineButton.setDisabled(true);
+					this.deleteLineButton.setDisabled(true);
+					this.editDetailButton.setVisible(true);
 				} else {
 					this.setFieldsReadOnly(true);
 					this.editEntry.setDisabled(true);
@@ -156,7 +191,9 @@ Ext.define('SCM.controller.WorkshopReturnProduct.WorkshopReturnProductController
 					this.clearButton.setDisabled(true);
 					this.submitEditButton.setDisabled(true);
 					this.checkButton.setVisible(false);
-					this.gridToolBar.setVisible(true);
+					this.addLineButton.setDisabled(false);
+					this.deleteLineButton.setDisabled(false);
+					this.editDetailButton.setVisible(false);
 				}
 			},
 
@@ -191,6 +228,7 @@ Ext.define('SCM.controller.WorkshopReturnProduct.WorkshopReturnProductController
 					}
 					tempString += 'WorkshopReturnProductV.workshop_workshop_id = \'' + this.searchCustId.getValue() + '\'';
 				}
+				debugger;
 				this.listPanel.store.getProxy().extraParams.whereStr = tempString;
 				this.listPanel.store.load();
 				this.detailPanel.store.removeAll();
@@ -239,6 +277,7 @@ Ext.define('SCM.controller.WorkshopReturnProduct.WorkshopReturnProductController
 
 			/**
 			 * 是否可以提交
+			 * 
 			 * @return {Boolean}
 			 */
 			isSubmitAble : function(record) {
@@ -261,7 +300,9 @@ Ext.define('SCM.controller.WorkshopReturnProduct.WorkshopReturnProductController
 
 			/**
 			 * 是否可以撤销提交
-			 * @param {} record
+			 * 
+			 * @param {}
+			 *            record
 			 */
 			isRollbackBillAble : function(record) {
 				if (record.get('status') != '4') {
@@ -290,5 +331,109 @@ Ext.define('SCM.controller.WorkshopReturnProduct.WorkshopReturnProductController
 			 */
 			getRollbackBillUrl : function() {
 				return '../../scm/control/rollbackWorkshopReturnProduct';
+			},
+
+			/**
+			 * 当用户编辑grid时，同步更新相关表单数据
+			 * 
+			 * @param {}
+			 *            editor
+			 * @param {}
+			 *            e
+			 */
+			initDetailList : function(editor, e) {
+				if (e.field == 'materialMaterialId') {
+					var record = this.searchMaterialId.store.findRecord('id', e.value);
+					if (record) {
+						e.record.set('materialMaterialModel', record.get('model'));
+						e.record.set('unitUnitId', record.get('defaultUnitId'));
+						e.record.set('unitUnitName', record.get('defaultUnitName'));
+						e.record.set('price', record.get('defaultPrice'));
+					}
+				}
+				e.record.set('entrysum', e.record.get('price') * e.record.get('volume'));
+			},
+
+			/**
+			 * 编辑事件
+			 * 
+			 * @param {}
+			 *            grid 当前表格
+			 * @param {}
+			 *            record 选中记录
+			 */
+			modifyDetailRecord : function(grid, record) {
+				this.currentRecord = record;
+				this.detailWin.uiStatus = 'Modify';
+				// 根据选择的id加载编辑界面数据
+				this.detailEntryId = record.get('id');
+
+				this.detailEntry.store.getProxy().extraParams.whereStr = "entry_id = '" + this.detailEntryId + "'";
+				this.detailEntry.store.load();
+				this.detailWin.show();
+			},
+
+			/**
+			 * 点击修改按钮
+			 * 
+			 * @param {}
+			 *            button 按钮控件
+			 */
+			editDetailRecord : function(button) {
+				var sm = this.editEntry.getSelectionModel();
+				if (sm.hasSelection()) {// 判断是否选择行记录
+					record = sm.getLastSelected();
+
+					// 如果单据状态是已提交、已审核或者已经结算则不能修改
+					this.modifyDetailRecord(this.editEntry, record);
+				} else {
+					showWarning('未选中物料！');
+				}
+			},
+
+			/**
+			 * 新增额外耗料
+			 * 
+			 * @param {}
+			 *            button
+			 */
+			addDetailLine : function(button) {
+				var detailRecord = Ext.create('WorkshopReturnProductDetailModel');
+
+				// 设置分录id
+				detailRecord.set('entryId', this.detailEntryId);
+				this.detailEntry.store.add(detailRecord);
+			},
+			/**
+			 * 删除额外耗料
+			 * 
+			 * @param {}
+			 *            button
+			 */
+			deleteDetailLine : function(button) {
+				var selMod = this.detailEntry.getSelectionModel();
+				if (selMod != null) {
+					this.detailEntry.store.remove(selMod.getLastSelected());
+				}
+			},
+
+			/**
+			 * 保存额外耗料列表
+			 * 
+			 * @param {}
+			 *            button 保存按钮
+			 */
+			saveDetailRecord : function(button) {
+				this.detailEntry.store.sync();
+				if (this.detailWin.isVisible()) {
+					this.detailWin.close();
+				}
+			},
+
+			/**
+			 * 取消编辑
+			 */
+			cancelDetail : function() {
+				this.detailWin.close();
 			}
 		});

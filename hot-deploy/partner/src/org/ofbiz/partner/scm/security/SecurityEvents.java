@@ -257,6 +257,7 @@ public class SecurityEvents {
         }else{
         	Calendar calendar = Calendar.getInstance();
 			calendar.setTime(Utils.getCurDate());
+			calendar.add(Calendar.MONTH, 1);
         	CommonEvents.setUsername(request, response);
         	String username = request.getParameter("USERNAME");
         	List<GenericValue> recordList =  CommonEvents.getDelegator(request).findList("TSystemUser", EntityCondition.makeCondition("userId",username), null, null, null, true);
@@ -278,6 +279,7 @@ public class SecurityEvents {
 		}else{
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(Utils.getCurDate());
+			calendar.add(Calendar.MONTH, 1);
 			jsonStr.put("username", username);
 			jsonStr.put("currentYear", calendar.get(Calendar.YEAR));
 			jsonStr.put("currentMonth", calendar.get(Calendar.MONTH));
