@@ -1,5 +1,6 @@
 package org.ofbiz.partner.scm.common;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 import org.ofbiz.entity.GenericValue;
@@ -40,11 +41,8 @@ public class GenericValue4Compare implements Comparable<GenericValue4Compare>{
 		return -1;
 	}
 
-	public Date getCompareDate(){
-		Object r=value.get(compareField);
-		if(r!=null)	return (Date)r; 
-		
-		return null;
+	public Timestamp getCompareDate(){
+		return value.getTimestamp(compareField);
 	}
 	
 	public GenericValue getValue(){

@@ -100,14 +100,24 @@ public class PriceCalImp4WMA implements IPriceCal {
 			delegator.store(curValue);// 更新当前库存表
 		} else {
 			Debug.logInfo("库存余额表不存在物料" + item.getMaterialId() + "，添加该物料记录！", module);
+			//查找上一个月末数量金额
+			GenericValue preMonthValue=delegator.findOne("HisMaterialBalance", UtilMisc.toMap("year", Utils.getYearOfPreMonth(year, month), "month", Utils.getMonthOfPreMonth(year, month), "warehouseId", item.getWarehouseId(), "materialId", item.getMaterialId()), false);
+			BigDecimal beginVolume=BigDecimal.ZERO;//月初数量
+			BigDecimal beginSum=BigDecimal.ZERO;//月初金额
+			if(preMonthValue!=null){
+				beginVolume=preMonthValue.getBigDecimal("beginVolume").add(preMonthValue.getBigDecimal("volume"));
+				beginSum=preMonthValue.getBigDecimal("beginsum").add(preMonthValue.getBigDecimal("totalSum"));
+			}
+			
+			
 			// 如果库存余额表没有改物料，则新增
 			curValue = delegator.makeValue("CurMaterialBalance");
 			curValue.set("year", year);
 			curValue.set("month", month);
 			curValue.set("warehouseId", item.getWarehouseId());
 			curValue.set("materialId", item.getMaterialId());
-			curValue.set("beginvolume", BigDecimal.ZERO);
-			curValue.set("beginsum", BigDecimal.ZERO);
+			curValue.set("beginvolume", beginVolume);
+			curValue.set("beginsum", beginSum);
 			curValue.set("volume", item.getAmount());
 			curValue.set("totalSum", item.getSum());
 

@@ -43,7 +43,28 @@ public class Utils {
 			return null;
 		}
 	}
-
+	/**
+	 * 设置当前期间
+	 * @param year
+	 * @param month
+	 * @throws Exception
+	 */
+	public static void setCurPeriod(int year ,int month) throws Exception{ 
+		
+		Calendar cal= Calendar.getInstance();
+		//月份需要减一，月份是从0开始
+		cal.set(year, month-1, 01, 0, 0, 0);
+		cal.set(Calendar.MILLISECOND, 0);
+		Delegator delegator=org.ofbiz.partner.scm.common.Utils.getDefaultDelegator();
+		GenericValue value=delegator.findByPrimaryKey("PriceMgrParamters", UtilMisc.toMap("id","001"));
+		SimpleDateFormat timeFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:SS.sss");
+		
+		value.set("value", timeFormat.format(cal.getTime()));
+		
+		delegator.store(value);
+		
+	}
+	
 	/**
 	 * 判断是否是当前期间
 	 * 
@@ -124,4 +145,62 @@ public class Utils {
 			billHead.store();
 		}
 	}
+	/**
+	 * 返回下一个月的年段
+	 * @param year
+	 * @param month
+	 * @return
+	 */
+	public static Integer getYearOfNextMonth(int year,int month) throws Exception{
+		if(month>12||month<1)throw new Exception("月份不合理");
+		if(month!=12){
+			return year;
+		}else{
+			return ++year;
+		}
+	}
+	/**
+	 * 返回下一个月的月段
+	 * @param year
+	 * @param month
+	 * @return
+	 */
+	public static Integer getMonthOfNextMonth(int year,int month)throws Exception{
+		if(month>12||month<1)throw new Exception("月份不合理");
+		if(month!=12){
+			return ++month;
+		}else{
+			return 1;
+		}
+	}
+	
+	/**
+	 * 返回上一个月的年段
+	 * @param year
+	 * @param month
+	 * @return
+	 */
+	public static Integer getYearOfPreMonth(int year,int month) throws Exception{
+		if(month>12||month<1)throw new Exception("月份不合理");
+		if(month!=1){
+			return year;
+		}else{
+			return --year;
+		}
+	}
+	/**
+	 * 返回上一个月的月段
+	 * @param year
+	 * @param month
+	 * @return
+	 */
+	public static Integer getMonthOfPreMonth(int year,int month)throws Exception{
+		if(month>12||month<1)throw new Exception("月份不合理");
+		if(month!=1){
+			return --month;
+		}else{
+			return 12;
+		}
+	}
+	
 }

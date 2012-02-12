@@ -122,6 +122,14 @@ Ext.JSON.encodeDate = function(d) {
     return   time;
 };  
 
+showInfo = function(msg){
+	Ext.Msg.show({
+	     title:'提示',
+	     msg: msg,
+	     buttons: Ext.Msg.YES,
+	     icon: Ext.Msg.INFO
+	});
+};
 showError= function(msg){
 	Ext.MessageBox.show({
                     title: '错误',
