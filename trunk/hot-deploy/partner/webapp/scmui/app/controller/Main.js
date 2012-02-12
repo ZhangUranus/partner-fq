@@ -41,7 +41,7 @@ Ext.define('SCM.controller.Main', {
 			'tabpanel' : {
 				remove : this.closeTab
 			},
-            'header button[action=logout]' : {
+            'south button[action=logout]' : {
                 click : this.logout
             }
 		});

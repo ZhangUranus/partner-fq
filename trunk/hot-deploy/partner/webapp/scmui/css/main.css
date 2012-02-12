@@ -1,3 +1,6 @@
+.system-logout{
+	background-image: url( ../images/icons/logout.png ) !important;
+}
 .system-add {
 	background-image: url( ../images/icons/add.png ) !important;
 }

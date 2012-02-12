@@ -15,14 +15,7 @@ Ext.define('SCM.view.Header', {
 						        type: 'hbox'
 						    },
 							region : 'north',
-							height : 60,
-                            items : [
-                                {
-                                    xtype: 'button',
-                                    action : 'logout',
-                                    text:'注销'
-                                }
-                            ]
+							height : 60
 						});
 				this.callParent(arguments);
 			}
