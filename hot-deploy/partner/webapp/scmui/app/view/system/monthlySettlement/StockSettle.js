@@ -67,6 +67,8 @@ Ext.define('SCM.view.system.monthlySettlement.StockSettle', {
 							}
 						});
 				
+			}else{
+				taskMask.hide();
 			}
 		}
     },
@@ -100,6 +102,8 @@ Ext.define('SCM.view.system.monthlySettlement.StockSettle', {
 							}
 						});
 				
+			}else{
+				taskMask.hide();
 			}
 		}
     }
