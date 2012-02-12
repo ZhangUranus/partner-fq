@@ -15,7 +15,7 @@ Ext.define('SCM.view.Header', {
 						        type: 'hbox'
 						    },
 							region : 'north',
-							height : 45,
+							height : 60,
                             items : [
                                 {
                                     xtype: 'button',
