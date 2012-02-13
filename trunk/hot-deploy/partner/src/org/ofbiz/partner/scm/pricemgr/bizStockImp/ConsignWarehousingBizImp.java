@@ -75,11 +75,7 @@ public class ConsignWarehousingBizImp implements IBizStock {
 				//取出的耗料数量、金额只是单个加工件的，需要乘于加工件数量
 				BigDecimal bomAmount = volume.multiply((BigDecimal) element.get(1));
 				BigDecimal bomSum = volume.multiply((BigDecimal) element.get(2));
-				if (!isOut) {
-					bomAmount = bomAmount.negate();
-					bomSum = bomSum.negate();
-				}
-				ConsignPriceMgr.getInstance().update(processorId, bomMaterialId, bomAmount, bomSum);
+				ConsignPriceMgr.getInstance().update(processorId, bomMaterialId, bomAmount.negate(), bomSum.negate());
 			}
 			if(isOut){
 				ConsignPriceMgr.getInstance().removeMaterialList(v.getString("id"));
