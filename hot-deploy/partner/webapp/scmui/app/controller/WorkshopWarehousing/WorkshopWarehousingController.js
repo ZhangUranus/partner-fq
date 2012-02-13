@@ -1,8 +1,8 @@
 Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 			extend : 'Ext.app.Controller',
 			mixins : ['SCM.extend.exporter.Exporter', 'SCM.extend.controller.BillCommonController'],
-			views : ['WorkshopWarehousing.ListUI', 'WorkshopWarehousing.EditUI'],
-			stores : ['WorkshopWarehousing.WorkshopWarehousingStore', 'WorkshopWarehousing.WorkshopWarehousingEditStore', 'WorkshopWarehousing.WorkshopWarehousingEditEntryStore'],
+			views : ['WorkshopWarehousing.ListUI', 'WorkshopWarehousing.EditUI', 'WorkshopWarehousing.DetailListUI'],
+			stores : ['WorkshopWarehousing.WorkshopWarehousingStore', 'WorkshopWarehousing.WorkshopWarehousingEditStore', 'WorkshopWarehousing.WorkshopWarehousingEditEntryStore', 'WorkshopWarehousing.WorkshopWarehousingDetailStore'],
 			requires : ['SCM.model.WorkshopWarehousing.WorkshopWarehousingActionModel'],
 			gridTitle : '制造入库单',
 			editName : 'WorkshopWarehousingedit',
@@ -61,6 +61,10 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 							'WorkshopWarehousingedit  gridpanel button[action=deleteLine]' : {
 								click : this.deleteLine
 							},
+							// 查看分录耗料明细
+							'WorkshopWarehousingedit gridpanel button[action=viewDetail]' : {
+								click : this.viewDetailList
+							},
 
 							// 编辑界面直接提交
 							'WorkshopWarehousingedit button[action=submit]' : {
@@ -101,8 +105,54 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 				this.searchEndDate = this.listContainer.down('datefield[name=searchEndDate]');
 				this.searchMaterialId = this.listContainer.down('combogrid[name=searchMaterialId]');
 				this.searchCustId = this.listContainer.down('combogrid[name=searchCustId]');
+				this.allColumn = this.editEntry.query('gridcolumn');
+				this.addLineButton = this.win.down('gridpanel button[action=addLine]');
+				this.deleteLineButton = this.win.down('gridpanel button[action=deleteLine]');
+				
+				// 耗料明细页面
+				this.viewDetailButton = this.win.down('gridpanel button[action=viewDetail]');
+				this.detailWin = Ext.widget('WorkshopWarehousingdetaillist');
+				this.detailEntry = this.detailWin.down('gridpanel');
 			},
-
+			
+			/**
+			 * 根据状态设置编辑界面状态
+			 * 
+			 * @param {}
+			 *            isReadOnly
+			 */
+			changeEditStatus : function(record) {
+				if (record.get('status') == '0') {
+					this.setFieldsReadOnly(false);
+					this.setGridEditAble(true);
+					this.saveButton.setDisabled(false);
+					this.clearButton.setDisabled(false);
+					this.submitEditButton.setDisabled(false);
+					this.viewDetailButton.setVisible(false);
+				} else {
+					this.setFieldsReadOnly(true);
+					this.setGridEditAble(false);
+					this.saveButton.setDisabled(true);
+					this.clearButton.setDisabled(true);
+					this.submitEditButton.setDisabled(true);
+					this.viewDetailButton.setVisible(true);
+				}
+			},
+			
+			/**
+			 * 设置分录列表是否可编辑
+			 * @param {} editAble
+			 */
+			setGridEditAble : function(editAble){
+				this.addLineButton.setDisabled(!editAble);
+				this.deleteLineButton.setDisabled(!editAble);
+				Ext.each(this.allColumn, function(item, index, length) {
+							if(item.getEditor()){
+								item.getEditor().setDisabled(!editAble);
+							}
+						})
+			},
+			
 			/**
 			 * 重写刷新方法
 			 * 
@@ -171,5 +221,22 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 			 */
 			getRollbackBillUrl : function() {
 				return '../../scm/control/rollbackWorkshopWarehousing';
+			},
+			
+			/**
+			 * 查看加工件耗料情况
+			 */
+			viewDetailList : function() {
+				var sm = this.editEntry.getSelectionModel();
+				if (sm.hasSelection()) {// 判断是否选择行记录
+					record = sm.getLastSelected();
+
+					this.detailEntry.store.getProxy().extraParams.whereStr = "parent_id = '" + record.get('id') + "'";
+					this.detailEntry.store.load();
+					this.detailWin.show();
+				} else {
+					showWarning('未选中物料！');
+				}
+				
 			}
 		});
