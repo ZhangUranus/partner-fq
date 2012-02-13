@@ -228,7 +228,6 @@ Ext.define('SCM.controller.WorkshopReturnProduct.WorkshopReturnProductController
 					}
 					tempString += 'WorkshopReturnProductV.workshop_workshop_id = \'' + this.searchCustId.getValue() + '\'';
 				}
-				debugger;
 				this.listPanel.store.getProxy().extraParams.whereStr = tempString;
 				this.listPanel.store.load();
 				this.detailPanel.store.removeAll();
