@@ -37,6 +37,7 @@ Ext.define('SCM.extend.toolbar.BillBaseToolbar', {
 							displayField : 'name',
 							store : Ext.create('MaterialStore'),
 							matchFieldWidth : false,
+							emptyText : '所有物料',
 							listConfig : {
 								width : SCM.MaxSize.COMBOGRID_WIDTH,
 								height : SCM.MaxSize.COMBOGRID_HEIGHT,
@@ -87,6 +88,7 @@ Ext.define('SCM.extend.toolbar.BillBaseToolbar', {
 								displayField : 'name',
 								store : custStore,
 								matchFieldWidth : false,
+								emptyText : '所有'+label,
 								listConfig : {
 									width : SCM.MaxSize.COMBOGRID_WIDTH,
 									height : SCM.MaxSize.COMBOGRID_HEIGHT,

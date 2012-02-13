@@ -10,6 +10,7 @@ import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericValue;
 import org.ofbiz.partner.scm.pricemgr.BillType;
 import org.ofbiz.partner.scm.pricemgr.ConsignPriceMgr;
+import org.ofbiz.partner.scm.pricemgr.ConsignProcessedPriceMgr;
 import org.ofbiz.partner.scm.pricemgr.IBizStock;
 import org.ofbiz.partner.scm.pricemgr.PriceCalItem;
 import org.ofbiz.partner.scm.pricemgr.PriceMgr;
@@ -49,7 +50,6 @@ public class ConsignWarehousingBizImp implements IBizStock {
 				// 将金额加到总金额中
 				totalSum = totalSum.add(sum);
 			} else {
-				ConsignPriceMgr.getInstance().removeMaterialList(v.getString("id"));
 				sum = v.getBigDecimal("entrysum");// 金额
 
 				// 如果是出库业务，数量、金额转换为负数
@@ -81,9 +81,16 @@ public class ConsignWarehousingBizImp implements IBizStock {
 				}
 				ConsignPriceMgr.getInstance().update(processorId, bomMaterialId, bomAmount, bomSum);
 			}
-
+			if(isOut){
+				ConsignPriceMgr.getInstance().removeMaterialList(v.getString("id"));
+			}
+			
+			//更新加工商对数表
+			ConsignProcessedPriceMgr.getInstance().update(processorId, materialId, volume, v.getBigDecimal("processPrice"));
+			
 			v.store();
 		}
+		
 		// 返填总金额
 		billValue.set("totalsum", totalSum);
 		billValue.store();

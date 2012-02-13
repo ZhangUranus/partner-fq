@@ -489,7 +489,8 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 									url : this.getRollbackBillUrl(),
 									success : function(response, option) {
 										this.rollbackBillSuccess(response, option);
-										Ext.Msg.alert("提示", "撤销成功！", this.refreshRecord);
+										Ext.Msg.alert("提示", "撤销成功！");
+										this.refreshRecord();
 									}
 								});
 					}

@@ -119,7 +119,7 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 			 * 根据状态设置编辑界面状态
 			 * @param {} isReadOnly
 			 */
-			changeEditStatus : function(isReadOnly) {
+			changeEditStatus : function(record) {
 				if(record.get('status')=='0'){
 					this.setFieldsReadOnly(false);
 					this.editEntry.setDisabled(false);

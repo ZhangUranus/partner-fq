@@ -53,8 +53,7 @@ public class PriceCalImp4WMA implements IPriceCal {
 		}
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(item.getBizTime());
-		cal.add(Calendar.MONTH, 1);
-		if (cal.get(Calendar.YEAR) != year || (cal.get(Calendar.MONTH)) != month) {
+		if (cal.get(Calendar.YEAR) != year || (cal.get(Calendar.MONTH)+1) != month) {
 			Debug.logError("计算条目业务日期不是当前期间", module);
 			throw new Exception("计算条目业务日期不是当前期间");
 		}
