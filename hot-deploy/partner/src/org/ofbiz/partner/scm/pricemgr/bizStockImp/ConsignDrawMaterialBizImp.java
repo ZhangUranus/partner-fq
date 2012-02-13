@@ -10,6 +10,7 @@ import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericValue;
 import org.ofbiz.partner.scm.pricemgr.BillType;
 import org.ofbiz.partner.scm.pricemgr.ConsignPriceMgr;
+import org.ofbiz.partner.scm.pricemgr.ConsignProcessedPriceMgr;
 import org.ofbiz.partner.scm.pricemgr.IBizStock;
 import org.ofbiz.partner.scm.pricemgr.PriceCalItem;
 import org.ofbiz.partner.scm.pricemgr.PriceMgr;
@@ -72,6 +73,12 @@ public class ConsignDrawMaterialBizImp implements IBizStock {
 			
 			v.store();
 		}
+		BigDecimal processedVolume = billValue.getBigDecimal("materialVolume");
+		if(!isOut){
+			processedVolume = processedVolume.negate();
+		}
+		ConsignProcessedPriceMgr.getInstance().update(processorId, billValue.getString("processedMaterialMaterialId"), processedVolume, null);
+		
 		// 返填总金额
 		billValue.set("totalsum", totalSum);
 		billValue.store();

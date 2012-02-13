@@ -30,9 +30,8 @@ public class ConsignPriceMgr {
 	private ConsignPriceMgr() {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(Utils.getCurDate());
-		calendar.add(Calendar.MONTH, 1);
 		year = calendar.get(Calendar.YEAR);
-		month = calendar.get(Calendar.MONTH);
+		month = calendar.get(Calendar.MONTH)+1;
 		delegator = org.ofbiz.partner.scm.common.Utils.getDefaultDelegator();
 	}
 

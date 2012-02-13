@@ -77,14 +77,12 @@ public class Utils {
 
 		Date curDate = getCurDate();// 获取当前系统期间
 		cal.setTime(curDate);
-		cal.add(Calendar.MONTH, 1);
 		int curYear = cal.get(Calendar.YEAR);
-		int curMonth = cal.get(Calendar.MONTH);
+		int curMonth = cal.get(Calendar.MONTH)+1;
 
 		cal.setTime(date);
-		cal.add(Calendar.MONTH, 1);
 		int year = cal.get(Calendar.YEAR);
-		int month = cal.get(Calendar.MONTH);
+		int month = cal.get(Calendar.MONTH)+1;
 
 		if (curYear == year && curMonth == month) {
 			return true;
