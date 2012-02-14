@@ -97,7 +97,7 @@ public class ConsignProcessedPriceMgr {
 				gv.set("supplierId", supplierId);
 				gv.set("materialId", materialId);
 				gv.set("beginvolume", beginVolume);
-				gv.set("volume", volume);
+				gv.set("volume", beginVolume.add(volume));
 				if(processPrice == null){
 					gv.set("outVolume", outVolume.add(volume));
 				}else{

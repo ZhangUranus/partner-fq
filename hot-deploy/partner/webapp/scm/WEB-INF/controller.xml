@@ -296,6 +296,23 @@
 		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="fetchData" />
 		<response name="success" type="none" />
 	</request-map>
+	<request-map uri="getMonthList">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="getMonthList" />
+		<response name="success" type="none" />
+	</request-map>
+	<request-map uri="queryConsignMatchReport">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="queryConsignMatchReport" />
+		<response name="success" type="none" />
+	</request-map>
+	<request-map uri="queryConsignMatchChart">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="queryConsignMatchChart" />
+		<response name="success" type="none" />
+	</request-map>
+	
+	
 	
 	<!-- exporter -->
 	<request-map uri="export">
