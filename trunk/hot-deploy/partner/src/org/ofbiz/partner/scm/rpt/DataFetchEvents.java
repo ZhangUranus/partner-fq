@@ -87,7 +87,7 @@ public class DataFetchEvents {
 					"LEFT JOIN UNIT UNT ON TM.DEFAULT_UNIT_ID = UNT.ID "+
 					"WHERE YEAR = " + year +
 					" AND MONTH = " + month ;
-		if(supplierId != null && "".equals(supplierId)){
+		if(supplierId != null && !"".equals(supplierId)){
 			sql += " AND CCPP.SUPPLIER_ID = '" + supplierId + "'";
 		}
 		
