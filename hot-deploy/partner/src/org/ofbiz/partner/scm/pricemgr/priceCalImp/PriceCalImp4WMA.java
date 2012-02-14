@@ -79,23 +79,47 @@ public class PriceCalImp4WMA implements IPriceCal {
 		GenericValue curValue = null;
 		BigDecimal curAmount = null;// 当前数量
 		BigDecimal curSum = null;// 当前金额
+		BigDecimal curInVolume = null;// 当前收入数量
+		BigDecimal curInSum = null;// 当前收入金额
+		BigDecimal curOutVolume = null;// 当前发出数量
+		BigDecimal curOutSum = null;// 当前发出金额
 		BigDecimal calAmount = null;// 计算后数量
 		BigDecimal calSum = null;// 计算后金额
+		BigDecimal inVolume = BigDecimal.ZERO;// 计算后收入数量
+		BigDecimal inSum = BigDecimal.ZERO;// 计算后收入金额
+		BigDecimal outVolume = BigDecimal.ZERO;// 计算后发出数量
+		BigDecimal outSum = BigDecimal.ZERO;// 计算后发出金额
 		if (curValueList != null && curValueList.size() > 0) {
 			// 取第一条匹配记录
 			curValue = curValueList.get(0);
 			Debug.logInfo("计算前物料数量单价" + curValue.getString("volume") + ";" + curValue.getString("totalSum"), module);
 			curAmount = curValue.getBigDecimal("volume");// 设置当前数量
 			curSum = curValue.getBigDecimal("totalSum");// 设置当前金额
-
+			curInVolume = curValue.getBigDecimal("inVolume");// 设置当前收入金额
+			curInSum = curValue.getBigDecimal("inSum");// 设置当前收入金额
+			curOutVolume = curValue.getBigDecimal("outVolume");// 设置当前发出金额
+			curOutSum = curValue.getBigDecimal("outSum");// 设置当前发出金额
+			
 			BigDecimal amount = item.getAmount();// 数量
 			BigDecimal sum = item.getSum();// 金额
 			
 			calAmount = curAmount.add(amount);// 计算后数量
 			calSum = curSum.add(sum);// 计算后金额
+			
+			if(item.isOut()){
+				outVolume = amount.negate();
+				outSum = sum.negate();
+			} else {
+				inVolume = amount;
+				inSum = sum;
+			}
 
 			curValue.set("volume", calAmount);
 			curValue.set("totalSum", calSum);
+			curValue.set("inVolume", curInVolume.add(inVolume));
+			curValue.set("inSum", curInSum.add(inSum));
+			curValue.set("outVolume", curOutVolume.add(outVolume));
+			curValue.set("outSum", curOutSum.add(outSum));
 
 			delegator.store(curValue);// 更新当前库存表
 		} else {
@@ -109,6 +133,8 @@ public class PriceCalImp4WMA implements IPriceCal {
 				beginSum=preMonthValue.getBigDecimal("beginsum").add(preMonthValue.getBigDecimal("totalSum"));
 			}
 			
+			calAmount = beginVolume.add(item.getAmount());// 计算后数量
+			calSum = beginSum.add(item.getSum());// 计算后金额
 			
 			// 如果库存余额表没有改物料，则新增
 			curValue = delegator.makeValue("CurMaterialBalance");
@@ -118,12 +144,21 @@ public class PriceCalImp4WMA implements IPriceCal {
 			curValue.set("materialId", item.getMaterialId());
 			curValue.set("beginvolume", beginVolume);
 			curValue.set("beginsum", beginSum);
-			curValue.set("volume", item.getAmount());
-			curValue.set("totalSum", item.getSum());
-
-			calAmount = item.getAmount();// 计算后数量
-			calSum = item.getSum();// 计算后金额
-
+			curValue.set("volume", calAmount);	//期初数量加当前数量
+			curValue.set("totalSum", calSum);	//期初金额加当前金额
+			
+			if(item.isOut()){
+				outVolume = item.getAmount().negate();
+				outSum = item.getSum().negate();
+			} else {
+				inVolume = item.getAmount();
+				inSum = item.getSum();
+			}
+			curValue.set("inVolume", inVolume);
+			curValue.set("inSum", inSum);
+			curValue.set("outVolume", outVolume);
+			curValue.set("outSum", outSum);
+			
 			delegator.create(curValue);// 新增条目
 		}
 		//返回入库后单价
