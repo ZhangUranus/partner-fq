@@ -190,8 +190,8 @@ public class ConsignPriceMgr {
 				gv.set("materialId", materialId);
 				gv.set("beginvolume", beginVolume);
 				gv.set("beginsum", beginSum);
-				gv.set("volume", volume);
-				gv.set("totalsum", totalsum);
+				gv.set("volume", beginVolume.add(volume));
+				gv.set("totalsum", beginSum.add(totalsum));
 				delegator.create(gv);
 			}
 		}
