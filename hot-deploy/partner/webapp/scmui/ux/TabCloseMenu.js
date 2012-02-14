@@ -34,7 +34,7 @@ Ext.define('Ext.tab.TabCloseMenu', {
      * @cfg {String} closeTabText
      * The text for closing the current tab. Defaults to <tt>'Close Tab'</tt>.
      */
-    closeTabText: 'Close Tab',
+    closeTabText: '关闭',
 
     /**
      * @cfg {Boolean} showCloseOthers
@@ -46,7 +46,7 @@ Ext.define('Ext.tab.TabCloseMenu', {
      * @cfg {String} closeOtherTabsText
      * The text for closing all tabs except the current one. Defaults to <tt>'Close Other Tabs'</tt>.
      */
-    closeOthersTabsText: 'Close Other Tabs',
+    closeOthersTabsText: '关闭其它',
 
     /**
      * @cfg {Boolean} showCloseAll
@@ -58,7 +58,7 @@ Ext.define('Ext.tab.TabCloseMenu', {
      * @cfg {String} closeAllTabsText
      * <p>The text for closing all tabs. Defaults to <tt>'Close All Tabs'</tt>.
      */
-    closeAllTabsText: 'Close All Tabs',
+    closeAllTabsText: '关闭所有',
 
     /**
      * @cfg {Array} extraItemsHead
