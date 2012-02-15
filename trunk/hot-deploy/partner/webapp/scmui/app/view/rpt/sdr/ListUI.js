@@ -1,11 +1,11 @@
 /*
  * 定义物料Bom列表界面 Mark
  */
-Ext.define('SCM.view.rpt.cpmr.ListUI', {
+Ext.define('SCM.view.rpt.sdr.ListUI', {
 			extend : 'Ext.container.Container',
 			requires : ['SCM.ux.combobox.ComboGrid', 'SCM.ux.grid.ComboColumn'],
-			alias : 'widget.consignprocessmatchingreport',
-			title : '发外加工对数表',
+			alias : 'widget.stockdetail',
+			title : '库存情况',
 			layout : {
 				type : 'border'
 			},
@@ -32,15 +32,41 @@ Ext.define('SCM.view.rpt.cpmr.ListUI', {
 													editable : false
 												}, {
 													xtype : 'combogrid',
-													name : 'searchSupplierId',
+													name : 'searchWarehouseId',
 													width : 155,
-													labelWidth : 45,
-													fieldLabel : '加工商',
-													store : Ext.create('SupplierStore'),
+													labelWidth : 35,
+													fieldLabel : '仓库',
+													store : Ext.create('WarehouseStore'),
 													valueField : 'id',
 													displayField : 'name',
 													matchFieldWidth : false,
-													emptyText : '所有加工商',
+													emptyText : '所有仓库',
+													listConfig : {
+														width : SCM.MaxSize.COMBOGRID_WIDTH,
+														height : SCM.MaxSize.COMBOGRID_HEIGHT,
+														columns : [{
+																	header : '编码',
+																	dataIndex : 'number',
+																	width : 100,
+																	hideable : false
+																}, {
+																	header : '名称',
+																	dataIndex : 'name',
+																	width : 80,
+																	hideable : false
+																}]
+													}
+												}, {
+													xtype : 'combogrid',
+													name : 'searchMaterialId',
+													width : 145,
+													labelWidth : 35,
+													fieldLabel : '物料',
+													valueField : 'id',
+													displayField : 'name',
+													store : Ext.create('MaterialStore'),
+													matchFieldWidth : false,
+													emptyText : '所有物料',
 													listConfig : {
 														width : SCM.MaxSize.COMBOGRID_WIDTH,
 														height : SCM.MaxSize.COMBOGRID_HEIGHT,
@@ -69,41 +95,41 @@ Ext.define('SCM.view.rpt.cpmr.ListUI', {
 										xtype : 'panel',
 										margin : '1 0 0 0',
 										region : 'center',
-										layout:'fit',
+										layout : 'fit',
 										items : {
 											xtype : 'chart',
 											animate : true,
 											shadow : true,
-											store : 'rpt.ConsignProcessMatchingChartStore',
+											store : 'rpt.StockDetailChartStore',
 											legend : {
 												position : 'right'
 											},
 											axes : [{
 														type : 'Numeric',
 														position : 'left',
-														fields : ['TOTAL_IN_SUM', 'TOTAL_OUT_SUM'],
+														fields : ['ENDSUM'],
 														minimum : 0,
 														label : {
 															renderer : Ext.util.Format.numberRenderer('0,000.00'),
 															font : '12px 宋体'
 														},
 														grid : true,
-														title : '金额'
+														title : '结存金额'
 													}, {
 														type : 'Category',
 														position : 'bottom',
-														fields : ['SUPPLIER_NAME'],
+														fields : ['MATERIAL_NAME'],
 														label : {
 															font : '12px 宋体'
 														},
-														title : '加工商'
+														title : '物料'
 													}],
 											series : [{
 														type : 'column',
 														axis : 'left',
-														xField : 'SUPPLIER_NAME',
-														yField : ['TOTAL_IN_SUM', 'TOTAL_OUT_SUM'],
-														title : ['收入金额', '发出金额'],
+														xField : 'MATERIAL_NAME',
+														yField : ['ENDSUM'],
+														title : ['结存金额'],
 														tips : {
 															trackMouse : true,
 															width : 140,
@@ -115,7 +141,7 @@ Ext.define('SCM.view.rpt.cpmr.ListUI', {
 														label : {
 															display : 'over',
 															'text-anchor' : 'middle',
-															field : ['TOTAL_IN_SUM', 'TOTAL_OUT_SUM'],
+															field : ['ENDSUM'],
 															renderer : Ext.util.Format.numberRenderer('0,000.00')
 														}
 													}]
@@ -126,66 +152,91 @@ Ext.define('SCM.view.rpt.cpmr.ListUI', {
 										region : 'south',
 										split : true,
 										height : 300,
-										store : 'rpt.ConsignProcessMatchingReportStore',
+										store : 'rpt.StockDetailReportStore',
 										columns : [{
 													header : '序号',
 													xtype : 'rownumberer',
 													width : 40
 												}, {
 													xtype : 'gridcolumn',
-													dataIndex : 'SUPPLIER_NAME',
-													width : 120,
-													text : '加工商'
+													dataIndex : 'WAREHOUSE_NAME',
+													width : 80,
+													text : '仓库'
 												}, {
 													xtype : 'gridcolumn',
 													dataIndex : 'MATERIAL_NAME',
 													width : 120,
-													text : '加工件'
+													text : '物料名称'
 												}, {
 													xtype : 'gridcolumn',
 													dataIndex : 'DEFAULT_UNIT_NAME',
-													width : 60,
+													width : 50,
 													text : '单位'
 												}, {
 													xtype : 'numbercolumn',
-													dataIndex : 'PRICE',
-													width : 100,
-													text : '加工单价'
-												}, {
-													xtype : 'numbercolumn',
 													dataIndex : 'BEGINVOLUME',
-													width : 100,
+													width : 80,
 													text : '期初数量'
 												}, {
 													xtype : 'numbercolumn',
-													dataIndex : 'IN_VOLUME',
-													width : 100,
-													text : '收入数量'
+													dataIndex : 'BEGINPRICE',
+													width : 80,
+													text : '期初单价'
 												}, {
 													xtype : 'numbercolumn',
-													dataIndex : 'IN_SUM',
-													width : 100,
-													text : '收入金额'
+													dataIndex : 'BEGINSUM',
+													width : 80,
+													text : '期初金额'
 												}, {
 													xtype : 'numbercolumn',
-													dataIndex : 'OUT_VOLUME',
-													width : 100,
-													text : '发出数量'
+													dataIndex : 'INVOLUME',
+													width : 80,
+													text : '本期收入数量'
 												}, {
 													xtype : 'numbercolumn',
-													dataIndex : 'OUT_SUM',
-													width : 100,
-													text : '发出金额'
+													dataIndex : 'INPRICE',
+													width : 80,
+													text : '本期收入单价'
 												}, {
 													xtype : 'numbercolumn',
-													dataIndex : 'VOLUME',
-													width : 100,
-													text : '结存数量'
+													dataIndex : 'INSUM',
+													width : 80,
+													text : '本期收入金额'
+												}, {
+													xtype : 'numbercolumn',
+													dataIndex : 'OUTVOLUME',
+													width : 80,
+													text : '本期发出数量'
+												}, {
+													xtype : 'numbercolumn',
+													dataIndex : 'OUTPRICE',
+													width : 80,
+													text : '本期发出单价'
+												}, {
+													xtype : 'numbercolumn',
+													dataIndex : 'OUTSUM',
+													width : 80,
+													text : '本期发出金额'
+												}, {
+													xtype : 'numbercolumn',
+													dataIndex : 'ENDVOLUME',
+													width : 80,
+													text : '期末数量'
+												}, {
+													xtype : 'numbercolumn',
+													dataIndex : 'ENDPRICE',
+													width : 80,
+													text : '期末单价'
+												}, {
+													xtype : 'numbercolumn',
+													dataIndex : 'ENDSUM',
+													width : 80,
+													text : '期末金额'
 												}],
 										dockedItems : [{
 													dock : 'bottom',
 													xtype : 'pagingtoolbar',
-													store : 'rpt.ConsignProcessMatchingReportStore',
+													store : 'rpt.StockDetailReportStore',
 													displayInfo : true
 												}]
 									}]

@@ -1,9 +1,9 @@
-Ext.define('SCM.controller.rpt.ConsignProcessMatchingReportController', {
+Ext.define('SCM.controller.rpt.StockDetailReportController', {
 			extend : 'Ext.app.Controller',
 			mixins : ['SCM.extend.exporter.Exporter'],
-			views : ['rpt.cpmr.ListUI'],
-			stores : ['rpt.ConsignProcessMatchingReportStore', 'rpt.ConsignProcessMatchingChartStore', 'rpt.MonthStore'],
-			models : ['rpt.ConsignProcessMatchingReportModel', 'rpt.ConsignProcessMatchingChartModel', 'rpt.MonthModel'],
+			views : ['rpt.sdr.ListUI'],
+			stores : ['rpt.StockDetailReportStore', 'rpt.StockDetailChartStore', 'rpt.MonthStore'],
+			models : ['rpt.StockDetailReportModel', 'rpt.StockDetailChartModel', 'rpt.MonthModel'],
 
 			/**
 			 * 初始化controller 增加事件监控
@@ -11,15 +11,15 @@ Ext.define('SCM.controller.rpt.ConsignProcessMatchingReportController', {
 			init : function() {
 				this.control({
 							// 完成日志界面初始化后调用
-							'consignprocessmatchingreport' : {
+							'stockdetail' : {
 								afterrender : this.initComponent
 							},
 							// 列表界面刷新
-							'consignprocessmatchingreport button[action=search]' : {
+							'stockdetail button[action=search]' : {
 								click : this.refreshRecord
 							},
 							// 数据导出
-							'consignprocessmatchingreport button[action=export]' : {
+							'stockdetail button[action=export]' : {
 								click : this.exportExcel
 							}
 						});
@@ -35,7 +35,8 @@ Ext.define('SCM.controller.rpt.ConsignProcessMatchingReportController', {
 				this.listPanel = view.down('gridpanel');
 				this.chartPanel = view.down('panel chart');
 				this.searchMonth = view.down('combobox[name=searchMonth]');
-				this.searchSupplierId = view.down('combogrid[name=searchSupplierId]');
+				this.searchWarehouseId = view.down('combogrid[name=searchWarehouseId]');
+				this.searchMaterialId = view.down('combogrid[name=searchMaterialId]');
 				this.searchMonth.store.load({
 							scope : this,
 							callback : function(records, operation, success) {
@@ -66,13 +67,23 @@ Ext.define('SCM.controller.rpt.ConsignProcessMatchingReportController', {
 					showWarning('请选择月份！');
 					return;
 				}
-				if (!Ext.isEmpty(this.searchSupplierId.getValue())) {
-					this.listPanel.store.getProxy().extraParams.supplier = this.searchSupplierId.getValue();
-					this.whereStr += " and CurConsignProcessedPriceV.supplier_id = '";
-					this.whereStr += this.searchSupplierId.getValue();
+				if (!Ext.isEmpty(this.searchWarehouseId.getValue())) {
+					this.listPanel.store.getProxy().extraParams.warehouseId = this.searchWarehouseId.getValue();
+					this.chartPanel.store.getProxy().extraParams.warehouseId = this.searchWarehouseId.getValue();
+					this.whereStr += " and CurMaterialBalanceV.warehouse_id = '";
+					this.whereStr += this.searchWarehouseId.getValue();
 					this.whereStr += "' ";
 				} else {
-					this.listPanel.store.getProxy().extraParams.supplier = "";
+					this.listPanel.store.getProxy().extraParams.warehouseId = "";
+					this.chartPanel.store.getProxy().extraParams.warehouseId = "";
+				}
+				if (!Ext.isEmpty(this.searchMaterialId.getValue())) {
+					this.listPanel.store.getProxy().extraParams.materialId = this.searchMaterialId.getValue();
+					this.whereStr += " and CurMaterialBalanceV.material_id = '";
+					this.whereStr += this.searchMaterialId.getValue();
+					this.whereStr += "' ";
+				} else {
+					this.listPanel.store.getProxy().extraParams.materialId = "";
 				}
 				this.listPanel.store.load();
 				this.chartPanel.store.load();

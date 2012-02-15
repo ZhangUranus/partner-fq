@@ -311,6 +311,16 @@
 		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="queryConsignMatchChart" />
 		<response name="success" type="none" />
 	</request-map>
+	<request-map uri="queryStockDetailReport">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="queryStockDetailReport" />
+		<response name="success" type="none" />
+	</request-map>
+	<request-map uri="queryStockDetailChart">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="queryStockDetailChart" />
+		<response name="success" type="none" />
+	</request-map>
 	
 	
 	
