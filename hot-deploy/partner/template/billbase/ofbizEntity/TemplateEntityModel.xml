@@ -42,7 +42,7 @@ under the License.
 			#end 
 	  #end <!-- \n -->
       <field name="note" type="description"></field>
-      <field name="status" type="numeric"></field>
+      <field name="status" type="int"></field>
       <field name="createdStamp" type="date-time"></field>
       <field name="lastUpdatedStamp" type="date-time"></field>
       <prim-key field="id"/>
