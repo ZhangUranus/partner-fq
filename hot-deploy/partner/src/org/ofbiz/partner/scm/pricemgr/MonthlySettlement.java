@@ -233,7 +233,7 @@ public class MonthlySettlement {
 		for(GenericValue bill:seqBillValueList){
 			String entityName=bill.getEntityName();
 			IBizStock iBiz=getBizImpByName(entityName);
-			iBiz.updateStock(bill,isOutByName(entityName));
+			iBiz.updateStock(bill,isOutByName(entityName),false);
 		}
 		Debug.logInfo("重算业务，操作结束~~~~~~~", module);
 	}

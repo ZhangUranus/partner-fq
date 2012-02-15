@@ -44,7 +44,7 @@ public class WorkshopDrawMaterialEvents {
 					throw new Exception("can`t find WorkshopDrawMaterial bill or bizdate is null");
 				}
 
-				BizStockImpFactory.getBizStockImp(BillType.WorkshopDrawMaterial).updateStock(billHead, true);
+				BizStockImpFactory.getBizStockImp(BillType.WorkshopDrawMaterial).updateStock(billHead, true, false);
 
 				BillBaseEvent.submitBill(request, response);// 更新单据状态
 			}
@@ -87,7 +87,7 @@ public class WorkshopDrawMaterialEvents {
 					throw new Exception("can`t find WorkshopDrawMaterial bill or bizdate is null");
 				}
 
-				BizStockImpFactory.getBizStockImp(BillType.WorkshopDrawMaterial).updateStock(billHead, false);
+				BizStockImpFactory.getBizStockImp(BillType.WorkshopDrawMaterial).updateStock(billHead, false, true);
 
 				BillBaseEvent.rollbackBill(request, response);// 撤销单据
 			}

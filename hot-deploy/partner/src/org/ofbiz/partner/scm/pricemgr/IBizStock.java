@@ -16,5 +16,5 @@ public interface IBizStock {
 	 * @param calItem
 	 * @throws Exception
 	 */
-	public void updateStock(GenericValue billValue, boolean isOut) throws Exception;
+	public void updateStock(GenericValue billValue, boolean isOut, boolean isCancel) throws Exception;
 }

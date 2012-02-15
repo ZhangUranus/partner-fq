@@ -43,7 +43,7 @@ public class ConsignWarehousingEvents {
 					throw new Exception("can`t find ConsignWarehousing bill or bizdate is null");
 				}
 
-				BizStockImpFactory.getBizStockImp(BillType.ConsignWarehousing).updateStock(billHead, false);
+				BizStockImpFactory.getBizStockImp(BillType.ConsignWarehousing).updateStock(billHead, false, false);
 
 				BillBaseEvent.submitBill(request, response);// 更新单据状态
 			}
@@ -86,7 +86,7 @@ public class ConsignWarehousingEvents {
 					throw new Exception("can`t find ConsignWarehousing bill or bizdate is null");
 				}
 
-				BizStockImpFactory.getBizStockImp(BillType.ConsignWarehousing).updateStock(billHead, true);
+				BizStockImpFactory.getBizStockImp(BillType.ConsignWarehousing).updateStock(billHead, true, true);
 
 				BillBaseEvent.rollbackBill(request, response);// 撤销单据
 			}

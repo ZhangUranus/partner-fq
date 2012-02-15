@@ -44,7 +44,7 @@ public class WorkshopReturnMaterialEvents {
 					throw new Exception("can`t find WorkshopReturnMaterial bill or bizdate is null");
 				}
 
-				BizStockImpFactory.getBizStockImp(BillType.WorkshopReturnMaterial).updateStock(billHead, false);
+				BizStockImpFactory.getBizStockImp(BillType.WorkshopReturnMaterial).updateStock(billHead, false, false);
 
 				BillBaseEvent.submitBill(request, response);// 更新单据状态
 			}
@@ -87,7 +87,7 @@ public class WorkshopReturnMaterialEvents {
 					throw new Exception("can`t find WorkshopReturnMaterial bill or bizdate is null");
 				}
 
-				BizStockImpFactory.getBizStockImp(BillType.WorkshopReturnMaterial).updateStock(billHead, true);
+				BizStockImpFactory.getBizStockImp(BillType.WorkshopReturnMaterial).updateStock(billHead, true, true);
 
 				BillBaseEvent.rollbackBill(request, response);// 撤销单据
 			}

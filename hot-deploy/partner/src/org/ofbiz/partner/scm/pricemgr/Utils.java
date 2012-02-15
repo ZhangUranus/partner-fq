@@ -137,7 +137,7 @@ public class Utils {
 		GenericValue billHead = delegator.findOne("ReturnProductWarehousing", UtilMisc.toMap("id", billValue.getString("id")), false);
 		
 		if(billHead != null){
-			BizStockImpFactory.getBizStockImp(BillType.ReturnProductWarehousing).updateStock(billHead, false);
+			BizStockImpFactory.getBizStockImp(BillType.ReturnProductWarehousing).updateStock(billHead, false, false);
 	
 			if (billHead != null) {
 				billHead.set("status", new Long(4));
