@@ -1,6 +1,7 @@
 package org.ofbiz.partner.scm.pricemgr;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -151,8 +152,8 @@ public class MonthlySettlement {
 		cal.add(Calendar.MONTH, 1);
 		Date endDate=cal.getTime();
 		List<EntityCondition> condList=new ArrayList<EntityCondition>();
-		condList.add(EntityCondition.makeCondition("submitStamp",EntityOperator.GREATER_THAN_EQUAL_TO,fromDate));
-		condList.add(EntityCondition.makeCondition("submitStamp",EntityOperator.LESS_THAN,endDate));
+		condList.add(EntityCondition.makeCondition("submitStamp",EntityOperator.GREATER_THAN_EQUAL_TO,new Timestamp(fromDate.getTime())));
+		condList.add(EntityCondition.makeCondition("submitStamp",EntityOperator.LESS_THAN,new Timestamp(endDate.getTime())));
 		condList.add(EntityCondition.makeCondition("status",EntityOperator.EQUALS,4));
 		EntityCondition composeCond=EntityCondition.makeCondition(condList);
 		
@@ -336,6 +337,9 @@ public class MonthlySettlement {
 		//转移车间中间表 CurWorkshopPrice HisWorkshopPrice
 		transferEntityData("CurWorkshopPrice", "HisWorkshopPrice",cond,null);
 		
+		//转移发外加工对数表 CurConsignProcessedPrice HisConsignProcessedPrice
+		transferEntityData("CurConsignProcessedPrice", "HisConsignProcessedPrice",cond,null);
+		
 	}
 
 	/**
@@ -448,8 +452,8 @@ public class MonthlySettlement {
 		cal.add(Calendar.MONTH, 1);
 		Date endDate=cal.getTime();
 		List<EntityCondition> condList=new ArrayList<EntityCondition>();
-		condList.add(EntityCondition.makeCondition("submitStamp",EntityOperator.GREATER_THAN_EQUAL_TO,fromDate));
-		condList.add(EntityCondition.makeCondition("submitStamp",EntityOperator.LESS_THAN,endDate));
+		condList.add(EntityCondition.makeCondition("submitStamp",EntityOperator.GREATER_THAN_EQUAL_TO,new Timestamp(fromDate.getTime())));
+		condList.add(EntityCondition.makeCondition("submitStamp",EntityOperator.LESS_THAN,new Timestamp(endDate.getTime())));
 		condList.add(EntityCondition.makeCondition("status",EntityOperator.EQUALS,4));
 		EntityCondition cond=EntityCondition.makeCondition(condList);
 		
