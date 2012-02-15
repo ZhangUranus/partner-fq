@@ -20,7 +20,7 @@
 		<field name="submitterSystemUserId" type="id-long"></field>
 		<field name="totalsum" type="fixed-point"></field>
 		<field name="note" type="description"></field>
-		<field name="status" type="numeric"></field>
+		<field name="status" type="int"></field>
 		<field name="createdStamp" type="date-time"></field>
 		<field name="submitStamp" type="date-time"></field>
 		<prim-key field="id" />
