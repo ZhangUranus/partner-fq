@@ -49,7 +49,7 @@ public class WorkshopReturnProductEvents {
 					throw new Exception("can`t find WorkshopReturnProduct bill or bizdate is null");
 				}
 
-				if (billHead.getLong("status").equals(new Long(0))) {
+				if (billHead.getInteger("status")==0) {
 					BizStockImpFactory.getBizStockImp(BillType.WorkshopReturnProduct).updateStock(billHead, true, false);
 					BillBaseEvent.submitBill(request, response);// 更新单据状态
 				} else {
@@ -69,15 +69,15 @@ public class WorkshopReturnProductEvents {
 					}
 					
 					//当状态为未验收时，创建进货单，并置状态为验收中
-					if(billHead.getLong("checkStatus").equals(new Long(0))){
+					if(billHead.getInteger("checkStatus")==0){
 						Utils.createReturnProductWarehousingBill(billHead,request);	//创建进货单
-						billHead.set("checkStatus", new Long(1));// 设置验收状态为验收中
+						billHead.set("checkStatus", 1);// 设置验收状态为验收中
 					}
 					
 					//当所有物料都完成验收时，将状态改为完成验收，并提交进货单
 					if (isFinish) {
 						Utils.submitReturnProductWarehousing(billHead,request);	//提交
-						billHead.set("checkStatus", new Long(2));
+						billHead.set("checkStatus", 2);
 					}
 					billHead.set("checkerSystemUserId", CommonEvents.getAttributeToSession(request, "uid"));
 					billHead.store();

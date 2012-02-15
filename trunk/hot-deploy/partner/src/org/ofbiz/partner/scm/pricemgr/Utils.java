@@ -110,7 +110,7 @@ public class Utils {
 		billHead.set("submitterSystemUserId", billValue.getString("submitterSystemUserId"));
 		billHead.set("totalsum", billValue.getBigDecimal("totalsum"));
 		billHead.set("note", billValue.getString("note"));
-		billHead.set("status", new Long(0));
+		billHead.set("status", 0);
 		billHead.set("createdStamp", billValue.getTimestamp("createdStamp"));
 		billHead.set("submitStamp", billValue.getTimestamp("submitStamp"));
 		billHead.create();
@@ -140,7 +140,7 @@ public class Utils {
 			BizStockImpFactory.getBizStockImp(BillType.ReturnProductWarehousing).updateStock(billHead, false, false);
 	
 			if (billHead != null) {
-				billHead.set("status", new Long(4));
+				billHead.set("status", 4);
 				billHead.set("submitterSystemUserId", CommonEvents.getAttributeToSession(request, "uid"));
 				billHead.set("submitStamp", new Timestamp(System.currentTimeMillis()));
 				billHead.store();

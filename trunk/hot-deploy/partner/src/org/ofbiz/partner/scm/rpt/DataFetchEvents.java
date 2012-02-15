@@ -320,7 +320,7 @@ public class DataFetchEvents {
 			} else {
 				jsonStr.append(",");
 			}
-			jsonStr.append("{'id' : '" + v.getString("year") + v.getString("month") + "',");
+			jsonStr.append("{'id' : '" + v.getString("year") + "-" + v.getString("month") + "',");
 			jsonStr.append("'name' : '" + v.getString("year") + "年" + v.getString("month") + "月" + "'}");
 		}
 		if (!isFirstValue) {
