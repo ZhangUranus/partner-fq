@@ -114,7 +114,8 @@ public class MonthlySettlement {
 	            //修改系统当前期间，滚动到下一个月
 	            stepToNextPeriod();
 	            
-	            
+	            //提交事务
+	            TransactionUtil.commit(beganTransaction);
 	            
 		} catch (Exception e) {
             Debug.logError(e, module);
@@ -127,12 +128,6 @@ public class MonthlySettlement {
         } finally {
         	//释放系统
         	unlockSystem();
-        	
-            try {
-                TransactionUtil.commit(beganTransaction);
-            } catch (GenericTransactionException e) {
-                Debug.logError(e, "Unable to commit transaction", module);
-            }
         }
         Debug.logInfo("月结操作结束~~~~~~~", module);
 		return true;
@@ -412,6 +407,9 @@ public class MonthlySettlement {
 	    		
 	    		//修改系统当前期间，滚动到上一个月
 	    		 stepToPrePeriod();
+	    		 
+	    		//提交事务
+	    		 TransactionUtil.commit(beganTransaction);
 	            
 		} catch (Exception e) {
             Debug.logError(e, module);
@@ -423,12 +421,6 @@ public class MonthlySettlement {
         } finally {
         	//释放系统
         	unlockSystem();
-        	
-            try {
-                TransactionUtil.commit(beganTransaction);
-            } catch (GenericTransactionException e) {
-                Debug.logError(e, "Unable to commit transaction", module);
-            }
         }
 		
 		return true;
@@ -511,6 +503,10 @@ public class MonthlySettlement {
 		//删除本期数据,转移车间中间表 
 		delegator.removeAll("CurWorkshopPrice");
 		transferEntityData("HisWorkshopPrice", "CurWorkshopPrice",cond,null);
+		
+		//删除本期数据,转移发外加工对数表
+		delegator.removeAll("CurConsignProcessedPrice");
+		transferEntityData("HisConsignProcessedPrice", "CurConsignProcessedPrice",cond,null);
 	}
 	
 	
