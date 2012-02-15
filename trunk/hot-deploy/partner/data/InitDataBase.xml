@@ -23,4 +23,5 @@ under the License.
    <TMaterialType id='2' number='02' name='坯件' />	
    <TMaterialType id='3' number='03' name='半成品' />
    <TMaterialType id='4' number='04' name='成品' />
+   <TMaterialType id='5' number='05' name='安装包装' />
 </entity-engine-xml>
