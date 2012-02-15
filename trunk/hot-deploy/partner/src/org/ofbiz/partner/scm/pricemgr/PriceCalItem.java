@@ -18,8 +18,9 @@ public class PriceCalItem {
 	private String billEntryId=null;
 	private boolean isOut=false;//是否出库操作
 	private String extendParam = null;//扩展参数，不需要用到可以传null值
+	private boolean isCancel=false;//是否为撤销操作
 	public PriceCalItem(Date biz,String warehouseId,String materialId, BigDecimal amount, BigDecimal sum,
-			BillType billType,String billEntryId,boolean isOut,String extendParam) {
+			BillType billType,String billEntryId,boolean isOut,boolean isCancel,String extendParam) {
 		super();
 		this.bizTime=biz;
 		this.warehouseId = warehouseId;
@@ -29,6 +30,7 @@ public class PriceCalItem {
 		this.billType = billType;
 		this.billEntryId=billEntryId;
 		this.isOut=isOut;
+		this.isCancel=isCancel;
 		this.extendParam = extendParam;
 	}
 	public Date getBizTime() {
@@ -54,6 +56,9 @@ public class PriceCalItem {
 	}
 	public boolean isOut() {
 		return isOut;
+	}
+	public boolean isCancel() {
+		return isCancel;
 	}
 	public String getExtendParam() {
 		return extendParam;
@@ -85,6 +90,7 @@ public class PriceCalItem {
 	public void setExtendParam(String extendParam) {
 		this.extendParam = extendParam;
 	}
-	
-	
+	public void setCancel(boolean isCancel) {
+		this.isCancel = isCancel;
+	}
 }

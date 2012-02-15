@@ -18,7 +18,7 @@ import org.ofbiz.partner.scm.pricemgr.Utils;
 public class WorkshopDrawMaterialBizImp implements IBizStock {
 	private Delegator delegator = org.ofbiz.partner.scm.common.Utils.getDefaultDelegator();
 
-	public void updateStock(GenericValue billValue, boolean isOut) throws Exception {
+	public void updateStock(GenericValue billValue, boolean isOut, boolean isCancel) throws Exception {
 		// 注意不能使用billHead.getDate方法，出产生castException异常
 		Date bizDate = (Date) billValue.get("bizDate");
 		if (bizDate == null || !Utils.isCurPeriod(bizDate)) {
@@ -62,7 +62,7 @@ public class WorkshopDrawMaterialBizImp implements IBizStock {
 			Debug.log("制造领料单价计算:物料id" + materialId + ";数量" + volume + ";金额" + sum, "WorkshopDrawMaterialBizImp");
 			
 			// 构建计算条目
-			PriceCalItem item = new PriceCalItem(bizDate, warehouseId, materialId, volume, sum, BillType.WorkshopDrawMaterial, v.getString("id"), isOut, null);
+			PriceCalItem item = new PriceCalItem(bizDate, warehouseId, materialId, volume, sum, BillType.WorkshopDrawMaterial, v.getString("id"), isOut, isCancel, null);
 
 			// 计算分录单价
 			PriceMgr.getInstance().calPrice(item);

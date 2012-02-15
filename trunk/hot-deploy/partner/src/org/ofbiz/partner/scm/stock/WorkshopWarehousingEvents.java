@@ -43,7 +43,7 @@ public class WorkshopWarehousingEvents {
 					throw new Exception("can`t find WorkshopWarehousing bill or bizdate is null");
 				}
 
-				BizStockImpFactory.getBizStockImp(BillType.WorkshopWarehousing).updateStock(billHead, false);
+				BizStockImpFactory.getBizStockImp(BillType.WorkshopWarehousing).updateStock(billHead, false, false);
 
 				BillBaseEvent.submitBill(request, response);// 更新单据状态
 			}
@@ -86,7 +86,7 @@ public class WorkshopWarehousingEvents {
 					throw new Exception("can`t find WorkshopWarehousing bill or bizdate is null");
 				}
 
-				BizStockImpFactory.getBizStockImp(BillType.WorkshopWarehousing).updateStock(billHead, true);
+				BizStockImpFactory.getBizStockImp(BillType.WorkshopWarehousing).updateStock(billHead, true, true);
 
 				BillBaseEvent.rollbackBill(request, response);// 撤销单据
 			}

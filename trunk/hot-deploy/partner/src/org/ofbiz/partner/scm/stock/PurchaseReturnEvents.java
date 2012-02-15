@@ -106,7 +106,7 @@ public class PurchaseReturnEvents {
 					PurPlanBalance.getInstance().updateInWarehouse(supplierId, materialId, volume);
 				}
 
-				BizStockImpFactory.getBizStockImp(BillType.PurchaseReturn).updateStock(billHead, true);
+				BizStockImpFactory.getBizStockImp(BillType.PurchaseReturn).updateStock(billHead, true, false);
 
 				BillBaseEvent.submitBill(request, response);// 更新单据状态
 
@@ -171,7 +171,7 @@ public class PurchaseReturnEvents {
 					PurPlanBalance.getInstance().updateInWarehouse(supplierId, materialId, volume.negate());
 				}
 
-				BizStockImpFactory.getBizStockImp(BillType.PurchaseReturn).updateStock(billHead, false);
+				BizStockImpFactory.getBizStockImp(BillType.PurchaseReturn).updateStock(billHead, false, true);
 				
 				BillBaseEvent.rollbackBill(request, response);// 撤销单据
 			}

@@ -50,7 +50,7 @@ public class ConsignReturnProductEvents {
 				}
 				
 				if (billHead.getLong("status").equals(new Long(0))) {
-					BizStockImpFactory.getBizStockImp(BillType.ConsignReturnProduct).updateStock(billHead, true);
+					BizStockImpFactory.getBizStockImp(BillType.ConsignReturnProduct).updateStock(billHead, true, false);
 					BillBaseEvent.submitBill(request, response);// 更新单据状态
 				} else {
 					// 获取单据id分录条目
@@ -122,7 +122,7 @@ public class ConsignReturnProductEvents {
 					throw new Exception("can`t find ConsignReturnProduct bill or bizdate is null");
 				}
 
-				BizStockImpFactory.getBizStockImp(BillType.ConsignReturnProduct).updateStock(billHead, false);
+				BizStockImpFactory.getBizStockImp(BillType.ConsignReturnProduct).updateStock(billHead, false, true);
 
 				BillBaseEvent.rollbackBill(request, response);// 撤销单据
 			}

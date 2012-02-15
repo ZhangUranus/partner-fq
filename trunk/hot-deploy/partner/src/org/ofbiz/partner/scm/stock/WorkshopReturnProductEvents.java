@@ -50,7 +50,7 @@ public class WorkshopReturnProductEvents {
 				}
 
 				if (billHead.getLong("status").equals(new Long(0))) {
-					BizStockImpFactory.getBizStockImp(BillType.WorkshopReturnProduct).updateStock(billHead, true);
+					BizStockImpFactory.getBizStockImp(BillType.WorkshopReturnProduct).updateStock(billHead, true, false);
 					BillBaseEvent.submitBill(request, response);// 更新单据状态
 				} else {
 					// 获取单据id分录条目
@@ -122,7 +122,7 @@ public class WorkshopReturnProductEvents {
 					throw new Exception("can`t find WorkshopReturnProduct bill or bizdate is null");
 				}
 
-				BizStockImpFactory.getBizStockImp(BillType.WorkshopReturnProduct).updateStock(billHead, false);
+				BizStockImpFactory.getBizStockImp(BillType.WorkshopReturnProduct).updateStock(billHead, false, true);
 
 				BillBaseEvent.rollbackBill(request, response);// 撤销单据
 			}

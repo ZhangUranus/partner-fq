@@ -70,7 +70,7 @@ public class InspectiveBizEvents {
 					PurPlanBalance.getInstance().updateInWarehouse(supplierId, materialId, volume.negate());
 				}
 
-				BizStockImpFactory.getBizStockImp(BillType.PurchaseWarehouse).updateStock(billHead, false);
+				BizStockImpFactory.getBizStockImp(BillType.PurchaseWarehouse).updateStock(billHead, false, false);
 
 				BillBaseEvent.submitBill(request, response);// 更新单据状态
 
@@ -135,7 +135,7 @@ public class InspectiveBizEvents {
 					PurPlanBalance.getInstance().updateInWarehouse(supplierId, materialId, volume);
 				}
 
-				BizStockImpFactory.getBizStockImp(BillType.PurchaseWarehouse).updateStock(billHead, true);
+				BizStockImpFactory.getBizStockImp(BillType.PurchaseWarehouse).updateStock(billHead, true, true);
 				
 				BillBaseEvent.rollbackBill(request, response);// 撤销单据
 			}

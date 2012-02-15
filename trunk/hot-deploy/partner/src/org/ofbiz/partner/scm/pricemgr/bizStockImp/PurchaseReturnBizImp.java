@@ -16,7 +16,7 @@ import org.ofbiz.partner.scm.pricemgr.PriceMgr;
 public class PurchaseReturnBizImp implements IBizStock {
 	private Delegator delegator = org.ofbiz.partner.scm.common.Utils.getDefaultDelegator();
 
-	public void updateStock(GenericValue billValue, boolean isOut) throws Exception {
+	public void updateStock(GenericValue billValue, boolean isOut, boolean isCancel) throws Exception {
 		Date bizDate = (Date) billValue.get("bizDate");
 
 		// 获取单据id分录条目
@@ -36,7 +36,7 @@ public class PurchaseReturnBizImp implements IBizStock {
 			}
 
 			// 构建计算条目
-			PriceCalItem item = new PriceCalItem(bizDate, warehouseId, materialId, volume, sum, BillType.PurchaseReturn, v.getString("id"), isOut, null);
+			PriceCalItem item = new PriceCalItem(bizDate, warehouseId, materialId, volume, sum, BillType.PurchaseReturn, v.getString("id"), isOut, isCancel, null);
 
 			// 计算分录单价
 			PriceMgr.getInstance().calPrice(item);

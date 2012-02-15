@@ -106,12 +106,12 @@ public class PriceCalImp4WMA implements IPriceCal {
 			calAmount = curAmount.add(amount);// 计算后数量
 			calSum = curSum.add(sum);// 计算后金额
 			
-			if(item.isOut()){
-				outVolume = amount.negate();
-				outSum = sum.negate();
-			} else {
+			if(item.isOut() == item.isCancel()){//取消操作并非正常出入库
 				inVolume = amount;
 				inSum = sum;
+			} else {
+				outVolume = amount.negate();
+				outSum = sum.negate();
 			}
 
 			curValue.set("volume", calAmount);
