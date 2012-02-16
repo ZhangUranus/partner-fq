@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.ofbiz.partner.scm.common.CommonEvents;
 import org.ofbiz.partner.scm.pricemgr.MonthlySettlement;
 import org.ofbiz.partner.scm.pricemgr.Utils;
 
@@ -29,6 +30,7 @@ public class MonthlySettleEvents {
 		request.setAttribute("year", year);
 		request.setAttribute("month", month);
 		MonthlySettlement.getInstance().monthlySettle(request,response);
+		CommonEvents.writeJsonDataToExt(response, "{success:true}");
 		return "success";
 	}
 	
@@ -44,6 +46,7 @@ public class MonthlySettleEvents {
 		request.setAttribute("year", year);
 		request.setAttribute("month", month);
 		MonthlySettlement.getInstance().rollbackSettle(request,response);
+		CommonEvents.writeJsonDataToExt(response, "{success:true}");
 		return "success";
 	}
 	

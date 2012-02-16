@@ -50,4 +50,12 @@ public class Utils {
 		}
 		return ja;
 	}
+	
+	/**
+	 * 返回系统数据库配置名称 例如 localmysql
+	 * @return
+	 */
+	public static String getConnectionHelperName(){
+		return  "localmysql";
+	}
 }

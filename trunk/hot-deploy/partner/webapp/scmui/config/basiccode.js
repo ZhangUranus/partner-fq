@@ -147,3 +147,65 @@ showWarning= function(msg){
                     buttons: Ext.Msg.OK
                 });
 };
+
+ var defaultPrintCss='<style type="text/css">'+
+    '.base'+
+    '{'+
+    /*绝对定位*/
+    'position: absolute; '+
+     /*绝对定位是的左边距离*/
+    'left:50px; '+
+    /*绝对定位是的上边距离*/
+    'top:100px; '+
+    'width:300px;'+
+    /*内容超过规定宽度时是否换行*/
+    'white-space: nowrap; '+
+    /*内容超过规定宽度时是否截取超长部分*/
+    'overflow:hidden;'+
+    /* 分页 page-break-before:always;*/
+    '}'+
+    '</style>';
+ 
+ /*打印数据
+   @win 输出窗口
+   @data 打印的内容，json对象 {billNumber:'001',bizDate:'2012-08-09',supplierName:'江门开发' ,entries:[{materialName:'钢条',volume:10},{materialName:'钢条',volume:10}]}
+   @printTemplate 打印模板，定义打印内容的打印样式 [{dataIndex:'data.billNumber',style:'left:0px;top:150px'}, {dataIndex:'data.supplierName',style:'left:0px;top:100px'},{dataIndex:'data.entries[0].materialName',style:'left:0px;top:150px'}]
+ */
+ function appendData2Win(win,data,printTemplate){
+     if(!isArray(printTemplate))return ;
+  
+  var records= new Array(printTemplate.length);
+  for(var t in printTemplate){
+   var item=printTemplate[t];
+   try{
+    var text = eval(item.dataIndex);/*查找data对象的打印值*/
+    records[t]={style:item.style,text:text};
+   }catch(err){
+     /*没有查找到对象值，忽略*/
+   }
+  }
+  insertPrintContent(win,records);
+ }
+ /*jason 对象转化为html字符添加到页面上，[{style:'',text:''},{}....]*/
+function insertPrintContent(win,records){
+  if(isArray(records)&&win.document!= undefined){
+   for(var i in records){
+    win.document.write(getBlock(records[i]));
+   }
+  }
+ };
+ /*jason 对象转化为div，{style:'',text:''}*/
+ function getBlock(jo){
+  jo=jo||{};
+  var str='<div class=base ';
+  if(jo.style!= undefined){
+   str=str+' style=\''+jo.style+ ' \' ';
+  }
+  str=str+'>'+jo.text+'</div>';
+  return str;
+ };
+ /*判断对象是否数组*/
+ function isArray(obj) { 
+  return Object.prototype.toString.call(obj) === '[object Array]'; 
+ }
+

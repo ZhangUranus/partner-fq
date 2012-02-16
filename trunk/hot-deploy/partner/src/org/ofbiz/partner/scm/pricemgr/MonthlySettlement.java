@@ -1,6 +1,8 @@
 package org.ofbiz.partner.scm.pricemgr;
 
 import java.math.BigDecimal;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,6 +22,7 @@ import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericValue;
 import org.ofbiz.entity.condition.EntityCondition;
 import org.ofbiz.entity.condition.EntityOperator;
+import org.ofbiz.entity.jdbc.ConnectionFactory;
 import org.ofbiz.entity.transaction.GenericTransactionException;
 import org.ofbiz.entity.transaction.TransactionUtil;
 import org.ofbiz.partner.scm.common.GenericValue4Compare;
@@ -201,18 +204,39 @@ public class MonthlySettlement {
 	 */
 	private void clearMidTable()throws Exception {
 		Debug.logInfo("清空中间表为月初状态，操作开始~~~~~~~", module);
-		//当前余额表CurMaterialBalance 【volume、totalSum】设置为零
-		delegator.storeByCondition("CurMaterialBalance", UtilMisc.toMap("volume", BigDecimal.ZERO, "totalSum", BigDecimal.ZERO), null);
+		Connection conn= ConnectionFactory.getConnection(org.ofbiz.partner.scm.common.Utils.getConnectionHelperName());
 		
-		//当前委外单价中间表CurConsignPrice 【volume、totalSum】设置为零
-		delegator.storeByCondition("CurConsignPrice", UtilMisc.toMap("volume", BigDecimal.ZERO, "totalSum", BigDecimal.ZERO), null);
-		
-		//当前车间单价中间表CurWorkshopPrice 【volume、totalSum】设置为零
-		delegator.storeByCondition("CurWorkshopPrice", UtilMisc.toMap("volume", BigDecimal.ZERO, "totalSum", BigDecimal.ZERO), null);
-		
-		//当前成品单价中间表CurProductPrice 【volume、totalSum】设置为零
-		delegator.storeByCondition("CurProductPrice", UtilMisc.toMap("volume", BigDecimal.ZERO, "totalSum", BigDecimal.ZERO), null);
-		
+		try{
+			//当前余额表CurMaterialBalance 【inVolume、inSum、outVolume、outSum】设置为零  【volume=beginvolume、totalSum=beginsum】
+			Debug.logInfo("执行update cur_material_balance set in_Volume=0 ,in_Sum=0,out_Volume=0,out_Sum=0,volume=beginvolume,total_Sum=beginsum ", module);
+			PreparedStatement ps=conn.prepareStatement("update cur_material_balance set in_Volume=0 ,in_Sum=0,out_Volume=0,out_Sum=0,volume=beginvolume,total_Sum=beginsum ");
+			ps.executeUpdate();
+			
+			//当前委外单价中间表CurConsignPrice 【volume=beginvolume、totalsum=beginsum】
+			Debug.logInfo("执行update Cur_Consign_Price set volume=beginvolume,totalsum=beginsum ", module);
+			ps=conn.prepareStatement("update Cur_Consign_Price set volume=beginvolume,totalsum=beginsum ");
+			ps.executeUpdate();
+
+			//当前委外加工件数量中间表CurConsignProcessedPrice【outVolume=0、inVolume=0、inSum=0、volume=beginvolume】
+			Debug.logInfo("执行update Cur_Consign_Processed_Price set out_Volume=0,in_Volume=0,in_Sum=0,volume=beginvolume ", module);
+			ps=conn.prepareStatement("update Cur_Consign_Processed_Price set out_Volume=0,in_Volume=0,in_Sum=0,volume=beginvolume ");
+			ps.executeUpdate();
+			
+			//当前车间单价中间表CurWorkshopPrice 【volume=beginvolume、totalSum=beginsum】
+			Debug.logInfo("执行update Cur_Workshop_Price set volume=beginvolume,totalsum=beginsum ", module);
+			ps=conn.prepareStatement("update Cur_Workshop_Price set volume=beginvolume,totalsum=beginsum ");
+			ps.executeUpdate();
+			
+			//当前成品单价中间表CurProductPrice 【volume=beginvolume、totalSum=beginsum】
+			Debug.logInfo("执行update Cur_Product_Price set volume=beginvolume,totalsum=beginsum ", module);
+			ps=conn.prepareStatement("update Cur_Product_Price set volume=beginvolume,totalsum=beginsum ");
+			ps.executeUpdate();
+			
+		}finally{
+			if(conn!=null){
+				conn.close();
+			}
+		}
 		Debug.logInfo("清空中间表为月初状态，操作结束~~~~~~", module);
 	}
 	
@@ -322,45 +346,73 @@ public class MonthlySettlement {
 	 * 设置单价表到下一个月状态
 	 */
 	private void settleMidTable() throws Exception {
-		EntityCondition cond=EntityCondition.makeCondition(UtilMisc.toMap("year", year, "month", month));
-		//转移库存余额表
-		transferEntityData("CurMaterialBalance", "HisMaterialBalance",cond,null);
-		
-		//转移委外中间表 CurConsignPrice HisConsignPrice
-		transferEntityData("CurConsignPrice", "HisConsignPrice",cond,null);
-		
-		//转移车间中间表 CurWorkshopPrice HisWorkshopPrice
-		transferEntityData("CurWorkshopPrice", "HisWorkshopPrice",cond,null);
-		
-		//转移发外加工对数表 CurConsignProcessedPrice HisConsignProcessedPrice
-		transferEntityData("CurConsignProcessedPrice", "HisConsignProcessedPrice",cond,null);
-		
-	}
+		Debug.logInfo("设置中间表到下一个月状态，操作开始", module);
+		Connection conn= ConnectionFactory.getConnection(org.ofbiz.partner.scm.common.Utils.getConnectionHelperName());
+		int yearOfnextMonth=Utils.getYearOfNextMonth(year, month);
+		int monthOfnextMonth=Utils.getMonthOfNextMonth(year, month);
+		try{
+			//当前余额表CurMaterialBalance 转移到历史表 ，当前余额表【in_Volume=0 ,in_Sum=0,out_Volume=0,out_Sum=0,beginvolume=volume,beginsum=total_Sum】
+			Debug.logInfo("执行delete from  his_material_balance where year="+year+" and month="+month, module);
+			PreparedStatement ps=conn.prepareStatement("delete from  his_material_balance where year="+year+" and month="+month);
+			ps.executeUpdate();
+			Debug.logInfo("执行insert his_material_balance select * from cur_material_balance", module);
+			ps=conn.prepareStatement("insert his_material_balance select * from cur_material_balance");
+			ps.executeUpdate();
+			Debug.logInfo("执行update cur_material_balance set year="+yearOfnextMonth+" ,month="+monthOfnextMonth+" ,in_Volume=0 ,in_Sum=0,out_Volume=0,out_Sum=0,beginvolume=volume,beginsum=total_Sum", module);
+			ps=conn.prepareStatement("update cur_material_balance set year="+yearOfnextMonth+" ,month="+monthOfnextMonth+" ,in_Volume=0 ,in_Sum=0,out_Volume=0,out_Sum=0,beginvolume=volume,beginsum=total_Sum");
+			ps.executeUpdate();
+			
+			//当前委外单价中间表CurConsignPrice数据转移到历史表，当前余额表更新【年、月、期初数量、期初金额】
+			Debug.logInfo("执行delete from  His_Consign_Price where year="+year+" and month="+month, module);
+			ps=conn.prepareStatement("delete from  His_Consign_Price where year="+year+" and month="+month);
+			ps.executeUpdate();
+			Debug.logInfo("执行insert His_Consign_Price select * from Cur_Consign_Price", module);
+			ps=conn.prepareStatement("insert His_Consign_Price select * from Cur_Consign_Price");
+			ps.executeUpdate();
+			Debug.logInfo("执行update Cur_Consign_Price set year="+yearOfnextMonth+" ,month="+monthOfnextMonth+" , beginvolume=volume,beginsum=totalsum", module);
+			ps=conn.prepareStatement("update Cur_Consign_Price set year="+yearOfnextMonth+" ,month="+monthOfnextMonth+" , beginvolume=volume,beginsum=totalsum");
+			ps.executeUpdate();
 
-	/**
-	 * 转移实体数据,转移表和目标表字段要一致
-	 * @throws Exception
-	 */
-	private void transferEntityData(String fromEntityName,String targetEntityName,EntityCondition cond,Set<String> fields) throws Exception{
-		if(fromEntityName==null||fromEntityName.length()<1||targetEntityName==null||targetEntityName.length()<1||cond==null){
-			throw new Exception("转移实体名称为空,或者条件为空！");
-		}
-		List<GenericValue> curList=delegator.findList(fromEntityName,cond,fields,null,null,true);
-		if(curList!=null&&curList.size()>0){
-			List<GenericValue> hisList=FastList.newInstance();
-			for(GenericValue cv:curList){
-				GenericValue hisv=delegator.makeValue(targetEntityName,fields==null?cv.getAllFields():cv.getFields(fields));
-				hisList.add(hisv);
+			//当前委外加工件数量中间表CurConsignProcessedPrice数据转移到历史表，当前余额表更新【年、月、期初数量】
+			Debug.logInfo("执行delete from  His_Consign_Processed_Price where year="+year+" and month="+month, module);
+			ps=conn.prepareStatement("delete from  His_Consign_Processed_Price where year="+year+" and month="+month);
+			ps.executeUpdate();
+			Debug.logInfo("执行insert His_Consign_Processed_Price select * from Cur_Consign_Processed_Price", module);
+			ps=conn.prepareStatement("insert His_Consign_Processed_Price select * from Cur_Consign_Processed_Price");
+			ps.executeUpdate();
+			Debug.logInfo("执行update Cur_Consign_Processed_Price set year="+yearOfnextMonth+" ,month="+monthOfnextMonth+" ,  out_Volume=0,in_Volume=0,in_Sum=0,beginvolume=volume ", module);
+			ps=conn.prepareStatement("update Cur_Consign_Processed_Price set year="+yearOfnextMonth+" ,month="+monthOfnextMonth+" ,  out_Volume=0,in_Volume=0,in_Sum=0,beginvolume=volume ");
+			ps.executeUpdate();
+			
+			//当前车间单价中间表CurWorkshopPrice 数据转移到历史表，当前余额表更新【年、月、期初数量、期初金额】
+			Debug.logInfo("执行delete from  His_Workshop_Price where year="+year+" and month="+month, module);
+			ps=conn.prepareStatement("delete from  His_Workshop_Price where year="+year+" and month="+month);
+			ps.executeUpdate();
+			Debug.logInfo("执行insert His_Workshop_Price select * from Cur_Workshop_Price", module);
+			ps=conn.prepareStatement("insert His_Workshop_Price select * from Cur_Workshop_Price");
+			ps.executeUpdate();
+			Debug.logInfo("执行update Cur_Workshop_Price set year="+yearOfnextMonth+" ,month="+monthOfnextMonth+" , beginvolume=volume,beginsum=totalsum", module);
+			ps=conn.prepareStatement("update Cur_Workshop_Price set year="+yearOfnextMonth+" ,month="+monthOfnextMonth+" , beginvolume=volume,beginsum=totalsum");
+			ps.executeUpdate();
+			
+			//当前成品单价中间表CurProductPrice 数据转移到历史表，当前余额表更新【年、月、期初数量、期初金额】
+			Debug.logInfo("执行delete from  His_Product_Price where year="+year+" and month="+month, module);
+			ps=conn.prepareStatement("delete from  His_Product_Price where year="+year+" and month="+month);
+			ps.executeUpdate();
+			Debug.logInfo("执行insert His_Product_Price select * from Cur_Product_Price", module);
+			ps=conn.prepareStatement("insert His_Product_Price select * from Cur_Product_Price");
+			ps.executeUpdate();
+			Debug.logInfo("执行update Cur_Product_Price set year="+yearOfnextMonth+" ,month="+monthOfnextMonth+" , beginvolume=volume,beginsum=totalsum", module);
+			ps=conn.prepareStatement("update Cur_Product_Price set year="+yearOfnextMonth+" ,month="+monthOfnextMonth+" , beginvolume=volume,beginsum=totalsum");
+			ps.executeUpdate();
+			
+		}finally{
+			if(conn!=null){
+				conn.close();
 			}
-			//清除目标表数据
-			delegator.removeByCondition(targetEntityName, cond);
-			
-			//插入数据
-			delegator.storeAll(hisList);
-			
-			//清除源数据
-			delegator.removeByCondition(fromEntityName, cond);
 		}
+		Debug.logInfo("设置中间表到下一个月状态，操作结束", module);
+		
 	}
 
 	/**
@@ -491,25 +543,41 @@ public class MonthlySettlement {
 	 */
 	private void clearMidTableToPre() throws Exception{
 		
-		EntityCondition cond=EntityCondition.makeCondition(UtilMisc.toMap("year", Utils.getYearOfPreMonth(year, month), "month", Utils.getMonthOfPreMonth(year, month)));
+		Connection conn= ConnectionFactory.getConnection(org.ofbiz.partner.scm.common.Utils.getConnectionHelperName());
 		//删除本期数据,转移库存余额表
-		delegator.removeAll("CurMaterialBalance");
-		transferEntityData("HisMaterialBalance", "CurMaterialBalance",cond,null);
+		copyPreMonthData(conn,"His_Material_Balance", "Cur_Material_Balance");
 		
 		//删除本期数据,转移委外中间表
-		delegator.removeAll("CurConsignPrice");
-		transferEntityData("HisConsignPrice", "CurConsignPrice",cond,null);
+		copyPreMonthData(conn,"His_Consign_Price", "Cur_Consign_Price");
+		
+		//删除本期数据,转移委外加工件中间表
+		copyPreMonthData(conn,"His_Consign_Processed_Price", "Cur_Consign_Processed_Price");
 		
 		//删除本期数据,转移车间中间表 
-		delegator.removeAll("CurWorkshopPrice");
-		transferEntityData("HisWorkshopPrice", "CurWorkshopPrice",cond,null);
+		copyPreMonthData(conn,"His_Workshop_Price", "Cur_Workshop_Price");
 		
 		//删除本期数据,转移发外加工对数表
-		delegator.removeAll("CurConsignProcessedPrice");
-		transferEntityData("HisConsignProcessedPrice", "CurConsignProcessedPrice",cond,null);
+		copyPreMonthData(conn,"His_Consign_Processed_Price", "Cur_Consign_Processed_Price");
 	}
 	
-	
+	/**
+	 * 删除当前表数据，拷贝上个月的数据到当前表
+	 * @param conn
+	 * @param string
+	 * @param string2
+	 */
+	private void copyPreMonthData(Connection conn, String hisTable, String targetTable) throws Exception {
+		int yearOfnextMonth=Utils.getYearOfPreMonth(year, month);
+		int monthOfnextMonth=Utils.getMonthOfPreMonth(year, month);
+		
+		Debug.logInfo("执行delete from "+targetTable, module);
+		PreparedStatement ps=conn.prepareStatement("delete from "+targetTable);
+		ps.executeUpdate();
+		Debug.logInfo("执行insert "+targetTable+" select * from "+hisTable+" where year="+yearOfnextMonth+" and month="+monthOfnextMonth, module);
+		ps=conn.prepareStatement("insert "+targetTable+" select * from "+hisTable+" where year="+yearOfnextMonth+" and month="+monthOfnextMonth);
+		ps.executeUpdate();
+		
+	}
 	public int getYear() {
 		return year;
 	}
