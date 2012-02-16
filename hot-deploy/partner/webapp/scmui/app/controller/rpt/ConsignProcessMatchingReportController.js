@@ -62,13 +62,18 @@ Ext.define('SCM.controller.rpt.ConsignProcessMatchingReportController', {
 					this.whereStr += tempStr[0];
 					this.whereStr += " and month = ";
 					this.whereStr += tempStr[1];
+					if(SCM.SystemMonthlyYear == tempStr[0] && SCM.SystemMonthlyMonth == tempStr[1]){
+						this.exportTableName = 'CurConsignProcessedPriceView';
+					} else {
+						this.exportTableName = 'HisConsignProcessedPriceView';
+					}
 				} else {
 					showWarning('请选择月份！');
 					return;
 				}
 				if (!Ext.isEmpty(this.searchSupplierId.getValue())) {
 					this.listPanel.store.getProxy().extraParams.supplier = this.searchSupplierId.getValue();
-					this.whereStr += " and CurConsignProcessedPriceV.supplier_id = '";
+					this.whereStr += " and ConsignProcessedPriceV.supplier_id = '";
 					this.whereStr += this.searchSupplierId.getValue();
 					this.whereStr += "' ";
 				} else {
