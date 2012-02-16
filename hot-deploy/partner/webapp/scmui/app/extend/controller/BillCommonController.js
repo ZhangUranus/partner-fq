@@ -190,7 +190,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 					this.editButton.setDisabled(true);
 					if (this.auditButton) {
 						this.auditButton.setDisabled(true);
-						this.unauditButton.setDisabled(false);
+						this.unauditButton.setDisabled(true);
 					}
 					if (this.submitButton) {
 						this.submitButton.setDisabled(true);

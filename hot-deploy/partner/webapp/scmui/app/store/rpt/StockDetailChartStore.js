@@ -6,7 +6,7 @@ Ext.define('SCM.store.rpt.StockDetailChartStore', {
 			autoLoad : false,
 			autoSync : false,
 			sorters : [{// 根据MATERIAL_NAME字段排序
-				property : 'material_name',
+				property : 'MATERIAL_NAME',
 				direction : 'ASC'
 			}]
 		});
