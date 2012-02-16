@@ -55,7 +55,10 @@ Ext.define('SCM.view.system.monthlySettlement.StockSettle', {
 							scope : this,
 							url : "../../scm/control/monthlySettle",
 							success : function(response, option) {
-								if(response.responseText.length<1)showError("系统错误");
+								if(response.responseText.length<1){
+									taskMask.hide();
+									showError("系统错误");
+								}
 					 			var responseArray = Ext.JSON.decode(response.responseText);
 					 			if(responseArray.success){
 					 				showInfo('结算操作结束');
@@ -89,8 +92,10 @@ Ext.define('SCM.view.system.monthlySettlement.StockSettle', {
 							scope : this,
 							url : "../../scm/control/rollbackSettle",
 							success : function(response, option) {
-								if(response.responseText.length<1)showError("系统错误");
-								
+								if(response.responseText.length<1){
+									taskMask.hide();
+									showError("系统错误");
+								}
 					 			var responseArray = Ext.JSON.decode(response.responseText);
 					 			if(responseArray.success){
 					 				showInfo('结算操作结束');

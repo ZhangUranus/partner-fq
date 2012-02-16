@@ -197,14 +197,8 @@ public class WorkshopPriceMgr {
 				gv.set("totalsum", oldSum.add(totalsum));
 				delegator.store(gv);
 			} else {// 新增记录
-				//取上一个月库存信息
-				GenericValue preMonthValue=delegator.findOne("HisWorkshopPrice", UtilMisc.toMap("year", Utils.getYearOfPreMonth(year, month), "month", Utils.getMonthOfPreMonth(year, month), "workshopId", workshopId, "materialId", materialId), false);
 				BigDecimal beginVolume=BigDecimal.ZERO;//月初数量
 				BigDecimal beginSum=BigDecimal.ZERO;//月初金额
-				if(preMonthValue!=null){
-					beginVolume=preMonthValue.getBigDecimal("beginVolume").add(preMonthValue.getBigDecimal("volume"));
-					beginSum=preMonthValue.getBigDecimal("beginsum").add(preMonthValue.getBigDecimal("totalSum"));
-				}
 				gv = delegator.makeValue("CurWorkshopPrice");
 				gv.set("year", year);
 				gv.set("month", month);
@@ -212,8 +206,8 @@ public class WorkshopPriceMgr {
 				gv.set("materialId", materialId);
 				gv.set("beginvolume", beginVolume);
 				gv.set("beginsum", beginSum);
-				gv.set("volume", beginVolume.add(volume));
-				gv.set("totalsum", beginSum.add(totalsum));
+				gv.set("volume", volume);
+				gv.set("totalsum", totalsum);
 				delegator.create(gv);
 			}
 		}
