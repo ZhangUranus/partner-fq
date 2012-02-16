@@ -22,7 +22,7 @@ public class DataFetchEvents {
 	
 	public static String fetchData(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// 数据库连接
-		Connection conn = ConnectionFactory.getConnection("localmysql");
+		Connection conn = ConnectionFactory.getConnection(Utils.getConnectionHelperName());
 		try {
 			String sql = "select a.number,a.biz_date ,b.name from Purchase_Warehousing a inner join supplier b on a.supplier_supplier_id=b.id";
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -79,30 +79,30 @@ public class DataFetchEvents {
 			materialId = request.getParameter("materialId");
 		}
 		
-		String sql ="SELECT "+
-						"CMB.WAREHOUSE_ID, "+
-						"WH.NAME AS WAREHOUSE_NAME, "+
-						"CMB.MATERIAL_ID, "+
-						"TM.NAME AS MATERIAL_NAME, "+
-						"TM.DEFAULT_UNIT_ID, "+
-						"UN.NAME AS DEFAULT_UNIT_NAME, "+
-						"ROUND(IFNULL(CMB.BEGINVOLUME,0),4) AS BEGINVOLUME, "+
-						"ROUND(IFNULL(CMB.BEGINSUM,0),4) AS BEGINSUM, "+
-						"ROUND(IFNULL(CMB.BEGINSUM/CMB.BEGINVOLUME,0),4) AS BEGINPRICE, "+
-						"ROUND(IFNULL(CMB.VOLUME,0),4) AS ENDVOLUME, "+
-						"ROUND(IFNULL(CMB.TOTAL_SUM,0),4) AS ENDSUM, "+
-						"ROUND(IFNULL(CMB.TOTAL_SUM/CMB.VOLUME,0),4) AS ENDPRICE, "+
-						"ROUND(IFNULL(CMB.IN_VOLUME,0),4) AS INVOLUME, "+
-						"ROUND(IFNULL(CMB.IN_SUM,0),4) AS INSUM, "+
-						"ROUND(IFNULL(CMB.IN_SUM/CMB.IN_VOLUME,0),4) AS INPRICE, "+
-						"ROUND(IFNULL(CMB.OUT_VOLUME,0),4) AS OUTVOLUME, "+
-						"ROUND(IFNULL(CMB.OUT_SUM,0),4) AS OUTSUM, "+
-						"ROUND(IFNULL(CMB.OUT_SUM/CMB.OUT_VOLUME,0),4) AS OUTPRICE "+
-					"FROM " + tableName + " CMB "+
-					"LEFT JOIN WAREHOUSE WH ON CMB.WAREHOUSE_ID = WH.ID "+
-					"LEFT JOIN T_MATERIAL TM ON CMB.MATERIAL_ID = TM.ID "+
-					"LEFT JOIN UNIT UN ON TM.DEFAULT_UNIT_ID = UN.ID "+
-					"WHERE YEAR = " + year +
+		String sql =" SELECT "+
+						" CMB.WAREHOUSE_ID, "+
+						" WH.NAME AS WAREHOUSE_NAME, "+
+						" CMB.MATERIAL_ID, "+
+						" TM.NAME AS MATERIAL_NAME, "+
+						" TM.DEFAULT_UNIT_ID, "+
+						" UN.NAME AS DEFAULT_UNIT_NAME, "+
+						" ROUND(IFNULL(CMB.BEGINVOLUME,0),4) AS BEGINVOLUME, "+
+						" ROUND(IFNULL(CMB.BEGINSUM,0),4) AS BEGINSUM, "+
+						" ROUND(IFNULL(CMB.BEGINSUM/CMB.BEGINVOLUME,0),4) AS BEGINPRICE, "+
+						" ROUND(IFNULL(CMB.VOLUME,0),4) AS ENDVOLUME, "+
+						" ROUND(IFNULL(CMB.TOTAL_SUM,0),4) AS ENDSUM, "+
+						" ROUND(IFNULL(CMB.TOTAL_SUM/CMB.VOLUME,0),4) AS ENDPRICE, "+
+						" ROUND(IFNULL(CMB.IN_VOLUME,0),4) AS INVOLUME, "+
+						" ROUND(IFNULL(CMB.IN_SUM,0),4) AS INSUM, "+
+						" ROUND(IFNULL(CMB.IN_SUM/CMB.IN_VOLUME,0),4) AS INPRICE, "+
+						" ROUND(IFNULL(CMB.OUT_VOLUME,0),4) AS OUTVOLUME, "+
+						" ROUND(IFNULL(CMB.OUT_SUM,0),4) AS OUTSUM, "+
+						" ROUND(IFNULL(CMB.OUT_SUM/CMB.OUT_VOLUME,0),4) AS OUTPRICE "+
+					" FROM " + tableName + " CMB "+
+					" LEFT JOIN WAREHOUSE WH ON CMB.WAREHOUSE_ID = WH.ID "+
+					" LEFT JOIN T_MATERIAL TM ON CMB.MATERIAL_ID = TM.ID "+
+					" LEFT JOIN UNIT UN ON TM.DEFAULT_UNIT_ID = UN.ID "+
+					" WHERE YEAR = " + year +
 					" AND MONTH = " + month ;
 		if(materialId != null && !"".equals(materialId)){
 			sql += " AND CMB.MATERIAL_ID = '" + materialId + "'";
@@ -147,13 +147,13 @@ public class DataFetchEvents {
 			warehouseId = request.getParameter("warehouseId");
 		}
 		
-		String sql ="SELECT " +
-						"CMB.MATERIAL_ID, " +
-						"TM.NAME AS MATERIAL_NAME, " +
-						"ROUND(SUM(IFNULL(CMB.TOTAL_SUM,0)),4) AS ENDSUM " +
-					"FROM " + tableName + " CMB " +
-					"LEFT JOIN T_MATERIAL TM ON CMB.MATERIAL_ID = TM.ID " +
-					"WHERE YEAR = " + year +
+		String sql =" SELECT " +
+						" CMB.MATERIAL_ID, " +
+						" TM.NAME AS MATERIAL_NAME, " +
+						" ROUND(SUM(IFNULL(CMB.TOTAL_SUM,0)),4) AS ENDSUM " +
+					" FROM " + tableName + " CMB " +
+					" LEFT JOIN T_MATERIAL TM ON CMB.MATERIAL_ID = TM.ID " +
+					" WHERE YEAR = " + year +
 					" AND MONTH = " + month ;
 		if(warehouseId != null && !"".equals(warehouseId)){
 			sql += " AND CMB.WAREHOUSE_ID = '" + warehouseId + "'";
@@ -196,25 +196,25 @@ public class DataFetchEvents {
 		if(request.getParameter("supplier") != null){
 			supplierId = request.getParameter("supplier");
 		}
-		String sql ="SELECT "+
-						"CCPP.SUPPLIER_ID, "+
-						"SUP.NAME AS SUPPLIER_NAME, "+
-						"CCPP.MATERIAL_ID, "+
-						"TM.NAME AS MATERIAL_NAME, "+
-						"TM.DEFAULT_UNIT_ID, "+
-						"UNT.NAME AS DEFAULT_UNIT_NAME, "+
-						"ROUND(IFNULL(CCPP.IN_SUM/CCPP.IN_VOLUME,0),4) AS PRICE, "+
-						"ROUND(IFNULL(CCPP.BEGINVOLUME,0),4) AS BEGINVOLUME, "+
-						"ROUND(IFNULL(CCPP.IN_VOLUME,0),4) AS IN_VOLUME, "+
-						"ROUND(IFNULL(CCPP.IN_SUM,0),4) AS IN_SUM, "+
-						"ROUND(IFNULL(CCPP.OUT_VOLUME,0),4) AS OUT_VOLUME, "+
-						"ROUND(IFNULL(CCPP.OUT_VOLUME*(CCPP.IN_SUM/CCPP.IN_VOLUME),0),4) AS OUT_SUM, "+
-						"ROUND(IFNULL(CCPP.VOLUME,0),4) AS VOLUME "+
-					"FROM "+ tableName +" CCPP "+
-					"LEFT JOIN T_MATERIAL TM ON CCPP.MATERIAL_ID = TM.ID "+
-					"LEFT JOIN SUPPLIER SUP ON CCPP.SUPPLIER_ID = SUP.ID "+
-					"LEFT JOIN UNIT UNT ON TM.DEFAULT_UNIT_ID = UNT.ID "+
-					"WHERE YEAR = " + year +
+		String sql =" SELECT "+
+						" CCPP.SUPPLIER_ID, "+
+						" SUP.NAME AS SUPPLIER_NAME, "+
+						" CCPP.MATERIAL_ID, "+
+						" TM.NAME AS MATERIAL_NAME, "+
+						" TM.DEFAULT_UNIT_ID, "+
+						" UNT.NAME AS DEFAULT_UNIT_NAME, "+
+						" ROUND(IFNULL(CCPP.IN_SUM/CCPP.IN_VOLUME,0),4) AS PRICE, "+
+						" ROUND(IFNULL(CCPP.BEGINVOLUME,0),4) AS BEGINVOLUME, "+
+						" ROUND(IFNULL(CCPP.IN_VOLUME,0),4) AS IN_VOLUME, "+
+						" ROUND(IFNULL(CCPP.IN_SUM,0),4) AS IN_SUM, "+
+						" ROUND(IFNULL(CCPP.OUT_VOLUME,0),4) AS OUT_VOLUME, "+
+						" ROUND(IFNULL(CCPP.OUT_VOLUME*(CCPP.IN_SUM/CCPP.IN_VOLUME),0),4) AS OUT_SUM, "+
+						" ROUND(IFNULL(CCPP.VOLUME,0),4) AS VOLUME "+
+					" FROM "+ tableName +" CCPP "+
+					" LEFT JOIN T_MATERIAL TM ON CCPP.MATERIAL_ID = TM.ID "+
+					" LEFT JOIN SUPPLIER SUP ON CCPP.SUPPLIER_ID = SUP.ID "+
+					" LEFT JOIN UNIT UNT ON TM.DEFAULT_UNIT_ID = UNT.ID "+
+					" WHERE YEAR = " + year +
 					" AND MONTH = " + month ;
 		if(supplierId != null && !"".equals(supplierId)){
 			sql += " AND CCPP.SUPPLIER_ID = '" + supplierId + "'";
@@ -251,25 +251,109 @@ public class DataFetchEvents {
 			tableName = " HIS_CONSIGN_PROCESSED_PRICE ";
 		}
 		
-		String sql ="SELECT "+
-						"CCPP.SUPPLIER_ID, "+
-						"SUP.NAME AS SUPPLIER_NAME, "+
-						"SUM(ROUND(IFNULL(CCPP.IN_SUM,0),4)) AS TOTAL_IN_SUM, "+
-						"SUM(ROUND(IFNULL(CCPP.OUT_VOLUME*(CCPP.IN_SUM/CCPP.IN_VOLUME),0),4)) AS TOTAL_OUT_SUM "+
-					"FROM "+ tableName +" CCPP "+
-					"LEFT JOIN T_MATERIAL TM ON CCPP.MATERIAL_ID = TM.ID "+
-					"LEFT JOIN SUPPLIER SUP ON CCPP.SUPPLIER_ID = SUP.ID "+
-					"LEFT JOIN UNIT UNT ON TM.DEFAULT_UNIT_ID = UNT.ID "+
-					"WHERE YEAR = " + year +
+		String sql =" SELECT "+
+						" CCPP.SUPPLIER_ID, "+
+						" SUP.NAME AS SUPPLIER_NAME, "+
+						" SUM(ROUND(IFNULL(CCPP.IN_SUM,0),4)) AS TOTAL_IN_SUM, "+
+						" SUM(ROUND(IFNULL(CCPP.OUT_VOLUME*(CCPP.IN_SUM/CCPP.IN_VOLUME),0),4)) AS TOTAL_OUT_SUM "+
+					" FROM "+ tableName +" CCPP "+
+					" LEFT JOIN T_MATERIAL TM ON CCPP.MATERIAL_ID = TM.ID "+
+					" LEFT JOIN SUPPLIER SUP ON CCPP.SUPPLIER_ID = SUP.ID "+
+					" LEFT JOIN UNIT UNT ON TM.DEFAULT_UNIT_ID = UNT.ID "+
+					" WHERE YEAR = " + year +
 					" AND MONTH = " + month +
 					" GROUP BY CCPP.SUPPLIER_ID,SUP.NAME";
 		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(sql));
 		return "sucess";
 	}
 	
+	/**
+	 * 安装包装报表
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public static String queryPackingMaterialReport(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String startDate = null;
+		String endDate = null;
+		String warehouseId = null;
+		if(request.getParameter("startDate") != null && request.getParameter("endDate") != null){
+			startDate = request.getParameter("startDate");
+			endDate = request.getParameter("endDate");
+		}else{
+			throw new Exception("找不到日期参数！");
+		}
+		
+		if(request.getParameter("warehouseId") != null){
+			warehouseId = request.getParameter("warehouseId");
+		}
+		String sql =" SELECT " +
+						" WW.BIZ_DATE, " +
+						" WW.NUMBER, " +
+						" WW.STATUS, " +
+						" WH.NAME AS WAREHOUSENAME, " +
+						" TM.NAME AS MATERIALNAME, " +
+						" WWE.MATERIAL_MATERIAL_MODEL AS MATERIALMODEL, " +
+						" UIT.NAME AS UNITNAME, " +
+						" SUM(ROUND(IFNULL(WWE.VOLUME,0),4)) AS VOLUME, " +
+						" SUM(ROUND(IFNULL(WWE.PRICE,0),4)) AS PRICE, " +
+						" SUM(ROUND(IFNULL(WWE.ENTRYSUM,0),4)) AS ENTRYSUM " +
+					" FROM WORKSHOP_WAREHOUSING WW " +
+					" LEFT JOIN WORKSHOP_WAREHOUSING_ENTRY WWE ON WW.ID = WWE.PARENT_ID " +
+					" LEFT JOIN T_MATERIAL TM ON WWE.MATERIAL_MATERIAL_ID = TM.ID " +
+					" LEFT JOIN WAREHOUSE WH ON WWE.WAREHOUSE_WAREHOUSE_ID = WH.ID " +
+					" LEFT JOIN UNIT UIT ON WWE.UNIT_UNIT_ID = UIT.ID " +
+					" WHERE TM.MATERIAL_TYPE_ID = 5 " +
+					" AND WW.BIZ_DATE >= '" + startDate + "'" +
+					" AND WW.BIZ_DATE <= '" + endDate + "'" ;
+		if(warehouseId != null && !"".equals(warehouseId)){
+			sql += " AND WWE.WAREHOUSE_WAREHOUSE_ID = '" + warehouseId + "'";
+		}
+		sql += " GROUP BY WW.NUMBER,WH.NAME,TM.NAME,WWE.MATERIAL_MATERIAL_MODEL,UIT.NAME ";
+		
+		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(sql));
+		return "sucess";
+	}
+	
+	/**
+	 * 安装包装报表明细
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public static String queryPackingMaterialDetail(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String number = null;
+		
+		if(request.getParameter("number") != null){
+			number = request.getParameter("number");
+		}
+		String sql =" SELECT " +
+						" WW.NUMBER, " +
+						" WWE.WAREHOUSE_WAREHOUSE_ID AS WAREHOUSEID, " +
+						" WWE.MATERIAL_MATERIAL_ID AS MATERIALID, " +
+						" TM.NUMBER AS MATERIALNUMBER, " +
+						" TM.NAME AS MATERIALNAME, " +
+						" AVG(ROUND(IFNULL(WPD.VOLUME,0),4)) AS PERVOLUME, " +
+						" AVG(ROUND(IFNULL(WPD.PRICE,0),4)) AS PRICE, " +
+						" ROUND(IFNULL(AVG(WPD.VOLUME*WWE.VOLUME),0),4) AS VOLUME, " +
+						" ROUND(IFNULL(AVG(WPD.PRICE*WPD.VOLUME*WWE.VOLUME),0),4) AS ENTRYSUM " +
+					" FROM WORKSHOP_WAREHOUSING WW " +
+					" LEFT JOIN WORKSHOP_WAREHOUSING_ENTRY WWE ON WW.ID = WWE.PARENT_ID " +
+					" LEFT JOIN WORKSHOP_PRICE_DETAIL WPD ON WWE.ID = WPD.PARENT_ID " +
+					" LEFT JOIN T_MATERIAL TM ON WPD.MATERIAL_ID = TM.ID " +
+					" LEFT JOIN UNIT UIT ON TM.DEFAULT_UNIT_ID = UIT.ID " +
+					" WHERE WW.NUMBER = '" + number + "'";
+		sql += " GROUP BY WW.NUMBER,WWE.WAREHOUSE_WAREHOUSE_ID,WWE.MATERIAL_MATERIAL_ID,TM.NUMBER,TM.NAME,WWE.VOLUME ";
+		
+		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(sql));
+		return "sucess";
+	}
+	
 	public static String executeSelectSQL(String sql) throws Exception {
 		// 数据库连接
-		Connection conn = ConnectionFactory.getConnection("localmysql");
+		Connection conn = ConnectionFactory.getConnection(Utils.getConnectionHelperName());
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			JSONArray ja = Utils.getJsonArr4ResultSet(ps.executeQuery());

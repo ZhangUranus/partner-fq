@@ -19,7 +19,7 @@ Ext.application({
 					'system.SystemController', 'system.LogController', 'PurchaseWarehousing.PurchaseWarehousingController', 'PurchaseReturn.PurchaseReturnController', 'ConsignDrawMaterial.ConsignDrawMaterialController',
 					'ConsignReturnMaterial.ConsignReturnMaterialController', 'WorkshopDrawMaterial.WorkshopDrawMaterialController', 'WorkshopReturnMaterial.WorkshopReturnMaterialController',
 					'ConsignWarehousing.ConsignWarehousingController', 'WorkshopWarehousing.WorkshopWarehousingController', 'ConsignReturnProduct.ConsignReturnProductController',
-					'WorkshopReturnProduct.WorkshopReturnProductController', 'rpt.ConsignProcessMatchingReportController', 'rpt.StockDetailReportController'],
+					'WorkshopReturnProduct.WorkshopReturnProductController', 'rpt.ConsignProcessMatchingReportController', 'rpt.StockDetailReportController', 'rpt.PackingMaterialReportController'],
 			launch : function() {
 				var viewport = Ext.create('SCM.view.Viewport');
 				viewport.doLayout(); // 刷新布局

@@ -58,7 +58,25 @@ public class ExportHelper {
 				for (int i = 0; i < dataIndex.length; i++) {
 					HSSFCell cell = row.createCell(i);
 					cell.setCellStyle(style);
-					HSSFRichTextString text = new HSSFRichTextString(v.getString(dataIndex[i]));
+					String tempText = "";
+					if("status".equals(dataIndex[i])){
+						if("0".equals(v.getString(dataIndex[i]))){
+							tempText = "保存";
+						}else if("1".equals(v.getString(dataIndex[i]))){
+							tempText = "已审核";
+						}else if("2".equals(v.getString(dataIndex[i]))){
+							tempText = "审核不通过";
+						}else if("3".equals(v.getString(dataIndex[i]))){
+							tempText = "已结算";
+						}else if("4".equals(v.getString(dataIndex[i]))){
+							tempText = "已提交";
+						}else{
+							tempText = "未知";
+						}
+					}else{
+						tempText = v.getString(dataIndex[i]);
+					}
+					HSSFRichTextString text = new HSSFRichTextString(tempText);
 					cell.setCellValue(text);
 				}
 			}
