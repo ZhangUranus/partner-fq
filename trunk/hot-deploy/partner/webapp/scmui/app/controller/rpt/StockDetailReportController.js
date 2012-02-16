@@ -44,7 +44,6 @@ Ext.define('SCM.controller.rpt.StockDetailReportController', {
 								this.refreshRecord();
 							}
 						});
-
 			},
 
 			/**
@@ -63,6 +62,11 @@ Ext.define('SCM.controller.rpt.StockDetailReportController', {
 					this.whereStr += tempStr[0];
 					this.whereStr += " and month = ";
 					this.whereStr += tempStr[1];
+					if(SCM.SystemMonthlyYear == tempStr[0] && SCM.SystemMonthlyMonth == tempStr[1]){
+						this.exportTableName = 'CurMaterialBalanceView';
+					} else {
+						this.exportTableName = 'HisMaterialBalanceView';
+					}
 				} else {
 					showWarning('请选择月份！');
 					return;
@@ -70,7 +74,7 @@ Ext.define('SCM.controller.rpt.StockDetailReportController', {
 				if (!Ext.isEmpty(this.searchWarehouseId.getValue())) {
 					this.listPanel.store.getProxy().extraParams.warehouseId = this.searchWarehouseId.getValue();
 					this.chartPanel.store.getProxy().extraParams.warehouseId = this.searchWarehouseId.getValue();
-					this.whereStr += " and CurMaterialBalanceV.warehouse_id = '";
+					this.whereStr += " and MaterialBalanceV.warehouse_id = '";
 					this.whereStr += this.searchWarehouseId.getValue();
 					this.whereStr += "' ";
 				} else {
@@ -79,7 +83,7 @@ Ext.define('SCM.controller.rpt.StockDetailReportController', {
 				}
 				if (!Ext.isEmpty(this.searchMaterialId.getValue())) {
 					this.listPanel.store.getProxy().extraParams.materialId = this.searchMaterialId.getValue();
-					this.whereStr += " and CurMaterialBalanceV.material_id = '";
+					this.whereStr += " and MaterialBalanceV.material_id = '";
 					this.whereStr += this.searchMaterialId.getValue();
 					this.whereStr += "' ";
 				} else {
@@ -95,18 +99,18 @@ Ext.define('SCM.controller.rpt.StockDetailReportController', {
 			 * @return {}
 			 */
 			getParams : function() {
-				var header = "加工商,加工件,单位,加工单价,期初数量,收入数量,收入金额,发出数量,发出金额,结存数量";
-				var dataIndex = "supplierName,materialName,defaultUnitName,price,beginvolume,inVolume,inSum,outVolume,outSum,volume";
+				var header = "仓库,物料名称,单位,期初数量,期初单价,期初金额,本期收入数量,本期收入单价,本期收入金额,本期发出数量,本期发出单价,本期发出金额,期末数量,期末单价,期末金额";
+				var dataIndex = "warehouseName,materialName,unitName,beginvolume,beginPrice,beginsum,volume,price,totalSum,inVolume,inPrice,inSum,outVolume,outPrice,outSum";
 
 				with (this.listPanel.store) {
 					var params = {
 						// Store参数
-						sort : '[{"property":"supplierId","direction":"ASC"}]',
+						sort : '[{"property":"warehouseName","direction":"ASC"}]',
 						filter : Ext.encode(filters.items),
 
 						// 页面参数
-						entity : 'CurConsignProcessedPriceView', // 导出实体名称，一般为视图名称。
-						title : '加工商对数表', // sheet页名称
+						entity : this.exportTableName, // 导出实体名称，一般为视图名称。
+						title : '库存情况', // sheet页名称
 						header : header, // 表头
 						dataIndex : dataIndex, // 数据引用
 						type : 'EXCEL',
