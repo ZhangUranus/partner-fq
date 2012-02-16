@@ -321,6 +321,16 @@
 		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="queryStockDetailChart" />
 		<response name="success" type="none" />
 	</request-map>
+	<request-map uri="queryPackingMaterialReport">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="queryPackingMaterialReport" />
+		<response name="success" type="none" />
+	</request-map>
+	<request-map uri="queryPackingMaterialDetail">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="queryPackingMaterialDetail" />
+		<response name="success" type="none" />
+	</request-map>
 	
 	
 	
