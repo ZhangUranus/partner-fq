@@ -33,7 +33,7 @@ Ext.define('SCM.view.rpt.sdr.ListUI', {
 												}, {
 													xtype : 'combogrid',
 													name : 'searchWarehouseId',
-													width : 155,
+													width : 145,
 													labelWidth : 35,
 													fieldLabel : '仓库',
 													store : Ext.create('WarehouseStore'),

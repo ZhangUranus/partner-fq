@@ -3,6 +3,8 @@ Ext.namespace('SCM');
 /**
  * 系统默认尺寸
  */
+SCM.SystemMonthlyYear=2012;
+SCM.SystemMonthlyMonth=1;
 SCM.MinSize = Ext.apply({//label等于3－4个中文字
 			WINDOW_WIDTH : 300,
 			WINDOW_HEIGHT : 350,
