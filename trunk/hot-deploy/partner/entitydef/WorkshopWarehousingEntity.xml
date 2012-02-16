@@ -28,6 +28,35 @@
 		<field name="submitStamp" type="date-time"></field>
 		<prim-key field="id" />
 	</entity>
+	<!-- 安装包装材料表视图，暂时用于导出功能 -->
+	<view-entity entity-name="WorkshopWarehousingPackingView" package-name="org.ofbiz.scm.WorkshopWarehousing" title="WorkshopWarehousingPackingView Entity">
+		<member-entity entity-alias="WorkshopWarehousingV" entity-name="WorkshopWarehousing"></member-entity>
+		<member-entity entity-alias="WorkshopWarehousingEntryV" entity-name="WorkshopWarehousingEntry"></member-entity>
+		<member-entity entity-alias="WarehouseV" entity-name="Warehouse"></member-entity>
+		<member-entity entity-alias="TMaterialV" entity-name="TMaterial"></member-entity>
+		<member-entity entity-alias="UnitV" entity-name="Unit"></member-entity>
+		<alias-all entity-alias="WorkshopWarehousingV" group-by="true"></alias-all>
+		<alias name="warehouseName" entity-alias="WarehouseV" field="name" group-by="true"></alias>
+		<alias name="materialName" entity-alias="TMaterialV" field="name" group-by="true"></alias>
+		<alias name="materialModel" entity-alias="TMaterialV" field="model" group-by="true"></alias>
+		<alias name="unitName" entity-alias="UnitV" field="name" group-by="true"></alias>
+		<alias name="volume" entity-alias="WorkshopWarehousingEntryV" field="volume" function="sum"></alias>
+		<alias name="price" entity-alias="WorkshopWarehousingEntryV" field="price" function="sum"></alias>
+		<alias name="entrysum" entity-alias="WorkshopWarehousingEntryV" field="entrysum" function="sum"></alias>
+		<view-link entity-alias="WorkshopWarehousingV" rel-entity-alias="WorkshopWarehousingEntryV" rel-optional="true">
+			<key-map field-name="id" rel-field-name="parentId" />
+		</view-link>
+		<view-link entity-alias="WorkshopWarehousingEntryV" rel-entity-alias="TMaterialV" rel-optional="true">
+			<key-map field-name="materialMaterialId" rel-field-name="id" />
+		</view-link>
+		<view-link entity-alias="WorkshopWarehousingEntryV" rel-entity-alias="WarehouseV" rel-optional="true">
+			<key-map field-name="warehouseWarehouseId" rel-field-name="id" />
+		</view-link>
+		<view-link entity-alias="TMaterialV" rel-entity-alias="UnitV" rel-optional="true">
+			<key-map field-name="defaultUnitId" rel-field-name="id" />
+		</view-link>
+	</view-entity>
+	<entity-group group="org.ofbiz" entity="WorkshopWarehousingPackingView"/>
 	<!-- 分录 -->
 	<entity entity-name="WorkshopWarehousingEntry" package-name="org.ofbiz.scm.WorkshopWarehousing" title="WorkshopWarehousingEntry Entity">
 		<field name="id" type="id-long"></field>
