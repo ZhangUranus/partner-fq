@@ -8,7 +8,6 @@ Ext.define('SCM.controller.ProductionPlan.ProductionPlanController', {
 			 * 初始化controller 增加事件监控
 			 */
 			init : function() {
-				debugger;
 				this.control({
 							// 完成日志界面初始化后调用
 							'productionplan' : {
@@ -24,7 +23,6 @@ Ext.define('SCM.controller.ProductionPlan.ProductionPlanController', {
 			 *            grid 事件触发控件
 			 */
 			initComponent : function(view) {
-				debugger;
 				this.listPanel = view.down('form gridpanel');
 				this.materialIdField = view.down('form combogrid[name=processedMaterialId]');
 				this.materialVolumeField = view.down('form numberfield[name=materialVolume]');
