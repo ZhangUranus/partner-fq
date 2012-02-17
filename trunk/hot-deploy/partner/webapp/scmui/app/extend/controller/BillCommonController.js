@@ -740,8 +740,8 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				var printWin = window.open('', 'printwin');
 				appendData2Win(printWin,printData,template.template);
 				printWin.document.close();
-//				printWin.print();
-//				printWin.close();
+				printWin.print();
+				printWin.close();
 				
 			},
 			/**
