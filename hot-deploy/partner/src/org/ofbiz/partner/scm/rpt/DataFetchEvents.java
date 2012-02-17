@@ -351,6 +351,45 @@ public class DataFetchEvents {
 		return "sucess";
 	}
 	
+	/**
+	 * 生产计划
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public static String queryProductionPlan(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String materialId = null;
+		String materialVolume = "0";
+		if(request.getParameter("materialId") != null){
+			materialId = request.getParameter("materialId");
+		}else{
+			throw new Exception("找不到加工件参数！");
+		}
+		if(request.getParameter("materialVolume") != null){
+			materialVolume = request.getParameter("materialVolume");
+		}
+		
+		String sql =" SELECT " +
+						" WH.NAME AS WAREHOUSENAME, " +
+						" TM.NAME AS MATERIALNAME, " +
+						" TM.MODEL AS MATERIALMODEL, " +
+						" UNT.NAME AS UNITNAME, " +
+						" ROUND(IFNULL(MBE.VOLUME*"+ materialVolume +",0),4) AS VOLUME, " +
+						" ROUND(IFNULL(CMB.VOLUME,0),4) AS STOCKVOLUME, " +
+						" ROUND(IFNULL(CMB.TOTAL_SUM/CMB.VOLUME,0),4) AS PRICE, " +
+						" ROUND(IFNULL((CMB.TOTAL_SUM/CMB.VOLUME) * (MBE.VOLUME * " + materialVolume + "),0),4) AS ENDSUM " +
+					" FROM MATERIAL_BOM MB " +
+					" LEFT JOIN MATERIAL_BOM_ENTRY MBE ON MB.ID = MBE.PARENT_ID " +
+					" LEFT JOIN T_MATERIAL TM ON MBE.ENTRY_MATERIAL_ID = TM.ID " +
+					" LEFT JOIN UNIT UNT ON TM.DEFAULT_UNIT_ID = UNT.ID " +
+					" LEFT JOIN CUR_MATERIAL_BALANCE CMB ON MBE.ENTRY_MATERIAL_ID = CMB.MATERIAL_ID " +
+					" LEFT JOIN WAREHOUSE WH ON CMB.WAREHOUSE_ID = WH.ID " +
+					" WHERE MB.MATERIAL_ID = '" + materialId + "'";
+		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(sql));
+		return "sucess";
+	}
+	
 	public static String executeSelectSQL(String sql) throws Exception {
 		// 数据库连接
 		Connection conn = ConnectionFactory.getConnection(Utils.getConnectionHelperName());
