@@ -56,7 +56,6 @@
 			<key-map field-name="defaultUnitId" rel-field-name="id" />
 		</view-link>
 	</view-entity>
-	<entity-group group="org.ofbiz" entity="WorkshopWarehousingPackingView"/>
 	<!-- 分录 -->
 	<entity entity-name="WorkshopWarehousingEntry" package-name="org.ofbiz.scm.WorkshopWarehousing" title="WorkshopWarehousingEntry Entity">
 		<field name="id" type="id-long"></field>
