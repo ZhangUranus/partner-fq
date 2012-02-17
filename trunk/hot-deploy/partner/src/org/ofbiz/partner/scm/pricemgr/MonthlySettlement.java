@@ -128,6 +128,7 @@ public class MonthlySettlement {
                 Debug.logError(e2, "Unable to rollback transaction", module);
             }
             Debug.logInfo("月结操作出错~~~~~~~", module);
+            throw e;
         } finally {
         	//释放系统
         	unlockSystem();
@@ -470,6 +471,7 @@ public class MonthlySettlement {
             } catch (GenericTransactionException e2) {
                 Debug.logError(e2, "Unable to rollback transaction", module);
             }
+            throw e;
         } finally {
         	//释放系统
         	unlockSystem();

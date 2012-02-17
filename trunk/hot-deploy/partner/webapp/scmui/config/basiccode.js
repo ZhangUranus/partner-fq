@@ -172,8 +172,7 @@ showWarning= function(msg){
    @printTemplate 打印模板，定义打印内容的打印样式 [{dataIndex:'data.billNumber',style:'left:0px;top:150px'}, {dataIndex:'data.supplierName',style:'left:0px;top:100px'},{dataIndex:'data.entries[0].materialName',style:'left:0px;top:150px'}]
  */
  function appendData2Win(win,data,printTemplate){
-     if(!isArray(printTemplate))return ;
-  
+ 
   var records= new Array(printTemplate.length);
   for(var t in printTemplate){
    var item=printTemplate[t];
@@ -188,7 +187,8 @@ showWarning= function(msg){
  }
  /*jason 对象转化为html字符添加到页面上，[{style:'',text:''},{}....]*/
 function insertPrintContent(win,records){
-  if(isArray(records)&&win.document!= undefined){
+  win.document.write(defaultPrintCss);
+  if(Ext.isArray(records)&&win.document!= undefined){
    for(var i in records){
     win.document.write(getBlock(records[i]));
    }
@@ -204,8 +204,3 @@ function insertPrintContent(win,records){
   str=str+'>'+jo.text+'</div>';
   return str;
  };
- /*判断对象是否数组*/
- function isArray(obj) { 
-  return Object.prototype.toString.call(obj) === '[object Array]'; 
- }
-
