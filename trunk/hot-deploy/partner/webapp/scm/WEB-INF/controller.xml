@@ -296,11 +296,15 @@
 		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="fetchData" />
 		<response name="success" type="none" />
 	</request-map>
+	
+	<!-- 获取月份列表 -->
 	<request-map uri="getMonthList">
 		<security https="false" auth="false" />
 		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="getMonthList" />
 		<response name="success" type="none" />
 	</request-map>
+	
+	<!-- 委外加工对数表 -->
 	<request-map uri="queryConsignMatchReport">
 		<security https="false" auth="false" />
 		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="queryConsignMatchReport" />
@@ -311,6 +315,8 @@
 		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="queryConsignMatchChart" />
 		<response name="success" type="none" />
 	</request-map>
+	
+	<!-- 库存情况报表 -->
 	<request-map uri="queryStockDetailReport">
 		<security https="false" auth="false" />
 		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="queryStockDetailReport" />
@@ -321,6 +327,8 @@
 		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="queryStockDetailChart" />
 		<response name="success" type="none" />
 	</request-map>
+	
+	<!-- 安装包装材料表 -->
 	<request-map uri="queryPackingMaterialReport">
 		<security https="false" auth="false" />
 		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="queryPackingMaterialReport" />
@@ -329,6 +337,13 @@
 	<request-map uri="queryPackingMaterialDetail">
 		<security https="false" auth="false" />
 		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="queryPackingMaterialDetail" />
+		<response name="success" type="none" />
+	</request-map>
+	
+	<!-- 生产计划列表 -->
+	<request-map uri="queryProductionPlan">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="queryProductionPlan" />
 		<response name="success" type="none" />
 	</request-map>
 	
