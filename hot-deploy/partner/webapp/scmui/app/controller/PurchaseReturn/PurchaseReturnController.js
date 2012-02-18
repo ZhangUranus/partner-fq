@@ -207,7 +207,11 @@ Ext.define('SCM.controller.PurchaseReturn.PurchaseReturnController', {
 								url : '../../scm/control/getCurMaterialBalanceValue',
 								success : function(response, option) {
 									var result = Ext.decode(response.responseText)
-									record.set('stockVolume', result.stockVolume);
+									if (result.success) {
+										record.set('stockVolume', result.stockVolume);
+									} else {
+										showError('获取仓库库存数量失败！');
+									}
 								}
 							});
 				}

@@ -112,27 +112,27 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 				this.approverWin = Ext.widget('purchasebillapproveredit');
 				this.approverStatus = this.approverWin.down('combobox[name=status]');
 				this.approverNote = this.approverWin.down('textarea[name=approverNote]');
-				
+
 			},
-			
+
 			/**
 			 * 根据状态设置编辑界面状态
 			 * @param {} isReadOnly
 			 */
 			changeEditStatus : function(record) {
-				if(record.get('status')=='0'){
+				if (record.get('status') == '0') {
 					this.setFieldsReadOnly(false);
 					this.editEntry.setDisabled(false);
 					this.saveButton.setDisabled(false);
 					this.clearButton.setDisabled(false);
-				}else{
+				} else {
 					this.setFieldsReadOnly(true);
 					this.editEntry.setDisabled(true);
 					this.saveButton.setDisabled(true);
 					this.clearButton.setDisabled(true);
 				}
 			},
-			
+
 			/**
 			 * 重写刷新方法
 			 * 
@@ -229,10 +229,16 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 										params : {
 											billId : record.get('id'),
 											entity : this.entityName,
-											isValid : record.get('status')=='1'? true:false
+											isValid : record.get('status') == '1' ? true : false
 										},
 										url : '../../scm/control/unauditPurchaseBill',
 										success : function(response) {
+											var result = Ext.decode(response.responseText)
+											if (result.success) {
+												Ext.Msg.alert("提示", "反审核成功！");
+											} else {
+												showError(result.message);
+											}
 											this.refreshRecord();
 										}
 									});
@@ -246,8 +252,8 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 			 * 审批界面保存
 			 */
 			approverSave : function() {
-				if(!this.approverNote.isValid() || !this.approverStatus.isValid()){
-					return ;
+				if (!this.approverNote.isValid() || !this.approverStatus.isValid()) {
+					return;
 				}
 				Ext.Ajax.request({
 							scope : this,
@@ -256,16 +262,22 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 								entity : this.entityName,
 								approverNote : this.approverNote.getValue(),
 								status : this.approverStatus.getValue(),
-								isValid : this.approverStatus.getValue()=='1' ? true:false
+								isValid : this.approverStatus.getValue() == '1' ? true : false
 							},
 							url : '../../scm/control/auditPurchaseBill',
 							success : function(response) {
+								var result = Ext.decode(response.responseText)
+								if (result.success) {
+									Ext.Msg.alert("提示", "审核成功！");
+								} else {
+									showError(result.message);
+								}
 								this.refreshRecord();
 								this.approverCancel();
 							}
 						});
 			},
-			
+
 			/**
 			 * 审批界面取消
 			 */
