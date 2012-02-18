@@ -340,6 +340,18 @@
 		<response name="success" type="none" />
 	</request-map>
 	
+	<!-- 成品报表 -->
+	<request-map uri="queryProductReport">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="queryProductReport" />
+		<response name="success" type="none" />
+	</request-map>
+	<request-map uri="queryProductChart">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="queryProductChart" />
+		<response name="success" type="none" />
+	</request-map>
+	
 	<!-- 生产计划列表 -->
 	<request-map uri="queryProductionPlan">
 		<security https="false" auth="false" />
