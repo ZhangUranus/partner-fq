@@ -348,6 +348,13 @@
 	</request-map>
 	
 	
+	<!-- 打印 -->
+	<request-map uri="getPrintData">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.common.PrintEvents" invoke="getPrintData" />
+		<response name="success" type="none" />
+	</request-map>
+	
 	
 	<!-- exporter -->
 	<request-map uri="export">

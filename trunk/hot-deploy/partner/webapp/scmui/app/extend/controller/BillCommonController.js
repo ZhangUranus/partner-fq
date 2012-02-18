@@ -37,6 +37,10 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				this.afterInitComponent();
 				this.refreshRecord();
 				this.searchMaterialId.store.load(); // 初始化物料列表
+				
+				
+				this.selectedPrintTemplate;
+				this.printdata;
 			},
 
 			afterInitComponent : Ext.emptyFn,
@@ -717,6 +721,11 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 
 			// 打印单据
 			print : function(button) {
+				var sm = this.listPanel.getSelectionModel();
+				if (!sm.hasSelection()) {// 判断是否选择行记录
+					showError("请选择打印记录");
+					return;
+				}
 				//选择打印模板
 				var templates=this.getPrintTemplateArr();
 				if(!Ext.isArray(templates)){
@@ -738,16 +747,13 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				selector.show();
 //				}
 				
+				
 			},
 			
 			buildPrintContent : function(template) {
-				var printData=this.getPrintData();
-				var printWin = window.open('', 'printwin');
-				appendData2Win(printWin,printData,template.template);
-				printWin.document.close();
-				printWin.print();
-				printWin.close();
-				
+				this.selectedPrintTemplate=template;
+				var sr = this.getSelectRecord();
+				var printData=this.getPrintData(sr.get('id'));
 			},
 			/**
 			 *返回单据打印模板，数组类型
@@ -765,24 +771,12 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 			 */
 			//getPrintTemplateArr:Ext.emptyFn,
 			getPrintTemplateArr: function(){
-				return [{name:'单据打印模板1',
-					     template:[{dataIndex:'data.billNumber',style:'left:50px;top:200px'}, 
-					        	{dataIndex:'data.supplierName',style:'left:0px;top:100px'},
-					               {dataIndex:'data.entries[0].materialName',style:'left:40;top:150px'}
+				return [{name:'默认打印模板',
+					     template:[{dataIndex:'data.number',style:'left:10px;top:50px'}, 
+					        	{dataIndex:'data.bizDate',style:'left:150px;top:50px'},
+					               {dataIndex:'data.entry[0].materialMaterialName',style:'left:10px;top:80px'}
 					                ]
-					     },
-					     {name:'单据打印模板2',
-						     template:[{dataIndex:'data.billNumber',style:'left:50px;top:200px'}, 
-						        	{dataIndex:'data.supplierName',style:'left:0px;top:100px'},
-						               {dataIndex:'data.entries[0].materialName',style:'left:40;top:150px'}
-						                ]
-						  },
-						  {name:'单据打印模板3',
-							     template:[{dataIndex:'data.billNumber',style:'left:50px;top:200px'}, 
-							        	{dataIndex:'data.supplierName',style:'left:0px;top:100px'},
-							               {dataIndex:'data.entries[0].materialName',style:'left:40;top:150px'}
-							                ]
-							     },
+					     }
 					     ];
 			},
 			/**
@@ -790,7 +784,36 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 			 * 打印的内容，json对象 {billNumber:'001',bizDate:'2012-08-09',supplierName:'江门开发' ,entries:[{materialName:'钢条',volume:10},{materialName:'钢条',volume:10}]}
 			 */
 //			getPrintData:Ext.emptyFn
-			getPrintData: function(){
-				return {billNumber:'001',bizDate:'2012-08-09',supplierName:'江门开发' ,entries:[{materialName:'钢条',volume:10},{materialName:'钢条',volume:10}]};
+//			getPrintData: function(){
+//				return {billNumber:'001',bizDate:'2012-08-09',supplierName:'江门开发' ,entries:[{materialName:'钢条',volume:10},{materialName:'钢条',volume:10}]};
+//			}
+			//取打印数据公共方法
+			getPrintData: function(id){
+				Ext.Ajax.request({
+					scope : this,
+					params : {
+						headId : id,
+						headView : this.entityName+'View',
+						entryView : this.entityName+'EntryView'
+					},
+					url : '../../scm/control/getPrintData',
+					success : function(response) {
+						var responseObj=Ext.decode(response.responseText);
+						if(responseObj.success){
+							this.doPrint(this.selectedPrintTemplate,responseObj.printData);
+						}else{
+							showError("打印数据格式出错");
+						}
+					}
+				});
+			},
+			//调用打印
+			doPrint: function(template,data){
+				var printWin = window.open('', 'printwin');
+				appendData2Win(printWin,data,template.template);
+				printWin.document.close();
+				printWin.print();
+				printWin.close();
 			}
+
 		})
