@@ -428,9 +428,14 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 									},
 									url : me.getSubmitBillUrl(),
 									success : function(response, option) {
-										me.submitBillSuccess(response, option);
-										Ext.Msg.alert("提示", "处理成功！");
-										me.refreshRecord();
+										var result = Ext.decode(response.responseText)
+                						if(result.success){
+											me.submitBillSuccess(response, option);
+											Ext.Msg.alert("提示", "处理成功！");
+                						} else {
+                							showError(result.message);
+                						}
+                						me.refreshRecord();
 									}
 								});
 					}

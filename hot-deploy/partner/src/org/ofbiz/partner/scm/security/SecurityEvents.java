@@ -99,6 +99,7 @@ public class SecurityEvents {
 				}
 				dispatcher.runAsync("createUserLogin", userMap);	//增加系统用户
 				delegator.create(v);		//增加项目用户
+				TransactionUtil.commit(beganTransaction);
 			} catch (GenericEntityException e) {
 				try {
 					TransactionUtil.rollback(beganTransaction, UtilProperties.getPropertyValue("ErrorCode_zh_CN", "AddUserFromDBEntityException"), e);
@@ -106,9 +107,7 @@ public class SecurityEvents {
 	            	throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "RollbackAddUserTransactionException"));
 	            }
 				throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "AddUserFromDBEntityException"));
-			} finally {
-	            TransactionUtil.commit(beganTransaction);
-	        }
+			}
 		}
 		return "success";
 	}
@@ -173,6 +172,7 @@ public class SecurityEvents {
 				}
 				delegator.store(v);		//修改项目用户
 				delegator.store(sv);	//修改系统用户
+				TransactionUtil.commit(beganTransaction);
 			} catch (GenericEntityException e) {
 				try {
 					TransactionUtil.rollback(beganTransaction, UtilProperties.getPropertyValue("ErrorCode_zh_CN", "UpdateUserFromDBEntityException"), e);
@@ -180,9 +180,7 @@ public class SecurityEvents {
 	            	throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "RollbackUpdateUserTransactionException"));
 	            }
 				throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "UpdateUserFromDBEntityException"));
-			} finally {
-	            TransactionUtil.commit(beganTransaction);
-	        }
+			}
 		}
 		return "success";
 	}
@@ -211,6 +209,7 @@ public class SecurityEvents {
 				delegator.removeByCondition(roleEntityName, EntityCondition.makeCondition("userId", record.getString("userId")));
 				delegator.removeValue(v);
 				delegator.removeValue(sv);
+				TransactionUtil.commit(beganTransaction);
 			} catch (GenericEntityException e) {
 				try {
 					TransactionUtil.rollback(beganTransaction, UtilProperties.getPropertyValue("ErrorCode_zh_CN", "DeleteUserFromDBEntityException"), e);
@@ -218,9 +217,7 @@ public class SecurityEvents {
 	            	throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "RollbackDeleteUserTransactionException"));
 	            }
 				throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "DeleteUserFromDBEntityException"));
-			} finally {
-	            TransactionUtil.commit(beganTransaction);
-	        }
+			}
 		}
 		return "success";
 	}
