@@ -68,7 +68,7 @@ public class PurPlanBalance {
 				BigDecimal balance=gv.getBigDecimal("balance");
 				BigDecimal result=balance.add(volume);
 				if(result.compareTo(BigDecimal.ZERO)<0){
-					throw new Exception("供应商可入库数量不能为负数！");
+					throw new Exception("供应商入库数量不能大于待验收数量，请重新输入！");
 				}
 				gv.set("balance", result);
 				delegator.store(gv);
@@ -77,7 +77,7 @@ public class PurPlanBalance {
 				gv.set("supplierId", supplierId);
 				gv.set("materialId", materialId);
 				if(volume.compareTo(BigDecimal.ZERO)<0){
-					throw new Exception("供应商可入库数量不能为负数！");
+					throw new Exception("供应商入库数量不能大于待验收数量，请重新输入！");
 				}
 				gv.set("balance", volume);
 				delegator.create(gv);

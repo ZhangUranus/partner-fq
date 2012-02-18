@@ -47,6 +47,7 @@ public class ConsignReturnMaterialEvents {
 
 				BillBaseEvent.submitBill(request, response);// 更新单据状态
 			}
+			TransactionUtil.commit(beganTransaction);
 		} catch (Exception e) {
 			Debug.logError(e, module);
 			try {
@@ -54,12 +55,7 @@ public class ConsignReturnMaterialEvents {
 			} catch (GenericTransactionException e2) {
 				Debug.logError(e2, "Unable to rollback transaction", module);
 			}
-		} finally {
-			try {
-				TransactionUtil.commit(beganTransaction);
-			} catch (GenericTransactionException e) {
-				Debug.logError(e, "Unable to commit transaction", module);
-			}
+			throw e;
 		}
 		return "success";
 	}
@@ -90,6 +86,7 @@ public class ConsignReturnMaterialEvents {
 
 				BillBaseEvent.rollbackBill(request, response);// 撤销单据
 			}
+			TransactionUtil.commit(beganTransaction);
 		} catch (Exception e) {
 			Debug.logError(e, module);
 			try {
@@ -97,12 +94,7 @@ public class ConsignReturnMaterialEvents {
 			} catch (GenericTransactionException e2) {
 				Debug.logError(e2, "Unable to rollback transaction", module);
 			}
-		} finally {
-			try {
-				TransactionUtil.commit(beganTransaction);
-			} catch (GenericTransactionException e) {
-				Debug.logError(e, "Unable to commit transaction", module);
-			}
+			throw e;
 		}
 		return "success";
 	}
