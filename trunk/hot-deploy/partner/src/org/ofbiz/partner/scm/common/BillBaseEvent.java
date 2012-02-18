@@ -1,18 +1,13 @@
 package org.ofbiz.partner.scm.common;
 
 import java.sql.Timestamp;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.print.attribute.HashAttributeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import net.sf.json.JSONObject;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.condition.EntityCondition;
-import org.ofbiz.entity.transaction.TransactionUtil;
 
 /**
  * 基础单据业务操作
@@ -40,6 +35,7 @@ public class BillBaseEvent {
 			fieldSet.put("approverNote", approverNote!=null ? approverNote : "");//设置审核意见
 			fieldSet.put("approverSystemUserId", CommonEvents.getAttributeToSession(request, "uid"));
 			delegator.storeByCondition(entity, fieldSet, EntityCondition.makeConditionWhere("id='"+billId+"'"));
+			writeSuccessMessageToExt(response,"审核成功");
 			return "sucess";
 		}else{
 			throw new Exception("empty billId or null entity");
@@ -63,6 +59,7 @@ public class BillBaseEvent {
 			fieldSet.put("approverNote", "");//设置审核意见
 			fieldSet.put("approverSystemUserId", CommonEvents.getAttributeToSession(request, "uid"));
 			delegator.storeByCondition(entity, fieldSet, EntityCondition.makeConditionWhere("id='"+billId+"'"));
+			writeSuccessMessageToExt(response,"反审核成功");
 			return "sucess";
 		}else{
 			throw new Exception("empty billId or null entity");
@@ -89,6 +86,7 @@ public class BillBaseEvent {
 			fieldSet.put("submitterSystemUserId", CommonEvents.getAttributeToSession(request, "uid"));
 			fieldSet.put("submitStamp", new Timestamp(System.currentTimeMillis()));
 			delegator.storeByCondition(entity, fieldSet, EntityCondition.makeConditionWhere("id='"+billId+"'"));
+			writeSuccessMessageToExt(response,"提交成功");
 			return "sucess";
 		}else{
 			throw new Exception("empty billId or null entity");
@@ -112,9 +110,17 @@ public class BillBaseEvent {
 			fieldSet.put("status", 0);//设置为保存状态
 			fieldSet.put("submitterSystemUserId", CommonEvents.getAttributeToSession(request, "uid"));
 			delegator.storeByCondition(entity, fieldSet, EntityCondition.makeConditionWhere("id='"+billId+"'"));
+			writeSuccessMessageToExt(response,"撤销成功");
 			return "sucess";
 		}else{
 			throw new Exception("empty billId or null entity");
 		}
+	}
+	
+	public static void writeSuccessMessageToExt(HttpServletResponse response ,String message) throws Exception{
+		JSONObject jsonResult=new JSONObject();
+		jsonResult.element("success", true);//成功标记
+		jsonResult.element("message", message);//成功信息
+		CommonEvents.writeJsonDataToExt(response, jsonResult.toString());
 	}
 }

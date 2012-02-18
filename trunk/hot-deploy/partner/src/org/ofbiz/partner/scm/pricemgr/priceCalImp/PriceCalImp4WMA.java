@@ -104,6 +104,9 @@ public class PriceCalImp4WMA implements IPriceCal {
 			BigDecimal sum = item.getSum();// 金额
 			
 			calAmount = curAmount.add(amount);// 计算后数量
+			if(calAmount.compareTo(BigDecimal.ZERO)<0){
+				throw new Exception("库存物料数量小于出库数量，请检查并调整出库数量！");
+			}
 			calSum = curSum.add(sum);// 计算后金额
 			
 			if(item.isOut() == item.isCancel()){//取消操作并非正常出入库
@@ -135,6 +138,10 @@ public class PriceCalImp4WMA implements IPriceCal {
 			
 			calAmount = beginVolume.add(item.getAmount());// 计算后数量
 			calSum = beginSum.add(item.getSum());// 计算后金额
+			
+			if(calAmount.compareTo(BigDecimal.ZERO)<0){
+				throw new Exception("库存物料数量小于出库数量，请检查并调整出库数量！");
+			}
 			
 			// 如果库存余额表没有改物料，则新增
 			curValue = delegator.makeValue("CurMaterialBalance");

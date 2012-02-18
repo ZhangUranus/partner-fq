@@ -216,31 +216,35 @@ Ext.define('SCM.controller.PurchaseWarehousing.PurchaseWarehousingController', {
 			setScheduleVolume : function(record, supplierId, materialId) {
 				if (!Ext.isEmpty(supplierId) && !Ext.isEmpty(materialId)) {
 					Ext.Ajax.request({
-						scope : this,
-						params : {
-							supplierId : supplierId,
-							materialId : materialId
-						},
-						url : '../../scm/control/getPlanBalance',
-						success : function(response, option) {
-							var result = Ext.decode(response.responseText)
-							record.set('scheduleVolume', result.count);
-						}
-					});
+								scope : this,
+								params : {
+									supplierId : supplierId,
+									materialId : materialId
+								},
+								url : '../../scm/control/getPlanBalance',
+								success : function(response, option) {
+									var result = Ext.decode(response.responseText)
+									if (result.success) {
+										record.set('scheduleVolume', result.count);
+									} else {
+										showError('获取供应商待验收数量失败！');
+									}
+								}
+							});
 				}
 			},
-			
+
 			/**
 			 * 获取单据提交URL
 			 */
-			getSubmitBillUrl : function(){
+			getSubmitBillUrl : function() {
 				return '../../scm/control/submitInspective';
 			},
-			
+
 			/**
 			 * 获取单据撤销URL
 			 */
-			getRollbackBillUrl : function(){
+			getRollbackBillUrl : function() {
 				return '../../scm/control/rollbackInspective';
 			}
 		});
