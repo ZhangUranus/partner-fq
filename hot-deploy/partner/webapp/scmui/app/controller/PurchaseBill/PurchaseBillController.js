@@ -274,5 +274,4 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 				this.approverStatus.setValue('');
 				this.approverWin.close();
 			}
-
 		});

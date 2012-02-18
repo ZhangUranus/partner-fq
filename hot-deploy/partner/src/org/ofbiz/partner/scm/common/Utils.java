@@ -32,9 +32,9 @@ public class Utils {
 		}
 		
 		JsonConfig config = new JsonConfig(); 
-		config.registerJsonValueProcessor(java.util.Date.class, new DateJsonProcessor());
-		config.registerJsonValueProcessor(java.sql.Date.class, new DateJsonProcessor());
-		config.registerJsonValueProcessor(java.sql.Timestamp.class,new DateJsonProcessor());
+		config.registerJsonValueProcessor(java.util.Date.class, new DateJsonProcessor(null));
+		config.registerJsonValueProcessor(java.sql.Date.class, new DateJsonProcessor(null));
+		config.registerJsonValueProcessor(java.sql.Timestamp.class,new DateJsonProcessor(null));
 		
 		
 		JSONArray ja=new JSONArray();
