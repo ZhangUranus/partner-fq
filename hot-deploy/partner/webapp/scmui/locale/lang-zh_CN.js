@@ -132,7 +132,7 @@ var LocaleLang = {
 	workshopReturnProduct :'制造退货',
 	analyticStatistics :'分析统计',
 	stockDetail :'库存情况',
-	semiProductCostReport :'黑胚材料耗用表',
+	semiProductCostReport :'黑坯材料耗用表',
 	consignProcessMatchingReport:'发外加工对数表',
 	packingMaterialReport :'安装包装材料表',
 	productReport :'成品报表',

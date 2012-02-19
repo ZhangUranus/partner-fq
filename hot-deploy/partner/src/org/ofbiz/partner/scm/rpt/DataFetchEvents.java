@@ -7,11 +7,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+
 import org.ofbiz.entity.GenericValue;
 import org.ofbiz.entity.jdbc.ConnectionFactory;
 import org.ofbiz.entity.util.EntityFindOptions;
@@ -43,6 +45,22 @@ public class DataFetchEvents {
 		return "sucess";
 	}
 	
+	public static List<Map<String, Object>> getListWithReportName(HttpServletRequest request) throws Exception{
+		List<Map<String, Object>> list = null;
+		if("SDR".equals(request.getParameter("report"))){
+			list = getStockDetailReportList(request);
+		} else if("PKM".equals(request.getParameter("report"))){
+			list = getPackingMaterialReportList(request);
+		} else if("CPMR".equals(request.getParameter("report"))){
+			list = getConsignMatchReportList(request);
+		} else if("PR".equals(request.getParameter("report"))){
+			list = getProductReportList(request);
+		} else if("SPC".equals(request.getParameter("report"))){
+			list = getSemiProductCostReportList(request);
+		}
+		return list;
+	}
+	
 	/**
 	 * 库存情况报表
 	 * @param request
@@ -51,6 +69,28 @@ public class DataFetchEvents {
 	 * @throws Exception
 	 */
 	public static String queryStockDetailReport(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(getStockDetailReportSql(request)));
+		return "sucess";
+	}
+	
+	/**
+	 * 库存情况数据列表
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public static List<Map<String ,Object>> getStockDetailReportList(HttpServletRequest request) throws Exception {
+		return getListWithSQL(getStockDetailReportSql(request));
+	}
+	
+	/**
+	 * 库存情况报表SQL
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	public static String getStockDetailReportSql(HttpServletRequest request) throws Exception {
 		String year = null;
 		String month = null;
 		String warehouseId = null;
@@ -110,9 +150,7 @@ public class DataFetchEvents {
 		if(warehouseId != null && !"".equals(warehouseId)){
 			sql += " AND CMB.WAREHOUSE_ID = '" + warehouseId + "'";
 		}
-		
-		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(sql));
-		return "sucess";
+		return sql;
 	}
 	
 	/**
@@ -173,6 +211,28 @@ public class DataFetchEvents {
 	 * @throws Exception
 	 */
 	public static String queryConsignMatchReport(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(getConsignMatchReportSql(request)));
+		return "sucess";
+	}
+	
+	/**
+	 * 发外加工对数数据列表
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public static List<Map<String ,Object>> getConsignMatchReportList(HttpServletRequest request) throws Exception {
+		return getListWithSQL(getConsignMatchReportSql(request));
+	}
+	
+	/**
+	 * 获取发外加工对数报表SQL
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	public static String getConsignMatchReportSql(HttpServletRequest request) throws Exception {
 		String year = null;
 		String month = null;
 		String supplierId = null;
@@ -219,9 +279,7 @@ public class DataFetchEvents {
 		if(supplierId != null && !"".equals(supplierId)){
 			sql += " AND CCPP.SUPPLIER_ID = '" + supplierId + "'";
 		}
-		
-		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(sql));
-		return "sucess";
+		return sql;
 	}
 	
 	/**
@@ -275,6 +333,28 @@ public class DataFetchEvents {
 	 * @throws Exception
 	 */
 	public static String queryPackingMaterialReport(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(getPackingMaterialReportSql(request)));
+		return "sucess";
+	}
+	
+	/**
+	 * 获取安装包数据列表
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public static List<Map<String ,Object>> getPackingMaterialReportList(HttpServletRequest request) throws Exception {
+		return getListWithSQL(getPackingMaterialReportSql(request));
+	}
+	
+	/**
+	 * 获取安装包报表SQL
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	public static String getPackingMaterialReportSql(HttpServletRequest request) throws Exception {
 		String startDate = null;
 		String endDate = null;
 		String warehouseId = null;
@@ -311,10 +391,9 @@ public class DataFetchEvents {
 			sql += " AND WWE.WAREHOUSE_WAREHOUSE_ID = '" + warehouseId + "'";
 		}
 		sql += " GROUP BY WW.NUMBER,WH.NAME,TM.NAME,WWE.MATERIAL_MATERIAL_MODEL,UIT.NAME ";
-		
-		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(sql));
-		return "sucess";
+		return sql;
 	}
+	
 	
 	/**
 	 * 安装包装报表明细
@@ -398,6 +477,28 @@ public class DataFetchEvents {
 	 * @throws Exception
 	 */
 	public static String queryProductReport(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(getProductReportSql(request)));
+		return "sucess";
+	}
+	
+	/**
+	 * 获取成品数据列表
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public static List<Map<String ,Object>> getProductReportList(HttpServletRequest request) throws Exception {
+		return getListWithSQL(getProductReportSql(request));
+	}
+	
+	/**
+	 * 获取成品报表SQL
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	public static String getProductReportSql(HttpServletRequest request) throws Exception {
 		String year = null;
 		String month = null;
 		String warehouseId = null;
@@ -458,9 +559,7 @@ public class DataFetchEvents {
 		if(warehouseId != null && !"".equals(warehouseId)){
 			sql += " AND CMB.WAREHOUSE_ID = '" + warehouseId + "'";
 		}
-		
-		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(sql));
-		return "sucess";
+		return sql;
 	}
 	
 	/**
@@ -521,6 +620,152 @@ public class DataFetchEvents {
 		return "sucess";
 	}
 	
+	/**
+	 * 黑坯件材料耗用表
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public static String querySemiProductCostReport(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(getSemiProductCostReportSql(request)));
+		return "sucess";
+	}
+	
+	/**
+	 * 获取黑坯件材料耗用表数据列表
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public static List<Map<String ,Object>> getSemiProductCostReportList(HttpServletRequest request) throws Exception {
+		return getListWithSQL(getSemiProductCostReportSql(request));
+	}
+	
+	/**
+	 * 获取黑坯件材料耗用表SQL
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	public static String getSemiProductCostReportSql(HttpServletRequest request) throws Exception {
+		String startDate = null;
+		String endDate = null;
+		String warehouseId = null;
+		if(request.getParameter("startDate") != null && request.getParameter("endDate") != null){
+			startDate = request.getParameter("startDate");
+			endDate = request.getParameter("endDate");
+		}else{
+			throw new Exception("找不到日期参数！");
+		}
+		
+		if(request.getParameter("warehouseId") != null){
+			warehouseId = request.getParameter("warehouseId");
+		}
+		String sql =" SELECT " +
+						" WW.BIZ_DATE, " +
+						" WW.NUMBER, " +
+						" WW.STATUS, " +
+						" WH.NAME AS WAREHOUSENAME, " +
+						" TM.NAME AS MATERIALNAME, " +
+						" WWE.MATERIAL_MATERIAL_MODEL AS MATERIALMODEL, " +
+						" UIT.NAME AS UNITNAME, " +
+						" SUM(ROUND(IFNULL(WWE.VOLUME,0),4)) AS VOLUME, " +
+						" SUM(ROUND(IFNULL(WWE.PRICE,0),4)) AS PRICE, " +
+						" SUM(ROUND(IFNULL(WWE.ENTRYSUM,0),4)) AS ENTRYSUM " +
+					" FROM WORKSHOP_WAREHOUSING WW " +
+					" LEFT JOIN WORKSHOP_WAREHOUSING_ENTRY WWE ON WW.ID = WWE.PARENT_ID " +
+					" LEFT JOIN T_MATERIAL TM ON WWE.MATERIAL_MATERIAL_ID = TM.ID " +
+					" LEFT JOIN WAREHOUSE WH ON WWE.WAREHOUSE_WAREHOUSE_ID = WH.ID " +
+					" LEFT JOIN UNIT UIT ON WWE.UNIT_UNIT_ID = UIT.ID " +
+					" WHERE TM.MATERIAL_TYPE_ID = 2 " +
+					" AND WW.BIZ_DATE >= '" + startDate + "'" +
+					" AND WW.BIZ_DATE <= '" + endDate + "'" ;
+		if(warehouseId != null && !"".equals(warehouseId)){
+			sql += " AND WWE.WAREHOUSE_WAREHOUSE_ID = '" + warehouseId + "'";
+		}
+		sql += " GROUP BY WW.NUMBER,WH.NAME,TM.NAME,WWE.MATERIAL_MATERIAL_MODEL,UIT.NAME ";
+		sql += " union ";
+		sql += " SELECT ";
+		sql += " 	CW.BIZ_DATE, ";
+		sql += " 	CW.NUMBER, ";
+		sql += " 	CW.STATUS, ";
+		sql += " 	WH.NAME AS WAREHOUSENAME, ";
+		sql += " 	TM.NAME AS MATERIALNAME, ";
+		sql += " 	CWE.MATERIAL_MATERIAL_MODEL AS MATERIALMODEL, ";
+		sql += " 	UIT.NAME AS UNITNAME, ";
+		sql += " 	SUM(ROUND(IFNULL(CWE.VOLUME,0),4)) AS VOLUME, ";
+		sql += " 	SUM(ROUND(IFNULL(CWE.PRICE,0),4)) AS PRICE, ";
+		sql += " 	SUM(ROUND(IFNULL(CWE.ENTRYSUM,0),4)) AS ENTRYSUM ";
+		sql += " FROM CONSIGN_WAREHOUSING CW ";
+		sql += " LEFT JOIN CONSIGN_WAREHOUSING_ENTRY CWE ON CW.ID = CWE.PARENT_ID ";
+		sql += " LEFT JOIN T_MATERIAL TM ON CWE.MATERIAL_MATERIAL_ID = TM.ID ";
+		sql += " LEFT JOIN WAREHOUSE WH ON CWE.WAREHOUSE_WAREHOUSE_ID = WH.ID ";
+		sql += " LEFT JOIN UNIT UIT ON CWE.UNIT_UNIT_ID = UIT.ID ";
+		sql += " WHERE TM.MATERIAL_TYPE_ID = 2 ";
+		sql += " AND CW.BIZ_DATE >= '" + startDate + "'";
+		sql += " AND CW.BIZ_DATE <= '" + endDate + "'" ;
+		if(warehouseId != null && !"".equals(warehouseId)){
+			sql += " AND CWE.WAREHOUSE_WAREHOUSE_ID = '" + warehouseId + "'";
+		}
+		sql += " GROUP BY CW.NUMBER,WH.NAME,TM.NAME,CWE.MATERIAL_MATERIAL_MODEL,UIT.NAME ";
+		return sql;
+	}
+	
+	/**
+	 * 黑坯件材料耗用明细表
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public static String querySemiProductCostDetail(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String number = null;
+		
+		if(request.getParameter("number") != null){
+			number = request.getParameter("number");
+		}
+		String sql =" SELECT " +
+						" WW.NUMBER, " +
+						" WWE.WAREHOUSE_WAREHOUSE_ID AS WAREHOUSEID, " +
+						" WWE.MATERIAL_MATERIAL_ID AS MATERIALID, " +
+						" TM.NUMBER AS MATERIALNUMBER, " +
+						" TM.NAME AS MATERIALNAME, " +
+						" AVG(ROUND(IFNULL(WPD.VOLUME,0),4)) AS PERVOLUME, " +
+						" AVG(ROUND(IFNULL(WPD.PRICE,0),4)) AS PRICE, " +
+						" ROUND(IFNULL(AVG(WPD.VOLUME*WWE.VOLUME),0),4) AS VOLUME, " +
+						" ROUND(IFNULL(AVG(WPD.PRICE*WPD.VOLUME*WWE.VOLUME),0),4) AS ENTRYSUM " +
+					" FROM WORKSHOP_WAREHOUSING WW " +
+					" LEFT JOIN WORKSHOP_WAREHOUSING_ENTRY WWE ON WW.ID = WWE.PARENT_ID " +
+					" LEFT JOIN WORKSHOP_PRICE_DETAIL WPD ON WWE.ID = WPD.PARENT_ID " +
+					" LEFT JOIN T_MATERIAL TM ON WPD.MATERIAL_ID = TM.ID " +
+					" LEFT JOIN UNIT UIT ON TM.DEFAULT_UNIT_ID = UIT.ID " +
+					" WHERE WW.NUMBER = '" + number + "'";
+		sql += " GROUP BY WW.NUMBER,WWE.WAREHOUSE_WAREHOUSE_ID,WWE.MATERIAL_MATERIAL_ID,TM.NUMBER,TM.NAME,WWE.VOLUME ";
+		sql += " UNION ";
+		sql += " SELECT ";
+		sql += " 	CW.NUMBER, ";
+		sql += " 	CWE.WAREHOUSE_WAREHOUSE_ID AS WAREHOUSEID, ";
+		sql += " 	CWE.MATERIAL_MATERIAL_ID AS MATERIALID, ";
+		sql += " 	TM.NUMBER AS MATERIALNUMBER, ";
+		sql += " 	TM.NAME AS MATERIALNAME, ";
+		sql += " 	AVG(ROUND(IFNULL(CPD.VOLUME,0),4)) AS PERVOLUME, ";
+		sql += " 	AVG(ROUND(IFNULL(CPD.PRICE,0),4)) AS PRICE, ";
+		sql += " 	ROUND(IFNULL(AVG(CPD.VOLUME*CWE.VOLUME),0),4) AS VOLUME, ";
+		sql += " 	ROUND(IFNULL(AVG(CPD.PRICE*CPD.VOLUME*CWE.VOLUME),0),4) AS ENTRYSUM ";
+		sql += " FROM CONSIGN_WAREHOUSING CW ";
+		sql += " LEFT JOIN CONSIGN_WAREHOUSING_ENTRY CWE ON CW.ID = CWE.PARENT_ID ";
+		sql += " LEFT JOIN CONSIGN_PRICE_DETAIL CPD ON CWE.ID = CPD.PARENT_ID ";
+		sql += " LEFT JOIN T_MATERIAL TM ON CPD.MATERIAL_ID = TM.ID ";
+		sql += " LEFT JOIN UNIT UIT ON TM.DEFAULT_UNIT_ID = UIT.ID ";
+		sql += " WHERE CW.NUMBER = '" + number + "'";
+		sql += " GROUP BY CW.NUMBER,CWE.WAREHOUSE_WAREHOUSE_ID,CWE.MATERIAL_MATERIAL_ID,TM.NUMBER,TM.NAME,CWE.VOLUME ";
+		
+		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(sql));
+		return "sucess";
+	}
+
 	public static String executeSelectSQL(String sql) throws Exception {
 		// 数据库连接
 		Connection conn = ConnectionFactory.getConnection(Utils.getConnectionHelperName());
@@ -534,6 +779,20 @@ public class DataFetchEvents {
 			result.element("total", ja.size());
 			
 			return result.toString();
+		} finally {
+			if (conn != null) {
+				conn.close();
+			}
+		}
+	}
+
+	public static List<Map<String, Object>> getListWithSQL(String sql) throws Exception {
+		// 数据库连接
+		Connection conn = ConnectionFactory.getConnection(Utils.getConnectionHelperName());
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			List<Map<String, Object>> list = Utils.getList4ResultSet(ps.executeQuery());
+			return list;
 		} finally {
 			if (conn != null) {
 				conn.close();

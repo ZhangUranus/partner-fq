@@ -3,7 +3,9 @@ package org.ofbiz.partner.scm.common;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -11,6 +13,8 @@ import net.sf.json.JsonConfig;
 
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.DelegatorFactory;
+import org.ofbiz.entity.GenericValue;
+import org.ofbiz.entity.model.ModelEntity;
 
 public class Utils {
 	public static Delegator getDefaultDelegator(){
@@ -50,6 +54,41 @@ public class Utils {
 		}
 		return ja;
 	}
+	
+	/**
+	 * 结果集转换为List
+	 * @param rs
+	 * @return
+	 * @throws Exception
+	 */
+	public static List<Map<String,Object>> getList4ResultSet(ResultSet rs) throws Exception{
+		List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
+		ResultSetMetaData md = rs.getMetaData();
+		int columnCount = md.getColumnCount(); //Map rowData;
+		while (rs.next()) { //rowData = new HashMap(columnCount);
+			Map<String,Object> rowData = new HashMap<String,Object>();
+			for (int i = 1; i <= columnCount; i++ ) {
+				rowData.put(md.getColumnName(i), rs.getObject(i));
+			}
+			list.add(rowData);
+		} 
+		return list;
+	}
+	
+	/**
+	 * 结果集转换为List
+	 * @param rs
+	 * @return
+	 * @throws Exception
+	 */
+	public static List<Map<String,Object>> changeListFormGenericValue(List<GenericValue> valueList) throws Exception{
+		List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
+		for(GenericValue v : valueList){
+			list.add(v.getAllFields());
+		} 
+		return list;
+	}
+	
 	
 	/**
 	 * 返回系统数据库配置名称 例如 localmysql
