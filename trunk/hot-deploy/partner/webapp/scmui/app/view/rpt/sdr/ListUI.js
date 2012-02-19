@@ -96,6 +96,8 @@ Ext.define('SCM.view.rpt.sdr.ListUI', {
 										margin : '1 0 0 0',
 										region : 'center',
 										layout : 'fit',
+										minWidth : 300,
+										minHeight : 200,
 										items : {
 											xtype : 'chart',
 											animate : true,
