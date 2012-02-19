@@ -80,7 +80,17 @@ Ext.define('SCM.controller.rpt.ConsignProcessMatchingReportController', {
 					this.listPanel.store.getProxy().extraParams.supplier = "";
 				}
 				this.listPanel.store.load();
-				this.chartPanel.store.load();
+				this.chartPanel.store.load({
+							scope : this,
+							callback : function(records, operation, success) {
+								if(records.length==0){
+									this.chartPanel.setVisible(false);
+								} else {
+									this.chartPanel.setVisible(true);
+									this.chartPanel.redraw();
+								}
+							}
+						});
 			},
 
 			/**
