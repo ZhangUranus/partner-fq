@@ -1,9 +1,9 @@
-Ext.define('SCM.controller.rpt.PackingMaterialReportController', {
+Ext.define('SCM.controller.rpt.SemiProductCostReportController', {
 			extend : 'Ext.app.Controller',
 			mixins : ['SCM.extend.exporter.Exporter'],
-			views : ['rpt.pkm.ListUI'],
-			stores : ['rpt.PackingMaterialReportStore', 'rpt.PackingMaterialDetailStore', 'rpt.MonthStore'],
-			models : ['rpt.PackingMaterialReportModel', 'rpt.PackingMaterialDetailModel', 'rpt.MonthModel'],
+			views : ['rpt.spc.ListUI'],
+			stores : ['rpt.SemiProductCostReportStore', 'rpt.SemiProductCostDetailStore', 'rpt.MonthStore'],
+			models : ['rpt.SemiProductCostReportModel', 'rpt.SemiProductCostDetailModel', 'rpt.MonthModel'],
 
 			/**
 			 * 初始化controller 增加事件监控
@@ -11,19 +11,19 @@ Ext.define('SCM.controller.rpt.PackingMaterialReportController', {
 			init : function() {
 				this.control({
 							// 完成日志界面初始化后调用
-							'packingmaterialreport' : {
+							'semiproductcostreport' : {
 								afterrender : this.initComponent
 							},
 							// 列表事件
-							'packingmaterialreport gridpanel[region=center]' : {
+							'semiproductcostreport gridpanel[region=center]' : {
 								select : this.showDetail
 							},
 							// 列表界面刷新
-							'packingmaterialreport button[action=search]' : {
+							'semiproductcostreport button[action=search]' : {
 								click : this.refreshRecord
 							},
 							// 数据导出
-							'packingmaterialreport button[action=export]' : {
+							'semiproductcostreport button[action=export]' : {
 								click : this.exportExcel
 							}
 						});
@@ -65,6 +65,7 @@ Ext.define('SCM.controller.rpt.PackingMaterialReportController', {
 					showWarning('开始日期不允许大于结束日期，请重新选择！');
 					return;
 				}
+				
 				if (!Ext.isEmpty(this.searchWarehouseId.getValue())) {
 					this.listPanel.store.getProxy().extraParams.warehouseId = this.searchWarehouseId.getValue();
 				} else {
@@ -75,15 +76,10 @@ Ext.define('SCM.controller.rpt.PackingMaterialReportController', {
 
 			/**
 			 * 显示分录信息
-			 * 
-			 * @param {}
-			 *            me
-			 * @param {}
-			 *            record
-			 * @param {}
-			 *            index
-			 * @param {}
-			 *            eOpts
+			 * @param {} me
+			 * @param {} record
+			 * @param {} index
+			 * @param {} eOpts
 			 */
 			showDetail : function(me, record, index, eOpts) {
 				if (record != null && record.get("NUMBER") != null) {
@@ -113,12 +109,13 @@ Ext.define('SCM.controller.rpt.PackingMaterialReportController', {
 								count++;
 							}
 						});
+				
 				with (this.listPanel.store) {
 					var params = getProxy().extraParams;
 
 					// 页面参数
-					params.report = 'PKM';
-					params.title = '安装包装材料表'; // sheet页名称
+					params.report = 'SPC';
+					params.title = '黑坯材料耗用表'; // sheet页名称
 					params.header = header; // 表头
 					params.dataIndex = dataIndex; // 数据引用
 					params.pattern = 'SQL';

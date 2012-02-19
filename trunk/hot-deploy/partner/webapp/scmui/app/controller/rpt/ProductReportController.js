@@ -51,20 +51,10 @@ Ext.define('SCM.controller.rpt.ProductReportController', {
 			 * 
 			 */
 			refreshRecord : function() {
-				this.whereStr = 'TMaterialV.material_type_id = 4 ';
 				if (!Ext.isEmpty(this.searchMonth.getValue())) {
 					var tempStr = this.searchMonth.getValue().split('-');
 					this.listPanel.store.getProxy().extraParams.year = tempStr[0];
 					this.listPanel.store.getProxy().extraParams.month = tempStr[1];
-					this.whereStr += " and year = ";
-					this.whereStr += tempStr[0];
-					this.whereStr += " and month = ";
-					this.whereStr += tempStr[1];
-					if(SCM.SystemMonthlyYear == tempStr[0] && SCM.SystemMonthlyMonth == tempStr[1]){
-						this.exportTableName = 'CurMaterialBalanceView';
-					} else {
-						this.exportTableName = 'HisMaterialBalanceView';
-					}
 				} else {
 					showWarning('请选择月份！');
 					return;
@@ -72,9 +62,6 @@ Ext.define('SCM.controller.rpt.ProductReportController', {
 				if (!Ext.isEmpty(this.searchWarehouseId.getValue())) {
 					this.listPanel.store.getProxy().extraParams.warehouseId = this.searchWarehouseId.getValue();
 					this.chartPanel.store.getProxy().extraParams.warehouseId = this.searchWarehouseId.getValue();
-					this.whereStr += " and MaterialBalanceV.warehouse_id = '";
-					this.whereStr += this.searchWarehouseId.getValue();
-					this.whereStr += "' ";
 				} else {
 					this.listPanel.store.getProxy().extraParams.warehouseId = "";
 					this.chartPanel.store.getProxy().extraParams.warehouseId = "";
@@ -82,9 +69,6 @@ Ext.define('SCM.controller.rpt.ProductReportController', {
 				if (!Ext.isEmpty(this.searchMaterialId.getValue())) {
 					this.listPanel.store.getProxy().extraParams.materialId = this.searchMaterialId.getValue();
 					this.chartPanel.store.getProxy().extraParams.materialId = this.searchMaterialId.getValue();
-					this.whereStr += " and MaterialBalanceV.material_id = '";
-					this.whereStr += this.searchMaterialId.getValue();
-					this.whereStr += "' ";
 				} else {
 					this.listPanel.store.getProxy().extraParams.materialId = "";
 					this.chartPanel.store.getProxy().extraParams.materialId = "";
@@ -109,23 +93,32 @@ Ext.define('SCM.controller.rpt.ProductReportController', {
 			 * @return {}
 			 */
 			getParams : function() {
-				var header = "仓库,物料名称,单位,期初数量,期初单价,期初金额,本期收入数量,本期收入单价,本期收入金额,本期发出数量,本期发出单价,本期发出金额,期末数量,期末单价,期末金额";
-				var dataIndex = "warehouseName,materialName,unitName,beginvolume,beginPrice,beginsum,volume,price,totalSum,inVolume,inPrice,inSum,outVolume,outPrice,outSum";
-
+				var tempheader = this.listPanel.headerCt.query('{isVisible()}');
+				var header = "";
+				var dataIndex = "";
+				var count = 0;
+				Ext.each(tempheader, function(column, index, length) {
+							if (column.xtype != 'rownumberer') {
+								if (count != 0) {
+									header += ",";
+									dataIndex += ",";
+								}
+								header += column.text;
+								dataIndex += column.dataIndex;
+								count++;
+							}
+						});
+				
 				with (this.listPanel.store) {
-					var params = {
-						// Store参数
-						sort : '[{"property":"warehouseName","direction":"ASC"}]',
-						filter : Ext.encode(filters.items),
+					var params = getProxy().extraParams;
 
-						// 页面参数
-						entity : this.exportTableName, // 导出实体名称，一般为视图名称。
-						title : '成品报表', // sheet页名称
-						header : header, // 表头
-						dataIndex : dataIndex, // 数据引用
-						type : 'EXCEL',
-						whereStr : this.whereStr
-					}
+					// 页面参数
+					params.report = 'PR';
+					params.title = '成品报表'; // sheet页名称
+					params.header = header; // 表头
+					params.dataIndex = dataIndex; // 数据引用
+					params.pattern = 'SQL';
+					params.type = 'EXCEL';
 					return params;
 				}
 			}

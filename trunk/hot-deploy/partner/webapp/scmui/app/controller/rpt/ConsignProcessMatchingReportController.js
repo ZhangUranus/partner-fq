@@ -51,31 +51,18 @@ Ext.define('SCM.controller.rpt.ConsignProcessMatchingReportController', {
 			 * 
 			 */
 			refreshRecord : function() {
-				this.whereStr = '';
 				if (!Ext.isEmpty(this.searchMonth.getValue())) {
 					var tempStr = this.searchMonth.getValue().split('-');
 					this.listPanel.store.getProxy().extraParams.year = tempStr[0];
 					this.listPanel.store.getProxy().extraParams.month = tempStr[1];
 					this.chartPanel.store.getProxy().extraParams.year = tempStr[0];
 					this.chartPanel.store.getProxy().extraParams.month = tempStr[1];
-					this.whereStr += " year = ";
-					this.whereStr += tempStr[0];
-					this.whereStr += " and month = ";
-					this.whereStr += tempStr[1];
-					if(SCM.SystemMonthlyYear == tempStr[0] && SCM.SystemMonthlyMonth == tempStr[1]){
-						this.exportTableName = 'CurConsignProcessedPriceView';
-					} else {
-						this.exportTableName = 'HisConsignProcessedPriceView';
-					}
 				} else {
 					showWarning('请选择月份！');
 					return;
 				}
 				if (!Ext.isEmpty(this.searchSupplierId.getValue())) {
 					this.listPanel.store.getProxy().extraParams.supplier = this.searchSupplierId.getValue();
-					this.whereStr += " and ConsignProcessedPriceV.supplier_id = '";
-					this.whereStr += this.searchSupplierId.getValue();
-					this.whereStr += "' ";
 				} else {
 					this.listPanel.store.getProxy().extraParams.supplier = "";
 				}
@@ -99,23 +86,32 @@ Ext.define('SCM.controller.rpt.ConsignProcessMatchingReportController', {
 			 * @return {}
 			 */
 			getParams : function() {
-				var header = "加工商,加工件,单位,加工单价,期初数量,收入数量,收入金额,发出数量,发出金额,结存数量";
-				var dataIndex = "supplierName,materialName,defaultUnitName,price,beginvolume,inVolume,inSum,outVolume,outSum,volume";
-
+				var tempheader = this.listPanel.headerCt.query('{isVisible()}');
+				var header = "";
+				var dataIndex = "";
+				var count = 0;
+				Ext.each(tempheader, function(column, index, length) {
+							if (column.xtype != 'rownumberer') {
+								if (count != 0) {
+									header += ",";
+									dataIndex += ",";
+								}
+								header += column.text;
+								dataIndex += column.dataIndex;
+								count++;
+							}
+						});
+				
 				with (this.listPanel.store) {
-					var params = {
-						// Store参数
-						sort : '[{"property":"supplierId","direction":"ASC"}]',
-						filter : Ext.encode(filters.items),
+					var params = getProxy().extraParams;
 
-						// 页面参数
-						entity : 'CurConsignProcessedPriceView', // 导出实体名称，一般为视图名称。
-						title : '加工商对数表', // sheet页名称
-						header : header, // 表头
-						dataIndex : dataIndex, // 数据引用
-						type : 'EXCEL',
-						whereStr : this.whereStr
-					}
+					// 页面参数
+					params.report = 'CPMR';
+					params.title = '加工商对数表'; // sheet页名称
+					params.header = header; // 表头
+					params.dataIndex = dataIndex; // 数据引用
+					params.pattern = 'SQL';
+					params.type = 'EXCEL';
 					return params;
 				}
 			}

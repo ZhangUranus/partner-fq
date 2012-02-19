@@ -40,50 +40,6 @@
 		<prim-key field="warehouseId" />
 		<prim-key field="materialId" />
 	</entity>
-	<!-- 历史存货余额表视图，暂时用于导出功能 -->
-	<view-entity entity-name="HisMaterialBalanceView" package-name="org.ofbiz.scm.pricemgr" title="HisMaterialBalanceView Entity">
-		<member-entity entity-alias="MaterialBalanceV" entity-name="HisMaterialBalance"></member-entity>
-		<member-entity entity-alias="WarehouseV" entity-name="Warehouse"></member-entity>
-		<member-entity entity-alias="TMaterialV" entity-name="TMaterial"></member-entity>
-		<member-entity entity-alias="UnitV" entity-name="Unit"></member-entity>
-		<alias-all entity-alias="MaterialBalanceV"></alias-all>
-		<alias name="beginPrice">
-			<complex-alias operator="/">
-				<complex-alias-field entity-alias="MaterialBalanceV" field="beginsum" />
-				<complex-alias-field entity-alias="MaterialBalanceV" field="beginvolume" />
-			</complex-alias>
-		</alias>
-		<alias name="price">
-			<complex-alias operator="/">
-				<complex-alias-field entity-alias="MaterialBalanceV" field="totalSum" />
-				<complex-alias-field entity-alias="MaterialBalanceV" field="volume" />
-			</complex-alias>
-		</alias>
-		<alias name="inPrice">
-			<complex-alias operator="/">
-				<complex-alias-field entity-alias="MaterialBalanceV" field="inSum" />
-				<complex-alias-field entity-alias="MaterialBalanceV" field="inVolume" />
-			</complex-alias>
-		</alias>
-		<alias name="outPrice">
-			<complex-alias operator="/">
-				<complex-alias-field entity-alias="MaterialBalanceV" field="outSum" />
-				<complex-alias-field entity-alias="MaterialBalanceV" field="outVolume" />
-			</complex-alias>
-		</alias>
-		<alias name="warehouseName" entity-alias="WarehouseV" field="name"></alias>
-		<alias name="materialName" entity-alias="TMaterialV" field="name"></alias>
-		<alias name="unitName" entity-alias="UnitV" field="name"></alias>
-		<view-link entity-alias="MaterialBalanceV" rel-entity-alias="WarehouseV" rel-optional="true">
-			<key-map field-name="warehouseId" rel-field-name="id" />
-		</view-link>
-		<view-link entity-alias="MaterialBalanceV" rel-entity-alias="TMaterialV" rel-optional="true">
-			<key-map field-name="materialId" rel-field-name="id" />
-		</view-link>
-		<view-link entity-alias="TMaterialV" rel-entity-alias="UnitV" rel-optional="true">
-			<key-map field-name="defaultUnitId" rel-field-name="id" />
-		</view-link>
-	</view-entity>
 	<!-- 当前存货余额表 -->
 	<entity entity-name="CurMaterialBalance" package-name="org.ofbiz.scm.pricemgr" title="CurMaterialBalance Entity">
 		<field name="year" type="int"></field>
@@ -103,50 +59,6 @@
 		<prim-key field="warehouseId" />
 		<prim-key field="materialId" />
 	</entity>
-	<!-- 当前存货余额表视图，暂时用于导出功能 -->
-	<view-entity entity-name="CurMaterialBalanceView" package-name="org.ofbiz.scm.pricemgr" title="CurMaterialBalanceView Entity">
-		<member-entity entity-alias="MaterialBalanceV" entity-name="CurMaterialBalance"></member-entity>
-		<member-entity entity-alias="WarehouseV" entity-name="Warehouse"></member-entity>
-		<member-entity entity-alias="TMaterialV" entity-name="TMaterial"></member-entity>
-		<member-entity entity-alias="UnitV" entity-name="Unit"></member-entity>
-		<alias-all entity-alias="MaterialBalanceV"></alias-all>
-		<alias name="beginPrice">
-			<complex-alias operator="/">
-				<complex-alias-field entity-alias="MaterialBalanceV" field="beginsum" />
-				<complex-alias-field entity-alias="MaterialBalanceV" field="beginvolume" />
-			</complex-alias>
-		</alias>
-		<alias name="price">
-			<complex-alias operator="/">
-				<complex-alias-field entity-alias="MaterialBalanceV" field="totalSum" />
-				<complex-alias-field entity-alias="MaterialBalanceV" field="volume" />
-			</complex-alias>
-		</alias>
-		<alias name="inPrice">
-			<complex-alias operator="/">
-				<complex-alias-field entity-alias="MaterialBalanceV" field="inSum" />
-				<complex-alias-field entity-alias="MaterialBalanceV" field="inVolume" />
-			</complex-alias>
-		</alias>
-		<alias name="outPrice">
-			<complex-alias operator="/">
-				<complex-alias-field entity-alias="MaterialBalanceV" field="outSum" />
-				<complex-alias-field entity-alias="MaterialBalanceV" field="outVolume" />
-			</complex-alias>
-		</alias>
-		<alias name="warehouseName" entity-alias="WarehouseV" field="name"></alias>
-		<alias name="materialName" entity-alias="TMaterialV" field="name"></alias>
-		<alias name="unitName" entity-alias="UnitV" field="name"></alias>
-		<view-link entity-alias="MaterialBalanceV" rel-entity-alias="WarehouseV" rel-optional="true">
-			<key-map field-name="warehouseId" rel-field-name="id" />
-		</view-link>
-		<view-link entity-alias="MaterialBalanceV" rel-entity-alias="TMaterialV" rel-optional="true">
-			<key-map field-name="materialId" rel-field-name="id" />
-		</view-link>
-		<view-link entity-alias="TMaterialV" rel-entity-alias="UnitV" rel-optional="true">
-			<key-map field-name="defaultUnitId" rel-field-name="id" />
-		</view-link>
-	</view-entity>
 	<!-- 历史委外入库退料，加工商、物料加权单价表 -->
 	<entity entity-name="HisConsignPrice" package-name="org.ofbiz.scm.pricemgr" title="ConsignPrice Entity">
 		<field name="year" type="int"></field>
@@ -193,41 +105,6 @@
 		<prim-key field="supplierId" />
 		<prim-key field="materialId" />
 	</entity>
-	<!-- 历史发外加工对数表视图，暂时用于导出功能 -->
-	<view-entity entity-name="HisConsignProcessedPriceView" package-name="org.ofbiz.scm.pricemgr" title="HisConsignProcessedPriceView Entity">
-		<member-entity entity-alias="ConsignProcessedPriceV" entity-name="HisConsignProcessedPrice"></member-entity>
-		<member-entity entity-alias="TMaterialV" entity-name="TMaterial"></member-entity>
-		<member-entity entity-alias="SupplierV" entity-name="Supplier"></member-entity>
-		<member-entity entity-alias="UnitV" entity-name="Unit"></member-entity>
-		<alias-all entity-alias="ConsignProcessedPriceV"></alias-all>
-		<alias name="price">
-			<complex-alias operator="/">
-				<complex-alias-field entity-alias="ConsignProcessedPriceV" field="inSum" />
-				<complex-alias-field entity-alias="ConsignProcessedPriceV" field="inVolume" />
-			</complex-alias>
-		</alias>
-		<alias name="outSum">
-			<complex-alias operator="*">
-				<complex-alias-field entity-alias="ConsignProcessedPriceV" field="outVolume" />
-				<complex-alias operator="/">
-					<complex-alias-field entity-alias="ConsignProcessedPriceV" field="inSum" />
-					<complex-alias-field entity-alias="ConsignProcessedPriceV" field="inVolume" />
-				</complex-alias>
-			</complex-alias>
-		</alias>
-		<alias name="materialName" entity-alias="TMaterialV" field="name"></alias>
-		<alias name="supplierName" entity-alias="SupplierV" field="name"></alias>
-		<alias name="defaultUnitName" entity-alias="UnitV" field="name"></alias>
-		<view-link entity-alias="ConsignProcessedPriceV" rel-entity-alias="TMaterialV" rel-optional="true">
-			<key-map field-name="materialId" rel-field-name="id" />
-		</view-link>
-		<view-link entity-alias="ConsignProcessedPriceV" rel-entity-alias="SupplierV" rel-optional="true">
-			<key-map field-name="supplierId" rel-field-name="id" />
-		</view-link>
-		<view-link entity-alias="TMaterialV" rel-entity-alias="UnitV" rel-optional="true">
-			<key-map field-name="defaultUnitId" rel-field-name="id" />
-		</view-link>
-	</view-entity>
 	<!-- 当期发外加工对数表 -->
 	<entity entity-name="CurConsignProcessedPrice" package-name="org.ofbiz.scm.pricemgr" title="CurConsignProcessedPrice Entity">
 		<field name="year" type="int"></field>
@@ -244,41 +121,6 @@
 		<prim-key field="supplierId" />
 		<prim-key field="materialId" />
 	</entity>
-	<!-- 当期发外加工对数表视图，暂时用于导出功能 -->
-	<view-entity entity-name="CurConsignProcessedPriceView" package-name="org.ofbiz.scm.pricemgr" title="CurConsignProcessedPriceView Entity">
-		<member-entity entity-alias="ConsignProcessedPriceV" entity-name="CurConsignProcessedPrice"></member-entity>
-		<member-entity entity-alias="TMaterialV" entity-name="TMaterial"></member-entity>
-		<member-entity entity-alias="SupplierV" entity-name="Supplier"></member-entity>
-		<member-entity entity-alias="UnitV" entity-name="Unit"></member-entity>
-		<alias-all entity-alias="ConsignProcessedPriceV"></alias-all>
-		<alias name="price">
-			<complex-alias operator="/">
-				<complex-alias-field entity-alias="ConsignProcessedPriceV" field="inSum" />
-				<complex-alias-field entity-alias="ConsignProcessedPriceV" field="inVolume" />
-			</complex-alias>
-		</alias>
-		<alias name="outSum">
-			<complex-alias operator="*">
-				<complex-alias-field entity-alias="ConsignProcessedPriceV" field="outVolume" />
-				<complex-alias operator="/">
-					<complex-alias-field entity-alias="ConsignProcessedPriceV" field="inSum" />
-					<complex-alias-field entity-alias="ConsignProcessedPriceV" field="inVolume" />
-				</complex-alias>
-			</complex-alias>
-		</alias>
-		<alias name="materialName" entity-alias="TMaterialV" field="name"></alias>
-		<alias name="supplierName" entity-alias="SupplierV" field="name"></alias>
-		<alias name="defaultUnitName" entity-alias="UnitV" field="name"></alias>
-		<view-link entity-alias="ConsignProcessedPriceV" rel-entity-alias="TMaterialV" rel-optional="true">
-			<key-map field-name="materialId" rel-field-name="id" />
-		</view-link>
-		<view-link entity-alias="ConsignProcessedPriceV" rel-entity-alias="SupplierV" rel-optional="true">
-			<key-map field-name="supplierId" rel-field-name="id" />
-		</view-link>
-		<view-link entity-alias="TMaterialV" rel-entity-alias="UnitV" rel-optional="true">
-			<key-map field-name="defaultUnitId" rel-field-name="id" />
-		</view-link>
-	</view-entity>
 	<!-- 委外入库退料，关联物料明细单价表 -->
 	<entity entity-name="ConsignPriceDetail" package-name="org.ofbiz.scm.pricemgr" title="ConsignPriceDetail Entity">
 		<field name="parentId" type="id-long"></field>
