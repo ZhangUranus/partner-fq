@@ -81,6 +81,7 @@ public class WorkshopReturnProductEvents {
 					}
 					billHead.set("checkerSystemUserId", CommonEvents.getAttributeToSession(request, "uid"));
 					billHead.store();
+					BillBaseEvent.writeSuccessMessageToExt(response, "验收成功");
 				}
 			}
 			TransactionUtil.commit(beganTransaction);
