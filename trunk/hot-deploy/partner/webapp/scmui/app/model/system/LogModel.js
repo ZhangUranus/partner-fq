@@ -43,7 +43,7 @@ Ext.define('SCM.model.system.LogModel', {
 			proxy : {
 				type : 'jsonajax',
 				api : {
-					read : '../../scm/control/requestJsonData?entity=VSystemLog'
+					read : '../../scm/control/querySystemLogReport'
 				}
 			}
 		});

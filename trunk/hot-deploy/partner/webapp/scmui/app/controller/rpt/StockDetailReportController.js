@@ -113,6 +113,7 @@ Ext.define('SCM.controller.rpt.StockDetailReportController', {
 					var params = getProxy().extraParams;
 
 					// 页面参数
+					params.sort = Ext.encode(getSorters());
 					params.report = 'SDR';
 					params.title = '库存情况'; // sheet页名称
 					params.header = header; // 表头

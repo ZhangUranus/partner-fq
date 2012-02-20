@@ -4,9 +4,5 @@ Ext.define('SCM.store.rpt.ProductChartStore', {
 			alias : 'ProductChartStore',
 			remoteSort : true, // 服务器排序
 			autoLoad : false,
-			autoSync : false,
-			sorters : [{// 根据MONTH字段排序
-				property : 'MONTH',
-				direction : 'ASC'
-			}]
+			autoSync : false
 		});
