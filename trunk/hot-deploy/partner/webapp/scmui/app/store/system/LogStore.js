@@ -8,6 +8,6 @@ Ext.define('SCM.store.system.LogStore', {
 			autoSync : true,
 			sorters : [{//根据hitTime字段排序
 				property : 'hitTime',
-				direction : 'ASC'
+				direction : 'DESC'
 			}]
 		});

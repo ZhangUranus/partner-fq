@@ -29,7 +29,6 @@ public class WorkshopWarehousingBizImp implements IBizStock {
 		if (workshopId == null && workshopId.length() < 1) {
 			throw new Exception("制造入库单车间为空！！！");
 		}
-
 		// 获取单据id分录条目
 		List<GenericValue> entryList = delegator.findByAnd("WorkshopWarehousingEntry", UtilMisc.toMap("parentId", billValue.getString("id")));
 
@@ -79,7 +78,6 @@ public class WorkshopWarehousingBizImp implements IBizStock {
 			if(isOut){
 				WorkshopPriceMgr.getInstance().removeMaterialList(v.getString("id"));
 			}
-
 			v.store();
 		}
 		// 返填总金额

@@ -6,12 +6,13 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import net.sf.json.JSONArray;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.ofbiz.entity.GenericValue;
@@ -19,6 +20,7 @@ import org.ofbiz.entity.jdbc.ConnectionFactory;
 import org.ofbiz.entity.util.EntityFindOptions;
 import org.ofbiz.partner.scm.common.CommonEvents;
 import org.ofbiz.partner.scm.common.Utils;
+import org.ofbiz.partner.scm.pojo.OrderPojo;
 
 public class DataFetchEvents {
 	
@@ -65,7 +67,7 @@ public class DataFetchEvents {
 	 * @throws Exception
 	 */
 	public static String queryStockDetailReport(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(getStockDetailReportSql(request),request));
+		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(request,getStockDetailReportSql(request)));
 		return "sucess";
 	}
 	
@@ -77,7 +79,7 @@ public class DataFetchEvents {
 	 * @throws Exception
 	 */
 	public static List<Map<String ,Object>> getStockDetailReportList(HttpServletRequest request) throws Exception {
-		return getListWithSQL(getStockDetailReportSql(request),request);
+		return getListWithSQL(request,getStockDetailReportSql(request));
 	}
 	
 	/**
@@ -194,7 +196,7 @@ public class DataFetchEvents {
 		}
 		sql += " GROUP BY CMB.MATERIAL_ID,TM.NAME ";
 		
-		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(sql,request));
+		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(request,sql));
 		return "sucess";
 	}
 	
@@ -207,7 +209,7 @@ public class DataFetchEvents {
 	 * @throws Exception
 	 */
 	public static String queryConsignMatchReport(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(getConsignMatchReportSql(request),request));
+		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(request,getConsignMatchReportSql(request)));
 		return "sucess";
 	}
 	
@@ -219,7 +221,7 @@ public class DataFetchEvents {
 	 * @throws Exception
 	 */
 	public static List<Map<String ,Object>> getConsignMatchReportList(HttpServletRequest request) throws Exception {
-		return getListWithSQL(getConsignMatchReportSql(request),request);
+		return getListWithSQL(request,getConsignMatchReportSql(request));
 	}
 	
 	/**
@@ -317,7 +319,7 @@ public class DataFetchEvents {
 					" WHERE YEAR = " + year +
 					" AND MONTH = " + month +
 					" GROUP BY CCPP.SUPPLIER_ID,SUP.NAME";
-		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(sql,request));
+		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(request,sql));
 		return "sucess";
 	}
 	
@@ -329,7 +331,7 @@ public class DataFetchEvents {
 	 * @throws Exception
 	 */
 	public static String queryPackingMaterialReport(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(getPackingMaterialReportSql(request),request));
+		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(request,getPackingMaterialReportSql(request)));
 		return "sucess";
 	}
 	
@@ -341,7 +343,7 @@ public class DataFetchEvents {
 	 * @throws Exception
 	 */
 	public static List<Map<String ,Object>> getPackingMaterialReportList(HttpServletRequest request) throws Exception {
-		return getListWithSQL(getPackingMaterialReportSql(request),request);
+		return getListWithSQL(request,getPackingMaterialReportSql(request));
 	}
 	
 	/**
@@ -422,7 +424,7 @@ public class DataFetchEvents {
 					" WHERE WW.NUMBER = '" + number + "'";
 		sql += " GROUP BY WW.NUMBER,WWE.WAREHOUSE_WAREHOUSE_ID,WWE.MATERIAL_MATERIAL_ID,TM.NUMBER,TM.NAME,WWE.VOLUME ";
 		
-		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(sql,request));
+		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(request,sql));
 		return "sucess";
 	}
 	
@@ -461,7 +463,7 @@ public class DataFetchEvents {
 					" LEFT JOIN CUR_MATERIAL_BALANCE CMB ON MBE.ENTRY_MATERIAL_ID = CMB.MATERIAL_ID " +
 					" LEFT JOIN WAREHOUSE WH ON CMB.WAREHOUSE_ID = WH.ID " +
 					" WHERE MB.MATERIAL_ID = '" + materialId + "'";
-		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(sql,request));
+		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(request,sql));
 		return "sucess";
 	}
 	
@@ -473,7 +475,7 @@ public class DataFetchEvents {
 	 * @throws Exception
 	 */
 	public static String queryProductReport(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(getProductReportSql(request),request));
+		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(request,getProductReportSql(request)));
 		return "sucess";
 	}
 	
@@ -485,7 +487,7 @@ public class DataFetchEvents {
 	 * @throws Exception
 	 */
 	public static List<Map<String ,Object>> getProductReportList(HttpServletRequest request) throws Exception {
-		return getListWithSQL(getProductReportSql(request),request);
+		return getListWithSQL(request,getProductReportSql(request));
 	}
 	
 	/**
@@ -612,7 +614,7 @@ public class DataFetchEvents {
 		sql += " GROUP BY CONCAT(YEAR,IF(MONTH<10,CONCAT(0,MONTH),MONTH)) ";
 		sql += " ORDER BY MONTH " ;
 		
-		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(sql,request));
+		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(request,sql));
 		return "sucess";
 	}
 	
@@ -624,7 +626,7 @@ public class DataFetchEvents {
 	 * @throws Exception
 	 */
 	public static String querySemiProductCostReport(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(getSemiProductCostReportSql(request),request));
+		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(request,getSemiProductCostReportSql(request)));
 		return "sucess";
 	}
 	
@@ -636,7 +638,7 @@ public class DataFetchEvents {
 	 * @throws Exception
 	 */
 	public static List<Map<String ,Object>> getSemiProductCostReportList(HttpServletRequest request) throws Exception {
-		return getListWithSQL(getSemiProductCostReportSql(request),request);
+		return getListWithSQL(request,getSemiProductCostReportSql(request));
 	}
 	
 	/**
@@ -758,7 +760,7 @@ public class DataFetchEvents {
 		sql += " WHERE CW.NUMBER = '" + number + "'";
 		sql += " GROUP BY CW.NUMBER,CWE.WAREHOUSE_WAREHOUSE_ID,CWE.MATERIAL_MATERIAL_ID,TM.NUMBER,TM.NAME,CWE.VOLUME ";
 		
-		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(sql,request));
+		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(request,sql));
 		return "sucess";
 	}
 	
@@ -770,7 +772,7 @@ public class DataFetchEvents {
 	 * @throws Exception
 	 */
 	public static String querySystemLogReport(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(querySystemLogListSql(request),request));
+		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(request,querySystemLogListSql(request)));
 		return "sucess";
 	}
 	
@@ -781,7 +783,7 @@ public class DataFetchEvents {
 	 * @throws Exception
 	 */
 	public static List<Map<String ,Object>> getSystemLogList(HttpServletRequest request) throws Exception {
-		return getListWithSQL(querySystemLogListSql(request),request);
+		return getListWithSQL(request,querySystemLogListSql(request));
 	}
 	
 	/**
@@ -829,26 +831,27 @@ public class DataFetchEvents {
 		return sql;
 	}
 	
-	public static String addOrderString(HttpServletRequest request, String sql) throws Exception{
+	public static String addOrderParam(HttpServletRequest request, String sql) throws Exception{
 		if(request.getParameter("sort")!=null){
 			ObjectMapper objMapper = new ObjectMapper();//新建局部变量
-			List<LinkedHashMap<String, Object>> list = objMapper.readValue(request.getParameter("sort").toString(), List.class);
-			for (int i = 0; i < list.size(); i++){
-				sql += " ORDER BY " + list.get(i).get("property").toString() + " " +list.get(i).get("direction").toString();
+			JSONArray array = JSONArray.fromObject(request.getParameter("sort").toString());
+			for(int i = 0; i < array.size(); i++) {
+				OrderPojo order = objMapper.readValue(array.getString(i), OrderPojo.class); 
+				if(i==0){
+					sql += " ORDER BY ";
+				}
+				sql += order.getProperty() + " " + order.getDirection();
 			}
 		}
 		return sql;
 	}
 
-	public static String executeSelectSQL(String sql,HttpServletRequest request) throws Exception {
+	public static String executeSelectSQL(HttpServletRequest request,String sql) throws Exception {
 		// 数据库连接
 		Connection conn = ConnectionFactory.getConnection(Utils.getConnectionHelperName());
 		try {
-			//增加排序
-			sql = addOrderString(request,sql);
-			PreparedStatement ps = conn.prepareStatement(sql);
+			PreparedStatement ps = conn.prepareStatement(addOrderParam(request,sql));
 			ResultSet rs = ps.executeQuery();
-			
 			return Utils.getJsonArr4ResultSet(rs,request).toString();
 		} finally {
 			if (conn != null) {
@@ -857,14 +860,11 @@ public class DataFetchEvents {
 		}
 	}
 
-	public static List<Map<String, Object>> getListWithSQL(String sql,HttpServletRequest request) throws Exception {
+	public static List<Map<String, Object>> getListWithSQL(HttpServletRequest request,String sql) throws Exception {
 		// 数据库连接
 		Connection conn = ConnectionFactory.getConnection(Utils.getConnectionHelperName());
 		try {
-			//增加排序
-			sql = addOrderString(request,sql);
-			
-			PreparedStatement ps = conn.prepareStatement(sql);
+			PreparedStatement ps = conn.prepareStatement(addOrderParam(request,sql));
 			List<Map<String, Object>> list = Utils.getList4ResultSet(ps.executeQuery());
 			return list;
 		} finally {
