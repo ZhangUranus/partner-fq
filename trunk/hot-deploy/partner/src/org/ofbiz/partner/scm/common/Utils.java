@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
@@ -14,7 +16,6 @@ import net.sf.json.JsonConfig;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.DelegatorFactory;
 import org.ofbiz.entity.GenericValue;
-import org.ofbiz.entity.model.ModelEntity;
 
 public class Utils {
 	public static Delegator getDefaultDelegator(){
@@ -23,7 +24,7 @@ public class Utils {
 	}
 	
 	
-	public static JSONArray getJsonArr4ResultSet(ResultSet rs) throws Exception{
+	public static JSONObject getJsonArr4ResultSet(ResultSet rs,HttpServletRequest request) throws Exception{
 		
 		ResultSetMetaData metaData= rs.getMetaData();
 		/**
@@ -40,19 +41,36 @@ public class Utils {
 		config.registerJsonValueProcessor(java.sql.Date.class, new DateJsonProcessor(null));
 		config.registerJsonValueProcessor(java.sql.Timestamp.class,new DateJsonProcessor(null));
 		
-		
 		JSONArray ja=new JSONArray();
 		
-		while(rs.next()){
-			JSONObject jo=new JSONObject();
-			
-			for (String name : columnList) {
-				jo.element(name, rs.getObject(name),config);
-			}
-			ja.add(jo,config);
-			
+		//分页参数
+		boolean isDividePage = false;
+		int start = 0;
+		int limit = 0;
+		int toIndex = 0;
+		int row = 0;
+		if(request.getParameter("start") != null && request.getParameter("limit") != null){
+			start = Integer.parseInt(request.getParameter("start"));
+			limit = Integer.parseInt(request.getParameter("limit"));
+			toIndex = start+limit;
+			isDividePage = true;
 		}
-		return ja;
+		while(rs.next()){
+			if(!isDividePage || (row >= start && row < toIndex)){
+				JSONObject jo=new JSONObject();
+				for (String name : columnList) {
+					jo.element(name, rs.getObject(name),config);
+				}
+				ja.add(jo,config);
+			}
+			row ++ ;
+		}
+		JSONObject result = new JSONObject();
+		result.element("success", true);
+		result.element("records", ja);
+		result.element("total", row);
+		
+		return result;
 	}
 	
 	/**
