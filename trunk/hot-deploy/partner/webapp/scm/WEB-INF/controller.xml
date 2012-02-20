@@ -371,6 +371,13 @@
 		<response name="success" type="none" />
 	</request-map>
 	
+	<!-- 获取日志列表 -->
+	<request-map uri="querySystemLogReport">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="querySystemLogReport" />
+		<response name="success" type="none" />
+	</request-map>
+	
 	
 	<!-- 打印 -->
 	<request-map uri="getPrintData">
