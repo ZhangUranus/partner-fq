@@ -9,7 +9,6 @@ import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericValue;
 import org.ofbiz.partner.scm.pricemgr.BillType;
-import org.ofbiz.partner.scm.pricemgr.ConsignPriceMgr;
 import org.ofbiz.partner.scm.pricemgr.IBizStock;
 import org.ofbiz.partner.scm.pricemgr.PriceCalItem;
 import org.ofbiz.partner.scm.pricemgr.PriceMgr;
@@ -50,7 +49,6 @@ public class WorkshopWarehousingBizImp implements IBizStock {
 				// 将金额加到总金额中
 				totalSum = totalSum.add(sum);
 			} else {
-				WorkshopPriceMgr.getInstance().removeMaterialList(v.getString("id"));
 				sum = v.getBigDecimal("entrysum");// 金额
 
 				// 如果是出库业务，数量、金额转换为负数
@@ -76,11 +74,10 @@ public class WorkshopWarehousingBizImp implements IBizStock {
 				// 取出的耗料数量、金额只是单个加工件的，需要乘于加工件数量
 				BigDecimal bomAmount = volume.multiply((BigDecimal) element.get(1));
 				BigDecimal bomSum = volume.multiply((BigDecimal) element.get(2));
-				if (!isOut) {
-					bomAmount = bomAmount.negate();
-					bomSum = bomSum.negate();
-				}
-				WorkshopPriceMgr.getInstance().update(workshopId, bomMaterialId, bomAmount, bomSum);
+				WorkshopPriceMgr.getInstance().update(workshopId, bomMaterialId, bomAmount.negate(), bomSum.negate());
+			}
+			if(isOut){
+				WorkshopPriceMgr.getInstance().removeMaterialList(v.getString("id"));
 			}
 
 			v.store();
