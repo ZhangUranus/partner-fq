@@ -6,14 +6,14 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 
+import org.codehaus.jackson.map.ObjectMapper;
 import org.ofbiz.entity.GenericValue;
 import org.ofbiz.entity.jdbc.ConnectionFactory;
 import org.ofbiz.entity.util.EntityFindOptions;
@@ -30,18 +30,12 @@ public class DataFetchEvents {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 
-			JSONArray ja = Utils.getJsonArr4ResultSet(rs);
-
-			JSONObject result = new JSONObject();
-			result.element("success", true);
-			result.element("records", ja);
-			CommonEvents.writeJsonDataToExt(response, result.toString());
+			CommonEvents.writeJsonDataToExt(response, Utils.getJsonArr4ResultSet(rs,request).toString());
 		} finally {
 			if (conn != null) {
 				conn.close();
 			}
 		}
-
 		return "sucess";
 	}
 	
@@ -57,6 +51,8 @@ public class DataFetchEvents {
 			list = getProductReportList(request);
 		} else if("SPC".equals(request.getParameter("report"))){
 			list = getSemiProductCostReportList(request);
+		} else if("SL".equals(request.getParameter("report"))){
+			list = getSystemLogList(request);
 		}
 		return list;
 	}
@@ -69,7 +65,7 @@ public class DataFetchEvents {
 	 * @throws Exception
 	 */
 	public static String queryStockDetailReport(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(getStockDetailReportSql(request)));
+		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(getStockDetailReportSql(request),request));
 		return "sucess";
 	}
 	
@@ -81,7 +77,7 @@ public class DataFetchEvents {
 	 * @throws Exception
 	 */
 	public static List<Map<String ,Object>> getStockDetailReportList(HttpServletRequest request) throws Exception {
-		return getListWithSQL(getStockDetailReportSql(request));
+		return getListWithSQL(getStockDetailReportSql(request),request);
 	}
 	
 	/**
@@ -198,7 +194,7 @@ public class DataFetchEvents {
 		}
 		sql += " GROUP BY CMB.MATERIAL_ID,TM.NAME ";
 		
-		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(sql));
+		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(sql,request));
 		return "sucess";
 	}
 	
@@ -211,7 +207,7 @@ public class DataFetchEvents {
 	 * @throws Exception
 	 */
 	public static String queryConsignMatchReport(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(getConsignMatchReportSql(request)));
+		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(getConsignMatchReportSql(request),request));
 		return "sucess";
 	}
 	
@@ -223,7 +219,7 @@ public class DataFetchEvents {
 	 * @throws Exception
 	 */
 	public static List<Map<String ,Object>> getConsignMatchReportList(HttpServletRequest request) throws Exception {
-		return getListWithSQL(getConsignMatchReportSql(request));
+		return getListWithSQL(getConsignMatchReportSql(request),request);
 	}
 	
 	/**
@@ -321,7 +317,7 @@ public class DataFetchEvents {
 					" WHERE YEAR = " + year +
 					" AND MONTH = " + month +
 					" GROUP BY CCPP.SUPPLIER_ID,SUP.NAME";
-		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(sql));
+		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(sql,request));
 		return "sucess";
 	}
 	
@@ -333,7 +329,7 @@ public class DataFetchEvents {
 	 * @throws Exception
 	 */
 	public static String queryPackingMaterialReport(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(getPackingMaterialReportSql(request)));
+		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(getPackingMaterialReportSql(request),request));
 		return "sucess";
 	}
 	
@@ -345,7 +341,7 @@ public class DataFetchEvents {
 	 * @throws Exception
 	 */
 	public static List<Map<String ,Object>> getPackingMaterialReportList(HttpServletRequest request) throws Exception {
-		return getListWithSQL(getPackingMaterialReportSql(request));
+		return getListWithSQL(getPackingMaterialReportSql(request),request);
 	}
 	
 	/**
@@ -426,7 +422,7 @@ public class DataFetchEvents {
 					" WHERE WW.NUMBER = '" + number + "'";
 		sql += " GROUP BY WW.NUMBER,WWE.WAREHOUSE_WAREHOUSE_ID,WWE.MATERIAL_MATERIAL_ID,TM.NUMBER,TM.NAME,WWE.VOLUME ";
 		
-		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(sql));
+		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(sql,request));
 		return "sucess";
 	}
 	
@@ -465,7 +461,7 @@ public class DataFetchEvents {
 					" LEFT JOIN CUR_MATERIAL_BALANCE CMB ON MBE.ENTRY_MATERIAL_ID = CMB.MATERIAL_ID " +
 					" LEFT JOIN WAREHOUSE WH ON CMB.WAREHOUSE_ID = WH.ID " +
 					" WHERE MB.MATERIAL_ID = '" + materialId + "'";
-		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(sql));
+		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(sql,request));
 		return "sucess";
 	}
 	
@@ -477,7 +473,7 @@ public class DataFetchEvents {
 	 * @throws Exception
 	 */
 	public static String queryProductReport(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(getProductReportSql(request)));
+		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(getProductReportSql(request),request));
 		return "sucess";
 	}
 	
@@ -489,7 +485,7 @@ public class DataFetchEvents {
 	 * @throws Exception
 	 */
 	public static List<Map<String ,Object>> getProductReportList(HttpServletRequest request) throws Exception {
-		return getListWithSQL(getProductReportSql(request));
+		return getListWithSQL(getProductReportSql(request),request);
 	}
 	
 	/**
@@ -616,7 +612,7 @@ public class DataFetchEvents {
 		sql += " GROUP BY CONCAT(YEAR,IF(MONTH<10,CONCAT(0,MONTH),MONTH)) ";
 		sql += " ORDER BY MONTH " ;
 		
-		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(sql));
+		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(sql,request));
 		return "sucess";
 	}
 	
@@ -628,7 +624,7 @@ public class DataFetchEvents {
 	 * @throws Exception
 	 */
 	public static String querySemiProductCostReport(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(getSemiProductCostReportSql(request)));
+		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(getSemiProductCostReportSql(request),request));
 		return "sucess";
 	}
 	
@@ -640,7 +636,7 @@ public class DataFetchEvents {
 	 * @throws Exception
 	 */
 	public static List<Map<String ,Object>> getSemiProductCostReportList(HttpServletRequest request) throws Exception {
-		return getListWithSQL(getSemiProductCostReportSql(request));
+		return getListWithSQL(getSemiProductCostReportSql(request),request);
 	}
 	
 	/**
@@ -762,23 +758,98 @@ public class DataFetchEvents {
 		sql += " WHERE CW.NUMBER = '" + number + "'";
 		sql += " GROUP BY CW.NUMBER,CWE.WAREHOUSE_WAREHOUSE_ID,CWE.MATERIAL_MATERIAL_ID,TM.NUMBER,TM.NAME,CWE.VOLUME ";
 		
-		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(sql));
+		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(sql,request));
 		return "sucess";
 	}
+	
+	/**
+	 * 获取日志列表
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public static String querySystemLogReport(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(querySystemLogListSql(request),request));
+		return "sucess";
+	}
+	
+	/**
+	 * 获取日志列表（用于导出）
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	public static List<Map<String ,Object>> getSystemLogList(HttpServletRequest request) throws Exception {
+		return getListWithSQL(querySystemLogListSql(request),request);
+	}
+	
+	/**
+	 * 获取日志列表SQL
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	public static String querySystemLogListSql(HttpServletRequest request) throws Exception {
+		String startDate = null;
+		String endDate = null;
+		String userId = null;
+		if(request.getParameter("startDate") != null && request.getParameter("endDate") != null){
+			startDate = request.getParameter("startDate");
+			endDate = request.getParameter("endDate");
+		}else{
+			throw new Exception("找不到日期参数！");
+		}
+		
+		if(request.getParameter("userId") != null){
+			userId = request.getParameter("userId");
+		}
+		String sql =" SELECT " + 
+						" SH.id, " + 
+						" SH.HIT_START_DATE_TIME AS hitTime, " + 
+						" SH.HIT_TYPE_ID AS hitType, " + 
+						" SH.RUNNING_TIME_MILLIS AS runningTime, " + 
+						" SH.USER_LOGIN_ID AS userId, " + 
+						" SH.REQUEST_URL AS url, " + 
+						" TSLT.NAME AS name, " + 
+						" TSLT.OPERATE_TYPE AS operateType, " + 
+						" TSLT.KEY_WORD AS keyWord, " + 
+						" TSLT.VALID AS valid, " + 
+						" VIT.CLIENT_IP_ADDRESS AS ipAddress, " + 
+						" VIT.CLIENT_HOST_NAME AS hostName " + 
+					" FROM SERVER_HIT SH, T_SYSTEM_LOG_TYPE TSLT, VISIT VIT " + 
+					" WHERE TSLT.VALID = '1' " + 
+					" AND SH.VISIT_ID = VIT.VISIT_ID " + 
+					" AND SH.REQUEST_URL LIKE CONCAT('%',TSLT.KEY_WORD,'%') " + 
+					" AND SH.HIT_START_DATE_TIME >= '" + startDate + "'" +
+					" AND SH.HIT_START_DATE_TIME <= '" + endDate + "'" ;
+		if(userId != null && !"".equals(userId)){
+			sql += " AND SH.USER_LOGIN_ID = '" + userId + "'";
+		}
+		return sql;
+	}
+	
+	public static String addOrderString(HttpServletRequest request, String sql) throws Exception{
+		if(request.getParameter("sort")!=null){
+			ObjectMapper objMapper = new ObjectMapper();//新建局部变量
+			List<LinkedHashMap<String, Object>> list = objMapper.readValue(request.getParameter("sort").toString(), List.class);
+			for (int i = 0; i < list.size(); i++){
+				sql += " ORDER BY " + list.get(i).get("property").toString() + " " +list.get(i).get("direction").toString();
+			}
+		}
+		return sql;
+	}
 
-	public static String executeSelectSQL(String sql) throws Exception {
+	public static String executeSelectSQL(String sql,HttpServletRequest request) throws Exception {
 		// 数据库连接
 		Connection conn = ConnectionFactory.getConnection(Utils.getConnectionHelperName());
 		try {
+			//增加排序
+			sql = addOrderString(request,sql);
 			PreparedStatement ps = conn.prepareStatement(sql);
-			JSONArray ja = Utils.getJsonArr4ResultSet(ps.executeQuery());
-
-			JSONObject result = new JSONObject();
-			result.element("success", true);
-			result.element("records", ja);
-			result.element("total", ja.size());
+			ResultSet rs = ps.executeQuery();
 			
-			return result.toString();
+			return Utils.getJsonArr4ResultSet(rs,request).toString();
 		} finally {
 			if (conn != null) {
 				conn.close();
@@ -786,10 +857,13 @@ public class DataFetchEvents {
 		}
 	}
 
-	public static List<Map<String, Object>> getListWithSQL(String sql) throws Exception {
+	public static List<Map<String, Object>> getListWithSQL(String sql,HttpServletRequest request) throws Exception {
 		// 数据库连接
 		Connection conn = ConnectionFactory.getConnection(Utils.getConnectionHelperName());
 		try {
+			//增加排序
+			sql = addOrderString(request,sql);
+			
 			PreparedStatement ps = conn.prepareStatement(sql);
 			List<Map<String, Object>> list = Utils.getList4ResultSet(ps.executeQuery());
 			return list;
