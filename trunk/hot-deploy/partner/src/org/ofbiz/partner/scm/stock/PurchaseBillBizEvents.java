@@ -17,9 +17,6 @@ import org.ofbiz.entity.transaction.GenericTransactionException;
 import org.ofbiz.entity.transaction.TransactionUtil;
 import org.ofbiz.partner.scm.common.BillBaseEvent;
 import org.ofbiz.partner.scm.common.CommonEvents;
-import org.ofbiz.partner.scm.pricemgr.BillType;
-import org.ofbiz.partner.scm.pricemgr.PriceCalItem;
-import org.ofbiz.partner.scm.pricemgr.PriceMgr;
 import org.ofbiz.partner.scm.pricemgr.Utils;
 import org.ofbiz.partner.scm.purplan.PurPlanBalance;
 
@@ -48,31 +45,30 @@ public class PurchaseBillBizEvents {
 			BillBaseEvent.auditBill(request, response);// 更新单据状态
 
 			// 如果单据状态为不通过，不影响库存
-			if (request.getParameter("isValid").equals("false")) {
-				return "success";
-			}
+			if (!request.getParameter("isValid").equals("false")) {
+				// 根据单据每条记录更新供应商可入库总申请数量
+				Delegator delegator = (Delegator) request.getAttribute("delegator");
+				String billId = request.getParameter("billId");// 单据id
+				if (delegator != null && billId != null) {
+					Debug.log("采购申请单审核:" + billId, module);
+					GenericValue billHead = delegator.findOne("PurchaseBill", UtilMisc.toMap("id", billId), false);
+					if (billHead == null){
+						throw new Exception("采购申请单不存在！");
+					}
+					Date bizDate = (Date) billHead.get("bizDate");
+					if (bizDate == null || !Utils.isCurPeriod(bizDate)) {
+						throw new Exception("单据业务日期不在当前系统期间");
+					}
+					if (billHead.getString("supplierSupplierId") == null) {
+						throw new Exception("供应商不存在！");
+					}
+					String supplierId = billHead.getString("supplierSupplierId");
+					// 获取单据id分录条目
+					List<GenericValue> entryList = delegator.findByAnd("PurchaseBillEntry", UtilMisc.toMap("parentId", billId));
 
-			// 根据单据每条记录更新供应商可入库总申请数量
-			Delegator delegator = (Delegator) request.getAttribute("delegator");
-			String billId = request.getParameter("billId");// 单据id
-			if (delegator != null && billId != null) {
-				Debug.log("采购申请单审核:" + billId, module);
-				GenericValue billHead = delegator.findOne("PurchaseBill", UtilMisc.toMap("id", billId), false);
-
-				Date bizDate = (Date) billHead.get("bizDate");
-				if (bizDate == null || !Utils.isCurPeriod(bizDate)) {
-					throw new Exception("单据业务日期不在当前系统期间");
-				}
-
-				if (billHead == null && billHead.getString("supplierSupplierId") == null) {
-					throw new Exception("can`t find purchase bill or supplier is null");
-				}
-				String supplierId = billHead.getString("supplierSupplierId");
-				// 获取单据id分录条目
-				List<GenericValue> entryList = delegator.findByAnd("PurchaseBillEntry", UtilMisc.toMap("parentId", billId));
-
-				for (GenericValue v : entryList) {
-					PurPlanBalance.getInstance().updateInWarehouse(supplierId, v.getString("materialMaterialId"), v.getBigDecimal("volume"));
+					for (GenericValue v : entryList) {
+						PurPlanBalance.getInstance().updateInWarehouse(supplierId, v.getString("materialMaterialId"), v.getBigDecimal("volume"));
+					}
 				}
 			}
 			TransactionUtil.commit(beganTransaction);
@@ -104,30 +100,31 @@ public class PurchaseBillBizEvents {
 			BillBaseEvent.unauditBill(request, response);// 更新单据状态
 
 			// 如果单据状态为不通过，不影响库存
-			if (request.getParameter("isValid").equals("false")) {
-				return "success";
-			}
+			if (!request.getParameter("isValid").equals("false")) {
+				// 根据单据每条记录更新供应商可入库总申请数量
+				Delegator delegator = (Delegator) request.getAttribute("delegator");
+				String billId = request.getParameter("billId");// 单据id
+				if (delegator != null && billId != null) {
+					Debug.log("采购申请单审核:" + billId, module);
+					GenericValue billHead = delegator.findOne("PurchaseBill", UtilMisc.toMap("id", billId), false);
+					if (billHead == null){
+						throw new Exception("采购申请单不存在！");
+					}
+					Date bizDate = (Date) billHead.get("bizDate");
+					if (bizDate == null || !Utils.isCurPeriod(bizDate)) {
+						throw new Exception("单据业务日期不在当前系统期间");
+					}
+					if (billHead.getString("supplierSupplierId") == null) {
+						throw new Exception("供应商不存在！");
+					}
+					String supplierId = billHead.getString("supplierSupplierId");
+					// 获取单据id分录条目
+					List<GenericValue> entryList = delegator.findByAnd("PurchaseBillEntry", UtilMisc.toMap("parentId", billId));
 
-			// 根据单据每条记录更新供应商可入库总申请数量
-			Delegator delegator = (Delegator) request.getAttribute("delegator");
-			String billId = request.getParameter("billId");// 单据id
-			if (delegator != null && billId != null) {
-				Debug.log("采购申请单审核:" + billId, module);
-				GenericValue billHead = delegator.findOne("PurchaseBill", UtilMisc.toMap("id", billId), false);
-				Date bizDate = (Date) billHead.get("bizDate");
-				if (bizDate == null || !Utils.isCurPeriod(bizDate)) {
-					throw new Exception("单据业务日期不在当前系统期间");
-				}
-				if (billHead == null && billHead.getString("supplierSupplierId") == null) {
-					throw new Exception("can`t find purchase bill or supplier is null");
-				}
-				String supplierId = billHead.getString("supplierSupplierId");
-				// 获取单据id分录条目
-				List<GenericValue> entryList = delegator.findByAnd("PurchaseBillEntry", UtilMisc.toMap("parentId", billId));
-
-				for (GenericValue v : entryList) {
-					// 每个记录入库数量需要转换为负数
-					PurPlanBalance.getInstance().updateInWarehouse(supplierId, v.getString("materialMaterialId"), BigDecimal.ZERO.subtract(v.getBigDecimal("volume")));
+					for (GenericValue v : entryList) {
+						// 每个记录入库数量需要转换为负数
+						PurPlanBalance.getInstance().updateInWarehouse(supplierId, v.getString("materialMaterialId"), BigDecimal.ZERO.subtract(v.getBigDecimal("volume")));
+					}
 				}
 			}
 			TransactionUtil.commit(beganTransaction);
