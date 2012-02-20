@@ -6,7 +6,7 @@ Ext.define('SCM.store.rpt.SemiProductCostDetailStore', {
 			autoLoad : false,
 			autoSync : false,
 			sorters : [{// 根据MATERIALNAME字段排序
-				property : 'MATERIALNAME',
+				property : 'MATERIALNUMBER',
 				direction : 'ASC'
 			}]
 		});

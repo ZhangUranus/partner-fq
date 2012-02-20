@@ -114,6 +114,7 @@ Ext.define('SCM.controller.rpt.SemiProductCostReportController', {
 					var params = getProxy().extraParams;
 
 					// 页面参数
+					params.sort = Ext.encode(getSorters());
 					params.report = 'SPC';
 					params.title = '黑坯材料耗用表'; // sheet页名称
 					params.header = header; // 表头

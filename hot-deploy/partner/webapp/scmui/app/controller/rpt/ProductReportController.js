@@ -113,6 +113,7 @@ Ext.define('SCM.controller.rpt.ProductReportController', {
 					var params = getProxy().extraParams;
 
 					// 页面参数
+					params.sort = Ext.encode(getSorters());
 					params.report = 'PR';
 					params.title = '成品报表'; // sheet页名称
 					params.header = header; // 表头

@@ -4,9 +4,5 @@ Ext.define('SCM.store.rpt.ConsignProcessMatchingChartStore', {
 			alias : 'ConsignProcessMatchingChartStore',
 			remoteSort : true, // 服务器排序
 			autoLoad : false,
-			autoSync : false,
-			sorters : [{// 根据supplier_name字段排序
-				property : 'supplier_name',
-				direction : 'ASC'
-			}]
+			autoSync : false
 		});

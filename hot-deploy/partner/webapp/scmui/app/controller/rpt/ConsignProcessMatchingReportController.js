@@ -106,6 +106,7 @@ Ext.define('SCM.controller.rpt.ConsignProcessMatchingReportController', {
 					var params = getProxy().extraParams;
 
 					// 页面参数
+					params.sort = Ext.encode(getSorters());
 					params.report = 'CPMR';
 					params.title = '加工商对数表'; // sheet页名称
 					params.header = header; // 表头

@@ -2,7 +2,7 @@ Ext.define('SCM.store.system.LogStore', {
 			extend : 'Ext.data.Store',
 			model : 'SCM.model.system.LogModel',
 			alias : 'LogStore',
-			pageSize : 21, // 每页行数
+			pageSize : 20, // 每页行数
 			remoteSort : true, // 服务器排序
 			autoLoad : false,
 			autoSync : true,

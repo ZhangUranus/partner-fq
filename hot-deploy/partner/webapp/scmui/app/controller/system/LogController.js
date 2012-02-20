@@ -33,7 +33,6 @@ Ext.define('SCM.controller.system.LogController', {
 			 */
 			initComponent : function(view) {
 				this.listPanel = view;
-				this.initWhereStr = "TSystemLogType.valid = '1' and ServerHit.request_url like CONCAT('%',TSystemLogType.key_word,'%')";
 				this.searchStartDate = this.listPanel.down('datefield[name=searchStartDate]');
 				this.searchEndDate = this.listPanel.down('datefield[name=searchEndDate]');
 				this.searchUserId = this.listPanel.down('combogrid[name=searchUserId]');
@@ -45,22 +44,28 @@ Ext.define('SCM.controller.system.LogController', {
 			 * 
 			 */
 			refreshRecord : function() {
-				var tempString = '';
-				tempString += this.initWhereStr;
-				if (this.searchStartDate.getValue()) {
-					tempString += ' and ServerHit.hit_start_date_time >= \'' + this.searchStartDate.getRawValue() + ' 00:00:00\'';
+				if (!Ext.isEmpty(this.searchStartDate.getRawValue())) {
+					this.listPanel.store.getProxy().extraParams.startDate = this.searchStartDate.getRawValue() + ' 00:00:00';
+				} else {
+					showWarning('请选择开始日期！');
+					return;
 				}
-				if (this.searchEndDate.getValue()) {
-					if (this.searchStartDate.getRawValue() > this.searchEndDate.getRawValue()) {
-						showWarning('开始日期不允许大于结束日期，请重新选择！');
-						return;
-					}
-					tempString += ' and ServerHit.hit_start_date_time <= \'' + this.searchEndDate.getRawValue() + ' 23:59:59\'';
+				if (!Ext.isEmpty(this.searchEndDate.getRawValue())) {
+					this.listPanel.store.getProxy().extraParams.endDate = this.searchEndDate.getRawValue() + ' 23:59:59';
+				} else {
+					showWarning('请选择结束日期！');
+					return;
 				}
+				if (this.searchStartDate.getRawValue() > this.searchEndDate.getRawValue()) {
+					showWarning('开始日期不允许大于结束日期，请重新选择！');
+					return;
+				}
+				
 				if (!Ext.isEmpty(this.searchUserId.getValue())) {
-					tempString += ' and ServerHit.user_login_id = \'' + this.searchUserId.getValue() + '\'';
+					this.listPanel.store.getProxy().extraParams.userId = this.searchUserId.getValue();
+				} else {
+					this.listPanel.store.getProxy().extraParams.userId = "";
 				}
-				this.listPanel.store.getProxy().extraParams.whereStr = tempString;
 				this.listPanel.store.load();
 			},
 
@@ -86,19 +91,16 @@ Ext.define('SCM.controller.system.LogController', {
 							}
 						})
 				with (this.listPanel.store) {
-					var params = {
-						// Store参数
-						sort : Ext.encode(getSorters()),
-						filter : Ext.encode(filters.items),
+					var params = getProxy().extraParams;
 
-						// 页面参数
-						entity : 'VSystemLog', // 导出实体名称，一般为视图名称。
-						title : '系统日志', // sheet页名称
-						header : header, // 表头
-						dataIndex : dataIndex, // 数据引用
-						type : 'EXCEL',
-						whereStr : getProxy().extraParams.whereStr
-					}
+					// 页面参数
+					params.sort = Ext.encode(getSorters());
+					params.report = 'SL';
+					params.title = '系统日志'; // sheet页名称
+					params.header = header; // 表头
+					params.dataIndex = dataIndex; // 数据引用
+					params.pattern = 'SQL';
+					params.type = 'EXCEL';
 					return params;
 				}
 			}

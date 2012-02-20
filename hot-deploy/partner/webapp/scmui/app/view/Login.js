@@ -90,12 +90,8 @@ Ext.define('SCM.view.Login',{
                             },
                             failure: function(form, action) {
                             	Ext.getCmp("current-user-label").setText("未登录");
-                                Ext.MessageBox.show({
-                                    width:150,
-                                    title:"登录失败",
-                                    buttons: Ext.MessageBox.OK,
-                                    msg:action.result.msg
-                                })
+                            	var result = Ext.decode(action.response.responseText)
+                				showError(result.message);
                             }
                         });
                     }

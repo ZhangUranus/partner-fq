@@ -117,6 +117,7 @@ Ext.define('SCM.controller.rpt.PackingMaterialReportController', {
 					var params = getProxy().extraParams;
 
 					// 页面参数
+					params.sort = Ext.encode(getSorters());
 					params.report = 'PKM';
 					params.title = '安装包装材料表'; // sheet页名称
 					params.header = header; // 表头
