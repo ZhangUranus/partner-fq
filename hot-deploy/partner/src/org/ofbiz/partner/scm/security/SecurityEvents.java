@@ -247,17 +247,32 @@ public class SecurityEvents {
 //		if (recordList == null || recordList.size() < 1) {
 //			responseString = "fail";
 //		}
-		
+
+    	String username = request.getParameter("USERNAME");
+    	List<GenericValue> recordList =  CommonEvents.getDelegator(request).findList("TSystemUser", EntityCondition.makeCondition("userId",username), null, null, null, true);
+    	GenericValue systemUser = recordList.get(0);
 		JSONObject jsonStr = new JSONObject();
 		if (!"success".equals(responseString)) {
-			jsonStr.put("success", false);
+			GenericValue userLogin = CommonEvents.getDelegator(request).findOne("UserLogin", true, "userLoginId", username);
+			Long currentFailedLogins = userLogin.getLong("successiveFailedLogins");
+			String mflStr = UtilProperties.getPropertyValue("security.properties", "max.failed.logins");
+            long maxFailedLogins = 3;
+            try {
+                maxFailedLogins = Long.parseLong(mflStr);
+            } catch (Exception e) {
+                maxFailedLogins = 3;
+                Debug.logWarning("Could not parse max.failed.logins from security.properties, using default of 3", module);
+            }
+            if (maxFailedLogins > 0 && currentFailedLogins.longValue() >= maxFailedLogins) {
+            	systemUser.set("valid", "N");
+                systemUser.store();
+            }
+			throw new Exception("用户名、密码不正确或用户已失效，请确认后重新输入！");
         }else{
         	Calendar calendar = Calendar.getInstance();
 			calendar.setTime(Utils.getCurDate());
         	CommonEvents.setUsername(request, response);
-        	String username = request.getParameter("USERNAME");
-        	List<GenericValue> recordList =  CommonEvents.getDelegator(request).findList("TSystemUser", EntityCondition.makeCondition("userId",username), null, null, null, true);
-        	String uid = recordList.get(0).getString("id");
+        	String uid = systemUser.getString("id");
         	CommonEvents.setAttributeToSession(request, "uid", uid);
 			jsonStr.put("currentYear", calendar.get(Calendar.YEAR));
 			jsonStr.put("currentMonth", calendar.get(Calendar.MONTH)+1);
@@ -286,6 +301,7 @@ public class SecurityEvents {
 	
 	public static String logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		CommonEvents.removeAttributeFromSession(request, "USERNAME");
+		LoginWorker.logout(request, response);
 		CommonEvents.writeJsonDataToExt(response, "{'success': true}");
 		return "success";
 	}
