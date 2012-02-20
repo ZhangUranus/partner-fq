@@ -290,10 +290,10 @@ public class MonthlySettlement {
 			return false;
 			
 		}else if(en.equalsIgnoreCase("WorkshopReturnProduct")){//车间退库
-			return false;
+			return true;
 			
 		}else if(en.equalsIgnoreCase("WorkshopWarehousing")){//车间入库
-			return true;
+			return false;
 			
 		}else{
 			throw new Exception("没有对应的业务实现类");
