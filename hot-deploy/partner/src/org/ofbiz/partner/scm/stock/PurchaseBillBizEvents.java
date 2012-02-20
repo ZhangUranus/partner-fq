@@ -65,7 +65,6 @@ public class PurchaseBillBizEvents {
 					String supplierId = billHead.getString("supplierSupplierId");
 					// 获取单据id分录条目
 					List<GenericValue> entryList = delegator.findByAnd("PurchaseBillEntry", UtilMisc.toMap("parentId", billId));
-
 					for (GenericValue v : entryList) {
 						PurPlanBalance.getInstance().updateInWarehouse(supplierId, v.getString("materialMaterialId"), v.getBigDecimal("volume"));
 					}
@@ -120,7 +119,6 @@ public class PurchaseBillBizEvents {
 					String supplierId = billHead.getString("supplierSupplierId");
 					// 获取单据id分录条目
 					List<GenericValue> entryList = delegator.findByAnd("PurchaseBillEntry", UtilMisc.toMap("parentId", billId));
-
 					for (GenericValue v : entryList) {
 						// 每个记录入库数量需要转换为负数
 						PurPlanBalance.getInstance().updateInWarehouse(supplierId, v.getString("materialMaterialId"), BigDecimal.ZERO.subtract(v.getBigDecimal("volume")));

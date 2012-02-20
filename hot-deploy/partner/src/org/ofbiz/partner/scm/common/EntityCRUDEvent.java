@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -15,13 +14,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import javolution.util.FastList;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.codehaus.jackson.map.ObjectMapper;
-import org.ofbiz.base.crypto.HashCrypt;
 import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilProperties;
-import org.ofbiz.common.login.LoginServices;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericEntityException;
 import org.ofbiz.entity.GenericValue;
@@ -31,6 +29,8 @@ import org.ofbiz.entity.condition.EntityOperator;
 import org.ofbiz.entity.model.ModelEntity;
 import org.ofbiz.entity.model.ModelField;
 import org.ofbiz.entity.util.EntityFindOptions;
+import org.ofbiz.partner.scm.pojo.FilterPojo;
+import org.ofbiz.partner.scm.pojo.OrderPojo;
 
 /**
  * 实体CRUD 操作事件公共类
@@ -407,9 +407,10 @@ public class EntityCRUDEvent {
 			//过滤字段，对字段做与方式过滤，obectMapper是静态变量，线程不安全
 			if(request.getParameter("filter") != null){
 				ObjectMapper objMapper = new ObjectMapper();//新建局部变量
-				List<LinkedHashMap<String, Object>> list = objMapper.readValue(request.getParameter("filter").toString(), List.class);
-				for (int i = 0; i < list.size(); i++){
-					conds.add(EntityCondition.makeCondition(list.get(i).get("property").toString(),list.get(i).get("value").toString()));
+				JSONArray array = JSONArray.fromObject(request.getParameter("filter").toString());
+				for(int i = 0; i < array.size(); i++) {
+					FilterPojo filter = objMapper.readValue(array.getString(i), FilterPojo.class); 
+					conds.add(EntityCondition.makeCondition(filter.getProperty(),filter.getValue()));
 				}
 			}
 			//处理whereStr过滤，覆盖filter条件
@@ -448,9 +449,10 @@ public class EntityCRUDEvent {
 			List<String> orders = new ArrayList<String>();
 			if(request.getParameter("sort")!=null){
 				ObjectMapper objMapper = new ObjectMapper();//新建局部变量
-				List<LinkedHashMap<String, Object>> list = objMapper.readValue(request.getParameter("sort").toString(), List.class);
-				for (int i = 0; i < list.size(); i++){
-					String field = list.get(i).get("property").toString() + " " +list.get(i).get("direction").toString();
+				JSONArray array = JSONArray.fromObject(request.getParameter("sort").toString());
+				for(int i = 0; i < array.size(); i++) {
+					OrderPojo order = objMapper.readValue(array.getString(i), OrderPojo.class); 
+					String field = order.getProperty() + " " + order.getDirection();
 					orders.add(field);		//增加排序字段
 				}
 			}
