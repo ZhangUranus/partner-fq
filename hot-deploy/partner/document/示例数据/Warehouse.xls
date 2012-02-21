@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+ <Worksheet ss:Name="Table1">
+  <Table>
+   <Column ss:Index="1" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="2" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="3" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="4" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="5" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="6" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="7" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="8" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="9" ss:AutoFitWidth="0" ss:Width="110"/>   <Row>
+    <Cell><Data ss:Type="String">ID</Data></Cell>
+    <Cell><Data ss:Type="String">WS_TYPE_ID</Data></Cell>
+    <Cell><Data ss:Type="String">NUMBER</Data></Cell>
+    <Cell><Data ss:Type="String">NAME</Data></Cell>
+    <Cell><Data ss:Type="String">DESCRIPTION</Data></Cell>
+    <Cell><Data ss:Type="String">LAST_UPDATED_STAMP</Data></Cell>
+    <Cell><Data ss:Type="String">LAST_UPDATED_TX_STAMP</Data></Cell>
+    <Cell><Data ss:Type="String">CREATED_STAMP</Data></Cell>
+    <Cell><Data ss:Type="String">CREATED_TX_STAMP</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">12d05a2b-6a9e-4628-8ec6-346c9627271d</Data></Cell>
+    <Cell><Data ss:Type="String">a00c4213-bab9-415f-bc63-5e79079165be</Data></Cell>
+    <Cell><Data ss:Type="String">WH100003</Data></Cell>
+    <Cell><Data ss:Type="String">半成品仓一</Data></Cell>
+    <Cell><Data ss:Type="String"/></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:09:22</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:09:22</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:09:22</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:09:22</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">7510738c-0e1f-4c88-a675-063774e34298</Data></Cell>
+    <Cell><Data ss:Type="String">f8e8cc46-70c4-419f-a5c1-9d595ad7cfe5</Data></Cell>
+    <Cell><Data ss:Type="String">WH100006</Data></Cell>
+    <Cell><Data ss:Type="String">原料仓二</Data></Cell>
+    <Cell><Data ss:Type="String"/></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:09:51</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:09:51</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:09:51</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:09:51</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">94325f11-78f1-48e6-8e43-e1eca419d007</Data></Cell>
+    <Cell><Data ss:Type="String">6d014323-07f0-4b01-afad-b2a61d87b778</Data></Cell>
+    <Cell><Data ss:Type="String">WH100002</Data></Cell>
+    <Cell><Data ss:Type="String">成品仓二</Data></Cell>
+    <Cell><Data ss:Type="String"/></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:09:08</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:09:08</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:09:08</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:09:08</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">aac20ea1-a726-4673-98e7-56a4545cbc0c</Data></Cell>
+    <Cell><Data ss:Type="String">f8e8cc46-70c4-419f-a5c1-9d595ad7cfe5</Data></Cell>
+    <Cell><Data ss:Type="String">WH100005</Data></Cell>
+    <Cell><Data ss:Type="String">原料仓一</Data></Cell>
+    <Cell><Data ss:Type="String"/></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:09:43</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:09:43</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:09:43</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:09:43</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">b6b4e473-8f9f-4108-9450-272acf3d36d1</Data></Cell>
+    <Cell><Data ss:Type="String">6d014323-07f0-4b01-afad-b2a61d87b778</Data></Cell>
+    <Cell><Data ss:Type="String">WH100001</Data></Cell>
+    <Cell><Data ss:Type="String">成品仓一</Data></Cell>
+    <Cell><Data ss:Type="String"/></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:08:58</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:08:58</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:08:58</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:08:58</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">eb73af61-855a-438a-83af-02c02a35b2ec</Data></Cell>
+    <Cell><Data ss:Type="String">a00c4213-bab9-415f-bc63-5e79079165be</Data></Cell>
+    <Cell><Data ss:Type="String">WH100004</Data></Cell>
+    <Cell><Data ss:Type="String">半成品仓二</Data></Cell>
+    <Cell><Data ss:Type="String"/></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:09:35</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:09:35</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:09:35</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:09:35</Data></Cell>
+   </Row>
+  </Table>
+ </Worksheet>
+</Workbook>
