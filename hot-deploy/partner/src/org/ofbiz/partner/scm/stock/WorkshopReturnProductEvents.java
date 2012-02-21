@@ -70,12 +70,12 @@ public class WorkshopReturnProductEvents {
 					
 					//当状态为未验收时，创建进货单，并置状态为验收中
 					if(billHead.getInteger("checkStatus")==0){
-						Utils.createReturnProductWarehousingBill(billHead,request);	//创建进货单
 						billHead.set("checkStatus", 1);// 设置验收状态为验收中
 					}
 					
 					//当所有物料都完成验收时，将状态改为完成验收，并提交进货单
 					if (isFinish) {
+						Utils.createReturnProductWarehousingBill(billHead,request);	//创建进货单
 						Utils.submitReturnProductWarehousing(billHead,request);	//提交
 						billHead.set("checkStatus", 2);
 					}
