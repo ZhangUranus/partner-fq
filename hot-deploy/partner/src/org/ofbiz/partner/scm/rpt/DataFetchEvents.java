@@ -380,9 +380,10 @@ public class DataFetchEvents {
 					" FROM WORKSHOP_WAREHOUSING WW " +
 					" LEFT JOIN WORKSHOP_WAREHOUSING_ENTRY WWE ON WW.ID = WWE.PARENT_ID " +
 					" LEFT JOIN T_MATERIAL TM ON WWE.MATERIAL_MATERIAL_ID = TM.ID " +
+					" LEFT JOIN T_MATERIAL_TYPE TMT ON TM.MATERIAL_TYPE_ID = TMT.ID " +
 					" LEFT JOIN WAREHOUSE WH ON WWE.WAREHOUSE_WAREHOUSE_ID = WH.ID " +
 					" LEFT JOIN UNIT UIT ON WWE.UNIT_UNIT_ID = UIT.ID " +
-					" WHERE TM.MATERIAL_TYPE_ID = 5 " +
+					" WHERE TMT.NUMBER = 'MTT100005' " +
 					" AND WW.BIZ_DATE >= '" + startDate + "'" +
 					" AND WW.BIZ_DATE <= '" + endDate + "'" ;
 		if(warehouseId != null && !"".equals(warehouseId)){
@@ -547,8 +548,9 @@ public class DataFetchEvents {
 					" FROM " + tableName + " CMB "+
 					" LEFT JOIN WAREHOUSE WH ON CMB.WAREHOUSE_ID = WH.ID "+
 					" LEFT JOIN T_MATERIAL TM ON CMB.MATERIAL_ID = TM.ID "+
+					" LEFT JOIN T_MATERIAL_TYPE TMT ON TM.MATERIAL_TYPE_ID = TMT.ID " +
 					" LEFT JOIN UNIT UN ON TM.DEFAULT_UNIT_ID = UN.ID "+
-					" WHERE MATERIAL_TYPE_ID = 4 " +
+					" WHERE TMT.NUMBER = 'MTT100004' " +
 					" AND YEAR = " + year +
 					" AND MONTH = " + month ;
 		if(materialId != null && !"".equals(materialId)){
@@ -585,8 +587,9 @@ public class DataFetchEvents {
 					" FROM HIS_MATERIAL_BALANCE CMB " +
 					" LEFT JOIN WAREHOUSE WH ON CMB.WAREHOUSE_ID = WH.ID " +
 					" LEFT JOIN T_MATERIAL TM ON CMB.MATERIAL_ID = TM.ID " +
+					" LEFT JOIN T_MATERIAL_TYPE TMT ON TM.MATERIAL_TYPE_ID = TMT.ID " +
 					" LEFT JOIN UNIT UN ON TM.DEFAULT_UNIT_ID = UN.ID " +
-					" WHERE MATERIAL_TYPE_ID = 4 ";
+					" WHERE TMT.NUMBER = 'MTT100004' ";
 		if(materialId != null && !"".equals(materialId)){
 			sql += " AND CMB.MATERIAL_ID = '" + materialId + "'";
 		}
@@ -603,8 +606,9 @@ public class DataFetchEvents {
 		sql += " FROM CUR_MATERIAL_BALANCE CMB " ;
 		sql += " LEFT JOIN WAREHOUSE WH ON CMB.WAREHOUSE_ID = WH.ID " ;
 		sql += " LEFT JOIN T_MATERIAL TM ON CMB.MATERIAL_ID = TM.ID " ;
+		sql += " LEFT JOIN T_MATERIAL_TYPE TMT ON TM.MATERIAL_TYPE_ID = TMT.ID ";
 		sql += " LEFT JOIN UNIT UN ON TM.DEFAULT_UNIT_ID = UN.ID " ;
-		sql += " WHERE MATERIAL_TYPE_ID = 4 " ;
+		sql += " WHERE TMT.NUMBER = 'MTT100004' " ;
 		if(materialId != null && !"".equals(materialId)){
 			sql += " AND CMB.MATERIAL_ID = '" + materialId + "'";
 		}
@@ -675,9 +679,10 @@ public class DataFetchEvents {
 					" FROM WORKSHOP_WAREHOUSING WW " +
 					" LEFT JOIN WORKSHOP_WAREHOUSING_ENTRY WWE ON WW.ID = WWE.PARENT_ID " +
 					" LEFT JOIN T_MATERIAL TM ON WWE.MATERIAL_MATERIAL_ID = TM.ID " +
+					" LEFT JOIN T_MATERIAL_TYPE TMT ON TM.MATERIAL_TYPE_ID = TMT.ID " +
 					" LEFT JOIN WAREHOUSE WH ON WWE.WAREHOUSE_WAREHOUSE_ID = WH.ID " +
 					" LEFT JOIN UNIT UIT ON WWE.UNIT_UNIT_ID = UIT.ID " +
-					" WHERE TM.MATERIAL_TYPE_ID = 2 " +
+					" WHERE TMT.NUMBER = 'MTT100002' " +
 					" AND WW.BIZ_DATE >= '" + startDate + "'" +
 					" AND WW.BIZ_DATE <= '" + endDate + "'" ;
 		if(warehouseId != null && !"".equals(warehouseId)){
@@ -699,9 +704,10 @@ public class DataFetchEvents {
 		sql += " FROM CONSIGN_WAREHOUSING CW ";
 		sql += " LEFT JOIN CONSIGN_WAREHOUSING_ENTRY CWE ON CW.ID = CWE.PARENT_ID ";
 		sql += " LEFT JOIN T_MATERIAL TM ON CWE.MATERIAL_MATERIAL_ID = TM.ID ";
+		sql += " LEFT JOIN T_MATERIAL_TYPE TMT ON TM.MATERIAL_TYPE_ID = TMT.ID ";
 		sql += " LEFT JOIN WAREHOUSE WH ON CWE.WAREHOUSE_WAREHOUSE_ID = WH.ID ";
 		sql += " LEFT JOIN UNIT UIT ON CWE.UNIT_UNIT_ID = UIT.ID ";
-		sql += " WHERE TM.MATERIAL_TYPE_ID = 2 ";
+		sql += " WHERE TMT.NUMBER = 'MTT100002' ";
 		sql += " AND CW.BIZ_DATE >= '" + startDate + "'";
 		sql += " AND CW.BIZ_DATE <= '" + endDate + "'" ;
 		if(warehouseId != null && !"".equals(warehouseId)){
