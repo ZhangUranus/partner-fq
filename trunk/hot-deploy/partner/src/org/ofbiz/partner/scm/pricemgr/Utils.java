@@ -131,11 +131,17 @@ public class Utils {
 			tempEntry.create();
 		}
 	}
-
+	
+	/**
+	 * 提交入库单
+	 * @param billValue
+	 * @param request
+	 * @throws Exception
+	 */
 	public static void submitReturnProductWarehousing(GenericValue billValue, HttpServletRequest request) throws Exception {
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
 		GenericValue billHead = delegator.findOne("ReturnProductWarehousing", UtilMisc.toMap("id", billValue.getString("id")), false);
-		
+		billHead.set("bizDate",new Timestamp(System.currentTimeMillis()));//将入库单单据时间修改为当前时间
 		if(billHead != null){
 			BizStockImpFactory.getBizStockImp(BillType.ReturnProductWarehousing).updateStock(billHead, false, false);
 	
