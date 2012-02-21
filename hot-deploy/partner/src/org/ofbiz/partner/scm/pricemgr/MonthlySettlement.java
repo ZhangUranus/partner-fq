@@ -148,8 +148,8 @@ public class MonthlySettlement {
 	 * @throws Exception
 	 */
 	private void checkCanSettle() throws Exception {
-		Debug.logInfo("检查是否当前期间的提交单据，操作开始~~~~~~", module);
-		//过滤条件 ,系统期间时间段，单据状态为提交状态(4)
+		Debug.logInfo("检查是否当前期间的保存单据，操作开始~~~~~~", module);
+		//过滤条件 ,系统期间时间段，单据状态为保存状态(0)
 		Calendar cal=Calendar.getInstance();
 		cal.set(year, month-1, 1, 0, 0, 0);
 		Date fromDate=cal.getTime();
@@ -158,30 +158,30 @@ public class MonthlySettlement {
 		List<EntityCondition> condList=new ArrayList<EntityCondition>();
 		condList.add(EntityCondition.makeCondition("submitStamp",EntityOperator.GREATER_THAN_EQUAL_TO,new Timestamp(fromDate.getTime())));
 		condList.add(EntityCondition.makeCondition("submitStamp",EntityOperator.LESS_THAN,new Timestamp(endDate.getTime())));
-		condList.add(EntityCondition.makeCondition("status",EntityOperator.EQUALS,4));
+		condList.add(EntityCondition.makeCondition("status",EntityOperator.EQUALS,0));
 		EntityCondition cond=EntityCondition.makeCondition(condList);
 		
-		if(checkExist("PurchaseWarehousing", cond))throw new Exception("本期间存在提交状态的采购入库单，不能进行结算！！");
+		if(checkExist("PurchaseWarehousing", cond))throw new Exception("本期间存在保存状态的采购入库单，不能进行结算！！");
 		
-		if(checkExist("PurchaseReturn", cond))throw new Exception("本期间存在提交状态的采购退库单，不能进行结算！！");
+		if(checkExist("PurchaseReturn", cond))throw new Exception("本期间存在保存状态的采购退库单，不能进行结算！！");
 		
-		if(checkExist("ConsignDrawMaterial", cond))throw new Exception("本期间存在提交状态的委外领料单，不能进行结算！！");
+		if(checkExist("ConsignDrawMaterial", cond))throw new Exception("本期间保存提交状态的委外领料单，不能进行结算！！");
 		
-		if(checkExist("ConsignReturnMaterial", cond))throw new Exception("本期间存在提交状态的委外退料单，不能进行结算！！");
+		if(checkExist("ConsignReturnMaterial", cond))throw new Exception("本期间保存提交状态的委外退料单，不能进行结算！！");
 		
-		if(checkExist("ConsignWarehousing", cond))throw new Exception("本期间存在提交状态的委外入库单，不能进行结算！！");
+		if(checkExist("ConsignWarehousing", cond))throw new Exception("本期间存在保存状态的委外入库单，不能进行结算！！");
 		
-		if(checkExist("ConsignReturnProduct", cond))throw new Exception("本期间存在提交状态的委外退货单，不能进行结算！！");
+		if(checkExist("ConsignReturnProduct", cond))throw new Exception("本期间存在保存状态的委外退货单，不能进行结算！！");
 		
-		if(checkExist("WorkshopDrawMaterial", cond))throw new Exception("本期间存在提交状态的车间领料单，不能进行结算！！");
+		if(checkExist("WorkshopDrawMaterial", cond))throw new Exception("本期间存在保存状态的车间领料单，不能进行结算！！");
 		
-		if(checkExist("WorkshopReturnMaterial", cond))throw new Exception("本期间存在提交状态的车间退料单，不能进行结算！！");
+		if(checkExist("WorkshopReturnMaterial", cond))throw new Exception("本期间存在保存状态的车间退料单，不能进行结算！！");
 		
-		if(checkExist("WorkshopWarehousing", cond))throw new Exception("本期间存在提交状态的车间入库单，不能进行结算！！");
+		if(checkExist("WorkshopWarehousing", cond))throw new Exception("本期间存在保存状态的车间入库单，不能进行结算！！");
 		
-		if(checkExist("WorkshopReturnProduct", cond))throw new Exception("本期间存在提交状态的车间退库单，不能进行结算！！");
+		if(checkExist("WorkshopReturnProduct", cond))throw new Exception("本期间存在保存状态的车间退库单，不能进行结算！！");
 		
-		Debug.logInfo("检查是否当前期间的提交单据，操作结束~~~~~~", module);
+		Debug.logInfo("检查是否当前期间的保存单据，操作结束~~~~~~", module);
 		
 	}
 	/**
