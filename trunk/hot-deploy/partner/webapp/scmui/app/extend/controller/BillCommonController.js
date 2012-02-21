@@ -31,10 +31,10 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				this.listPanel.store.proxy.addListener('afterRequest', this.afterRequest, this); // 监听所有请求回调
 
 				this.getEdit();
+				this.afterInitComponent();
 				this.initButtonByPermission();
 				this.changeComponentsState();
 				this.initEnterEvent();
-				this.afterInitComponent();
 				this.refreshRecord();
 				this.searchMaterialId.store.load(); // 初始化物料列表
 				
@@ -158,9 +158,11 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 					if (this.listContainer.permission.submit) {
 						this.submitButton.setVisible(true);
 						this.rollbackButton.setVisible(true);
+						this.submitEditButton.setVisible(true);
 					} else {
 						this.submitButton.setVisible(false);
 						this.rollbackButton.setVisible(false);
+						this.submitEditButton.setVisible(false);
 					}
 				}
 			},
@@ -206,12 +208,14 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				} else {
 					if (this.listContainer.permission.edit) {
 						this.saveButton.setVisible(true);
+						this.clearButton.setVisible(true);
 						// Ext.each(this.fields, function(item, index, length)
 						// {由初始化状态决定
 						// item.setReadOnly(false);
 						// })
 					} else {
 						this.saveButton.setVisible(false);
+						this.clearButton.setVisible(false);
 						this.setFieldsReadOnly(true);
 					}
 				}

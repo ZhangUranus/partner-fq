@@ -65,6 +65,7 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 					this.editForm = this.win.down('form');
 					this.fields = this.editForm.query("textfield{isVisible()}"); // 取所以显示的field
 					this.saveButton = this.win.down('button[action=save]');
+					this.clearButton = this.win.down('button[action=clear]');
 				}
 				return this.win;
 			},
@@ -140,15 +141,18 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 				}
 				if (this.win.uiStatus == 'AddNew') {
 					this.saveButton.setVisible(true);
+					this.clearButton.setVisible(true);
 				} else {
 					if (this.listContainer.permission.edit) {
 						this.saveButton.setVisible(true);
+						this.clearButton.setVisible(true);
 						// Ext.each(this.fields, function(item, index, length)
 						// {由初始化状态决定
 						// item.setReadOnly(false);
 						// })
 					} else {
 						this.saveButton.setVisible(false);
+						this.clearButton.setVisible(false);
 						Ext.each(this.fields, function(item, index, length) {
 									item.setReadOnly(true);
 								})
