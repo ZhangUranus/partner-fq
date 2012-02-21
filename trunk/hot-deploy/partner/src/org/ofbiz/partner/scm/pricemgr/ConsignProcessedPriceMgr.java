@@ -78,7 +78,11 @@ public class ConsignProcessedPriceMgr {
 					gv.set("inSum", inSum.add(curInSum));
 					volume = volume.negate();//入库操作，结存数应该取反
 				}
-				gv.set("volume", oldVolume.add(volume));
+				BigDecimal tempVolume = oldVolume.add(volume);
+				if(tempVolume.compareTo(BigDecimal.ZERO)<0){
+					throw new Exception("供应商物料数量小于供应商出库数量，请检查并调整供应商出库数量！");
+				}
+				gv.set("volume", tempVolume);
 				delegator.store(gv);
 			} else {// 新增记录
 				//取上一个月库存信息
@@ -97,7 +101,12 @@ public class ConsignProcessedPriceMgr {
 				gv.set("supplierId", supplierId);
 				gv.set("materialId", materialId);
 				gv.set("beginvolume", beginVolume);
-				gv.set("volume", beginVolume.add(volume));
+				
+				BigDecimal tempVolume = beginVolume.add(volume);
+				if(tempVolume.compareTo(BigDecimal.ZERO)<0){
+					throw new Exception("供应商物料数量小于供应商出库数量，请检查并调整供应商出库数量！");
+				}
+				gv.set("volume", tempVolume);
 				if(processPrice == null){
 					gv.set("outVolume", outVolume.add(volume));
 				}else{
