@@ -181,6 +181,8 @@ public class MonthlySettlement {
 		
 		if(checkExist("WorkshopReturnProduct", cond))throw new Exception("本期间存在保存状态的车间退库单，不能进行结算！！");
 		
+		if(checkExist("ReturnProductWarehousing", cond))throw new Exception("本期间存在保存状态的进货单，不能进行结算！！");
+		
 		Debug.logInfo("检查是否当前期间的保存单据，操作结束~~~~~~", module);
 		
 	}
@@ -232,6 +234,10 @@ public class MonthlySettlement {
 		
 		//车间退货
 		mergeCompareValue("WorkshopReturnProduct",composeCond,allBillList);
+		
+		//进货单
+		mergeCompareValue("ReturnProductWarehousing",composeCond,allBillList);
+		
 		
 		//排序单据
 		Object[] billsArr=allBillList.toArray();
@@ -342,6 +348,9 @@ public class MonthlySettlement {
 		}else if(en.equalsIgnoreCase("WorkshopWarehousing")){//车间入库
 			return false;
 			
+		}else if(en.equalsIgnoreCase("ReturnProductWarehousing")){//进货单
+			return false;
+			
 		}else{
 			throw new Exception("没有对应的业务实现类");
 		}
@@ -383,6 +392,9 @@ public class MonthlySettlement {
 			
 		}else if(en.equalsIgnoreCase("WorkshopWarehousing")){//车间入库
 			return BizStockImpFactory.getBizStockImp(BillType.WorkshopWarehousing);
+			
+		}else if(en.equalsIgnoreCase("ReturnProductWarehousing")){//进货单
+			return BizStockImpFactory.getBizStockImp(BillType.ReturnProductWarehousing);
 			
 		}else{
 			throw new Exception("没有对应的业务实现类");
@@ -571,6 +583,8 @@ public class MonthlySettlement {
 		if(checkExist("WorkshopWarehousing", cond))throw new Exception("本期间存在提交状态的车间入库单，不能进行反结算！！");
 		
 		if(checkExist("WorkshopReturnProduct", cond))throw new Exception("本期间存在提交状态的车间退库单，不能进行反结算！！");
+		
+		if(checkExist("ReturnProductWarehousing", cond))throw new Exception("本期间存在提交状态的进货单，不能进行反结算！！");
 		
 		Debug.logInfo("检查是否当前期间的提交单据，操作结束~~~~~~", module);
 		

@@ -23,6 +23,7 @@ public class BizStockImpFactory {
 	private static IBizStock workshopReturnMaterialBizImp =new WorkshopReturnMaterialBizImp();
 	private static IBizStock workshopReturnProductBizImp =new WorkshopReturnProductBizImp();
 	private static IBizStock workshopWarehousingBizImp =new WorkshopWarehousingBizImp();
+	private static IBizStock returnProductWarehousingBizImp =new ReturnProductWarehousingBizImp();
 	public static IBizStock getBizStockImp(BillType billType) throws Exception{
 		switch (billType) {
 		case PurchaseWarehouse:
@@ -46,7 +47,7 @@ public class BizStockImpFactory {
 		case WorkshopWarehousing:
 			return  workshopWarehousingBizImp;
 		case ReturnProductWarehousing:
-			return new ReturnProductWarehousingBizImp();
+			return returnProductWarehousingBizImp;
 		default:
 			throw new Exception("不支持该类型接口实现");
 		}
