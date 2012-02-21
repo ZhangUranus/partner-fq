@@ -92,18 +92,6 @@ under the License.
       <field name="address" type="description"></field>
       <prim-key field="id"/>
     </entity> 
-    <!-- 委外供应商实体 -->
-    <entity entity-name="ConsignProcesser"
-            package-name="org.ofbiz.scm.basedata"
-            title="ConsignProcesser  Entity">
-      <field name="id" type="id-long"></field>
-      <field name="number" type="name"></field>
-      <field name="name" type="name"></field>
-      <field name="contractor" type="name"></field>
-      <field name="phone" type="name"></field>
-      <field name="address" type="description"></field>
-      <prim-key field="id"/>
-    </entity> 
     <!-- 客户实体 -->
     <entity entity-name="Customer"
             package-name="org.ofbiz.scm.basedata"
