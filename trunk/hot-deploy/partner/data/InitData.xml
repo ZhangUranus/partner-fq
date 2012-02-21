@@ -7,7 +7,6 @@
 	<TSystemUser id='18f85a5d-1c39-44f4-9f2f-e7d64056ff7b' userId='admin' userName='系统管理员' password='{SHA}40bd001563085fc35165329ea1ff5c5ecbdbbeef' sex='0' departmentId='2c2f37d4-33ac-4026-9ec0-3f8571e8a4a4' position='管理员' phoneNumber='13800000000' email='admin@21cn.com' valid='Y' />
 	<UserLogin userLoginId="admin" enabled="Y" isSystem="Y" currentPassword="{SHA}40bd001563085fc35165329ea1ff5c5ecbdbbeef" />
 	<TSystemUserOfRole id='1e58762d-7192-4a42-a59b-4eff792f922e' userId='admin' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' />
-	<Department id='2c2f37d4-33ac-4026-9ec0-3f8571e8a4a4' number='systemManagement' name='系统管理' />
 	<!-- 增加基础菜单数据 -->
 	<TSystemMenu menuId='warehouseManagement' menuName='仓库管理' menuType='0' parentId='-1' sort='1' hyperlink='' styleName='warehouse-management' display='1' description='仓库管理' />
 	<TSystemMenu menuId='purchaseManagement' menuName='采购管理' menuType='0' parentId='warehouseManagement' sort='11' hyperlink='' styleName='purchase-management' display='1' description='采购管理' />
@@ -228,12 +227,11 @@
 	<TSystemMenuOfRole id='e97d3623-4e32-4e79-a561-440d6e668508' menuId='productReport' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='V' />
 	<TSystemMenuOfRole id='d358c0d6-48e9-4641-85a9-c36f50b6541d' menuId='BOMBillInfoMaintaince' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='V' />
 	<!-- 增加系统序列号规则，建议第一次启动初始化后，屏蔽该数据 -->
-	<TSystemSerialNumber id='80c869ca-fe97-4da1-b5b5-5017195aaf5d' serialDate='20120101' entityName='Unit' prefix='UNT' serialNumber='100001' initNumber='100001' description='计量单位编号' hasDate='0' />
+	<!--<TSystemSerialNumber id='80c869ca-fe97-4da1-b5b5-5017195aaf5d' serialDate='20120101' entityName='Unit' prefix='UNT' serialNumber='100001' initNumber='100001' description='计量单位编号' hasDate='0' />
 	<TSystemSerialNumber id='76f21d31-e491-4bbb-b798-05a52fd45e10' serialDate='20120101' entityName='WarehouseType' prefix='WHT' serialNumber='100001' initNumber='100001' description='仓库类型编号' hasDate='0' />
 	<TSystemSerialNumber id='b44376e5-6445-47fd-ac77-137c4066d3c3' serialDate='20120101' entityName='Warehouse' prefix='WH' serialNumber='100001' initNumber='100001' description='仓库编号' hasDate='0' />
 	<TSystemSerialNumber id='47ef2564-903d-479b-aaa0-92f7889d519d' serialDate='20120101' entityName='Workshop' prefix='WS' serialNumber='100001' initNumber='100001' description='车间编号' hasDate='0' />
 	<TSystemSerialNumber id='3e048094-2275-41e7-8929-bf73032bdbbb' serialDate='20120101' entityName='Supplier' prefix='SUP' serialNumber='100001' initNumber='100001' description='供应商编号' hasDate='0' />
-	<TSystemSerialNumber id='7b8f2eff-d59e-4283-8e1f-ff99d37cf868' serialDate='20120101' entityName='ConsignProcesser' prefix='CP' serialNumber='100001' initNumber='100001' description='委外供应商编号' hasDate='0' />
 	<TSystemSerialNumber id='9fb59915-b9dd-464c-94af-65b87dfe7cf1' serialDate='20120101' entityName='Customer' prefix='CUST' serialNumber='100001' initNumber='100001' description='客户编号' hasDate='0' />
 	<TSystemSerialNumber id='cbdae0dc-d4a2-4e6a-ae00-d19f541b28c3' serialDate='20120101' entityName='TMaterialType' prefix='MTT' serialNumber='100001' initNumber='100001' description='物料类别编号' hasDate='0' />
 	<TSystemSerialNumber id='b28c6cee-1701-4200-8eb2-ae6721c9cbf4' serialDate='20120101' entityName='TMaterial' prefix='MT' serialNumber='100001' initNumber='100001' description='物料编号' hasDate='0' />
@@ -249,9 +247,9 @@
 	<TSystemSerialNumber id='b4e936f8-41a1-4200-90ed-8c7dc389e71a' serialDate='20120101' entityName='WorkshopDrawMaterial' prefix='WDM' serialNumber='100001' initNumber='100001' description='制造领料单编号' hasDate='1' />
 	<TSystemSerialNumber id='caca485d-3e34-412e-bac7-5d6377e91d74' serialDate='20120101' entityName='WorkshopReturnMaterial' prefix='WRM' serialNumber='100001' initNumber='100001' description='制造退料单编号' hasDate='1' />
 	<TSystemSerialNumber id='2b5a51ce-e920-47c0-990a-1976843a856b' serialDate='20120101' entityName='WorkshopWarehousing' prefix='WWS' serialNumber='100001' initNumber='100001' description='制造入库单编号' hasDate='1' />
-	<TSystemSerialNumber id='d6549ba2-c2b8-457b-bb87-437787b38624' serialDate='20120101' entityName='WorkshopReturnProduct' prefix='WRP' serialNumber='100001' initNumber='100001' description='制造退货单编号' hasDate='1' />
+	<TSystemSerialNumber id='d6549ba2-c2b8-457b-bb87-437787b38624' serialDate='20120101' entityName='WorkshopReturnProduct' prefix='WRP' serialNumber='100001' initNumber='100001' description='制造退货单编号' hasDate='1' />-->
 	<!-- 系统当前期间 -->
-	<PriceMgrParamters id='001' value='2012-02-01 00:00:00.000' />
+	<PriceMgrParamters id='001' value='2011-11-01 00:00:00.000' />
 	<!-- 日志类型定义 -->
 	<TSystemLogType id='50de6816-ac9d-476b-8300-b71563c64812' number='LOG100001' name='仓库管理' operateType='登录' keyWord='checkLogin' valid='1' />
 	<TSystemLogType id='fcbd8c0a-b171-43de-a4b9-515b0897699c' number='LOG100002' name='仓库管理' operateType='注销' keyWord='logout' valid='1' />

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements. See the NOTICE file distributed with this work for additional information regarding copyright ownership. The ASF licenses this file to you under the Apache License, Version 2.0 (the "License"); you 
+	may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
+	OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. -->
+<entity-engine-xml>
+	<TMaterialType id='0df0a576-5664-48b9-a62a-ee291b065fe3' number='MTT100001' name='原材料' />	
+	<TMaterialType id='0e6319b4-5391-4c96-aa20-5068a6336500' number='MTT100002' name='坯件' />	
+	<TMaterialType id='04269554-599b-4d90-9ca6-8e5920b00ad5' number='MTT100003' name='半成品' />
+	<TMaterialType id='4b06b051-02d1-4f43-b7c3-a7a654125f56' number='MTT100004' name='成品' />
+	<TMaterialType id='3cf72aba-bb0b-4c3a-87dc-fd30d2739fa1' number='MTT100005' name='安装包装' />
+</entity-engine-xml>
