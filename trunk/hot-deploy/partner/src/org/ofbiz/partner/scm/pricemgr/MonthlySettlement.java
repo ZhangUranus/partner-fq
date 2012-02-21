@@ -120,6 +120,9 @@ public class MonthlySettlement {
 	            //提交事务
 	            TransactionUtil.commit(beganTransaction);
 	            
+	            //单价计算更新
+	            PriceMgr.getInstance().refreshPeriod();
+	            
 		} catch (Exception e) {
             Debug.logError(e, module);
             try {
@@ -464,6 +467,8 @@ public class MonthlySettlement {
 	    		//提交事务
 	    		 TransactionUtil.commit(beganTransaction);
 	            
+	    		//单价计算更新
+		         PriceMgr.getInstance().refreshPeriod();
 		} catch (Exception e) {
             Debug.logError(e, module);
             try {
