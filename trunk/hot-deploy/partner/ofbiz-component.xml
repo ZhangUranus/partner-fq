@@ -25,7 +25,18 @@
 	<entity-resource type="model" reader-name="main" loader="main" location="entitydef/ReturnProductWarehousingEntity.xml"/>
     <entity-resource type="data" reader-name="seed" loader="main" location="data/ContentTypeData.xml"/>
     <entity-resource type="data" reader-name="seed" loader="main" location="data/InitData.xml"/>
-    <entity-resource type="data" reader-name="seed" loader="main" location="data/InitDataBase.xml"/>
+    <entity-resource type="data" reader-name="seed" loader="main" location="data/Example-Customer.xml"/>
+    <entity-resource type="data" reader-name="seed" loader="main" location="data/Example-Department.xml"/>
+    <entity-resource type="data" reader-name="seed" loader="main" location="data/Example-MaterialBom.xml"/>
+    <entity-resource type="data" reader-name="seed" loader="main" location="data/Example-MaterialBomEntry.xml"/>
+    <entity-resource type="data" reader-name="seed" loader="main" location="data/Example-Supplier.xml"/>
+    <entity-resource type="data" reader-name="seed" loader="main" location="data/Example-TMaterial.xml"/>
+    <entity-resource type="data" reader-name="seed" loader="main" location="data/Example-TMaterialType.xml"/>
+    <entity-resource type="data" reader-name="seed" loader="main" location="data/Example-TSystemSerialNumber.xml"/>
+    <entity-resource type="data" reader-name="seed" loader="main" location="data/Example-Unit.xml"/>
+    <entity-resource type="data" reader-name="seed" loader="main" location="data/Example-Warehouse.xml"/>
+    <entity-resource type="data" reader-name="seed" loader="main" location="data/Example-WarehouseType.xml"/>
+    <entity-resource type="data" reader-name="seed" loader="main" location="data/Example-Workshop.xml"/>
 	<webapp name="scm" 
 		title="SCM" 
 		server="default-server" 
