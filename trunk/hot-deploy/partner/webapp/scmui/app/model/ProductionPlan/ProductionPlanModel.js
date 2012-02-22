@@ -23,6 +23,15 @@ Ext.define('SCM.model.ProductionPlan.ProductionPlanModel', {
 						name : 'STOCKVOLUME',
 						type : 'float'
 					}, {
+						name : 'ISOUT',
+						convert:function(value,record){
+							if(record.get('STOCKVOLUME')<record.get('VOLUME')){
+								return true;//库存不足
+							}else{
+								return false;
+							}
+						}
+					}, {
 						name : 'PRICE',
 						type : 'float'
 					}, {
