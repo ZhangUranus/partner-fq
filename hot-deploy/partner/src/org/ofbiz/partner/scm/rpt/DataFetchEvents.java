@@ -655,6 +655,7 @@ public class DataFetchEvents {
 		String startDate = null;
 		String endDate = null;
 		String warehouseId = null;
+		String materialId = null;
 		if(request.getParameter("startDate") != null && request.getParameter("endDate") != null){
 			startDate = request.getParameter("startDate");
 			endDate = request.getParameter("endDate");
@@ -665,6 +666,10 @@ public class DataFetchEvents {
 		if(request.getParameter("warehouseId") != null){
 			warehouseId = request.getParameter("warehouseId");
 		}
+		if(request.getParameter("materialId") != null){
+			materialId = request.getParameter("materialId");
+		}
+		
 		String sql =" SELECT " +
 						" WW.BIZ_DATE, " +
 						" WW.NUMBER, " +
@@ -687,6 +692,9 @@ public class DataFetchEvents {
 					" AND WW.BIZ_DATE <= '" + endDate + "'" ;
 		if(warehouseId != null && !"".equals(warehouseId)){
 			sql += " AND WWE.WAREHOUSE_WAREHOUSE_ID = '" + warehouseId + "'";
+		}
+		if(materialId != null && !"".equals(materialId)){
+			sql += " AND TM.ID = '" + materialId + "'";
 		}
 		sql += " GROUP BY WW.NUMBER,WH.NAME,TM.NAME,WWE.MATERIAL_MATERIAL_MODEL,UIT.NAME ";
 		sql += " union ";
@@ -712,6 +720,9 @@ public class DataFetchEvents {
 		sql += " AND CW.BIZ_DATE <= '" + endDate + "'" ;
 		if(warehouseId != null && !"".equals(warehouseId)){
 			sql += " AND CWE.WAREHOUSE_WAREHOUSE_ID = '" + warehouseId + "'";
+		}
+		if(materialId != null && !"".equals(materialId)){
+			sql += " AND TM.ID = '" + materialId + "'";
 		}
 		sql += " GROUP BY CW.NUMBER,WH.NAME,TM.NAME,CWE.MATERIAL_MATERIAL_MODEL,UIT.NAME ";
 		return sql;
