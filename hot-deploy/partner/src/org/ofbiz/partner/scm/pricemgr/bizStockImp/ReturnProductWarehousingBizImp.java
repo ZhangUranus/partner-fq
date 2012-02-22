@@ -27,15 +27,25 @@ public class ReturnProductWarehousingBizImp implements IBizStock {
 		// 获取单据id分录条目
 		List<GenericValue> entryList = delegator.findByAnd("ReturnProductWarehousingEntry", UtilMisc.toMap("parentId", billValue.getString("id")));
 		
+		BigDecimal totalSum = BigDecimal.ZERO;
 		for (GenericValue v : entryList) {
 			String warehouseId = v.getString("warehouseWarehouseId");// 仓库id
 			String materialId = v.getString("materialMaterialId");// 物料id
 			BigDecimal volume = v.getBigDecimal("volume");// 数量
+			if(volume.compareTo(BigDecimal.ZERO)<0){
+				throw new Exception("进货数量不能为零，请重新输入！");
+			}
 			BigDecimal sum = v.getBigDecimal("entrysum");
 			
 			//增加额外耗料金额
 			BigDecimal extraSum = WorkshopPriceMgr.getInstance().updateMaterialExtra(v);
 			sum = sum.add(extraSum);
+			totalSum = totalSum.add(sum);
+			
+			//返填单价，金额
+			v.set("price", sum.divide(volume));
+			v.set("entrysum", sum);
+			v.store();
 			
 			Debug.log("退货入库库单价计算:物料id" + materialId + ";数量" + volume + ";金额" + sum, "ReturnProductWarehousingBizImp");
 
@@ -45,5 +55,8 @@ public class ReturnProductWarehousingBizImp implements IBizStock {
 			// 计算分录单价
 			PriceMgr.getInstance().calPrice(item);
 		}
+		//返填总金额
+		billValue.set("totalsum", totalSum);
+		billValue.store();
 	}
 }

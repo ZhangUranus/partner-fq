@@ -37,6 +37,9 @@ public class WorkshopWarehousingBizImp implements IBizStock {
 			String warehouseId = v.getString("warehouseWarehouseId");// 仓库id
 			String materialId = v.getString("materialMaterialId");// 物料id
 			BigDecimal volume = v.getBigDecimal("volume");// 数量
+			if(volume.compareTo(BigDecimal.ZERO)<0){
+				throw new Exception("制造入库数量不能为零，请重新输入！");
+			}
 			BigDecimal sum = null;
 			if (!isOut) {
 				BigDecimal price = WorkshopPriceMgr.getInstance().CreateWorkshopPriceDetailList(workshopId, materialId, v.getString("id"));

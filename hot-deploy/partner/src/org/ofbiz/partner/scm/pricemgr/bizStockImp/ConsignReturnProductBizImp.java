@@ -32,6 +32,9 @@ public class ConsignReturnProductBizImp implements IBizStock {
 			String warehouseId = v.getString("warehouseWarehouseId");// 仓库id
 			String materialId = v.getString("materialMaterialId");// 物料id
 			BigDecimal volume = v.getBigDecimal("volume");// 数量
+			if(volume.compareTo(BigDecimal.ZERO)<0){
+				throw new Exception("委外退货数量不能为零，请重新输入！");
+			}
 			BigDecimal sum = null;
 			if (isOut) {
 				BigDecimal price = PriceMgr.getInstance().getPrice(warehouseId, materialId); // 物料单价
@@ -40,7 +43,7 @@ public class ConsignReturnProductBizImp implements IBizStock {
 				// 返填单价和金额
 				v.set("price", price);
 				v.set("entrysum", sum);
-				v.set("checkedVolume", BigDecimal.ZERO);
+//				v.set("checkedVolume", BigDecimal.ZERO);//避免结算后变零
 				// 将金额加到总金额中
 				totalSum = totalSum.add(sum);
 

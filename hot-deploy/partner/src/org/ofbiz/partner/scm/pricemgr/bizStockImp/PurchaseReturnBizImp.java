@@ -26,6 +26,9 @@ public class PurchaseReturnBizImp implements IBizStock {
 			String warehouseId = v.getString("warehouseWarehouseId");// 仓库id
 			String materialId = v.getString("materialMaterialId");// 物料id
 			BigDecimal volume = v.getBigDecimal("volume");// 数量
+			if(volume.compareTo(BigDecimal.ZERO)<0){
+				throw new Exception("委外退货数量不能为零，请重新输入！");
+			}
 			BigDecimal sum = v.getBigDecimal("entrysum");// 金额
 			Debug.log("采购退货单价计算:物料id" + materialId + ";数量" + volume + ";金额" + sum, "PurchaseReturnBizImp");
 
