@@ -23,8 +23,18 @@
 	<entity-resource type="model" reader-name="main" loader="main" location="entitydef/WorkshopWarehousingEntity.xml"/>
 	<entity-resource type="model" reader-name="main" loader="main" location="entitydef/WorkshopReturnProductEntity.xml"/>
 	<entity-resource type="model" reader-name="main" loader="main" location="entitydef/ReturnProductWarehousingEntity.xml"/>
+	
+	<!-- 系统基础数据 -->
     <entity-resource type="data" reader-name="seed" loader="main" location="data/ContentTypeData.xml"/>
-    <entity-resource type="data" reader-name="seed" loader="main" location="data/InitData.xml"/>
+    <entity-resource type="data" reader-name="seed" loader="main" location="data/System-Department.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/System-PriceMgrParamters.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/System-TSystemLogType.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/System-TSystemMenu.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/System-TSystemMenuOfRole.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/System-TSystemRole.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/System-TSystemSerialNumber.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/System-TSystemUser.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/System-TSystemUserOfRole.xml"/>
 	
 	<!-- 示例数据 -->
 	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-ConsignDrawMaterial.xml"/>
@@ -41,7 +51,6 @@
 	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-CurMaterialBalance.xml"/>
 	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-CurWorkshopPrice.xml"/>
 	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-Customer.xml"/>
-	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-Department.xml"/>
 	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-HisConsignPrice.xml"/>
 	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-HisConsignProcessedPrice.xml"/>
 	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-HisMaterialBalance.xml"/>
