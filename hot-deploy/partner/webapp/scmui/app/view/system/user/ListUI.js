@@ -138,7 +138,7 @@ Ext.define('SCM.view.system.user.ListUI', {
 																id : 'user-grid',
 																selModel : checkBoxModel,
 																store : 'system.RoleStore',
-																anchor : '80% 30%',
+																anchor : '80% 40%',
 																frame : true,
 																columns : [{
 																			xtype : 'gridcolumn',
