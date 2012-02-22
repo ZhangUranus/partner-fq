@@ -2,8 +2,8 @@ Ext.define('SCM.controller.rpt.SemiProductCostReportController', {
 			extend : 'Ext.app.Controller',
 			mixins : ['SCM.extend.exporter.Exporter'],
 			views : ['rpt.spc.ListUI'],
-			stores : ['rpt.SemiProductCostReportStore', 'rpt.SemiProductCostDetailStore', 'rpt.MonthStore'],
-			models : ['rpt.SemiProductCostReportModel', 'rpt.SemiProductCostDetailModel', 'rpt.MonthModel'],
+			stores : ['rpt.SemiProductCostReportStore', 'rpt.SemiProductCostDetailStore', 'rpt.MonthStore', 'basedata.SemiMaterialStore'],
+			models : ['rpt.SemiProductCostReportModel', 'rpt.SemiProductCostDetailModel', 'rpt.MonthModel', 'basedata.SemiMaterialModel'],
 
 			/**
 			 * 初始化controller 增加事件监控
@@ -41,6 +41,7 @@ Ext.define('SCM.controller.rpt.SemiProductCostReportController', {
 				this.searchStartDate = view.down('datefield[name=searchStartDate]');
 				this.searchEndDate = view.down('datefield[name=searchEndDate]');
 				this.searchWarehouseId = view.down('combogrid[name=searchWarehouseId]');
+				this.searchMaterialId = view.down('combogrid[name=searchMaterialId]');
 				this.refreshRecord();
 			},
 
@@ -70,6 +71,11 @@ Ext.define('SCM.controller.rpt.SemiProductCostReportController', {
 					this.listPanel.store.getProxy().extraParams.warehouseId = this.searchWarehouseId.getValue();
 				} else {
 					this.listPanel.store.getProxy().extraParams.warehouseId = "";
+				}
+				if (!Ext.isEmpty(this.searchMaterialId.getValue())) {
+					this.listPanel.store.getProxy().extraParams.materialId = this.searchMaterialId.getValue();
+				} else {
+					this.listPanel.store.getProxy().extraParams.materialId = "";
 				}
 				this.listPanel.store.load();
 			},

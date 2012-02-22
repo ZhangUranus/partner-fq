@@ -70,6 +70,32 @@ Ext.define('SCM.view.rpt.spc.ListUI', {
 																}]
 													}
 												}, {
+													xtype : 'combogrid',
+													name : 'searchMaterialId',
+													width : 145,
+													labelWidth : 35,
+													fieldLabel : '坯件',
+													valueField : 'id',
+													displayField : 'name',
+													store : Ext.create('SemiMaterialStore'),
+													matchFieldWidth : false,
+													emptyText : '所有坯件',
+													listConfig : {
+														width : SCM.MaxSize.COMBOGRID_WIDTH,
+														height : SCM.MaxSize.COMBOGRID_HEIGHT,
+														columns : [{
+																	header : '编码',
+																	dataIndex : 'number',
+																	width : 80,
+																	hideable : false
+																}, {
+																	header : '名称',
+																	dataIndex : 'name',
+																	width : 100,
+																	hideable : false
+																}]
+													}
+												}, {
 													text : '查询',
 													iconCls : 'system-search',
 													action : 'search'
