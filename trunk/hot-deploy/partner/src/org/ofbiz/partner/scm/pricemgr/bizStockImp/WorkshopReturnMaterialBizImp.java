@@ -38,6 +38,9 @@ public class WorkshopReturnMaterialBizImp implements IBizStock {
 			String warehouseId = v.getString("warehouseWarehouseId");// 仓库id
 			String materialId = v.getString("materialMaterialId");// 物料id
 			BigDecimal volume = v.getBigDecimal("volume");// 数量
+			if(volume.compareTo(BigDecimal.ZERO)<0){
+				throw new Exception("制造退料数量不能为零，请重新输入！");
+			}
 			BigDecimal sum = null;
 			if (!isOut) {
 				BigDecimal price = WorkshopPriceMgr.getInstance().getPrice(workshopId, materialId); // 物料单价
