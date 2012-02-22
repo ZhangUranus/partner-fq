@@ -125,6 +125,9 @@
 .log-management {
 	background-image: url( ../images/icons/log-management.png ) !important;
 }
+.stock-settle {
+	background-image: url( ../images/icons/stock-settle.png ) !important;
+}
 .basic-setting{
 	background-image: url( ../images/icons/basic-setting.png ) !important;
 }
@@ -148,6 +151,24 @@
 }
 .BOM-bill-info-maintaince{
 	background-image: url( ../images/icons/BOM-bill-info-maintaince.png ) !important;
+}
+.unit-info-maintaince{
+	background-image: url( ../images/icons/unit-info-maintaince.png ) !important;
+}
+.warehouse-type-maintaince{
+	background-image: url( ../images/icons/warehouse-type-maintaince.png ) !important;
+}
+.supplier-maintaince{
+	background-image: url( ../images/icons/supplier-maintaince.png ) !important;
+}
+.workshop-maintaince{
+	background-image: url( ../images/icons/workshop-maintaince.png ) !important;
+}
+.flag-green{
+	background-image: url( ../images/icons/flag-green.png ) !important;
+}
+.flag-red{
+	background-image: url( ../images/icons/flag-red.png ) !important;
 }
 
 .tree-user{
