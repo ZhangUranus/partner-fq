@@ -106,13 +106,13 @@ public class Utils {
 		billHead = delegator.makeValue("ReturnProductWarehousing");
 		billHead.set("id", billValue.getString("id"));
 		billHead.set("number", billValue.getString("number"));
-		billHead.set("bizDate", billValue.getTimestamp("bizDate"));
+		billHead.set("bizDate", new Timestamp(System.currentTimeMillis()));
 		billHead.set("submitterSystemUserId", billValue.getString("submitterSystemUserId"));
 		billHead.set("totalsum", billValue.getBigDecimal("totalsum"));
 		billHead.set("note", billValue.getString("note"));
 		billHead.set("status", 0);
-		billHead.set("createdStamp", billValue.getTimestamp("createdStamp"));
-		billHead.set("submitStamp", billValue.getTimestamp("submitStamp"));
+		billHead.set("createdStamp", new Timestamp(System.currentTimeMillis()));
+		billHead.set("submitStamp", new Timestamp(System.currentTimeMillis()));
 		billHead.create();
 		List<GenericValue> entryList = delegator.findByAnd("ReturnProductWarehousingEntry", UtilMisc.toMap("parentId", billValue.getString("id")));
 		if (entryList != null && entryList.size() > 0) {
@@ -141,10 +141,8 @@ public class Utils {
 	public static void submitReturnProductWarehousing(GenericValue billValue, HttpServletRequest request) throws Exception {
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
 		GenericValue billHead = delegator.findOne("ReturnProductWarehousing", UtilMisc.toMap("id", billValue.getString("id")), false);
-		billHead.set("bizDate",new Timestamp(System.currentTimeMillis()));//将入库单单据时间修改为当前时间
 		if(billHead != null){
 			BizStockImpFactory.getBizStockImp(BillType.ReturnProductWarehousing).updateStock(billHead, false, false);
-	
 			if (billHead != null) {
 				billHead.set("status", 4);
 				billHead.set("submitterSystemUserId", CommonEvents.getAttributeToSession(request, "uid"));

@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.ofbiz.base.util.UtilMisc;
@@ -28,6 +29,10 @@ public class WorkshopPriceMgr {
 	private int year, month;// 当期年月
 
 	private WorkshopPriceMgr() {
+		refreshPeriod();
+	}
+	
+	public void refreshPeriod(){
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(Utils.getCurDate());
 		year = calendar.get(Calendar.YEAR);
@@ -160,18 +165,23 @@ public class WorkshopPriceMgr {
 	public BigDecimal updateMaterialExtra(GenericValue value) throws Exception {
 		List<GenericValue> entryList = delegator.findByAnd("ReturnProductWarehousingEntryExtra", UtilMisc.toMap("entryId", value.getString("id")));
 		BigDecimal sum = BigDecimal.ZERO;
+		BigDecimal totalSum = sum ;
 		for (GenericValue entryValue : entryList) {
-			BigDecimal price = this.getPrice(value.getString("warehouseWarehouseId"), entryValue.getString("materialMaterialId"));
+			// 通过制造退货单获取车间编码
+			GenericValue gv = delegator.findOne("WorkshopReturnProduct", UtilMisc.toMap("id", value.getString("parentId")), false);
+			
+			BigDecimal price = this.getPrice(gv.getString("workshopWorkshopId"), entryValue.getString("materialMaterialId"));
 			BigDecimal volume = entryValue.getBigDecimal("volume");
 			entryValue.set("price", price);
 			sum = volume.multiply(price);
+			totalSum = totalSum.add(sum);
 			entryValue.set("entrysum", sum);
 			entryValue.store();
 			
 			// 更新车间库存表，车间物料出库
-			this.update(value.getString("warehouseWarehouseId"), entryValue.getString("materialMaterialId"), volume.negate(), sum.negate());
+			this.update(gv.getString("workshopWorkshopId"), entryValue.getString("materialMaterialId"), volume.negate(), sum.negate());
 		}
-		return sum;
+		return totalSum;
 	}
 
 	/**
