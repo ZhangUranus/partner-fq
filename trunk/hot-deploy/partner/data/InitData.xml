@@ -249,7 +249,7 @@
 	<TSystemSerialNumber id='2b5a51ce-e920-47c0-990a-1976843a856b' serialDate='20120101' entityName='WorkshopWarehousing' prefix='WWS' serialNumber='100001' initNumber='100001' description='制造入库单编号' hasDate='1' />
 	<TSystemSerialNumber id='d6549ba2-c2b8-457b-bb87-437787b38624' serialDate='20120101' entityName='WorkshopReturnProduct' prefix='WRP' serialNumber='100001' initNumber='100001' description='制造退货单编号' hasDate='1' />-->
 	<!-- 系统当前期间 -->
-	<PriceMgrParamters id='001' value='2011-11-01 00:00:00.000' />
+	<PriceMgrParamters id='001' value='2012-02-01 00:00:00.000' />
 	<!-- 日志类型定义 -->
 	<TSystemLogType id='50de6816-ac9d-476b-8300-b71563c64812' number='LOG100001' name='仓库管理' operateType='登录' keyWord='checkLogin' valid='1' />
 	<TSystemLogType id='fcbd8c0a-b171-43de-a4b9-515b0897699c' number='LOG100002' name='仓库管理' operateType='注销' keyWord='logout' valid='1' />

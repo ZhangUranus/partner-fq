@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements. See the NOTICE file distributed with this work for additional information regarding copyright ownership. The ASF licenses this file to you under the Apache License, Version 2.0 (the "License"); you 
+	may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
+	OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. -->
+<entity-engine-xml>
+	<PurchaseReturn id="635d3605-0a8b-4c2f-b45d-346c770cf764" number="PRT20120102100001" bizDate="2012-01-02 08:00:00" supplierSupplierId="95cf10dd-d19e-4881-a55b-7db7c464e87b" returnerSystemUserId="18f85a5d-1c39-44f4-9f2f-e7d64056ff7b" submitterSystemUserId="18f85a5d-1c39-44f4-9f2f-e7d64056ff7b" totalsum="1000" note="" status="4" submitStamp="2012-01-02 23:42:47" />
+	<PurchaseReturn id="ab8298bc-bf0d-4b17-be06-3684dcfe0128" number="PRT20111102100001" bizDate="2011-11-02 08:00:00" supplierSupplierId="95cf10dd-d19e-4881-a55b-7db7c464e87b" returnerSystemUserId="18f85a5d-1c39-44f4-9f2f-e7d64056ff7b" submitterSystemUserId="18f85a5d-1c39-44f4-9f2f-e7d64056ff7b" totalsum="900" note="木材质量有问题。" status="4" submitStamp="2011-11-02 17:05:48" />
+	<PurchaseReturn id="c05b8b8c-71c2-4794-9a3f-5c81896424ea" number="PRT20120209100001" bizDate="2012-02-22 08:00:00" supplierSupplierId="95cf10dd-d19e-4881-a55b-7db7c464e87b" returnerSystemUserId="18f85a5d-1c39-44f4-9f2f-e7d64056ff7b" submitterSystemUserId="18f85a5d-1c39-44f4-9f2f-e7d64056ff7b" totalsum="180" note="" status="4" submitStamp="2012-02-09 09:59:55" />
+</entity-engine-xml>
