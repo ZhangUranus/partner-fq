@@ -28,6 +28,10 @@ public class ConsignPriceMgr {
 	private int year ,month ;//当期年月
 
 	private ConsignPriceMgr() {
+		refreshPeriod();
+	}
+	
+	public void refreshPeriod(){
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(Utils.getCurDate());
 		year = calendar.get(Calendar.YEAR);

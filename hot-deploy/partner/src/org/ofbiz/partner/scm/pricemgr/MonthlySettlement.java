@@ -124,6 +124,10 @@ public class MonthlySettlement {
 	            
 	            //单价计算更新
 	            PriceMgr.getInstance().refreshPeriod();
+	            ConsignPriceMgr.getInstance().refreshPeriod();
+	            ConsignProcessedPriceMgr.getInstance().refreshPeriod();
+	            ProductPriceMgr.getInstance().refreshPeriod();
+	            WorkshopPriceMgr.getInstance().refreshPeriod();
 	            
 		} catch (Exception e) {
             Debug.logError(e, module);
@@ -525,6 +529,11 @@ public class MonthlySettlement {
 	            
 	    		//单价计算更新
 		         PriceMgr.getInstance().refreshPeriod();
+		         ConsignPriceMgr.getInstance().refreshPeriod();
+		         ConsignProcessedPriceMgr.getInstance().refreshPeriod();
+		         ProductPriceMgr.getInstance().refreshPeriod();
+		         WorkshopPriceMgr.getInstance().refreshPeriod();
+		         
 		} catch (Exception e) {
             Debug.logError(e, module);
             try {

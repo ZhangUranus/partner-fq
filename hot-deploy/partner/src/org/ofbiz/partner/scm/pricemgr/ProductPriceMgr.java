@@ -20,11 +20,15 @@ public static final String module = ProductPriceMgr.class.getName();
 	private int year, month;// 当期年月
 	private static ProductPriceMgr instance=null;
 	private ProductPriceMgr(){
+		refreshPeriod();
+	}
+	public void refreshPeriod(){
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(Utils.getCurDate());
 		year = calendar.get(Calendar.YEAR);
 		month = calendar.get(Calendar.MONTH)+1;
 	}
+	
 	public static ProductPriceMgr getInstance(){
 		if(instance==null){
 			instance=new ProductPriceMgr();
