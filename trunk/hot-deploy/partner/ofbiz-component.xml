@@ -25,18 +25,56 @@
 	<entity-resource type="model" reader-name="main" loader="main" location="entitydef/ReturnProductWarehousingEntity.xml"/>
     <entity-resource type="data" reader-name="seed" loader="main" location="data/ContentTypeData.xml"/>
     <entity-resource type="data" reader-name="seed" loader="main" location="data/InitData.xml"/>
-    <entity-resource type="data" reader-name="seed" loader="main" location="data/Example-Customer.xml"/>
-    <entity-resource type="data" reader-name="seed" loader="main" location="data/Example-Department.xml"/>
-    <entity-resource type="data" reader-name="seed" loader="main" location="data/Example-MaterialBom.xml"/>
-    <entity-resource type="data" reader-name="seed" loader="main" location="data/Example-MaterialBomEntry.xml"/>
-    <entity-resource type="data" reader-name="seed" loader="main" location="data/Example-Supplier.xml"/>
-    <entity-resource type="data" reader-name="seed" loader="main" location="data/Example-TMaterial.xml"/>
-    <entity-resource type="data" reader-name="seed" loader="main" location="data/Example-TMaterialType.xml"/>
-    <entity-resource type="data" reader-name="seed" loader="main" location="data/Example-TSystemSerialNumber.xml"/>
-    <entity-resource type="data" reader-name="seed" loader="main" location="data/Example-Unit.xml"/>
-    <entity-resource type="data" reader-name="seed" loader="main" location="data/Example-Warehouse.xml"/>
-    <entity-resource type="data" reader-name="seed" loader="main" location="data/Example-WarehouseType.xml"/>
-    <entity-resource type="data" reader-name="seed" loader="main" location="data/Example-Workshop.xml"/>
+	
+	<!-- 示例数据 -->
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-ConsignDrawMaterial.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-ConsignDrawMaterialEntry.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-ConsignPriceDetail.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-ConsignReturnMaterial.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-ConsignReturnMaterialEntry.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-ConsignReturnProduct.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-ConsignReturnProductEntry.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-ConsignWarehousing.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-ConsignWarehousingEntry.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-CurConsignPrice.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-CurConsignProcessedPrice.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-CurMaterialBalance.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-CurWorkshopPrice.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-Customer.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-Department.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-HisConsignPrice.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-HisConsignProcessedPrice.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-HisMaterialBalance.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-HisWorkshopPrice.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-MaterialBom.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-MaterialBomEntry.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-PurchaseBill.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-PurchaseBillEntry.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-PurchaseReturn.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-PurchaseReturnEntry.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-PurchaseWarehousing.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-PurchaseWarehousingEntry.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-PurPlanBalance.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-ReturnProductWarehousing.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-ReturnProductWarehousingEntry.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-ReturnProductWarehousingEntryExtra.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-Supplier.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-TMaterial.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-TMaterialType.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-TSystemSerialNumber.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-Unit.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-Warehouse.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-WarehouseType.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-Workshop.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-WorkshopDrawMaterial.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-WorkshopDrawMaterialEntry.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-WorkshopPriceDetail.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-WorkshopReturnProduct.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-WorkshopReturnProductEntry.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-WorkshopWarehousing.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-WorkshopWarehousingEntry.xml"/>
+	
+	
 	<webapp name="scm" 
 		title="SCM" 
 		server="default-server" 
