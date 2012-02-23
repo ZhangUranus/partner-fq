@@ -14,7 +14,7 @@ Ext.application({
 			name : 'SCM',
 			appFolder : 'app',
 			controllers : [// 载入系统controller
-			'Main', 'basedata.UnitController', 'basedata.WarehouseTypeController', 'basedata.WarehouseController', 'basedata.CustomerController', 'basedata.DepartmentController',
+			'Main', 'homepage.HomePageController', 'basedata.UnitController', 'basedata.WarehouseTypeController', 'basedata.WarehouseController', 'basedata.CustomerController', 'basedata.DepartmentController',
 					'basedata.MaterialController', 'basedata.MaterialBomController', 'basedata.WorkshopController', 'PurchaseBill.PurchaseBillController', 'Supplier.SupplierController',
 					'system.SystemController', 'system.LogController', 'PurchaseWarehousing.PurchaseWarehousingController', 'PurchaseReturn.PurchaseReturnController',
 					'ConsignDrawMaterial.ConsignDrawMaterialController', 'ConsignReturnMaterial.ConsignReturnMaterialController', 'WorkshopDrawMaterial.WorkshopDrawMaterialController',
