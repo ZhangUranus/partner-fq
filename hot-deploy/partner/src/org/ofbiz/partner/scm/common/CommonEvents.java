@@ -1,6 +1,5 @@
 package org.ofbiz.partner.scm.common;
 
-import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,12 +14,10 @@ import javolution.util.FastList;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-import org.codehaus.jackson.map.ObjectMapper;
 import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilProperties;
 import org.ofbiz.base.util.UtilValidate;
 import org.ofbiz.entity.GenericDelegator;
-import org.ofbiz.entity.GenericEntityException;
 import org.ofbiz.entity.GenericValue;
 import org.ofbiz.entity.condition.EntityCondition;
 import org.ofbiz.entity.condition.EntityConditionList;
@@ -35,7 +32,6 @@ public class CommonEvents {
 	private static final String module = CommonEvents.class.getName();
 	private static final String usernameCookieName = "OFBiz.Username";
 	private static GenericDelegator delegator = null;
-	private static ObjectMapper objectMapper = new ObjectMapper();
 	private static SerialNumberHelper serialNumberHelper = new SerialNumberHelper();
 	
 	public static GenericDelegator getDelegator(HttpServletRequest request){

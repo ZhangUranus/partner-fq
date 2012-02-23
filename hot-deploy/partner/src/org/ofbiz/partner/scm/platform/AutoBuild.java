@@ -2,16 +2,6 @@ package org.ofbiz.partner.scm.platform;
 
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
-import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.Vector;
-
-import javolution.util.FastList;
-import javolution.util.FastMap;
 
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
@@ -20,17 +10,13 @@ import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.MethodInvocationException;
 import org.apache.velocity.exception.ParseErrorException;
 import org.apache.velocity.exception.ResourceNotFoundException;
-import org.ofbiz.base.util.UtilMisc;
-import org.ofbiz.entity.GenericValue;
-
-import net.sf.json.JSONObject;
 
 public class AutoBuild {
 	
 final String TARGET_FOLDER="D:\\Learning\\ofbiz\\apache-ofbiz-10.04\\hot-deploy\\partner\\";
 
 public static void main(String[] args){
-	AutoBuild ab=new AutoBuild();
+//	AutoBuild ab=new AutoBuild();
 	
 	/* first, we init the runtime engine.  Defaults are fine. */
 
