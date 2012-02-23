@@ -23,6 +23,9 @@ Ext.define('SCM.view.homepage.ListUI', {
 										layout : {
 											type : 'border'
 										},
+										tools : [{
+													type : 'refresh'
+												}],
 										items : [{
 													xtype : 'gridpanel',
 													margin : '1 0 0 0',
@@ -133,6 +136,9 @@ Ext.define('SCM.view.homepage.ListUI', {
 										split : true,
 										height : 315,
 										store : 'homepage.HomePageStatusStore',
+										tools : [{
+													type : 'refresh'
+												}],
 										columns : [{
 													header : '序号',
 													xtype : 'rownumberer',
