@@ -27,6 +27,12 @@ Ext.define('SCM.controller.homepage.HomePageController', {
 			 */
 			initComponent : function(view) {
 				this.chartPanel = view.down('panel panel chart');
+				this.westPanel = view.down('panel gridpanel[region=west]');
+				this.centerPanel = view.down('gridpanel[region=south]');
+				this.volumeRefreshButton = view.down('panel').tools.refresh;
+				this.statusRefreshButton = this.centerPanel.tools.refresh;
+				this.volumeRefreshButton.addListener('click',this.refreshVolumeList,this);
+				this.statusRefreshButton.addListener('click',this.refreshStatusList,this);
 			},
 			
 			/**
@@ -42,8 +48,31 @@ Ext.define('SCM.controller.homepage.HomePageController', {
 						});
 			},
 			
+			/**
+			 * 刷新图形
+			 * @param {} me
+			 * @param {} record
+			 * @param {} index
+			 * @param {} eOpts
+			 */
 			refreshChart : function(me, record, index, eOpts) {
 				this.chartPanel.store.getProxy().extraParams.materialId = record.get("ID");
 				this.refreshRecord();
+			},
+			
+			/**
+			 * 刷新物料分布情况
+			 * @param {} me
+			 */
+			refreshVolumeList : function(me){
+				this.westPanel.store.load();
+			},
+			
+			/**
+			 * 刷新单据完成情况
+			 * @param {} me
+			 */
+			refreshStatusList : function(me){
+				this.centerPanel.store.load();
 			}
 		});
