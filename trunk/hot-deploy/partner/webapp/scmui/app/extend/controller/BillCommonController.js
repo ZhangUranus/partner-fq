@@ -814,7 +814,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				appendData2Win(printWin,data,template.template);
 				printWin.document.close();
 				printWin.print();
-				printWin.close();
+//				printWin.close();
 			}
 
 		})
