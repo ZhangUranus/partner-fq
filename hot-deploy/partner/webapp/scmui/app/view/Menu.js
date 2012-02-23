@@ -13,7 +13,7 @@ Ext.define('SCM.view.Menu', {
 							margins : '0 0 -1 1',
 							layout : 'accordion',
 							region : 'west',
-							border : false,
+							border : true,
 							enabled : false,
 							split : true,
 							width : 212,
