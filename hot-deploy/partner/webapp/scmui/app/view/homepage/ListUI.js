@@ -19,6 +19,7 @@ Ext.define('SCM.view.homepage.ListUI', {
 										margin : '1 0 0 0',
 										region : 'center',
 										height : 350,
+										minHeight : 220,
 										layout : {
 											type : 'border'
 										},
