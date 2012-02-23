@@ -778,16 +778,8 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 			 *@style css样式
 			 *抽象方法，具体单据需要进行定义
 			 */
-			//getPrintTemplateArr:Ext.emptyFn,
-			getPrintTemplateArr: function(){
-				return [{name:'默认打印模板',
-					     template:[{dataIndex:'data.number',style:'left:10px;top:50px'}, 
-					        	{dataIndex:'data.bizDate',style:'left:150px;top:50px'},
-					               {dataIndex:'data.entry[0].materialMaterialName',style:'left:10px;top:80px'}
-					                ]
-					     }
-					     ];
-			},
+			getPrintTemplateArr:Ext.emptyFn,
+			
 			/**
 			 * 返回单据打印数据
 			 * 打印的内容，json对象 {billNumber:'001',bizDate:'2012-08-09',supplierName:'江门开发' ,entries:[{materialName:'钢条',volume:10},{materialName:'钢条',volume:10}]}
