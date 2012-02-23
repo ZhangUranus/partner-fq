@@ -246,5 +246,14 @@ Ext.define('SCM.controller.PurchaseWarehousing.PurchaseWarehousingController', {
 			 */
 			getRollbackBillUrl : function() {
 				return '../../scm/control/rollbackInspective';
+			},
+			getPrintTemplateArr: function(){
+				return [{name:'默认打印模板',
+					     template:[{dataIndex:'data.number',style:'left:10px;top:50px'}, 
+					        	{dataIndex:'data.bizDate',style:'left:150px;top:50px'},
+					               {dataIndex:'data.entry[0].materialMaterialName',style:'left:10px;top:80px'}
+					                ]
+					     }
+					     ];
 			}
 		});
