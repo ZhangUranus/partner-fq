@@ -59,12 +59,12 @@ Ext.define('SCM.view.homepage.ListUI', {
 																xtype : 'numbercolumn',
 																dataIndex : 'CS_VOLUME',
 																width : 80,
-																text : '供应商数量'
+																text : '加工商数量'
 															}, {
 																xtype : 'numbercolumn',
 																dataIndex : 'CS_SUM',
 																width : 80,
-																text : '供应商金额'
+																text : '加工商金额'
 															}]
 
 												}, {
