@@ -273,7 +273,10 @@ public class SecurityEvents {
 			calendar.setTime(Utils.getCurDate());
         	CommonEvents.setUsername(request, response);
         	String uid = systemUser.getString("id");
+        	String uname = systemUser.getString("userName");
         	CommonEvents.setAttributeToSession(request, "uid", uid);
+        	CommonEvents.setAttributeToSession(request, "uname", uname);
+			jsonStr.put("username", uname);
 			jsonStr.put("currentYear", calendar.get(Calendar.YEAR));
 			jsonStr.put("currentMonth", calendar.get(Calendar.MONTH)+1);
 			jsonStr.put("success", true);
@@ -290,7 +293,7 @@ public class SecurityEvents {
 		}else{
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(Utils.getCurDate());
-			jsonStr.put("username", username);
+			jsonStr.put("username", CommonEvents.getAttributeFormSession(request, "uname"));
 			jsonStr.put("currentYear", calendar.get(Calendar.YEAR));
 			jsonStr.put("currentMonth", calendar.get(Calendar.MONTH)+1);
 			jsonStr.put("success", true);

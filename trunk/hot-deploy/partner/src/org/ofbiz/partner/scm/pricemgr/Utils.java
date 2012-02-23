@@ -145,7 +145,7 @@ public class Utils {
 			BizStockImpFactory.getBizStockImp(BillType.ReturnProductWarehousing).updateStock(billHead, false, false);
 			if (billHead != null) {
 				billHead.set("status", 4);
-				billHead.set("submitterSystemUserId", CommonEvents.getAttributeToSession(request, "uid"));
+				billHead.set("submitterSystemUserId", CommonEvents.getAttributeFormSession(request, "uid"));
 				billHead.set("submitStamp", new Timestamp(System.currentTimeMillis()));
 				billHead.store();
 			}
