@@ -1,3 +1,6 @@
+.system-help{
+	background-image: url( ../images/icons/help.png ) !important;
+}
 .system-logout{
 	background-image: url( ../images/icons/logout.png ) !important;
 }
