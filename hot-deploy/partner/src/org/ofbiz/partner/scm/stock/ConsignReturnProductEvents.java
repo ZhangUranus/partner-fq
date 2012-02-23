@@ -79,7 +79,7 @@ public class ConsignReturnProductEvents {
 						Utils.submitReturnProductWarehousing(billHead,request);	//提交
 						billHead.set("checkStatus", 2);
 					}
-					billHead.set("checkerSystemUserId", CommonEvents.getAttributeToSession(request, "uid"));
+					billHead.set("checkerSystemUserId", CommonEvents.getAttributeFormSession(request, "uid"));
 					billHead.store();
 					BillBaseEvent.writeSuccessMessageToExt(response, "验收成功");
 				}

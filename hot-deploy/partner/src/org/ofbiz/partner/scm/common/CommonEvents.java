@@ -100,7 +100,7 @@ public class CommonEvents {
 	 * 从session中获取属性值
 	 * 
 	 * */
-    public static String getAttributeToSession(HttpServletRequest request,String attributeName){
+    public static String getAttributeFormSession(HttpServletRequest request,String attributeName){
     	if(!"".equals(attributeName)){
     		return request.getSession().getAttribute(attributeName).toString();
     	}else{
