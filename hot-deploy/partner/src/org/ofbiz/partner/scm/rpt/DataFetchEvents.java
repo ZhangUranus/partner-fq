@@ -862,6 +862,226 @@ public class DataFetchEvents {
 		}
 		return sql;
 	}
+	
+	/**
+	 * 查询物料库存情况
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public static String queryMaterialVolumeDetail(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		String sql =" SELECT " +
+						" TM.ID AS ID, " +
+						" TM.NUMBER AS NUMBER, " +
+						" TM.NAME AS NAME, " +
+						" SUM(IFNULL(CMB.VOLUME,0)) AS WH_VOLUME, " +
+						" SUM(IFNULL(CMB.TOTAL_SUM,0)) AS WH_SUM, " +
+						" SUM(IFNULL(CWP.VOLUME,0)) AS WS_VOLUME, " +
+						" SUM(IFNULL(CWP.TOTALSUM,0)) AS WS_SUM, " +
+						" SUM(IFNULL(CCP.VOLUME,0)) AS CS_VOLUME, " +
+						" SUM(IFNULL(CCP.TOTALSUM,0)) AS CS_SUM " +
+					" FROM CUR_MATERIAL_BALANCE CMB " +
+					" LEFT JOIN T_MATERIAL TM ON CMB.MATERIAL_ID = TM.ID " +
+					" LEFT JOIN CUR_WORKSHOP_PRICE CWP ON CMB.MATERIAL_ID = CWP.MATERIAL_ID " +
+					" LEFT JOIN CUR_CONSIGN_PRICE CCP ON CMB.MATERIAL_ID = CCP.MATERIAL_ID " +
+					" GROUP BY TM.ID,TM.NUMBER,TM.NAME " + 
+					" ORDER BY TM.NUMBER ";
+		
+		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(request,sql));
+		return "sucess";
+	}
+	
+	/**
+	 * 查询物料库存分布情况雷达图
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public static String queryMaterialVolumeRadar(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String materialString = "";
+		if(request.getParameter("materialId") != null){
+			materialString = "WHERE MATERIAL_ID = '" + request.getParameter("materialId") + "'";
+		}
+		
+		String sql =" SELECT " +
+						" WH.NAME AS NAME, " +
+						" SUM(IFNULL(CMB.VOLUME,0)) AS VOLUME " +
+					" FROM CUR_MATERIAL_BALANCE CMB " +
+					" LEFT JOIN WAREHOUSE WH ON CMB.WAREHOUSE_ID = WH.ID " +
+					materialString +
+					" GROUP BY WH.NAME " +
+					" UNION " +
+					" SELECT " +
+						" WS.NAME AS NAME, " +
+						" SUM(IFNULL(CWP.VOLUME,0)) AS VOLUME " +
+					" FROM CUR_WORKSHOP_PRICE CWP " +
+					" LEFT JOIN WORKSHOP WS ON CWP.WORKSHOP_ID = WS.ID " +
+					materialString +
+					" GROUP BY WS.NAME " +
+					" UNION " +
+					" SELECT " +
+						" SP.NAME AS NAME, " +
+						" SUM(IFNULL(CCP.VOLUME,0)) AS VOLUME " +
+					" FROM CUR_CONSIGN_PRICE CCP " +
+					" LEFT JOIN SUPPLIER SP ON CCP.SUPPLIER_ID = SP.ID " +
+					materialString +
+					" GROUP BY SP.NAME ";
+		
+		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(request,sql));
+		return "sucess";
+	}
+	
+	/**
+	 * 单据状态查询
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public static String queryBillStatusList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(org.ofbiz.partner.scm.pricemgr.Utils.getCurDate());
+		int year = calendar.get(Calendar.YEAR);
+		int month = calendar.get(Calendar.MONTH)+1;
+		
+		String conditionString = " WHERE YEAR(BIZ_DATE) = '" + year + "' AND MONTH(BIZ_DATE) = '" + month +"'";
+		String monthString = "'" + year + "年" + month + "月" + "' AS MONTH, ";
+		
+		String sql =" SELECT " +
+					" 0 AS ODER, " +
+					monthString +
+					" '采购单' AS NAME, " +
+					" CONCAT( " +
+					" 	CONCAT('<font color=red>已保存(',CONVERT(IFNULL(SUM(CASE WHEN STATUS = 0 THEN 1 ELSE 0 END),0),char),'单)</font></font>、'), " +
+					" 	CONCAT('<font color=green>审核通过(',CONVERT(IFNULL(SUM(CASE WHEN STATUS = 1 THEN 1 ELSE 0 END),0),char),'单)</font>、'), " +
+					" 	CONCAT('<font color=Maroon>审核不通过(',CONVERT(IFNULL(SUM(CASE WHEN STATUS = 2 THEN 1 ELSE 0 END),0),char),'单)</font>') " +
+					" ) AS DETAIL " +
+					" FROM PURCHASE_BILL " +
+					conditionString +
+					" UNION " +
+					" SELECT " +
+					" 1 AS ODER, " +
+					monthString +
+					" '采购入库单' AS NAME, " +
+					" CONCAT( " +
+					" 	CONCAT('<font color=red>已保存(',CONVERT(IFNULL(SUM(CASE WHEN STATUS = 0 THEN 1 ELSE 0 END),0),char),'单)</font>、'), " +
+					" 	CONCAT('<font color=green>已提交(',CONVERT(IFNULL(SUM(CASE WHEN STATUS = 4 THEN 1 ELSE 0 END),0),char),'单)</font> ') " +
+					" ) AS DETAIL " +
+					" FROM PURCHASE_WAREHOUSING " +
+					conditionString +
+					" UNION " +
+					" SELECT " +
+					" 2 AS ODER, " +
+					monthString +
+					" '采购退货单' AS NAME, " +
+					" CONCAT( " +
+					" 	CONCAT('<font color=red>已保存(',CONVERT(IFNULL(SUM(CASE WHEN STATUS = 0 THEN 1 ELSE 0 END),0),char),'单)</font>、'), " +
+					" 	CONCAT('<font color=green>已提交(',CONVERT(IFNULL(SUM(CASE WHEN STATUS = 4 THEN 1 ELSE 0 END),0),char),'单)</font> ') " +
+					" ) AS DETAIL " +
+					" FROM PURCHASE_RETURN " +
+					conditionString +
+					" UNION " +
+					" SELECT " +
+					" 3 AS ODER, " +
+					monthString +
+					" '委外领料单' AS NAME, " +
+					" CONCAT( " +
+					" 	CONCAT('<font color=red>已保存(',CONVERT(IFNULL(SUM(CASE WHEN STATUS = 0 THEN 1 ELSE 0 END),0),char),'单)</font>、'), " +
+					" 	CONCAT('<font color=green>已提交(',CONVERT(IFNULL(SUM(CASE WHEN STATUS = 4 THEN 1 ELSE 0 END),0),char),'单)</font> ') " +
+					" ) AS DETAIL " +
+					" FROM CONSIGN_DRAW_MATERIAL " +
+					conditionString +
+					" UNION " +
+					" SELECT " +
+					" 4 AS ODER, " +
+					monthString +
+					" '委外退料单' AS NAME, " +
+					" CONCAT( " +
+					" 	CONCAT('<font color=red>已保存(',CONVERT(IFNULL(SUM(CASE WHEN STATUS = 0 THEN 1 ELSE 0 END),0),char),'单)</font>、'), " +
+					" 	CONCAT('<font color=green>已提交(',CONVERT(IFNULL(SUM(CASE WHEN STATUS = 4 THEN 1 ELSE 0 END),0),char),'单)</font> ') " +
+					" ) AS DETAIL " +
+					" FROM CONSIGN_RETURN_MATERIAL " +
+					conditionString +
+					" UNION " +
+					" SELECT " +
+					" 5 AS ODER, " +
+					monthString +
+					" '委外入库单' AS NAME, " +
+					" CONCAT( " +
+					" 	CONCAT('<font color=red>已保存(',CONVERT(IFNULL(SUM(CASE WHEN STATUS = 0 THEN 1 ELSE 0 END),0),char),'单)</font>、'), " +
+					" 	CONCAT('<font color=green>已提交(',CONVERT(IFNULL(SUM(CASE WHEN STATUS = 4 THEN 1 ELSE 0 END),0),char),'单)</font> ') " +
+					" ) AS DETAIL " +
+					" FROM CONSIGN_WAREHOUSING " +
+					conditionString +
+					" UNION " +
+					" SELECT " +
+					" 6 AS ODER, " +
+					monthString +
+					" '委外退货单' AS NAME, " +
+					" CONCAT( " +
+					" 	CONCAT('<font color=red>已保存(',CONVERT(IFNULL(SUM(CASE WHEN STATUS = 0 THEN 1 ELSE 0 END),0),char),'单)</font>、'), " +
+					" 	CONCAT('<font color=green>已提交(',CONVERT(IFNULL(SUM(CASE WHEN STATUS = 4 THEN 1 ELSE 0 END),0),char),'单)</font>【'), " +
+					" 	CONCAT('<font color=red>未验收(',CONVERT(IFNULL(SUM(CASE WHEN STATUS = 4 AND CHECK_STATUS = 0 THEN 1 ELSE 0 END),0),char),'单)</font>、'), " +
+					" 	CONCAT('<font color=Maroon>验收中(',CONVERT(IFNULL(SUM(CASE WHEN STATUS = 4 AND CHECK_STATUS = 1 THEN 1 ELSE 0 END),0),char),'单)</font>、'), " +
+					" 	CONCAT('<font color=green>验收完成(',CONVERT(IFNULL(SUM(CASE WHEN STATUS = 4 AND CHECK_STATUS = 2 THEN 1 ELSE 0 END),0),char),'单)</font>】') " +
+					" ) AS DETAIL " +
+					" FROM CONSIGN_RETURN_PRODUCT " +
+					conditionString +
+					" UNION " +
+					" SELECT " +
+					" 7 AS ODER, " +
+					monthString +
+					" '制造领料单' AS NAME, " +
+					" CONCAT( " +
+					" 	CONCAT('<font color=red>已保存(',CONVERT(IFNULL(SUM(CASE WHEN STATUS = 0 THEN 1 ELSE 0 END),0),char),'单)</font>、'), " +
+					" 	CONCAT('<font color=green>已提交(',CONVERT(IFNULL(SUM(CASE WHEN STATUS = 4 THEN 1 ELSE 0 END),0),char),'单)</font> ') " +
+					" ) AS DETAIL " +
+					" FROM WORKSHOP_DRAW_MATERIAL " +
+					conditionString +
+					" UNION " +
+					" SELECT " +
+					" 8 AS ODER, " +
+					monthString +
+					" '制造退料单' AS NAME, " +
+					" CONCAT( " +
+					" 	CONCAT('<font color=red>已保存(',CONVERT(IFNULL(SUM(CASE WHEN STATUS = 0 THEN 1 ELSE 0 END),0),char),'单)</font>、'), " +
+					" 	CONCAT('<font color=green>已提交(',CONVERT(IFNULL(SUM(CASE WHEN STATUS = 4 THEN 1 ELSE 0 END),0),char),'单)</font> ') " +
+					" ) AS DETAIL " +
+					" FROM WORKSHOP_RETURN_MATERIAL " +
+					conditionString +
+					" UNION " +
+					" SELECT " +
+					" 9 AS ODER, " +
+					monthString +
+					" '制造入库单' AS NAME, " +
+					" CONCAT( " +
+					" 	CONCAT('<font color=red>已保存(',CONVERT(IFNULL(SUM(CASE WHEN STATUS = 0 THEN 1 ELSE 0 END),0),char),'单)</font>、'), " +
+					" 	CONCAT('<font color=green>已提交(',CONVERT(IFNULL(SUM(CASE WHEN STATUS = 4 THEN 1 ELSE 0 END),0),char),'单)</font> ') " +
+					" ) AS DETAIL " +
+					" FROM WORKSHOP_WAREHOUSING " +
+					conditionString +
+					" UNION " +
+					" SELECT " +
+					" 10 AS ODER, " +
+					monthString +
+					" '制造退货单' AS NAME, " +
+					" CONCAT( " +
+					" 	CONCAT('<font color=red>已保存(',CONVERT(IFNULL(SUM(CASE WHEN STATUS = 0 THEN 1 ELSE 0 END),0),char),'单)</font>、'), " +
+					" 	CONCAT('<font color=green>已提交(',CONVERT(IFNULL(SUM(CASE WHEN STATUS = 4 THEN 1 ELSE 0 END),0),char),'单)</font>【'), " +
+					" 	CONCAT('<font color=red>未验收(',CONVERT(IFNULL(SUM(CASE WHEN STATUS = 4 AND CHECK_STATUS = 0 THEN 1 ELSE 0 END),0),char),'单)</font>、'), " +
+					" 	CONCAT('<font color=Maroon>验收中(',CONVERT(IFNULL(SUM(CASE WHEN STATUS = 4 AND CHECK_STATUS = 1 THEN 1 ELSE 0 END),0),char),'单)</font>、'), " +
+					" 	CONCAT('<font color=green>验收完成(',CONVERT(IFNULL(SUM(CASE WHEN STATUS = 4 AND CHECK_STATUS = 2 THEN 1 ELSE 0 END),0),char),'单)</font>】') " +
+					" ) AS DETAIL " +
+					" FROM WORKSHOP_RETURN_PRODUCT " +
+					conditionString +
+					" ORDER BY ODER " ;
+		
+		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(request,sql));
+		return "sucess";
+	}
 
 	public static String executeSelectSQL(HttpServletRequest request,String sql) throws Exception {
 		// 数据库连接
