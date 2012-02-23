@@ -2,15 +2,6 @@ package org.ofbiz.partner.scm.common;
 
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
-import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javolution.util.FastList;
-import javolution.util.FastMap;
 
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
@@ -19,9 +10,6 @@ import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.MethodInvocationException;
 import org.apache.velocity.exception.ParseErrorException;
 import org.apache.velocity.exception.ResourceNotFoundException;
-import org.ofbiz.entity.GenericValue;
-
-import net.sf.json.JSONObject;
 
 public class AutoBuid {
 public static void main(String[] args){

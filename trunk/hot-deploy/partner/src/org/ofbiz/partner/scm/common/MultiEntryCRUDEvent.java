@@ -12,12 +12,8 @@ import javolution.util.FastList;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-import org.ofbiz.base.crypto.HashCrypt;
 import org.ofbiz.base.util.UtilMisc;
-import org.ofbiz.common.login.LoginServices;
 import org.ofbiz.entity.Delegator;
-import org.ofbiz.entity.GenericEntityException;
-import org.ofbiz.entity.GenericPK;
 import org.ofbiz.entity.GenericValue;
 import org.ofbiz.entity.model.ModelEntity;
 import org.ofbiz.entity.model.ModelField;
