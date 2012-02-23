@@ -45,6 +45,9 @@ Ext.define('SCM.controller.Main', {
 			},
             'south button[action=logout]' : {
                 click : this.logout
+            },
+            'south button[action=help]' : {
+                click : this.downloadHelp
             }
 		});
 	},
@@ -116,5 +119,8 @@ Ext.define('SCM.controller.Main', {
                 Ext.Msg.alert("提示","你已经注销！",new Function("window.location = window.location;"));
             }
         });
+    },
+    downloadHelp : function() {
+    	window.location = '../scmui/help/help.doc';
     }
 })
