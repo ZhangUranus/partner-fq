@@ -378,6 +378,26 @@
 		<response name="success" type="none" />
 	</request-map>
 	
+	<!-- 获取单据状态列表 -->
+	<request-map uri="queryBillStatusList">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="queryBillStatusList" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 获取物料库存情况 -->
+	<request-map uri="queryMaterialVolumeDetail">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="queryMaterialVolumeDetail" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 查询物料库存分布情况雷达图 -->
+	<request-map uri="queryMaterialVolumeRadar">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="queryMaterialVolumeRadar" />
+		<response name="success" type="none" />
+	</request-map>
+	
+	
 	
 	<!-- 打印 -->
 	<request-map uri="getPrintData">

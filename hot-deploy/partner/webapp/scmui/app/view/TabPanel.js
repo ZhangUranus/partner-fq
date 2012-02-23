@@ -19,7 +19,7 @@ Ext.define('SCM.view.TabPanel', {
 							activeTab : 0,
 							border : false,
 							items : [{
-										xtype : 'welcomeindex',
+										xtype : 'homepage',
 										title : LocaleLang.home,
 										iconCls : 'main-index',
 										closable : false
