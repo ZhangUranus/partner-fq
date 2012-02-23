@@ -12,7 +12,7 @@ Ext.define('SCM.view.South', {
 							// frame:true,
 							region : 'south',
 							height : 23,
-							items : ["当前用户：", {
+							items : ["您好！", {
 										xtype : 'label',
 										id : 'current-user-label',
 										text : '未登录',
@@ -24,7 +24,7 @@ Ext.define('SCM.view.South', {
 									}, {
 										xtype : 'button',
 										action : 'logout',
-										margin : '0 15 0 0',
+										margin : '0 15 0 15',
 										iconCls : 'system-logout',
 										text : '注销'
 									}, "系统期间：", {

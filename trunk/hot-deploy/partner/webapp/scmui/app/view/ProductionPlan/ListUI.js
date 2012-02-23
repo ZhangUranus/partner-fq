@@ -112,12 +112,11 @@ Ext.define('SCM.view.ProductionPlan.ListUI', {
 																text : '库存数量',
 																width : 100
 															}, {
-																xtype : 'booleancolumn',
+																xtype : 'gridcolumn',
 																dataIndex : 'ISOUT',
-																text : '是否库存不足',
-																trueText: '是',
-													            falseText: '否', 
-																width : 100
+																width : 60,
+																text : '库存情况',
+																renderer: SCM.store.basiccode.warningRenderer
 															}, {
 																xtype : 'numbercolumn',
 																dataIndex : 'PRICE',
