@@ -391,9 +391,9 @@
 		<response name="success" type="none" />
 	</request-map>
 	<!-- 查询物料库存分布情况雷达图 -->
-	<request-map uri="queryMaterialVolumeRadar">
+	<request-map uri="queryMaterialVolumeChart">
 		<security https="false" auth="false" />
-		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="queryMaterialVolumeRadar" />
+		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="queryMaterialVolumeChart" />
 		<response name="success" type="none" />
 	</request-map>
 	
