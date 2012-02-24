@@ -810,11 +810,12 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 			},
 			//调用打印
 			doPrint: function(template,data){
-				var printWin = window.open('', 'printwin');
-				appendData2Win(printWin,data,template.template);
-				printWin.document.close();
-				printWin.print();
-//				printWin.close();
+				if(window.printframe){
+					window.printframe.document.clear();//清除旧打印内容
+					appendData2Win(window.printframe,data,template.template);
+					window.printframe.document.close();
+					window.printframe.print();
+				}
 			}
 
 		})
