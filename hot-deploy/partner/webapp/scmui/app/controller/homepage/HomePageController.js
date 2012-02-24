@@ -1,8 +1,8 @@
 Ext.define('SCM.controller.homepage.HomePageController', {
 			extend : 'Ext.app.Controller',
 			views : ['homepage.ListUI'],
-			stores : ['homepage.HomePageStatusStore', 'homepage.HomePageVolumeDetailStore', 'homepage.HomePageVolumeRadarStore'],
-			models : ['homepage.HomePageStatusModel', 'homepage.HomePageVolumeDetailModel', 'homepage.HomePageVolumeRadarModel'],
+			stores : ['homepage.HomePageStatusStore', 'homepage.HomePageVolumeDetailStore', 'homepage.HomePageVolumeChartStore'],
+			models : ['homepage.HomePageStatusModel', 'homepage.HomePageVolumeDetailModel', 'homepage.HomePageVolumeChartModel'],
 
 			/**
 			 * 初始化controller 增加事件监控
@@ -36,19 +36,6 @@ Ext.define('SCM.controller.homepage.HomePageController', {
 			},
 			
 			/**
-			 * 重写刷新方法
-			 * 
-			 */
-			refreshRecord : function() {
-				this.chartPanel.store.load({
-							scope : this,
-							callback : function(records, operation, success) {
-								this.chartPanel.redraw();
-							}
-						});
-			},
-			
-			/**
 			 * 刷新图形
 			 * @param {} me
 			 * @param {} record
@@ -57,7 +44,12 @@ Ext.define('SCM.controller.homepage.HomePageController', {
 			 */
 			refreshChart : function(me, record, index, eOpts) {
 				this.chartPanel.store.getProxy().extraParams.materialId = record.get("ID");
-				this.refreshRecord();
+				this.chartPanel.store.load({
+							scope : this,
+							callback : function(records, operation, success) {
+								this.chartPanel.redraw();
+							}
+						});
 			},
 			
 			/**

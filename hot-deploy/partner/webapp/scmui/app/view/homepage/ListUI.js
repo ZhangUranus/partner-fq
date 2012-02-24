@@ -11,7 +11,6 @@ Ext.define('SCM.view.homepage.ListUI', {
 			},
 			initComponent : function() {
 				var me = this;
-				var radarStore = Ext.create('HomePageVolumeRadarStore');
 				Ext.applyIf(me, {
 							items : [{
 										xtype : 'panel',
@@ -81,7 +80,7 @@ Ext.define('SCM.view.homepage.ListUI', {
 														xtype : 'chart',
 														animate : true,
 														shadow : true,
-														store : 'homepage.HomePageVolumeRadarStore',
+														store : 'homepage.HomePageVolumeChartStore',
 														legend : {
 															position : 'right'
 														},

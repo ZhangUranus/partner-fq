@@ -894,13 +894,13 @@ public class DataFetchEvents {
 	}
 	
 	/**
-	 * 查询物料库存分布情况雷达图
+	 * 查询物料库存分布情况图形
 	 * @param request
 	 * @param response
 	 * @return
 	 * @throws Exception
 	 */
-	public static String queryMaterialVolumeRadar(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public static String queryMaterialVolumeChart(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String materialString = "";
 		if(request.getParameter("materialId") != null){
 			materialString = "WHERE MATERIAL_ID = '" + request.getParameter("materialId") + "'";
