@@ -3,11 +3,11 @@ Ext.define('SCM.extend.toolbar.BillBaseToolbar', {
 			alias : 'widget.billbasetoolbar',
 			initComponent : function() {
 				var me = this;
-				var tools = [];
 				var today = new Date();
+				var tempTool = new Array();
 				var startDay = new Date(today.getFullYear(), today.getMonth(), 1);
-				// 增加日期条件
-				tools.push([{
+				
+				var tools = [{
 							xtype : 'datefield',
 							name : 'searchStartDate',
 							format : 'Y-m-d',
@@ -53,7 +53,7 @@ Ext.define('SCM.extend.toolbar.BillBaseToolbar', {
 											hideable : false
 										}]
 							}
-						}]);
+						}];
 
 				// 增加供应商/车间/加工商/客户等条件
 				if (me.custType) {
@@ -78,7 +78,7 @@ Ext.define('SCM.extend.toolbar.BillBaseToolbar', {
 						custStore = Ext.create('CustomerStore');
 					}
 
-					tools.push([{
+					tools = tools.concat([{
 								xtype : 'combogrid',
 								name : 'searchCustId',
 								width : 110 + labelWidth,
@@ -108,7 +108,7 @@ Ext.define('SCM.extend.toolbar.BillBaseToolbar', {
 				}
 
 				// 增加基础按钮
-				tools.push([{
+				tools = tools.concat([{
 							text : '查询',
 							iconCls : 'system-search',
 							action : 'search'
@@ -125,10 +125,10 @@ Ext.define('SCM.extend.toolbar.BillBaseToolbar', {
 							iconCls : 'system-delete',
 							action : 'delete'
 						}]);
-
+				
 				// 增加审核按钮
 				if (me.audit) {
-					tools.push([{
+					tools = tools.concat([{
 								text : '审核',
 								iconCls : 'system-audit',
 								action : 'audit'
@@ -141,7 +141,7 @@ Ext.define('SCM.extend.toolbar.BillBaseToolbar', {
 				
 				// 增加提交按钮
 				if(me.submit){
-					tools.push([{
+					tools = tools.concat([{
 								text : '提交',
 								iconCls : 'system-submit',
 								action : 'submit'
@@ -153,7 +153,7 @@ Ext.define('SCM.extend.toolbar.BillBaseToolbar', {
 				}
 
 				// 增加打印按钮
-				tools.push([{
+					tools = tools.concat([{
 							text : '导出',
 							iconCls : 'system-export',
 							action : 'export'

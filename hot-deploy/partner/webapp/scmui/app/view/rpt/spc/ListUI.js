@@ -5,8 +5,6 @@ Ext.define('SCM.view.rpt.spc.ListUI', {
 			extend : 'Ext.container.Container',
 			alias : 'widget.semiproductcostreport',
 			title : '黑坯材料耗用表',
-			height : 497,
-			width : 718,
 			layout : {
 				type : 'border'
 			},

@@ -16,6 +16,11 @@ Ext.define('SCM.model.system.SystemUserModel', {
 					}, {
 						name : 'name',
 						type : 'string'
-					}
-					]
-});
+					}],
+			proxy : {
+				type : 'jsonajax',
+				api : {
+					read: '../../scm/control/requestJsonData?entity=SystemUser'
+				}
+			}
+		});

@@ -7,8 +7,6 @@ Ext.define('SCM.view.WorkshopReturnProduct.ListUI', {
 			requires : ['SCM.extend.toolbar.BillBaseToolbar'],
 			alias : 'widget.WorkshopReturnProductlist',
 			title : '制造退货单查询',
-			height : 497,
-			width : 718,
 			layout : {
 				type : 'border'
 			},

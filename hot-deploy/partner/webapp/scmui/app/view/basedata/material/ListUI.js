@@ -6,8 +6,6 @@ Ext.define('SCM.view.basedata.material.ListUI', {
 			requires : ['SCM.extend.toolbar.BaseToolbar'],
 			alias : 'widget.materialinfomaintaince',
 			title : '物料',
-			height : 497,
-			width : 718,
 			layout : {
 				type : 'border'
 			},
