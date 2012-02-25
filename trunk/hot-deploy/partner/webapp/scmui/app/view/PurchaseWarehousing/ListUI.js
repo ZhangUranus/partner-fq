@@ -7,8 +7,6 @@ Ext.define('SCM.view.PurchaseWarehousing.ListUI', {
 			requires : ['SCM.extend.toolbar.BillBaseToolbar'],
 			alias : 'widget.PurchaseWarehousinglist',
 			title : '采购入库单查询',
-			height : 497,
-			width : 718,
 			layout : {
 				type : 'border'
 			},

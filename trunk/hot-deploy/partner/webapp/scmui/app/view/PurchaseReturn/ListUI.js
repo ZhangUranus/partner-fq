@@ -7,8 +7,6 @@ Ext.define('SCM.view.PurchaseReturn.ListUI', {
 			requires : ['SCM.extend.toolbar.BillBaseToolbar'],
 			alias : 'widget.PurchaseReturnlist',
 			title : '采购退货单查询',
-			height : 497,
-			width : 718,
 			layout : {
 				type : 'border'
 			},

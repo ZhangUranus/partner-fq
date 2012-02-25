@@ -6,8 +6,6 @@ Ext.define('SCM.view.basedata.department.ListUI', {
 			requires : ['SCM.extend.toolbar.BaseToolbar'],
 			alias : 'widget.departmentinfomaintaince',
 			title : '部门',
-			height : 371,
-			width : 540,
 			layout : {
 				type : 'border'
 			},
