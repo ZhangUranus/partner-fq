@@ -10,7 +10,7 @@ Ext.define('SCM.ux.combobox.ComboGrid', {
 			queryMode : 'remote',
 			minChars : 1,
 			typeAhead : true,
-			autoSelect : false,//暂时没有实现自动选中功能该值不允许为true;
+			autoSelect : true,//暂时没有实现自动选中功能该值不允许为true;
 
 			/**
 			 * @private

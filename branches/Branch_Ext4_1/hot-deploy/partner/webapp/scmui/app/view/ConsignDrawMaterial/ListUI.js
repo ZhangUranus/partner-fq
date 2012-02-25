@@ -6,8 +6,6 @@ Ext.define('SCM.view.ConsignDrawMaterial.ListUI', {
 			requires : ['SCM.extend.toolbar.BillBaseToolbar'],
 			alias : 'widget.ConsignDrawMateriallist',
 			title : '委外领料单查询',
-			height : 497,
-			width : 718,
 			layout : {
 				type : 'border'
 			},

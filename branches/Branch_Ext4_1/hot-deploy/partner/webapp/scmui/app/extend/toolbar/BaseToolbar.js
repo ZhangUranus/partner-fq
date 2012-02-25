@@ -13,6 +13,7 @@ Ext.define('SCM.extend.toolbar.BaseToolbar', {
 							items : [{
 										xtype : 'textfield',
 										name : 'keyWord',
+										minWidth : 120,
 										emptyText : '请输入查询关键字'
 									}, {
 										text : '查询',

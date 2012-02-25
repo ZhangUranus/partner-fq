@@ -18,13 +18,6 @@ Ext.define('SCM.view.WorkshopReturnProduct.EditUI', {
 				var cellEditing = Ext.create('Ext.grid.plugin.CellEditing', {
 							clicksToEdit : 1
 						});
-				var entryStore = Ext.create('WorkshopReturnProductEditEntryStore');
-				var materialBomStore = Ext.create('MaterialBomEditStore');
-				materialBomStore.load();
-				var unitStore = Ext.create('UnitStore');
-				unitStore.load();
-				var warehouseStore = Ext.create('WarehouseStore');
-				warehouseStore.load();
 				Ext.applyIf(me, {
 							items : [{
 										xtype : 'form',
@@ -190,7 +183,7 @@ Ext.define('SCM.view.WorkshopReturnProduct.EditUI', {
 													xtype : 'gridpanel',
 													id : 'WorkshopReturnProduct-edit-grid',
 													region : 'center',
-													store : entryStore,
+													store : Ext.create('WorkshopReturnProductEditEntryStore'),
 													columns : [{
 																xtype : 'gridcolumn',
 																dataIndex : 'id',
@@ -210,7 +203,7 @@ Ext.define('SCM.view.WorkshopReturnProduct.EditUI', {
 																	xtype : 'combogrid',
 																	valueField : 'id',
 																	displayField : 'name',
-																	store : warehouseStore,
+																	store : Ext.create('WarehouseStore'),
 																	matchFieldWidth : false,
 																	listConfig : {
 																		width : SCM.MaxSize.COMBOGRID_WIDTH,
@@ -237,7 +230,7 @@ Ext.define('SCM.view.WorkshopReturnProduct.EditUI', {
 																	xtype : 'combogrid',
 																	valueField : 'materialId',
 																	displayField : 'materialName',
-																	store : materialBomStore,
+																	store : Ext.create('MaterialBomEditStore'),
 																	matchFieldWidth : false,
 																	listConfig : {
 																		width : SCM.MaxSize.COMBOGRID_WIDTH,
@@ -283,7 +276,7 @@ Ext.define('SCM.view.WorkshopReturnProduct.EditUI', {
 																	xtype : 'combobox',
 																	valueField : 'id',
 																	displayField : 'name',
-																	store : unitStore,
+																	store : Ext.create('UnitStore'),
 																	readOnly : true
 																},
 																width : 80

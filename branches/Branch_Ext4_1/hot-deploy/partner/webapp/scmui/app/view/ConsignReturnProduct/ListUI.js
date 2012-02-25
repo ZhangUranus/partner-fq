@@ -6,8 +6,6 @@ Ext.define('SCM.view.ConsignReturnProduct.ListUI', {
 			requires : ['SCM.extend.toolbar.BillBaseToolbar'],
 			alias : 'widget.ConsignReturnProductlist',
 			title : '委外退货单查询',
-			height : 497,
-			width : 718,
 			layout : {
 				type : 'border'
 			},
