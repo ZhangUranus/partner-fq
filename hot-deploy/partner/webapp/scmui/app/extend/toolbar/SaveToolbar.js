@@ -3,10 +3,10 @@ Ext.define('SCM.extend.toolbar.SaveToolbar', {
 			alias : 'widget.savetoolbar',
 			initComponent : function() {
 				var me = this;
-				var tools = [];
-				tools.push(['->']);
+				var tools = new Array();
+				tools = tools.concat(['->']);
 				if (me.type == 'bill') {
-					tools.push([{
+					tools = tools.concat([{
 								text : '验收',
 								iconCls : 'system-submit',
 								hidden : true,
@@ -17,13 +17,13 @@ Ext.define('SCM.extend.toolbar.SaveToolbar', {
 								action : 'submit'
 							}]);
 				}
-				tools.push([{
+				tools = tools.concat([{
 							text : '保存',
 							iconCls : 'system-save',
 							action : 'save'
 						}]);
 				if (me.type != 'simple') {
-					tools.push([{
+					tools = tools.concat([{
 								text : '重填',
 								iconCls : 'system-clear',
 								action : 'clear'
@@ -34,7 +34,7 @@ Ext.define('SCM.extend.toolbar.SaveToolbar', {
 								action : 'print'
 							}]);
 				}
-				tools.push([{
+				tools = tools.concat([{
 							text : '取消',
 							iconCls : 'system-delete',
 							action : 'cancel'

@@ -11,14 +11,6 @@ Ext.define('SCM.view.ProductionPlan.ListUI', {
 			},
 			initComponent : function() {
 				var me = this;
-				var materialStore = Ext.create('MaterialStore');
-				materialStore.load();
-				var materialBomStore = Ext.create('MaterialBomEditStore');
-				materialBomStore.load();
-				var unitStore = Ext.create('UnitStore');
-				unitStore.load();
-				var warehouseStore = Ext.create('WarehouseStore');
-				warehouseStore.load();
 				Ext.applyIf(me, {
 							items : [{
 										xtype : 'form',
@@ -40,7 +32,7 @@ Ext.define('SCM.view.ProductionPlan.ListUI', {
 																name : 'processedMaterialId',
 																valueField : 'materialId',
 																displayField : 'materialName',
-																store : materialBomStore,
+																store : Ext.create('MaterialBomEditStore'),
 																margin : 5,
 																matchFieldWidth : false,
 																allowBlank : false,

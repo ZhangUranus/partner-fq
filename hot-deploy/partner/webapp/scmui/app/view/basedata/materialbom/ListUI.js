@@ -7,8 +7,6 @@ Ext.define('SCM.view.basedata.materialbom.ListUI', {
 			alias : 'widget.bombillinfomaintaince',
 			title : '物料BOM',
 			store : 'basedata.MaterialBomStore',
-			height : 497,
-			width : 718,
 
 			initComponent : function() {
 				var me = this;

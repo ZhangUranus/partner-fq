@@ -5,8 +5,6 @@ Ext.define('SCM.view.rpt.pkm.ListUI', {
 			extend : 'Ext.container.Container',
 			alias : 'widget.packingmaterialreport',
 			title : '安装包装材料表',
-			height : 497,
-			width : 718,
 			layout : {
 				type : 'border'
 			},

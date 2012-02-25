@@ -6,8 +6,6 @@ Ext.define('SCM.view.WorkshopWarehousing.ListUI', {
 			requires : ['SCM.extend.toolbar.BillBaseToolbar'],
 			alias : 'widget.WorkshopWarehousinglist',
 			title : '制造入库单查询',
-			height : 497,
-			width : 718,
 			layout : {
 				type : 'border'
 			},
