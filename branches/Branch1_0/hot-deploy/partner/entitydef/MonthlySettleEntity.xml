@@ -1,0 +1,234 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements. See the NOTICE file distributed with this work for additional information regarding copyright ownership. 
+	The ASF licenses this file to you under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 
+	Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+	See the License for the specific language governing permissions and limitations under the License. -->
+<entitymodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/entitymodel.xsd">
+	<!-- ========================================================= -->
+	<!-- ======================== Defaults ======================= -->
+	<!-- ========================================================= -->
+	<title>Entity of monthly settle module of  partner scm </title>
+	<description>None</description>
+	<copyright>Copyright 2011-2012 The Partner</copyright>
+	<author></author>
+	<version>1.0</version>
+	<!-- 系统参数表 -->
+	<entity entity-name="PriceMgrParamters" package-name="org.ofbiz.scm.pricemgr" title="PriceMgrParamters Entity">
+		<field name="id" type="id-long"></field>
+		<field name="number" type="name"></field>
+		<field name="name" type="name"></field>
+		<field name="value" type="value"></field>
+		<field name="note" type="value"></field>
+		<prim-key field="id" />
+	</entity>
+	<!-- 历史存货余额表 -->
+	<entity entity-name="HisMaterialBalance" package-name="org.ofbiz.scm.pricemgr" title="HisMaterialBalance Entity">
+		<field name="year" type="int"></field>
+		<field name="month" type="int"></field>
+		<field name="warehouseId" type="id-long"></field>
+		<field name="materialId" type="id-long"></field>
+		<field name="beginvolume" type="fixed-point"></field>
+		<field name="beginsum" type="fixed-point"></field>
+		<field name="inVolume" type="fixed-point"></field>
+		<field name="inSum" type="fixed-point"></field>
+		<field name="outVolume" type="fixed-point"></field>
+		<field name="outSum" type="fixed-point"></field>
+		<field name="volume" type="fixed-point"></field>
+		<field name="totalSum" type="fixed-point"></field>
+		<prim-key field="year" />
+		<prim-key field="month" />
+		<prim-key field="warehouseId" />
+		<prim-key field="materialId" />
+	</entity>
+	<!-- 当前存货余额表 -->
+	<entity entity-name="CurMaterialBalance" package-name="org.ofbiz.scm.pricemgr" title="CurMaterialBalance Entity">
+		<field name="year" type="int"></field>
+		<field name="month" type="int"></field>
+		<field name="warehouseId" type="id-long"></field>
+		<field name="materialId" type="id-long"></field>
+		<field name="beginvolume" type="fixed-point"></field>
+		<field name="beginsum" type="fixed-point"></field>
+		<field name="inVolume" type="fixed-point"></field>
+		<field name="inSum" type="fixed-point"></field>
+		<field name="outVolume" type="fixed-point"></field>
+		<field name="outSum" type="fixed-point"></field>
+		<field name="volume" type="fixed-point"></field>
+		<field name="totalSum" type="fixed-point"></field>
+		<prim-key field="year" />
+		<prim-key field="month" />
+		<prim-key field="warehouseId" />
+		<prim-key field="materialId" />
+	</entity>
+	<!-- 历史委外入库退料，加工商、物料加权单价表 -->
+	<entity entity-name="HisConsignPrice" package-name="org.ofbiz.scm.pricemgr" title="ConsignPrice Entity">
+		<field name="year" type="int"></field>
+		<field name="month" type="int"></field>
+		<field name="supplierId" type="id-long"></field>
+		<field name="materialId" type="id-long"></field>
+		<field name="beginvolume" type="fixed-point"></field>
+		<field name="beginsum" type="fixed-point"></field>
+		<field name="volume" type="fixed-point"></field>
+		<field name="totalsum" type="fixed-point"></field>
+		<prim-key field="year" />
+		<prim-key field="month" />
+		<prim-key field="supplierId" />
+		<prim-key field="materialId" />
+	</entity>
+	<!-- 当期委外入库退料，加工商、物料加权单价表 -->
+	<entity entity-name="CurConsignPrice" package-name="org.ofbiz.scm.pricemgr" title="ConsignPrice Entity">
+		<field name="year" type="int"></field>
+		<field name="month" type="int"></field>
+		<field name="supplierId" type="id-long"></field>
+		<field name="materialId" type="id-long"></field>
+		<field name="beginvolume" type="fixed-point"></field>
+		<field name="beginsum" type="fixed-point"></field>
+		<field name="volume" type="fixed-point"></field>
+		<field name="totalsum" type="fixed-point"></field>
+		<prim-key field="year" />
+		<prim-key field="month" />
+		<prim-key field="supplierId" />
+		<prim-key field="materialId" />
+	</entity>
+	<!-- 历史发外加工对数表 -->
+	<entity entity-name="HisConsignProcessedPrice" package-name="org.ofbiz.scm.pricemgr" title="HisConsignProcessedPrice Entity">
+		<field name="year" type="int"></field>
+		<field name="month" type="int"></field>
+		<field name="supplierId" type="id-long"></field>
+		<field name="materialId" type="id-long"></field>
+		<field name="beginvolume" type="fixed-point"></field>
+		<field name="outVolume" type="fixed-point"></field><!--发出数量 -->
+		<field name="inVolume" type="fixed-point"></field><!--收入数量 -->
+		<field name="inSum" type="fixed-point"></field><!--收入金额（加工单价*收入数量） -->
+		<field name="volume" type="fixed-point"></field>
+		<prim-key field="year" />
+		<prim-key field="month" />
+		<prim-key field="supplierId" />
+		<prim-key field="materialId" />
+	</entity>
+	<!-- 当期发外加工对数表 -->
+	<entity entity-name="CurConsignProcessedPrice" package-name="org.ofbiz.scm.pricemgr" title="CurConsignProcessedPrice Entity">
+		<field name="year" type="int"></field>
+		<field name="month" type="int"></field>
+		<field name="supplierId" type="id-long"></field>
+		<field name="materialId" type="id-long"></field>
+		<field name="beginvolume" type="fixed-point"></field>
+		<field name="outVolume" type="fixed-point"></field><!--发出数量 -->
+		<field name="inVolume" type="fixed-point"></field><!--收入数量 -->
+		<field name="inSum" type="fixed-point"></field><!--收入金额（加工单价*收入数量） -->
+		<field name="volume" type="fixed-point"></field>
+		<prim-key field="year" />
+		<prim-key field="month" />
+		<prim-key field="supplierId" />
+		<prim-key field="materialId" />
+	</entity>
+	<!-- 委外入库退料，关联物料明细单价表 -->
+	<entity entity-name="ConsignPriceDetail" package-name="org.ofbiz.scm.pricemgr" title="ConsignPriceDetail Entity">
+		<field name="parentId" type="id-long"></field>
+		<field name="materialId" type="id-long"></field>
+		<field name="volume" type="fixed-point"></field>
+		<field name="price" type="fixed-point"></field>
+		<prim-key field="parentId" />
+		<prim-key field="materialId" />
+	</entity>
+	<view-entity entity-name="ConsignPriceDetailView" package-name="org.ofbiz.scm.pricemgr" title="ConsignPriceDetailView Entity">
+		<member-entity entity-alias="ConsignPriceDetailV" entity-name="ConsignPriceDetail"></member-entity>
+		<member-entity entity-alias="TMaterialV" entity-name="TMaterial"></member-entity>
+		<alias-all entity-alias="ConsignPriceDetailV"></alias-all>
+		<alias name="entrysum">
+			<complex-alias operator="*">
+				<complex-alias-field entity-alias="ConsignPriceDetailV" field="volume" />
+				<complex-alias-field entity-alias="ConsignPriceDetailV" field="price" />
+			</complex-alias>
+		</alias>
+		<alias name="materialModel" entity-alias="TMaterialV" field="model"></alias>
+		<alias name="materialUnitId" entity-alias="TMaterialV" field="defaultUnitId"></alias>
+		<view-link entity-alias="ConsignPriceDetailV" rel-entity-alias="TMaterialV" rel-optional="true">
+			<key-map field-name="materialId" rel-field-name="id" />
+		</view-link>
+	</view-entity>
+	<!-- 历史车间入库退料，车间、物料加权单价表 -->
+	<entity entity-name="HisWorkshopPrice" package-name="org.ofbiz.scm.pricemgr" title="WorkshopPrice Entity">
+		<field name="year" type="int"></field>
+		<field name="month" type="int"></field>
+		<field name="workshopId" type="id-long"></field>
+		<field name="materialId" type="id-long"></field>
+		<field name="beginvolume" type="fixed-point"></field>
+		<field name="beginsum" type="fixed-point"></field>
+		<field name="volume" type="fixed-point"></field>
+		<field name="totalsum" type="fixed-point"></field>
+		<prim-key field="year" />
+		<prim-key field="month" />
+		<prim-key field="workshopId" />
+		<prim-key field="materialId" />
+	</entity>
+	<!-- 当期车间入库退料，车间、物料加权单价表 -->
+	<entity entity-name="CurWorkshopPrice" package-name="org.ofbiz.scm.pricemgr" title="WorkshopPrice Entity">
+		<field name="year" type="int"></field>
+		<field name="month" type="int"></field>
+		<field name="workshopId" type="id-long"></field>
+		<field name="materialId" type="id-long"></field>
+		<field name="beginvolume" type="fixed-point"></field>
+		<field name="beginsum" type="fixed-point"></field>
+		<field name="volume" type="fixed-point"></field>
+		<field name="totalsum" type="fixed-point"></field>
+		<prim-key field="year" />
+		<prim-key field="month" />
+		<prim-key field="workshopId" />
+		<prim-key field="materialId" />
+	</entity>
+	<!-- 车间入库退料，关联物料明细单价表 -->
+	<entity entity-name="WorkshopPriceDetail" package-name="org.ofbiz.scm.pricemgr" title="WorkshopPriceDetail Entity">
+		<field name="parentId" type="id-long"></field>
+		<field name="materialId" type="id-long"></field>
+		<field name="volume" type="fixed-point"></field>
+		<field name="price" type="fixed-point"></field>
+		<prim-key field="parentId" />
+		<prim-key field="materialId" />
+	</entity>
+	<view-entity entity-name="WorkshopPriceDetailView" package-name="org.ofbiz.scm.pricemgr" title="WorkshopPriceDetailView Entity">
+		<member-entity entity-alias="WorkshopPriceDetailV" entity-name="WorkshopPriceDetail"></member-entity>
+		<member-entity entity-alias="TMaterialV" entity-name="TMaterial"></member-entity>
+		<alias-all entity-alias="WorkshopPriceDetailV"></alias-all>
+		<alias name="entrysum">
+			<complex-alias operator="*">
+				<complex-alias-field entity-alias="WorkshopPriceDetailV" field="volume" />
+				<complex-alias-field entity-alias="WorkshopPriceDetailV" field="price" />
+			</complex-alias>
+		</alias>
+		<alias name="materialModel" entity-alias="TMaterialV" field="model"></alias>
+		<alias name="materialUnitId" entity-alias="TMaterialV" field="defaultUnitId"></alias>
+		<view-link entity-alias="WorkshopPriceDetailV" rel-entity-alias="TMaterialV" rel-optional="true">
+			<key-map field-name="materialId" rel-field-name="id" />
+		</view-link>
+	</view-entity>
+	<!-- 历史成品出库退货，客户、物料加权单价表 -->
+	<entity entity-name="HisProductPrice" package-name="org.ofbiz.scm.pricemgr" title="ConsignPrice Entity">
+		<field name="year" type="int"></field>
+		<field name="month" type="int"></field>
+		<field name="customerId" type="id-long"></field>
+		<field name="materialId" type="id-long"></field>
+		<field name="beginvolume" type="fixed-point"></field>
+		<field name="beginsum" type="fixed-point"></field>
+		<field name="volume" type="fixed-point"></field>
+		<field name="totalsum" type="fixed-point"></field>
+		<prim-key field="year" />
+		<prim-key field="month" />
+		<prim-key field="customerId" />
+		<prim-key field="materialId" />
+	</entity>
+	<!-- 当期成品出库退货，客户、物料加权单价表 -->
+	<entity entity-name="CurProductPrice" package-name="org.ofbiz.scm.pricemgr" title="ConsignPrice Entity">
+		<field name="year" type="int"></field>
+		<field name="month" type="int"></field>
+		<field name="customerId" type="id-long"></field>
+		<field name="materialId" type="id-long"></field>
+		<field name="beginvolume" type="fixed-point"></field>
+		<field name="beginsum" type="fixed-point"></field>
+		<field name="volume" type="fixed-point"></field>
+		<field name="totalsum" type="fixed-point"></field>
+		<prim-key field="year" />
+		<prim-key field="month" />
+		<prim-key field="customerId" />
+		<prim-key field="materialId" />
+	</entity>
+</entitymodel>

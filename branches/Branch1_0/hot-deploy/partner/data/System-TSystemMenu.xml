@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements. See the NOTICE file distributed with this work for additional information regarding copyright ownership. The ASF licenses this file to you under the Apache License, Version 2.0 (the "License"); you 
+	may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
+	OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. -->
+<entity-engine-xml>
+	<TSystemMenu menuId='warehouseManagement' menuName='仓库管理' menuType='0' parentId='-1' sort='1' hyperlink='' styleName='warehouse-management' display='1' description='仓库管理' />
+	<TSystemMenu menuId='purchaseManagement' menuName='采购管理' menuType='0' parentId='warehouseManagement' sort='11' hyperlink='' styleName='purchase-management' display='1' description='采购管理' />
+	<TSystemMenu menuId='purchaseBillManagement' menuName='采购单管理' menuType='1' parentId='purchaseManagement' sort='111' hyperlink='PurchaseBilllist' styleName='purchase-bill-management' display='1' description='采购单管理' />
+	<TSystemMenu menuId='purchaseWarehousing' menuName='采购入库' menuType='1' parentId='purchaseManagement' sort='112' hyperlink='PurchaseWarehousinglist' styleName='purchase-warehousing' display='1' description='采购入库' />
+	<TSystemMenu menuId='purchaseReturn' menuName='采购退货' menuType='1' parentId='purchaseManagement' sort='113' hyperlink='PurchaseReturnlist' styleName='purchase-return' display='1' description='采购退货' />
+	<TSystemMenu menuId='consignProcess' menuName='委外加工' menuType='0' parentId='warehouseManagement' sort='12' hyperlink='' styleName='consign-process' display='1' description='委外加工' />
+	<TSystemMenu menuId='consignDrawMaterial' menuName='委外领料' menuType='1' parentId='consignProcess' sort='121' hyperlink='ConsignDrawMateriallist' styleName='consign-draw-material' display='1' description='委外领料' />
+	<TSystemMenu menuId='consignReturnMaterial' menuName='委外退料' menuType='1' parentId='consignProcess' sort='122' hyperlink='ConsignReturnMateriallist' styleName='consign-return-material' display='1' description='委外退料' />
+	<TSystemMenu menuId='consignWarehousing' menuName='委外入库' menuType='1' parentId='consignProcess' sort='123' hyperlink='ConsignWarehousinglist' styleName='consign-warehousing' display='1' description='委外入库' />
+	<TSystemMenu menuId='consignReturnProduct' menuName='委外退货' menuType='1' parentId='consignProcess' sort='124' hyperlink='ConsignReturnProductlist' styleName='consign-return-product' display='1' description='委外退货' />
+	<TSystemMenu menuId='workshopManufacture' menuName='车间制造' menuType='0' parentId='warehouseManagement' sort='13' hyperlink='' styleName='workshop-manufacture' display='1' description='车间制造' />
+	<TSystemMenu menuId='workshopDrawMaterial' menuName='制造领料' menuType='1' parentId='workshopManufacture' sort='131' hyperlink='WorkshopDrawMateriallist' styleName='workshop-draw-material' display='1' description='制造领料' />
+	<TSystemMenu menuId='workshopReturnMaterial' menuName='制造退料' menuType='1' parentId='workshopManufacture' sort='132' hyperlink='WorkshopReturnMateriallist' styleName='workshop-return-material' display='1' description='制造退料' />
+	<TSystemMenu menuId='workshopWarehousing' menuName='制造入库' menuType='1' parentId='workshopManufacture' sort='133' hyperlink='WorkshopWarehousinglist' styleName='workshop-warehousing' display='1' description='制造入库' />
+	<TSystemMenu menuId='workshopReturnProduct' menuName='制造退货' menuType='1' parentId='workshopManufacture' sort='134' hyperlink='WorkshopReturnProductlist' styleName='workshop-return-product' display='1' description='制造退货' />
+	<TSystemMenu menuId='productionPlan' menuName='生产计划' menuType='1' parentId='workshopManufacture' sort='135' hyperlink='productionplan' styleName='production-plan' display='1' description='生产计划' />
+	<TSystemMenu menuId='analyticStatistics' menuName='分析统计' menuType='0' parentId='warehouseManagement' sort='14' hyperlink='' styleName='analytic-statistics' display='1' description='分析统计' />
+	<TSystemMenu menuId='stockDetail' menuName='库存情况' menuType='1' parentId='analyticStatistics' sort='141' hyperlink='stockdetail' styleName='stock-detail' display='1' description='库存情况' />
+	<TSystemMenu menuId='semiProductCostReport' menuName='黑坯材料耗用表' menuType='1' parentId='analyticStatistics' sort='142' hyperlink='semiproductcostreport' styleName='semi-product-cost-report' display='1' description='黑胚材料耗用表' />
+	<TSystemMenu menuId='consignProcessMatchingReport' menuName='发外加工对数表' menuType='1' parentId='analyticStatistics' sort='143' hyperlink='consignprocessmatchingreport' styleName='consign-process-matching-report' display='1' description='发外加工对数表' />
+	<TSystemMenu menuId='packingMaterialReport' menuName='安装包装材料表' menuType='1' parentId='analyticStatistics' sort='144' hyperlink='packingmaterialreport' styleName='packing-material-report' display='1' description='安装包装材料表' />
+	<TSystemMenu menuId='productReport' menuName='成品报表' menuType='1' parentId='analyticStatistics' sort='145' hyperlink='productreport' styleName='product-report' display='1' description='成品报表' />
+	<TSystemMenu menuId='systemManagement' menuName='系统管理' menuType='0' parentId='-1' sort='2' hyperlink='' styleName='system-management' display='1' description='系统管理模块' />
+	<TSystemMenu menuId='userManagement' menuName='用户管理' menuType='1' parentId='systemManagement' sort='21' hyperlink='usermanagement' styleName='user-management' display='1' description='用户管理页面' />
+	<TSystemMenu menuId='logManagement' menuName='日志管理' menuType='1' parentId='systemManagement' sort='22' hyperlink='logmanagement' styleName='log-management' display='1' description='日志管理页面' />
+	<TSystemMenu menuId='stockSettle' menuName='存货核算' menuType='1' parentId='systemManagement' sort='23' hyperlink='stockSettle' styleName='stock-settle' display='1' description='角色管理页面' />
+	<TSystemMenu menuId='basicSetting' menuName='基础设置' menuType='0' parentId='-1' sort='3' hyperlink='' styleName='basic-setting' display='1' description='基础设置模块' />
+	<TSystemMenu menuId='basicCodingMaintaince' menuName='基础代码维护' menuType='1' parentId='basicSetting' sort='31' hyperlink='basiccodingmaintaince' styleName='basic-coding-maintaince' display='0' description='基础代码维护模块' />
+	<TSystemMenu menuId='custInfoMaintaince' menuName='客户资料维护' menuType='1' parentId='basicSetting' sort='32' hyperlink='custinfomaintaince' styleName='cust-info-maintaince' display='1' description='客户资料维护页面' />
+	<TSystemMenu menuId='warehouseInfoMaintaince' menuName='仓库资料维护' menuType='1' parentId='basicSetting' sort='33' hyperlink='warehouseinfomaintaince' styleName='warehouse-info-maintaince' display='1' description='仓库资料维护页面' />
+	<TSystemMenu menuId='materialInfoMaintaince' menuName='料品资料维护' menuType='1' parentId='basicSetting' sort='34' hyperlink='materialinfomaintaince' styleName='material-info-maintaince' display='1' description='料品资料维护页面' />
+	<TSystemMenu menuId='departmentInfoMaintaince' menuName='部门资料维护' menuType='1' parentId='basicSetting' sort='35' hyperlink='departmentinfomaintaince' styleName='department-info-maintaince' display='1' description='部门资料维护页面' />
+	<TSystemMenu menuId='staffInfoMaintaince' menuName='职员资料维护' menuType='1' parentId='basicSetting' sort='36' hyperlink='staffInfomaintaince' styleName='staff-info-maintaince' display='0' description='职员资料维护页面' />
+	<TSystemMenu menuId='BOMBillInfoMaintaince' menuName='BOM单资料维护' menuType='1' parentId='basicSetting' sort='37' hyperlink='bombillinfomaintaince' styleName='BOM-bill-info-maintaince' display='1' description='BOM单资料维护' />
+	<TSystemMenu menuId='UnitMaintaince' menuName='计量单位维护' menuType='1' parentId='basicSetting' sort='38' hyperlink='unitlist' styleName='unit-info-maintaince' display='1' description='计量单位维护' />
+	<TSystemMenu menuId='WarehousetTypeMaintaince' menuName='仓库类型维护' menuType='1' parentId='basicSetting' sort='39' hyperlink='warehousetypelist' styleName='warehouse-type-maintaince' display='1' description='仓库类型维护' />
+	<TSystemMenu menuId='SupplierMaintaince' menuName='供应商资料维护' menuType='1' parentId='basicSetting' sort='40' hyperlink='Supplierlist' styleName='supplier-maintaince' display='1' description='供应商管理' />
+	<TSystemMenu menuId='WorkshopMaintaince' menuName='车间资料维护' menuType='1' parentId='basicSetting' sort='41' hyperlink='workshoplist' styleName='workshop-maintaince' display='1' description='车间管理' />
+</entity-engine-xml>
