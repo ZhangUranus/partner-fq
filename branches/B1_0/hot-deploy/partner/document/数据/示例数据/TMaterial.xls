@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+ <Worksheet ss:Name="Table1">
+  <Table>
+   <Column ss:Index="1" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="2" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="3" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="4" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="6" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="8" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="9" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="10" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="11" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="12" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="13" ss:AutoFitWidth="0" ss:Width="110"/>   <Row>
+    <Cell><Data ss:Type="String">ID</Data></Cell>
+    <Cell><Data ss:Type="String">NUMBER</Data></Cell>
+    <Cell><Data ss:Type="String">NAME</Data></Cell>
+    <Cell><Data ss:Type="String">MODEL</Data></Cell>
+    <Cell><Data ss:Type="String">DEFAULT_PRICE</Data></Cell>
+    <Cell><Data ss:Type="String">DEFAULT_SUPPLIER_ID</Data></Cell>
+    <Cell><Data ss:Type="String">SAFE_STOCK</Data></Cell>
+    <Cell><Data ss:Type="String">DEFAULT_UNIT_ID</Data></Cell>
+    <Cell><Data ss:Type="String">MATERIAL_TYPE_ID</Data></Cell>
+    <Cell><Data ss:Type="String">LAST_UPDATED_STAMP</Data></Cell>
+    <Cell><Data ss:Type="String">LAST_UPDATED_TX_STAMP</Data></Cell>
+    <Cell><Data ss:Type="String">CREATED_STAMP</Data></Cell>
+    <Cell><Data ss:Type="String">CREATED_TX_STAMP</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">1fb8187a-3018-41df-82ea-bdc43574e0fd</Data></Cell>
+    <Cell><Data ss:Type="String">MT100009</Data></Cell>
+    <Cell><Data ss:Type="String">桌子（30）</Data></Cell>
+    <Cell><Data ss:Type="String">30张</Data></Cell>
+    <Cell><Data ss:Type="Number">1350.000000</Data></Cell>
+    <Cell><Data ss:Type="String">5ec0c46e-0039-4576-92f1-3dccc3c31a23</Data></Cell>
+    <Cell><Data ss:Type="Number">100.000000</Data></Cell>
+    <Cell><Data ss:Type="String">3963fbe7-152e-4217-b74b-ff322408344d</Data></Cell>
+    <Cell><Data ss:Type="String">3cf72aba-bb0b-4c3a-87dc-fd30d2739fa1</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:33:10</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:33:10</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:33:10</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:33:10</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">301e67c1-a1fb-4b44-957d-75720fa0cc6a</Data></Cell>
+    <Cell><Data ss:Type="String">MT100005</Data></Cell>
+    <Cell><Data ss:Type="String">螺丝</Data></Cell>
+    <Cell><Data ss:Type="String">3MM</Data></Cell>
+    <Cell><Data ss:Type="Number">0.200000</Data></Cell>
+    <Cell><Data ss:Type="String">b576993b-aa4f-4125-bae3-d131d566ec0e</Data></Cell>
+    <Cell><Data ss:Type="Number">100.000000</Data></Cell>
+    <Cell><Data ss:Type="String">9751a815-3906-442d-98a2-1c933b0abef1</Data></Cell>
+    <Cell><Data ss:Type="String">04269554-599b-4d90-9ca6-8e5920b00ad5</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:27:46</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:27:46</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:27:46</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:27:46</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">6ab8ad39-3d27-4f7e-b39b-5b08976d426a</Data></Cell>
+    <Cell><Data ss:Type="String">MT100003</Data></Cell>
+    <Cell><Data ss:Type="String">桌脚（未喷漆）</Data></Cell>
+    <Cell><Data ss:Type="String">0.8M</Data></Cell>
+    <Cell><Data ss:Type="Number">5.000000</Data></Cell>
+    <Cell><Data ss:Type="String">5ec0c46e-0039-4576-92f1-3dccc3c31a23</Data></Cell>
+    <Cell><Data ss:Type="Number">1000.000000</Data></Cell>
+    <Cell><Data ss:Type="String">2849d243-715d-479f-a6d6-60cc4bd5cc5a</Data></Cell>
+    <Cell><Data ss:Type="String">0e6319b4-5391-4c96-aa20-5068a6336500</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:23:32</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:23:32</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:23:32</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:23:32</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">7c679cdf-25df-4084-94c6-fd710490fd10</Data></Cell>
+    <Cell><Data ss:Type="String">MT100008</Data></Cell>
+    <Cell><Data ss:Type="String">桌子</Data></Cell>
+    <Cell><Data ss:Type="String">1张</Data></Cell>
+    <Cell><Data ss:Type="Number">45.000000</Data></Cell>
+    <Cell><Data ss:Type="String">5ec0c46e-0039-4576-92f1-3dccc3c31a23</Data></Cell>
+    <Cell><Data ss:Type="Number">500.000000</Data></Cell>
+    <Cell><Data ss:Type="String">3963fbe7-152e-4217-b74b-ff322408344d</Data></Cell>
+    <Cell><Data ss:Type="String">3cf72aba-bb0b-4c3a-87dc-fd30d2739fa1</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:32:04</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:32:04</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:32:04</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:32:04</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">944bd0c0-d426-44ad-8718-4aa6b9ed8f1c</Data></Cell>
+    <Cell><Data ss:Type="String">MT100007</Data></Cell>
+    <Cell><Data ss:Type="String">桌面</Data></Cell>
+    <Cell><Data ss:Type="String">1.2M</Data></Cell>
+    <Cell><Data ss:Type="Number">22.000000</Data></Cell>
+    <Cell><Data ss:Type="String">5ec0c46e-0039-4576-92f1-3dccc3c31a23</Data></Cell>
+    <Cell><Data ss:Type="Number">1000.000000</Data></Cell>
+    <Cell><Data ss:Type="String">2849d243-715d-479f-a6d6-60cc4bd5cc5a</Data></Cell>
+    <Cell><Data ss:Type="String">4b06b051-02d1-4f43-b7c3-a7a654125f56</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:30:49</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:30:49</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:30:49</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:30:49</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">96b4cd81-8cd3-4c09-adbf-1167b33949f6</Data></Cell>
+    <Cell><Data ss:Type="String">MT100006</Data></Cell>
+    <Cell><Data ss:Type="String">桌脚</Data></Cell>
+    <Cell><Data ss:Type="String">0.8</Data></Cell>
+    <Cell><Data ss:Type="Number">5.500000</Data></Cell>
+    <Cell><Data ss:Type="String">5ec0c46e-0039-4576-92f1-3dccc3c31a23</Data></Cell>
+    <Cell><Data ss:Type="Number">1000.000000</Data></Cell>
+    <Cell><Data ss:Type="String">2849d243-715d-479f-a6d6-60cc4bd5cc5a</Data></Cell>
+    <Cell><Data ss:Type="String">4b06b051-02d1-4f43-b7c3-a7a654125f56</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:30:17</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:30:17</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:30:17</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:30:17</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">98e6948d-8fcf-4c8e-a969-ed700e0103b4</Data></Cell>
+    <Cell><Data ss:Type="String">MT100004</Data></Cell>
+    <Cell><Data ss:Type="String">桌面（未喷漆）</Data></Cell>
+    <Cell><Data ss:Type="String">1.2M</Data></Cell>
+    <Cell><Data ss:Type="Number">20.000000</Data></Cell>
+    <Cell><Data ss:Type="String">5ec0c46e-0039-4576-92f1-3dccc3c31a23</Data></Cell>
+    <Cell><Data ss:Type="Number">1000.000000</Data></Cell>
+    <Cell><Data ss:Type="String">2849d243-715d-479f-a6d6-60cc4bd5cc5a</Data></Cell>
+    <Cell><Data ss:Type="String">0e6319b4-5391-4c96-aa20-5068a6336500</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:24:17</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:24:17</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:24:17</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:24:17</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">a718a7a5-e465-4b82-866e-0faaf44d3043</Data></Cell>
+    <Cell><Data ss:Type="String">MT100001</Data></Cell>
+    <Cell><Data ss:Type="String">木材</Data></Cell>
+    <Cell><Data ss:Type="String">1M</Data></Cell>
+    <Cell><Data ss:Type="Number">1.000000</Data></Cell>
+    <Cell><Data ss:Type="String">95cf10dd-d19e-4881-a55b-7db7c464e87b</Data></Cell>
+    <Cell><Data ss:Type="Number">1000.000000</Data></Cell>
+    <Cell><Data ss:Type="String">9751a815-3906-442d-98a2-1c933b0abef1</Data></Cell>
+    <Cell><Data ss:Type="String">0df0a576-5664-48b9-a62a-ee291b065fe3</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:21:23</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:21:23</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:21:23</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:21:23</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">fa745ff5-f75b-4ceb-8b68-a96b19031dfa</Data></Cell>
+    <Cell><Data ss:Type="String">MT100002</Data></Cell>
+    <Cell><Data ss:Type="String">铁</Data></Cell>
+    <Cell><Data ss:Type="String">1M</Data></Cell>
+    <Cell><Data ss:Type="Number">0.100000</Data></Cell>
+    <Cell><Data ss:Type="String">80e07116-26a9-4ace-b09c-b2b1fd5bdd32</Data></Cell>
+    <Cell><Data ss:Type="Number">1000.000000</Data></Cell>
+    <Cell><Data ss:Type="String">9751a815-3906-442d-98a2-1c933b0abef1</Data></Cell>
+    <Cell><Data ss:Type="String">0df0a576-5664-48b9-a62a-ee291b065fe3</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:22:07</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:22:07</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:22:07</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:22:07</Data></Cell>
+   </Row>
+  </Table>
+ </Worksheet>
+</Workbook>

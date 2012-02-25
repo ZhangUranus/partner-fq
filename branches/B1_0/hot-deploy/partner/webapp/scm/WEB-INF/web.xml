@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web  
+    Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd">
+<web-app>
+	<display-name>SCM</display-name>
+  	<description>SCM Project</description>
+    <context-param>
+         <param-name>entityDelegatorName</param-name>
+         <param-value>default</param-value>
+    </context-param>
+    <context-param>
+         <param-name>localDispatcherName</param-name>
+         <param-value>partner</param-value>
+    </context-param>
+    <filter>
+         <filter-name>ContextFilter</filter-name>
+    <filter-class>org.ofbiz.webapp.control.ContextFilter</filter-class>
+         <init-param>
+             <param-name>allowedPaths</param-name>
+             <param-value>/control:/index.html</param-value>
+         </init-param>
+    </filter>
+    <filter-mapping>
+         <filter-name>ContextFilter</filter-name>
+         <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <servlet>
+         <servlet-name>ControlServlet</servlet-name>
+         <servlet-class>
+             org.ofbiz.webapp.control.ControlServlet
+         </servlet-class>
+    </servlet>
+    <servlet-mapping>
+         <servlet-name>ControlServlet</servlet-name>
+         <url-pattern>/control/*</url-pattern>
+    </servlet-mapping>
+    	<session-config>
+		<session-timeout>30</session-timeout><!-- in minutes -->
+	</session-config>
+</web-app>
