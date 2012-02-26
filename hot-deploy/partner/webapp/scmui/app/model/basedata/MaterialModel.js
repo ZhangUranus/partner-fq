@@ -52,6 +52,9 @@ Ext.define('SCM.model.basedata.MaterialModel', {
 					update : '../../scm/control/updateJsonData?entity=TMaterial',
 					destroy : '../../scm/control/deleteJsonData?entity=TMaterial'
 				},
-				remoteFilter : true
+				remoteFilter : true,
+				extraParams : {
+					queryField : 'number,name'
+				}
 			}
 		});
