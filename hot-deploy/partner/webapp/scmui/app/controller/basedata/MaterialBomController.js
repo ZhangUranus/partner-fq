@@ -107,6 +107,7 @@ Ext.define('SCM.controller.basedata.MaterialBomController', {
 			 */
 			addNewRecord : function(button) {
 				newRecord = Ext.create(this.modelName);// 新增记录
+				newRecord.phantom = true;
 				this.win.uiStatus = 'AddNew';
 				this.editForm.getForm().loadRecord(newRecord);
 				// 清空分录
@@ -229,6 +230,7 @@ Ext.define('SCM.controller.basedata.MaterialBomController', {
 					}
 				} else if (this.win.uiStatus == 'AddNew') {// 新增记录
 					record = Ext.create(this.modelName);
+					record.phantom = true;
 					record.set(values);
 
 					// 新建一个复合model
@@ -275,6 +277,7 @@ Ext.define('SCM.controller.basedata.MaterialBomController', {
 			 */
 			addLine : function(button) {
 				var entryRecord = Ext.create('MaterialBomEditEntryModel');
+				entryRecord.phantom = true;
 				// 设置父id
 				entryRecord.set('parentId', this.editForm.getValues().id);
 				this.editGrid.store.add(entryRecord);
