@@ -102,7 +102,7 @@ Ext.define('SCM.controller.Main', {
 				            }
 				        });
                 	}else{
-                		self.getTabpanel().setActiveTab(record.data.id);
+                		self.getTabpanel().setActiveTab(record.get("id"));
                 	}
                 }
             }

@@ -90,7 +90,7 @@ Ext.define('SCM.controller.basedata.MaterialController', {
 				this.currentRecord = record;
 				this.listPanel.store.load({
 							params : {
-								'whereStr' : 'TMaterialV.material_Type_Id =\'' + record.data.id + '\''
+								'whereStr' : 'TMaterialV.material_Type_Id =\'' + record.get("id") + '\''
 							}
 						});
 			},
@@ -122,6 +122,7 @@ Ext.define('SCM.controller.basedata.MaterialController', {
 			 */
 			addNewRecord : function(button) {
 				newRecord = Ext.create(this.modelName);// 新增记录
+				newRecord.phantom = true;
 				if (this.currentRecord) {
 					newRecord.set('materialTypeId', this.currentRecord.get('id'));
 				}
