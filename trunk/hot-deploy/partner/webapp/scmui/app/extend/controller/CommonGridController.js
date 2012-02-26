@@ -238,6 +238,7 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 			 */
 			addNewRecord : function(button) {
 				newRecord = Ext.create(this.modelName);// 新增记录
+				newRecord.phantom = true;
 				this.getEdit().uiStatus = 'AddNew';
 				this.editForm.getForm().loadRecord(newRecord);
 				this.showEdit();
@@ -300,6 +301,7 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 					record.set(values);
 				} else if (this.win.uiStatus == 'AddNew') {// 新增记录
 					record = Ext.create(this.modelName);
+					record.phantom = true;
 					record.set(values);
 					if (this.listPanel.store.indexOf(this.oldRecord) != -1) {// 避免重复添加
 						this.listPanel.store.remove(this.oldRecord);
