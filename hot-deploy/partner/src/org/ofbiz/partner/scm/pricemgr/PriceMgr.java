@@ -12,7 +12,6 @@ import org.ofbiz.entity.GenericValue;
  *
  */
 public class PriceMgr {
-	private static final String module=org.ofbiz.partner.scm.pricemgr.PriceMgr.class.getName();
 	private int year ,month ;//当期年月
 	private IPriceCal priceCal;
 	//单实例模式
