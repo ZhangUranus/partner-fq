@@ -37,32 +37,32 @@ SCM.store.basiccode.validRenderer = function(value) {
 SCM.store.basiccode.billStatusStore = new Ext.data.Store({
 			fields : ['id', 'name'],
 			data : [{
-						'id' : '0',
+						'id' : 0,
 						'name' : '保存'
 					}, {
-						'id' : '1',
+						'id' : 1,
 						'name' : '已审核'
 					}, {
-						'id' : '2',
+						'id' : 2,
 						'name' : '审核不通过'
 					}, {
-						'id' : '3',
+						'id' : 3,
 						'name' : '已结算'
 					}, {
-						'id' : '4',
+						'id' : 4,
 						'name' : '已提交'
 					}]
 		});
 SCM.store.basiccode.billStatusRenderer = function(value) {
-	if (value == '0') {
+	if (value == 0) {
 		return '保存';
-	} else if (value == '1') {
+	} else if (value == 1) {
 		return '已审核';
-	} else if (value == '2') {
+	} else if (value == 2) {
 		return '审核不通过';
-	} else if (value == '3') {
+	} else if (value == 3) {
 		return '已结算';
-	} else if (value == '4') {
+	} else if (value == 4) {
 		return '已提交';
 	}
 
@@ -71,15 +71,15 @@ SCM.store.basiccode.billStatusRenderer = function(value) {
 SCM.store.basiccode.approverStore = new Ext.data.Store({
 			fields : ['id', 'name'],
 			data : [{
-						'id' : '1',
+						'id' : 1,
 						'name' : '通过'
 					}, {
-						'id' : '2',
+						'id' : 2,
 						'name' : '不通过'
 					}]
 		});
 SCM.store.basiccode.approverRenderer = function(value) {
-	if (value == "1") {
+	if (value == 1) {
 		return "通过";
 	} else
 		return "不通过"
@@ -88,22 +88,22 @@ SCM.store.basiccode.approverRenderer = function(value) {
 SCM.store.basiccode.checkStatusStore = new Ext.data.Store({
 			fields : ['id', 'name'],
 			data : [{
-						'id' : '0',
+						'id' : 0,
 						'name' : '未验收'
 					}, {
-						'id' : '1',
+						'id' : 1,
 						'name' : '验收中'
 					}, {
-						'id' : '2',
+						'id' : 2,
 						'name' : '已完成'
 					}]
 		});
 SCM.store.basiccode.checkStatusRenderer = function(value) {
-	if (value == '0') {
+	if (value == 0) {
 		return '未验收';
-	} else if (value == '1') {
+	} else if (value == 1) {
 		return '验收中';
-	} else if (value == '2') {
+	} else if (value == 2) {
 		return '已完成';
 	}
 };
