@@ -23,6 +23,11 @@ public class ConsignReturnProductBizImp implements IBizStock {
 		if (bizDate == null || !Utils.isCurPeriod(bizDate)) {
 			throw new Exception("单据业务日期不在当前系统期间");
 		}
+		// 供应商id
+		String processorId = billValue.getString("processorSupplierId");
+		if (processorId == null || processorId.length() < 1) {
+			throw new Exception("委外退料单加工商为空！！！");
+		}
 
 		// 获取单据id分录条目
 		List<GenericValue> entryList = delegator.findByAnd("ConsignReturnProductEntry", UtilMisc.toMap("parentId", billValue.getString("id")));
@@ -32,18 +37,22 @@ public class ConsignReturnProductBizImp implements IBizStock {
 			String warehouseId = v.getString("warehouseWarehouseId");// 仓库id
 			String materialId = v.getString("materialMaterialId");// 物料id
 			BigDecimal volume = v.getBigDecimal("volume");// 数量
-			if(volume.compareTo(BigDecimal.ZERO)<0){
-				throw new Exception("委外退货数量不能为零，请重新输入！");
+			if (volume.compareTo(BigDecimal.ZERO) <= 0) {
+				throw new Exception("委外退货数量不能小于等于零，请重新输入！");
 			}
 			BigDecimal sum = null;
 			if (isOut) {
+				GenericValue warehouseValue = PriceMgr.getInstance().getCurMaterialBalanceValue(warehouseId, materialId);
+				if (volume.compareTo(warehouseValue.getBigDecimal("volume")) < 0) {
+					throw new Exception("委外退货数量不能大于库存数量，请重新输入！");
+				}
 				BigDecimal price = PriceMgr.getInstance().getPrice(warehouseId, materialId); // 物料单价
 				sum = price.multiply(volume); // 物料金额
 
 				// 返填单价和金额
 				v.set("price", price);
 				v.set("entrysum", sum);
-//				v.set("checkedVolume", BigDecimal.ZERO);//避免结算后变零
+				// v.set("checkedVolume", BigDecimal.ZERO);//避免结算后变零
 				// 将金额加到总金额中
 				totalSum = totalSum.add(sum);
 
