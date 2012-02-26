@@ -313,7 +313,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				var editStore = Ext.create(this.editStoreName);
 				editStore.filter([{
 							property : "id",
-							value : record.data.id
+							value : record.get("id")
 						}]);
 				editStore.load({
 							scope : this,
@@ -324,7 +324,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 								entryStore.clearFilter();
 								entryStore.filter([{
 											property : "parentId",
-											value : records[0].id
+											value : records[0].get("id")
 										}]);// 过滤记录
 								entryStore.load();
 								this.showEdit();
@@ -352,6 +352,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 			addNewRecord : function(button) {
 				this.listPanel.getSelectionModel().deselectAll();
 				var newRecord = Ext.create(this.modelName);// 新增记录
+				newRecord.phantom = true;
 				this.currentRecord = newRecord;
 				this.changeEditStatus(newRecord);
 				this.getEdit().uiStatus = 'AddNew';
@@ -597,6 +598,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 					}
 				} else if (me.win.uiStatus == 'AddNew') {// 新增记录
 					record = Ext.create(me.modelName);
+					record.phantom = true;
 					record.set(values);
 
 					me.commitSave(record, me.editEntry.store);
@@ -695,7 +697,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 			// 新增分录
 			addLine : function(button) {
 				var entryRecord = Ext.create(this.entryModelName);
-
+				entryRecord.phantom = true;
 				// 设置父id
 				entryRecord.set('parentId', this.editForm.getValues().id);
 				this.editEntry.store.add(entryRecord);
@@ -720,7 +722,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 						entryStore.clearFilter(true);
 						entryStore.filter([{
 									property : "parentId",
-									value : record.data.id
+									value : record.get("id")
 								}]);
 						entryStore.load();
 					}
