@@ -26,7 +26,7 @@ public class WorkshopWarehousingBizImp implements IBizStock {
 		}
 		// 供应商id
 		String workshopId = billValue.getString("workshopWorkshopId");
-		if (workshopId == null && workshopId.length() < 1) {
+		if (workshopId == null || workshopId.length() < 1) {
 			throw new Exception("制造入库单车间为空！！！");
 		}
 		// 获取单据id分录条目
@@ -37,8 +37,8 @@ public class WorkshopWarehousingBizImp implements IBizStock {
 			String warehouseId = v.getString("warehouseWarehouseId");// 仓库id
 			String materialId = v.getString("materialMaterialId");// 物料id
 			BigDecimal volume = v.getBigDecimal("volume");// 数量
-			if(volume.compareTo(BigDecimal.ZERO)<0){
-				throw new Exception("制造入库数量不能为零，请重新输入！");
+			if(volume.compareTo(BigDecimal.ZERO)<=0){
+				throw new Exception("制造入库数量不能小于等于零，请重新输入！");
 			}
 			BigDecimal sum = null;
 			if (!isOut) {

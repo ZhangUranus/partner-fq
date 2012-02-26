@@ -82,7 +82,7 @@ public class PurchaseReturnEvents {
 			if (delegator != null && billId != null) {
 				Debug.log("出库单审核:" + billId, module);
 				GenericValue billHead = delegator.findOne("PurchaseReturn", UtilMisc.toMap("id", billId), false);
-				if (billHead == null && billHead.get("bizDate") == null) {
+				if (billHead == null || billHead.get("bizDate") == null) {
 					throw new Exception("can`t find PurchaseReturn bill or bizdate is null");
 				}
 				// 注意不能使用billHead.getDate方法，出产生castException异常
@@ -92,7 +92,7 @@ public class PurchaseReturnEvents {
 				}
 				// 供应商id
 				String supplierId = billHead.getString("supplierSupplierId");
-				if (supplierId == null && supplierId.length() < 1) {
+				if (supplierId == null || supplierId.length() < 1) {
 					throw new Exception("采购退货单供应商为空！！！");
 				}
 				// 获取单据id分录条目
@@ -142,7 +142,7 @@ public class PurchaseReturnEvents {
 			if (delegator != null && billId != null) {
 				Debug.log("出库单撤销:" + billId, module);
 				GenericValue billHead = delegator.findOne("PurchaseReturn", UtilMisc.toMap("id", billId), false);
-				if (billHead == null && billHead.get("bizDate") == null) {
+				if (billHead == null || billHead.get("bizDate") == null) {
 					throw new Exception("can`t find PurchaseReturn bill or bizdate is null");
 				}
 				// 注意不能使用billHead.getDate方法，出产生castException异常
@@ -152,7 +152,7 @@ public class PurchaseReturnEvents {
 				}
 				// 供应商id
 				String supplierId = billHead.getString("supplierSupplierId");
-				if (supplierId == null && supplierId.length() < 1) {
+				if (supplierId == null || supplierId.length() < 1) {
 					throw new Exception("采购退货单供应商为空！！！");
 				}
 

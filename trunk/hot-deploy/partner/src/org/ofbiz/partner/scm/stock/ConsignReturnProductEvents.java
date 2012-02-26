@@ -45,7 +45,7 @@ public class ConsignReturnProductEvents {
 			if (delegator != null && billId != null) {
 				Debug.log("出库单提交:" + billId, module);
 				GenericValue billHead = delegator.findOne("ConsignReturnProduct", UtilMisc.toMap("id", billId), false);
-				if (billHead == null && billHead.get("bizDate") == null) {
+				if (billHead == null || billHead.get("bizDate") == null) {
 					throw new Exception("can`t find ConsignReturnProduct bill or bizdate is null");
 				}
 				
@@ -115,7 +115,7 @@ public class ConsignReturnProductEvents {
 			if (delegator != null && billId != null) {
 				Debug.log("出库单撤销:" + billId, module);
 				GenericValue billHead = delegator.findOne("ConsignReturnProduct", UtilMisc.toMap("id", billId), false);
-				if (billHead == null && billHead.get("bizDate") == null) {
+				if (billHead == null || billHead.get("bizDate") == null) {
 					throw new Exception("can`t find ConsignReturnProduct bill or bizdate is null");
 				}
 

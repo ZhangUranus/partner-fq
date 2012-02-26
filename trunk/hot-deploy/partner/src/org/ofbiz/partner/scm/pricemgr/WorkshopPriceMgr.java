@@ -195,7 +195,7 @@ public class WorkshopPriceMgr {
 	public void update(String workshopId, String materialId, BigDecimal volume, BigDecimal totalsum) throws Exception {
 		synchronized (updateLock) {
 			if (workshopId == null || materialId == null || volume == null || totalsum == null) {
-				throw new Exception("supplierId or materialId or volume or totalsum  is null");
+				throw new Exception("workshopId or materialId or volume or totalsum  is null");
 			}
 			// 查找供应商可入库余额表
 			GenericValue gv = delegator.findOne("CurWorkshopPrice", UtilMisc.toMap("year", new Integer(year), "month", new Integer(month), "workshopId", workshopId, "materialId", materialId), false);
@@ -229,6 +229,25 @@ public class WorkshopPriceMgr {
 				delegator.create(gv);
 			}
 		}
-
+	}
+	
+	/**
+	 * 获取物料库存数量
+	 * @param supplierId
+	 * @param materialId
+	 * @return
+	 * @throws Exception
+	 */
+	public BigDecimal getVolumeOfMaterial(String workshopId, String materialId) throws Exception {
+		if (workshopId == null || materialId == null) {
+			throw new Exception("workshopId or materialId is null");
+		}
+		// 查找供应商可入库余额表
+		GenericValue gv = delegator.findOne("CurWorkshopPrice", UtilMisc.toMap("year", new Integer(year), "month", new Integer(month), "workshopId", workshopId, "materialId", materialId), false);
+		if (gv != null) {
+			return gv.getBigDecimal("volume");
+		}else{
+			return BigDecimal.ZERO;
+		}
 	}
 }
