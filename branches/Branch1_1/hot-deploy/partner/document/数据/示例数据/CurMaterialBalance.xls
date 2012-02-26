@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+ <Worksheet ss:Name="Table1">
+  <Table>
+   <Column ss:Index="3" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="4" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="13" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="14" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="15" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="16" ss:AutoFitWidth="0" ss:Width="110"/>   <Row>
+    <Cell><Data ss:Type="String">YEAR</Data></Cell>
+    <Cell><Data ss:Type="String">MONTH</Data></Cell>
+    <Cell><Data ss:Type="String">WAREHOUSE_ID</Data></Cell>
+    <Cell><Data ss:Type="String">MATERIAL_ID</Data></Cell>
+    <Cell><Data ss:Type="String">BEGINVOLUME</Data></Cell>
+    <Cell><Data ss:Type="String">BEGINSUM</Data></Cell>
+    <Cell><Data ss:Type="String">IN_VOLUME</Data></Cell>
+    <Cell><Data ss:Type="String">IN_SUM</Data></Cell>
+    <Cell><Data ss:Type="String">OUT_VOLUME</Data></Cell>
+    <Cell><Data ss:Type="String">OUT_SUM</Data></Cell>
+    <Cell><Data ss:Type="String">VOLUME</Data></Cell>
+    <Cell><Data ss:Type="String">TOTAL_SUM</Data></Cell>
+    <Cell><Data ss:Type="String">LAST_UPDATED_STAMP</Data></Cell>
+    <Cell><Data ss:Type="String">LAST_UPDATED_TX_STAMP</Data></Cell>
+    <Cell><Data ss:Type="String">CREATED_STAMP</Data></Cell>
+    <Cell><Data ss:Type="String">CREATED_TX_STAMP</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">2012</Data></Cell>
+    <Cell><Data ss:Type="Number">2</Data></Cell>
+    <Cell><Data ss:Type="String">12d05a2b-6a9e-4628-8ec6-346c9627271d</Data></Cell>
+    <Cell><Data ss:Type="String">6ab8ad39-3d27-4f7e-b39b-5b08976d426a</Data></Cell>
+    <Cell><Data ss:Type="Number">1195.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">6013.264600</Data></Cell>
+    <Cell><Data ss:Type="Number">8005.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">34930.760000</Data></Cell>
+    <Cell><Data ss:Type="Number">4000.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">17801.600000</Data></Cell>
+    <Cell><Data ss:Type="Number">5200.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">23142.424600</Data></Cell>
+    <Cell><Data ss:Type="String">2012-02-22 13:04:08</Data></Cell>
+    <Cell><Data ss:Type="String">2012-02-22 13:04:08</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-10 17:13:16</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-10 17:13:16</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">2012</Data></Cell>
+    <Cell><Data ss:Type="Number">2</Data></Cell>
+    <Cell><Data ss:Type="String">12d05a2b-6a9e-4628-8ec6-346c9627271d</Data></Cell>
+    <Cell><Data ss:Type="String">98e6948d-8fcf-4c8e-a969-ed700e0103b4</Data></Cell>
+    <Cell><Data ss:Type="Number">500.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">10560.393000</Data></Cell>
+    <Cell><Data ss:Type="Number">2000.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">38565.200000</Data></Cell>
+    <Cell><Data ss:Type="Number">1000.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">19650.200000</Data></Cell>
+    <Cell><Data ss:Type="Number">1500.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">29475.393000</Data></Cell>
+    <Cell><Data ss:Type="String">2012-02-22 13:04:08</Data></Cell>
+    <Cell><Data ss:Type="String">2012-02-22 13:04:08</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-10 17:18:19</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-10 17:18:19</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">2012</Data></Cell>
+    <Cell><Data ss:Type="Number">2</Data></Cell>
+    <Cell><Data ss:Type="String">7510738c-0e1f-4c88-a675-063774e34298</Data></Cell>
+    <Cell><Data ss:Type="String">fa745ff5-f75b-4ceb-8b68-a96b19031dfa</Data></Cell>
+    <Cell><Data ss:Type="Number">30000.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">3150.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">0.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">0.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">15100.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">1585.500000</Data></Cell>
+    <Cell><Data ss:Type="Number">14900.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">1564.500000</Data></Cell>
+    <Cell><Data ss:Type="String">2012-02-09 10:30:27</Data></Cell>
+    <Cell><Data ss:Type="String">2012-02-09 10:30:27</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 17:02:27</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 17:02:27</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">2012</Data></Cell>
+    <Cell><Data ss:Type="Number">2</Data></Cell>
+    <Cell><Data ss:Type="String">94325f11-78f1-48e6-8e43-e1eca419d007</Data></Cell>
+    <Cell><Data ss:Type="String">1fb8187a-3018-41df-82ea-bdc43574e0fd</Data></Cell>
+    <Cell><Data ss:Type="Number">30.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">34856.760000</Data></Cell>
+    <Cell><Data ss:Type="Number">0.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">0.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">0.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">0.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">30.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">34856.760000</Data></Cell>
+    <Cell><Data ss:Type="String">2012-01-02 22:36:53</Data></Cell>
+    <Cell><Data ss:Type="String">2012-01-02 22:36:52</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-10 17:26:39</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-10 17:26:39</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">2012</Data></Cell>
+    <Cell><Data ss:Type="Number">2</Data></Cell>
+    <Cell><Data ss:Type="String">94325f11-78f1-48e6-8e43-e1eca419d007</Data></Cell>
+    <Cell><Data ss:Type="String">7c679cdf-25df-4084-94c6-fd710490fd10</Data></Cell>
+    <Cell><Data ss:Type="Number">100.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">3917.920000</Data></Cell>
+    <Cell><Data ss:Type="Number">0.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">0.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">0.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">0.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">100.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">3917.920000</Data></Cell>
+    <Cell><Data ss:Type="String">2011-12-02 19:18:59</Data></Cell>
+    <Cell><Data ss:Type="String">2011-12-02 19:18:58</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-10 17:26:43</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-10 17:26:43</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">2012</Data></Cell>
+    <Cell><Data ss:Type="Number">2</Data></Cell>
+    <Cell><Data ss:Type="String">aac20ea1-a726-4673-98e7-56a4545cbc0c</Data></Cell>
+    <Cell><Data ss:Type="String">a718a7a5-e465-4b82-866e-0faaf44d3043</Data></Cell>
+    <Cell><Data ss:Type="Number">10200.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">10199.360000</Data></Cell>
+    <Cell><Data ss:Type="Number">100000.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">95000.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">106600.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">101762.720000</Data></Cell>
+    <Cell><Data ss:Type="Number">3600.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">3436.640000</Data></Cell>
+    <Cell><Data ss:Type="String">2012-02-22 12:59:04</Data></Cell>
+    <Cell><Data ss:Type="String">2012-02-22 12:59:04</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 17:01:56</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 17:01:56</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">2012</Data></Cell>
+    <Cell><Data ss:Type="Number">2</Data></Cell>
+    <Cell><Data ss:Type="String">b6b4e473-8f9f-4108-9450-272acf3d36d1</Data></Cell>
+    <Cell><Data ss:Type="String">1fb8187a-3018-41df-82ea-bdc43574e0fd</Data></Cell>
+    <Cell><Data ss:Type="Number">20.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">23737.560000</Data></Cell>
+    <Cell><Data ss:Type="Number">30.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">34785.270000</Data></Cell>
+    <Cell><Data ss:Type="Number">0.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">0.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">50.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">58522.830000</Data></Cell>
+    <Cell><Data ss:Type="String">2012-02-22 13:08:39</Data></Cell>
+    <Cell><Data ss:Type="String">2012-02-22 13:08:39</Data></Cell>
+    <Cell><Data ss:Type="String">2012-01-02 23:56:27</Data></Cell>
+    <Cell><Data ss:Type="String">2012-01-02 23:56:26</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">2012</Data></Cell>
+    <Cell><Data ss:Type="Number">2</Data></Cell>
+    <Cell><Data ss:Type="String">b6b4e473-8f9f-4108-9450-272acf3d36d1</Data></Cell>
+    <Cell><Data ss:Type="String">7c679cdf-25df-4084-94c6-fd710490fd10</Data></Cell>
+    <Cell><Data ss:Type="Number">200.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">7912.500000</Data></Cell>
+    <Cell><Data ss:Type="Number">0.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">0.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">0.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">0.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">200.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">7912.500000</Data></Cell>
+    <Cell><Data ss:Type="String">2012-01-03 09:54:36</Data></Cell>
+    <Cell><Data ss:Type="String">2012-01-03 09:54:36</Data></Cell>
+    <Cell><Data ss:Type="String">2012-01-02 23:56:51</Data></Cell>
+    <Cell><Data ss:Type="String">2012-01-02 23:56:51</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">2012</Data></Cell>
+    <Cell><Data ss:Type="Number">2</Data></Cell>
+    <Cell><Data ss:Type="String">b6b4e473-8f9f-4108-9450-272acf3d36d1</Data></Cell>
+    <Cell><Data ss:Type="String">944bd0c0-d426-44ad-8718-4aa6b9ed8f1c</Data></Cell>
+    <Cell><Data ss:Type="Number">100.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">1970.450000</Data></Cell>
+    <Cell><Data ss:Type="Number">1000.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">19729.900000</Data></Cell>
+    <Cell><Data ss:Type="Number">1000.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">19727.600000</Data></Cell>
+    <Cell><Data ss:Type="Number">100.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">1972.750000</Data></Cell>
+    <Cell><Data ss:Type="String">2012-02-22 13:08:05</Data></Cell>
+    <Cell><Data ss:Type="String">2012-02-22 13:08:05</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-10 17:23:34</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-10 17:23:34</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">2012</Data></Cell>
+    <Cell><Data ss:Type="Number">2</Data></Cell>
+    <Cell><Data ss:Type="String">b6b4e473-8f9f-4108-9450-272acf3d36d1</Data></Cell>
+    <Cell><Data ss:Type="String">96b4cd81-8cd3-4c09-adbf-1167b33949f6</Data></Cell>
+    <Cell><Data ss:Type="Number">400.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">2001.920000</Data></Cell>
+    <Cell><Data ss:Type="Number">4000.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">18138.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">4000.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">18309.200000</Data></Cell>
+    <Cell><Data ss:Type="Number">400.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">1830.720000</Data></Cell>
+    <Cell><Data ss:Type="String">2012-02-22 13:08:05</Data></Cell>
+    <Cell><Data ss:Type="String">2012-02-22 13:08:05</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-10 17:23:34</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-10 17:23:34</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">2012</Data></Cell>
+    <Cell><Data ss:Type="Number">2</Data></Cell>
+    <Cell><Data ss:Type="String">eb73af61-855a-438a-83af-02c02a35b2ec</Data></Cell>
+    <Cell><Data ss:Type="String">301e67c1-a1fb-4b44-957d-75720fa0cc6a</Data></Cell>
+    <Cell><Data ss:Type="Number">1996.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">314.370000</Data></Cell>
+    <Cell><Data ss:Type="Number">24.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">4.725000</Data></Cell>
+    <Cell><Data ss:Type="Number">20.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">3.150000</Data></Cell>
+    <Cell><Data ss:Type="Number">2000.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">315.945000</Data></Cell>
+    <Cell><Data ss:Type="String">2012-02-09 11:08:20</Data></Cell>
+    <Cell><Data ss:Type="String">2012-02-09 11:08:20</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-10 17:19:42</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-10 17:19:42</Data></Cell>
+   </Row>
+  </Table>
+ </Worksheet>
+</Workbook>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements. See the NOTICE file distributed with this work for additional information regarding copyright ownership. The ASF licenses this file to you under the Apache License, Version 2.0 (the "License"); you 
+	may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
+	OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. -->
+<entity-engine-xml>
+	<Workshop id="26330cf0-a745-4f5c-9f9d-638cb83cd42c" number="WS100002" name="加工车间" description="负责切割等加工" />
+	<Workshop id="317b8c16-4e73-429b-8428-7e5700f393fb" number="WS100004" name="包装车间" description="负责成品打包" />
+	<Workshop id="3487eb04-0fb6-484e-9a1d-4a3d204c8a86" number="WS100001" name="喷漆车间" description="负责呸件喷漆工作" />
+	<Workshop id="7bbd3934-36c2-41ae-a2ff-2f9c0d83e344" number="WS100003" name="组装车间" description="负责组装" />
+</entity-engine-xml>

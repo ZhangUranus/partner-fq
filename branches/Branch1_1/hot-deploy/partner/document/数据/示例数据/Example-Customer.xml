@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements. See the NOTICE file distributed with this work for additional information regarding copyright ownership. The ASF licenses this file to you under the Apache License, Version 2.0 (the "License"); you 
+	may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
+	OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. -->
+<entity-engine-xml>
+	<Customer id="3edd4826-3132-4241-8ee2-441f4f472ad9" number="CUST100001" name="宝利家私有限公司" contractor="张三" fax="02039485544" postCode="544099" phone="02034995455" address="广东省广州" />
+	<Customer id="4a268c4e-ebf0-4f2b-b0b7-af8456c94e9e" number="CUST100003" name="五邑五金有限公司" contractor="王五" fax="07588377287" postCode="664773" phone="07589983883" address="广东省江门" />
+	<Customer id="dd78f90e-0426-4753-b9dc-89bb8afa2090" number="CUST100002" name="红树湾家具有限公司" contractor="李四" fax="02038874747" postCode="544099" phone="02030499553" address="广东省广州" />
+</entity-engine-xml>

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<entitymodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/entitymodel.xsd">
+    <title>Entity of an Open For Business Project Component</title>
+    <description>None</description>
+    <copyright>Copyright 2001-2009 The Apache Software Foundation</copyright>
+    <author>None</author>
+    <version>1.0</version>
+	<entity entity-name="TSystemMenu" package-name="org.ofbiz.partner.system" title="Menu table">
+		<field name="menuId" type="id-uuid-ne"/>
+		<field name="menuName" type="name"/>
+		<field name="menuType" type="indicator"/>
+		<field name="parentId" type="id-uuid"/>
+		<field name="sort" type="numeric"/>
+		<field name="hyperlink" type="id-long"/>
+		<field name="styleName" type="id-long"/>
+		<field name="display" type="indicator"/>
+		<field name="description" type="long-varchar"/>
+		<prim-key field="menuId"/>
+	</entity>
+	<view-entity entity-name="VSystemMenu" package-name="org.ofbiz.partner.system">
+		<member-entity entity-alias="Menu" entity-name="TSystemMenu"/>
+		<member-entity entity-alias="TUser" entity-name="TSystemUser"/>
+		<member-entity entity-alias="MenuOfRole" entity-name="TSystemMenuOfRole"/>
+		<member-entity entity-alias="UserOfRole" entity-name="TSystemUserOfRole"/>
+		<alias-all entity-alias="Menu" ></alias-all>
+		<alias name="userId" entity-alias="TUser" field="userId"></alias>
+		<view-link entity-alias="TUser" rel-entity-alias="UserOfRole" rel-optional="true">
+		    <key-map field-name="userId" rel-field-name="userId"/>
+		</view-link>
+		<view-link entity-alias="UserOfRole" rel-entity-alias="MenuOfRole" rel-optional="true">
+		    <key-map field-name="roleId" rel-field-name="roleId"/>
+		</view-link>
+		<view-link entity-alias="MenuOfRole" rel-entity-alias="Menu" rel-optional="true">
+		    <key-map field-name="menuId" rel-field-name="menuId"/>
+		</view-link>
+	</view-entity>
+	<entity entity-name="TSystemUser" package-name="org.ofbiz.partner.system" title="User table">
+		<field name="id" type="id-uuid-ne"/>
+		<field name="userId" type="id-uuid-ne"/>
+		<field name="userName" type="name"/>
+		<field name="password" type="id-long"/>
+		<field name="sex" type="indicator"/>
+		<field name="departmentId" type="id-uuid"/>
+		<field name="position" type="name"/>
+		<field name="phoneNumber" type="id"/>
+		<field name="email" type="email"/>
+		<field name="valid" type="indicator"/>
+		<prim-key field="id"/>
+	</entity>
+	<view-entity entity-name="SystemUser" package-name="org.ofbiz.partner.system">
+		<member-entity entity-alias="TUser" entity-name="TSystemUser"/>
+		<alias name="id" entity-alias="TUser" field="id"></alias>
+		<alias name="number" entity-alias="TUser" field="userId"></alias>
+		<alias name="name" entity-alias="TUser" field="userName"></alias>
+	</view-entity>
+	<view-entity entity-name="VSystemUserTree" package-name="org.ofbiz.partner.system">
+		<member-entity entity-alias="TUser" entity-name="TSystemUser"/>
+		<alias name="id" entity-alias="TUser" field="id"></alias>
+		<alias name="name" entity-alias="TUser" field="userName"></alias>
+		<alias name="parentId" entity-alias="TUser" field="departmentId"></alias>
+		<alias name="valid" entity-alias="TUser" field="valid"></alias>
+		<alias name="userId" entity-alias="TUser" field="userId"></alias>
+	</view-entity>
+	<view-entity entity-name="VSystemUserOfRole" package-name="org.ofbiz.partner.system">
+		<member-entity entity-alias="Role" entity-name="TSystemRole"/>
+		<member-entity entity-alias="UserOfRole" entity-name="TSystemUserOfRole"/>
+		<alias-all entity-alias="Role" >
+			</alias-all>
+		<alias name="roleId" entity-alias="UserOfRole" field="roleId"></alias>
+		<view-link entity-alias="Role" rel-entity-alias="UserOfRole" rel-optional="true">
+		    <key-map field-name="roleId" rel-field-name="roleId"/>
+		</view-link>
+	</view-entity>
+	<entity entity-name="TSystemUserOfRole" package-name="org.ofbiz.partner.system" title="User Of Role table">
+		<field name="id" type="id-uuid-ne"/>
+		<field name="userId" type="id-uuid-ne"/>
+		<field name="roleId" type="id-uuid-ne"/>
+		<prim-key field="id"/>
+	</entity>
+	<entity entity-name="TSystemRole" package-name="org.ofbiz.partner.system" title="Role table">
+		<field name="roleId" type="id-uuid-ne"/>
+		<field name="roleName" type="name"/>
+		<field name="description" type="long-varchar"/>
+		<prim-key field="roleId"/>
+	</entity>
+	<view-entity entity-name="VSystemUserOfMenu" package-name="org.ofbiz.partner.system">
+		<member-entity entity-alias="UserOfRole" entity-name="TSystemUserOfRole"/>
+		<member-entity entity-alias="MenuOfRole" entity-name="TSystemMenuOfRole"/>
+		<alias name="userId" entity-alias="UserOfRole" field="userId"></alias>
+		<alias name="menuId" entity-alias="MenuOfRole" field="menuId"></alias>
+		<alias name="operateType" entity-alias="MenuOfRole" field="operateType"></alias>
+		<view-link entity-alias="UserOfRole" rel-entity-alias="MenuOfRole" rel-optional="true">
+		    <key-map field-name="roleId" rel-field-name="roleId"/>
+		</view-link>
+	</view-entity>
+	<entity entity-name="TSystemMenuOfRole" package-name="org.ofbiz.partner.system" title="Menu Of Role table">
+		<field name="id" type="id-uuid-ne"/>
+		<field name="menuId" type="id-uuid-ne"/>
+		<field name="roleId" type="id-uuid-ne"/>
+		<field name="operateType" type="name"/>
+		<prim-key field="id"/>
+	</entity>
+	<entity entity-name="TSystemSerialNumber" package-name="org.ofbiz.partner.system" title="system serial number">
+		<field name="id" type="id-uuid-ne"/>
+		<field name="serialDate" type="name"/>
+		<field name="entityName" type="id-long"/>
+		<field name="prefix" type="name"/>
+		<field name="serialNumber" type="numeric"/>
+		<field name="initNumber" type="numeric"/>
+		<field name="description" type="long-varchar"/>
+		<field name="hasDate" type="indicator"/>
+		<prim-key field="id"/>
+	</entity>
+	<entity entity-name="TSystemLogType" package-name="org.ofbiz.partner.system" title="system log type">
+		<field name="id" type="id-uuid-ne"/>
+		<field name="number" type="name"/>
+		<field name="name" type="name"/>
+		<field name="operateType" type="name"/>
+		<field name="keyWord" type="value"/>
+		<field name="valid" type="indicator"/>
+		<prim-key field="id"/>
+	</entity>
+	<view-entity entity-name="VSystemLog" package-name="org.ofbiz.partner.system">
+		<member-entity entity-alias="ServerHit" entity-name="ServerHit"/>
+		<member-entity entity-alias="TSystemLogType" entity-name="TSystemLogType"/>
+		<alias name="id" entity-alias="ServerHit" field="id"></alias>
+		<alias name="hitTime" entity-alias="ServerHit" field="hitStartDateTime"></alias>
+		<alias name="hitType" entity-alias="ServerHit" field="hitTypeId"></alias>
+		<alias name="runningTime" entity-alias="ServerHit" field="runningTimeMillis"></alias>
+		<alias name="userId" entity-alias="ServerHit" field="userLoginId"></alias>
+		<alias name="url" entity-alias="ServerHit" field="requestUrl"></alias>
+		<alias name="ipAddress" entity-alias="ServerHit" field="serverIpAddress"></alias>
+		<alias name="hostName" entity-alias="ServerHit" field="serverHostName"></alias>
+		<alias name="name" entity-alias="TSystemLogType" field="name"></alias>
+		<alias name="operateType" entity-alias="TSystemLogType" field="operateType"></alias>
+		<alias name="keyWord" entity-alias="TSystemLogType" field="keyWord"></alias>
+		<alias name="valid" entity-alias="TSystemLogType" field="valid"></alias>
+	</view-entity>
+</entitymodel>
