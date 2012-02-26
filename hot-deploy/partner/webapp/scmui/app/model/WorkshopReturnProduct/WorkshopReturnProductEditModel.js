@@ -40,7 +40,8 @@ Ext.define('SCM.model.WorkshopReturnProduct.WorkshopReturnProductEditModel', {
 				persist : false
 			}, {
 				name : 'checkStatus',
-				type : 'int'
+				type : 'int',
+				defaultValue : 0
 			}, {
 				name : 'submitterSystemUserId',
 				type : 'string'
