@@ -249,6 +249,7 @@ Ext.define('SCM.controller.${TemplateName}.${TemplateName}Controller', {
      */
     addNewRecord: function(button){
     	newRecord=Ext.create('${TemplateName}EditModel');//新增记录
+		newRecord.phantom = true;
     	this.win.uiStatus='AddNew';
     	this.editForm.loadRecord(newRecord);
     	this.showEdit();
@@ -304,6 +305,7 @@ Ext.define('SCM.controller.${TemplateName}.${TemplateName}Controller', {
 		    record.set(values);
 		}else if(this.win.uiStatus=='AddNew'){//新增记录
 		    record=Ext.create('${TemplateName}EditModel');
+			record.phantom = true;
 		    record.set(values);
 		    if(this.listPanel.store.indexOf(this.oldRecord) != -1){//避免重复添加
 		    	this.listPanel.store.remove(this.oldRecord);
