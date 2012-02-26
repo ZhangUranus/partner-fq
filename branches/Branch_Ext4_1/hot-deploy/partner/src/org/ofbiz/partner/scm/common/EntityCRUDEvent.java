@@ -422,8 +422,18 @@ public class EntityCRUDEvent {
 			if(request.getParameter("query")!=null && !"".equals(request.getParameter("query"))){
 				if(request.getParameter("queryField")!=null && !"".equals(request.getParameter("queryField"))){
 					String[] fieldArray = request.getParameter("queryField").split(",");
+					EntityCondition oldCondition = null;
+					EntityCondition curCondition = null;
 					for(String field: fieldArray){
-						conds.add(EntityCondition.makeCondition(field, EntityOperator.LIKE, "%"+request.getParameter("query")+"%"));
+						if(oldCondition != null){
+							curCondition = EntityCondition.makeCondition(oldCondition,EntityOperator.OR,EntityCondition.makeCondition(field, EntityOperator.LIKE, "%"+request.getParameter("query")+"%"));
+						}else{
+							curCondition = EntityCondition.makeCondition(field, EntityOperator.LIKE, "%"+request.getParameter("query")+"%");
+						}
+						oldCondition = curCondition;
+					}
+					if(curCondition != null){
+						conds.add(curCondition);
 					}
 				}else{
 					conds.add(EntityCondition.makeCondition("name", EntityOperator.LIKE, "%"+request.getParameter("query")+"%"));
