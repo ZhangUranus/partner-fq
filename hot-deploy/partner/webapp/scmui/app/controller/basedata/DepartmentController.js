@@ -107,7 +107,7 @@ Ext.define('SCM.controller.basedata.DepartmentController', {
 				this.currentRecord = record;
 				this.listPanel.store.load({
 							params : {
-								'whereStr' : 'DepartmentV.id =\'' + record.data.id + '\'  or DepartmentV.parent_Id=\'' + record.data.id + '\''
+								'whereStr' : 'DepartmentV.id =\'' + record.get("id") + '\'  or DepartmentV.parent_Id=\'' + record.get("id") + '\''
 							}
 						});
 			},
@@ -120,6 +120,7 @@ Ext.define('SCM.controller.basedata.DepartmentController', {
 			 */
 			addNewRecord : function(button) {
 				newRecord = Ext.create(this.modelName);// 新增记录
+				newRecord.phantom = true;
 				if (this.currentRecord) {
 					newRecord.set('parentId', this.currentRecord.get('id'));
 				}

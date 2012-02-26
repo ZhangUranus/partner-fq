@@ -260,6 +260,7 @@ Ext.define('SCM.controller.system.SystemController', {
 			addNewRecord : function(button) {
 				this.initEditState();
 				newRecord = Ext.create('SCM.model.system.UserModel');// 新增记录
+				newRecord.phantom = true;
 				if (this.userTree.getSelectionModel().getLastSelected() != null) {
 					if (!this.userTree.getSelectionModel().getLastSelected().get('isUser')) {
 						newRecord.set('departmentId', this.userTree.getSelectionModel().getLastSelected().get('id'));
@@ -321,6 +322,7 @@ Ext.define('SCM.controller.system.SystemController', {
 					record.set("roles", roleString);
 				} else if (me.userForm.uiStatus == 'AddNew') {// 新增记录
 					record = Ext.create('SCM.model.system.UserModel');
+					record.phantom = true;
 					record.set(values);
 					record.set("roles", roleString);
 					me.oldRecord = record;
