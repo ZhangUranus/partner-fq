@@ -398,6 +398,7 @@ Ext.define('SCM.controller.WorkshopReturnProduct.WorkshopReturnProductController
 			 */
 			addDetailLine : function(button) {
 				var detailRecord = Ext.create('WorkshopReturnProductDetailModel');
+				detailRecord.phantom = true;
 
 				// 设置分录id
 				detailRecord.set('entryId', this.detailEntryId);

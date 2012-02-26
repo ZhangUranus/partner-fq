@@ -224,6 +224,7 @@ Ext.define('SCM.controller.ConsignDrawMaterial.ConsignDrawMaterialController', {
 								var materialVolume = me.materialVolumeFields.getValue() ? me.materialVolumeFields.getValue() : 0;
 								var tempRecord = records[i];
 								var entryRecord = Ext.create(me.entryModelName);
+								entryRecord.phantom = true;
 
 								// 设置父id
 								entryRecord.set('parentId', me.editForm.getValues().id);
