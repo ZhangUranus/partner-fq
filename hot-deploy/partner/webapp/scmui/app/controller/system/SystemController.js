@@ -1,7 +1,7 @@
 Ext.define('SCM.controller.system.SystemController', {
 			extend : 'Ext.app.Controller',
 
-			views : ['system.user.ListUI','system.monthlySettlement.StockSettle'],
+			views : ['system.user.ListUI', 'system.monthlySettlement.StockSettle'],
 			stores : ['system.UserStore', 'system.SystemUserStore', 'system.RoleStore', 'system.UserTreeStore', 'system.UserOfRoleStore'],
 			models : ['system.UserTreeModel'],
 
@@ -86,22 +86,14 @@ Ext.define('SCM.controller.system.SystemController', {
 						me.changeComponentsState();
 					} else if (request.action == 'create') {
 						Ext.Msg.alert("提示", "新增用户成功！", callBack);
-						function callBack() {
-							Ext.getCmp('user-form-layout').getLayout().setActiveItem(0);
-							me.refreshTree();
-						}
 					} else if (request.action == 'update') {
 						Ext.Msg.alert("提示", "更新用户成功！", callBack);
-						function callBack() {
-							Ext.getCmp('user-form-layout').getLayout().setActiveItem(0);
-							me.refreshTree();
-						}
 					} else if (request.action == 'destroy') {
 						Ext.Msg.alert("提示", "删除成功！", callBack);
-						function callBack() {
-							Ext.getCmp('user-form-layout').getLayout().setActiveItem(0);
-							me.refreshTree();
-						}
+					}
+					function callBack() {
+						Ext.getCmp('user-form-layout').getLayout().setActiveItem(0);
+						me.refreshTree();
 					}
 				} else {
 					// 不需要处理，由服务器抛出异常即可
@@ -212,7 +204,7 @@ Ext.define('SCM.controller.system.SystemController', {
 				if (this.selectUser) {
 					this.userForm.uiStatus = 'Modify';
 					this.initEditState();
-					var model = this.userStore.findRecord("id",record.get('id'));
+					var model = this.userStore.findRecord("id", record.get('id'));
 					this.userForm.getForm().loadRecord(model);
 					this.loadGridRecord(model);
 				}
