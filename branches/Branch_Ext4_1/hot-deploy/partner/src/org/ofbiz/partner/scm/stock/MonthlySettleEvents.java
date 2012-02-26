@@ -17,7 +17,6 @@ import org.ofbiz.partner.scm.pricemgr.Utils;
  *
  */
 public class MonthlySettleEvents {
-	private static final String module=org.ofbiz.partner.scm.stock.MonthlySettleEvents.class.getName();
 	/*
 	 *月度结算 
 	 */

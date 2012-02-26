@@ -1,5 +1,6 @@
 package org.ofbiz.partner.scm.common;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Iterator;
 import java.util.List;
@@ -98,6 +99,9 @@ public class MultiEntryCRUDEvent {
 						v.set(fieldName,Integer.valueOf(0));
 					}
 					
+				}else if(headRecord.get(fieldName)!=null && vModelField.getType().equals("fixed-point")){
+					BigDecimal bd = new BigDecimal(headRecord.get(fieldName).toString());
+					v.set(fieldName, bd);
 				}else{
 					v.set(fieldName, headRecord.get(fieldName));
 				}

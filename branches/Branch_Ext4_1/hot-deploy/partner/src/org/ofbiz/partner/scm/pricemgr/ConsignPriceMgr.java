@@ -201,6 +201,25 @@ public class ConsignPriceMgr {
 				delegator.create(gv);
 			}
 		}
-
+	}
+	
+	/**
+	 * 获取物料库存数量
+	 * @param supplierId
+	 * @param materialId
+	 * @return
+	 * @throws Exception
+	 */
+	public BigDecimal getVolumeOfMaterial(String supplierId, String materialId) throws Exception {
+		if (supplierId == null || materialId == null ) {
+			throw new Exception("supplierId or materialId is null");
+		}
+		// 查找供应商可入库余额表
+		GenericValue gv = delegator.findOne("CurConsignPrice", UtilMisc.toMap("year", new Integer(year), "month", new Integer(month), "supplierId", supplierId, "materialId", materialId), false);
+		if (gv != null) {
+			return gv.getBigDecimal("volume");
+		}else{
+			return BigDecimal.ZERO;
+		}
 	}
 }
