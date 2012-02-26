@@ -40,7 +40,8 @@ Ext.define('SCM.model.ConsignReturnProduct.ConsignReturnProductEditModel', {
 				persist : false
 			}, {
 				name : 'checkStatus',
-				type : 'int'
+				type : 'int',
+				defaultValue : 0
 			}, {
 				name : 'submitterSystemUserId',
 				type : 'string'
