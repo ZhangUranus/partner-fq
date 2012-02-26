@@ -75,8 +75,8 @@ Ext.onReady(function(){
 
     if(exists('Ext.util.Format')){
         Ext.apply(Ext.util.Format, {
-            thousandSeparator: '.',
-            decimalSeparator: ',',
+            thousandSeparator: ',',
+            decimalSeparator: '.',
             currencySign: '\u00a5',  // Chinese Yuan
             dateFormat: 'y年m月d日'
         });
