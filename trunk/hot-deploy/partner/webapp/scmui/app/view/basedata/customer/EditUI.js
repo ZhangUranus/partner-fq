@@ -56,10 +56,9 @@ Ext.define('SCM.view.basedata.customer.EditUI', {
 													fieldLabel : '传真',
 													maxLength : 20
 												}, {
-													name : 'postCode',
-													fieldLabel : '邮政编码',
-													minLength : 6,
-													maxLength : 6
+													name : 'email',
+													vtype : 'email',
+													fieldLabel : '邮箱'
 												}]
 									}],
 							dockedItems : [{

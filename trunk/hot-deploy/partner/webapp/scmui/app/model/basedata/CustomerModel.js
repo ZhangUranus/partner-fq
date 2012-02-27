@@ -26,7 +26,7 @@ Ext.define('SCM.model.basedata.CustomerModel', {
 						name : 'fax',
 						type : 'string'
 					}, {
-						name : 'postCode',
+						name : 'email',
 						type : 'string'
 					}],
 			idgen : 'uuid', // 使用uuid生成记录id 每个模型必须要有id字段
@@ -37,6 +37,9 @@ Ext.define('SCM.model.basedata.CustomerModel', {
 					create : '../../scm/control/addnewJsonData?entity=Customer',
 					update : '../../scm/control/updateJsonData?entity=Customer',
 					destroy : '../../scm/control/deleteJsonData?entity=Customer'
+				},
+				extraParams : {
+					queryField : 'number,name'
 				}
 			}
 		});

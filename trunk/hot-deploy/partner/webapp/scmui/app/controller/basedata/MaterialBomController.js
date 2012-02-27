@@ -252,23 +252,7 @@ Ext.define('SCM.controller.basedata.MaterialBomController', {
 				oneEntryModel = processOneEntryModel(oneEntryModel, record, store);
 				oneEntryModel.save();
 			},
-
-			/**
-			 * 刷新页面数据
-			 * 
-			 * @param {}
-			 *            button 刷新按钮
-			 */
-			refreshRecord : function(button) {
-				if (this.searchText.getValue()) {
-					this.listPanel.store.getProxy().extraParams.whereStr = 'TMaterialV.name like \'%' + this.searchText.getValue() + '%\' or TEntryMaterialV.name like \'%'
-							+ this.searchText.getValue() + '%\'';
-				} else {
-					this.listPanel.store.getProxy().extraParams.whereStr = '';
-				}
-				this.listPanel.store.load();
-				this.changeComponentsState();
-			},
+			
 			/**
 			 * 新增分录
 			 * 

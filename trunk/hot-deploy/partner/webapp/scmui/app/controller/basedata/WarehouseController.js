@@ -66,21 +66,5 @@ Ext.define('SCM.controller.basedata.WarehouseController', {
 			 */
 			afterInitComponent : function() {
         		this.editForm.down('[name=wsTypeId]').store.load();		//初始下拉框数据
-			},
-
-			/**
-			 * 刷新页面数据
-			 * 
-			 * @param {} button 刷新按钮
-			 */
-			refreshRecord : function(button) {
-				if (this.searchText.getValue()) {
-					this.listPanel.store.getProxy().extraParams.whereStr = 'WarehouseV.name like \'%' + this.searchText.getValue() + '%\'';
-				} else {
-					this.listPanel.store.getProxy().extraParams.whereStr = '';
-				}
-				this.listPanel.store.load();
-				this.changeComponentsState();
 			}
-
 		});

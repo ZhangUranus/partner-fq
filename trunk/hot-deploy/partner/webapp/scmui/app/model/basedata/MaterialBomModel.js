@@ -44,6 +44,9 @@ Ext.define('SCM.model.basedata.MaterialBomModel', {
 				api : {
 					read : '../../scm/control/requestJsonData?entity=MaterialBomListView',
 					destroy : '../../scm/control/deleteWithEntry?headEntity=MaterialBom&entryEntity=MaterialBomEntry'
+				},
+				extraParams : {
+					queryField : 'number,materialName,bomMaterialName'
 				}
 			}
 		});
