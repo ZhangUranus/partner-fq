@@ -148,6 +148,14 @@ Ext.define('SCM.controller.WorkshopReturnProduct.WorkshopReturnProductController
 					hideTrigger : true
 				};
 			},
+			
+			/**
+			 * 初始化用户选择
+			 * @param {} record
+			 */
+			initCurrentUserSelect : function(record){
+				record.set('returnerSystemUserId',SCM.CurrentUserUID);
+			},
 
 			/**
 			 * 根据状态设置编辑界面状态

@@ -106,6 +106,15 @@ Ext.define('SCM.controller.PurchaseWarehousing.PurchaseWarehousingController', {
 				this.supplierFields.addListener('change', this.supplierChange, this);
 				this.editEntry.store.proxy.addListener('afterRequest', this.supplierChange, this);
 			},
+			
+			/**
+			 * 初始化用户选择
+			 * @param {} record
+			 */
+			initCurrentUserSelect : function(record){
+				record.set('buyerSystemUserId',SCM.CurrentUserUID);
+				record.set('checkerSystemUserId',SCM.CurrentUserUID);
+			},
 
 			/**
 			 * 重写刷新方法

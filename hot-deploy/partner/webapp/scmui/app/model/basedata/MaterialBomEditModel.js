@@ -35,7 +35,7 @@ Ext.define('SCM.model.basedata.MaterialBomEditModel', {
 					read : '../../scm/control/requestJsonData?entity=MaterialBomView'
 				},
 				extraParams : {
-					queryField : 'materialName'
+					queryField : 'number,materialName'
 				}
 			}
 		});

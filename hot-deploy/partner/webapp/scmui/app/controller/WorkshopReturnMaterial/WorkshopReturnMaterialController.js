@@ -103,8 +103,14 @@ Ext.define('SCM.controller.WorkshopReturnMaterial.WorkshopReturnMaterialControll
 				this.searchCustId = this.listContainer.down('combogrid[name=searchCustId]');
 				this.totalFields = this.editForm.down('textfield[name=totalsum]');
 				this.workshopFields = this.editForm.down('combogrid[name=workshopWorkshopId]');
-				// this.workshopFields.addListener('change',
-				// this.changeWorkshop, this);
+			},
+			
+			/**
+			 * 初始化用户选择
+			 * @param {} record
+			 */
+			initCurrentUserSelect : function(record){
+				record.set('checkerSystemUserId',SCM.CurrentUserUID);
 			},
 
 			/**

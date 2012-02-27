@@ -103,9 +103,14 @@ Ext.define('SCM.controller.ConsignReturnMaterial.ConsignReturnMaterialController
 				this.searchCustId = this.listContainer.down('combogrid[name=searchCustId]');
 				this.totalFields = this.editForm.down('textfield[name=totalsum]');
 				this.processorFields = this.editForm.down('combogrid[name=processorSupplierId]');
-				// this.processorFields.addListener('change',
-				// this.changeProcessor,
-				// this);
+			},
+			
+			/**
+			 * 初始化用户选择
+			 * @param {} record
+			 */
+			initCurrentUserSelect : function(record){
+				record.set('checkerSystemUserId',SCM.CurrentUserUID);
 			},
 
 			/**

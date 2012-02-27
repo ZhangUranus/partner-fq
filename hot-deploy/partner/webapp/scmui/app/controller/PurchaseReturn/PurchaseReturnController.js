@@ -104,6 +104,14 @@ Ext.define('SCM.controller.PurchaseReturn.PurchaseReturnController', {
 				this.totalFields = this.editForm.down('textfield[name=totalsum]');
 				this.editEntry.store.proxy.addListener('afterRequest', this.changeStockVolume, this);
 			},
+			
+			/**
+			 * 初始化用户选择
+			 * @param {} record
+			 */
+			initCurrentUserSelect : function(record){
+				record.set('returnerSystemUserId',SCM.CurrentUserUID);
+			},
 
 			/**
 			 * 重写刷新方法
