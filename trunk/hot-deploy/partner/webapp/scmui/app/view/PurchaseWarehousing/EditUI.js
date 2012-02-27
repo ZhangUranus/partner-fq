@@ -18,13 +18,6 @@ Ext.define('SCM.view.PurchaseWarehousing.EditUI', {
 				var cellEditing = Ext.create('Ext.grid.plugin.CellEditing', {
 							clicksToEdit : 1
 						});
-				var entryStore = Ext.create('PurchaseWarehousingEditEntryStore');
-				var materialStore = Ext.create('MaterialStore');
-				materialStore.load();
-				var unitStore = Ext.create('UnitStore');
-				unitStore.load();
-				var warehouseStore = Ext.create('WarehouseStore');
-				warehouseStore.load();
 				Ext.applyIf(me, {
 							items : [{
 										xtype : 'form',
@@ -182,7 +175,7 @@ Ext.define('SCM.view.PurchaseWarehousing.EditUI', {
 													xtype : 'gridpanel',
 													id : 'PurchaseWarehousing-edit-grid',
 													region : 'center',
-													store : entryStore,
+													store : Ext.create('PurchaseWarehousingEditEntryStore'),
 													columns : [{
 																xtype : 'gridcolumn',
 																dataIndex : 'id',
@@ -202,7 +195,7 @@ Ext.define('SCM.view.PurchaseWarehousing.EditUI', {
 																	xtype : 'combogrid',
 																	valueField : 'id',
 																	displayField : 'name',
-																	store : warehouseStore,
+																	store : Ext.create('WarehouseStore'),
 																	matchFieldWidth : false,
 																	listConfig : {
 																		width : SCM.MaxSize.COMBOGRID_WIDTH,
@@ -229,7 +222,7 @@ Ext.define('SCM.view.PurchaseWarehousing.EditUI', {
 																	xtype : 'combogrid',
 																	valueField : 'id',
 																	displayField : 'name',
-																	store : materialStore,
+																	store : Ext.create('MaterialStore'),
 																	matchFieldWidth : false,
 																	listConfig : {
 																		width : SCM.MaxSize.COMBOGRID_WIDTH,
@@ -275,7 +268,7 @@ Ext.define('SCM.view.PurchaseWarehousing.EditUI', {
 																	xtype : 'combobox',
 																	valueField : 'id',
 																	displayField : 'name',
-																	store : unitStore,
+																	store : Ext.create('UnitStore'),
 																	readOnly : true
 																},
 																width : 80

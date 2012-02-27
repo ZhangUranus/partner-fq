@@ -198,8 +198,8 @@
 }
 
 .x-form-readonly {
-	filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=60 );
-	opacity: 0.6
+	filter: alpha(opacity=60);
+	opacity: .6
 }
 .x-ie6 .x-form-readonly {
 	filter: none

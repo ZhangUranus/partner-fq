@@ -116,6 +116,14 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 			},
 			
 			/**
+			 * 初始化用户选择
+			 * @param {} record
+			 */
+			initCurrentUserSelect : function(record){
+				record.set('checkerSystemUserId',SCM.CurrentUserUID);
+			},
+			
+			/**
 			 * 根据状态设置编辑界面状态
 			 * 
 			 * @param {}

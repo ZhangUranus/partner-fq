@@ -109,6 +109,14 @@ Ext.define('SCM.controller.ConsignDrawMaterial.ConsignDrawMaterialController', {
 				this.MaterialStore = Ext.create('SCM.store.basedata.MaterialBomStore');
 				this.editEntry.store.proxy.addListener('afterRequest', this.changeStockVolume, this);
 			},
+			
+			/**
+			 * 初始化用户选择
+			 * @param {} record
+			 */
+			initCurrentUserSelect : function(record){
+				record.set('issuerSystemUserId',SCM.CurrentUserUID);
+			},
 
 			/**
 			 * 重写刷新方法

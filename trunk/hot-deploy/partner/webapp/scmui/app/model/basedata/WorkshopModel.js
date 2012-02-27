@@ -25,6 +25,9 @@ Ext.define('SCM.model.basedata.WorkshopModel', {
 					create : '../../scm/control/addnewJsonData?entity=Workshop',
 					update : '../../scm/control/updateJsonData?entity=Workshop',
 					destroy : '../../scm/control/deleteJsonData?entity=Workshop'
+				},
+				extraParams : {
+					queryField : 'number,name'
 				}
 			}
 		});

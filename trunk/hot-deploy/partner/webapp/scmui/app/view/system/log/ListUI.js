@@ -93,21 +93,21 @@ Ext.define('SCM.view.system.log.ListUI', {
 													width : 145,
 													labelWidth : 35,
 													fieldLabel : '用户',
-													valueField : 'userId',
-													displayField : 'userName',
-													store : 'system.UserStore',
+													valueField : 'id',
+													displayField : 'name',
+													store : Ext.create('SystemUserStore'),
 													matchFieldWidth : false,
 													listConfig : {
 														width : SCM.MaxSize.COMBOGRID_WIDTH,
 														height : SCM.MaxSize.COMBOGRID_HEIGHT,
 														columns : [{
 																	header : '编码',
-																	dataIndex : 'userId',
+																	dataIndex : 'number',
 																	width : 100,
 																	hideable : false
 																}, {
 																	header : '名称',
-																	dataIndex : 'userName',
+																	dataIndex : 'name',
 																	width : 80,
 																	hideable : false
 																}]

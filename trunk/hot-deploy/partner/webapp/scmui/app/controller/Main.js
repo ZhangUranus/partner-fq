@@ -24,6 +24,7 @@ Ext.define('SCM.controller.Main', {
                 	Ext.getCmp("current-date-label").setText(result.currentYear+"年"+result.currentMonth+"月");
 	                SCM.SystemMonthlyYear = result.currentYear;
 	                SCM.SystemMonthlyMonth = result.currentMonth;
+	                SCM.CurrentUserUID = result.uid;
 	                Ext.getCmp('main-tree').show();
 	                Ext.getCmp('main-content').show();
                 }else{

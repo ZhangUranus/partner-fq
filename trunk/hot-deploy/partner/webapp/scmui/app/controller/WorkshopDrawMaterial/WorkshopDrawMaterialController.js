@@ -104,6 +104,14 @@ Ext.define('SCM.controller.WorkshopDrawMaterial.WorkshopDrawMaterialController',
 				this.totalFields = this.editForm.down('textfield[name=totalsum]');
 				this.editEntry.store.proxy.addListener('afterRequest', this.changeStockVolume, this);
 			},
+			
+			/**
+			 * 初始化用户选择
+			 * @param {} record
+			 */
+			initCurrentUserSelect : function(record){
+				record.set('issuerSystemUserId',SCM.CurrentUserUID);
+			},
 
 			/**
 			 * 重写刷新方法

@@ -71,7 +71,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 					this.win = Ext.widget(this.editName);
 					this.editForm = this.win.down('form');
 					this.editEntry = this.win.down('gridpanel');
-					this.fields = this.editForm.query("textfield{isVisible()}[readOnly=false]"); // 取所以显示的field
+					this.fields = this.editForm.query("textfield{hidden==false}{readOnly==false}"); // 取所以显示的field
 					this.submitEditButton = this.win.down('button[action=submit]');
 					this.saveButton = this.win.down('button[action=save]');
 					this.clearButton = this.win.down('button[action=clear]');
@@ -357,12 +357,19 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				this.changeEditStatus(newRecord);
 				this.getEdit().uiStatus = 'AddNew';
 
+				this.initCurrentUserSelect(newRecord);
 				this.editForm.getForm().loadRecord(newRecord);
 				// 清空分录
 				this.editEntry.store.removeAll();
 				this.editEntry.getView().refresh();
 				this.showEdit();
 			},
+			
+			/**
+			 * 初始化用户选择框
+			 * @type 
+			 */
+			initCurrentUserSelect : Ext.emptyFn ,
 
 			/**
 			 * 点击删除按钮

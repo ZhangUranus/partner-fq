@@ -29,6 +29,9 @@ Ext.define('SCM.model.Supplier.SupplierModel', {
 					read : '../../scm/control/requestJsonData?entity=SupplierView',
 					destroy : '../../scm/control/deleteWithEntry?headEntity=Supplier&entryEntity=SupplierEntry'
 				},
-				remoteFilter : true
+				remoteFilter : true,
+				extraParams : {
+					queryField : 'number,name'
+				}
 			}
 		});

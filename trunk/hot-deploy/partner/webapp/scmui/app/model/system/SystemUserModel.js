@@ -21,6 +21,9 @@ Ext.define('SCM.model.system.SystemUserModel', {
 				type : 'jsonajax',
 				api : {
 					read: '../../scm/control/requestJsonData?entity=SystemUser'
+				},
+				extraParams : {
+					queryField : 'number,name'
 				}
 			}
 		});
