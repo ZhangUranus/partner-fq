@@ -28,6 +28,9 @@ Ext.define('SCM.model.basedata.DepartmentModel', {
 					create : '../../scm/control/addnewJsonData?entity=Department',
 					update : '../../scm/control/updateJsonData?entity=Department',
 					destroy : '../../scm/control/deleteJsonData?entity=Department'
+				},
+				extraParams : {
+					queryField : 'number,name'
 				}
 			}
 		});

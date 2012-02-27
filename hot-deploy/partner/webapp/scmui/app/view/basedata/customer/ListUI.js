@@ -44,9 +44,9 @@ Ext.define('SCM.view.basedata.customer.ListUI', {
 										dataIndex : 'fax',
 										width : 100
 									}, {
-										header : '邮政编码',
-										dataIndex : 'postCode',
-										width : 100
+										header : '邮箱',
+										dataIndex : 'email',
+										width : 150
 									}],
 							dockedItems : [{
 										xtype : 'basetoolbar'

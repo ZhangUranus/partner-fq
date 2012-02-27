@@ -103,9 +103,9 @@ Ext.define('SCM.controller.basedata.MaterialController', {
 			 */
 			refreshRecord : function(button) {
 				if (this.searchText.getValue()) {
-					this.listPanel.store.getProxy().extraParams.whereStr = 'TMaterialV.NAME like \'%' + this.searchText.getValue() + '%\'';
+					this.listPanel.store.getProxy().extraParams.query = this.searchText.getValue();
 				} else {
-					this.listPanel.store.getProxy().extraParams.whereStr = '';
+					this.listPanel.store.getProxy().extraParams.query = '';
 				}
 				this.listPanel.store.load();
 				if(this.treePanel){

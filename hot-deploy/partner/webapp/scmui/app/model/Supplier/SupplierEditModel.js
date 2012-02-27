@@ -47,6 +47,9 @@ Ext.define('SCM.model.Supplier.SupplierEditModel', {
 					update : '../../scm/control/updateJsonData?entity=Supplier',
 					destroy : '../../scm/control/deleteJsonData?entity=Supplier'
 				},
-				remoteFilter : true
+				remoteFilter : true,
+				extraParams : {
+					queryField : 'number,name'
+				}
 			}
 		});

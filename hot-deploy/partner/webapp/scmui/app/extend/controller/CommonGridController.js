@@ -272,9 +272,9 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 			 */
 			refreshRecord : function(button) {
 				if (this.searchText.getValue()) {
-					this.listPanel.store.getProxy().extraParams.whereStr = 'name like \'%' + this.searchText.getValue() + '%\'';
+					this.listPanel.store.getProxy().extraParams.query = this.searchText.getValue();
 				} else {
-					this.listPanel.store.getProxy().extraParams.whereStr = '';
+					this.listPanel.store.getProxy().extraParams.query = '';
 				}
 				this.listPanel.store.load();
 				this.changeComponentsState();

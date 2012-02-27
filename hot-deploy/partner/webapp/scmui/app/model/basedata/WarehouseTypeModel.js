@@ -22,6 +22,9 @@ Ext.define('SCM.model.basedata.WarehouseTypeModel', {
 					create : '../../scm/control/addnewJsonData?entity=WarehouseType',
 					update : '../../scm/control/updateJsonData?entity=WarehouseType',
 					destroy : '../../scm/control/deleteJsonData?entity=WarehouseType'
+				},
+				extraParams : {
+					queryField : 'number,name'
 				}
 			}
 		});

@@ -22,6 +22,9 @@ Ext.define('SCM.model.basedata.UnitModel', {
 					create : '../../scm/control/addnewJsonData?entity=Unit',
 					update : '../../scm/control/updateJsonData?entity=Unit',
 					destroy : '../../scm/control/deleteJsonData?entity=Unit'
+				},
+				extraParams : {
+					queryField : 'number,name'
 				}
 			}
 		});

@@ -87,9 +87,9 @@ Ext.define('SCM.controller.basedata.DepartmentController', {
 			 */
 			refreshRecord : function(button) {
 				if (this.searchText.getValue()) {
-					this.listPanel.store.getProxy().extraParams.whereStr = 'DepartmentV.NAME like \'%' + this.searchText.getValue() + '%\'';
+					this.listPanel.store.getProxy().extraParams.query = this.searchText.getValue();
 				} else {
-					this.listPanel.store.getProxy().extraParams.whereStr = '';
+					this.listPanel.store.getProxy().extraParams.query = '';
 				}
 				this.listPanel.store.load();
 				this.treePanel.store.load();

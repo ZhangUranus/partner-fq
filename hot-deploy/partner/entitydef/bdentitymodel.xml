@@ -101,7 +101,7 @@ under the License.
       <field name="name" type="name"></field>
       <field name="contractor" type="name"></field>
       <field name="fax" type="name"></field>
-      <field name="postCode" type="name"></field>
+      <field name="email" type="name"></field>
       <field name="phone" type="name"></field>
       <field name="address" type="description"></field>
       <prim-key field="id"/>

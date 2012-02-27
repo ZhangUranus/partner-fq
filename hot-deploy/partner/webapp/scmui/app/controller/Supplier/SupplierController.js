@@ -1,15 +1,15 @@
 Ext.define('SCM.controller.Supplier.SupplierController', {
-	extend : 'Ext.app.Controller',
-	mixins : ['SCM.extend.exporter.Exporter', 'SCM.extend.controller.CommonGridController'],
-	views : ['Supplier.ListUI', 'Supplier.EditUI'],
-	stores : ['Supplier.SupplierStore', 'Supplier.SupplierEditStore'],
-	gridTitle : '供应商管理',
-	gridName : 'Supplierlist',
-	editName : 'Supplieredit',
-	modelName : 'SupplierEditModel',
-	entityName : 'Supplier',
-	
-	/**
+			extend : 'Ext.app.Controller',
+			mixins : ['SCM.extend.exporter.Exporter', 'SCM.extend.controller.CommonGridController'],
+			views : ['Supplier.ListUI', 'Supplier.EditUI'],
+			stores : ['Supplier.SupplierStore', 'Supplier.SupplierEditStore'],
+			gridTitle : '供应商管理',
+			gridName : 'Supplierlist',
+			editName : 'Supplieredit',
+			modelName : 'SupplierEditModel',
+			entityName : 'Supplier',
+
+			/**
 			 * 初始化controller 增加事件监控
 			 */
 			init : function() {
@@ -57,4 +57,4 @@ Ext.define('SCM.controller.Supplier.SupplierController', {
 							}
 						});
 			}
-	});
+		});
