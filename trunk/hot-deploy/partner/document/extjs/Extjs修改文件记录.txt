@@ -1,12 +1,17 @@
-1.ĞŞÕıcombox£¬date¿Ø¼şµÄreadonlyÑùÊ½£º
-ÎÄ¼ş£ºext-all-debug.js£¬ext-all.js
-Àà£ºExt.define('Ext.form.field.Trigger', {
-·½·¨£ºonRender: function(ct, position) {
+1.ä¿®æ­£comboxï¼Œdateæ§ä»¶çš„readonlyæ ·å¼ï¼š
+æ–‡ä»¶ï¼šext-all-debug.jsï¼Œext-all.js
+ç±»ï¼šExt.define('Ext.form.field.Trigger', {
+æ–¹æ³•ï¼šonRender: function(ct, position) {
 if (me.readOnly) {
 	me.setReadOnly(true);
 }
 
-2.Ğ¡ÊıµãÎÊÌâ£º
-ÎÄ¼ş£ºext-lang-zh_CN.js
+2.å°æ•°ç‚¹é—®é¢˜ï¼š
+æ–‡ä»¶ï¼šext-lang-zh_CN.js
 thousandSeparator: ',',
 decimalSeparator: '.',
+
+
+3.ä¿®æ”¹ext-all.cssæ–‡ä»¶
+- .x-item-disabled{filter:alpha(opacity=60);opacity:.6}
++ .x-item-disabled{filter:alpha(opacity=90);opacity:.9}
