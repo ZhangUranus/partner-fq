@@ -66,6 +66,11 @@ Ext.define('SCM.view.basedata.materialbom.EditUI', {
 																				hideable : false
 																			}]
 																}
+															}, {
+																xtype : 'textarea',
+																name : 'note',
+																fieldLabel : '备注',
+																maxLength : 50
 															}]
 												}, {
 													xtype : 'gridpanel',

@@ -16,7 +16,8 @@ SCM.MinSize = Ext.apply({//label等于3－4个中文字
 			FIELD_WIDTH : 260,
 			LABEL_WIDTH : 40,
 			COMBOGRID_WIDTH : 200,
-			COMBOGRID_HEIGHT : 250
+			COMBOGRID_HEIGHT : 250,
+			COMBOGRID_EXTRA_WIDTH : 320
 		}, SCM.MinSize || {});
 		
 SCM.DefaultSize = Ext.apply({//label等于3－4个中文字
@@ -26,7 +27,8 @@ SCM.DefaultSize = Ext.apply({//label等于3－4个中文字
 			FIELD_WIDTH : 280,
 			LABEL_WIDTH : 60,
 			COMBOGRID_WIDTH : 200,
-			COMBOGRID_HEIGHT : 250
+			COMBOGRID_HEIGHT : 250,
+			COMBOGRID_EXTRA_WIDTH : 320
 		}, SCM.DefaultSize || {});
 		
 SCM.MaxSize = Ext.apply({//label等于5－6个中文字
@@ -36,5 +38,6 @@ SCM.MaxSize = Ext.apply({//label等于5－6个中文字
 			FIELD_WIDTH : 300,
 			LABEL_WIDTH : 80,
 			COMBOGRID_WIDTH : 200,
-			COMBOGRID_HEIGHT : 250
+			COMBOGRID_HEIGHT : 250,
+			COMBOGRID_EXTRA_WIDTH : 320
 		}, SCM.MaxSize || {});
