@@ -43,6 +43,13 @@ Ext.define('SCM.model.PurchaseBill.PurchaseBillModel', {
 						name : 'totalsum',
 						type : 'float'
 					}, {
+						name : 'receiveStamp',
+						type : 'date',
+						defaultValue : new Date(),
+						convert : function(value, record) {
+							return new Date(value);
+						}
+					}, {
 						name : 'entryId',
 						type : 'string'
 					}, {
