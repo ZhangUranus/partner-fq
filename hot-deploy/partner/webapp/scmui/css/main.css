@@ -131,6 +131,9 @@
 .stock-settle {
 	background-image: url( ../images/icons/stock-settle.png ) !important;
 }
+.user-info {
+	background-image: url( ../images/icons/user-info.png ) !important;
+}
 .basic-setting{
 	background-image: url( ../images/icons/basic-setting.png ) !important;
 }

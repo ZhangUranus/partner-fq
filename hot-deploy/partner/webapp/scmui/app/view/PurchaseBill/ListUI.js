@@ -57,7 +57,7 @@ Ext.define('SCM.view.PurchaseBill.ListUI', {
 												}, {
 													xtype : 'gridcolumn',
 													dataIndex : 'supplierSupplierName',
-													width : 150,
+													width : 120,
 													groupable : false,
 													text : '供应商'
 												}, {
@@ -75,7 +75,7 @@ Ext.define('SCM.view.PurchaseBill.ListUI', {
 												}, {
 													xtype : 'gridcolumn',
 													dataIndex : 'approverNote',
-													width : 150,
+													width : 120,
 													groupable : false,
 													text : '审核意见'
 												}, {
@@ -84,6 +84,13 @@ Ext.define('SCM.view.PurchaseBill.ListUI', {
 													width : 100,
 													groupable : false,
 													text : '总金额'
+												}, {
+													xtype : 'datecolumn',
+													dataIndex : 'receiveStamp',
+													width : 150,
+													format : 'Y-m-d H:i:s',
+													groupable : false,
+													text : '返货时间'
 												}],
 										viewConfig : {
 
