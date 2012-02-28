@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +24,8 @@ import org.ofbiz.entity.GenericEntityException;
 import org.ofbiz.entity.GenericValue;
 import org.ofbiz.entity.condition.EntityCondition;
 import org.ofbiz.entity.condition.EntityConditionList;
+import org.ofbiz.entity.model.ModelEntity;
+import org.ofbiz.entity.model.ModelField;
 import org.ofbiz.entity.transaction.TransactionUtil;
 import org.ofbiz.entity.util.EntityFindOptions;
 import org.ofbiz.partner.scm.common.CommonEvents;
@@ -128,46 +131,64 @@ public class SecurityEvents {
 			JSONObject record = (JSONObject) r;// 单条记录
 			GenericValue v = delegator.makeValue(entityName);// 新建一个值对象
 			GenericValue sv = delegator.makeValue(systemEntityName);// 新建一个值对象
-			if(EntityCRUDEvent.checkFieldUnique(request,entityName,"userId",record.get("userId").toString(),"id",record.get("id").toString())){
-				v.set("userId", record.get("userId"));
-				sv.set("userLoginId", record.get("userId"));
-			}else{
-				throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "UserIdIsExist"));
+			ModelEntity vModel = v.getModelEntity();// 获取值对象字段模型
+			Iterator<String> i = record.keys();
+			String[] roles = null;
+			boolean roleUpdate = true;
+			while (i.hasNext()) {
+				String fieldName = i.next();
+				ModelField vModelField = vModel.getField(fieldName);
+				if (vModelField != null) {
+					if(fieldName.equals("userId")){
+						if(EntityCRUDEvent.checkFieldUnique(request,entityName,"userId",record.get("userId").toString(),"id",record.get("id").toString())){
+							v.set("userId", record.get("userId"));
+							sv.set("userLoginId", record.get("userId"));
+						}else{
+							throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "UserIdIsExist"));
+						}
+					} else if(fieldName.equals("userName")){
+						if(EntityCRUDEvent.checkFieldUnique(request,entityName,"userName",record.get("userName").toString(),"id",record.get("id").toString())){
+							v.set("userName", record.get("userName").toString());
+						}else{
+							throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "NameIsExist"));
+						}
+					} else if(fieldName.equals("password")){
+						if(!record.get("password").toString().startsWith("{SHA}")){
+							v.set("password", HashCrypt.getDigestHash(record.get("password").toString(), LoginServices.getHashType()));
+							sv.set("currentPassword", HashCrypt.getDigestHash(record.get("password").toString(), LoginServices.getHashType()));
+						}else{
+							v.set("password",record.get("password"));
+							sv.set("currentPassword",record.get("password"));
+						}
+					} else if(fieldName.equals("valid")){
+						v.set("valid",record.get("valid"));
+						sv.set("enabled",record.get("valid"));
+					} else if(fieldName.equals("roles")){
+						if(!"".equals(record.getString("roles"))){
+							if("noUpdate".equals(record.getString("roles"))){
+								roleUpdate = false;
+							}
+							roles = record.getString("roles").split(";");
+						}
+					} else {
+						v.set(fieldName, record.get(fieldName));
+					}
+				}
 			}
-			if(EntityCRUDEvent.checkFieldUnique(request,entityName,"userName",record.get("userName").toString(),"id",record.get("id").toString())){
-				v.set("userName", record.get("userName").toString());
-			}else{
-				throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "NameIsExist"));
-			}
-			if(!record.get("password").toString().startsWith("{SHA}")){
-				v.set("password", HashCrypt.getDigestHash(record.get("password").toString(), LoginServices.getHashType()));
-				sv.set("currentPassword", HashCrypt.getDigestHash(record.get("password").toString(), LoginServices.getHashType()));
-			}else{
-				v.set("password",record.get("password"));
-				sv.set("currentPassword",record.get("password"));
-			}
-			
-			v.set("id",record.get("id"));
-			v.set("sex",record.get("sex"));
-			v.set("departmentId",record.get("departmentId"));
-			v.set("position",record.get("position"));
-			v.set("phoneNumber",record.get("phoneNumber"));
-			v.set("email",record.get("email"));
-			v.set("valid",record.get("valid"));
-			sv.set("enabled",record.get("valid"));
 			boolean beganTransaction = false;		//增加事务控制
 			try {
 				beganTransaction = TransactionUtil.begin();
-				delegator.removeByCondition(roleEntityName, EntityCondition.makeCondition("userId", record.getString("userId")));
-				if(!"".equals(record.getString("roles"))){
-					String[] roles = record.getString("roles").split(";");
-					for(String role : roles){
-						String[] roleArr = role.split("#");
-						GenericValue rv = delegator.makeValue(roleEntityName);// 新建一个值对象
-						rv.set("id", roleArr[0]);
-						rv.set("roleId", roleArr[1]);
-						rv.set("userId", record.getString("userId"));
-						delegator.create(rv);
+				if(roleUpdate){
+					delegator.removeByCondition(roleEntityName, EntityCondition.makeCondition("userId", record.getString("userId")));
+					if(roles != null){
+						for(String role : roles){
+							String[] roleArr = role.split("#");
+							GenericValue rv = delegator.makeValue(roleEntityName);// 新建一个值对象
+							rv.set("id", roleArr[0]);
+							rv.set("roleId", roleArr[1]);
+							rv.set("userId", record.getString("userId"));
+							delegator.create(rv);
+						}
 					}
 				}
 				delegator.store(v);		//修改项目用户
