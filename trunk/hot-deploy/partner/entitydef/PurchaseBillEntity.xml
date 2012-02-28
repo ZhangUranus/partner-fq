@@ -21,6 +21,7 @@
 		<field name="buyerSystemUserId" type="id-long"></field>
 		<field name="approverSystemUserId" type="id-long"></field>
 		<field name="totalsum" type="fixed-point"></field>
+		<field name="receiveStamp" type="date-time"></field>
 		<field name="note" type="description"></field>
 		<field name="approverNote" type="description"></field>
 		<field name="status" type="int"></field>
