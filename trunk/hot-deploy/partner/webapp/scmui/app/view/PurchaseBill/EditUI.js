@@ -130,6 +130,17 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 																name : 'totalsum',
 																margin : 5
 															}, {
+																xtype : 'datefield',
+																name : 'receiveStamp',
+																margin : 5,
+																format : 'Y-m-d H:i:s',
+																fieldLabel : '返货时间',
+																allowBlank : false
+															}, {
+																xtype : 'label'
+															}, {
+																xtype : 'label'
+															}, {
 																xtype : 'textarea',
 																name : 'note',
 																margin : 5,
