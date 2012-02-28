@@ -239,6 +239,10 @@ public class EntityCRUDEvent {
 			}
 			try {
 				delegator.store(v);
+				List<GenericValue> valueList = new ArrayList<GenericValue>();
+				valueList.add(v);
+				String jsonStr = getJsonFromGenValList(valueList,1); // 将查询结果转换为json字符串
+				CommonEvents.writeJsonDataToExt(response, jsonStr); // 将结果返回前端Ext
 			} catch (GenericEntityException e) {
 				throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "UpdateRecordToDBEntityException"));
 			}
@@ -324,7 +328,7 @@ public class EntityCRUDEvent {
 	 * @return
 	 * @throws Exception 
 	 */
-	private static String getJsonFromGenValList(List<GenericValue> valueList,int total) throws Exception {
+	public static String getJsonFromGenValList(List<GenericValue> valueList,int total) throws Exception {
 		if (valueList == null || valueList.size() < 1) {
 			return "{'success':true,total:0,'records':[]}";
 		}
