@@ -1,9 +1,9 @@
 Ext.define('SCM.controller.system.SystemController', {
 			extend : 'Ext.app.Controller',
 
-			views : ['system.user.ListUI', 'system.monthlySettlement.StockSettle'],
-			stores : ['system.UserStore', 'system.SystemUserStore', 'system.RoleStore', 'system.UserTreeStore', 'system.UserOfRoleStore'],
-			models : ['system.UserTreeModel'],
+			views : ['system.user.ListUI', 'system.user.EditUI', 'system.monthlySettlement.StockSettle'],
+			stores : ['system.UserStore', 'system.SystemUserStore', 'system.UserInfoStore', 'system.RoleStore', 'system.UserTreeStore', 'system.UserOfRoleStore'],
+			models : ['system.UserTreeModel', 'system.UserInfoModel'],
 
 			/**
 			 * 初始化controller 增加事件监控
@@ -26,20 +26,29 @@ Ext.define('SCM.controller.system.SystemController', {
 							'usermanagement button[action=delete]' : {
 								click : this.deleteRecord
 							},
-
 							// 编辑界面保存
 							'usermanagement form button[action=save]' : {
 								click : this.saveRecord
 							},
-
 							// 监听各field值变动事件，只监听可见控件
 							'usermanagement form textfield{isVisible()}' : {
 								change : this.fieldchange
 							},
-
 							// 角色列表更新事件
 							'usermanagement grid' : {
 								selectionchange : this.fieldchange
+							},
+							// 完成用户界面初始化后调用
+							'userinfo' : {
+								afterrender : this.initUserForm
+							},
+							// 用户资料维护保存事件
+							'userinfo button[action=save]' : {
+								click : this.saveUserInfo
+							},
+							// 监听各field值变动事件，只监听可见控件
+							'userinfo textfield{isVisible()}' : {
+								change : this.userInfoFieldChange
 							}
 						});
 			},
@@ -54,7 +63,7 @@ Ext.define('SCM.controller.system.SystemController', {
 				this.selectUser = false;
 				this.userView = view;
 				this.userForm = view.down('form');
-				this.fields = this.userForm.query("textfield{isVisible()}"); // 取所以显示的field
+				this.fields = this.userForm.query("textfield{hidden==false}{readOnly==false}"); // 取所以显示的field
 				this.userGrid = view.down('gridpanel');
 				this.userTree = view.down('treepanel');
 				this.newButton = view.down('button[action=addNew]');
@@ -348,6 +357,104 @@ Ext.define('SCM.controller.system.SystemController', {
 
 			refreshTree : function() {
 				this.userTree.store.load();
+			},
+			
+			/**
+			 * 初始化个人资料维护界面
+			 */
+			initUserForm : function(view) {
+				this.userInfoForm = view ;
+				this.userInfoForm.inited = false;
+				this.userInfoForm.modifyed = false;
+				this.userInfoFields = this.userInfoForm.query("textfield{hidden==false}{readOnly==false}"); // 取所以显示的field
+				this.userInfoStore = Ext.create('UserInfoStore');
+				this.userInfoStore.proxy.addListener('afterRequest', this.afterUserInfoRequest, this); // 监听所有请求回调
+				this.userInfoStore.filter([{
+							property : "id",
+							value : SCM.CurrentUserUID
+						}]);
+				this.userInfoStore.load({
+					scope : this,
+					callback : function(records, operation, success){
+						view.getForm().loadRecord(records[0]);
+						this.userInfoForm.inited = true;
+					}
+				})
+			},
+			
+			/**
+			 * 校验form所有field的输入值是否有效
+			 * 
+			 * @return true 有效,false 无效
+			 */
+			isUserInfoValidate : function() {
+				var valid = true;
+				Ext.each(this.userInfoFields, function(item, index, length) {
+							var password = "";
+							var passwordComfirm = "";
+							if (item.name == 'password') {
+								password = item.value;
+							}
+							if (item.name == 'passwordComfirm') {
+								passwordComfirm = item.value;
+							}
+							if (!item.isValid()) {
+								valid = false;
+							}
+						})
+				return valid;
+			},
+			
+			/**
+			 * 捕捉field控件的change事件，设置form的修改状态
+			 * 
+			 * @param {}
+			 *            textField 当前控件
+			 * @param {}
+			 *            newValue 新值
+			 * @param {}
+			 *            oldValue 旧值
+			 */
+			userInfoFieldChange : function(textField, newValue, oldValue) {
+				if (this.userInfoForm.inited && !this.userInfoForm.modifyed) {
+					this.userInfoForm.modifyed = true;
+				}
+				if (textField && textField.name == 'password') {// 修改密码是，修改确认密码的正则表达式
+					var pc = this.userInfoForm.query("textfield[name=passwordComfirm]");
+					pc[0].regex = new RegExp('^' + textField.value + '$');
+					pc[0].regexText = '密码和确认密码不一致！';
+					pc[0].isValid();
+				}
+			},
+			
+			/**
+			 * 保存个人资料
+			 */
+			saveUserInfo : function() {
+				var me = this;
+				if (!me.userInfoForm.modifyed) {// 用户未做任何修改，直接关闭编辑框
+					Ext.Msg.alert("提示信息", "未做任何修改！");
+					return;
+				}
+				var model = null;
+				if (!this.isUserInfoValidate()) {
+					return;
+				}
+				this.userInfoForm.getForm().updateRecord(this.userInfoForm.getRecord());
+			},
+			
+			/**
+			 * 监听保存成功事件
+			 */
+			afterUserInfoRequest : function(request, success) {
+				var me = this;
+				if (success && request.operation.success) {
+					if (request.action == 'update') {
+						Ext.Msg.alert("提示", "更新用户成功！");
+					}
+				} else {
+					// 不需要处理，由服务器抛出异常即可
+				}
 			}
 
 		});

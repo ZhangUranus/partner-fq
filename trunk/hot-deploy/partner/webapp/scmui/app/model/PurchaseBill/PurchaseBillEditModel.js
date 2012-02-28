@@ -42,6 +42,13 @@ Ext.define('SCM.model.PurchaseBill.PurchaseBillEditModel', {
 				name : 'totalsum',
 				type : 'float'
 			}, {
+				name : 'receiveStamp',
+				type : 'date',
+				defaultValue : new Date(),
+				convert : function(value, record) {
+					return new Date(value);
+				}
+			}, {
 				name : 'createdStamp',
 				defaultValue : new Date(),
 				type : 'date',
@@ -73,7 +80,7 @@ Ext.define('SCM.model.PurchaseBill.PurchaseBillEditModel', {
 	proxy : {
 		type : 'jsonajax',
 		api : {
-			read : '../../scm/control/requestJsonData?entity=PurchaseBillView&distinct=true&fields=id,number,bizDate,supplierSupplierId,supplierSupplierName,buyerSystemUserId,buyerSystemUserName,approverSystemUserId,approverSystemUserName,totalsum,createdStamp,lastUpdatedStamp,note,approverNote,status',
+			read : '../../scm/control/requestJsonData?entity=PurchaseBillView&distinct=true&fields=id,number,bizDate,supplierSupplierId,supplierSupplierName,buyerSystemUserId,buyerSystemUserName,approverSystemUserId,approverSystemUserName,totalsum,receiveStamp,createdStamp,lastUpdatedStamp,note,approverNote,status',
 			destroy : '../../scm/control/deleteWithEntry?headEntity=PurchaseBill&entryEntity=PurchaseBillEntry'
 		},
 		remoteFilter : true
