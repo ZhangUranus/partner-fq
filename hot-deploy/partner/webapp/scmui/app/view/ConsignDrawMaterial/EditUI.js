@@ -133,7 +133,7 @@ Ext.define('SCM.view.ConsignDrawMaterial.EditUI', {
 																matchFieldWidth : false,
 																allowBlank : false,
 																listConfig : {
-																	width : 185,
+																	width : SCM.MaxSize.COMBOGRID_EXTRA_WIDTH,
 																	height : SCM.MaxSize.COMBOGRID_HEIGHT,
 																	columns : [{
 																				header : '编码',
@@ -144,6 +144,11 @@ Ext.define('SCM.view.ConsignDrawMaterial.EditUI', {
 																				header : '名称',
 																				dataIndex : 'materialName',
 																				width : 80,
+																				hideable : false
+																			}, {
+																				header : '备注',
+																				dataIndex : 'note',
+																				width : 120,
 																				hideable : false
 																			}]
 																}
@@ -273,12 +278,13 @@ Ext.define('SCM.view.ConsignDrawMaterial.EditUI', {
 													viewConfig : {
 
 													},
-													plugins : [cellEditing]//,
-//													dockedItems : [{
-//																xtype : 'gridedittoolbar',
-//																dock : 'top'
-//															}]
-												}, {
+													plugins : [cellEditing]
+													// ,
+												// dockedItems : [{
+												// xtype : 'gridedittoolbar',
+												// dock : 'top'
+												// }]
+											}	, {
 													xtype : 'container',
 													height : 50,
 													layout : {
@@ -315,9 +321,9 @@ Ext.define('SCM.view.ConsignDrawMaterial.EditUI', {
 																margin : 5,
 																colspan : 3,
 																style : {
-																	'font-weight': 'bold',
-																	'color': 'red',
-																	'font-size':12
+																	'font-weight' : 'bold',
+																	'color' : 'red',
+																	'font-size' : 12
 																}
 															}]
 												}]

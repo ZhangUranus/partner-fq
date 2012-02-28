@@ -18,6 +18,9 @@ Ext.define('SCM.model.basedata.MaterialBomEditModel', {
 						name : 'materialName',
 						type : 'string',
 						persist : false
+					}, {
+						name : 'note',
+						type : 'string'
 					}
 
 			],

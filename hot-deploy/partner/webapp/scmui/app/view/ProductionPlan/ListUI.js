@@ -37,7 +37,7 @@ Ext.define('SCM.view.ProductionPlan.ListUI', {
 																matchFieldWidth : false,
 																allowBlank : false,
 																listConfig : {
-																	width : 185,
+																	width : SCM.MaxSize.COMBOGRID_EXTRA_WIDTH,
 																	height : SCM.MaxSize.COMBOGRID_HEIGHT,
 																	columns : [{
 																				header : '编码',
@@ -48,6 +48,11 @@ Ext.define('SCM.view.ProductionPlan.ListUI', {
 																				header : '名称',
 																				dataIndex : 'materialName',
 																				width : 80,
+																				hideable : false
+																			}, {
+																				header : '备注',
+																				dataIndex : 'note',
+																				width : 120,
 																				hideable : false
 																			}]
 																}
@@ -108,7 +113,7 @@ Ext.define('SCM.view.ProductionPlan.ListUI', {
 																dataIndex : 'ISOUT',
 																width : 60,
 																text : '库存情况',
-																renderer: SCM.store.basiccode.warningRenderer
+																renderer : SCM.store.basiccode.warningRenderer
 															}, {
 																xtype : 'numbercolumn',
 																dataIndex : 'PRICE',
