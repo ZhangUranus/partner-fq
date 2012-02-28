@@ -63,7 +63,7 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 				if (!this.win || this.win.isDestroyed) {
 					this.win = Ext.widget(this.editName);
 					this.editForm = this.win.down('form');
-					this.fields = this.editForm.query("textfield{isVisible()}"); // 取所以显示的field
+					this.fields = this.editForm.query("textfield{hidden==false}"); // 取所以显示的field
 					this.saveButton = this.win.down('button[action=save]');
 					this.clearButton = this.win.down('button[action=clear]');
 				}
@@ -83,10 +83,13 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 					if (request.action == 'read') {
 						this.changeComponentsState();
 					} else if (request.action == 'create') {
+						this.isUpdate = true;
 						this.refreshRecord();
 					} else if (request.action == 'update') {
+						this.isUpdate = true;
 						this.refreshRecord();
 					} else if (request.action == 'destroy') {
+						this.isUpdate = true;
 						this.refreshRecord();
 					}
 					if (this.win.isVisible()) {
@@ -278,6 +281,7 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 				}
 				this.listPanel.store.load();
 				this.changeComponentsState();
+				this.isUpdate = false;
 			},
 
 			/**
@@ -297,8 +301,7 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 				}
 				var record;
 				if (this.win.uiStatus == 'Modify') {// 修改记录
-					record = this.editForm.getRecord();
-					record.set(values);
+					this.editForm.getForm().updateRecord(this.editForm.getRecord());
 				} else if (this.win.uiStatus == 'AddNew') {// 新增记录
 					record = Ext.create(this.modelName);
 					record.phantom = true;

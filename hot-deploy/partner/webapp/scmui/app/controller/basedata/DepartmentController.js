@@ -92,8 +92,12 @@ Ext.define('SCM.controller.basedata.DepartmentController', {
 					this.listPanel.store.getProxy().extraParams.query = '';
 				}
 				this.listPanel.store.load();
-				this.treePanel.store.load();
 				this.changeComponentsState();
+				//数据变更时才刷新树形菜单。
+				if(this.isUpdate){
+					this.treePanel.store.load();
+				}
+				this.isUpdate = false;
 			},
 			
 			/**
