@@ -172,6 +172,12 @@ public class SecurityEvents {
 				}
 				delegator.store(v);		//修改项目用户
 				delegator.store(sv);	//修改系统用户
+				
+				List<GenericValue> valueList = new ArrayList<GenericValue>();
+				valueList.add(v);
+				String jsonStr = EntityCRUDEvent.getJsonFromGenValList(valueList,1); // 将查询结果转换为json字符串
+				CommonEvents.writeJsonDataToExt(response, jsonStr); // 将结果返回前端Ext
+				
 				TransactionUtil.commit(beganTransaction);
 			} catch (GenericEntityException e) {
 				try {
