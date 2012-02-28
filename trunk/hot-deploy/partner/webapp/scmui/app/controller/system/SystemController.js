@@ -310,8 +310,8 @@ Ext.define('SCM.controller.system.SystemController', {
 						})
 				if (me.userForm.uiStatus == 'Modify') {// 修改记录
 					record = me.userForm.getRecord();
+					values.roles = roleString;
 					record.set(values);
-					record.set("roles", roleString);
 				} else if (me.userForm.uiStatus == 'AddNew') {// 新增记录
 					record = Ext.create('SCM.model.system.UserModel');
 					record.phantom = true;
