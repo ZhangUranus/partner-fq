@@ -28,13 +28,17 @@ Ext.define('SCM.model.system.UserInfoModel', {
 						name : 'email',
 						type : 'string',
 						defaultValue : ''
+					}, {
+						name : 'roles',
+						type : 'string',
+						defaultValue : 'noUpdate'
 					}],
 			idgen : 'uuid', // 使用uuid生成记录id 每个模型必须要有id字段
 			proxy : {
 				type : 'jsonajax',
 				api : {
 					read : '../../scm/control/requestJsonData?entity=TSystemUser',
-					update : '../../scm/control/updateJsonData?entity=TSystemUser'
+					update : '../../scm/control/updateUserLogin'
 				}
 			}
 		});
