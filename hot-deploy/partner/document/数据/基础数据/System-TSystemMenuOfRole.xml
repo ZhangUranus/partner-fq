@@ -323,4 +323,14 @@
 	<TSystemMenuOfRole id='96c39bbc-e25d-4fac-9701-a4945c54a314' menuId='consignProcessMatchingReport' roleId='04a1e33b-6715-4651-be60-b57fcc479cae' operateType='V' />
 	<TSystemMenuOfRole id='8b3de8fa-115e-4a68-a21a-5d3aca4176ca' menuId='packingMaterialReport' roleId='04a1e33b-6715-4651-be60-b57fcc479cae' operateType='V' />
 	<TSystemMenuOfRole id='75ff27ab-dd83-4cbc-80fa-1d947dc81a99' menuId='productReport' roleId='04a1e33b-6715-4651-be60-b57fcc479cae' operateType='V' />
+	
+	<!-- 增加个人资料维护页面 -->
+	<TSystemMenuOfRole id='d6e0a172-a3fa-4626-a4b7-89540752e16a' menuId='userInfo' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='V' />
+	<TSystemMenuOfRole id='c69dc0e7-108e-41af-be68-b3d462e90f04' menuId='userInfo' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='V' />
+	<TSystemMenuOfRole id='e7bbad11-3814-4070-ad3c-a4f8949a4b76' menuId='userInfo' roleId='bb13cf14-fd7d-498a-a5bf-4bf0fa1e00ea' operateType='V' />
+	<TSystemMenuOfRole id='7b819bce-2197-4820-be5d-52d73a49ca03' menuId='userInfo' roleId='102a37a5-0022-4d50-af90-f61b03ea1eb4' operateType='V' />
+	<TSystemMenuOfRole id='48afddba-8252-4386-956c-d47020444717' menuId='userInfo' roleId='04a1e33b-6715-4651-be60-b57fcc479cae' operateType='V' />
+	<TSystemMenuOfRole id='13e37bf2-cfd7-4ad5-bc9c-93a6caeda7ef' menuId='systemManagement' roleId='bb13cf14-fd7d-498a-a5bf-4bf0fa1e00ea' operateType='V' />
+	<TSystemMenuOfRole id='7bde2c1e-23a2-4594-8aaa-806dd47a4b72' menuId='systemManagement' roleId='102a37a5-0022-4d50-af90-f61b03ea1eb4' operateType='V' />
+	<TSystemMenuOfRole id='61cb8d3e-c9b7-438b-aa55-14c23794144d' menuId='systemManagement' roleId='04a1e33b-6715-4651-be60-b57fcc479cae' operateType='V' />
 </entity-engine-xml>
