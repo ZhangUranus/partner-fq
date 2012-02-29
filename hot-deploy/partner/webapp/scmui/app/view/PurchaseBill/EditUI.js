@@ -74,6 +74,32 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 																}
 															}, {
 																xtype : 'combogrid',
+																fieldLabel : '申请人',
+																name : 'submitUserId',
+																valueField : 'id',
+																displayField : 'name',
+																store : Ext.create('SystemUserStore'),
+																margin : 5,
+																matchFieldWidth : false,
+																allowBlank : false,
+																readOnly : true,
+																listConfig : {
+																	width : 185,
+																	height : SCM.MaxSize.COMBOGRID_HEIGHT,
+																	columns : [{
+																				header : '编码',
+																				dataIndex : 'number',
+																				width : 100,
+																				hideable : false
+																			}, {
+																				header : '名称',
+																				dataIndex : 'name',
+																				width : 80,
+																				hideable : false
+																			}]
+																}
+															}, {
+																xtype : 'combogrid',
 																fieldLabel : '采购员',
 																name : 'buyerSystemUserId',
 																valueField : 'id',
@@ -136,8 +162,6 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 																format : 'Y-m-d H:i:s',
 																fieldLabel : '返货时间',
 																allowBlank : false
-															}, {
-																xtype : 'label'
 															}, {
 																xtype : 'label'
 															}, {
