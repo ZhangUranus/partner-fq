@@ -115,7 +115,7 @@ Ext.define('SCM.controller.ConsignDrawMaterial.ConsignDrawMaterialController', {
 			 * @param {} record
 			 */
 			initCurrentUserSelect : function(record){
-				record.set('issuerSystemUserId',SCM.CurrentUserUID);
+				record.set('issuerSystemUserId',SCM.CurrentUser.id);
 			},
 
 			/**

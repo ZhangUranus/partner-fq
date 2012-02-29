@@ -20,11 +20,11 @@ Ext.define('SCM.controller.Main', {
             success : function(response , option) {
                 var result = Ext.decode(response.responseText)
                 if(result.success){
-                	Ext.getCmp("current-user-label").setText(result.username);
+                	Ext.getCmp("current-user-label").setText(result.currentUser.userName);
                 	Ext.getCmp("current-date-label").setText(result.currentYear+"年"+result.currentMonth+"月");
 	                SCM.SystemMonthlyYear = result.currentYear;
 	                SCM.SystemMonthlyMonth = result.currentMonth;
-	                SCM.CurrentUserUID = result.uid;
+	                SCM.CurrentUser = result.currentUser;
 	                Ext.getCmp('main-tree').show();
 	                Ext.getCmp('main-content').show();
                 }else{

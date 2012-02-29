@@ -106,6 +106,7 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 				this.searchMaterialId = this.listContainer.down('combogrid[name=searchMaterialId]');
 				this.searchCustId = this.listContainer.down('combogrid[name=searchCustId]');
 				this.totalFields = this.editForm.down('textfield[name=totalsum]');
+				this.submitUserFields = this.editForm.down('combogrid[name=submitUserId]');
 				this.auditButton = this.listContainer.down('button[action=audit]');// 审核按钮
 				this.unauditButton = this.listContainer.down('button[action=unaudit]');// 反审核按钮
 
@@ -120,7 +121,8 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 			 * @param {} record
 			 */
 			initCurrentUserSelect : function(record){
-				record.set('buyerSystemUserId',SCM.CurrentUserUID);
+				record.set('buyerSystemUserId',SCM.CurrentUser.id);
+				record.set('submitUserId',SCM.CurrentUser.id);
 			},
 
 			/**
@@ -205,12 +207,31 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 				}
 				this.totalFields.setValue(sum);
 			},
-			// 审核单据
+			
+			/**
+			 * 判断用户是否属于同一部门，属于同一部门才有权限进行审批
+			 */
+			hasAuditPermission : function(id){
+				var record = this.submitUserFields.store.findRecord("id",id);
+				if(SCM.CurrentUser.departmentId == record.get("departmentId")){
+					return true;
+				}
+				return false;
+			},
+			
+			/**
+			 * 审核单据
+			 * @param {} button
+			 */ 
 			auditBill : function(button) {
 				sm = this.listPanel.getSelectionModel();
 
 				if (sm.hasSelection()) {// 判断是否选择行记录
 					record = sm.getLastSelected();
+					if(!this.hasAuditPermission(record.get("submitUserId"))){
+						showError('您没有权限审核该小组采购单！');
+						return;
+					}
 					if (record.get('status') != '0') {
 						showError('单据已审核！');
 						return;
@@ -225,6 +246,10 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 
 				if (sm.hasSelection()) {// 判断是否选择行记录
 					record = sm.getLastSelected();
+					if(!this.hasAuditPermission(record.get("submitUserId"))){
+						showError('您没有权限反审核该小组采购单！');
+						return;
+					}
 					if (!(record.get('status') == '1' || record.get('status') == '2')) {
 						showError('单据未审核！');
 						return;
