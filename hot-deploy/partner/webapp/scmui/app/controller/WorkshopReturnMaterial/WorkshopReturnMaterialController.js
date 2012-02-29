@@ -110,7 +110,7 @@ Ext.define('SCM.controller.WorkshopReturnMaterial.WorkshopReturnMaterialControll
 			 * @param {} record
 			 */
 			initCurrentUserSelect : function(record){
-				record.set('checkerSystemUserId',SCM.CurrentUserUID);
+				record.set('checkerSystemUserId',SCM.CurrentUser.id);
 			},
 
 			/**

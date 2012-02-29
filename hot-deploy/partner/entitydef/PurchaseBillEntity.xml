@@ -18,6 +18,7 @@
 		<field name="number" type="name"></field>
 		<field name="bizDate" type="date-time"></field>
 		<field name="supplierSupplierId" type="id-long"></field>
+		<field name="submitUserId" type="id-long"></field>
 		<field name="buyerSystemUserId" type="id-long"></field>
 		<field name="approverSystemUserId" type="id-long"></field>
 		<field name="totalsum" type="fixed-point"></field>
@@ -47,11 +48,13 @@
 		<member-entity entity-alias="PurchaseBillV" entity-name="PurchaseBill"></member-entity>
 		<member-entity entity-alias="PurchaseBillEntryV" entity-name="PurchaseBillEntry"></member-entity>
 		<member-entity entity-alias="supplierSupplierV" entity-name="Supplier"></member-entity>
+		<member-entity entity-alias="submitSystemUserV" entity-name="SystemUser"></member-entity>
 		<member-entity entity-alias="buyerSystemUserV" entity-name="SystemUser"></member-entity>
 		<member-entity entity-alias="approverSystemUserV" entity-name="SystemUser"></member-entity>
 		<alias-all entity-alias="PurchaseBillV"></alias-all>
 		<alias name="materialMaterialId" entity-alias="PurchaseBillEntryV" field="materialMaterialId"></alias>
 		<alias name="supplierSupplierName" entity-alias="supplierSupplierV" field="name"></alias>
+		<alias name="submitUserName" entity-alias="submitSystemUserV" field="name"></alias>
 		<alias name="buyerSystemUserName" entity-alias="buyerSystemUserV" field="name"></alias>
 		<alias name="approverSystemUserName" entity-alias="approverSystemUserV" field="name"></alias>
 		<view-link entity-alias="PurchaseBillV" rel-entity-alias="PurchaseBillEntryV" rel-optional="true">
@@ -59,6 +62,9 @@
 		</view-link>
 		<view-link entity-alias="PurchaseBillV" rel-entity-alias="supplierSupplierV" rel-optional="true">
 			<key-map field-name="supplierSupplierId" rel-field-name="id" />
+		</view-link>
+		<view-link entity-alias="PurchaseBillV" rel-entity-alias="submitSystemUserV" rel-optional="true">
+			<key-map field-name="submitUserId" rel-field-name="id" />
 		</view-link>
 		<view-link entity-alias="PurchaseBillV" rel-entity-alias="buyerSystemUserV" rel-optional="true">
 			<key-map field-name="buyerSystemUserId" rel-field-name="id" />
