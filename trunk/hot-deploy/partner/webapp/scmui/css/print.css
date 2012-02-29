@@ -1,0 +1,49 @@
+div.printbody{
+/*width:100px;
+*/
+border:0px;
+}
+/*打印单据标题*/
+div.caption { 
+	padding: 0 0 5px 0; 
+	font-size:20px;
+	text-align: center; 
+}
+div.field{
+	left:0px;
+	top: 0px;
+	/*内容超过规定宽度时是否换行*/
+	white-space: nowrap; 
+	/*内容超过规定宽度时截取超长部分*/
+	overflow:hidden;
+	padding: 6px 6px 6px 12px; 
+	
+}
+/*打印元素分页该元素后面内容会在另外页打印*/
+div.nextPage{
+	page-break-after:always;
+}
+/*下一行开始*/
+div.nextLine{
+	clear: both;
+}
+table{
+	width:100%;
+	position: relative;
+	border-collapse:collapse;
+}
+th { 
+	font: bold 9px ; 
+	border: 1px solid ; 
+	letter-spacing: 2px; 
+	text-transform: uppercase; 
+	text-align: left; 
+	padding: 6px 6px 6px 12px; 
+}
+td{
+	border: 1px solid ; 
+	letter-spacing: 2px; 
+	text-transform: uppercase; 
+	text-align: left; 
+	padding: 6px 6px 6px 12px; 
+}
