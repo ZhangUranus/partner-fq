@@ -371,7 +371,7 @@ Ext.define('SCM.controller.system.SystemController', {
 				this.userInfoStore.proxy.addListener('afterRequest', this.afterUserInfoRequest, this); // 监听所有请求回调
 				this.userInfoStore.filter([{
 							property : "id",
-							value : SCM.CurrentUserUID
+							value : SCM.CurrentUser.id
 						}]);
 				this.userInfoStore.load({
 					scope : this,

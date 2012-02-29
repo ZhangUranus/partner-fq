@@ -76,8 +76,8 @@ public class CommonEvents {
 	 * 设置属性到Session中
 	 * 
 	 * */
-    public static void setAttributeToSession(HttpServletRequest request,String attributeName,String attributeValue){
-    	if(!"".equals(attributeName) && !"".equals(attributeValue)){
+    public static void setAttributeToSession(HttpServletRequest request,String attributeName,Object attributeValue){
+    	if(!"".equals(attributeName) && attributeValue != null){
     		request.getSession().setAttribute(attributeName, attributeValue);
     	}
     }

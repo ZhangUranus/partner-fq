@@ -110,7 +110,7 @@ Ext.define('SCM.controller.WorkshopDrawMaterial.WorkshopDrawMaterialController',
 			 * @param {} record
 			 */
 			initCurrentUserSelect : function(record){
-				record.set('issuerSystemUserId',SCM.CurrentUserUID);
+				record.set('issuerSystemUserId',SCM.CurrentUser.id);
 			},
 
 			/**
