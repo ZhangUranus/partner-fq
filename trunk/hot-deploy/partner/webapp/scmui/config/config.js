@@ -3,7 +3,7 @@ Ext.namespace('SCM');
 /**
  * 系统全局参数
  */
-SCM.CurrentUserUID="";
+SCM.CurrentUser="";
 SCM.SystemMonthlyYear=2012;
 SCM.SystemMonthlyMonth=1;
 /**

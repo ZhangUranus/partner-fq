@@ -26,6 +26,12 @@ Ext.define('SCM.model.PurchaseBill.PurchaseBillModel', {
 						type : 'string',
 						persist : false
 					}, {
+						name : 'submitUserId',
+						type : 'string'
+					}, {
+						name : 'submitUserName',
+						type : 'string'
+					}, {
 						name : 'buyerSystemUserId',
 						type : 'string'
 					}, {

@@ -16,6 +16,9 @@ Ext.define('SCM.model.system.SystemUserModel', {
 					}, {
 						name : 'name',
 						type : 'string'
+					}, {
+						name : 'departmentId',
+						type : 'string'
 					}],
 			proxy : {
 				type : 'jsonajax',

@@ -80,11 +80,11 @@ Ext.define('SCM.view.Login',{
                             waitTitle:'正在验证登录',
                             url:'../scm/control/checkLogin',
                             success: function(form, action) {
-                            	Ext.getCmp("current-user-label").setText(action.result.username);
+                            	Ext.getCmp("current-user-label").setText(action.result.currentUser.userName);
                             	Ext.getCmp("current-date-label").setText(action.result.currentYear+"年"+action.result.currentMonth+"月");
                                 SCM.SystemMonthlyYear = action.result.currentYear;
 	                			SCM.SystemMonthlyMonth = action.result.currentMonth;
-	                			SCM.CurrentUserUID = action.result.uid;
+	                			SCM.CurrentUser = action.result.currentUser;
                                 win.hide();
                                 Ext.getCmp('main-tree').show();
                                 Ext.getCmp('main-content').show();
