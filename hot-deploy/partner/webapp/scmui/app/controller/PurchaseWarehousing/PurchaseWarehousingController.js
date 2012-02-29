@@ -112,8 +112,8 @@ Ext.define('SCM.controller.PurchaseWarehousing.PurchaseWarehousingController', {
 			 * @param {} record
 			 */
 			initCurrentUserSelect : function(record){
-				record.set('buyerSystemUserId',SCM.CurrentUserUID);
-				record.set('checkerSystemUserId',SCM.CurrentUserUID);
+				record.set('buyerSystemUserId',SCM.CurrentUser.id);
+				record.set('checkerSystemUserId',SCM.CurrentUser.id);
 			},
 
 			/**

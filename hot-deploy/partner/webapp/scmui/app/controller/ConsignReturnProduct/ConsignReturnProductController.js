@@ -125,7 +125,7 @@ Ext.define('SCM.controller.ConsignReturnProduct.ConsignReturnProductController',
 			 * @param {} record
 			 */
 			initCurrentUserSelect : function(record){
-				record.set('returnerSystemUserId',SCM.CurrentUserUID);
+				record.set('returnerSystemUserId',SCM.CurrentUser.id);
 			},
 
 			/**

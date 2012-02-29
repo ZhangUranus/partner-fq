@@ -110,7 +110,7 @@ Ext.define('SCM.controller.PurchaseReturn.PurchaseReturnController', {
 			 * @param {} record
 			 */
 			initCurrentUserSelect : function(record){
-				record.set('returnerSystemUserId',SCM.CurrentUserUID);
+				record.set('returnerSystemUserId',SCM.CurrentUser.id);
 			},
 
 			/**
