@@ -83,6 +83,7 @@
 		<member-entity entity-alias="unitUnitV" entity-name="Unit"></member-entity>
 		<alias-all entity-alias="WorkshopReturnProductEntryV"></alias-all>
 		<alias name="warehouseWarehouseName" entity-alias="warehouseWarehouseV" field="name"></alias>
+		<alias name="materialMaterialNumber" entity-alias="materialMaterialV" field="number"></alias>
 		<alias name="materialMaterialName" entity-alias="materialMaterialV" field="name"></alias>
 		<alias name="unitUnitName" entity-alias="unitUnitV" field="name"></alias>
 		<view-link entity-alias="WorkshopReturnProductEntryV" rel-entity-alias="warehouseWarehouseV" rel-optional="true">

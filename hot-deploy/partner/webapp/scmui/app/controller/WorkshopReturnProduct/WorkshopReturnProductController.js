@@ -444,13 +444,30 @@ Ext.define('SCM.controller.WorkshopReturnProduct.WorkshopReturnProductController
 			cancelDetail : function() {
 				this.detailWin.close();
 			},
-			getPrintTemplateArr: function(){
-				return [{name:'默认打印模板',
-					     template:[{dataIndex:'data.number',style:'left:10px;top:50px'}, 
-					        	{dataIndex:'data.bizDate',style:'left:150px;top:50px'},
-					               {dataIndex:'data.entry[0].materialMaterialName',style:'left:10px;top:80px'}
-					                ]
-					     }
-					     ];
+			getMainPrintHTML:function(){
+				return "<div>"
+				+"<div class='caption' >江门市蓬江区富桥旅游用品厂有限公司</div>"
+				+"<div class='caption' >车间半成品退货单</div>"
+				+"<div class='field' >单据编号:<span class='dataField' fieldindex='data.number' width=150px></span></div>"
+				+"<div class='field' style='width:25%;float:left;'>退货车间:<span class='dataField' fieldindex='data.workshopWorkshopName' width=150px></span></div>"
+				+"<div class='field' style='width:25%;float:left;'>退货员:<span style='width:150px'></span></div>"
+				+"<div class='field' align='right' style='width:35%;float:right;'>日期:<span class='dataField' fieldindex='data.bizDate' width=150px></span></div>"
+				+"<div class='nextLine'></div>"
+				+"<table  cellspacing='0' class='dataEntry' fieldindex='data.entry'>" 
+				+"<tr> "
+				+"<th bindfield='materialMaterialNumber'>货号</th>" 
+				+"<th bindfield='warehouseWarehouseName'>仓库</th> "
+				+"<th bindfield='materialMaterialName'>物料名称</th>" 
+				+"<th bindfield='materialMaterialModel'>规格型号</th> "
+				+"<th bindfield='volume'>数量</th> "
+				+"<th bindfield='unitUnitName'>单位</th> "
+				+"<th bindfield='note'>备注</th> "
+				+"</tr> "
+				+"</table>" 
+				+"<div class='field' >质检意见:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;质检人签名:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>"
+				+"<div class='field' ><span style='font-weight:20px'>□</span>返工 	车间主任签名:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='font-weight:20px'>□</span>报废  	 车间主任签名:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>"
+				+"<div class='field' style='width:50%;'>打印时间:<span class='dataField' fieldindex='data.printTime'></span></div>"
+				+"<div class='field' style='width:50%;'>第<span class='dataField' fieldindex='data.curPage'></span>页/共<span class='dataField' fieldindex='data.totalPages'></span>页</div>"
+				+"</div>";
 			}
 		});
