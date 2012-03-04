@@ -183,7 +183,6 @@
 	<TSystemMenuOfRole id='38cd5b58-e12a-43ca-9e02-fee650ec959a' menuId='purchaseBillManagement' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='E' />
 	<TSystemMenuOfRole id='f3e360a3-22b1-41a0-868f-a68970204a5a' menuId='purchaseBillManagement' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='D' />
 	<TSystemMenuOfRole id='678a094b-942b-4f90-a3cf-fcddede79f41' menuId='purchaseBillManagement' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='N' />
-	<TSystemMenuOfRole id='f58f90be-278c-4f7e-899b-0d3e571f84ac' menuId='purchaseBillManagement' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='A' />
 	<TSystemMenuOfRole id='dddc4d21-6690-4a5e-923e-0e43d27d4c77' menuId='purchaseWarehousing' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='V' />
 	<TSystemMenuOfRole id='33f1a0d7-f251-4b04-9a8b-1a2bb6279c37' menuId='purchaseWarehousing' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='E' />
 	<TSystemMenuOfRole id='08a0531f-7e77-4f27-a4be-010a0571899d' menuId='purchaseWarehousing' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='D' />
