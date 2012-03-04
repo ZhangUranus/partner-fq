@@ -25,6 +25,8 @@ Ext.application({
 				var viewport = Ext.create('SCM.view.Viewport');
 				viewport.doLayout(); // 刷新布局
 
+				
+				Ext.override(Ext.form.field.Number,{decimalPrecision:4});
 //				//4.1B2版本已经解决改问题，屏蔽代码。
 //				// 修正treestoreload的bug
 //				Ext.override(Ext.data.TreeStore, {

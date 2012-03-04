@@ -247,7 +247,7 @@ function getBlock(jo) {
      this.mainBodyDiv='';//主页样式
      this.loopBodyDiv='';//循环页样式
      this.tailDiv='';//尾页样式
-     this.loopCount=1; //循环数
+     this.loopCount=9; //循环数
      this.loopEntryIndex='data.entry';//循环体数据索引
     };
     
@@ -284,10 +284,10 @@ function getBlock(jo) {
            var loopEntry=eval(printConfig.loopEntryIndex);
            pagesCount=Math.ceil(loopEntry.length/printConfig.loopCount);//无条件进位
            
-           //设置总页数
-           data.totalPages=pagesCount;
+           //设置总页数,转化为字符类型，这样打印出来就不显示小数位
+           data.totalPages=''+pagesCount;
            //设置当前页数
-           data.curPage=1;
+           data.curPage='1';
            
            //循环体开始、结束记录位置，从1开始
            var fromCount=1;
@@ -315,7 +315,7 @@ function getBlock(jo) {
             	   doc.body.appendChild(nextPageDiv);
             	   
                    //设置当前页数
-            	   data.curPage=i;
+            	   data.curPage=''+i;
             	   
             	 //写入循环页
             	   var loopDiv=doc.createElement('div');
@@ -335,7 +335,7 @@ function getBlock(jo) {
            }
            
            if(pagesCount>1){//大于一页尾页处理
-        	   data.curPage=pagesCount;
+        	   data.curPage=''+pagesCount;
         	   //分页
         	   var nextPageDiv=doc.createElement('div');
         	   nextPageDiv.className='nextPage';
@@ -366,6 +366,9 @@ function getBlock(jo) {
            if(fi){
             try{
 		     var text = eval(fi);/* 查找data对象的打印值 */
+		     if((typeof text) == 'number'){
+		    	 text=text.toFixed(4);
+		     }
 		     if(text!=undefined){
 		      field.innerHTML=text;
 		     }
@@ -425,6 +428,9 @@ function getBlock(jo) {
        // 获取每列的值
        try{
 	       var value= eval(bindEntryIndex+"["+k+"]."+fieldMapArr[cn]);/* 查找data对象的打印值 */
+	       if((typeof value) == 'number'){
+	    	   value=value.toFixed(4);
+		     }
 	       if(value!=undefined){
 	        cell.innerText=value;
 	       }

@@ -247,13 +247,29 @@ Ext.define('SCM.controller.ConsignWarehousing.ConsignWarehousingController', {
 				}
 				
 			},
-			getPrintTemplateArr: function(){
-				return [{name:'默认打印模板',
-					     template:[{dataIndex:'data.number',style:'left:10px;top:50px'}, 
-					        	{dataIndex:'data.bizDate',style:'left:150px;top:50px'},
-					               {dataIndex:'data.entry[0].materialMaterialName',style:'left:10px;top:80px'}
-					                ]
-					     }
-					     ];
+			getMainPrintHTML:function(){
+				return "<div>"
+				+"<div class='caption' >江门市蓬江区富桥旅游用品厂有限公司</div>"
+				+"<div class='caption' >委外加工验收单</div>"
+				+"<div class='field' >单据编号:<span class='dataField' fieldindex='data.number' width=150px></span></div>"
+				+"<div class='field' style='width:45%;float:left;'>加工单位:<span class='dataField' fieldindex='data.processorSupplierName' width=150px></span></div>"
+				+"<div class='field' align='right' style='width:45%;float:right;'>日期:<span class='dataField' fieldindex='data.bizDate' width=150px></span></div>"
+				+"<div class='nextLine'></div>"
+				+"<table  cellspacing='0' class='dataEntry' fieldindex='data.entry'>" 
+				+"<tr> "
+				+"<th bindfield='materialMaterialNumber'>货号</th> "
+				+"<th bindfield='materialMaterialName'>物料名称</th>" 
+				+"<th bindfield='materialMaterialModel'>规格型号</th> "
+				+"<th bindfield='unitUnitName'>单位</th> "
+				+"<th bindfield='volume'>数量</th> "
+				+"<th bindfield='price'>单位</th> "
+				+"<th bindfield='entrysum'>金额</th> "
+				+"</table>" 
+				+"<div class='field' style='width:50%;'></div>"
+				+"<div class='field' style='width:30%;float:left;'>验收员:<span class='dataField' fieldindex='data.checkerSystemUserName' width=150px></span></div>"
+				+"<div class='field' style='width:30%;float:left;'>供应商确认:</div>"
+				+"<div class='field' style='width:50%;'>打印时间:<span class='dataField' fieldindex='data.printTime'></span></div>"
+				+"<div class='field' style='width:50%;'>第<span class='dataField' fieldindex='data.curPage'></span>页/共<span class='dataField' fieldindex='data.totalPages'></span>页</div>"
+				+"</div>";
 			}
 		});
