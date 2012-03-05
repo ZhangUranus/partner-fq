@@ -21,6 +21,6 @@ public class FilterPojo {
 	}
 
 	public String toString() {
-		return "OrderPojo [property=" + property + ", value=" + value + "]";
+		return "FilterPojo [property=" + property + ", value=" + value + "]";
 	}
 }
