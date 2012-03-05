@@ -319,13 +319,28 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 				this.approverStatus.setValue('');
 				this.approverWin.close();
 			},
-			getPrintTemplateArr: function(){
-				return [{name:'默认打印模板',
-					     template:[{dataIndex:'data.number',style:'left:10px;top:50px'}, 
-					        	{dataIndex:'data.bizDate',style:'left:150px;top:50px'},
-					               {dataIndex:'data.entry[0].materialMaterialName',style:'left:10px;top:80px'}
-					                ]
-					     }
-					     ];
+			getMainPrintHTML:function(){
+				return "<div>"
+				+"<div class='caption' >江门市蓬江区富桥旅游用品厂有限公司</div>"
+				+"<div class='caption' >材料备货计划</div>"
+				+"<div class='field' >单据编号:<span class='dataField' fieldindex='data.number' width=150px></span></div>"
+				+"<div class='field' style='width:45%;float:left;'>供应商:<span class='dataField' fieldindex='data.supplierSupplierName' width=150px></span></div>"
+				+"<div class='field' align='left' style='width:45%;float:left;'>发出日期:<span class='dataField' fieldindex='data.bizDate' width=150px></span></div>"
+				+"<div class='field' align='right' style='width:45%;float:right;'>采购员:<span class='dataField' fieldindex='data.buyerSystemUserName' width=150px></span></div>"
+				+"<div class='field' align='left' style='width:45%;float:left;'>预备交货期:<span class='dataField' fieldindex='data.receiveStamp' width=150px></span></div>"
+				+"<div class='nextLine'></div>"
+				+"<table  cellspacing='0' class='dataEntry' fieldindex='data.entry'>" 
+				+"<tr> "
+				+"<th bindfield='materialMaterialName'>材料名称</th> "
+				+"<th bindfield='materialMaterialModel'>规格</th> "
+				+"<th bindfield='empty'>质量要求</th> "
+				+"<th bindfield='unitUnitName'>单位</th>" 
+				+"<th bindfield='volume'>数量</th> "
+				+"</tr> "
+				+"</table>" 
+				+"<div class='field' style='width:30%;float:left;'>供应商确认:</div>"
+				+"<div class='field' style='width:50%;'>打印时间:<span class='dataField' fieldindex='data.printTime'></span></div>"
+				+"<div class='field' style='width:50%;'>第<span class='dataField' fieldindex='data.curPage'></span>页/共<span class='dataField' fieldindex='data.totalPages'></span>页</div>"
+				+"</div>";
 			}
 		});
