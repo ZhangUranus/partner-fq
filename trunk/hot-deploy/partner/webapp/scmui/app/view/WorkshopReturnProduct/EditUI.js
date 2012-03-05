@@ -49,7 +49,7 @@ Ext.define('SCM.view.WorkshopReturnProduct.EditUI', {
 																allowBlank : false
 															}, {
 																xtype : 'combogrid',
-																fieldLabel : '加工商',
+																fieldLabel : '车间',
 																name : 'workshopWorkshopId',
 																valueField : 'id',
 																displayField : 'name',
