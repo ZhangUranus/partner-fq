@@ -19,7 +19,7 @@ Ext.define('SCM.view.WorkshopReturnProduct.ListUI', {
 							items : [{
 										xtype : 'billbasetoolbar',//工具栏
 										submit : true,
-										custType : 'customer',
+										custType : 'workshop',
 										region : 'north'
 									}, {
 										xtype : 'gridpanel',
@@ -60,7 +60,7 @@ Ext.define('SCM.view.WorkshopReturnProduct.ListUI', {
 													dataIndex : 'workshopWorkshopName',
 													width : 150,
 													groupable : false,
-													text : '加工商'
+													text : '车间'
 												}, {
 													xtype : 'gridcolumn',
 													dataIndex : 'returnerSystemUserName',
