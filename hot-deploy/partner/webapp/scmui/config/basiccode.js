@@ -297,7 +297,7 @@ function getBlock(jo) {
     	   var mainBodyDiv=doc.createElement('div');
     	   mainBodyDiv.innerHTML=printConfig.mainBodyDiv;
     	   doc.body.appendChild(mainBodyDiv);
-    	   this.fillPage(mainBodyDiv, data, fromCount, endCount);
+    	   this.fillPage(mainBodyDiv, data, fromCount, endCount,printConfig.loopCount);
            
     	   //开始结束位置调整
     	   fromCount=endCount+1;
@@ -325,7 +325,7 @@ function getBlock(jo) {
             		   loopDiv.innerHTML=printConfig.loopBodyDiv;
             	   }
             	   doc.body.appendChild(loopDiv);
-            	   this.fillPage(loopDiv, data, fromCount, endCount);
+            	   this.fillPage(loopDiv, data, fromCount, endCount,printConfig.loopCount);
             	   
             	 //开始结束位置调整
             	   fromCount=endCount+1;
@@ -349,14 +349,16 @@ function getBlock(jo) {
         		   tailDiv.innerHTML=printConfig.tailDiv;
         	   }
         	   doc.body.appendChild(tailDiv);
-        	   this.fillPage(tailDiv, data, fromCount, loopEntry.length);
+        	   this.fillPage(tailDiv, data, fromCount, loopEntry.length,printConfig.loopCount);
         	   
            }
+           
+           
            
       };
       
       // 填充page里面的数据
-      PrintHelper.prototype.fillPage = function(/* 填充数据的Element对象 */page,data,/* 循环体取数范围，从1开始 */fromCount,endCount){
+      PrintHelper.prototype.fillPage = function(/* 填充数据的Element对象 */page,data,/* 循环体取数范围，从1开始 */fromCount,endCount,/*打印显示的行数，填充数量不够插入空行*/maxCount){
        // 填充表头字段-------------------
        var fields=page.getElementsByClassName('dataField');
         for(var i=0;i<fields.length;i++){
@@ -406,41 +408,54 @@ function getBlock(jo) {
 		     /* 没有查找到对象值，忽略 */
 		     continue;
 		  }
-    if(bindEntryData!=null&&bindEntryData.length!=undefined){
-       // 判断是否符合分页输出条件
-     if(fromCount!=null&&endCount!=null&&fromCount!=undefined&&endCount!=undefined
-        &&fromCount>0&&endCount>=fromCount&&endCount<=bindEntryData.length){
-      
-     }else{
-      fromCount=1;
-      endCount=bindEntryData.length;
-     }
-     
-     // 循环每行数据，在table上添加对应的行记录
-     var insertPos=1;
-     for(var k =fromCount-1;k<endCount;k++){
-      var row = ltable.insertRow(insertPos);// 向最后插入一行
-      insertPos++;
-      
-      // 插入列
-      for(var cn=0;cn<fieldMapArr.length;cn++){
-       var cell=row.insertCell(cn);
-       // 获取每列的值
-       try{
-	       var value= eval(bindEntryIndex+"["+k+"]."+fieldMapArr[cn]);/* 查找data对象的打印值 */
-	       if((typeof value) == 'number'){
-	    	   value=value.toFixed(2);//显示两位小数
-		     }
-	       if(value!=undefined){
-	        cell.innerText=value;
+	    if(bindEntryData!=null&&bindEntryData.length!=undefined){
+	       // 判断是否符合分页输出条件
+	     if(fromCount!=null&&endCount!=null&&fromCount!=undefined&&endCount!=undefined
+	        &&fromCount>0&&endCount>=fromCount&&endCount<=bindEntryData.length){
+	      
+	     }else{
+	      fromCount=1;
+	      endCount=bindEntryData.length;
+	     }
+	     
+	     // 循环每行数据，在table上添加对应的行记录
+	     var insertPos=1;
+	     for(var k =fromCount-1;k<endCount;k++){
+	      var row = ltable.insertRow(insertPos);// 向最后插入一行
+	      insertPos++;
+	      
+	      // 插入列
+	      for(var cn=0;cn<fieldMapArr.length;cn++){
+	       var cell=row.insertCell(cn);
+	       // 获取每列的值
+	       try{
+		       var value= eval(bindEntryIndex+"["+k+"]."+fieldMapArr[cn]);/* 查找data对象的打印值 */
+		       if((typeof value) == 'number'){
+		    	   value=value.toFixed(2);//显示两位小数
+			     }
+		       if(value!=undefined){
+		        cell.innerText=value;
+		       }
+	       }catch(err){
+	        /* 没有查找到对象值，忽略 */
+	         continue;
 	       }
-       }catch(err){
-        /* 没有查找到对象值，忽略 */
-         continue;
-       }
-      }
-     }
-    }
+	      }
+	     }
+	     
+	    //插入空行 
+	    if(endCount-fromCount>=0&&endCount-fromCount<maxCount-1){
+	    	var emptyRowCount=maxCount-(endCount-fromCount+1);//空行数量
+	    	for(var i=0;i<emptyRowCount;i++){
+	    		var emptyRow = ltable.insertRow(insertPos);// 向最后插入一行
+	    		for(var cn=0;cn<columns.length;cn++){
+	    		       var cell=emptyRow.insertCell(cn);
+	    		       cell.innerHTML='&nbsp;';
+	    		}
+	    	}
+	    }
+	     
+	    }
          
        }
     }
