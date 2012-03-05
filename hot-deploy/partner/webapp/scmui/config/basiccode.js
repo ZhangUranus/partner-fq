@@ -367,7 +367,7 @@ function getBlock(jo) {
             try{
 		     var text = eval(fi);/* 查找data对象的打印值 */
 		     if((typeof text) == 'number'){
-		    	 text=text.toFixed(4);
+		    	 text=text.toFixed(2);//显示两位小数
 		     }
 		     if(text!=undefined){
 		      field.innerHTML=text;
@@ -429,7 +429,7 @@ function getBlock(jo) {
        try{
 	       var value= eval(bindEntryIndex+"["+k+"]."+fieldMapArr[cn]);/* 查找data对象的打印值 */
 	       if((typeof value) == 'number'){
-	    	   value=value.toFixed(4);
+	    	   value=value.toFixed(2);//显示两位小数
 		     }
 	       if(value!=undefined){
 	        cell.innerText=value;
