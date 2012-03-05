@@ -325,7 +325,7 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 				+"<div class='caption' >材料备货计划</div>"
 				+"<div class='field' >单据编号:<span class='dataField' fieldindex='data.number' width=150px></span></div>"
 				+"<div class='field' style='width:45%;float:left;'>供应商:<span class='dataField' fieldindex='data.supplierSupplierName' width=150px></span></div>"
-				+"<div class='field' align='left' style='width:45%;float:left;'>发出日期:<span class='dataField' fieldindex='data.bizDate' width=150px></span></div>"
+				+"<div class='field' align='right' style='width:45%;float:right;'>发出日期:<span class='dataField' fieldindex='data.bizDate' width=150px></span></div>"
 				+"<div class='field' align='right' style='width:45%;float:right;'>采购员:<span class='dataField' fieldindex='data.buyerSystemUserName' width=150px></span></div>"
 				+"<div class='field' align='left' style='width:45%;float:left;'>预备交货期:<span class='dataField' fieldindex='data.receiveStamp' width=150px></span></div>"
 				+"<div class='nextLine'></div>"

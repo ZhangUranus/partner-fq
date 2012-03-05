@@ -239,7 +239,7 @@ Ext.define('SCM.controller.WorkshopDrawMaterial.WorkshopDrawMaterialController',
 				+"<div class='nextLine'></div>"
 				+"<table  cellspacing='0' class='dataEntry' fieldindex='data.entry'>" 
 				+"<tr> "
-				+"<th bindfield='warehouseWarehouseNumber'>货号</th>" 
+				+"<th bindfield='materialMaterialNumber'>货号</th>" 
 				+"<th bindfield='warehouseWarehouseName'>仓库</th> "
 				+"<th bindfield='materialMaterialName'>物料名称</th>" 
 				+"<th bindfield='materialMaterialModel'>规格型号</th> "
