@@ -129,12 +129,19 @@ Ext.onReady(function(){
           emptyText     : null
        });
     }
-
+	
+    if(exists('Ext.grid.NumberColumn')){
+        Ext.apply(Ext.grid.NumberColumn.prototype, {
+            format : '0,000.0000'
+        });
+    }
+    
     if(exists('Ext.form.field.Number')){
        Ext.apply(Ext.form.field.Number.prototype, {
           minText : "该输入项的最小值是 {0}",
           maxText : "该输入项的最大值是 {0}",
-          nanText : "{0} 不是有效数值"
+          nanText : "{0} 不是有效数值",
+          decimalPrecision : 4
        });
     }
 
