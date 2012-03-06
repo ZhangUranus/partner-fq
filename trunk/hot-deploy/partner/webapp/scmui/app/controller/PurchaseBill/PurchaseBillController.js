@@ -342,5 +342,13 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 				+"<div class='field' style='width:50%;'>打印时间:<span class='dataField' fieldindex='data.printTime'></span></div>"
 				+"<div class='field' style='width:50%;'>第<span class='dataField' fieldindex='data.curPage'></span>页/共<span class='dataField' fieldindex='data.totalPages'></span>页</div>"
 				+"</div>";
+			},
+			getPrintCfg:function(){
+				var cfg=new PrintConfig();
+				cfg.loopCount=20;
+				cfg.mainBodyDiv=this.getMainPrintHTML();
+				cfg.loopBodyDiv=this.getLoopPrintHTML();
+				cfg.tailDiv=this.getTailPrintHTML();
+				return cfg;
 			}
 		});
