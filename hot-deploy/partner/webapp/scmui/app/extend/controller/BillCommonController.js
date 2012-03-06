@@ -794,15 +794,18 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 					printDom.clear();//清除旧打印内容
 					
 					//构建打印设置对象
-					var printConfig=new PrintConfig();
-					printConfig.mainBodyDiv=this.getMainPrintHTML();
-					printConfig.loopBodyDiv=this.getLoopPrintHTML();
-					printConfig.tailDiv=this.getTailPrintHTML();
-					
+					var printConfig
+					if(this.getPrintCfg!=undefined){
+						printConfig=this.getPrintCfg();
+					}else{
+						printConfig=new PrintConfig();
+						printConfig.mainBodyDiv=this.getMainPrintHTML();
+						printConfig.loopBodyDiv=this.getLoopPrintHTML();
+						printConfig.tailDiv=this.getTailPrintHTML();
+					}
 				    printHelper.writePrintContent(printDom,data,printConfig);     
 				    printDom.close();
 					window.printframe.print();
 				}
 			}
-
 		})
