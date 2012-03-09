@@ -744,7 +744,12 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				}
 				
 				var record=sm.getLastSelected();
-				this.getPrintData(record.get('id'));
+				if(this.canPrint(record)){
+					this.getPrintData(record.get('id'));
+				}else{
+					showError('单据不能打印！');
+				}
+				
 				
 			},
 			/**
@@ -807,5 +812,15 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				    printDom.close();
 					window.printframe.print();
 				}
+			},
+			//判断是否能打印
+			canPrint:function(record){
+				//单据状态为已提交或者已审核才能打印
+				if(record.get('status')==4||record.get('status')==1){
+					return true;
+				}else{
+					return false;
+				}
+				
 			}
 		})
