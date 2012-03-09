@@ -188,7 +188,7 @@
 }
 
 #main-top {
-    background: #4b85b3 url( ../images/header-img.png) no-repeat;
+    background-image: url( ../images/header.png);
     background-position-x:left;
     background-position-y:center;
 }
