@@ -10,12 +10,18 @@ Ext.define('SCM.view.Header', {
 			initComponent : function() {
 				Ext.applyIf(this, {
                             layout: {
-						        pack: 'end',
-                                align: 'middle',
+						        pack: 'start',
+                                align: 'left',
 						        type: 'hbox'
 						    },
 							region : 'north',
-							height : 60
+							height : 55,
+							items : [{
+						        xtype: 'image',
+						        src : 'images/header-img.png',
+						        height : 55,
+						        width : 500
+						    }]
 						});
 				this.callParent(arguments);
 			}
