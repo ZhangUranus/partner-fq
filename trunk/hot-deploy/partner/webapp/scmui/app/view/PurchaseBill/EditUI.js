@@ -83,6 +83,7 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 																matchFieldWidth : false,
 																allowBlank : false,
 																readOnly : true,
+																hidden : true,
 																listConfig : {
 																	width : 185,
 																	height : SCM.MaxSize.COMBOGRID_HEIGHT,
@@ -108,6 +109,7 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 																margin : 5,
 																matchFieldWidth : false,
 																allowBlank : false,
+																readOnly : true,
 																listConfig : {
 																	width : 185,
 																	height : SCM.MaxSize.COMBOGRID_HEIGHT,
@@ -162,6 +164,8 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 																format : 'Y-m-d H:i:s',
 																fieldLabel : '返货时间',
 																allowBlank : false
+															}, {
+																xtype : 'label'
 															}, {
 																xtype : 'label'
 															}, {
