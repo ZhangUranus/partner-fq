@@ -82,6 +82,7 @@ Ext.define('SCM.view.ConsignDrawMaterial.EditUI', {
 																margin : 5,
 																matchFieldWidth : false,
 																allowBlank : false,
+																readOnly : true,
 																listConfig : {
 																	width : 185,
 																	height : SCM.MaxSize.COMBOGRID_HEIGHT,
