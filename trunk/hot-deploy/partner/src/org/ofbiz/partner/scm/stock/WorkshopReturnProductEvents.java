@@ -60,7 +60,11 @@ public class WorkshopReturnProductEvents {
 						BigDecimal checkedVolume = entryValue.getBigDecimal("checkedVolume");
 						BigDecimal currentCheckVolume = entryValue.getBigDecimal("currentCheckVolume");
 						BigDecimal volume = entryValue.getBigDecimal("volume");
-						entryValue.set("checkedVolume", checkedVolume.add(currentCheckVolume));
+						BigDecimal checkedV = checkedVolume.add(currentCheckVolume);
+						if(volume.compareTo(checkedV)==-1){
+							throw new Exception("验收数量不能大于退货数量，请重新输入！");
+						}
+						entryValue.set("checkedVolume", checkedV);
 						entryValue.set("currentCheckVolume", BigDecimal.ZERO);
 						if(volume.compareTo(entryValue.getBigDecimal("checkedVolume"))!=0){
 							isFinish = false;
