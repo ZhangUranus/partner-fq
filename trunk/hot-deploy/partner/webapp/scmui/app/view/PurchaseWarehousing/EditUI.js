@@ -178,16 +178,6 @@ Ext.define('SCM.view.PurchaseWarehousing.EditUI', {
 													region : 'center',
 													store : Ext.create('PurchaseWarehousingEditEntryStore'),
 													columns : [{
-																xtype : 'gridcolumn',
-																dataIndex : 'id',
-																text : 'id',
-																hidden : true
-															}, {
-																xtype : 'gridcolumn',
-																dataIndex : 'parentId',
-																text : 'parentId',
-																hidden : true
-															}, {
 																xtype : 'combocolumn',
 																dataIndex : 'warehouseWarehouseId',
 																text : '仓库',
