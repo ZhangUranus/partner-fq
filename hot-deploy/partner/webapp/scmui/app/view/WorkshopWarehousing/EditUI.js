@@ -150,16 +150,6 @@ Ext.define('SCM.view.WorkshopWarehousing.EditUI', {
 													region : 'center',
 													store : Ext.create('WorkshopWarehousingEditEntryStore'),
 													columns : [{
-																xtype : 'gridcolumn',
-																dataIndex : 'id',
-																text : 'id',
-																hidden : true
-															}, {
-																xtype : 'gridcolumn',
-																dataIndex : 'parentId',
-																text : 'parentId',
-																hidden : true
-															}, {
 																xtype : 'combocolumn',
 																dataIndex : 'warehouseWarehouseId',
 																text : '仓库',

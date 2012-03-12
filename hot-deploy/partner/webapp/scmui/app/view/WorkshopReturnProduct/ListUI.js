@@ -33,11 +33,6 @@ Ext.define('SCM.view.WorkshopReturnProduct.ListUI', {
 													width : 40
 												}, {
 													xtype : 'gridcolumn',
-													dataIndex : 'id',
-													text : 'id',
-													hidden : true
-												}, {
-													xtype : 'gridcolumn',
 													dataIndex : 'number',
 													width : 150,
 													text : '编码'
@@ -105,16 +100,6 @@ Ext.define('SCM.view.WorkshopReturnProduct.ListUI', {
 													header : '序号',
 													xtype : 'rownumberer',
 													width : 40
-												}, {
-													xtype : 'gridcolumn',
-													dataIndex : 'id',
-													text : 'id',
-													hidden : true
-												}, {
-													xtype : 'gridcolumn',
-													dataIndex : 'parentId',
-													text : 'parentId',
-													hidden : true
 												}, {
 													xtype : 'gridcolumn',
 													dataIndex : 'warehouseWarehouseName',

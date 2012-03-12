@@ -127,7 +127,7 @@ Ext.define('SCM.view.ConsignDrawMaterial.EditUI', {
 																xtype : 'combogrid',
 																fieldLabel : '加工件',
 																name : 'processedMaterialMaterialId',
-																valueField : 'materialId',
+																valueField : 'id',
 																displayField : 'materialName',
 																store : Ext.create('MaterialBomEditStore'),
 																margin : 5,
@@ -190,16 +190,6 @@ Ext.define('SCM.view.ConsignDrawMaterial.EditUI', {
 													region : 'center',
 													store : Ext.create('ConsignDrawMaterialEditEntryStore'),
 													columns : [{
-																xtype : 'gridcolumn',
-																dataIndex : 'id',
-																text : 'id',
-																hidden : true
-															}, {
-																xtype : 'gridcolumn',
-																dataIndex : 'parentId',
-																text : 'parentId',
-																hidden : true
-															}, {
 																xtype : 'combocolumn',
 																dataIndex : 'warehouseWarehouseId',
 																text : '仓库',

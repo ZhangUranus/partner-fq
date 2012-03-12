@@ -91,16 +91,6 @@ Ext.define('SCM.view.PurchaseReturn.ListUI', {
 													width : 40
 												}, {
 													xtype : 'gridcolumn',
-													dataIndex : 'id',
-													text : 'id',
-													hidden : true
-												}, {
-													xtype : 'gridcolumn',
-													dataIndex : 'parentId',
-													text : 'parentId',
-													hidden : true
-												}, {
-													xtype : 'gridcolumn',
 													dataIndex : 'warehouseWarehouseName',
 													text : '仓库'
 												}, {
