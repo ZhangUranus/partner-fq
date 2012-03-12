@@ -18,11 +18,6 @@ Ext.define('SCM.view.system.log.ListUI', {
 										xtype : 'rownumberer',
 										width : 40
 									}, {
-										xtype : 'gridcolumn',
-										dataIndex : 'id',
-										text : 'id',
-										hidden : true
-									}, {
 										xtype : 'datecolumn',
 										dataIndex : 'hitTime',
 										width : 180,

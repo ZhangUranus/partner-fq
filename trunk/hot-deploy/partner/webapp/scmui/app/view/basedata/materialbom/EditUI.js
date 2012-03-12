@@ -78,17 +78,6 @@ Ext.define('SCM.view.basedata.materialbom.EditUI', {
 													region : 'center',
 													store : 'basedata.MaterialBomEditEntryStore',
 													columns : [{
-																xtype : 'gridcolumn',
-																dataIndex : 'id',
-																text : 'id',
-																hidden : true
-															}, {
-																xtype : 'gridcolumn',
-																dataIndex : 'parentId',
-																text : 'parentId',
-																hidden : true
-
-															}, {
 																xtype : 'combocolumn',
 																dataIndex : 'entryMaterialId',
 																text : '物料编码',
