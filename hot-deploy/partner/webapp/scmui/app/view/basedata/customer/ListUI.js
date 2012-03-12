@@ -15,11 +15,6 @@ Ext.define('SCM.view.basedata.customer.ListUI', {
 										xtype : 'rownumberer',
 										width : 40
 									}, {
-										header : 'id',
-										dataIndex : 'id',
-										width : 100,
-										hidden : true
-									}, {
 										header : '编码',
 										dataIndex : 'number',
 										width : 100

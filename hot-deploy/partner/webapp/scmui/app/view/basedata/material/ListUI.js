@@ -39,10 +39,6 @@ Ext.define('SCM.view.basedata.material.ListUI', {
 													dataIndex : 'materialTypeName',
 													text : '物料类别'
 												}, {
-													dataIndex : 'id',
-													text : 'id',
-													hidden : true
-												}, {
 													dataIndex : 'number',
 													text : '编码'
 												}, {

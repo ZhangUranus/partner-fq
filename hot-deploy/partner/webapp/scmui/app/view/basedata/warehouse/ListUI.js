@@ -15,16 +15,6 @@ Ext.define('SCM.view.basedata.warehouse.ListUI', {
 										xtype : 'rownumberer',
 										width : 40
 									}, {
-										header : 'id',
-										dataIndex : 'id',
-										width : 200,
-										hidden : true
-									}, {
-										header : '仓库类型id',
-										dataIndex : 'wsTypeId',
-										width : 200,
-										hidden : true
-									}, {
 										header : '仓库类型',
 										dataIndex : 'warehouseTypeName',
 										width : 200
