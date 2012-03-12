@@ -109,16 +109,6 @@ Ext.define('SCM.view.PurchaseBill.ListUI', {
 													width : 40
 												}, {
 													xtype : 'gridcolumn',
-													dataIndex : 'id',
-													text : 'id',
-													hidden : true
-												}, {
-													xtype : 'gridcolumn',
-													dataIndex : 'parentId',
-													text : 'parentId',
-													hidden : true
-												}, {
-													xtype : 'gridcolumn',
 													dataIndex : 'materialMaterialName',
 													text : '物料'
 												}, {

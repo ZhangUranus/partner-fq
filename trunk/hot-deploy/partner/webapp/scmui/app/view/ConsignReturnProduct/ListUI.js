@@ -32,11 +32,6 @@ Ext.define('SCM.view.ConsignReturnProduct.ListUI', {
 													width : 40
 												}, {
 													xtype : 'gridcolumn',
-													dataIndex : 'id',
-													text : 'id',
-													hidden : true
-												}, {
-													xtype : 'gridcolumn',
 													dataIndex : 'number',
 													width : 150,
 													text : '编码'
@@ -63,32 +58,19 @@ Ext.define('SCM.view.ConsignReturnProduct.ListUI', {
 												}, {
 													xtype : 'gridcolumn',
 													dataIndex : 'returnerSystemUserName',
-													width : 80,
+													width : 120,
 													groupable : false,
 													text : '退货员'
 												}, {
 													xtype : 'gridcolumn',
-													dataIndex : 'checkerSystemUserName',
-													width : 80,
-													groupable : false,
-													text : '验收员'
-												}, {
-													xtype : 'gridcolumn',
-													renderer : SCM.store.basiccode.checkStatusRenderer,
-													dataIndex : 'checkStatus',
-													width : 80,
-													groupable : false,
-													text : '验收状态'
-												}, {
-													xtype : 'gridcolumn',
 													dataIndex : 'submitterSystemUserName',
-													width : 80,
+													width : 120,
 													groupable : false,
 													text : '提交人'
 												}, {
 													xtype : 'numbercolumn',
 													dataIndex : 'totalsum',
-													width : 100,
+													width : 120,
 													groupable : false,
 													text : '总金额'
 												}],
@@ -106,16 +88,6 @@ Ext.define('SCM.view.ConsignReturnProduct.ListUI', {
 													width : 40
 												}, {
 													xtype : 'gridcolumn',
-													dataIndex : 'id',
-													text : 'id',
-													hidden : true
-												}, {
-													xtype : 'gridcolumn',
-													dataIndex : 'parentId',
-													text : 'parentId',
-													hidden : true
-												}, {
-													xtype : 'gridcolumn',
 													dataIndex : 'warehouseWarehouseName',
 													text : '仓库'
 												}, {
@@ -126,14 +98,6 @@ Ext.define('SCM.view.ConsignReturnProduct.ListUI', {
 													xtype : 'gridcolumn',
 													dataIndex : 'materialMaterialModel',
 													text : '规格型号'
-												}, {
-													xtype : 'numbercolumn',
-													dataIndex : 'currentCheckVolume',
-													text : '本次验收数量'
-												}, {
-													xtype : 'numbercolumn',
-													dataIndex : 'checkedVolume',
-													text : '已验收数量'
 												}, {
 													xtype : 'numbercolumn',
 													dataIndex : 'volume',
