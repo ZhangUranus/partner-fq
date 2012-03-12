@@ -3,7 +3,7 @@ div.printbody{
 */
 border:0px;
 }
-/*´òÓ¡µ¥¾İ±êÌâ*/
+/*æ‰“å°å•æ®æ ‡é¢˜*/
 div.caption { 
 	padding: 0 0 5px 0; 
 	font-size:20px;
@@ -12,38 +12,42 @@ div.caption {
 div.field{
 	left:0px;
 	top: 0px;
-	/*ÄÚÈİ³¬¹ı¹æ¶¨¿í¶ÈÊ±ÊÇ·ñ»»ĞĞ*/
+	/*å†…å®¹è¶…è¿‡è§„å®šå®½åº¦æ—¶æ˜¯å¦æ¢è¡Œ*/
 	white-space: nowrap; 
-	/*ÄÚÈİ³¬¹ı¹æ¶¨¿í¶ÈÊ±½ØÈ¡³¬³¤²¿·Ö*/
+	/*å†…å®¹è¶…è¿‡è§„å®šå®½åº¦æ—¶æˆªå–è¶…é•¿éƒ¨åˆ†*/
 	overflow:hidden;
 	padding: 6px 6px 6px 12px; 
 	
 }
-/*´òÓ¡ÔªËØ·ÖÒ³¸ÃÔªËØºóÃæÄÚÈİ»áÔÚÁíÍâÒ³´òÓ¡*/
+/*æ‰“å°å…ƒç´ åˆ†é¡µè¯¥å…ƒç´ åé¢å†…å®¹ä¼šåœ¨å¦å¤–é¡µæ‰“å°*/
 div.nextPage{
 	page-break-after:always;
 }
-/*ÏÂÒ»ĞĞ¿ªÊ¼*/
+/*ä¸‹ä¸€è¡Œå¼€å§‹*/
 div.nextLine{
 	clear: both;
 }
 table{
-	width:100%;
-	position: relative;
-	border-collapse:collapse;
+ border-left: none;
+ border-right: none ;
+ border-top: 1px solid ;
+ border-bottom: 1px solid ;
+ width:100%;
+ position: relative;
+ border-collapse:collapse;
 }
-th { 
-	font: bold 9px ; 
-	border: 1px solid ; 
-	letter-spacing: 2px; 
-	text-transform: uppercase; 
-	text-align: left; 
-	padding: 6px 6px 6px 12px; 
+th {  
+ font: bold 9px ; 
+ border: none ; 
+ letter-spacing: 2px; 
+ text-transform: uppercase; 
+ text-align: left; 
+ padding: 6px 6px 6px 12px; 
 }
 td{
-	border: 1px solid ; 
-	letter-spacing: 2px; 
-	text-transform: uppercase; 
-	text-align: left; 
-	padding: 6px 6px 6px 12px; 
+ border: none ; 
+ letter-spacing: 2px; 
+ text-transform: uppercase; 
+ text-align: left; 
+ padding: 6px 6px 6px 12px; 
 }
