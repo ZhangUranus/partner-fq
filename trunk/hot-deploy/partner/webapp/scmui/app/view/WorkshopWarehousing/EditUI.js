@@ -185,7 +185,7 @@ Ext.define('SCM.view.WorkshopWarehousing.EditUI', {
 																	xtype : 'combogrid',
 																	valueField : 'id',
 																	displayField : 'materialName',
-																	store : Ext.create('MaterialBomEditStore'),
+																	store : Ext.create('MaterialBomComboStore'),
 																	matchFieldWidth : false,
 																	listConfig : {
 																		width : 500,

@@ -108,6 +108,24 @@ SCM.store.basiccode.checkStatusRenderer = function(value) {
 	}
 };
 
+SCM.store.basiccode.auditStatusStore = new Ext.data.Store({
+			fields : ['id', 'name'],
+			data : [{
+						'id' : 0,
+						'name' : '未核准'
+					}, {
+						'id' : 1,
+						'name' : '已核准'
+					}]
+		});
+SCM.store.basiccode.auditStatusRenderer = function(value) {
+	if (value == 0) {
+		return '未核准';
+	} else if (value == 1) {
+		return '已核准';
+	}
+};
+
 SCM.store.basiccode.warningRenderer = function(value) {
 	if (value) {
 		return '<span class="flag-red" >&nbsp&nbsp&nbsp&nbsp</span>';

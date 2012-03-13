@@ -17,6 +17,12 @@ Ext.define('SCM.model.basedata.MaterialBomModel', {
 						name : 'note',
 						type : 'string'
 					}, {
+						name : 'status',
+						type : 'int'
+					}, {
+						name : 'valid',
+						type : 'string'
+					}, {
 						name : 'materialId',
 						type : 'string'
 					}, {
