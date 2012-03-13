@@ -53,14 +53,14 @@
 		<field name="description" type="description"></field>
 		<prim-key field="id" />
 	</entity>
-	<!-- 供应商实体 -->
+	<!-- 供应商实体 
 	<entity entity-name="Supplier" package-name="org.ofbiz.scm.basedata" title="Supplier  Entity">
 		<field name="id" type="id-long"></field>
 		<field name="number" type="name"></field>
 		<field name="name" type="name"></field>
 		<field name="address" type="description"></field>
 		<prim-key field="id" />
-	</entity>
+	</entity>-->
 	<!-- 客户实体 -->
 	<entity entity-name="Customer" package-name="org.ofbiz.scm.basedata" title="Customer  Entity">
 		<field name="id" type="id-long"></field>

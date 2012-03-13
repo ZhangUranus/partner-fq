@@ -126,7 +126,7 @@ Ext.define('SCM.view.ConsignDrawMaterial.EditUI', {
 															}, {
 																xtype : 'combogrid',
 																fieldLabel : '加工件',
-																name : 'processedMaterialMaterialId',
+																name : 'processedBomId',
 																valueField : 'id',
 																displayField : 'materialName',
 																store : Ext.create('MaterialBomEditStore'),

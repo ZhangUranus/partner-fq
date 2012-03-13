@@ -24,9 +24,9 @@ Ext.define('SCM.controller.ProductionPlan.ProductionPlanController', {
 			 */
 			initComponent : function(view) {
 				this.listPanel = view.down('form gridpanel');
-				this.materialIdField = view.down('form combogrid[name=processedMaterialId]');
+				this.bomIdField = view.down('form combogrid[name=processedBomId]');
 				this.materialVolumeField = view.down('form numberfield[name=materialVolume]');
-				this.materialIdField.addListener('change', this.refreshRecord, this);
+				this.bomIdField.addListener('change', this.refreshRecord, this);
 				this.materialVolumeField.addListener('change', this.refreshRecord, this);
 			},
 
@@ -35,8 +35,8 @@ Ext.define('SCM.controller.ProductionPlan.ProductionPlanController', {
 			 * 
 			 */
 			refreshRecord : function() {
-				if (!Ext.isEmpty(this.materialIdField.getValue())) {
-					this.listPanel.store.getProxy().extraParams.materialId = this.materialIdField.getValue();
+				if (!Ext.isEmpty(this.bomIdField.getValue())) {
+					this.listPanel.store.getProxy().extraParams.bomId = this.bomIdField.getValue();
 				} else {
 					showWarning('请选择加工件！');
 				}
