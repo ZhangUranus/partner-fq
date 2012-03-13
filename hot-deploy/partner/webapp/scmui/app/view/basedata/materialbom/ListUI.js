@@ -26,12 +26,26 @@ Ext.define('SCM.view.basedata.materialbom.ListUI', {
 									}, {
 										xtype : 'gridcolumn',
 										dataIndex : 'number',
-										width : 150,
+										width : 120,
 										text : 'BOM编码'
 									}, {
 										xtype : 'gridcolumn',
+										renderer : SCM.store.basiccode.auditStatusRenderer,
+										dataIndex : 'status',
+										width : 60,
+										groupable : false,
+										text : '状态'
+									}, {
+										xtype : 'gridcolumn',
+										renderer : SCM.store.basiccode.validRenderer,
+										dataIndex : 'valid',
+										width : 70,
+										groupable : false,
+										text : '是否有效'
+									}, {
+										xtype : 'gridcolumn',
 										dataIndex : 'note',
-										width : 150,
+										width : 120,
 										text : 'BOM备注'
 									}, {
 										xtype : 'gridcolumn',
@@ -48,7 +62,7 @@ Ext.define('SCM.view.basedata.materialbom.ListUI', {
 									}, {
 										xtype : 'gridcolumn',
 										dataIndex : 'bomMaterialModel',
-										width : 150,
+										width : 120,
 										groupable : false,
 										text : 'BOM物料规格型号'
 									}, {
@@ -65,7 +79,8 @@ Ext.define('SCM.view.basedata.materialbom.ListUI', {
 
 							],
 							dockedItems : [{
-										xtype : 'basetoolbar'
+										xtype : 'basetoolbar',
+										audit : true
 									}, {
 										dock : 'bottom',
 										xtype : 'pagingtoolbar',

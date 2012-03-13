@@ -124,6 +124,8 @@
 		<field name="number" type="name"></field>
 		<field name="materialId" type="id-long"></field>
 		<field name="note" type="description"></field>
+		<field name="status" type="int"></field>
+		<field name="valid" type="indicator"/>
 		<prim-key field="id" />
 	</entity>
 	<view-entity entity-name="MaterialBomView" package-name="org.ofbiz.scm.basedata" title="MaterialBomView  Entity">
@@ -167,6 +169,8 @@
 		<alias name="id" entity-alias="MaterialBomV" field="id"></alias>
 		<alias name="number" entity-alias="MaterialBomV" field="number"></alias>
 		<alias name="note" entity-alias="MaterialBomV" field="note"></alias>
+		<alias name="status" entity-alias="MaterialBomV" field="status"></alias>
+		<alias name="valid" entity-alias="MaterialBomV" field="valid"></alias>
 		<alias name="materialId" entity-alias="TMaterialV" field="id"></alias>
 		<alias name="materialName" entity-alias="TMaterialV" field="name"></alias>
 		<alias name="bomMaterialId" entity-alias="TEntryMaterialV" field="id"></alias>

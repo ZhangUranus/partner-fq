@@ -25,6 +25,7 @@ Ext.define('SCM.view.basedata.materialbom.EditUI', {
 										name : 'materialform',
 										bodyPadding : '10 10 10 10',
 										layout : 'border',
+										border : 0,
 										items : [{
 													xtype : 'container',
 													border : 0,
@@ -38,9 +39,7 @@ Ext.define('SCM.view.basedata.materialbom.EditUI', {
 																name : 'id',
 																fieldLabel : 'id',
 																hidden : true
-															},
-
-															{
+															}, {
 																name : 'number',
 																fieldLabel : '编码',
 																emptyText : '保存时系统自动生成',
@@ -67,6 +66,13 @@ Ext.define('SCM.view.basedata.materialbom.EditUI', {
 																				hideable : false
 																			}]
 																}
+															}, {
+																xtype : 'combobox',
+																name : 'valid',// 定义管理的model字段
+																fieldLabel : '是否有效',
+																store : SCM.store.basiccode.validStore,
+																displayField : 'name',// 显示字段
+																valueField : 'id'// 值字段，后台通过该字段传递
 															}, {
 																xtype : 'textarea',
 																name : 'note',

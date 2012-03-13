@@ -2,7 +2,7 @@ Ext.define('SCM.controller.basedata.MaterialBomController', {
 			extend : 'Ext.app.Controller',
 			mixins : ['SCM.extend.exporter.Exporter', 'SCM.extend.controller.CommonGridController'],
 			views : ['basedata.materialbom.ListUI', 'basedata.materialbom.EditUI'],
-			stores : ['basedata.MaterialBomStore', 'basedata.MaterialBomEditStore', 'basedata.MaterialBomEditEntryStore'],
+			stores : ['basedata.MaterialBomStore', 'basedata.MaterialBomEditStore', 'basedata.MaterialBomEditEntryStore', 'basedata.MaterialBomComboStore'],
 			requires : ['SCM.model.basedata.MaterialBomActionModel'],
 			gridTitle : 'BOM单',
 			gridName : 'bombillinfomaintaince',
@@ -39,6 +39,10 @@ Ext.define('SCM.controller.basedata.MaterialBomController', {
 							},
 							'bombillinfomaintaince button[action=export]' : {
 								click : this.exportExcel
+							},
+							//核准BOM
+							'bombillinfomaintaince button[action=audit]' : {
+								click : this.audit
 							},
 							// 编辑界面保存
 							'materialbomedit button[action=save]' : {
@@ -80,10 +84,11 @@ Ext.define('SCM.controller.basedata.MaterialBomController', {
 			afterInitComponent : function() {
 				this.editGrid = this.win.down('gridpanel');
 				this.editGrid.addListener('edit', this.initMaterialInfo, this); // 监控列表编辑事件
+				this.materialField = this.editForm.down("textfield[name=materialId]");
 				this.editGridMaterial = this.editForm.down('[name=materialId]');
 				this.editGridMaterial.store.load(); // 初始物料下拉框数据
 			},
-			
+
 			/**
 			 * 当用户编辑grid时，同步更新相关表单数据
 			 * @param {} editor
@@ -98,7 +103,7 @@ Ext.define('SCM.controller.basedata.MaterialBomController', {
 					}
 				}
 			},
-			
+
 			/**
 			 * 点击新增按钮
 			 * 
@@ -107,6 +112,7 @@ Ext.define('SCM.controller.basedata.MaterialBomController', {
 			 */
 			addNewRecord : function(button) {
 				newRecord = Ext.create(this.modelName);// 新增记录
+				this.changeEditStatus(newRecord);
 				newRecord.phantom = true;
 				this.win.uiStatus = 'AddNew';
 				this.editForm.getForm().loadRecord(newRecord);
@@ -168,7 +174,24 @@ Ext.define('SCM.controller.basedata.MaterialBomController', {
 				sm = this.listPanel.getSelectionModel();
 				if (sm.hasSelection()) {// 判断是否选择行记录
 					record = sm.getLastSelected();
+					this.changeEditStatus(record);
 					this.loadFormRecord(record);
+				}
+			},
+
+			/**
+			 * 根据状态设置编辑界面状态
+			 * 
+			 * @param {}
+			 *            isReadOnly
+			 */
+			changeEditStatus : function(record) {
+				if (record.get('status') == '0') {
+					this.editGrid.setDisabled(false);
+					this.materialField.setReadOnly(false);
+				} else {
+					this.editGrid.setDisabled(true);
+					this.materialField.setReadOnly(true);
 				}
 			},
 
@@ -188,6 +211,10 @@ Ext.define('SCM.controller.basedata.MaterialBomController', {
 				if (sm.hasSelection()) {// 判断是否选择行记录
 					// 删除选择的记录
 					records = sm.getSelection();
+					if (records[0].get("status") == 1) {
+						Ext.Msg.alert("提示", "该BOM单已核准，不允许删除！");
+						return;
+					}
 					Ext.Msg.confirm('提示', '确定删除该' + this.gridTitle + '？', confirmChange, this);
 					function confirmChange(id) {
 						if (id == 'yes') {
@@ -252,7 +279,7 @@ Ext.define('SCM.controller.basedata.MaterialBomController', {
 				oneEntryModel = processOneEntryModel(oneEntryModel, record, store);
 				oneEntryModel.save();
 			},
-			
+
 			/**
 			 * 新增分录
 			 * 
@@ -285,6 +312,43 @@ Ext.define('SCM.controller.basedata.MaterialBomController', {
 				if (selMod != null) {
 					return selMod.getLastSelected();
 				}
-			}
+			},
 
+			/**
+			 * 核准BOM单，核准后不允许删除
+			 */
+			audit : function(button) {
+				var me = this;
+				sm = this.listPanel.getSelectionModel();
+				if (sm.hasSelection()) {// 判断是否选择行记录
+					// 删除选择的记录
+					var record = sm.getLastSelected();
+					if (record.get('status') != '0') {
+						showWarning('BOM单已核准！');
+						return false;
+					} else {
+						return true;
+					}
+					Ext.Msg.confirm('提示', '核准的BOM不允许进行删除、修改操作，确定核准该BOM单？', auditConfirm, this);
+					function auditConfirm(id) {
+						if (id == 'yes') {
+							Ext.Ajax.request({
+										params : {
+											bomId : record.get('id')
+										},
+										url : '../../scm/control/auditBOMBill',
+										success : function(response, option) {
+											var result = Ext.decode(response.responseText)
+											if (result.success) {
+												Ext.Msg.alert("提示", "处理成功！");
+											} else {
+												showError(result.message);
+											}
+											me.refreshRecord();
+										}
+									});
+						}
+					}
+				}
+			}
 		});

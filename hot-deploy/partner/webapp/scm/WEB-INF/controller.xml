@@ -79,6 +79,11 @@
 		<event type="java" path="org.ofbiz.partner.scm.common.BillBaseEvent" invoke="rollbackBill" />
 		<response name="success" type="none" />
 	</request-map>
+	<request-map uri="auditBOMBill">
+		<security auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.common.BillBaseEvent" invoke="auditBOMBill" />
+		<response name="success" type="none" />
+	</request-map>
 	<request-map uri="requestJsonData">
 		<security https="false" auth="false" />
 		<event type="java" path="org.ofbiz.partner.scm.common.EntityCRUDEvent" invoke="getColl2Json" />

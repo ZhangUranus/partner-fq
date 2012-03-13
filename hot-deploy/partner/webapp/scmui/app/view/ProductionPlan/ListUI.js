@@ -32,7 +32,7 @@ Ext.define('SCM.view.ProductionPlan.ListUI', {
 																name : 'processedBomId',
 																valueField : 'id',
 																displayField : 'materialName',
-																store : Ext.create('MaterialBomEditStore'),
+																store : Ext.create('MaterialBomComboStore'),
 																margin : 5,
 																matchFieldWidth : false,
 																allowBlank : false,
