@@ -68,7 +68,7 @@ Ext.define('SCM.view.rpt.pr.ListUI', {
 													matchFieldWidth : false,
 													emptyText : '所有物料',
 													listConfig : {
-														width : SCM.MaxSize.COMBOGRID_WIDTH,
+														width : 400,
 														height : SCM.MaxSize.COMBOGRID_HEIGHT,
 														columns : [{
 																	header : '编码',
@@ -78,7 +78,7 @@ Ext.define('SCM.view.rpt.pr.ListUI', {
 																}, {
 																	header : '名称',
 																	dataIndex : 'name',
-																	width : 80,
+																	width : 280,
 																	hideable : false
 																}]
 													}

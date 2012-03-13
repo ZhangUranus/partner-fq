@@ -22,8 +22,45 @@ Ext.define('SCM.view.homepage.ListUI', {
 										layout : {
 											type : 'border'
 										},
-										tools : [{
-													type : 'refresh'
+										dockedItems : [{
+													xtype : 'toolbar',
+													height : 28,
+													defaults : {
+														margin : '0 3 0 0',
+														xtype : 'button'
+													},
+													items : [{
+																xtype : 'combogrid',
+																margin : '0 5 0 0',
+																name : 'searchMaterialId',
+																width : 200,
+																valueField : 'id',
+																displayField : 'name',
+																store : Ext.create('MaterialStore'),
+																matchFieldWidth : false,
+																emptyText : '所有物料 (取前8种物料)',
+																listConfig : {
+																	width : 400,
+																	height : SCM.MaxSize.COMBOGRID_HEIGHT,
+																	columns : [{
+																				header : '编码',
+																				dataIndex : 'number',
+																				width : 100,
+																				hideable : false
+																			}, {
+																				header : '名称',
+																				dataIndex : 'name',
+																				width : 280,
+																				hideable : false
+																			}]
+																}
+															}, {
+																xtype : 'button',
+																margin : '0 10 0 0',
+																text : '查询',
+																iconCls : 'system-search',
+																action : 'search'
+															}]
 												}],
 										items : [{
 													xtype : 'gridpanel',

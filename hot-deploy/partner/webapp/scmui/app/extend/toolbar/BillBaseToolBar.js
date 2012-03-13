@@ -39,7 +39,7 @@ Ext.define('SCM.extend.toolbar.BillBaseToolbar', {
 							matchFieldWidth : false,
 							emptyText : '所有物料',
 							listConfig : {
-								width : SCM.MaxSize.COMBOGRID_WIDTH,
+								width : 400,
 								height : SCM.MaxSize.COMBOGRID_HEIGHT,
 								columns : [{
 											header : '编码',
@@ -49,7 +49,7 @@ Ext.define('SCM.extend.toolbar.BillBaseToolbar', {
 										}, {
 											header : '名称',
 											dataIndex : 'name',
-											width : 80,
+											width : 280,
 											hideable : false
 										}]
 							}
@@ -90,7 +90,7 @@ Ext.define('SCM.extend.toolbar.BillBaseToolbar', {
 								matchFieldWidth : false,
 								emptyText : '所有'+label,
 								listConfig : {
-									width : SCM.MaxSize.COMBOGRID_WIDTH,
+									width : 300,
 									height : SCM.MaxSize.COMBOGRID_HEIGHT,
 									columns : [{
 												header : '编码',
@@ -100,7 +100,7 @@ Ext.define('SCM.extend.toolbar.BillBaseToolbar', {
 											}, {
 												header : '名称',
 												dataIndex : 'name',
-												width : 80,
+												width : 180,
 												hideable : false
 											}]
 								}

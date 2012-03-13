@@ -79,7 +79,7 @@ Ext.define('SCM.view.rpt.spc.ListUI', {
 													matchFieldWidth : false,
 													emptyText : '所有坯件',
 													listConfig : {
-														width : SCM.MaxSize.COMBOGRID_WIDTH,
+														width : 400,
 														height : SCM.MaxSize.COMBOGRID_HEIGHT,
 														columns : [{
 																	header : '编码',
@@ -89,7 +89,7 @@ Ext.define('SCM.view.rpt.spc.ListUI', {
 																}, {
 																	header : '名称',
 																	dataIndex : 'name',
-																	width : 100,
+																	width : 280,
 																	hideable : false
 																}]
 													}
