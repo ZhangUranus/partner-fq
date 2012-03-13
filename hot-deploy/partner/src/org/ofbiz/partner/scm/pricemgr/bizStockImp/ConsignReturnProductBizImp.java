@@ -10,6 +10,7 @@ import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericValue;
 import org.ofbiz.partner.scm.pricemgr.BillType;
 import org.ofbiz.partner.scm.pricemgr.IBizStock;
+import org.ofbiz.partner.scm.pricemgr.MaterialBomMgr;
 import org.ofbiz.partner.scm.pricemgr.PriceCalItem;
 import org.ofbiz.partner.scm.pricemgr.PriceMgr;
 import org.ofbiz.partner.scm.pricemgr.Utils;
@@ -35,7 +36,7 @@ public class ConsignReturnProductBizImp implements IBizStock {
 		BigDecimal totalSum = BigDecimal.ZERO;
 		for (GenericValue v : entryList) {
 			String warehouseId = v.getString("warehouseWarehouseId");// 仓库id
-			String materialId = v.getString("materialMaterialId");// 物料id
+			String materialId = MaterialBomMgr.getInstance().getMaterialIdByBomId(v.getString("bomId"));// 物料id
 			BigDecimal volume = v.getBigDecimal("volume");// 数量
 			if (volume.compareTo(BigDecimal.ZERO) <= 0) {
 				throw new Exception("委外退货数量不能小于等于零，请重新输入！");

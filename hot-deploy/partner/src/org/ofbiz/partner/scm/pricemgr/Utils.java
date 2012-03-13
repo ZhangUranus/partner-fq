@@ -124,7 +124,7 @@ public class Utils {
 			tempEntry.set("id", entryValue.getString("id"));
 			tempEntry.set("parentId", entryValue.getString("parentId"));
 			tempEntry.set("warehouseWarehouseId", entryValue.getString("warehouseWarehouseId"));
-			tempEntry.set("materialMaterialId", entryValue.getString("materialMaterialId"));
+			tempEntry.set("bomId", entryValue.getString("bomId"));
 			tempEntry.set("volume", entryValue.getBigDecimal("volume"));
 			tempEntry.set("price", entryValue.getBigDecimal("price"));
 			tempEntry.set("entrysum", entryValue.getBigDecimal("entrysum"));

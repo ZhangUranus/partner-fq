@@ -437,10 +437,10 @@ public class DataFetchEvents {
 	 * @throws Exception
 	 */
 	public static String queryProductionPlan(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String materialId = null;
+		String bomId = null;
 		String materialVolume = "0";
-		if(request.getParameter("materialId") != null){
-			materialId = request.getParameter("materialId");
+		if(request.getParameter("bomId") != null){
+			bomId = request.getParameter("bomId");
 		}else{
 			throw new Exception("找不到加工件参数！");
 		}
@@ -463,7 +463,7 @@ public class DataFetchEvents {
 					" LEFT JOIN UNIT UNT ON TM.DEFAULT_UNIT_ID = UNT.ID " +
 					" LEFT JOIN CUR_MATERIAL_BALANCE CMB ON MBE.ENTRY_MATERIAL_ID = CMB.MATERIAL_ID " +
 					" LEFT JOIN WAREHOUSE WH ON CMB.WAREHOUSE_ID = WH.ID " +
-					" WHERE MB.MATERIAL_ID = '" + materialId + "'";
+					" WHERE MB.ID = '" + bomId + "'";
 		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(request,sql));
 		return "sucess";
 	}
