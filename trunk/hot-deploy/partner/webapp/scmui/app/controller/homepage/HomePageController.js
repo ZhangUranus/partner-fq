@@ -29,7 +29,8 @@ Ext.define('SCM.controller.homepage.HomePageController', {
 				this.chartPanel = view.down('panel panel chart');
 				this.westPanel = view.down('panel gridpanel[region=west]');
 				this.centerPanel = view.down('gridpanel[region=south]');
-				this.volumeRefreshButton = view.down('panel').tools.refresh;
+				this.volumeRefreshButton = view.down('panel button');
+				this.searchMaterialId = view.down('panel combogrid[name=searchMaterialId]');
 				this.statusRefreshButton = this.centerPanel.tools.refresh;
 				this.volumeRefreshButton.addListener('click',this.refreshVolumeList,this);
 				this.statusRefreshButton.addListener('click',this.refreshStatusList,this);
@@ -57,6 +58,11 @@ Ext.define('SCM.controller.homepage.HomePageController', {
 			 * @param {} me
 			 */
 			refreshVolumeList : function(me){
+				if (!Ext.isEmpty(this.searchMaterialId.getValue())) {
+					this.westPanel.store.getProxy().extraParams.materialId = this.searchMaterialId.getValue();
+				} else {
+					this.westPanel.store.getProxy().extraParams.materialId = "";
+				}
 				this.westPanel.store.load();
 			},
 			

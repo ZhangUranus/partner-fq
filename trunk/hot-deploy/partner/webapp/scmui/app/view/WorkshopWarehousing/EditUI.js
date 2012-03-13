@@ -58,7 +58,7 @@ Ext.define('SCM.view.WorkshopWarehousing.EditUI', {
 																matchFieldWidth : false,
 																allowBlank : false,
 																listConfig : {
-																	width : 185,
+																	width : 300,
 																	height : SCM.MaxSize.COMBOGRID_HEIGHT,
 																	columns : [{
 																				header : '编码',
@@ -68,7 +68,7 @@ Ext.define('SCM.view.WorkshopWarehousing.EditUI', {
 																			}, {
 																				header : '名称',
 																				dataIndex : 'name',
-																				width : 80,
+																				width : 180,
 																				hideable : false
 																			}]
 																}
@@ -188,7 +188,7 @@ Ext.define('SCM.view.WorkshopWarehousing.EditUI', {
 																	store : Ext.create('MaterialBomEditStore'),
 																	matchFieldWidth : false,
 																	listConfig : {
-																		width : SCM.MaxSize.COMBOGRID_EXTRA_WIDTH,
+																		width : 500,
 																		height : SCM.MaxSize.COMBOGRID_HEIGHT,
 																		columns : [{
 																					header : '编码',
@@ -198,12 +198,12 @@ Ext.define('SCM.view.WorkshopWarehousing.EditUI', {
 																				}, {
 																					header : '名称',
 																					dataIndex : 'materialName',
-																					width : 80,
+																					width : 280,
 																					hideable : false
 																				}, {
 																					header : '备注',
 																					dataIndex : 'note',
-																					width : 120,
+																					width : 100,
 																					hideable : false
 																				}]
 																	}

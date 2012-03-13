@@ -52,7 +52,7 @@ Ext.define('SCM.view.WorkshopReturnProduct.DetailEditUI', {
 														store : materialStore,
 														matchFieldWidth : false,
 														listConfig : {
-															width : SCM.MaxSize.COMBOGRID_WIDTH,
+															width : 400,
 															height : SCM.MaxSize.COMBOGRID_HEIGHT,
 															columns : [{
 																		header : '编码',
@@ -62,7 +62,7 @@ Ext.define('SCM.view.WorkshopReturnProduct.DetailEditUI', {
 																	}, {
 																		header : '名称',
 																		dataIndex : 'name',
-																		width : 80,
+																		width : 280,
 																		hideable : false
 																	}]
 														}

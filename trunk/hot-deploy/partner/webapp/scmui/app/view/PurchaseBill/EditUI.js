@@ -58,7 +58,7 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 																matchFieldWidth : false,
 																allowBlank : false,
 																listConfig : {
-																	width : 185,
+																	width : 300,
 																	height : SCM.MaxSize.COMBOGRID_HEIGHT,
 																	columns : [{
 																				header : '编码',
@@ -68,7 +68,7 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 																			}, {
 																				header : '名称',
 																				dataIndex : 'name',
-																				width : 80,
+																				width : 180,
 																				hideable : false
 																			}]
 																}
@@ -199,7 +199,7 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 																	store : Ext.create('MaterialStore'),
 																	matchFieldWidth : false,
 																	listConfig : {
-																		width : SCM.MaxSize.COMBOGRID_WIDTH,
+																		width : 400,
 																		height : SCM.MaxSize.COMBOGRID_HEIGHT,
 																		columns : [{
 																					header : '编码',
@@ -209,7 +209,7 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 																				}, {
 																					header : '名称',
 																					dataIndex : 'name',
-																					width : 80,
+																					width : 280,
 																					hideable : false
 																				}]
 																	}

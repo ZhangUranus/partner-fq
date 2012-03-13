@@ -42,7 +42,7 @@ Ext.define('SCM.view.rpt.cpmr.ListUI', {
 													matchFieldWidth : false,
 													emptyText : '所有加工商',
 													listConfig : {
-														width : SCM.MaxSize.COMBOGRID_WIDTH,
+														width : 300,
 														height : SCM.MaxSize.COMBOGRID_HEIGHT,
 														columns : [{
 																	header : '编码',
@@ -52,7 +52,7 @@ Ext.define('SCM.view.rpt.cpmr.ListUI', {
 																}, {
 																	header : '名称',
 																	dataIndex : 'name',
-																	width : 80,
+																	width : 180,
 																	hideable : false
 																}]
 													}
