@@ -29,8 +29,8 @@ Ext.define('SCM.view.ProductionPlan.ListUI', {
 													items : [{
 																xtype : 'combogrid',
 																fieldLabel : '加工件',
-																name : 'processedMaterialId',
-																valueField : 'materialId',
+																name : 'processedBomId',
+																valueField : 'id',
 																displayField : 'materialName',
 																store : Ext.create('MaterialBomEditStore'),
 																margin : 5,

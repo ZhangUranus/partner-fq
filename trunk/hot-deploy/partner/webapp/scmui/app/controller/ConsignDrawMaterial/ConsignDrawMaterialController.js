@@ -102,8 +102,8 @@ Ext.define('SCM.controller.ConsignDrawMaterial.ConsignDrawMaterialController', {
 				this.searchMaterialId = this.listContainer.down('combogrid[name=searchMaterialId]');
 				this.searchCustId = this.listContainer.down('combogrid[name=searchCustId]');
 				this.totalFields = this.editForm.down('textfield[name=totalsum]');
-				this.processedMaterialFields = this.editForm.down('combogrid[name=processedMaterialMaterialId]');
-				this.processedMaterialFields.addListener('change', this.initMaterialGrid, this);
+				this.processedBomIdFields = this.editForm.down('combogrid[name=processedBomId]');
+				this.processedBomIdFields.addListener('change', this.initMaterialGrid, this);
 				this.materialVolumeFields = this.editForm.down('numberfield[name=materialVolume]');
 				this.materialVolumeFields.addListener('change', this.materialVolumeChange, this);
 				this.MaterialStore = Ext.create('SCM.store.basedata.MaterialBomStore');
@@ -225,7 +225,7 @@ Ext.define('SCM.controller.ConsignDrawMaterial.ConsignDrawMaterialController', {
 			 */
 			initMaterialGrid : function(field, newValue, oldValue) {
 				var me = this;
-				me.MaterialStore.getProxy().extraParams.whereStr = 'TMaterialV.id = \'' + newValue + '\'';
+				me.MaterialStore.getProxy().extraParams.whereStr = 'MaterialBomV.id = \'' + newValue + '\'';
 				me.MaterialStore.load(function(records, operation, success) {
 							me.editEntry.store.removeAll();
 							for (var i = 0; i < records.length; i++) {
@@ -245,6 +245,7 @@ Ext.define('SCM.controller.ConsignDrawMaterial.ConsignDrawMaterialController', {
 								entryRecord.set('unitUnitName', tempRecord.get('unitName'));
 								me.editEntry.store.add(entryRecord);
 							}
+							me.MaterialStore.getProxy().extraParams.whereStr = "";
 						});
 			},
 

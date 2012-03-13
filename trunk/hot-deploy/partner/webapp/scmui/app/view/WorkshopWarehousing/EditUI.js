@@ -178,12 +178,12 @@ Ext.define('SCM.view.WorkshopWarehousing.EditUI', {
 																}
 															}, {
 																xtype : 'combocolumn',
-																dataIndex : 'materialMaterialId',
+																dataIndex : 'bomId',
 																text : '加工件',
 																gridId : 'WorkshopWarehousing-edit-grid',
 																editor : {
 																	xtype : 'combogrid',
-																	valueField : 'materialId',
+																	valueField : 'id',
 																	displayField : 'materialName',
 																	store : Ext.create('MaterialBomEditStore'),
 																	matchFieldWidth : false,

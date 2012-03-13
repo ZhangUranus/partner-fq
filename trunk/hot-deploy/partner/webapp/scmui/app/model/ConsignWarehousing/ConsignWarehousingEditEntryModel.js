@@ -18,6 +18,9 @@ Ext.define('SCM.model.ConsignWarehousing.ConsignWarehousingEditEntryModel', {
 						type : 'string',
 						persist : false
 					}, {
+						name : 'bomId',
+						type : 'string'
+					}, {
 						name : 'materialMaterialId',
 						type : 'string'
 					}, {

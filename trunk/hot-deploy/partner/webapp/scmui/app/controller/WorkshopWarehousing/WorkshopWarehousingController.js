@@ -108,6 +108,8 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 				this.allColumn = this.editEntry.query('gridcolumn');
 				this.addLineButton = this.win.down('gridpanel button[action=addLine]');
 				this.deleteLineButton = this.win.down('gridpanel button[action=deleteLine]');
+				this.MaterialStore = Ext.create('SCM.store.basedata.MaterialBomStore');
+				this.MaterialStore.load();
 				
 				// 耗料明细页面
 				this.viewDetailButton = this.win.down('gridpanel button[action=viewDetail]');
@@ -184,7 +186,7 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 					if (tempString != '') {
 						tempString += ' and ';
 					}
-					tempString += 'WorkshopWarehousingEntryV.material_material_id = \'' + this.searchMaterialId.getValue() + '\'';
+					tempString += 'materialMaterialV.material_material_id = \'' + this.searchMaterialId.getValue() + '\'';
 				}
 				if (this.searchCustId.getValue() && this.searchCustId.getValue() != '') {
 					if (tempString != '') {
@@ -207,12 +209,12 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 			 *            e
 			 */
 			initMaterialInfo : function(editor, e) {
-				if (e.field == 'materialMaterialId') {
-					var record = this.searchMaterialId.store.findRecord('id', e.value);
+				if (e.field == 'bomId') {
+					var record = this.MaterialStore.findRecord('id', e.value);
 					if (record) {
-						e.record.set('materialMaterialModel', record.get('model'));
-						e.record.set('unitUnitId', record.get('defaultUnitId'));
-						e.record.set('unitUnitName', record.get('defaultUnitName'));
+						e.record.set('materialMaterialModel', record.get('bomMaterialModel'));
+						e.record.set('unitUnitId', record.get('unitId'));
+						e.record.set('unitUnitName', record.get('unitName'));
 					}
 				}
 			},

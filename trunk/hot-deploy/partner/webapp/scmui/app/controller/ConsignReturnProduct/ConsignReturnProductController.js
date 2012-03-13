@@ -108,7 +108,9 @@ Ext.define('SCM.controller.ConsignReturnProduct.ConsignReturnProductController',
 				this.currentCheckVolumeColumn = this.editEntry.down('numbercolumn[dataIndex=currentCheckVolume]');
 				this.volumeColumn = this.editEntry.down('numbercolumn[dataIndex=volume]');
 				this.warehouseColumn = this.editEntry.down('combocolumn[dataIndex=warehouseWarehouseId]');
-				this.marterialColumn = this.editEntry.down('combocolumn[dataIndex=materialMaterialId]');
+				this.marterialColumn = this.editEntry.down('combocolumn[dataIndex=bomId]');
+				this.MaterialStore = Ext.create('SCM.store.basedata.MaterialBomStore');
+				this.MaterialStore.load();
 				this.gridToolBar = this.editEntry.down('gridedittoolbar');
 				this.checkButton = this.win.down('button[action=check]');
 				this.checkBill = false;
@@ -191,7 +193,7 @@ Ext.define('SCM.controller.ConsignReturnProduct.ConsignReturnProductController',
 					if (tempString != '') {
 						tempString += ' and ';
 					}
-					tempString += 'ConsignReturnProductEntryV.material_material_id = \'' + this.searchMaterialId.getValue() + '\'';
+					tempString += 'materialMaterialV.material_material_id = \'' + this.searchMaterialId.getValue() + '\'';
 				}
 				if (this.searchCustId.getValue() && this.searchCustId.getValue() != '') {
 					if (tempString != '') {
@@ -214,12 +216,12 @@ Ext.define('SCM.controller.ConsignReturnProduct.ConsignReturnProductController',
 			 *            e
 			 */
 			initMaterialInfo : function(editor, e) {
-				if (e.field == 'materialMaterialId') {
-					var record = this.searchMaterialId.store.findRecord('id', e.value);
+				if (e.field == 'bomId') {
+					var record = this.MaterialStore.findRecord('id', e.value);
 					if (record) {
-						e.record.set('materialMaterialModel', record.get('model'));
-						e.record.set('unitUnitId', record.get('defaultUnitId'));
-						e.record.set('unitUnitName', record.get('defaultUnitName'));
+						e.record.set('materialMaterialModel', record.get('bomMaterialModel'));
+						e.record.set('unitUnitId', record.get('unitId'));
+						e.record.set('unitUnitName', record.get('unitName'));
 					}
 				}
 			},

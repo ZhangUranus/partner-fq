@@ -58,19 +58,32 @@ Ext.define('SCM.view.ConsignReturnProduct.ListUI', {
 												}, {
 													xtype : 'gridcolumn',
 													dataIndex : 'returnerSystemUserName',
-													width : 120,
+													width : 80,
 													groupable : false,
 													text : '退货员'
 												}, {
 													xtype : 'gridcolumn',
+													dataIndex : 'checkerSystemUserName',
+													width : 80,
+													groupable : false,
+													text : '验收员'
+												}, {
+													xtype : 'gridcolumn',
+													renderer : SCM.store.basiccode.checkStatusRenderer,
+													dataIndex : 'checkStatus',
+													width : 80,
+													groupable : false,
+													text : '验收状态'
+												}, {
+													xtype : 'gridcolumn',
 													dataIndex : 'submitterSystemUserName',
-													width : 120,
+													width : 80,
 													groupable : false,
 													text : '提交人'
 												}, {
 													xtype : 'numbercolumn',
 													dataIndex : 'totalsum',
-													width : 120,
+													width : 100,
 													groupable : false,
 													text : '总金额'
 												}],
@@ -98,6 +111,14 @@ Ext.define('SCM.view.ConsignReturnProduct.ListUI', {
 													xtype : 'gridcolumn',
 													dataIndex : 'materialMaterialModel',
 													text : '规格型号'
+												}, {
+													xtype : 'numbercolumn',
+													dataIndex : 'currentCheckVolume',
+													text : '本次验收数量'
+												}, {
+													xtype : 'numbercolumn',
+													dataIndex : 'checkedVolume',
+													text : '已验收数量'
 												}, {
 													xtype : 'numbercolumn',
 													dataIndex : 'volume',

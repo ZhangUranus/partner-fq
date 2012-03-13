@@ -214,12 +214,12 @@ Ext.define('SCM.view.WorkshopReturnProduct.EditUI', {
 																}
 															}, {
 																xtype : 'combocolumn',
-																dataIndex : 'materialMaterialId',
-																text : '物料',
+																dataIndex : 'bomId',
+																text : '加工件',
 																gridId : 'WorkshopReturnProduct-edit-grid',
 																editor : {
 																	xtype : 'combogrid',
-																	valueField : 'materialId',
+																	valueField : 'id',
 																	displayField : 'materialName',
 																	store : Ext.create('MaterialBomEditStore'),
 																	matchFieldWidth : false,
@@ -326,7 +326,7 @@ Ext.define('SCM.view.WorkshopReturnProduct.EditUI', {
 																fieldLabel : '单据状态'
 															}, {
 																xtype : 'label',
-																text : '注意：物料单价、金额、单据总金额在单据提交后才能显示！',
+																text : '注意：加工件单价、金额、单据总金额在单据提交后才能显示！',
 																margin : 5,
 																colspan : 3,
 																style : {

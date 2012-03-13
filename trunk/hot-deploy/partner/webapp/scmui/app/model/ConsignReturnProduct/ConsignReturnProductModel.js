@@ -64,7 +64,7 @@ Ext.define('SCM.model.ConsignReturnProduct.ConsignReturnProductModel', {
 						type : 'string',
 						persist : false
 					}, {
-						name : 'materialMaterialId',
+						name : 'bomId',
 						type : 'string'
 					}, {
 						name : 'materialMaterialName',

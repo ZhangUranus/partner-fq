@@ -108,7 +108,6 @@ Ext.define('SCM.view.ConsignReturnProduct.EditUI', {
 																margin : 5,
 																matchFieldWidth : false,
 																readOnly : true,
-																hidden : true,
 																listConfig : {
 																	width : 185,
 																	height : SCM.MaxSize.COMBOGRID_HEIGHT,
@@ -132,7 +131,6 @@ Ext.define('SCM.view.ConsignReturnProduct.EditUI', {
 																margin : 5,
 																valueField : 'id',
 																readOnly : true,
-																hidden : true,
 																fieldLabel : '验收状态'
 															}, {
 																xtype : 'combogrid',
@@ -166,6 +164,8 @@ Ext.define('SCM.view.ConsignReturnProduct.EditUI', {
 																readOnly : true,
 																name : 'totalsum',
 																margin : 5
+															}, {
+																xtype : 'label'
 															}, {
 																xtype : 'textarea',
 																name : 'note',
@@ -214,12 +214,12 @@ Ext.define('SCM.view.ConsignReturnProduct.EditUI', {
 																}
 															}, {
 																xtype : 'combocolumn',
-																dataIndex : 'materialMaterialId',
+																dataIndex : 'bomId',
 																text : '加工件',
 																gridId : 'ConsignReturnProduct-edit-grid',
 																editor : {
 																	xtype : 'combogrid',
-																	valueField : 'materialId',
+																	valueField : 'id',
 																	displayField : 'materialName',
 																	store : Ext.create('MaterialBomEditStore'),
 																	matchFieldWidth : false,
@@ -248,6 +248,16 @@ Ext.define('SCM.view.ConsignReturnProduct.EditUI', {
 																xtype : 'gridcolumn',
 																dataIndex : 'materialMaterialModel',
 																text : '规格型号'
+															}, {
+																xtype : 'numbercolumn',
+																dataIndex : 'currentCheckVolume',
+																text : '本次验收数量',
+																width : 80
+															}, {
+																xtype : 'numbercolumn',
+																dataIndex : 'checkedVolume',
+																text : '已验收数量',
+																width : 80
 															}, {
 																xtype : 'numbercolumn',
 																dataIndex : 'volume',

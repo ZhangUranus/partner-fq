@@ -40,7 +40,7 @@ Ext.define('SCM.model.ConsignDrawMaterial.ConsignDrawMaterialModel', {
 						type : 'string',
 						persist : false
 					}, {
-						name : 'processedMaterialMaterialId',
+						name : 'processedBomId',
 						type : 'string'
 					}, {
 						name : 'processedMaterialMaterialName',

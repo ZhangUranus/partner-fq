@@ -107,7 +107,7 @@ Ext.define('SCM.view.WorkshopReturnProduct.ListUI', {
 												}, {
 													xtype : 'gridcolumn',
 													dataIndex : 'materialMaterialName',
-													text : '物料'
+													text : '加工件'
 												}, {
 													xtype : 'gridcolumn',
 													dataIndex : 'materialMaterialModel',

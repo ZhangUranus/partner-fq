@@ -35,7 +35,7 @@
 		<field name="id" type="id-long"></field>
 		<field name="parentId" type="id-long"></field>
 		<field name="warehouseWarehouseId" type="id-long"></field>
-		<field name="materialMaterialId" type="id-long"></field>
+		<field name="bomId" type="id-long"></field>
 		<field name="materialMaterialModel" type="value"></field>
 		<field name="currentCheckVolume" type="fixed-point"></field>
 		<field name="checkedVolume" type="fixed-point"></field>
@@ -53,14 +53,19 @@
 		<member-entity entity-alias="returnerSystemUserV" entity-name="SystemUser"></member-entity>
 		<member-entity entity-alias="checkerSystemUserV" entity-name="SystemUser"></member-entity>
 		<member-entity entity-alias="submitterSystemUserV" entity-name="SystemUser"></member-entity>
+		<member-entity entity-alias="MaterialBomV" entity-name="MaterialBom"></member-entity>
 		<alias-all entity-alias="ConsignReturnProductV"></alias-all>
-		<alias name="materialMaterialId" entity-alias="ConsignReturnProductEntryV" field="materialMaterialId"></alias>
+		<alias name="materialMaterialId" entity-alias="MaterialBomV" field="materialId"></alias>
+		<alias name="bomId" entity-alias="ConsignReturnProductEntryV" field="bomId"></alias>
 		<alias name="processorSupplierName" entity-alias="processorSupplierV" field="name"></alias>
 		<alias name="returnerSystemUserName" entity-alias="returnerSystemUserV" field="name"></alias>
 		<alias name="checkerSystemUserName" entity-alias="checkerSystemUserV" field="name"></alias>
 		<alias name="submitterSystemUserName" entity-alias="submitterSystemUserV" field="name"></alias>
 		<view-link entity-alias="ConsignReturnProductV" rel-entity-alias="ConsignReturnProductEntryV" rel-optional="true">
 			<key-map field-name="id" rel-field-name="parentId" />
+		</view-link>
+		<view-link entity-alias="ConsignReturnProductEntryV" rel-entity-alias="MaterialBomV" rel-optional="true">
+			<key-map field-name="bomId" rel-field-name="id" />
 		</view-link>
 		<view-link entity-alias="ConsignReturnProductV" rel-entity-alias="processorSupplierV" rel-optional="true">
 			<key-map field-name="processorSupplierId" rel-field-name="id" />
@@ -81,16 +86,21 @@
 		<member-entity entity-alias="warehouseWarehouseV" entity-name="Warehouse"></member-entity>
 		<member-entity entity-alias="materialMaterialV" entity-name="Material"></member-entity>
 		<member-entity entity-alias="unitUnitV" entity-name="Unit"></member-entity>
+		<member-entity entity-alias="MaterialBomV" entity-name="MaterialBom"></member-entity>
 		<alias-all entity-alias="ConsignReturnProductEntryV"></alias-all>
 		<alias name="warehouseWarehouseName" entity-alias="warehouseWarehouseV" field="name"></alias>
 		<alias name="materialMaterialNumber" entity-alias="materialMaterialV" field="number"></alias>
+		<alias name="materialMaterialId" entity-alias="materialMaterialV" field="id"></alias>
 		<alias name="materialMaterialName" entity-alias="materialMaterialV" field="name"></alias>
 		<alias name="unitUnitName" entity-alias="unitUnitV" field="name"></alias>
 		<view-link entity-alias="ConsignReturnProductEntryV" rel-entity-alias="warehouseWarehouseV" rel-optional="true">
 			<key-map field-name="warehouseWarehouseId" rel-field-name="id" />
 		</view-link>
-		<view-link entity-alias="ConsignReturnProductEntryV" rel-entity-alias="materialMaterialV" rel-optional="true">
-			<key-map field-name="materialMaterialId" rel-field-name="id" />
+		<view-link entity-alias="ConsignReturnProductEntryV" rel-entity-alias="MaterialBomV" rel-optional="true">
+			<key-map field-name="bomId" rel-field-name="id" />
+		</view-link>
+		<view-link entity-alias="MaterialBomV" rel-entity-alias="materialMaterialV" rel-optional="true">
+			<key-map field-name="materialId" rel-field-name="id" />
 		</view-link>
 		<view-link entity-alias="ConsignReturnProductEntryV" rel-entity-alias="unitUnitV" rel-optional="true">
 			<key-map field-name="unitUnitId" rel-field-name="id" />
