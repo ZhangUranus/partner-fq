@@ -24,18 +24,24 @@ Ext.define('SCM.extend.toolbar.BaseToolbar', {
 							text : '删除',
 							iconCls : 'system-delete',
 							action : 'delete'
-						}, {
-							text : '导出',
-							iconCls : 'system-export',
-							action : 'export'
 						}];
-				if (me.audit) {
+				if (me.bomBill) {
 					tools = tools.concat([{
+								text : '复制',
+								iconCls : 'system-audit',
+								action : 'copy'
+							}, {
 								text : '核准',
 								iconCls : 'system-audit',
 								action : 'audit'
 							}]);
 				}
+				tools = tools.concat([{
+							text : '导出',
+							iconCls : 'system-export',
+							action : 'export'
+						}]);
+				
 				Ext.applyIf(me, {
 							xtype : 'toolbar',
 							height : 28,

@@ -29,6 +29,10 @@ Ext.define('SCM.controller.basedata.MaterialBomController', {
 							'bombillinfomaintaince button[action=modify]' : {
 								click : this.editRecord
 							},
+							// 列表复制按钮
+							'bombillinfomaintaince button[action=copy]' : {
+								click : this.copyRecord
+							},
 							// 列表删除按钮
 							'bombillinfomaintaince button[action=delete]' : {
 								click : this.deleteRecord
@@ -149,7 +153,6 @@ Ext.define('SCM.controller.basedata.MaterialBomController', {
 			 *            record
 			 */
 			loadGridRecord : function(record) {
-				var editStore = Ext.create('MaterialBomEditStore');
 				this.editGrid.store.load({
 							scope : this,
 							params : {
@@ -177,6 +180,58 @@ Ext.define('SCM.controller.basedata.MaterialBomController', {
 					this.changeEditStatus(record);
 					this.loadFormRecord(record);
 				}
+			},
+			
+			/**
+			 * 复制bom单
+			 * @param {} button
+			 */
+			copyRecord : function(button) {
+				var me = this;
+				sm = me.listPanel.getSelectionModel();
+				if (sm.hasSelection()) {// 判断是否选择行记录
+					var oldRecord = sm.getLastSelected();
+					newRecord = Ext.create(me.modelName);// 新增记录
+					newRecord.set('materialId',oldRecord.get("materialId"));
+					newRecord.set('materialName',oldRecord.get("materialName"));
+					
+					me.changeEditStatus(newRecord);
+					newRecord.phantom = true;
+					me.win.uiStatus = 'AddNew';
+					me.editForm.getForm().loadRecord(newRecord);
+					
+					var uuid = new Ext.data.UuidGenerator();
+					
+					var entryStore = Ext.create('MaterialBomEditEntryStore');
+					entryStore.load({
+							scope : me,
+							params : {
+								'whereStr' : 'MaterialBomEntryV.PARENT_ID =\'' + oldRecord.get('id') + '\''
+							},
+							callback : function(records, operation, success) {
+								// 清空分录
+								me.editGrid.store.removeAll(true);
+								me.editGrid.getView().refresh();
+								
+								Ext.each(records, function(item, index, length) {
+									var entryRecord = Ext.create('MaterialBomEditEntryModel');
+									entryRecord.phantom = true;
+									entryRecord.set('parentId', newRecord.get('id'));
+									entryRecord.set('entryMaterialId', item.get('entryMaterialId'));
+									entryRecord.set('entryMaterialName', item.get('entryMaterialName'));
+									entryRecord.set('volume', item.get('volume'));
+									entryRecord.set('entryUnitId', item.get('entryUnitId'));
+									entryRecord.set('entryUnitName', item.get('entryUnitName'));
+									me.editGrid.store.add(entryRecord);
+								});
+								me.editForm.inited = true;
+								me.showEdit();
+							}
+						});
+				}
+				
+				
+				
 			},
 
 			/**
