@@ -80,7 +80,7 @@ Ext.define('SCM.view.basedata.materialbom.ListUI', {
 							],
 							dockedItems : [{
 										xtype : 'basetoolbar',
-										audit : true
+										bomBill : true
 									}, {
 										dock : 'bottom',
 										xtype : 'pagingtoolbar',
