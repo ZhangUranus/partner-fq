@@ -28,7 +28,7 @@ Ext.define('SCM.extend.toolbar.BaseToolbar', {
 				if (me.bomBill) {
 					tools = tools.concat([{
 								text : '复制',
-								iconCls : 'system-audit',
+								iconCls : 'system-copy',
 								action : 'copy'
 							}, {
 								text : '核准',

@@ -43,6 +43,10 @@
 .system-rollback{
 	background-image: url( ../images/icons/rollback.png ) !important;
 }
+.system-copy{
+	background-image: url( ../images/icons/copy.png ) !important;
+}
+
 .detail{
 	background-image: url( ../images/icons/detail.png ) !important;
 }
