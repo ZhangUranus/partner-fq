@@ -8,6 +8,8 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -22,9 +24,6 @@ import org.ofbiz.entity.transaction.TransactionUtil;
 import org.ofbiz.partner.scm.pricemgr.Utils;
 import org.ofbiz.service.DispatchContext;
 import org.ofbiz.service.ServiceUtil;
-import org.python.modules.synchronize;
-
-import bsh.util.Util;
 
 public class ProductInwarehouseServices {
 	
@@ -40,7 +39,19 @@ public class ProductInwarehouseServices {
 	
 	//刷新matrerialNbr2ObjMap表
 	private static void refreshMtrMap(){
-		
+		Delegator delegator=org.ofbiz.partner.scm.common.Utils.getDefaultDelegator();
+		try {
+			List<GenericValue> mtrList=delegator.findByAnd("TMaterial", null,false);
+			if(mtrList!=null){
+				matrerialNbr2ObjMap=new HashMap<String, GenericValue>(mtrList.size());
+				for(GenericValue mtrValue:mtrList){
+					matrerialNbr2ObjMap.put(mtrValue.getString("number"), mtrValue);
+				}
+			}
+		} catch (GenericEntityException e) {
+			Debug.logError("刷新物料列表出错", module);
+			e.printStackTrace();
+		}
 	}
 	/**
 	 * 同步车间成品入库
@@ -103,10 +114,9 @@ public class ProductInwarehouseServices {
 		try {
 			Debug.logInfo("开始查询成品库入库记录，排除已经处理过的记录，开始时间"+fromStr+"  结束时间"+endStr, module);
 			
-			PreparedStatement ps=midconn.prepareStatement("select * from jxcla where LA002>=? and LA002<=? and LA008='A' and LA011='1' and LA004 not in ? and LA005 not in ?");
-			ps.setString(0, fromStr);
-			ps.setString(1, endStr);
-			ps.setString(2, idStrArr[0]);
+			PreparedStatement ps=midconn.prepareStatement("select * from jxcla where LA002>=? and LA002<=? and LA008='A' and LA011='1' and LA004 not in "+idStrArr[0]+" and LA005 not in "+idStrArr[1]);
+			ps.setString(1, fromStr);
+			ps.setString(2, endStr);
 			rs=ps.executeQuery();
 			
 			//启动事务
@@ -119,7 +129,7 @@ public class ProductInwarehouseServices {
 			
 			//获取默认仓库id
 			GenericValue defaultWarehouse=delegator.findOne("Warehouse", UtilMisc.toMap("number", "002"), false);
-			String defaultWarehouseId=defaultWorkshop.getString("id");
+			String defaultWarehouseId=defaultWarehouse.getString("id");
 			
 			//生成车间入库单
 			while(rs.next()){
@@ -188,7 +198,7 @@ public class ProductInwarehouseServices {
 	
 	/**
 	 * 获取时间段日期内的车间成品入库单标记LA004  LA005两个字符串
-	 * 样式如{'("444","444","444","444")','("555","555","555","555")'}
+	 * 样式如{"('444','444','444','444')","('555','555','555','555')"}
 	 * @param fd
 	 * @param ed
 	 * @return
@@ -210,18 +220,18 @@ public class ProductInwarehouseServices {
 			return null;
 		}
 		StringBuffer la4Str=new StringBuffer();
-		la4Str.append("(\"emptyholder\"");
+		la4Str.append("('emptyholder'");
 		StringBuffer la5Str=new StringBuffer();
-		la5Str.append("(\"emptyholder\"");
+		la5Str.append("('emptyholder'");
 		try {
-			PreparedStatement ps=pnconn.prepareStatement("select LA004 ,LA005 from Workshop_Return_Product_Entry where parent_id = (select id from Workshop_Return_Product where biz_Date>=? and biz_Date<=?) where LA004 is not null and LA005 is not null");
-			ps.setTimestamp(0, new Timestamp(fd.getTime()));
-			ps.setTimestamp(1, new Timestamp(ed.getTime()));
+			PreparedStatement ps=pnconn.prepareStatement("select LA004 ,LA005 from Workshop_Return_Product_Entry where parent_id = (select id from Workshop_Return_Product where biz_Date>=? and biz_Date<=?) and LA004 is not null and LA005 is not null");
+			ps.setTimestamp(1, new Timestamp(fd.getTime()));
+			ps.setTimestamp(2, new Timestamp(ed.getTime()));
 			ResultSet rs=ps.executeQuery();
 			Debug.logInfo("获取成品记录完成，开始拼凑LA004和LA005字段过滤字符串", module);
 			while(rs.next()){
-				la4Str.append(",\"").append(rs.getString("LA004")).append("\"");
-				la5Str.append(",\"").append(rs.getString("LA005")).append("\"");
+				la4Str.append(",'").append(rs.getString("LA004")).append("'");
+				la5Str.append(",'").append(rs.getString("LA005")).append("'");
 			}
 			la4Str.append(")");
 			la5Str.append(")");
