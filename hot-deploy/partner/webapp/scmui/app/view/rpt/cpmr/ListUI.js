@@ -129,20 +129,35 @@ Ext.define('SCM.view.rpt.cpmr.ListUI', {
 										split : true,
 										height : 300,
 										store : 'rpt.ConsignProcessMatchingReportStore',
+										features: [{
+									        ftype: 'summary'
+									    }],
 										columns : [{
 													header : '序号',
 													xtype : 'rownumberer',
-													width : 40
+													width : 40,
+													summaryType: 'count',
+													summaryRenderer: function(value, summaryData, dataIndex) {
+										                return '<font size=2 color=blue><b>99</b></font>';
+										            }
 												}, {
 													xtype : 'gridcolumn',
 													dataIndex : 'SUPPLIER_NAME',
 													width : 120,
-													text : '加工商'
+													text : '加工商',
+													summaryType: 'count',
+													summaryRenderer: function(value, summaryData, dataIndex) {
+										                return '<font size=2 color=blue><b>汇总</b></font>';
+										            }
 												}, {
 													xtype : 'gridcolumn',
 													dataIndex : 'MATERIAL_NAME',
 													width : 120,
-													text : '加工件'
+													text : '加工件',
+													summaryType: 'count',
+										            summaryRenderer: function(value, summaryData, dataIndex) {
+										                return '<font size=2 color=blue><b>(' + value + ' 种加工件)</b></font>';
+										            }
 												}, {
 													xtype : 'gridcolumn',
 													dataIndex : 'DEFAULT_UNIT_NAME',
@@ -157,32 +172,56 @@ Ext.define('SCM.view.rpt.cpmr.ListUI', {
 													xtype : 'numbercolumn',
 													dataIndex : 'BEGINVOLUME',
 													width : 100,
-													text : '期初数量'
+													text : '期初数量',
+													summaryType: 'sum',
+										            summaryRenderer: function(value, summaryData, dataIndex) {
+										                return '<font size=2 color=blue><b>' + Ext.util.Format.number(value,'0,000.0000') + '</b></font>';
+										            }
 												}, {
 													xtype : 'numbercolumn',
 													dataIndex : 'IN_VOLUME',
 													width : 100,
-													text : '收入数量'
+													text : '收入数量',
+													summaryType: 'sum',
+										            summaryRenderer: function(value, summaryData, dataIndex) {
+										                return '<font size=2 color=blue><b>' + Ext.util.Format.number(value,'0,000.0000') + '</b></font>';
+										            }
 												}, {
 													xtype : 'numbercolumn',
 													dataIndex : 'IN_SUM',
 													width : 100,
-													text : '收入金额'
+													text : '收入金额',
+													summaryType: 'sum',
+										            summaryRenderer: function(value, summaryData, dataIndex) {
+										                return '<font size=2 color=blue><b>' + Ext.util.Format.number(value,'0,000.0000') + '</b></font>';
+										            }
 												}, {
 													xtype : 'numbercolumn',
 													dataIndex : 'OUT_VOLUME',
 													width : 100,
-													text : '发出数量'
+													text : '发出数量',
+													summaryType: 'sum',
+										            summaryRenderer: function(value, summaryData, dataIndex) {
+										                return '<font size=2 color=blue><b>' + Ext.util.Format.number(value,'0,000.0000') + '</b></font>';
+										            }
 												}, {
 													xtype : 'numbercolumn',
 													dataIndex : 'OUT_SUM',
 													width : 100,
-													text : '发出金额'
+													text : '发出金额',
+													summaryType: 'sum',
+										            summaryRenderer: function(value, summaryData, dataIndex) {
+										                return '<font size=2 color=blue><b>' + Ext.util.Format.number(value,'0,000.0000') + '</b></font>';
+										            }
 												}, {
 													xtype : 'numbercolumn',
 													dataIndex : 'VOLUME',
 													width : 100,
-													text : '结存数量'
+													text : '结存数量',
+													summaryType: 'sum',
+										            summaryRenderer: function(value, summaryData, dataIndex) {
+										                return '<font size=2 color=blue><b>' + Ext.util.Format.number(value,'0,000.0000') + '</b></font>';
+										            }
 												}],
 										dockedItems : [{
 													dock : 'bottom',
