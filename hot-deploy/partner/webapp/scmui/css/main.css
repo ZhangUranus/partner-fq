@@ -28,6 +28,9 @@
 .system-export {
 	background-image: url( ../images/icons/export.gif ) !important;
 }
+.system-exportDetail {
+	background-image: url( ../images/icons/export-detail.png ) !important;
+}
 .system-print{
 	background-image: url( ../images/icons/printer.gif ) !important;
 }
