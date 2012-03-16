@@ -64,6 +64,10 @@ Ext.define('SCM.view.rpt.cpmr.ListUI', {
 													text : '导出',
 													iconCls : 'system-export',
 													action : 'export'
+												}, {
+													text : '导出明细',
+													iconCls : 'system-exportDetail',
+													action : 'exportDetail'
 												}]
 									}, {
 										xtype : 'panel',
