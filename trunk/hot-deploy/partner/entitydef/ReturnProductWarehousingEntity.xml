@@ -17,6 +17,7 @@
 		<field name="id" type="id-long"></field>
 		<field name="number" type="name"></field>
 		<field name="bizDate" type="date-time"></field>
+		<field name="processorId" type="id-long"></field>
 		<field name="submitterSystemUserId" type="id-long"></field>
 		<field name="totalsum" type="fixed-point"></field>
 		<field name="note" type="description"></field>
@@ -31,6 +32,7 @@
 		<field name="parentId" type="id-long"></field>
 		<field name="warehouseWarehouseId" type="id-long"></field>
 		<field name="bomId" type="id-long"></field>
+		<field name="unitUnitId" type="id-long"></field>
 		<field name="volume" type="fixed-point"></field>
 		<field name="price" type="fixed-point"></field>
 		<field name="entrysum" type="fixed-point"></field>
