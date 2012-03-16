@@ -32,5 +32,22 @@ Ext.define('SCM.extend.exporter.Exporter', {
 							}
 						});
 
+			},
+			
+			exportDetailExcel : function() {
+				Ext.Ajax.request({
+							url : '../scm/control/export',
+							params : this.getDetailParams(),
+
+							success : function(response, option) {
+								var result = Ext.decode(response.responseText);
+								if (result.success) {
+									window.location.href = '../scm/control/download?type=EXCEL&filename=' + result.filename;
+								} else {
+									Ext.Msg.alert("错误", result.message);
+								}
+							}
+						});
+
 			}
 		})
