@@ -21,6 +21,10 @@ Ext.define('SCM.controller.rpt.ConsignProcessMatchingReportController', {
 							// 数据导出
 							'consignprocessmatchingreport button[action=export]' : {
 								click : this.exportExcel
+							},
+							// 数据导出
+							'consignprocessmatchingreport button[action=exportDetail]' : {
+								click : this.exportDetailExcel
 							}
 						});
 			},
@@ -109,6 +113,31 @@ Ext.define('SCM.controller.rpt.ConsignProcessMatchingReportController', {
 					params.sort = Ext.encode(getSorters());
 					params.report = 'CPMR';
 					params.title = '加工商对数表'; // sheet页名称
+					params.header = header; // 表头
+					params.dataIndex = dataIndex; // 数据引用
+					params.pattern = 'SQL';
+					params.type = 'EXCEL';
+					return params;
+				}
+			},
+			
+			
+			/**
+			 * 获取报表参数
+			 * 
+			 * @return {}
+			 */
+			getDetailParams : function() {
+				var tempheader = this.listPanel.headerCt.query('{isVisible()}');
+				var header = "日期,单据类型,单据编码,供应商名称,提交人,仓库名称,加工件名称,单位,数量,加工单价,金额";
+				var dataIndex = "BIZ_DATE,NAME,NUMBER,SUPPLIER_NAME,USER_NAME,WAREHOUSE_NAME,MATERIAL_NAME,UNIT_NAME,VOLUME,PROCESS_PRICE,PROCESS_SUM";
+				
+				with (this.listPanel.store) {
+					var params = getProxy().extraParams;
+
+					// 页面参数
+					params.report = 'CPMRD';
+					params.title = '加工商对数明细表'; // sheet页名称
 					params.header = header; // 表头
 					params.dataIndex = dataIndex; // 数据引用
 					params.pattern = 'SQL';
