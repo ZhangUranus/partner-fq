@@ -55,6 +55,8 @@ public class DataFetchEvents {
 			list = getSemiProductCostReportList(request);
 		} else if("SL".equals(request.getParameter("report"))){
 			list = getSystemLogList(request);
+		} else if("CPMRD".equals(request.getParameter("report"))){
+			list = getConsignMatchReportDetailList(request);
 		}
 		return list;
 	}
@@ -277,6 +279,123 @@ public class DataFetchEvents {
 		if(supplierId != null && !"".equals(supplierId)){
 			sql += " AND CCPP.SUPPLIER_ID = '" + supplierId + "'";
 		}
+		return sql;
+	}
+	
+	/**
+	 * 发外加工对数明细列表（用于导出）
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public static List<Map<String ,Object>> getConsignMatchReportDetailList(HttpServletRequest request) throws Exception {
+		return getListWithSQL(request,getConsignMatchReportDetailSql(request));
+	}
+	
+	/**
+	 * 获取发外加工对数明细SQL
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	public static String getConsignMatchReportDetailSql(HttpServletRequest request) throws Exception {
+		String year = null;
+		String month = null;
+		String supplierId = null;
+		String supplierSeleteStr1 = "";
+		String supplierSeleteStr2 = "";
+		String supplierSeleteStr3 = "";
+		if(request.getParameter("year") != null && request.getParameter("month") != null){
+			year = request.getParameter("year");
+			month = request.getParameter("month");
+		}else{
+			throw new Exception("找不到日期参数！");
+		}
+		
+		if(request.getParameter("supplier") != null){
+			supplierId = request.getParameter("supplier");
+		}
+		
+		if(supplierId != null && !"".equals(supplierId)){
+			supplierSeleteStr1 = " AND CW.PROCESSOR_SUPPLIER_ID = '" + supplierId + "'";
+			supplierSeleteStr2 = " AND CRP.PROCESSOR_SUPPLIER_ID = '" + supplierId + "'";
+			supplierSeleteStr3 = " AND RPW.PROCESSOR_ID = '" + supplierId + "'";
+		}
+		
+		String sql =" SELECT DATE(CW.BIZ_DATE) AS BIZ_DATE," +
+				" '委外入库' AS NAME," +
+				" CW.NUMBER," +
+				" SP.NAME AS SUPPLIER_NAME," +
+				" TSU.USER_NAME AS USER_NAME," +
+				" WH.NAME AS WAREHOUSE_NAME," +
+				" TM.NAME AS MATERIAL_NAME," +
+				" UNT.NAME AS UNIT_NAME," +
+				" ROUND(IFNULL(CWE.VOLUME,0),4) AS VOLUME," +
+				" ROUND(IFNULL(CWE.PROCESS_PRICE,0),4) AS PROCESS_PRICE," +
+				" ROUND(IFNULL(CWE.VOLUME * CWE.PROCESS_PRICE,0),4) AS PROCESS_SUM" +
+				" FROM CONSIGN_WAREHOUSING CW" +
+				" LEFT JOIN CONSIGN_WAREHOUSING_ENTRY CWE ON CW.ID = CWE.PARENT_ID" +
+				" LEFT JOIN SUPPLIER SP ON CW.PROCESSOR_SUPPLIER_ID = SP.ID" +
+				" LEFT JOIN T_SYSTEM_USER TSU ON CW.SUBMITTER_SYSTEM_USER_ID = TSU.ID" +
+				" LEFT JOIN WAREHOUSE WH ON CWE.WAREHOUSE_WAREHOUSE_ID = WH.ID" +
+				" LEFT JOIN MATERIAL_BOM MB ON CWE.BOM_ID = MB.ID" +
+				" LEFT JOIN T_MATERIAL TM ON MB.MATERIAL_ID = TM.ID" +
+				" LEFT JOIN UNIT UNT ON CWE.UNIT_UNIT_ID = UNT.ID" +
+				" WHERE CW.STATUS = 4" +
+				" AND YEAR(BIZ_DATE) = " + year +
+				" AND MONTH(BIZ_DATE) = " + month +
+				supplierSeleteStr1 +
+				" UNION" +
+				" SELECT DATE(CRP.BIZ_DATE) AS BIZ_DATE," +
+				" '委外退货' AS NAME," +
+				" CRP.NUMBER," +
+				" SP.NAME AS SUPPLIER_NAME," +
+				" TSU.USER_NAME AS USER_NAME," +
+				" WH.NAME AS WAREHOUSE_NAME," +
+				" TM.NAME AS MATERIAL_NAME," +
+				" UNT.NAME AS UNIT_NAME," +
+				" ROUND(IFNULL(-CRPE.VOLUME,0),4) AS VOLUME," +
+				" 0 AS PROCESS_PRICE," +
+				" 0 AS PROCESS_SUM" +
+				" FROM CONSIGN_RETURN_PRODUCT CRP" +
+				" LEFT JOIN CONSIGN_RETURN_PRODUCT_ENTRY CRPE ON CRP.ID = CRPE.PARENT_ID" +
+				" LEFT JOIN SUPPLIER SP ON CRP.PROCESSOR_SUPPLIER_ID = SP.ID" +
+				" LEFT JOIN T_SYSTEM_USER TSU ON CRP.SUBMITTER_SYSTEM_USER_ID = TSU.ID" +
+				" LEFT JOIN WAREHOUSE WH ON CRPE.WAREHOUSE_WAREHOUSE_ID = WH.ID" +
+				" LEFT JOIN MATERIAL_BOM MB ON CRPE.BOM_ID = MB.ID" +
+				" LEFT JOIN T_MATERIAL TM ON MB.MATERIAL_ID = TM.ID" +
+				" LEFT JOIN UNIT UNT ON CRPE.UNIT_UNIT_ID = UNT.ID" +
+				" WHERE CRP.STATUS = 4" +
+				" AND YEAR(BIZ_DATE) = " + year +
+				" AND MONTH(BIZ_DATE) = " + month +
+				supplierSeleteStr2 +
+				" UNION" +
+				" SELECT DATE(RPW.BIZ_DATE) AS BIZ_DATE," +
+				" '委外验收' AS NAME," +
+				" RPW.NUMBER," +
+				" SP.NAME AS SUPPLIER_NAME," +
+				" TSU.USER_NAME AS USER_NAME," +
+				" WH.NAME AS WAREHOUSE_NAME," +
+				" TM.NAME AS MATERIAL_NAME," +
+				" UNT.NAME AS UNIT_NAME," +
+				" ROUND(IFNULL(-RPWE.VOLUME,0),4) AS VOLUME," +
+				" 0 AS PROCESS_PRICE," +
+				" 0 AS PROCESS_SUM" +
+				" FROM RETURN_PRODUCT_WAREHOUSING RPW" +
+				" LEFT JOIN RETURN_PRODUCT_WAREHOUSING_ENTRY RPWE ON RPW.ID = RPWE.PARENT_ID" +
+				" LEFT JOIN SUPPLIER SP ON RPW.PROCESSOR_ID = SP.ID" +
+				" LEFT JOIN T_SYSTEM_USER TSU ON RPW.SUBMITTER_SYSTEM_USER_ID = TSU.ID" +
+				" LEFT JOIN WAREHOUSE WH ON RPWE.WAREHOUSE_WAREHOUSE_ID = WH.ID" +
+				" LEFT JOIN MATERIAL_BOM MB ON RPWE.BOM_ID = MB.ID" +
+				" LEFT JOIN T_MATERIAL TM ON MB.MATERIAL_ID = TM.ID" +
+				" LEFT JOIN UNIT UNT ON RPWE.UNIT_UNIT_ID = UNT.ID" +
+				" WHERE RPW.STATUS = 4" +
+				" AND YEAR(BIZ_DATE) = " + year +
+				" AND MONTH(BIZ_DATE) = " + month +
+				supplierSeleteStr3 +
+				" AND SP.NAME != ''" +
+				" ORDER BY BIZ_DATE" ;
 		return sql;
 	}
 	
