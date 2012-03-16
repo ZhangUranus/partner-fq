@@ -107,6 +107,7 @@ public class Utils {
 		billHead.set("id", billValue.getString("id"));
 		billHead.set("number", billValue.getString("number"));
 		billHead.set("bizDate", new Timestamp(System.currentTimeMillis()));
+		billHead.set("processorId", billHead.containsKey("processorSupplierId") ? billValue.getString("processorSupplierId"):billValue.getString("workshopWorkshopId"));
 		billHead.set("submitterSystemUserId", billValue.getString("submitterSystemUserId"));
 		billHead.set("totalsum", billValue.getBigDecimal("totalsum"));
 		billHead.set("note", billValue.getString("note"));
@@ -125,6 +126,7 @@ public class Utils {
 			tempEntry.set("parentId", entryValue.getString("parentId"));
 			tempEntry.set("warehouseWarehouseId", entryValue.getString("warehouseWarehouseId"));
 			tempEntry.set("bomId", entryValue.getString("bomId"));
+			tempEntry.set("unitUnitId", entryValue.getString("unitUnitId"));
 			tempEntry.set("volume", entryValue.getBigDecimal("volume"));
 			tempEntry.set("price", entryValue.getBigDecimal("price"));
 			tempEntry.set("entrysum", entryValue.getBigDecimal("entrysum"));
