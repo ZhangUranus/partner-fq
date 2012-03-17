@@ -381,8 +381,6 @@ Ext.define('SCM.controller.basedata.MaterialBomController', {
 					if (record.get('status') != '0') {
 						showWarning('BOM单已核准！');
 						return false;
-					} else {
-						return true;
 					}
 					Ext.Msg.confirm('提示', '核准的BOM不允许进行删除、修改操作，确定核准该BOM单？', auditConfirm, this);
 					function auditConfirm(id) {
