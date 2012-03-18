@@ -15,6 +15,7 @@ import java.util.UUID;
 
 import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilMisc;
+import org.ofbiz.base.util.UtilProperties;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericEntityException;
 import org.ofbiz.entity.GenericValue;
@@ -29,19 +30,26 @@ public class ProductInwarehouseServices {
 	
 	public static final String module = ProductInwarehouseServices.class.getName();
 	//配置成品数据库数据源名称
-	public static final String midDatabaseHelperName="localmysql";
+	private static String midDatabaseHelperName="localmysql";
+	private static String defWshopNbr;//默认生成单据车间编码
+	private static String defWhouseNbr;//默认生成单据仓库编码
+	static{
+		defWshopNbr=UtilProperties.getPropertyValue("PrdServiceConfig", "midDatabaseHelperName");
+		defWshopNbr=UtilProperties.getPropertyValue("PrdServiceConfig", "defaultWorkshopNbr");
+		defWshopNbr=UtilProperties.getPropertyValue("PrdServiceConfig", "defaultWarehouseNbr");
+	}
 	
 	private static final SimpleDateFormat df= new SimpleDateFormat("yyyyMMdd");
 	
 	//料品编码和物料对象对应表
-	private static Map<String, GenericValue> matrerialNbr2ObjMap=null;
+	private static Map<String, GenericValue> matrerialNbr2ObjMap=new HashMap<String, GenericValue>();
 	//private static Object mtrMapLock=new Object();//对应matrerialNbr2IdMap的更新锁
 	
 	//刷新matrerialNbr2ObjMap表
 	private static void refreshMtrMap(){
 		Delegator delegator=org.ofbiz.partner.scm.common.Utils.getDefaultDelegator();
 		try {
-			List<GenericValue> mtrList=delegator.findByAnd("TMaterial", null,false);
+			List<GenericValue> mtrList=delegator.findList("TMaterial", null, null, null, null, false);
 			if(mtrList!=null){
 				matrerialNbr2ObjMap=new HashMap<String, GenericValue>(mtrList.size());
 				for(GenericValue mtrValue:mtrList){
@@ -113,24 +121,31 @@ public class ProductInwarehouseServices {
 		ResultSet rs=null;
 		try {
 			Debug.logInfo("开始查询成品库入库记录，排除已经处理过的记录，开始时间"+fromStr+"  结束时间"+endStr, module);
-			
-			PreparedStatement ps=midconn.prepareStatement("select * from jxcla where LA002>=? and LA002<=? and LA008='A' and LA011='1' and LA004 not in "+idStrArr[0]+" and LA005 not in "+idStrArr[1]);
-			ps.setString(1, fromStr);
-			ps.setString(2, endStr);
+			String sql="select * from jxcla where LA002>='"+fromStr+"' and LA002<='"+endStr+"' and LA008='A' and LA011='1' and LA004 not in "+idStrArr[0]+" and LA005 not in "+idStrArr[1];
+			PreparedStatement ps=midconn.prepareStatement(sql);
 			rs=ps.executeQuery();
 			
-			//启动事务
-			TransactionUtil.begin();
+
 			Delegator delegator=org.ofbiz.partner.scm.common.Utils.getDefaultDelegator();
 			
 			//获取默认车间id
-			GenericValue defaultWorkshop=delegator.findOne("Workshop", UtilMisc.toMap("number", "002"), false);
-			String defaultWorkshopId=defaultWorkshop.getString("id");
+			List<GenericValue> defaultWorkshop=delegator.findByAnd("Workshop", UtilMisc.toMap("number", "WS100004"));
+			if(defaultWorkshop==null||defaultWorkshop.size()<1){
+				Debug.logError("没有查找到默认车间", module);
+				return ServiceUtil.returnError("没有查找到默认车间");
+			}
+			String defaultWorkshopId=defaultWorkshop.get(0).getString("id");
 			
 			//获取默认仓库id
-			GenericValue defaultWarehouse=delegator.findOne("Warehouse", UtilMisc.toMap("number", "002"), false);
-			String defaultWarehouseId=defaultWarehouse.getString("id");
+			List<GenericValue> defaultWarehouse=delegator.findByAnd("Warehouse", UtilMisc.toMap("number", "WH100002"));
+			if(defaultWarehouse==null||defaultWarehouse.size()<1){
+				Debug.logError("没有查找到默认仓库", module);
+				return ServiceUtil.returnError("没有查找到默认仓库");
+			}
+			String defaultWarehouseId=defaultWarehouse.get(0).getString("id");
 			
+			//启动事务
+			TransactionUtil.begin();
 			//生成车间入库单
 			while(rs.next()){
 				String headId=UUID.randomUUID().toString();//单头id
@@ -144,15 +159,15 @@ public class ProductInwarehouseServices {
 				}
 				
 				
-				GenericValue workPrdHead= delegator.makeValue("WorkshopReturnProduct");
+				GenericValue workPrdHead= delegator.makeValue("WorkshopWarehousing");
 				workPrdHead.set("id", headId);//设置id
 				workPrdHead.set("number", rs.getString("LA004")+rs.getString("LA005"));//设置编码
-				workPrdHead.set("bizDate", bizDate);//设置业务日期
+				workPrdHead.set("bizDate", new Timestamp(bizDate.getTime()));//设置业务日期
 				workPrdHead.set("workshopWorkshopId",defaultWorkshopId);//设置车间
-				delegator.store(workPrdHead);//保存表头
+				delegator.create(workPrdHead);//保存表头
 				
-				GenericValue workPrdEntry=delegator.makeValue("WorkshopReturnProductEntry");
-				workPrdEntry.set("id", UUID.randomUUID());//设置分录id
+				GenericValue workPrdEntry=delegator.makeValue("WorkshopWarehousingEntry");
+				workPrdEntry.set("id", UUID.randomUUID().toString());//设置分录id
 				workPrdEntry.set("parentId", headId);//设置表头id
 				
 				//根据编码从缓存取物料对象
@@ -172,7 +187,7 @@ public class ProductInwarehouseServices {
 				workPrdEntry.set("materialMaterialModel", materialValue.get("model"));//设置物料型号
 				workPrdEntry.set("volume", rs.getBigDecimal("LA007"));//设置入库数量
 				workPrdEntry.set("unitUnitId", materialValue.get("defaultUnitId"));//设置计量单位id
-				delegator.store(workPrdEntry);//保存分录
+				delegator.create(workPrdEntry);//保存分录
 				
 			}
 			//事务提交
