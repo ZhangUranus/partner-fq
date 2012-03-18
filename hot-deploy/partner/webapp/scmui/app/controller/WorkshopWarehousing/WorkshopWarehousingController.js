@@ -253,7 +253,8 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 				return "<div>"
 				+"<div class='caption' >江门市蓬江区富桥旅游用品厂有限公司</div>"
 				+"<div class='caption' >车间半成品入库单</div>"
-				+"<div class='field' >单据编号:<span class='dataField' fieldindex='data.number' width=150px></span></div>"
+				+"<div class='field' style='width:45%;float:left;'  >单据编号:<span class='dataField' fieldindex='data.number' width=150px></span></div>"
+				+"<div class='field' align='right' style='width:45%;float:right;'>打印时间:<span class='dataField' fieldindex='data.printTime' width=150px ></span></div>"
 				+"<div class='field' style='width:25%;float:left;'>发货车间:<span class='dataField' fieldindex='data.workshopWorkshopName' width=150px></span></div>"
 				+"<div class='field' style='width:25%;float:left;'>发货人:<span style='width:150px'></span></div>"
 				+"<div class='field' align='right' style='width:35%;float:right;'>日期:<span class='dataField' fieldindex='data.bizDate' width=150px></span></div>"
@@ -269,8 +270,7 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 				+"<th bindfield='note'>备注</th> "
 				+"</tr> "
 				+"</table>"
-				+"<div class='field' style='width:50%;'>打印时间:<span class='dataField' fieldindex='data.printTime'></span></div>"
-				+"<div class='field' style='width:50%;'>第<span class='dataField' fieldindex='data.curPage'></span>页/共<span class='dataField' fieldindex='data.totalPages'></span>页</div>"
+				+"<div class='field' style='width:80px;float:right;'>第<span class='dataField' fieldindex='data.curPage'></span>页/共<span class='dataField' fieldindex='data.totalPages'></span>页</div>"
 				+"</div>";
 			}
 		});

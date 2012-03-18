@@ -345,7 +345,7 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 			},
 			getPrintCfg:function(){
 				var cfg=new PrintConfig();
-				cfg.loopCount=20;
+				cfg.loopCount=28;
 				cfg.mainBodyDiv=this.getMainPrintHTML();
 				cfg.loopBodyDiv=this.getLoopPrintHTML();
 				cfg.tailDiv=this.getTailPrintHTML();
