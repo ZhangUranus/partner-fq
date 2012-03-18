@@ -1,12 +1,13 @@
-div.printbody{
+div{
 /*width:100px;
 */
-border:0px;
+font-size: 9px;
 }
 /*打印单据标题*/
 div.caption { 
 	padding: 0 0 5px 0; 
-	font-size:20px;
+	font-size:15px;
+	font-weight:bold;
 	text-align: center; 
 }
 div.field{
@@ -28,6 +29,7 @@ div.nextLine{
 	clear: both;
 }
 table{
+ font-size: 9px;
  border-left: none;
  border-right: none ;
  border-top: 1px solid ;
