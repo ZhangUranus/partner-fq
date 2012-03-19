@@ -9,6 +9,7 @@ import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericValue;
 import org.ofbiz.partner.scm.pricemgr.BillType;
+import org.ofbiz.partner.scm.pricemgr.ConsignProcessedPriceMgr;
 import org.ofbiz.partner.scm.pricemgr.IBizStock;
 import org.ofbiz.partner.scm.pricemgr.MaterialBomMgr;
 import org.ofbiz.partner.scm.pricemgr.PriceCalItem;
@@ -25,6 +26,14 @@ public class ReturnProductWarehousingBizImp implements IBizStock {
 		if (bizDate == null || !Utils.isCurPeriod(bizDate)) {
 			throw new Exception("单据业务日期不在当前系统期间");
 		}
+		// 供应商id
+		String processorId = billValue.getString("processorId");
+		if (processorId == null || processorId.length() < 1) {
+			throw new Exception("委外退料单加工商为空！！！");
+		}
+		// 入库单类型CRP委外进货单、WRP车间进货单
+		String billType = billValue.getString("note");
+		
 		// 获取单据id分录条目
 		List<GenericValue> entryList = delegator.findByAnd("ReturnProductWarehousingEntry", UtilMisc.toMap("parentId", billValue.getString("id")));
 		
@@ -55,6 +64,11 @@ public class ReturnProductWarehousingBizImp implements IBizStock {
 
 			// 计算分录单价
 			PriceMgr.getInstance().calPrice(item);
+			
+			//更新加工商对数表
+			if(billType.equals("CRP")){
+				ConsignProcessedPriceMgr.getInstance().update(2,processorId, materialId, volume, null, isOut, isCancel);
+			}
 		}
 		//返填总金额
 		billValue.set("totalsum", totalSum);

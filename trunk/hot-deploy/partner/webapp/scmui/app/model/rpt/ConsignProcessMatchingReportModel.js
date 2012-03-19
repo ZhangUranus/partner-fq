@@ -11,6 +11,9 @@ Ext.define('SCM.model.rpt.ConsignProcessMatchingReportModel', {
 						name : 'SUPPLIER_NAME',
 						type : 'string'
 					}, {
+						name : 'TYPE_NAME',
+						type : 'string'
+					}, {
 						name : 'MATERIAL_ID',
 						type : 'string'
 					}, {
