@@ -107,10 +107,10 @@ public class Utils {
 		billHead.set("id", billValue.getString("id"));
 		billHead.set("number", billValue.getString("number"));
 		billHead.set("bizDate", new Timestamp(System.currentTimeMillis()));
-		billHead.set("processorId", billHead.containsKey("processorSupplierId") ? billValue.getString("processorSupplierId"):billValue.getString("workshopWorkshopId"));
+		billHead.set("processorId", billValue.containsKey("processorSupplierId") ? billValue.getString("processorSupplierId"):billValue.getString("workshopWorkshopId"));
 		billHead.set("submitterSystemUserId", billValue.getString("submitterSystemUserId"));
 		billHead.set("totalsum", billValue.getBigDecimal("totalsum"));
-		billHead.set("note", billValue.getString("note"));
+		billHead.set("note", billValue.containsKey("processorSupplierId") ? "CRP":"WRP");
 		billHead.set("status", 0);
 		billHead.set("createdStamp", new Timestamp(System.currentTimeMillis()));
 		billHead.set("submitStamp", new Timestamp(System.currentTimeMillis()));

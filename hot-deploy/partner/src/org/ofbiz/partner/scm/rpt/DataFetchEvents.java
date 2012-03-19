@@ -259,6 +259,7 @@ public class DataFetchEvents {
 		String sql =" SELECT "+
 						" CCPP.SUPPLIER_ID, "+
 						" SUP.NAME AS SUPPLIER_NAME, "+
+						" CASE WHEN CCPP.TYPE=1 THEN '正常出入库' ELSE '退货验收' END AS TYPE_NAME, "+
 						" CCPP.MATERIAL_ID, "+
 						" TM.NAME AS MATERIAL_NAME, "+
 						" TM.DEFAULT_UNIT_ID, "+
@@ -379,7 +380,7 @@ public class DataFetchEvents {
 				" WH.NAME AS WAREHOUSE_NAME," +
 				" TM.NAME AS MATERIAL_NAME," +
 				" UNT.NAME AS UNIT_NAME," +
-				" ROUND(IFNULL(-RPWE.VOLUME,0),4) AS VOLUME," +
+				" ROUND(IFNULL(RPWE.VOLUME,0),4) AS VOLUME," +
 				" 0 AS PROCESS_PRICE," +
 				" 0 AS PROCESS_SUM" +
 				" FROM RETURN_PRODUCT_WAREHOUSING RPW" +

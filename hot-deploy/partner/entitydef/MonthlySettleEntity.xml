@@ -95,6 +95,7 @@
 		<field name="month" type="int"></field>
 		<field name="supplierId" type="id-long"></field>
 		<field name="materialId" type="id-long"></field>
+		<field name="type" type="int"></field><!--1：正常发出收入；2：退货验收 -->
 		<field name="beginvolume" type="fixed-point"></field>
 		<field name="outVolume" type="fixed-point"></field><!--发出数量 -->
 		<field name="inVolume" type="fixed-point"></field><!--收入数量 -->
@@ -104,6 +105,7 @@
 		<prim-key field="month" />
 		<prim-key field="supplierId" />
 		<prim-key field="materialId" />
+		<prim-key field="type" />
 	</entity>
 	<!-- 当期发外加工对数表 -->
 	<entity entity-name="CurConsignProcessedPrice" package-name="org.ofbiz.scm.pricemgr" title="CurConsignProcessedPrice Entity">
@@ -111,11 +113,43 @@
 		<field name="month" type="int"></field>
 		<field name="supplierId" type="id-long"></field>
 		<field name="materialId" type="id-long"></field>
+		<field name="type" type="int"></field>
 		<field name="beginvolume" type="fixed-point"></field>
 		<field name="outVolume" type="fixed-point"></field><!--发出数量 -->
 		<field name="inVolume" type="fixed-point"></field><!--收入数量 -->
 		<field name="inSum" type="fixed-point"></field><!--收入金额（加工单价*收入数量） -->
 		<field name="volume" type="fixed-point"></field>
+		<prim-key field="year" />
+		<prim-key field="month" />
+		<prim-key field="supplierId" />
+		<prim-key field="materialId" />
+		<prim-key field="type" />
+	</entity>
+	<!-- 历史发外加工对数表 -->
+	<entity entity-name="HisPurchasePrice" package-name="org.ofbiz.scm.pricemgr" title="HisPurchasePrice Entity">
+		<field name="year" type="int"></field>
+		<field name="month" type="int"></field>
+		<field name="supplierId" type="id-long"></field>
+		<field name="materialId" type="id-long"></field>
+		<field name="outVolume" type="fixed-point"></field><!--退货数量 -->
+		<field name="inVolume" type="fixed-point"></field><!--采购数量 -->
+		<field name="entrySum" type="fixed-point"></field><!--金额（采购单价*（采购数量 - 退货数量）） -->
+		<field name="volume" type="fixed-point"></field><!--本期采购数量（采购数量-退货数量） -->
+		<prim-key field="year" />
+		<prim-key field="month" />
+		<prim-key field="supplierId" />
+		<prim-key field="materialId" />
+	</entity>
+	<!-- 当期发外加工对数表 -->
+	<entity entity-name="CurPurchasePrice" package-name="org.ofbiz.scm.pricemgr" title="CurPurchasePrice Entity">
+		<field name="year" type="int"></field>
+		<field name="month" type="int"></field>
+		<field name="supplierId" type="id-long"></field>
+		<field name="materialId" type="id-long"></field>
+		<field name="outVolume" type="fixed-point"></field><!--退货数量 -->
+		<field name="inVolume" type="fixed-point"></field><!--采购数量 -->
+		<field name="entrySum" type="fixed-point"></field><!--金额（采购单价*（采购数量 - 退货数量）） -->
+		<field name="volume" type="fixed-point"></field><!--本期采购数量（采购数量-退货数量） -->
 		<prim-key field="year" />
 		<prim-key field="month" />
 		<prim-key field="supplierId" />

@@ -86,7 +86,7 @@ public class ConsignWarehousingBizImp implements IBizStock {
 			}
 			
 			//更新加工商对数表
-			ConsignProcessedPriceMgr.getInstance().update(processorId, materialId, volume, v.getBigDecimal("processPrice"));
+			ConsignProcessedPriceMgr.getInstance().update(1,processorId, materialId, volume, v.getBigDecimal("processPrice"), isOut, isCancel);
 			
 			v.store();
 		}

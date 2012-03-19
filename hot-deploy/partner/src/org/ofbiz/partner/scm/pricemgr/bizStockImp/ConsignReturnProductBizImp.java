@@ -9,6 +9,7 @@ import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericValue;
 import org.ofbiz.partner.scm.pricemgr.BillType;
+import org.ofbiz.partner.scm.pricemgr.ConsignProcessedPriceMgr;
 import org.ofbiz.partner.scm.pricemgr.IBizStock;
 import org.ofbiz.partner.scm.pricemgr.MaterialBomMgr;
 import org.ofbiz.partner.scm.pricemgr.PriceCalItem;
@@ -84,6 +85,8 @@ public class ConsignReturnProductBizImp implements IBizStock {
 			// // 更新加工商库存表
 			// ConsignPriceMgr.getInstance().update(processorId, materialId,
 			// volume.negate(), sum.negate());
+			//更新加工商对数表
+			ConsignProcessedPriceMgr.getInstance().update(2,processorId, materialId, volume.negate(), null, isOut, isCancel);
 		}
 		// 返填总金额
 		billValue.set("totalsum", totalSum);

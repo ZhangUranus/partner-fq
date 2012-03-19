@@ -155,6 +155,11 @@ Ext.define('SCM.view.rpt.cpmr.ListUI', {
 										            }
 												}, {
 													xtype : 'gridcolumn',
+													dataIndex : 'TYPE_NAME',
+													width : 80,
+													text : '类型'
+												}, {
+													xtype : 'gridcolumn',
 													dataIndex : 'MATERIAL_NAME',
 													width : 120,
 													text : '加工件',

@@ -44,23 +44,23 @@ public class ConsignProcessedPriceMgr {
 
 	/**
 	 * 更新金额、数量
-	 * 
+	 * @param type 1:正常出入库；2:退货验收
 	 * @param supplierId
 	 * @param materialId
 	 * @param volume
 	 * @param totalsum
 	 * @throws Exception
 	 */
-	public void update(String supplierId, String materialId, BigDecimal volume, BigDecimal processPrice) throws Exception {
+	public void update(int type, String supplierId, String materialId, BigDecimal volume, BigDecimal processPrice, boolean isOut, boolean isCancel) throws Exception {
 		synchronized (updateLock) {
 			if (supplierId == null || materialId == null || volume == null) {
 				throw new Exception("supplierId or materialId or volume is null");
 			}
 			// 查找供应商结存对数表
-			GenericValue gv = delegator.findOne("CurConsignProcessedPrice", UtilMisc.toMap("year", new Integer(year), "month", new Integer(month), "supplierId", supplierId, "materialId", materialId), false);
+			GenericValue gv = delegator.findOne("CurConsignProcessedPrice", UtilMisc.toMap("year", new Integer(year), "month", new Integer(month), "supplierId", supplierId, "materialId", materialId, "type", new Integer(type)), false);
 			if (gv != null) {
 				BigDecimal oldVolume = gv.getBigDecimal("volume");
-				if(processPrice == null){
+				if((isOut && !isCancel) || (!isOut && isCancel)){
 					BigDecimal outVolume = gv.getBigDecimal("outVolume");
 					gv.set("outVolume", outVolume.add(volume));
 				}else{
@@ -69,13 +69,15 @@ public class ConsignProcessedPriceMgr {
 						inVolume = BigDecimal.ZERO;
 					}
 					BigDecimal curInVolume = inVolume.add(volume);
-					BigDecimal inSum = gv.getBigDecimal("inSum");
-					if(inSum == null){
-						inSum = BigDecimal.ZERO;
-					}
-					BigDecimal curInSum = processPrice.multiply(volume);
 					gv.set("inVolume", curInVolume);
-					gv.set("inSum", inSum.add(curInSum));
+					if(type == 1){
+						BigDecimal inSum = gv.getBigDecimal("inSum");
+						if(inSum == null){
+							inSum = BigDecimal.ZERO;
+						}
+						BigDecimal curInSum = processPrice.multiply(volume);
+						gv.set("inSum", inSum.add(curInSum));
+					}
 					volume = volume.negate();//入库操作，结存数应该取反
 				}
 				BigDecimal tempVolume = oldVolume.add(volume);
@@ -86,7 +88,7 @@ public class ConsignProcessedPriceMgr {
 				delegator.store(gv);
 			} else {// 新增记录
 				//取上一个月库存信息
-				GenericValue preMonthValue=delegator.findOne("HisConsignProcessedPrice", UtilMisc.toMap("year", Utils.getYearOfPreMonth(year, month), "month", Utils.getMonthOfPreMonth(year, month), "supplierId", supplierId, "materialId", materialId), false);
+				GenericValue preMonthValue=delegator.findOne("HisConsignProcessedPrice", UtilMisc.toMap("year", Utils.getYearOfPreMonth(year, month), "month", Utils.getMonthOfPreMonth(year, month), "supplierId", supplierId, "materialId", materialId, "type", new Integer(type)), false);
 				BigDecimal beginVolume=BigDecimal.ZERO;//月初数量
 				BigDecimal outVolume = BigDecimal.ZERO;//本期发出数量
 				BigDecimal inVolume = BigDecimal.ZERO;//本期收入数量
@@ -99,22 +101,27 @@ public class ConsignProcessedPriceMgr {
 				gv.set("year", year);
 				gv.set("month", month);
 				gv.set("supplierId", supplierId);
+				gv.set("type", type);
 				gv.set("materialId", materialId);
 				gv.set("beginvolume", beginVolume);
 				
+				if((isOut && !isCancel) || (!isOut && isCancel)){
+					gv.set("outVolume", outVolume.add(volume));
+				}else{
+					BigDecimal curInVolume = inVolume.add(volume);
+					gv.set("inVolume", curInVolume);
+					if(type == 1){
+						BigDecimal curInSum = processPrice.multiply(curInVolume);
+						gv.set("inSum", inSum.add(curInSum));
+					}
+					volume = volume.negate();//入库操作，结存数应该取反
+				}
 				BigDecimal tempVolume = beginVolume.add(volume);
 				if(tempVolume.compareTo(BigDecimal.ZERO)<0){
 					throw new Exception("供应商物料数量小于供应商出库数量，请检查并调整供应商出库数量！");
 				}
 				gv.set("volume", tempVolume);
-				if(processPrice == null){
-					gv.set("outVolume", outVolume.add(volume));
-				}else{
-					BigDecimal curInVolume = inVolume.add(volume);
-					BigDecimal curInSum = processPrice.multiply(curInVolume);
-					gv.set("inVolume", curInVolume);
-					gv.set("inSum", inSum.add(curInSum));
-				}
+				
 				delegator.create(gv);
 			}
 		}

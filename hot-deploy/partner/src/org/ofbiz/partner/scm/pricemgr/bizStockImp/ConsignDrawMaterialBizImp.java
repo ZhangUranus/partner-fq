@@ -81,7 +81,7 @@ public class ConsignDrawMaterialBizImp implements IBizStock {
 		if(!isOut){
 			processedVolume = processedVolume.negate();
 		}
-		ConsignProcessedPriceMgr.getInstance().update(processorId, MaterialBomMgr.getInstance().getMaterialIdByBomId(billValue.getString("processedBomId")), processedVolume, null);
+		ConsignProcessedPriceMgr.getInstance().update(1,processorId, MaterialBomMgr.getInstance().getMaterialIdByBomId(billValue.getString("processedBomId")), processedVolume, null, isOut, isCancel);
 		
 		// 返填总金额
 		billValue.set("totalsum", totalSum);
