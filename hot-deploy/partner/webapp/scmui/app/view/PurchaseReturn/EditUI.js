@@ -48,6 +48,14 @@ Ext.define('SCM.view.PurchaseReturn.EditUI', {
 																fieldLabel : '日期',
 																allowBlank : false
 															}, {
+																xtype : 'combobox',
+																name : 'type',
+																margin : 5,
+																fieldLabel : '单据类型',
+																store : SCM.store.basiccode.purchaseTypeStore,
+																displayField : 'name',
+																valueField : 'id'
+															}, {
 																xtype : 'combogrid',
 																fieldLabel : '供应商',
 																name : 'supplierSupplierId',
@@ -130,6 +138,10 @@ Ext.define('SCM.view.PurchaseReturn.EditUI', {
 																readOnly : true,
 																name : 'totalsum',
 																margin : 5
+															}, {
+																xtype : 'label'
+															}, {
+																xtype : 'label'
 															}, {
 																xtype : 'textarea',
 																name : 'note',

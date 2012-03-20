@@ -321,6 +321,18 @@
 		<response name="success" type="none" />
 	</request-map>
 	
+	<!-- 采购供应对数表 -->
+	<request-map uri="queryPurchaseMatchReport">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="queryPurchaseMatchReport" />
+		<response name="success" type="none" />
+	</request-map>
+	<request-map uri="queryPurchaseMatchChart">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="queryPurchaseMatchChart" />
+		<response name="success" type="none" />
+	</request-map>
+	
 	<!-- 库存情况报表 -->
 	<request-map uri="queryStockDetailReport">
 		<security https="false" auth="false" />

@@ -85,6 +85,24 @@ SCM.store.basiccode.approverRenderer = function(value) {
 		return "不通过"
 };
 
+SCM.store.basiccode.purchaseTypeStore = new Ext.data.Store({
+			fields : ['id', 'name'],
+			data : [{
+						'id' : 1,
+						'name' : '采购单'
+					}, {
+						'id' : 2,
+						'name' : '调整单'
+					}]
+		});
+SCM.store.basiccode.purchaseTypeRenderer = function(value) {
+	if (value == 1) {
+		return "采购单";
+	} else
+		return "调整单"
+};
+
+
 SCM.store.basiccode.checkStatusStore = new Ext.data.Store({
 			fields : ['id', 'name'],
 			data : [{

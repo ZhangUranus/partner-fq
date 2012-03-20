@@ -19,6 +19,7 @@
 		<field name="id" type="id-long"></field>
 		<field name="number" type="name"></field>
 		<field name="bizDate" type="date-time"></field>
+		<field name="type" type="int"></field><!--1：采购单；2：调整单 -->
 		<field name="supplierSupplierId" type="id-long"></field>
 		<field name="buyerSystemUserId" type="id-long"></field>
 		<field name="checkerSystemUserId" type="id-long"></field>

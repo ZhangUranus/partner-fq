@@ -18,6 +18,10 @@ Ext.define('SCM.model.PurchaseWarehousing.PurchaseWarehousingEditModel', {
 							return new Date(value);
 						}
 					}, {
+						name : 'type',
+						type : 'int',
+						defaultValue : 1
+					}, {
 						name : 'supplierSupplierId',
 						type : 'string'
 					}, {
@@ -79,7 +83,7 @@ Ext.define('SCM.model.PurchaseWarehousing.PurchaseWarehousingEditModel', {
 			proxy : {
 				type : 'jsonajax',
 				api : {
-					read : '../../scm/control/requestJsonData?entity=PurchaseWarehousingView&distinct=true&fields=id,number,bizDate,supplierSupplierId,supplierSupplierName,buyerSystemUserId,buyerSystemUserName,checkerSystemUserId,checkerSystemUserName,submitterSystemUserId,submitterSystemUserName,totalsum,createdStamp,lastUpdatedStamp,note,status',
+					read : '../../scm/control/requestJsonData?entity=PurchaseWarehousingView&distinct=true&fields=id,number,bizDate,type,supplierSupplierId,supplierSupplierName,buyerSystemUserId,buyerSystemUserName,checkerSystemUserId,checkerSystemUserName,submitterSystemUserId,submitterSystemUserName,totalsum,createdStamp,lastUpdatedStamp,note,status',
 					destroy : '../../scm/control/deleteWithEntry?headEntity=PurchaseWarehousing&entryEntity=PurchaseWarehousingEntry'
 				},
 				remoteFilter : true
