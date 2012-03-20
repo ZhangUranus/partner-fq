@@ -82,6 +82,8 @@
 	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-WorkshopReturnProductEntry.xml"/>
 	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-WorkshopWarehousing.xml"/>
 	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-WorkshopWarehousingEntry.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-CurPurchasePrice.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-HisPurchasePrice.xml"/>
 	
 	<!-- 计划任务数据 -->
 	<entity-resource type="data" reader-name="seed" loader="main" location="data/System-ScheduledServices.xml"/>
