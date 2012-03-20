@@ -122,6 +122,7 @@ public class MonthlySettlement {
 	            PriceMgr.getInstance().refreshPeriod();
 	            ConsignPriceMgr.getInstance().refreshPeriod();
 	            ConsignProcessedPriceMgr.getInstance().refreshPeriod();
+	            PurchasePriceMgr.getInstance().refreshPeriod();
 	            ProductPriceMgr.getInstance().refreshPeriod();
 	            WorkshopPriceMgr.getInstance().refreshPeriod();
 	            
@@ -274,6 +275,11 @@ public class MonthlySettlement {
 			//当前委外加工件数量中间表CurConsignProcessedPrice【outVolume=0、inVolume=0、inSum=0、volume=beginvolume】
 			Debug.logInfo("执行update Cur_Consign_Processed_Price set out_Volume=0,in_Volume=0,in_Sum=0,volume=beginvolume ", module);
 			ps=conn.prepareStatement("update Cur_Consign_Processed_Price set out_Volume=0,in_Volume=0,in_Sum=0,volume=beginvolume ");
+			ps.executeUpdate();
+			
+			//当前采购对数中间表CurPurchasePrice【out_Volume=0,in_Volume=0,entry_Sum=0,volume=0】
+			Debug.logInfo("执行update Cur_Purchase_Price set out_Volume=0,in_Volume=0,entry_Sum=0,volume=0 ", module);
+			ps=conn.prepareStatement("update Cur_Purchase_Price set out_Volume=0,in_Volume=0,entry_Sum=0,volume=0 ");
 			ps.executeUpdate();
 			
 			//当前车间单价中间表CurWorkshopPrice 【volume=beginvolume、totalSum=beginsum】
@@ -444,6 +450,17 @@ public class MonthlySettlement {
 			ps=conn.prepareStatement("update Cur_Consign_Processed_Price set year="+yearOfnextMonth+" ,month="+monthOfnextMonth+" ,  out_Volume=0,in_Volume=0,in_Sum=0,beginvolume=volume ");
 			ps.executeUpdate();
 			
+			//当前采购对数中间表CurPurchasePrice数据转移到历史表，当前余额表更新【年、月、期初数量】
+			Debug.logInfo("执行delete from  His_Purchase_Price where year="+year+" and month="+month, module);
+			ps=conn.prepareStatement("delete from  His_Purchase_Price where year="+year+" and month="+month);
+			ps.executeUpdate();
+			Debug.logInfo("执行insert His_Purchase_Price select * from Cur_Purchase_Price", module);
+			ps=conn.prepareStatement("insert His_Purchase_Price select * from Cur_Purchase_Price");
+			ps.executeUpdate();
+			Debug.logInfo("执行update Cur_Purchase_Price set year="+yearOfnextMonth+" ,month="+monthOfnextMonth+" ,  out_Volume=0,in_Volume=0,entry_Sum=0,volume=0 ", module);
+			ps=conn.prepareStatement("update Cur_Purchase_Price set year="+yearOfnextMonth+" ,month="+monthOfnextMonth+" ,  out_Volume=0,in_Volume=0,entry_Sum=0,volume=0 ");
+			ps.executeUpdate();
+			
 			//当前车间单价中间表CurWorkshopPrice 数据转移到历史表，当前余额表更新【年、月、期初数量、期初金额】
 			Debug.logInfo("执行delete from  His_Workshop_Price where year="+year+" and month="+month, module);
 			ps=conn.prepareStatement("delete from  His_Workshop_Price where year="+year+" and month="+month);
@@ -527,6 +544,7 @@ public class MonthlySettlement {
 		         PriceMgr.getInstance().refreshPeriod();
 		         ConsignPriceMgr.getInstance().refreshPeriod();
 		         ConsignProcessedPriceMgr.getInstance().refreshPeriod();
+		         PurchasePriceMgr.getInstance().refreshPeriod();
 		         ProductPriceMgr.getInstance().refreshPeriod();
 		         WorkshopPriceMgr.getInstance().refreshPeriod();
 		         
