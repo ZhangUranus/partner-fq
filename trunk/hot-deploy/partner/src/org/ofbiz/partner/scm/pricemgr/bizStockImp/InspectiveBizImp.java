@@ -12,12 +12,15 @@ import org.ofbiz.partner.scm.pricemgr.BillType;
 import org.ofbiz.partner.scm.pricemgr.IBizStock;
 import org.ofbiz.partner.scm.pricemgr.PriceCalItem;
 import org.ofbiz.partner.scm.pricemgr.PriceMgr;
+import org.ofbiz.partner.scm.pricemgr.PurchasePriceMgr;
 
 public class InspectiveBizImp implements IBizStock {
 	private Delegator delegator = org.ofbiz.partner.scm.common.Utils.getDefaultDelegator();
 
 	public void updateStock(GenericValue billValue, boolean isOut, boolean isCancel) throws Exception {
 		Date bizDate = (Date) billValue.get("bizDate");
+		
+		int billType = billValue.getInteger("type");
 
 		// 获取单据id分录条目
 		List<GenericValue> entryList = delegator.findByAnd("PurchaseWarehousingEntry", UtilMisc.toMap("parentId", billValue.getString("id")));
@@ -26,6 +29,8 @@ public class InspectiveBizImp implements IBizStock {
 			String warehouseId = v.getString("warehouseWarehouseId");// 仓库id
 			String materialId = v.getString("materialMaterialId");// 物料id
 			BigDecimal volume = v.getBigDecimal("volume");// 数量
+			BigDecimal price = v.getBigDecimal("price");// 单价
+			
 			if(volume.compareTo(BigDecimal.ZERO)<=0){
 				throw new Exception("委外入库数量不能小于等于零，请重新输入！");
 			}
@@ -43,6 +48,15 @@ public class InspectiveBizImp implements IBizStock {
 
 			// 计算分录单价
 			PriceMgr.getInstance().calPrice(item);
+			
+			if(billType == 1){
+				// 供应商id
+				String supplierId = billValue.getString("supplierSupplierId");
+				if (supplierId == null || supplierId.length() < 1) {
+					throw new Exception("采购入库单供应商为空！！！");
+				}
+				PurchasePriceMgr.getInstance().update(supplierId, materialId, volume, price, isOut, isCancel);
+			}
 		}
 	}
 }

@@ -19,6 +19,10 @@ Ext.define('SCM.model.PurchaseWarehousing.PurchaseWarehousingModel', {
 						type : 'date',
 						dateFormat : 'time'
 					}, {
+						name : 'type',
+						type : 'int',
+						defaultValue : 1
+					}, {
 						name : 'supplierSupplierId',
 						type : 'string'
 					}, {

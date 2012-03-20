@@ -18,6 +18,10 @@ Ext.define('SCM.model.PurchaseReturn.PurchaseReturnEditModel', {
 							return new Date(value);
 						}
 					}, {
+						name : 'type',
+						type : 'int',
+						defaultValue : 1
+					}, {
 						name : 'supplierSupplierId',
 						type : 'string'
 					}, {
@@ -70,7 +74,7 @@ Ext.define('SCM.model.PurchaseReturn.PurchaseReturnEditModel', {
 			proxy : {
 				type : 'jsonajax',
 				api : {
-					read : '../../scm/control/requestJsonData?entity=PurchaseReturnView&distinct=true&fields=id,number,bizDate,supplierSupplierId,supplierSupplierName,returnerSystemUserId,returnerSystemUserName,submitterSystemUserId,submitterSystemUserName,totalsum,createdStamp,lastUpdatedStamp,note,status',
+					read : '../../scm/control/requestJsonData?entity=PurchaseReturnView&distinct=true&fields=id,number,bizDate,type,supplierSupplierId,supplierSupplierName,returnerSystemUserId,returnerSystemUserName,submitterSystemUserId,submitterSystemUserName,totalsum,createdStamp,lastUpdatedStamp,note,status',
 					destroy : '../../scm/control/deleteWithEntry?headEntity=PurchaseReturn&entryEntity=PurchaseReturnEntry'
 				},
 				remoteFilter : true

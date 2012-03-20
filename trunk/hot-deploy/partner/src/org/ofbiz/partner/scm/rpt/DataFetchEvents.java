@@ -57,6 +57,10 @@ public class DataFetchEvents {
 			list = getSystemLogList(request);
 		} else if("CPMRD".equals(request.getParameter("report"))){
 			list = getConsignMatchReportDetailList(request);
+		} else if("PMR".equals(request.getParameter("report"))){
+			list = getPurchaseMatchReportList(request);
+		} else if("PMRD".equals(request.getParameter("report"))){
+			list = getPurchaseMatchReportDetailList(request);
 		}
 		return list;
 	}
@@ -439,6 +443,213 @@ public class DataFetchEvents {
 					" WHERE YEAR = " + year +
 					" AND MONTH = " + month +
 					" GROUP BY CCPP.SUPPLIER_ID,SUP.NAME";
+		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(request,sql));
+		return "sucess";
+	}
+	
+	/**
+	 * 采购供应对数报表
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public static String queryPurchaseMatchReport(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(request,getPurchaseMatchReportSql(request)));
+		return "sucess";
+	}
+	
+	/**
+	 * 采购供应对数数据列表
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public static List<Map<String ,Object>> getPurchaseMatchReportList(HttpServletRequest request) throws Exception {
+		return getListWithSQL(request,getPurchaseMatchReportSql(request));
+	}
+	
+	/**
+	 * 获取采购供应对数报表SQL
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	public static String getPurchaseMatchReportSql(HttpServletRequest request) throws Exception {
+		String year = null;
+		String month = null;
+		String supplierId = null;
+		String tableName = null;
+		if(request.getParameter("year") != null && request.getParameter("month") != null){
+			year = request.getParameter("year");
+			month = request.getParameter("month");
+		}else{
+			throw new Exception("找不到日期参数！");
+		}
+		Calendar cal= Calendar.getInstance();
+		//月份需要减一，月份是从0开始
+		cal.set(Integer.parseInt(year), Integer.parseInt(month)-1, 01, 0, 0, 0);
+		cal.set(Calendar.MILLISECOND, 0);
+		if(org.ofbiz.partner.scm.pricemgr.Utils.isCurPeriod(cal.getTime())){
+			tableName = " CUR_PURCHASE_PRICE ";
+		} else {
+			tableName = " HIS_PURCHASE_PRICE ";
+		}
+		
+		if(request.getParameter("supplier") != null){
+			supplierId = request.getParameter("supplier");
+		}
+		String sql =" SELECT "+
+						" CPP.SUPPLIER_ID, "+
+						" SUP.NAME AS SUPPLIER_NAME, "+
+						" CPP.MATERIAL_ID, "+
+						" TM.NAME AS MATERIAL_NAME, "+
+						" TM.DEFAULT_UNIT_ID, "+
+						" UNT.NAME AS DEFAULT_UNIT_NAME, "+
+						" ROUND(IFNULL(CPP.ENTRY_SUM/CPP.VOLUME,0),4) AS PRICE, "+
+						" ROUND(IFNULL(CPP.IN_VOLUME,0),4) AS IN_VOLUME, "+
+						" ROUND(IFNULL(CPP.OUT_VOLUME,0),4) AS OUT_VOLUME, "+
+						" ROUND(IFNULL(CPP.ENTRY_SUM,0),4) AS ENTRY_SUM, "+
+						" ROUND(IFNULL(CPP.VOLUME,0),4) AS VOLUME "+
+					" FROM "+ tableName +" CPP "+
+					" LEFT JOIN T_MATERIAL TM ON CPP.MATERIAL_ID = TM.ID "+
+					" LEFT JOIN SUPPLIER SUP ON CPP.SUPPLIER_ID = SUP.ID "+
+					" LEFT JOIN UNIT UNT ON TM.DEFAULT_UNIT_ID = UNT.ID "+
+					" WHERE YEAR = " + year +
+					" AND MONTH = " + month ;
+		if(supplierId != null && !"".equals(supplierId)){
+			sql += " AND CPP.SUPPLIER_ID = '" + supplierId + "'";
+		}
+		return sql;
+	}
+	
+	/**
+	 * 采购供应对数明细列表（用于导出）
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public static List<Map<String ,Object>> getPurchaseMatchReportDetailList(HttpServletRequest request) throws Exception {
+		return getListWithSQL(request,getPurchaseMatchReportDetailSql(request));
+	}
+	
+	/**
+	 * 获取发外加工对数明细SQL
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	public static String getPurchaseMatchReportDetailSql(HttpServletRequest request) throws Exception {
+		String year = null;
+		String month = null;
+		String supplierId = null;
+		String supplierSeleteStr1 = "";
+		String supplierSeleteStr2 = "";
+		if(request.getParameter("year") != null && request.getParameter("month") != null){
+			year = request.getParameter("year");
+			month = request.getParameter("month");
+		}else{
+			throw new Exception("找不到日期参数！");
+		}
+		
+		if(request.getParameter("supplier") != null){
+			supplierId = request.getParameter("supplier");
+		}
+		
+		if(supplierId != null && !"".equals(supplierId)){
+			supplierSeleteStr1 = " AND PW.SUPPLIER_SUPPLIER_ID = '" + supplierId + "'";
+			supplierSeleteStr2 = " AND PR.SUPPLIER_SUPPLIER_ID = '" + supplierId + "'";
+		}
+		
+		String sql =" SELECT DATE(PW.BIZ_DATE) AS BIZ_DATE," +
+				" '采购入库' AS NAME," +
+				" PW.NUMBER," +
+				" SP.NAME AS SUPPLIER_NAME," +
+				" TSU.USER_NAME AS USER_NAME," +
+				" WH.NAME AS WAREHOUSE_NAME," +
+				" TM.NAME AS MATERIAL_NAME," +
+				" UNT.NAME AS UNIT_NAME," +
+				" ROUND(IFNULL(PWE.VOLUME,0),4) AS VOLUME," +
+				" ROUND(IFNULL(PWE.PRICE,0),4) AS PRICE," +
+				" ROUND(IFNULL(PWE.VOLUME * PWE.PRICE,0),4) AS ENTRY_SUM" +
+				" FROM PURCHASE_WAREHOUSING PW" +
+				" LEFT JOIN PURCHASE_WAREHOUSING_ENTRY PWE ON PW.ID = PWE.PARENT_ID" +
+				" LEFT JOIN SUPPLIER SP ON PW.SUPPLIER_SUPPLIER_ID = SP.ID" +
+				" LEFT JOIN T_SYSTEM_USER TSU ON PW.SUBMITTER_SYSTEM_USER_ID = TSU.ID" +
+				" LEFT JOIN WAREHOUSE WH ON PWE.WAREHOUSE_WAREHOUSE_ID = WH.ID" +
+				" LEFT JOIN T_MATERIAL TM ON PWE.MATERIAL_MATERIAL_ID = TM.ID" +
+				" LEFT JOIN UNIT UNT ON PWE.UNIT_UNIT_ID = UNT.ID" +
+				" WHERE PW.STATUS = 4" +
+				" AND YEAR(BIZ_DATE) = " + year +
+				" AND MONTH(BIZ_DATE) = " + month +
+				supplierSeleteStr1 +
+				" UNION" +
+				" SELECT DATE(PR.BIZ_DATE) AS BIZ_DATE," +
+				" '采购退货' AS NAME," +
+				" PR.NUMBER," +
+				" SP.NAME AS SUPPLIER_NAME," +
+				" TSU.USER_NAME AS USER_NAME," +
+				" WH.NAME AS WAREHOUSE_NAME," +
+				" TM.NAME AS MATERIAL_NAME," +
+				" UNT.NAME AS UNIT_NAME," +
+				" ROUND(IFNULL(-PRE.VOLUME,0),4) AS VOLUME," +
+				" ROUND(IFNULL(PRE.PRICE,0),4) AS PRICE," +
+				" ROUND(IFNULL(-PRE.VOLUME * PRE.PRICE,0),4) AS ENTRY_SUM" +
+				" FROM PURCHASE_RETURN PR" +
+				" LEFT JOIN PURCHASE_RETURN_ENTRY PRE ON PR.ID = PRE.PARENT_ID" +
+				" LEFT JOIN SUPPLIER SP ON PR.SUPPLIER_SUPPLIER_ID = SP.ID" +
+				" LEFT JOIN T_SYSTEM_USER TSU ON PR.SUBMITTER_SYSTEM_USER_ID = TSU.ID" +
+				" LEFT JOIN WAREHOUSE WH ON PRE.WAREHOUSE_WAREHOUSE_ID = WH.ID" +
+				" LEFT JOIN T_MATERIAL TM ON PRE.MATERIAL_MATERIAL_ID = TM.ID" +
+				" LEFT JOIN UNIT UNT ON PRE.UNIT_UNIT_ID = UNT.ID" +
+				" WHERE PR.STATUS = 4" +
+				" AND YEAR(BIZ_DATE) = " + year +
+				" AND MONTH(BIZ_DATE) = " + month +
+				supplierSeleteStr2 +
+				" ORDER BY BIZ_DATE" ;
+		return sql;
+	}
+	
+	/**
+	 * 发外加工对数图形
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public static String queryPurchaseMatchChart(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String year = null;
+		String month = null;
+		String tableName = null;
+		if(request.getParameter("year") != null && request.getParameter("month") != null){
+			year = request.getParameter("year");
+			month = request.getParameter("month");
+		}else{
+			throw new Exception("找不到日期参数！");
+		}
+		Calendar cal= Calendar.getInstance();
+		//月份需要减一，月份是从0开始
+		cal.set(Integer.parseInt(year), Integer.parseInt(month)-1, 01, 0, 0, 0);
+		cal.set(Calendar.MILLISECOND, 0);
+		if(org.ofbiz.partner.scm.pricemgr.Utils.isCurPeriod(cal.getTime())){
+			tableName = " CUR_PURCHASE_PRICE ";
+		} else {
+			tableName = " HIS_PURCHASE_PRICE ";
+		}
+		
+		String sql =" SELECT "+
+						" CPP.SUPPLIER_ID, "+
+						" SUP.NAME AS SUPPLIER_NAME, "+
+						" SUM(ROUND(IFNULL(CPP.ENTRY_SUM,0),4)) AS ENTRY_SUM "+
+					" FROM "+ tableName +" CPP "+
+					" LEFT JOIN T_MATERIAL TM ON CPP.MATERIAL_ID = TM.ID "+
+					" LEFT JOIN SUPPLIER SUP ON CPP.SUPPLIER_ID = SUP.ID "+
+					" LEFT JOIN UNIT UNT ON TM.DEFAULT_UNIT_ID = UNT.ID "+
+					" WHERE YEAR = " + year +
+					" AND MONTH = " + month +
+					" GROUP BY CPP.SUPPLIER_ID,SUP.NAME";
 		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(request,sql));
 		return "sucess";
 	}
