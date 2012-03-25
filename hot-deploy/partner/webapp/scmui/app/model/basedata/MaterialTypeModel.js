@@ -1,4 +1,4 @@
-//定义计量单位数据模型
+//定义数据模型
 Ext.define('SCM.model.basedata.MaterialTypeModel', {
 			extend : 'Ext.data.Model',
 			requires : ['Ext.data.UuidGenerator', 'SCM.extend.proxy.JsonAjax'],

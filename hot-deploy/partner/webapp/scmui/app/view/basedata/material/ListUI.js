@@ -23,9 +23,29 @@ Ext.define('SCM.view.basedata.material.ListUI', {
 										rootVisible : false,
 										split : true,
 										store : 'basedata.MaterialTypeTreeStore',
-										viewConfig : {
-
-										}
+										dockedItems: [
+									                {
+									                    xtype: 'toolbar',
+									                    dock: 'top',
+									                    items: [
+									                        {
+									                            xtype: 'button',
+									                            text: '新分类',
+									                            action:'addType'
+									                        },
+									                        {
+									                            xtype: 'button',
+									                            text: '修改分类',
+									                            action:'modifyType'
+									                        },
+									                        {
+									                            xtype: 'button',
+									                            text: '删除分类',
+									                            action:'delType'
+									                        }
+									                    ]
+									                }
+										]
 									}, {
 										xtype : 'gridpanel',
 										title : '',
