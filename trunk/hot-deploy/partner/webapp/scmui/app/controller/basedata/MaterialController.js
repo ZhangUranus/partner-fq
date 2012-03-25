@@ -23,6 +23,18 @@ Ext.define('SCM.controller.basedata.MaterialController', {
 							'materialinfomaintaince treepanel' : {
 								select : this.selectNode
 							},
+							//物料分类新增
+							'materialinfomaintaince treepanel button[action=addType]' : {
+								click : this.addType
+							},
+							//物料分类修改
+							'materialinfomaintaince treepanel button[action=modifyType]' : {
+								click : this.modifyType
+							},
+							//物料分类删除
+							'materialinfomaintaince treepanel button[action=delType]' : {
+								click : this.delType
+							},
 							// 列表事件
 							'materialinfomaintaince gridpanel' : {
 								itemdblclick : this.modifyRecord, // 双击列表，弹出编辑界面
@@ -129,5 +141,26 @@ Ext.define('SCM.controller.basedata.MaterialController', {
 				this.getEdit().uiStatus = 'AddNew';
 				this.editForm.getForm().loadRecord(newRecord);
 				this.showEdit();
+			},
+			
+			/**
+			 * 新增分类
+			 */
+			addType :  function(button){
+				alert('新增分类');
+			},
+			
+			/**
+			 * 修改分类
+			 */
+			modifyType :  function(button){
+				alert('修改分类');
+			},
+			/**
+			 * 删除分类
+			 */
+			delType :  function(button){
+				alert('删除分类');
 			}
+			
 		});
