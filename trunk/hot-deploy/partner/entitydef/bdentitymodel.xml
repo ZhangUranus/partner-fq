@@ -79,6 +79,7 @@
 		<field name="parentId" type="id-long"></field>
 		<field name="number" type="name"></field>
 		<field name="name" type="name"></field>
+		<field name="longnumber" type="long-varchar"></field><!-- 物料类别长编码，查找分类子分类时使用 -->
 		<prim-key field="id" />
 	</entity>
 	<!-- 物料实体 -->
