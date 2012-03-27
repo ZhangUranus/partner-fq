@@ -30,18 +30,20 @@ Ext.define('SCM.view.basedata.material.ListUI', {
 									                    items: [
 									                        {
 									                            xtype: 'button',
-									                            text: '新分类',
-									                            //iconCls : 'tree-add',
+									                            text: '新增',
+									                            iconCls : 'tree-add',
 									                            action:'addType'
 									                        },
 									                        {
 									                            xtype: 'button',
-									                            text: '修改分类',
+									                            text: '修改',
+									                            iconCls : 'tree-edit',
 									                            action:'modifyType'
 									                        },
 									                        {
 									                            xtype: 'button',
-									                            text: '删除分类',
+									                            text: '删除',
+									                            iconCls : 'tree-del',
 									                            action:'delType'
 									                        }
 									                    ]

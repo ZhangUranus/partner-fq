@@ -197,6 +197,17 @@
 	background-image: url( ../images/icons/tree-department.png ) !important;
 }
 
+.tree-add{
+		background-image: url( ../images/icons/tree_add.png ) !important;
+}
+
+.tree-del{
+		background-image: url( ../images/icons/tree_del.png ) !important;
+}
+
+.tree-edit{
+		background-image: url( ../images/icons/tree_edit.png ) !important;
+}
 #main-top {
     background-image: url( ../images/header.png);
     background-position-x:left;
