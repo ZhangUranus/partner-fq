@@ -8,6 +8,9 @@ Ext.define('SCM.model.basedata.MaterialTypeModel', {
 						name : 'id',
 						type : 'string'
 					}, {
+						name : 'parentId',
+						type : 'string'
+					}, {
 						name : 'number',
 						type : 'string'
 					}, {
@@ -19,9 +22,9 @@ Ext.define('SCM.model.basedata.MaterialTypeModel', {
 				type : 'jsonajax',
 				api : {
 					read : '../../scm/control/requestJsonData?entity=TMaterialType',
-					create : '../../scm/control/addnewJsonData?entity=TMaterialType',
+					create : '../../scm/control/addMaterialType',
 					update : '../../scm/control/updateJsonData?entity=TMaterialType',
-					destroy : '../../scm/control/deleteJsonData?entity=TMaterialType'
+					destroy : '../../scm/control/delMaterialType'
 				}
 			}
 		});

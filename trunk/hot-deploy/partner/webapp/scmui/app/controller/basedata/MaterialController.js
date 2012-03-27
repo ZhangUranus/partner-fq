@@ -1,7 +1,7 @@
 Ext.define('SCM.controller.basedata.MaterialController', {
 			extend : 'Ext.app.Controller',
 			mixins : ['SCM.extend.exporter.Exporter', 'SCM.extend.controller.CommonGridController'],
-			views : ['basedata.material.ListUI', 'basedata.material.EditUI'],
+			views : ['basedata.material.ListUI', 'basedata.material.EditUI','basedata.material.TypeEditUI'],
 			stores : ['basedata.MaterialTypeTreeStore', 'basedata.MaterialTypeStore', 'basedata.MaterialStore'],
 			models : ['basedata.MaterialTypeTreeModel'],
 			gridTitle : '料品资料',
@@ -9,7 +9,7 @@ Ext.define('SCM.controller.basedata.MaterialController', {
 			editName : 'materialedit',
 			modelName : 'MaterialModel',
 			entityName : 'TMaterialListView',
-
+			
 			/**
 			 * 初始化controller 增加事件监控
 			 */
@@ -34,6 +34,10 @@ Ext.define('SCM.controller.basedata.MaterialController', {
 							//物料分类删除
 							'materialinfomaintaince treepanel button[action=delType]' : {
 								click : this.delType
+							},
+							//物料分类编辑界面保存
+							'materialtypeedit button[action=saveType]' : {
+								click : this.saveType
 							},
 							// 列表事件
 							'materialinfomaintaince gridpanel' : {
@@ -81,6 +85,11 @@ Ext.define('SCM.controller.basedata.MaterialController', {
 								change : this.fieldChange
 							}
 						});
+						
+						
+				if (!this.typeWin || this.typeWin.isDestroyed) {
+					this.typeWin = Ext.widget('materialtypeedit');
+				}
 			},
 
 			/**
@@ -89,6 +98,8 @@ Ext.define('SCM.controller.basedata.MaterialController', {
 			afterInitComponent : function() {
 				this.editForm.down('[name=materialTypeId]').store.load(); // 初始物料下拉框数据
 				this.editForm.down('[name=defaultUnitId]').store.load();// 初始计量单位下拉框数据
+				
+				this.treePanel=this.listContainer.down('treepanel');
 			},
 
 			/**
@@ -147,20 +158,83 @@ Ext.define('SCM.controller.basedata.MaterialController', {
 			 * 新增分类
 			 */
 			addType :  function(button){
-				alert('新增分类');
+				var selectedType=this.getSelType();
+				var newTypeRecord=Ext.create('MaterialTypeModel');
+				newTypeRecord.phantom=true;//标识为新增
+				newTypeRecord.set('parentId',selectedType.get('id'));
+				
+				this.typeWin.down('[name=parentId]').setDisabled(false);//设置可编辑
+				this.typeWin.down('[name=number]').setDisabled(false);//设置可编辑
+				this.typeWin.down('form').loadRecord(newTypeRecord);
+				this.typeWin.uiStatus = 'AddNew';
+				this.typeWin.show();
 			},
 			
 			/**
-			 * 修改分类
+			 * 修改分类，上级分类，编码不能修改
 			 */
 			modifyType :  function(button){
-				alert('修改分类');
+				var selectedType=this.getSelType();
+				var newTypeRecord=
+				SCM.model.basedata.MaterialTypeModel.load(selectedType.get('id'),{
+					scope: this,
+				    callback: function(record, operation) {
+				        //do something whether the load succeeded or failed
+				    	this.typeWin.down('[name=parentId]').setDisabled(true);//设置不可编辑
+				    	this.typeWin.down('[name=number]').setDisabled(true);//设置不可编辑
+						this.typeWin.down('form').loadRecord(record);
+						this.typeWin.uiStatus = 'Modify';
+						this.typeWin.show();				    	
+				    }
+				});
+
 			},
 			/**
 			 * 删除分类
 			 */
 			delType :  function(button){
-				alert('删除分类');
+				var selectedType=this.getSelType();
+				Ext.Ajax.request({
+					scope : this,
+					url : "../../scm/control/delMaterialType",
+					params : {
+                       id : selectedType.get('id')
+                    },
+					success : function(response, option) {
+						this.typeWin.hide();
+						this.refreshTypeTree();
+					}
+				});
+			},
+			//保存分类
+			saveType : function(button){
+				var form=this.typeWin.down('form');
+				var record=form.getRecord();
+				var values=form.getValues();;
+				if(record){
+					record.set(values);
+					record.save({scope:this,callback:function(record, operation){
+						this.typeWin.hide();
+						this.refreshTypeTree();
+					}});
+				}
+			},
+			//更新分类树，重新展开上一次选择节点
+			refreshTypeTree : function(isRefParent){
+				var selTypeId=this.getSelType().get('id');
+				this.treePanel.store.load({scope:this,callback:function(){
+					var record = this.treePanel.getRootNode().findChild("id",selTypeId, true);
+					if(record!=null){
+						this.treePanel.selectPath(record.getPath());	
+					}
+					
+				}});
+			},
+			//返回选择的分类
+			getSelType : function(){
+				if(this.treePanel!=undefined&&this.treePanel!=null ){
+					return this.treePanel.getSelectionModel().getLastSelected( );
+				}
 			}
 			
 		});
