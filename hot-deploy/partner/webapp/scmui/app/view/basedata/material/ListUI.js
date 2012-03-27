@@ -31,6 +31,7 @@ Ext.define('SCM.view.basedata.material.ListUI', {
 									                        {
 									                            xtype: 'button',
 									                            text: '新分类',
+									                            //iconCls : 'tree-add',
 									                            action:'addType'
 									                        },
 									                        {

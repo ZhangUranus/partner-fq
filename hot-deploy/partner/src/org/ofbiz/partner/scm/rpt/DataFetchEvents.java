@@ -21,10 +21,20 @@ import org.ofbiz.entity.util.EntityFindOptions;
 import org.ofbiz.partner.scm.common.CommonEvents;
 import org.ofbiz.partner.scm.common.Utils;
 import org.ofbiz.partner.scm.pojo.OrderPojo;
+import org.ofbiz.service.GenericServiceException;
+import org.ofbiz.service.LocalDispatcher;
 
 public class DataFetchEvents {
 	
 	public static String fetchData(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		 LocalDispatcher dispatcher=(LocalDispatcher) request.getAttribute("dispatcher");
+		 Map<String, Object> result = null;
+         try {
+             result = dispatcher.runSync("productInwarehouseServices", null);
+         } catch (GenericServiceException e) {
+        	 
+         }
+         if(true)return "success";
 		// 数据库连接
 		Connection conn = ConnectionFactory.getConnection(Utils.getConnectionHelperName());
 		try {
