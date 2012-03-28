@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements. See the NOTICE file distributed with this work for additional information regarding copyright ownership. The ASF licenses this file to you under the Apache License, Version 2.0 (the "License"); you 
+	may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
+	OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. -->
+<entity-engine-xml>
+	<Unit id="99ef4406-1345-4859-9c9e-22754210445b" number="UNT100001" name="kg" description="" />
+	<Unit id="a817df96-ee63-440c-b750-1dcf53b9a74f" number="UNT100002" name="只" description="" />
+	<Unit id="0e052f6e-4c79-4cb1-916d-809daa5d9a7b" number="UNT100003" name="个" description="" />
+	<Unit id="36c459b1-6aeb-459e-be01-c6e27c4cf468" number="UNT100004" name="条" description="" />
+	<Unit id="9fea6a23-0bc7-409c-9200-2b5157b14def" number="UNT100005" name="支" description="" />
+</entity-engine-xml>

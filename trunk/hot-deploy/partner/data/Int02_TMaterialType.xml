@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements. See the NOTICE file distributed with this work for additional information regarding copyright ownership. The ASF licenses this file to you under the Apache License, Version 2.0 (the "License"); you 
+	may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
+	OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. -->
+<entity-engine-xml>
+	<TMaterialType id='5a7467da-6a50-468f-b3aa-2f227b6458ca' parentId='' number='MTT100001' name='原材料' />
+	<TMaterialType id='d8c03f48-68c3-4be7-a443-1469f8a868b4' parentId='' number='MTT100002' name='半成品' />
+	<TMaterialType id='07680386-538c-4a88-91fb-31643e7822e6' parentId='' number='MTT100003' name='成品' />
+	<TMaterialType id='28c9238d-e6f3-4414-8cf3-32b4579e2173' parentId='5a7467da-6a50-468f-b3aa-2f227b6458ca' number='MTT100004' name='铁' />
+	<TMaterialType id='36316d97-f038-445b-a74b-32cb0c8301fe' parentId='28c9238d-e6f3-4414-8cf3-32b4579e2173' number='MTT100005' name='扁铁' />
+	<TMaterialType id='90c647fa-cb0f-4d00-88e9-1c6b6ffd2655' parentId='28c9238d-e6f3-4414-8cf3-32b4579e2173' number='MTT100006' name='平直' />
+	<TMaterialType id='fbbfae47-7831-463c-a14f-34fd0f49a4c3' parentId='28c9238d-e6f3-4414-8cf3-32b4579e2173' number='MTT100007' name='带钢' />
+	<TMaterialType id='635e0fa5-ab14-461f-ba05-2ec4c58f9480' parentId='28c9238d-e6f3-4414-8cf3-32b4579e2173' number='MTT100008' name='角铁' />
+	<TMaterialType id='a06c9c75-e04a-41ba-95e7-88c0f836891a' parentId='28c9238d-e6f3-4414-8cf3-32b4579e2173' number='MTT100009' name='方线' />
+	<TMaterialType id='7bd8377b-f747-48ef-8e4e-6b02af2fc1ef' parentId='28c9238d-e6f3-4414-8cf3-32b4579e2173' number='MTT100010' name='铆钉' />
+	<TMaterialType id='c46976a4-503d-4dfc-ba63-f51ab9ee1f6f' parentId='28c9238d-e6f3-4414-8cf3-32b4579e2173' number='MTT100011' name='拉丝' />
+	<TMaterialType id='48b4fd0b-3630-4d86-8c3e-285888b2e103' parentId='28c9238d-e6f3-4414-8cf3-32b4579e2173' number='MTT100012' name='螺母' />
+	<TMaterialType id='81a96d9c-74ff-4c79-96ee-aa752473647b' parentId='28c9238d-e6f3-4414-8cf3-32b4579e2173' number='MTT100013' name='圆管' />
+</entity-engine-xml>
