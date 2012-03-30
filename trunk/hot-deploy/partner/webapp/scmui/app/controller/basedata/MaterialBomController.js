@@ -16,10 +16,13 @@ Ext.define('SCM.controller.basedata.MaterialBomController', {
 			init : function() {
 				this.control({
 							'bombillinfomaintaince' : {
-								afterrender : this.initComponent, // 在界面完成初始化后调用
-								itemdblclick : this.editRecord, // 双击列表，弹出编辑界面
+								afterrender : this.initComponent // 在界面完成初始化后调用
+							},
+							// 列表事件
+							'bombillinfomaintaince gridpanel[region=center]' : {
+								select : this.showDetail,
+								itemdblclick : this.editRecord,
 								itemclick : this.changeComponentsState
-								// 点击列表，改变修改、删除按钮状态
 							},
 							// 列表新增按钮
 							'bombillinfomaintaince button[action=addNew]' : {
@@ -91,6 +94,8 @@ Ext.define('SCM.controller.basedata.MaterialBomController', {
 				this.materialField = this.editForm.down("textfield[name=materialId]");
 				this.editGridMaterial = this.editForm.down('[name=materialId]');
 				this.editGridMaterial.store.load(); // 初始物料下拉框数据
+				
+				this.detailPanel = this.listContainer.down('gridpanel[region=south]');// 明细列表
 			},
 
 			/**
@@ -403,5 +408,23 @@ Ext.define('SCM.controller.basedata.MaterialBomController', {
 						}
 					}
 				}
+			},
+			
+			/**
+			 * 显示分录信息
+			 */
+			showDetail : function(me, record, index, eOpts) {
+				if (record != null && record.get("id") != null) {
+					var entryStore = this.detailPanel.store;
+					if (entryStore != null) {
+						entryStore.clearFilter(true);
+						entryStore.filter([{
+									property : "parentId",
+									value : record.get("id")
+								}]);
+						entryStore.load();
+					}
+				}
+				this.changeComponentsState();
 			}
 		});

@@ -18,6 +18,10 @@ Ext.define('SCM.model.basedata.MaterialBomEditEntryModel', {
 						type : 'string',
 						persist : false
 					}, {
+						name : 'entryMaterialModel',
+						type : 'string',
+						persist : false
+					}, {
 						name : 'volume',
 						type : 'float'
 					}, {

@@ -50,7 +50,7 @@ Ext.define('SCM.view.basedata.materialbom.EditUI', {
 																name : 'materialId',
 																valueField : 'id',
 																displayField : 'name',
-																store : Ext.create('SCM.store.basedata.MaterialStore'),
+																store : Ext.create('MaterialComboStore'),
 																listConfig : {
 																	width : 400,
 																	height : SCM.MaxSize.COMBOGRID_HEIGHT,
@@ -93,7 +93,7 @@ Ext.define('SCM.view.basedata.materialbom.EditUI', {
 																	xtype : 'combogrid',
 																	valueField : 'id',
 																	displayField : 'name',
-																	store : Ext.create('SCM.store.basedata.MaterialStore'),
+																	store : Ext.create('MaterialComboStore'),
 																	matchFieldWidth : false,
 																	
 																	listConfig : {
@@ -132,7 +132,7 @@ Ext.define('SCM.view.basedata.materialbom.EditUI', {
 																	xtype : 'combogrid',
 																	valueField : 'id',
 																	displayField : 'name',
-																	store : Ext.create('SCM.store.basedata.UnitStore'),
+																	store : Ext.create('UnitStore'),
 																	matchFieldWidth : false,
 																	readOnly : true,
 																	listConfig : {

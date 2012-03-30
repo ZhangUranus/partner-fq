@@ -64,7 +64,7 @@ Ext.define('SCM.view.rpt.sdr.ListUI', {
 													fieldLabel : '物料',
 													valueField : 'id',
 													displayField : 'name',
-													store : Ext.create('MaterialStore'),
+													store : Ext.create('MaterialComboStore'),
 													matchFieldWidth : false,
 													emptyText : '所有物料',
 													listConfig : {

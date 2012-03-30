@@ -13,7 +13,7 @@ Ext.define('SCM.view.ConsignWarehousing.DetailListUI', {
 			initComponent : function() {
 				var me = this;
 				var entryStore = Ext.create('ConsignWarehousingDetailStore');
-				var materialStore = Ext.create('MaterialStore');
+				var materialStore = Ext.create('MaterialComboStore');
 				materialStore.load();
 				var unitStore = Ext.create('UnitStore');
 				unitStore.load();

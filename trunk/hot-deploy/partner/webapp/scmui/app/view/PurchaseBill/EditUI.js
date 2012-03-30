@@ -196,7 +196,7 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 																	xtype : 'combogrid',
 																	valueField : 'id',
 																	displayField : 'name',
-																	store : Ext.create('MaterialStore'),
+																	store : Ext.create('MaterialComboStore'),
 																	matchFieldWidth : false,
 																	listConfig : {
 																		width : 400,
