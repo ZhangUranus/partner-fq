@@ -153,6 +153,7 @@
 		<member-entity entity-alias="UnitV" entity-name="Unit"></member-entity>
 		<alias-all entity-alias="MaterialBomEntryV"></alias-all>
 		<alias name="entryMaterialName" entity-alias="TEntryMaterialV" field="name"></alias>
+		<alias name="entryMaterialModel" entity-alias="TEntryMaterialV" field="model"></alias>
 		<alias name="entryUnitName" entity-alias="UnitV" field="name"></alias>
 		<view-link entity-alias="MaterialBomEntryV" rel-entity-alias="TEntryMaterialV" rel-optional="true">
 			<key-map field-name="entryMaterialId" rel-field-name="id" />
