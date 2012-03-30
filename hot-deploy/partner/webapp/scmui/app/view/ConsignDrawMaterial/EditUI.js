@@ -225,7 +225,7 @@ Ext.define('SCM.view.ConsignDrawMaterial.EditUI', {
 																	xtype : 'combobox',
 																	valueField : 'id',
 																	displayField : 'name',
-																	store : Ext.create('MaterialStore'),
+																	store : Ext.create('MaterialComboStore'),
 																	readOnly : true
 																}
 															}, {

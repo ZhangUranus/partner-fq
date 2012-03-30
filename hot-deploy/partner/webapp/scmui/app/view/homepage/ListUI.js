@@ -36,7 +36,7 @@ Ext.define('SCM.view.homepage.ListUI', {
 																width : 200,
 																valueField : 'id',
 																displayField : 'name',
-																store : Ext.create('MaterialStore'),
+																store : Ext.create('MaterialComboStore'),
 																matchFieldWidth : false,
 																emptyText : '所有物料 (取前8种物料)',
 																listConfig : {

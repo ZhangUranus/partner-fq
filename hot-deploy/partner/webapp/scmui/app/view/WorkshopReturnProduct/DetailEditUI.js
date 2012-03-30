@@ -19,7 +19,7 @@ Ext.define('SCM.view.WorkshopReturnProduct.DetailEditUI', {
 							clicksToEdit : 1
 						});
 				var entryStore = Ext.create('WorkshopReturnProductDetailStore');
-				var materialStore = Ext.create('MaterialStore');
+				var materialStore = Ext.create('MaterialComboStore');
 				materialStore.load();
 				var unitStore = Ext.create('UnitStore');
 				unitStore.load();
@@ -49,7 +49,7 @@ Ext.define('SCM.view.WorkshopReturnProduct.DetailEditUI', {
 														xtype : 'combogrid',
 														valueField : 'id',
 														displayField : 'name',
-														store : materialStore,
+														store : MaterialComboStore,
 														matchFieldWidth : false,
 														listConfig : {
 															width : 400,
