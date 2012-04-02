@@ -12,7 +12,7 @@
 	<TSystemSerialNumber id='6b29460f-9b22-4c11-a22f-84f9deb2534b' serialDate='20120101' entityName='TMaterialType' prefix='MTT' serialNumber='100007' initNumber='100001' description='物料类别编号' hasDate='0' />
 	<TSystemSerialNumber id='3d7fc939-616e-4ff2-8312-5be37be67a8c' serialDate='20120101' entityName='TMaterial' prefix='MT' serialNumber='100001' initNumber='100001' description='物料编号' hasDate='0' />
 	<TSystemSerialNumber id='72889726-10a4-4241-ac9a-66d0f12d91b7' serialDate='20120101' entityName='MaterialBom' prefix='MTB' serialNumber='100344' initNumber='100001' description='BOM单编号' hasDate='0' />
-	<TSystemSerialNumber id='4fcd7765-38b6-4bd8-811d-e2225116411f' serialDate='20120101' entityName='Department' prefix='DPM' serialNumber='100001' initNumber='100001' description='部门编号' hasDate='0' />
+	<TSystemSerialNumber id='4fcd7765-38b6-4bd8-811d-e2225116411f' serialDate='20120101' entityName='Department' prefix='DPM' serialNumber='100005' initNumber='100001' description='部门编号' hasDate='0' />
 	<TSystemSerialNumber id='df110cae-1dcb-483a-81dc-43990471e8af' serialDate='20120101' entityName='PurchaseBill' prefix='PUR' serialNumber='100001' initNumber='100001' description='采购单编号' hasDate='1' />
 	<TSystemSerialNumber id='825bd0d4-3dc4-4c1c-92d7-28b7972bb004' serialDate='20120101' entityName='PurchaseWarehousing' prefix='PWS' serialNumber='100001' initNumber='100001' description='采购入库单编号' hasDate='1' />
 	<TSystemSerialNumber id='cf434ac3-633c-46d1-b023-a229b053523f' serialDate='20120101' entityName='PurchaseReturn' prefix='PRT' serialNumber='100001' initNumber='100001' description='采购退货单编号' hasDate='1' />
