@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements. See the NOTICE file distributed with this work for additional information regarding copyright ownership. The ASF licenses this file to you under the Apache License, Version 2.0 (the "License"); you 
+	may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
+	OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. -->
+<entity-engine-xml>
+<WarehouseType id="31cff0ff-0ca5-47d5-a3cd-3da56f0fe439" number="WHT100001" name="原材料仓" />
+<WarehouseType id="8eb12e25-eaf5-4163-8388-74fdc8232f5e" number="WHT100002" name="中间仓" />
+<WarehouseType id="45111ad0-0484-4271-89ab-c577733ad041" number="WHT100003" name="材料仓" />
+<WarehouseType id="b622c619-7ee2-4c94-a302-31f466dbcd38" number="WHT100004" name="安装仓" />
+<WarehouseType id="9d6dbeb8-4697-4a36-8c89-56dbb0adfbc8" number="WHT100005" name="成品仓" />
+</entity-engine-xml>
