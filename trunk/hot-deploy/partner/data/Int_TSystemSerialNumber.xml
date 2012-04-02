@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements. See the NOTICE file distributed with this work for additional information regarding copyright ownership. The ASF licenses this file to you under the Apache License, Version 2.0 (the "License"); you 
+	may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
+	OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. -->
+<entity-engine-xml>
+	<TSystemSerialNumber id='37d74b11-1892-4b2a-b294-6e1a18c04eb2' serialDate='20120101' entityName='Unit' prefix='UNT' serialNumber='100012' initNumber='100001' description='计量单位编号' hasDate='0' />
+	<TSystemSerialNumber id='42d56212-9b88-4fbb-b078-697172bfdbff' serialDate='20120101' entityName='WarehouseType' prefix='WHT' serialNumber='100006' initNumber='100001' description='仓库类型编号' hasDate='0' />
+	<TSystemSerialNumber id='db96e0df-3de8-4ce2-8525-5b88b335e38b' serialDate='20120101' entityName='Warehouse' prefix='WH' serialNumber='100008' initNumber='100001' description='仓库编号' hasDate='0' />
+	<TSystemSerialNumber id='4c0229a5-a545-43a3-afae-5abb821e3f1f' serialDate='20120101' entityName='Workshop' prefix='WS' serialNumber='100001' initNumber='100001' description='车间编号' hasDate='0' />
+	<TSystemSerialNumber id='ce306606-e30c-48cc-8a55-41157650567e' serialDate='20120101' entityName='Supplier' prefix='SUP' serialNumber='100059' initNumber='100001' description='供应商编号' hasDate='0' />
+	<TSystemSerialNumber id='d5d058f1-dd2d-42b3-a0c6-f0a80d33bb67' serialDate='20120101' entityName='Customer' prefix='CUST' serialNumber='100001' initNumber='100001' description='客户编号' hasDate='0' />
+	<TSystemSerialNumber id='6b29460f-9b22-4c11-a22f-84f9deb2534b' serialDate='20120101' entityName='TMaterialType' prefix='MTT' serialNumber='100007' initNumber='100001' description='物料类别编号' hasDate='0' />
+	<TSystemSerialNumber id='3d7fc939-616e-4ff2-8312-5be37be67a8c' serialDate='20120101' entityName='TMaterial' prefix='MT' serialNumber='100001' initNumber='100001' description='物料编号' hasDate='0' />
+	<TSystemSerialNumber id='72889726-10a4-4241-ac9a-66d0f12d91b7' serialDate='20120101' entityName='MaterialBom' prefix='MTB' serialNumber='100344' initNumber='100001' description='BOM单编号' hasDate='0' />
+	<TSystemSerialNumber id='4fcd7765-38b6-4bd8-811d-e2225116411f' serialDate='20120101' entityName='Department' prefix='DPM' serialNumber='100001' initNumber='100001' description='部门编号' hasDate='0' />
+	<TSystemSerialNumber id='df110cae-1dcb-483a-81dc-43990471e8af' serialDate='20120101' entityName='PurchaseBill' prefix='PUR' serialNumber='100001' initNumber='100001' description='采购单编号' hasDate='1' />
+	<TSystemSerialNumber id='825bd0d4-3dc4-4c1c-92d7-28b7972bb004' serialDate='20120101' entityName='PurchaseWarehousing' prefix='PWS' serialNumber='100001' initNumber='100001' description='采购入库单编号' hasDate='1' />
+	<TSystemSerialNumber id='cf434ac3-633c-46d1-b023-a229b053523f' serialDate='20120101' entityName='PurchaseReturn' prefix='PRT' serialNumber='100001' initNumber='100001' description='采购退货单编号' hasDate='1' />
+	<TSystemSerialNumber id='5b197d61-0bcd-436d-bf83-8bf74e331150' serialDate='20120101' entityName='ConsignDrawMaterial' prefix='CDM' serialNumber='100001' initNumber='100001' description='委外领料单编号' hasDate='1' />
+	<TSystemSerialNumber id='72b5d508-23f0-4217-bfdd-bd4558146d94' serialDate='20120101' entityName='ConsignReturnMaterial' prefix='CRM' serialNumber='100001' initNumber='100001' description='委外退料单编号' hasDate='1' />
+	<TSystemSerialNumber id='feeca83d-73a9-44c0-843d-022421c71652' serialDate='20120101' entityName='ConsignWarehousing' prefix='CWS' serialNumber='100001' initNumber='100001' description='委外入库单编号' hasDate='1' />
+	<TSystemSerialNumber id='a402065d-4cef-4474-aa4d-7361e2329910' serialDate='20120101' entityName='ConsignReturnProduct' prefix='CRP' serialNumber='100001' initNumber='100001' description='委外退货单编号' hasDate='1' />
+	<TSystemSerialNumber id='bc5ca561-93f7-436c-b42b-e1f08a4af535' serialDate='20120101' entityName='WorkshopDrawMaterial' prefix='WDM' serialNumber='100001' initNumber='100001' description='制造领料单编号' hasDate='1' />
+	<TSystemSerialNumber id='f70d3a3b-b202-4729-a009-70764e74d926' serialDate='20120101' entityName='WorkshopReturnMaterial' prefix='WRM' serialNumber='100001' initNumber='100001' description='制造退料单编号' hasDate='1' />
+	<TSystemSerialNumber id='938d34ca-350b-4b0b-8fd0-8c30fae77a26' serialDate='20120101' entityName='WorkshopWarehousing' prefix='WWS' serialNumber='100001' initNumber='100001' description='制造入库单编号' hasDate='1' />
+	<TSystemSerialNumber id='234baa72-e962-4ab8-891d-f1d07ac77f5f' serialDate='20120101' entityName='WorkshopReturnProduct' prefix='WRP' serialNumber='100001' initNumber='100001' description='制造退货单编号' hasDate='1' />
+</entity-engine-xml>
