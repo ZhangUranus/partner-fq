@@ -19,6 +19,7 @@ import net.sf.json.JSONObject;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.ofbiz.base.util.Debug;
+import org.ofbiz.base.util.StringUtil;
 import org.ofbiz.base.util.UtilProperties;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericEntityException;
@@ -164,19 +165,17 @@ public class EntityCRUDEvent {
 						}else{
 							throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "NameIsExist"));
 						}
+					}else if(fieldName.equals("number") && (record.get(fieldName)==null || "".equals(record.get(fieldName)))){
+						String entityNumber = CommonEvents.getSerialNumberHelper().getSerialNumber(request, entityName);
+						if(!"".equals(entityNumber)){//判断系统编码是否存在，存在的使用系统编码
+							v.set("number", entityNumber);
+						}
 					}else{
 						v.set(fieldName, record.get(fieldName));
 					}
 				}
 			}
 			
-			String entityNumber = CommonEvents.getSerialNumberHelper().getSerialNumber(request, entityName);
-			if(!"".equals(entityNumber)){//判断系统编码是否存在，存在的使用系统编码
-				ModelField vModelField = vModel.getField("number");
-				if (vModelField != null) {
-					v.set("number", entityNumber);
-				}
-			}
 			try {
 				delegator.create(v);
 			} catch (GenericEntityException e) {
