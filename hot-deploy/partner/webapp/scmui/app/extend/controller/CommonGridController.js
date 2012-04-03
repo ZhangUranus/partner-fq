@@ -205,7 +205,13 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 							}
 						});
 			},
-
+			
+			/**
+			 * 编辑时，将不可编辑的属性设置为只读
+			 * @param {} record
+			 */
+			changeEditStatus : Ext.emptyFn(),
+			
 			/**
 			 * 编辑事件
 			 * 
@@ -216,6 +222,7 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 			 */
 			modifyRecord : function(grid, record) {
 				this.getEdit().uiStatus = 'Modify';
+				this.changeEditStatus(record);
 				this.editForm.getForm().loadRecord(record);
 				this.showEdit();
 			},
@@ -243,6 +250,7 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 				newRecord = Ext.create(this.modelName);// 新增记录
 				newRecord.phantom = true;
 				this.getEdit().uiStatus = 'AddNew';
+				this.changeEditStatus(newRecord);
 				this.editForm.getForm().loadRecord(newRecord);
 				this.showEdit();
 			},

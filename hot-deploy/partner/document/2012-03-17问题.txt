@@ -1,9 +1,19 @@
-﻿1.委外入库加额外耗料
+1.委外入库加额外耗料
 2.调整打印字体大小，根据委外加工单字体大小，标题要求大D
 3.制造入库额外耗料
 4.发外入库要首先填充退货
 5.物料使用树形管理                                   --done
-6. 新建料品个编号还是系统自动生成？
+6. 新建料品个编号还是系统自动生成？	--done
+	修改：物料编号和BOM编号可以人工填写。修改代码列表：
+	partner\webapp\scmui\app\controller\basedata\MaterialBomController.js
+	partner\webapp\scmui\app\controller\basedata\MaterialController.js
+	partner\webapp\scmui\app\extend\controller\CommonGridController.js
+	partner\webapp\scmui\app\view\basedata\material\EditUI.js
+	partner\webapp\scmui\app\view\basedata\materialbom\EditUI.js
+	partner\src\org\ofbiz\partner\scm\common\EntityCRUDEvent.java
+	partner\src\org\ofbiz\partner\scm\common\MultiEntryCRUDEvent.java
+	覆盖代码后，需要重新ant代码，记得将初始化数据代码屏蔽后再ant。
+
 7. 料品维护，在树形结构选择某类型的料品，可以看到其他类型料品，再切换后报错
 
 BOM单出现三个问题：

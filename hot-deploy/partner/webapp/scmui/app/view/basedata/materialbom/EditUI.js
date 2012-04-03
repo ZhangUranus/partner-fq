@@ -42,8 +42,7 @@ Ext.define('SCM.view.basedata.materialbom.EditUI', {
 															}, {
 																name : 'number',
 																fieldLabel : '编码',
-																emptyText : '保存时系统自动生成',
-																readOnly : true
+																emptyText : '为空时，系统自动生成'
 															}, {
 																xtype : 'combogrid',
 																fieldLabel : '物料名称',
