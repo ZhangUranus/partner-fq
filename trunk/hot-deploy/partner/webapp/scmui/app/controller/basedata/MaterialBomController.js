@@ -89,6 +89,7 @@ Ext.define('SCM.controller.basedata.MaterialBomController', {
 			 * 重写空方法
 			 */
 			afterInitComponent : function() {
+				this.numberField = this.editForm.down('[name=number]');
 				this.editGrid = this.win.down('gridpanel');
 				this.editGrid.addListener('edit', this.initMaterialInfo, this); // 监控列表编辑事件
 				this.materialField = this.editForm.down("textfield[name=materialId]");
@@ -112,7 +113,7 @@ Ext.define('SCM.controller.basedata.MaterialBomController', {
 					}
 				}
 			},
-
+			
 			/**
 			 * 点击新增按钮
 			 * 
@@ -121,9 +122,9 @@ Ext.define('SCM.controller.basedata.MaterialBomController', {
 			 */
 			addNewRecord : function(button) {
 				newRecord = Ext.create(this.modelName);// 新增记录
-				this.changeEditStatus(newRecord);
 				newRecord.phantom = true;
 				this.win.uiStatus = 'AddNew';
+				this.changeEditStatus(newRecord);
 				this.editForm.getForm().loadRecord(newRecord);
 				// 清空分录
 				this.editGrid.store.removeAll(true);
@@ -139,6 +140,7 @@ Ext.define('SCM.controller.basedata.MaterialBomController', {
 			 */
 			loadFormRecord : function(record) {
 				this.win.uiStatus = 'Modify';
+				this.changeEditStatus(record);
 				Ext.create('MaterialBomEditModel').self.load(record.get('id'), {
 							scope : this,
 							params : {
@@ -182,7 +184,6 @@ Ext.define('SCM.controller.basedata.MaterialBomController', {
 				sm = this.listPanel.getSelectionModel();
 				if (sm.hasSelection()) {// 判断是否选择行记录
 					record = sm.getLastSelected();
-					this.changeEditStatus(record);
 					this.loadFormRecord(record);
 				}
 			},
@@ -200,9 +201,9 @@ Ext.define('SCM.controller.basedata.MaterialBomController', {
 					newRecord.set('materialId',oldRecord.get("materialId"));
 					newRecord.set('materialName',oldRecord.get("materialName"));
 					
-					me.changeEditStatus(newRecord);
 					newRecord.phantom = true;
 					me.win.uiStatus = 'AddNew';
+					me.changeEditStatus(newRecord);
 					me.editForm.getForm().loadRecord(newRecord);
 					
 					var uuid = new Ext.data.UuidGenerator();
@@ -252,6 +253,12 @@ Ext.define('SCM.controller.basedata.MaterialBomController', {
 				} else {
 					this.editGrid.setDisabled(true);
 					this.materialField.setReadOnly(true);
+				}
+				
+				if(this.win.uiStatus == 'Modify'){
+					this.numberField.setReadOnly(true);
+				}else{
+					this.numberField.setReadOnly(false);
 				}
 			},
 

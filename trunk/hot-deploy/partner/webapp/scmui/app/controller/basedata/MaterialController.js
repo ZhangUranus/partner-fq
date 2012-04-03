@@ -98,6 +98,7 @@ Ext.define('SCM.controller.basedata.MaterialController', {
 			afterInitComponent : function() {
 				this.editForm.down('[name=materialTypeId]').store.load(); // 初始物料下拉框数据
 				this.editForm.down('[name=defaultUnitId]').store.load();// 初始计量单位下拉框数据
+				this.numberField = this.editForm.down('[name=number]');
 				
 				this.treePanel=this.listContainer.down('treepanel');
 			},
@@ -116,6 +117,18 @@ Ext.define('SCM.controller.basedata.MaterialController', {
 								'whereStr' : 'TMaterialV.material_Type_Id =\'' + record.get("id") + '\''
 							}
 						});
+			},
+			
+			/**
+			 * 编辑时，将不可编辑的属性设置为只读
+			 * @param {} record
+			 */
+			changeEditStatus : function(record){
+				if(this.getEdit().uiStatus == 'Modify'){
+					this.numberField.setReadOnly(true);
+				}else{
+					this.numberField.setReadOnly(false);
+				}
 			},
 			
 			/**
@@ -150,6 +163,7 @@ Ext.define('SCM.controller.basedata.MaterialController', {
 					newRecord.set('materialTypeId', this.currentRecord.get('id'));
 				}
 				this.getEdit().uiStatus = 'AddNew';
+				this.changeEditStatus(newRecord);
 				this.editForm.getForm().loadRecord(newRecord);
 				this.showEdit();
 			},
