@@ -112,7 +112,7 @@ Ext.define('SCM.controller.basedata.MaterialController', {
 			 */
 			selectNode : function(me, record, index, eOpts) {
 				this.currentRecord = record;
-				this.listPanel.store.load({
+				this.listPanel.store.loadPage(1,{
 							params : {
 								'whereStr' : 'TMaterialV.material_Type_Id =\'' + record.get("id") + '\''
 							}
@@ -143,7 +143,7 @@ Ext.define('SCM.controller.basedata.MaterialController', {
 				} else {
 					this.listPanel.store.getProxy().extraParams.query = '';
 				}
-				this.listPanel.store.load();
+				this.listPanel.store.loadPage(1);
 				if(this.treePanel){
 					this.treePanel.store.load();
 				}
