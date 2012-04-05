@@ -134,6 +134,7 @@
 		<member-entity entity-alias="TMaterialV" entity-name="TMaterial"></member-entity>
 		<alias-all entity-alias="MaterialBomV"></alias-all>
 		<alias name="materialName" entity-alias="TMaterialV" field="name"></alias>
+		<alias name="materialNumber" entity-alias="TMaterialV" field="number"></alias>
 		<view-link entity-alias="MaterialBomV" rel-entity-alias="TMaterialV" rel-optional="true">
 			<key-map field-name="materialId" rel-field-name="id" />
 		</view-link>

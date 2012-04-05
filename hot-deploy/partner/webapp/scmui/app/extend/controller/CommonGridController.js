@@ -287,7 +287,7 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 				} else {
 					this.listPanel.store.getProxy().extraParams.query = '';
 				}
-				this.listPanel.store.load();
+				this.listPanel.store.loadPage(1);
 				this.changeComponentsState();
 				this.isUpdate = false;
 			},

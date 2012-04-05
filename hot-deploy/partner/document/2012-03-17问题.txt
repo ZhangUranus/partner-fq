@@ -19,7 +19,12 @@
 	this.listPanel.store.load 方法，修改为this.listPanel.store.loadPage(1),刷新第一页。
 
 
-8. bom单的查询不能根据物料编号查询？最好加这个功能。
+8. bom单的查询不能根据物料编号查询？最好加这个功能。--done 2012-4-5
+   添加物料编码过滤，同事修正翻页时刷新问题，修改文件
+  	app/extend/controller/CommonGridController.js
+	partner/entitydef/bdentitymodel.xml
+	app/model/basedata/MaterialBomModel.js
+	app/view/basedata/materialbom/ListUI.js
 
 
 
