@@ -18,6 +18,11 @@
       修改partner\webapp\scmui\app\controller\basedata\MaterialController.js
 	this.listPanel.store.load 方法，修改为this.listPanel.store.loadPage(1),刷新第一页。
 
+
+8. bom单的查询不能根据物料编号查询？最好加这个功能。
+
+
+
 BOM单出现三个问题：
 1. 详情度显示id，不是物料名称，--done
 2. 新加bom单会与初始化数据编码重叠。--更新TSystemSerialNumber表的相应编码
