@@ -1,6 +1,25 @@
-﻿1.委外入库加额外耗料
+1.委外入库加额外耗料、制造入库额外耗料：
+修改代码列表：2012-03-06
+	partner\entitydef\ConsignWarehousingEntity.xml
+	partner\entitydef\WorkshopWarehousingEntity.xml
+	partner\webapp\scmui\app\controller\ConsignWarehousing\ConsignWarehousingController.js
+	partner\webapp\scmui\app\controller\WorkshopWarehousing\WorkshopWarehousingController.js
+	partner\webapp\scmui\app\model\ConsignWarehousing\ConsignWarehousingEntryDetailModel.js
+	partner\webapp\scmui\app\model\WorkshopWarehousing\WorkshopWarehousingEntryDetailModel.js
+	partner\webapp\scmui\app\store\ConsignWarehousing\ConsignWarehousingEntryDetailStore.js
+	partner\webapp\scmui\app\store\WorkshopWarehousing\WorkshopWarehousingEntryDetailStore.js
+	partner\webapp\scmui\app\view\ConsignWarehousing\DetailListUI.js
+	partner\webapp\scmui\app\view\ConsignWarehousing\DetailEditUI.js
+	partner\webapp\scmui\app\view\WorkshopReturnProduct\DetailEditUI.js
+	partner\webapp\scmui\app\view\WorkshopWarehousing\DetailListUI.js
+	partner\webapp\scmui\app\view\WorkshopWarehousing\DetailEditUI.js
+	partner\src\org\ofbiz\partner\scm\pricemgr\WorkshopPriceMgr.java
+	partner\src\org\ofbiz\partner\scm\pricemgr\ConsignPriceMgr.java
+	partner\src\org\ofbiz\partner\scm\pricemgr\bizStockImp\WorkshopWarehousingBizImp.java
+	partner\src\org\ofbiz\partner\scm\pricemgr\bizStockImp\ConsignWarehousingBizImp.java
+
 2.调整打印字体大小，根据委外加工单字体大小，标题要求大D
-3.制造入库额外耗料
+
 4.发外入库要首先填充退货
 5.物料使用树形管理                                   --done
 6. 新建料品个编号还是系统自动生成？	--done
