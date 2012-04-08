@@ -134,7 +134,7 @@ public class SecurityEvents {
 			ModelEntity vModel = v.getModelEntity();// 获取值对象字段模型
 			Iterator<String> i = record.keys();
 			String[] roles = null;
-			boolean roleUpdate = false;
+			boolean roleUpdate = true;
 			while (i.hasNext()) {
 				String fieldName = i.next();
 				ModelField vModelField = vModel.getField(fieldName);
