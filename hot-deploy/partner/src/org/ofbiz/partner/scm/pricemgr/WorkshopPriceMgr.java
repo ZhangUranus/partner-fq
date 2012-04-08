@@ -166,7 +166,7 @@ public class WorkshopPriceMgr {
 		BigDecimal sum = BigDecimal.ZERO;
 		BigDecimal totalSum = sum ;
 		for (GenericValue entryValue : entryList) {
-			// 通过制造退货单获取车间编码
+			// 通过制造入库单获取车间编码
 			GenericValue gv = delegator.findOne("WorkshopReturnProduct", UtilMisc.toMap("id", value.getString("parentId")), false);
 			
 			BigDecimal price = this.getPrice(gv.getString("workshopWorkshopId"), entryValue.getString("materialMaterialId"));
@@ -181,6 +181,54 @@ public class WorkshopPriceMgr {
 			this.update(gv.getString("workshopWorkshopId"), entryValue.getString("materialMaterialId"), volume.negate(), sum.negate());
 		}
 		return totalSum;
+	}
+	
+	/**
+	 * 提交制造入库额外耗料，返回金额（并返填耗料的单价、金额到额外耗料金额）
+	 */
+	public BigDecimal updateWarehousingExtraCommit(GenericValue value) throws Exception {
+		List<GenericValue> entryList = delegator.findByAnd("WorkshopWarehousingEntryExtra", UtilMisc.toMap("entryId", value.getString("id")));
+		BigDecimal sum = BigDecimal.ZERO;
+		BigDecimal totalSum = sum ;
+		for (GenericValue entryValue : entryList) {
+			// 通过制造退货单获取车间编码
+			GenericValue gv = delegator.findOne("WorkshopWarehousing", UtilMisc.toMap("id", value.getString("parentId")), false);
+			
+			BigDecimal price = this.getPrice(gv.getString("workshopWorkshopId"), entryValue.getString("materialMaterialId"));
+			BigDecimal volume = entryValue.getBigDecimal("volume");
+			entryValue.set("price", price);
+			sum = volume.multiply(price);
+			totalSum = totalSum.add(sum);
+			entryValue.set("entrysum", sum);
+			entryValue.store();
+			
+			// 更新车间库存表，车间物料出库
+			this.update(gv.getString("workshopWorkshopId"), entryValue.getString("materialMaterialId"), volume.negate(), sum.negate());
+		}
+		return totalSum;
+	}
+	
+	/**
+	 * 回滚制造入库额外耗料（并返填耗料的单价、金额到额外耗料金额）
+	 */
+	public void updateWarehousingExtraRollback(GenericValue value) throws Exception {
+		List<GenericValue> entryList = delegator.findByAnd("WorkshopWarehousingEntryExtra", UtilMisc.toMap("entryId", value.getString("id")));
+		BigDecimal sum = BigDecimal.ZERO;
+		for (GenericValue entryValue : entryList) {
+			// 通过制造退货单获取车间编码
+			GenericValue gv = delegator.findOne("WorkshopWarehousing", UtilMisc.toMap("id", value.getString("parentId")), false);
+						
+			BigDecimal volume = entryValue.getBigDecimal("volume");
+			sum = entryValue.getBigDecimal("entrysum");
+			
+			//将金额和单价返填为零
+			entryValue.set("price", BigDecimal.ZERO);
+			entryValue.set("entrysum", BigDecimal.ZERO);
+			entryValue.store();
+			
+			// 更新车间库存表，车间物料出库
+			this.update(gv.getString("workshopWorkshopId"), entryValue.getString("materialMaterialId"), volume, sum);
+		}
 	}
 
 	/**

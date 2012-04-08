@@ -1,9 +1,9 @@
 Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 			extend : 'Ext.app.Controller',
 			mixins : ['SCM.extend.exporter.Exporter', 'SCM.extend.controller.BillCommonController'],
-			views : ['WorkshopWarehousing.ListUI', 'WorkshopWarehousing.EditUI', 'WorkshopWarehousing.DetailListUI'],
-			stores : ['WorkshopWarehousing.WorkshopWarehousingStore', 'WorkshopWarehousing.WorkshopWarehousingEditStore', 'WorkshopWarehousing.WorkshopWarehousingEditEntryStore', 'WorkshopWarehousing.WorkshopWarehousingDetailStore'],
-			requires : ['SCM.model.WorkshopWarehousing.WorkshopWarehousingActionModel'],
+			views : ['WorkshopWarehousing.ListUI', 'WorkshopWarehousing.EditUI', 'WorkshopWarehousing.DetailListUI', 'WorkshopWarehousing.DetailEditUI'],
+			stores : ['WorkshopWarehousing.WorkshopWarehousingStore', 'WorkshopWarehousing.WorkshopWarehousingEditStore', 'WorkshopWarehousing.WorkshopWarehousingEditEntryStore', 'WorkshopWarehousing.WorkshopWarehousingDetailStore', 'WorkshopWarehousing.WorkshopWarehousingEntryDetailStore'],
+			requires : ['SCM.model.WorkshopWarehousing.WorkshopWarehousingActionModel', 'SCM.model.WorkshopWarehousing.WorkshopWarehousingEntryDetailModel'],
 			gridTitle : '制造入库单',
 			editName : 'WorkshopWarehousingedit',
 			editStoreName : 'WorkshopWarehousingEditStore',
@@ -65,6 +65,26 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 							'WorkshopWarehousingedit gridpanel button[action=viewDetail]' : {
 								click : this.viewDetailList
 							},
+							// 编辑界面分录额外耗料明细
+							'WorkshopWarehousingedit gridpanel button[action=editDetail]' : {
+								click : this.editDetailRecord
+							},
+							// 编辑额外耗料明细界面分录新增
+							'WorkshopWarehousingdetailedit gridpanel button[action=addLine]' : {
+								click : this.addDetailLine
+							},
+							// 编辑额外耗料明细界面分录删除
+							'WorkshopWarehousingdetailedit gridpanel button[action=deleteLine]' : {
+								click : this.deleteDetailLine
+							},
+							// 编辑额外耗料明细界面取消
+							'WorkshopWarehousingdetailedit button[action=cancel]' : {
+								click : this.cancelDetail
+							},
+							// 编辑额外耗料明细界面保存
+							'WorkshopWarehousingdetailedit button[action=save]' : {
+								click : this.saveDetailRecord
+							},
 
 							// 编辑界面直接提交
 							'WorkshopWarehousingedit button[action=submit]' : {
@@ -115,6 +135,12 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 				this.viewDetailButton = this.win.down('gridpanel button[action=viewDetail]');
 				this.detailWin = Ext.widget('WorkshopWarehousingdetaillist');
 				this.detailEntry = this.detailWin.down('gridpanel');
+				
+				// 额外耗料明细界面
+				this.editDetailButton = this.win.down('gridpanel button[action=editDetail]');
+				this.detailEditWin = Ext.widget('WorkshopWarehousingdetailedit');
+				this.detailEditEntry = this.detailEditWin.down('gridpanel');
+				this.detailEditEntry.addListener('edit', this.initDetailList, this); // 监控列表编辑事件
 			},
 			
 			/**
@@ -139,6 +165,7 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 					this.clearButton.setDisabled(false);
 					this.submitEditButton.setDisabled(false);
 					this.viewDetailButton.setVisible(false);
+					this.editDetailButton.setVisible(true);
 				} else {
 					this.setFieldsReadOnly(true);
 					this.setGridEditAble(false);
@@ -146,6 +173,7 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 					this.clearButton.setDisabled(true);
 					this.submitEditButton.setDisabled(true);
 					this.viewDetailButton.setVisible(true);
+					this.editDetailButton.setVisible(false);
 				}
 			},
 			
@@ -248,6 +276,111 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 					showWarning('未选中物料！');
 				}
 				
+			},
+			
+			/**
+			 * 当用户编辑grid时，同步更新相关表单数据
+			 * 
+			 * @param {}
+			 *            editor
+			 * @param {}
+			 *            e
+			 */
+			initDetailList : function(editor, e) {
+				if (e.field == 'materialMaterialId') {
+					var record = this.searchMaterialId.store.findRecord('id', e.value);
+					if (record) {
+						e.record.set('materialMaterialModel', record.get('model'));
+						e.record.set('unitUnitId', record.get('defaultUnitId'));
+						e.record.set('unitUnitName', record.get('defaultUnitName'));
+						e.record.set('price', record.get('defaultPrice'));
+					}
+				}
+				e.record.set('entrysum', e.record.get('price') * e.record.get('volume'));
+			},
+
+			/**
+			 * 编辑事件
+			 * 
+			 * @param {}
+			 *            grid 当前表格
+			 * @param {}
+			 *            record 选中记录
+			 */
+			modifyDetailRecord : function(grid, record) {
+				this.currentRecord = record;
+				this.detailEditWin.uiStatus = 'Modify';
+				// 根据选择的id加载编辑界面数据
+				this.detailEditEntryId = record.get('id');
+
+				this.detailEditEntry.store.getProxy().extraParams.whereStr = "entry_id = '" + this.detailEditEntryId + "'";
+				this.detailEditEntry.store.load();
+				this.detailEditWin.show();
+			},
+
+			/**
+			 * 点击修改按钮
+			 * 
+			 * @param {}
+			 *            button 按钮控件
+			 */
+			editDetailRecord : function(button) {
+				var sm = this.editEntry.getSelectionModel();
+				if (sm.hasSelection()) {// 判断是否选择行记录
+					record = sm.getLastSelected();
+
+					// 如果单据状态是已提交、已审核或者已经结算则不能修改
+					this.modifyDetailRecord(this.editEntry, record);
+				} else {
+					showWarning('未选中物料！');
+				}
+			},
+
+			/**
+			 * 新增额外耗料
+			 * 
+			 * @param {}
+			 *            button
+			 */
+			addDetailLine : function(button) {
+				var detailRecord = Ext.create('WorkshopWarehousingEntryDetailModel');
+				detailRecord.phantom = true;
+
+				// 设置分录id
+				detailRecord.set('entryId', this.detailEditEntryId);
+				this.detailEditEntry.store.add(detailRecord);
+			},
+			/**
+			 * 删除额外耗料
+			 * 
+			 * @param {}
+			 *            button
+			 */
+			deleteDetailLine : function(button) {
+				var selMod = this.detailEditEntry.getSelectionModel();
+				if (selMod != null) {
+					this.detailEditEntry.store.remove(selMod.getLastSelected());
+				}
+			},
+
+			/**
+			 * 保存额外耗料列表
+			 * 
+			 * @param {}
+			 *            button 保存按钮
+			 */
+			saveDetailRecord : function(button) {
+				this.detailEditEntry.store.sync();
+				if (this.detailEditWin.isVisible()) {
+					this.detailEditWin.close();
+				}
+			},
+
+			/**
+			 * 取消编辑
+			 */
+			cancelDetail : function() {
+				this.detailEditWin.close();
 			},
 			getMainPrintHTML:function(){
 				return "<div>"
