@@ -6,9 +6,14 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import javolution.util.FastList;
+
 import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericValue;
+import org.ofbiz.entity.condition.EntityCondition;
+import org.ofbiz.entity.condition.EntityConditionList;
+import org.ofbiz.entity.condition.EntityOperator;
 
 /**
  * 委外单价管理类
@@ -268,6 +273,31 @@ public class ConsignPriceMgr {
 			return gv.getBigDecimal("volume");
 		}else{
 			return BigDecimal.ZERO;
+		}
+	}
+	
+	/**
+	 * 检查是否有未验收的退货单
+	 * @param supplierId
+	 * @param materialId
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean checkReturnProductWarehousingStatus(String supplierId, String materialId) throws Exception {
+		if (supplierId == null || materialId == null ) {
+			throw new Exception("supplierId or materialId is null");
+		}
+		EntityConditionList<EntityCondition> condition = null;
+		List<EntityCondition> conds = FastList.newInstance();
+		conds.add(EntityCondition.makeCondition("processorSupplierId", EntityOperator.EQUALS, supplierId));
+		conds.add(EntityCondition.makeCondition("materialId", EntityOperator.EQUALS, materialId));
+		conds.add(EntityCondition.makeCondition("checkStatus", EntityOperator.NOT_EQUAL, 2));
+		condition = EntityCondition.makeCondition(conds);
+		List<GenericValue> entryList = delegator.findByAnd("ConsignReturnProductList", condition);
+		if(entryList.size() > 0){
+			return false;
+		}else{
+			return true;
 		}
 	}
 }
