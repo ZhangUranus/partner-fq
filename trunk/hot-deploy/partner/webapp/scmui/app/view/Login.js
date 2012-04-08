@@ -33,18 +33,6 @@ Ext.define('SCM.view.Login',{
                 id:'PASSWORD',
                 width:240,
                 inputType : 'password' 
-            },{
-		        xtype: 'label',
-		        text: '用户：admin',
-                style: {
-		            color: 'red'
-		        }
-		    },{
-                xtype: 'label',
-                text: '密码：123',
-                style: {
-                    color: 'red'
-                }
             }],
             buttons:[{
                 text:'登录',
@@ -52,7 +40,7 @@ Ext.define('SCM.view.Login',{
             }]
         })
         Ext.apply(this,{
-            height: 160,
+            height: 132,
             width: 280,
             title: '用户登陆',
             closeAction: 'hide',
