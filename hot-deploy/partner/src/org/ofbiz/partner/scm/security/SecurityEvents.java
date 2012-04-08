@@ -134,7 +134,7 @@ public class SecurityEvents {
 			ModelEntity vModel = v.getModelEntity();// 获取值对象字段模型
 			Iterator<String> i = record.keys();
 			String[] roles = null;
-			boolean roleUpdate = true;
+			boolean roleUpdate = false;
 			while (i.hasNext()) {
 				String fieldName = i.next();
 				ModelField vModelField = vModel.getField(fieldName);
@@ -163,15 +163,17 @@ public class SecurityEvents {
 					} else if(fieldName.equals("valid")){
 						v.set("valid",record.get("valid"));
 						sv.set("enabled",record.get("valid"));
-					} else if(fieldName.equals("roles")){
-						if(!"".equals(record.getString("roles"))){
-							if("noUpdate".equals(record.getString("roles"))){
-								roleUpdate = false;
-							}
-							roles = record.getString("roles").split(";");
-						}
 					} else {
 						v.set(fieldName, record.get(fieldName));
+					}
+				}
+				
+				if(fieldName.equals("roles")){
+					if(!"".equals(record.getString("roles"))){
+						if("noUpdate".equals(record.getString("roles"))){
+							roleUpdate = false;
+						}
+						roles = record.getString("roles").split(";");
 					}
 				}
 			}
