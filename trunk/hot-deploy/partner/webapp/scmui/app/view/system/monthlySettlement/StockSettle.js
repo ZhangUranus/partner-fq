@@ -82,12 +82,12 @@ Ext.define('SCM.view.system.monthlySettlement.StockSettle', {
     rollbackSettlement:function(){
     	Ext.Msg.confirm('提示', '确定反结算系统？', confirmChange, this);
 		function confirmChange(id) {
-			 var taskMask = new Ext.LoadMask(Ext.getBody(), {
-                 msg: '正在进行反结算操作....',
-                 removeMask: true //完成后移除
-             });
-			 taskMask.show();
-			
+//			 var taskMask = new Ext.LoadMask(Ext.getBody(), {
+//                 msg: '正在进行反结算操作....',
+//                 removeMask: true //完成后移除
+//             });
+//			 taskMask.show();
+			 Ext.getBody().mask('正在进行反结算操作....');
 			if (id == 'yes') {
 				Ext.Ajax.request({ 
 							scope : this,
@@ -103,13 +103,13 @@ Ext.define('SCM.view.system.monthlySettlement.StockSettle', {
 					 			}else{
 					 				showError(responseArray.message);
 					 			}
-								taskMask.hide();
+					 			Ext.getBody().unmask();
 								
 							}
 						});
 				
 			}else{
-				taskMask.hide();
+				Ext.getBody().unmask();
 			}
 		}
     }
