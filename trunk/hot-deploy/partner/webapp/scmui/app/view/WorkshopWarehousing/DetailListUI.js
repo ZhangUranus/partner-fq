@@ -3,9 +3,9 @@ Ext.define('SCM.view.WorkshopWarehousing.DetailListUI', {
 			requires : ['SCM.extend.toolbar.SaveToolbar', 'SCM.extend.toolbar.GridEditToolbar', 'SCM.ux.combobox.ComboGrid', 'SCM.ux.grid.ComboColumn'],
 			alias : 'widget.WorkshopWarehousingdetaillist',
 			height : SCM.DefaultSize.WINDOW_HEIGHT,
-			width : 550,
+			width : 580,
 			title : '耗料明细',
-			layout : 'fit',
+			layout : 'border',
 			modal : true,// 背景变灰，不能编辑
 			collapsible : true,
 			resizable : false,
@@ -54,7 +54,7 @@ Ext.define('SCM.view.WorkshopWarehousing.DetailListUI', {
 													xtype : 'combocolumn',
 													dataIndex : 'materialUnitId',
 													text : '单位',
-													gridId : 'WorkshopReturnProduct-edit-grid',
+													gridId : 'WorkshopWarehousing-detail-list-grid',
 													editor : {
 														xtype : 'combobox',
 														valueField : 'id',
@@ -75,7 +75,15 @@ Ext.define('SCM.view.WorkshopWarehousing.DetailListUI', {
 													width : 80
 												}],
 										viewConfig : {}
-									}]
+									}, {
+								        xtype: 'label',
+										region : 'south',
+										height : 20,
+								        text: '该列表为单个加工件的耗料列表！',
+						                style: {
+								            color: 'red'
+								        }
+								    }]
 						});
 				this.callParent(arguments);
 			},

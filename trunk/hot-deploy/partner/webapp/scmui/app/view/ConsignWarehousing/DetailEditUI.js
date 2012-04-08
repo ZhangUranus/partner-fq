@@ -1,7 +1,7 @@
-Ext.define('SCM.view.WorkshopReturnProduct.DetailEditUI', {
+Ext.define('SCM.view.ConsignWarehousing.DetailEditUI', {
 			extend : 'Ext.window.Window',
 			requires : ['SCM.extend.toolbar.SaveToolbar', 'SCM.extend.toolbar.GridEditToolbar', 'SCM.ux.combobox.ComboGrid', 'SCM.ux.grid.ComboColumn'],
-			alias : 'widget.WorkshopReturnProductdetailedit',
+			alias : 'widget.ConsignWarehousingdetailedit',
 			height : SCM.DefaultSize.WINDOW_HEIGHT,
 			width : 550,
 			title : '额外耗料明细',
@@ -18,13 +18,13 @@ Ext.define('SCM.view.WorkshopReturnProduct.DetailEditUI', {
 				var cellEditing = Ext.create('Ext.grid.plugin.CellEditing', {
 							clicksToEdit : 1
 						});
-				var entryStore = Ext.create('WorkshopReturnProductDetailStore');
+				var entryStore = Ext.create('ConsignWarehousingEntryDetailStore');
 				var unitStore = Ext.create('UnitStore');
 				unitStore.load();
 				Ext.applyIf(me, {
 							items : [{
 										xtype : 'gridpanel',
-										id : 'WorkshopReturnProduct-detail-edit-grid',
+										id : 'ConsignWarehousing-detail-edit-grid',
 										region : 'center',
 										border : 0,
 										store : entryStore,
@@ -42,7 +42,7 @@ Ext.define('SCM.view.WorkshopReturnProduct.DetailEditUI', {
 													xtype : 'combocolumn',
 													dataIndex : 'materialMaterialId',
 													text : '物料',
-													gridId : 'WorkshopReturnProduct-detail-edit-grid',
+													gridId : 'ConsignWarehousing-detail-edit-grid',
 													editor : {
 														xtype : 'combogrid',
 														valueField : 'id',
@@ -83,7 +83,7 @@ Ext.define('SCM.view.WorkshopReturnProduct.DetailEditUI', {
 													xtype : 'combocolumn',
 													dataIndex : 'unitUnitId',
 													text : '单位',
-													gridId : 'WorkshopReturnProduct-edit-grid',
+													gridId : 'ConsignWarehousing-edit-grid',
 													editor : {
 														xtype : 'combobox',
 														valueField : 'id',

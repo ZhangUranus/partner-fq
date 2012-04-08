@@ -299,6 +299,7 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 							},
 							url : '../../scm/control/auditPurchaseBill',
 							success : function(response) {
+								debugger
 								var result = Ext.decode(response.responseText)
 								if (result.success) {
 									Ext.Msg.alert("提示", "审核成功！");
