@@ -3,6 +3,7 @@ package org.ofbiz.partner.scm.pricemgr;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -36,6 +37,8 @@ public class MonthlySettlement {
 	private int year;//结算年度
 	private int month;//结算月份
 	private Delegator delegator=null;
+	
+	
 	//单实例模式
 	private static MonthlySettlement instance=null;
 	public static MonthlySettlement getInstance(){
@@ -153,12 +156,13 @@ public class MonthlySettlement {
 		//过滤条件 ,系统期间时间段，单据状态为保存状态(0)
 		Calendar cal=Calendar.getInstance();
 		cal.set(year, month-1, 1, 0, 0, 0);
+		cal.set(Calendar.MILLISECOND, 0);
 		Date fromDate=cal.getTime();
 		cal.add(Calendar.MONTH, 1);
 		Date endDate=cal.getTime();
 		List<EntityCondition> condList=new ArrayList<EntityCondition>();
-		condList.add(EntityCondition.makeCondition("submitStamp",EntityOperator.GREATER_THAN_EQUAL_TO,new Timestamp(fromDate.getTime())));
-		condList.add(EntityCondition.makeCondition("submitStamp",EntityOperator.LESS_THAN,new Timestamp(endDate.getTime())));
+		condList.add(EntityCondition.makeCondition("bizDate",EntityOperator.GREATER_THAN_EQUAL_TO,new Timestamp(fromDate.getTime())));
+		condList.add(EntityCondition.makeCondition("bizDate",EntityOperator.LESS_THAN,new Timestamp(endDate.getTime())));
 		condList.add(EntityCondition.makeCondition("status",EntityOperator.EQUALS,0));
 		EntityCondition cond=EntityCondition.makeCondition(condList);
 		
@@ -201,8 +205,8 @@ public class MonthlySettlement {
 		cal.add(Calendar.MONTH, 1);
 		Date endDate=cal.getTime();
 		List<EntityCondition> condList=new ArrayList<EntityCondition>();
-		condList.add(EntityCondition.makeCondition("submitStamp",EntityOperator.GREATER_THAN_EQUAL_TO,new Timestamp(fromDate.getTime())));
-		condList.add(EntityCondition.makeCondition("submitStamp",EntityOperator.LESS_THAN,new Timestamp(endDate.getTime())));
+		condList.add(EntityCondition.makeCondition("bizDate",EntityOperator.GREATER_THAN_EQUAL_TO,new Timestamp(fromDate.getTime())));
+		condList.add(EntityCondition.makeCondition("bizDate",EntityOperator.LESS_THAN,new Timestamp(endDate.getTime())));
 		condList.add(EntityCondition.makeCondition("status",EntityOperator.EQUALS,4));
 		EntityCondition composeCond=EntityCondition.makeCondition(condList);
 		
