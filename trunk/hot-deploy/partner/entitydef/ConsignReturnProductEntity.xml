@@ -45,6 +45,16 @@
 		<field name="entrysum" type="fixed-point"></field>
 		<prim-key field="id" />
 	</entity>
+	<!-- 未验收物料列表 -->
+	<view-entity entity-name="ConsignReturnProductList" package-name="org.ofbiz.scm.ConsignReturnProduct" title="NeedReturnList Entity">
+		<member-entity entity-alias="ConsignReturnProductV" entity-name="ConsignReturnProduct"></member-entity>
+		<member-entity entity-alias="ConsignReturnProductEntryV" entity-name="ConsignReturnProductEntry"></member-entity>
+		<alias-all entity-alias="ConsignReturnProductV"></alias-all>
+		<alias name="materialId" entity-alias="ConsignReturnProductEntryV" field="bomId"></alias>
+		<view-link entity-alias="ConsignReturnProductV" rel-entity-alias="ConsignReturnProductEntryV" rel-optional="true">
+			<key-map field-name="id" rel-field-name="parentId" />
+		</view-link>
+	</view-entity>
 	<!-- 表头视图 -->
 	<view-entity entity-name="ConsignReturnProductView" package-name="org.ofbiz.scm.ConsignReturnProduct" title="ConsignReturnProductView  Entity">
 		<member-entity entity-alias="ConsignReturnProductV" entity-name="ConsignReturnProduct"></member-entity>
