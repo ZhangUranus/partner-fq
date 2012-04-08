@@ -45,6 +45,9 @@ public class ConsignWarehousingBizImp implements IBizStock {
 			}
 			BigDecimal sum = null;
 			if (!isOut) {
+				if(!ConsignPriceMgr.getInstance().checkReturnProductWarehousingStatus(processorId, materialId)){
+					throw new Exception("供应商存在未验收加工件，不允许进行入库操作，请访问“委外退货”页面进行验收！");
+				}
 				BigDecimal price = ConsignPriceMgr.getInstance().CreateConsignPriceDetailList(processorId, materialId, v.getString("id"));
 				sum = price.add(v.getBigDecimal("processPrice")).multiply(volume);
 				
