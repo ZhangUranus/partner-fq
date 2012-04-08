@@ -63,6 +63,8 @@ Ext.define('SCM.view.system.monthlySettlement.StockSettle', {
 					 			var responseArray = Ext.JSON.decode(response.responseText);
 					 			if(responseArray.success){
 					 				showInfo('结算操作结束');
+					 				Ext.getBody().unmask();
+					 				window.location.reload();
 					 			}else{
 					 				showError(responseArray.message);
 					 			}
@@ -99,7 +101,9 @@ Ext.define('SCM.view.system.monthlySettlement.StockSettle', {
 								}
 					 			var responseArray = Ext.JSON.decode(response.responseText);
 					 			if(responseArray.success){
-					 				showInfo('结算操作结束');
+					 				showInfo('反结算操作结束');
+					 				Ext.getBody().unmask();
+					 				window.location.reload();
 					 			}else{
 					 				showError(responseArray.message);
 					 			}

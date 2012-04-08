@@ -586,8 +586,8 @@ public class MonthlySettlement {
 		cal.add(Calendar.MONTH, 1);
 		Date endDate=cal.getTime();
 		List<EntityCondition> condList=new ArrayList<EntityCondition>();
-		condList.add(EntityCondition.makeCondition("submitStamp",EntityOperator.GREATER_THAN_EQUAL_TO,new Timestamp(fromDate.getTime())));
-		condList.add(EntityCondition.makeCondition("submitStamp",EntityOperator.LESS_THAN,new Timestamp(endDate.getTime())));
+		condList.add(EntityCondition.makeCondition("bizDate",EntityOperator.GREATER_THAN_EQUAL_TO,new Timestamp(fromDate.getTime())));
+		condList.add(EntityCondition.makeCondition("bizDate",EntityOperator.LESS_THAN,new Timestamp(endDate.getTime())));
 		condList.add(EntityCondition.makeCondition("status",EntityOperator.EQUALS,4));
 		EntityCondition cond=EntityCondition.makeCondition(condList);
 		
@@ -644,6 +644,9 @@ public class MonthlySettlement {
 		
 		//删除本期数据,转移委外加工件中间表
 		copyPreMonthData(conn,"His_Consign_Processed_Price", "Cur_Consign_Processed_Price");
+		
+		//删除本期数据,转移采购对数中间表
+		copyPreMonthData(conn,"His_Purchase_Price", "Cur_Purchase_Price");
 		
 		//删除本期数据,转移车间中间表 
 		copyPreMonthData(conn,"His_Workshop_Price", "Cur_Workshop_Price");
