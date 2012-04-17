@@ -187,6 +187,12 @@ Ext.define('SCM.view.WorkshopDrawMaterial.EditUI', {
 																	displayField : 'name',
 																	store : Ext.create('MaterialComboStore'),
 																	matchFieldWidth : false,
+																	listeners : {
+																		scope : this,
+																		beforequery : function(qe){
+																			return this.setEntryMaterialFilter(qe);
+																		}
+																	},
 																	listConfig : {
 																		width : 400,
 																		height : SCM.MaxSize.COMBOGRID_HEIGHT,
@@ -310,5 +316,23 @@ Ext.define('SCM.view.WorkshopDrawMaterial.EditUI', {
 				this.hide();
 				this.inited = false;
 				this.modifyed = false;
+			},
+			
+			setEntryMaterialFilter : function(qe){
+				var entryGrid = this.down('gridpanel');
+				var selRec = entryGrid.getSelectionModel().getLastSelected();
+				
+				//根据所选仓库过滤物料
+				var materialEntryStore = qe.combo.store;
+				if(materialEntryStore){
+					materialEntryStore.getProxy().extraParams.whereStr = "warehouse_Id ='" + selRec.get('warehouseWarehouseId') +"'";;
+					materialEntryStore.load({
+					    scope: this,
+					    callback: function(records, operation, success) {
+					        materialEntryStore.getProxy().extraParams.whereStr = "";
+					    }
+					});
+				}
+				return true;
 			}
 		});

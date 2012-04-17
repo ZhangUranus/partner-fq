@@ -1,8 +1,8 @@
 // 定义数据模型
-Ext.define('SCM.model.basedata.MaterialBomComboModel', {
+Ext.define('SCM.model.basedata.MaterialComboModel', {
 			extend : 'Ext.data.Model',
 			requires : ['Ext.data.UuidGenerator', 'SCM.extend.proxy.JsonAjax'],
-			alias : 'MaterialBomComboModel',
+			alias : 'MaterialComboModel',
 			fields : [// 字段
 					{
 						name : 'warehouseId',
@@ -14,32 +14,36 @@ Ext.define('SCM.model.basedata.MaterialBomComboModel', {
 						name : 'number',
 						type : 'string'
 					}, {
-						name : 'materialId',
+						name : 'name',
 						type : 'string'
 					}, {
-						name : 'materialName',
-						type : 'string',
-						persist : false
-					}, {
-						name : 'note',
+						name : 'model',
 						type : 'string'
 					}, {
-						name : 'status',
-						type : 'int',
-						defaultValue : 0
+						name : 'defaultPrice',
+						type : 'float'
 					}, {
-						name : 'valid',
+						name : 'defaultSupplierId',
 						type : 'string'
-					}
-			],
+					},{
+						name : 'safeStock',
+						type : 'float'
+					}, {
+						name : 'defaultUnitId',
+						type : 'string'
+					}, {
+						name : 'materialTypeId',
+						type : 'string'
+					}],
 			idgen : 'uuid', // 使用uuid生成记录id 每个模型必须要有id字段
 			proxy : {
 				type : 'jsonajax',
 				api : {
-					read : '../../scm/control/requestJsonData?entity=MaterialBOMWithWarehouseView'
+					read : '../../scm/control/requestJsonData?entity=MaterialWithWarehouseView'
 				},
+				remoteFilter : true,
 				extraParams : {
-					queryField : 'number,materialName'
+					queryField : 'number,name'
 				}
 			}
 		});
