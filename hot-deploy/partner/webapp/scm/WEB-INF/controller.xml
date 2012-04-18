@@ -131,6 +131,18 @@
 	</request-map>
 	
 	<!-- business request -->
+	<!-- 采购申请单提交 -->
+	<request-map uri="submitPurchaseBill">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.PurchaseBillBizEvents" invoke="submitBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 采购申请单撤销 -->
+	<request-map uri="rollbackPurchaseBill">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.PurchaseBillBizEvents" invoke="rollbackBill" />
+		<response name="success" type="none" />
+	</request-map>
 	<!-- 采购申请单审核 -->
 	<request-map uri="auditPurchaseBill">
 		<security https="false" auth="false" />
