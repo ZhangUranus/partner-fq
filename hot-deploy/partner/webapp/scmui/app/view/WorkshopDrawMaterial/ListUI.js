@@ -4,7 +4,7 @@
  */
 Ext.define('SCM.view.WorkshopDrawMaterial.ListUI', {
 			extend : 'Ext.container.Container',
-			requires : ['SCM.extend.toolbar.BillBaseToolbar'],
+			requires : ['SCM.extend.toolbar.BillBaseToolbar', 'SCM.extend.toolbar.BillSearchToolbar'],
 			alias : 'widget.WorkshopDrawMateriallist',
 			title : '制造领料单查询',
 			layout : {
@@ -19,11 +19,11 @@ Ext.define('SCM.view.WorkshopDrawMaterial.ListUI', {
 							items : [{
 										xtype : 'billbasetoolbar',//工具栏
 										submit : true,
-										custType : 'workshop',
-										region : 'north'
+										region : 'north',
+										border : '0 1 1 1'
 									}, {
 										xtype : 'gridpanel',
-										margin : '1 0 0 0',
+										margin : '0 0 0 0',
 										title : '',
 										region : 'center',
 										store : 'WorkshopDrawMaterial.WorkshopDrawMaterialEditStore',
@@ -75,7 +75,12 @@ Ext.define('SCM.view.WorkshopDrawMaterial.ListUI', {
 													groupable : false,
 													text : '总金额'
 												}],
-										viewConfig : {}
+										viewConfig : {},
+										dockedItems: [{
+											xtype : 'billsearchtoolbar',// 工具栏
+											custType : 'workshop',
+											border : '0 1 1 1'
+										}]
 									}, {
 										xtype : 'gridpanel',
 										title : '',

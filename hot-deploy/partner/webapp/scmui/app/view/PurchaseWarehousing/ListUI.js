@@ -4,7 +4,7 @@
  */
 Ext.define('SCM.view.PurchaseWarehousing.ListUI', {
 			extend : 'Ext.container.Container',
-			requires : ['SCM.extend.toolbar.BillBaseToolbar'],
+			requires : ['SCM.extend.toolbar.BillBaseToolbar', 'SCM.extend.toolbar.BillSearchToolbar'],
 			alias : 'widget.PurchaseWarehousinglist',
 			title : '采购入库单查询',
 			layout : {
@@ -19,11 +19,11 @@ Ext.define('SCM.view.PurchaseWarehousing.ListUI', {
 							items : [{
 										xtype : 'billbasetoolbar',//工具栏
 										submit : true,			//保留审核功能，通过权限屏蔽
-										custType : 'supplier',
-										region : 'north'
+										region : 'north',
+										border : '0 1 1 1'
 									}, {
 										xtype : 'gridpanel',
-										margin : '1 0 0 0',
+										margin : '0 0 0 0',
 										title : '',
 										region : 'center',
 										store : 'PurchaseWarehousing.PurchaseWarehousingEditStore',
@@ -90,7 +90,12 @@ Ext.define('SCM.view.PurchaseWarehousing.ListUI', {
 												}],
 										viewConfig : {
 
-										}
+										},
+										dockedItems: [{
+											xtype : 'billsearchtoolbar',// 工具栏
+											custType : 'supplier',
+											border : '0 1 1 1'
+										}]
 									}, {
 										xtype : 'gridpanel',
 										title : '',

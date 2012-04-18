@@ -3,7 +3,7 @@
  */
 Ext.define('SCM.view.ConsignDrawMaterial.ListUI', {
 			extend : 'Ext.container.Container',
-			requires : ['SCM.extend.toolbar.BillBaseToolbar'],
+			requires : ['SCM.extend.toolbar.BillBaseToolbar', 'SCM.extend.toolbar.BillSearchToolbar'],
 			alias : 'widget.ConsignDrawMateriallist',
 			title : '委外领料单查询',
 			layout : {
@@ -18,11 +18,11 @@ Ext.define('SCM.view.ConsignDrawMaterial.ListUI', {
 							items : [{
 										xtype : 'billbasetoolbar',// 工具栏
 										submit : true,			//保留审核功能，通过权限屏蔽
-										custType : 'processor',
-										region : 'north'
+										region : 'north',
+										border : '0 1 1 1'
 									}, {
 										xtype : 'gridpanel',
-										margin : '1 0 0 0',
+										margin : '0 0 0 0',
 										title : '',
 										region : 'center',
 										store : 'ConsignDrawMaterial.ConsignDrawMaterialEditStore',
@@ -88,7 +88,12 @@ Ext.define('SCM.view.ConsignDrawMaterial.ListUI', {
 												}],
 										viewConfig : {
 
-										}
+										},
+										dockedItems: [{
+											xtype : 'billsearchtoolbar',// 工具栏
+											custType : 'processor',
+											border : '0 1 1 1'
+										}]
 									}, {
 										xtype : 'gridpanel',
 										title : '',
