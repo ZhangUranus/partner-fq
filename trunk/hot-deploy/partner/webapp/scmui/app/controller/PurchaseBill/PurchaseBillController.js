@@ -37,6 +37,14 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 							'PurchaseBilllist button[action=search]' : {
 								click : this.refreshRecord
 							},
+							// 列表提交按钮
+							'PurchaseBilllist button[action=submit]' : {
+								click : this.submitBill
+							},
+							// 列表撤销按钮
+							'PurchaseBilllist button[action=rollback]' : {
+								click : this.rollbackBill
+							},
 							// 列表审核按钮
 							'PurchaseBilllist button[action=audit]' : {
 								click : this.auditBill
@@ -62,6 +70,10 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 								click : this.deleteLine
 							},
 
+							// 编辑界面直接提交
+							'PurchaseBilledit button[action=submit]' : {
+								click : this.saveAndSubmitRecord
+							},
 							// 编辑界面保存
 							'PurchaseBilledit button[action=save]' : {
 								click : this.saveRecord
@@ -123,24 +135,6 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 			initCurrentUserSelect : function(record){
 				record.set('buyerSystemUserId',SCM.CurrentUser.id);
 				record.set('submitUserId',SCM.CurrentUser.id);
-			},
-
-			/**
-			 * 根据状态设置编辑界面状态
-			 * @param {} isReadOnly
-			 */
-			changeEditStatus : function(record) {
-				if (record.get('status') == '0') {
-					this.setFieldsReadOnly(false);
-					this.editEntry.setDisabled(false);
-					this.saveButton.setDisabled(false);
-					this.clearButton.setDisabled(false);
-				} else {
-					this.setFieldsReadOnly(true);
-					this.editEntry.setDisabled(true);
-					this.saveButton.setDisabled(true);
-					this.clearButton.setDisabled(true);
-				}
 			},
 
 			/**
@@ -232,7 +226,11 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 						showError('您没有权限审核该小组采购单！');
 						return;
 					}
-					if (record.get('status') != '0') {
+					if (record.get('status') == '0') {
+						showError('单据未提交，无法进行审核！');
+						return;
+					}
+					if (record.get('status') != '4') {
 						showError('单据已审核！');
 						return;
 					}
@@ -299,7 +297,6 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 							},
 							url : '../../scm/control/auditPurchaseBill',
 							success : function(response) {
-								debugger
 								var result = Ext.decode(response.responseText)
 								if (result.success) {
 									Ext.Msg.alert("提示", "审核成功！");
@@ -320,6 +317,21 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 				this.approverStatus.setValue('');
 				this.approverWin.close();
 			},
+			
+			/**
+			 * 获取单据提交URL
+			 */
+			getSubmitBillUrl : function(){
+				return '../../scm/control/submitPurchaseBill';
+			},
+			
+			/**
+			 * 获取单据撤销URL
+			 */
+			getRollbackBillUrl : function(){
+				return '../../scm/control/rollbackPurchaseBill';
+			},
+			
 			getMainPrintHTML:function(){
 				return "<div>"
 				+"<div class='caption' >江门市蓬江区富桥旅游用品厂有限公司</div>"
