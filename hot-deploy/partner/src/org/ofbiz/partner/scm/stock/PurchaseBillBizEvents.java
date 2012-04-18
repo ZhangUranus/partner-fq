@@ -28,7 +28,87 @@ import org.ofbiz.partner.scm.purplan.PurPlanBalance;
  */
 public class PurchaseBillBizEvents {
 	private static final String module = org.ofbiz.partner.scm.stock.PurchaseBillBizEvents.class.getName();
-
+	
+	
+	/**
+	 * 采购申请单提交
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public static String submitBill(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		boolean beganTransaction = false;
+		try {
+			beganTransaction = TransactionUtil.begin();
+			Delegator delegator = (Delegator) request.getAttribute("delegator");
+			String billId = request.getParameter("billId");// 单据id
+			if (delegator != null && billId != null) {
+				Debug.log("采购申请单提交:" + billId, module);
+				GenericValue billHead = delegator.findOne("PurchaseBill", UtilMisc.toMap("id", billId), false);
+				if (billHead == null){
+					throw new Exception("采购申请单不存在！");
+				}
+				Date bizDate = (Date) billHead.get("bizDate");
+				if (bizDate == null || !Utils.isCurPeriod(bizDate)) {
+					throw new Exception("单据业务日期不在当前系统期间");
+				}
+			}
+			
+			BillBaseEvent.submitBill(request, response);// 更新单据状态
+			TransactionUtil.commit(beganTransaction);
+		} catch (Exception e) {
+			Debug.logError(e, module);
+			try {
+				TransactionUtil.rollback(beganTransaction, e.getMessage(), e);
+			} catch (GenericTransactionException e2) {
+				Debug.logError(e2, "Unable to rollback transaction", module);
+			}
+			throw e;
+		}
+		return "success";
+	}
+	
+	/**
+	 * 采购申请单撤销
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public static String rollbackBill(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		boolean beganTransaction = false;
+		try {
+			beganTransaction = TransactionUtil.begin();
+			Delegator delegator = (Delegator) request.getAttribute("delegator");
+			String billId = request.getParameter("billId");// 单据id
+			if (delegator != null && billId != null) {
+				Debug.log("采购申请单提交:" + billId, module);
+				GenericValue billHead = delegator.findOne("PurchaseBill", UtilMisc.toMap("id", billId), false);
+				if (billHead == null){
+					throw new Exception("采购申请单不存在！");
+				}
+				Date bizDate = (Date) billHead.get("bizDate");
+				if (bizDate == null || !Utils.isCurPeriod(bizDate)) {
+					throw new Exception("单据业务日期不在当前系统期间");
+				}
+			}
+			BillBaseEvent.rollbackBill(request, response);// 撤销单据
+			TransactionUtil.commit(beganTransaction);
+		} catch (Exception e) {
+			Debug.logError(e, module);
+			try {
+				TransactionUtil.rollback(beganTransaction, e.getMessage(), e);
+			} catch (GenericTransactionException e2) {
+				Debug.logError(e2, "Unable to rollback transaction", module);
+			}
+			throw e;
+		}
+		return "success";
+	}
+	
 	/**
 	 * 采购申请单审核
 	 * 
