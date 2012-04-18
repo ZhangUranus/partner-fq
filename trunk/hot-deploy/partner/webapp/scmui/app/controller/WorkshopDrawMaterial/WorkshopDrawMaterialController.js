@@ -97,10 +97,10 @@ Ext.define('SCM.controller.WorkshopDrawMaterial.WorkshopDrawMaterialController',
 			 * 重新方法，增加查询条件控件的引用
 			 */
 			afterInitComponent : function() {
-				this.searchStartDate = this.listContainer.down('datefield[name=searchStartDate]');
-				this.searchEndDate = this.listContainer.down('datefield[name=searchEndDate]');
-				this.searchMaterialId = this.listContainer.down('combogrid[name=searchMaterialId]');
-				this.searchCustId = this.listContainer.down('combogrid[name=searchCustId]');
+				this.searchStartDate = this.listPanel.down('datefield[name=searchStartDate]');
+				this.searchEndDate = this.listPanel.down('datefield[name=searchEndDate]');
+				this.searchMaterialId = this.listPanel.down('combogrid[name=searchMaterialId]');
+				this.searchCustId = this.listPanel.down('combogrid[name=searchCustId]');
 				this.totalFields = this.editForm.down('textfield[name=totalsum]');
 				this.editEntry.store.proxy.addListener('afterRequest', this.changeStockVolume, this);
 			},

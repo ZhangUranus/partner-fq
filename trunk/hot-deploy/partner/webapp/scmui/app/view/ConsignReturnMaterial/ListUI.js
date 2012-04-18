@@ -3,7 +3,7 @@
  */
 Ext.define('SCM.view.ConsignReturnMaterial.ListUI', {
 			extend : 'Ext.container.Container',
-			requires : ['SCM.extend.toolbar.BillBaseToolbar'],
+			requires : ['SCM.extend.toolbar.BillBaseToolbar', 'SCM.extend.toolbar.BillSearchToolbar'],
 			alias : 'widget.ConsignReturnMateriallist',
 			title : '委外退料单查询',
 			layout : {
@@ -18,11 +18,11 @@ Ext.define('SCM.view.ConsignReturnMaterial.ListUI', {
 							items : [{
 										xtype : 'billbasetoolbar',// 工具栏
 										submit : true,
-										custType : 'processor',
-										region : 'north'
+										region : 'north',
+										border : '0 1 1 1'
 									}, {
 										xtype : 'gridpanel',
-										margin : '1 0 0 0',
+										margin : '0 0 0 0',
 										title : '',
 										region : 'center',
 										store : 'ConsignReturnMaterial.ConsignReturnMaterialEditStore',
@@ -74,7 +74,12 @@ Ext.define('SCM.view.ConsignReturnMaterial.ListUI', {
 													groupable : false,
 													text : '总金额'
 												}],
-										viewConfig : {}
+										viewConfig : {},
+										dockedItems: [{
+											xtype : 'billsearchtoolbar',// 工具栏
+											custType : 'processor',
+											border : '0 1 1 1'
+										}]
 									}, {
 										xtype : 'gridpanel',
 										title : '',
