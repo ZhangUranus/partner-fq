@@ -59,7 +59,7 @@ public class BillBaseEvent {
 			Delegator delegator = (Delegator) request.getAttribute("delegator");
 			// 更新状态字段
 			Map<String, Object> fieldSet = new HashMap<String, Object>();
-			fieldSet.put("status", 0);// 设置为保存状态
+			fieldSet.put("status", 4);// 设置为保存状态
 			fieldSet.put("approverNote", "");// 设置审核意见
 			fieldSet.put("approverSystemUserId", CommonEvents.getAttributeFormSession(request, "uid"));
 			delegator.storeByCondition(entity, fieldSet, EntityCondition.makeConditionWhere("id='" + billId + "'"));
