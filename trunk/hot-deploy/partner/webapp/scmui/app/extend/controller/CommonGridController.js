@@ -210,7 +210,9 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 			 * 编辑时，将不可编辑的属性设置为只读
 			 * @param {} record
 			 */
-			changeEditStatus : Ext.emptyFn(),
+			changeEditStatus : function(record){
+				//空方法
+			},
 			
 			/**
 			 * 编辑事件
