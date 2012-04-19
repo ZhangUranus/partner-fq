@@ -111,7 +111,7 @@ Ext.define('SCM.controller.basedata.MaterialController', {
 			 * @param {} eOpts
 			 */
 			selectNode : function(me, record, index, eOpts) {
-				this.currentRecord = record;
+				this.currentRecord=record;
 				this.listPanel.store.loadPage(1,{
 							params : {
 								'whereStr' : 'TMaterialV.material_Type_Id =\'' + record.get("id") + '\''
@@ -138,15 +138,29 @@ Ext.define('SCM.controller.basedata.MaterialController', {
 			 *            button 刷新按钮
 			 */
 			refreshRecord : function(button) {
+				var lstore=this.listPanel.store;
 				if (this.searchText.getValue()) {
-					this.listPanel.store.getProxy().extraParams.query = this.searchText.getValue();
+					lstore.getProxy().extraParams.query = this.searchText.getValue();
 				} else {
-					this.listPanel.store.getProxy().extraParams.query = '';
+					lstore.getProxy().extraParams.query = '';
 				}
-				this.listPanel.store.loadPage(1);
-				if(this.treePanel){
-					this.treePanel.store.load();
+				
+//				
+//				//如果选择了物料分类，添加物料分类过滤  lrf 2012-4-19 
+				var selItem=this.getSelType();
+				var selTypeId;
+				if(selItem!=null){
+					this.listPanel.store.loadPage(1,{
+						params : {
+							'filter' : '[{property:\'materialTypeId\',value:\''+selItem.get('id')+'\'}]'
+						}	
+					});
+				}else{
+					this.listPanel.store.loadPage(1);
 				}
+				
+				
+				//this.refreshTypeTree();
 				this.changeComponentsState();
 			},
 
@@ -235,7 +249,14 @@ Ext.define('SCM.controller.basedata.MaterialController', {
 			},
 			//更新分类树，重新展开上一次选择节点
 			refreshTypeTree : function(isRefParent){
-				var selTypeId=this.getSelType().get('id');
+				var selItem=this.getSelType();
+				var selTypeId;
+				if(selItem!=null){
+					selTypeId=selItem.get('id');
+				}else{
+					selTypeId='';
+				}
+				
 				this.treePanel.store.load({scope:this,callback:function(){
 					var record = this.treePanel.getRootNode().findChild("id",selTypeId, true);
 					if(record!=null){
