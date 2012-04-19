@@ -412,12 +412,11 @@ public class EntityCRUDEvent {
 				conds.add(EntityCondition.makeCondition("id",request.getParameter("id")));
 			}
 			
-			//过滤字段，对字段做与方式过滤，obectMapper是静态变量，线程不安全
+			//过滤字段，对字段做与方式过滤
 			if(request.getParameter("filter") != null){
-				ObjectMapper objMapper = new ObjectMapper();//新建局部变量
 				JSONArray array = JSONArray.fromObject(request.getParameter("filter").toString());
 				for(int i = 0; i < array.size(); i++) {
-					FilterPojo filter = objMapper.readValue(array.getString(i), FilterPojo.class); 
+					FilterPojo filter = objectMapper.readValue(array.getString(i), FilterPojo.class); 
 					conds.add(EntityCondition.makeCondition(filter.getProperty(),filter.getValue()));
 				}
 			}
