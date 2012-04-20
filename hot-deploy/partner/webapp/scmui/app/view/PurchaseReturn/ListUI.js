@@ -89,6 +89,11 @@ Ext.define('SCM.view.PurchaseReturn.ListUI', {
 											xtype : 'billsearchtoolbar',// 工具栏
 											custType : 'supplier',
 											border : '0 1 1 1'
+										}, {
+											dock : 'bottom',
+											xtype : 'pagingtoolbar',
+											store : 'PurchaseReturn.PurchaseReturnEditStore',
+											displayInfo : true
 										}]
 									}, {
 										xtype : 'gridpanel',

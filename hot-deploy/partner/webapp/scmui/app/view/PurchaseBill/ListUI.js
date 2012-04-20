@@ -101,6 +101,11 @@ Ext.define('SCM.view.PurchaseBill.ListUI', {
 											xtype : 'billsearchtoolbar',// 工具栏
 											custType : 'supplier',
 											border : '0 1 1 1'
+										}, {
+											dock : 'bottom',
+											xtype : 'pagingtoolbar',
+											store : 'PurchaseBill.PurchaseBillEditStore',
+											displayInfo : true
 										}]
 									}, {
 										xtype : 'gridpanel',

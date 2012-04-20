@@ -80,6 +80,11 @@ Ext.define('SCM.view.WorkshopDrawMaterial.ListUI', {
 											xtype : 'billsearchtoolbar',// 工具栏
 											custType : 'workshop',
 											border : '0 1 1 1'
+										}, {
+											dock : 'bottom',
+											xtype : 'pagingtoolbar',
+											store : 'WorkshopDrawMaterial.WorkshopDrawMaterialEditStore',
+											displayInfo : true
 										}]
 									}, {
 										xtype : 'gridpanel',

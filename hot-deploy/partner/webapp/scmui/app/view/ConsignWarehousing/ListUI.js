@@ -79,6 +79,11 @@ Ext.define('SCM.view.ConsignWarehousing.ListUI', {
 											xtype : 'billsearchtoolbar',// 工具栏
 											custType : 'processor',
 											border : '0 1 1 1'
+										}, {
+											dock : 'bottom',
+											xtype : 'pagingtoolbar',
+											store : 'ConsignWarehousing.ConsignWarehousingEditStore',
+											displayInfo : true
 										}]
 									}, {
 										xtype : 'gridpanel',

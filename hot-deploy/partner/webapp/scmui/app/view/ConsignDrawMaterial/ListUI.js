@@ -93,6 +93,11 @@ Ext.define('SCM.view.ConsignDrawMaterial.ListUI', {
 											xtype : 'billsearchtoolbar',// 工具栏
 											custType : 'processor',
 											border : '0 1 1 1'
+										}, {
+											dock : 'bottom',
+											xtype : 'pagingtoolbar',
+											store : 'ConsignDrawMaterial.ConsignDrawMaterialEditStore',
+											displayInfo : true
 										}]
 									}, {
 										xtype : 'gridpanel',
