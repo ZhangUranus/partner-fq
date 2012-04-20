@@ -52,7 +52,7 @@ public class MaterialTypeEvents {
 			
 			delegator.create(newTypeV);
 		}
-		
+		CommonEvents.writeJsonDataToExt(response, "{success:true}"); // 将操作结果返回前端Ext
 		return "sucess";
 	}
 	/**
@@ -77,10 +77,13 @@ public class MaterialTypeEvents {
 		//查找是否存在该分类的物料
 		long matCnt=delegator.findCountByCondition("TMaterial", EntityCondition.makeCondition(UtilMisc.toMap("materialTypeId", delId)), null, null);
 		if(matCnt>0){
-			throw new Exception("改分类存在物料，不能删除！");
+			throw new Exception("分类存在物料，不能删除！");
 		}
 		
 		delegator.removeByAnd("TMaterialType", UtilMisc.toMap("id", delId));
+		
+		CommonEvents.writeJsonDataToExt(response, "{success:true}"); // 将操作结果返回前端Ext
+		
 		return "sucess";
 	}
 }
