@@ -93,6 +93,11 @@ Ext.define('SCM.view.WorkshopReturnProduct.ListUI', {
 											xtype : 'billsearchtoolbar',// 工具栏
 											custType : 'workshop',
 											border : '0 1 1 1'
+										}, {
+											dock : 'bottom',
+											xtype : 'pagingtoolbar',
+											store : 'WorkshopReturnProduct.WorkshopReturnProductEditStore',
+											displayInfo : true
 										}]
 									}, {
 										xtype : 'gridpanel',
