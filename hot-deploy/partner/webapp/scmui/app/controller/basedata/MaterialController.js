@@ -112,11 +112,15 @@ Ext.define('SCM.controller.basedata.MaterialController', {
 			 */
 			selectNode : function(me, record, index, eOpts) {
 				this.currentRecord=record;
-				this.listPanel.store.loadPage(1,{
-							params : {
-								'whereStr' : 'TMaterialV.material_Type_Id =\'' + record.get("id") + '\''
-							}
-						});
+				
+				this.listPanel.store.filters.clear();
+				this.listPanel.store.filter([{property:'materialTypeId',value:record.get('id')}]);
+				
+//				this.listPanel.store.loadPage(1,{
+//							params : {
+//								'whereStr' : 'TMaterialV.material_Type_Id =\'' + record.get("id") + '\''
+//							}
+//						});
 			},
 			
 			/**
@@ -150,11 +154,13 @@ Ext.define('SCM.controller.basedata.MaterialController', {
 				var selItem=this.getSelType();
 				var selTypeId;
 				if(selItem!=null){
-					this.listPanel.store.loadPage(1,{
-						params : {
-							'filter' : '[{property:\'materialTypeId\',value:\''+selItem.get('id')+'\'}]'
-						}	
-					});
+					lstore.filters.clear();
+					lstore.filter([{property:'materialTypeId',value:selItem.get('id')}]);
+//					this.listPanel.store.loadPage(1,{
+//						params : {
+//							'filter' : '[{property:\'materialTypeId\',value:\''+selItem.get('id')+'\'}]'
+//						}	
+//					});
 				}else{
 					this.listPanel.store.loadPage(1);
 				}
@@ -229,8 +235,13 @@ Ext.define('SCM.controller.basedata.MaterialController', {
                        id : selectedType.get('id')
                     },
 					success : function(response, option) {
-						this.typeWin.hide();
-						this.refreshTypeTree();
+						var result = Ext.decode(response.responseText);
+						if (result.success) {
+							showInfo('操作成功！');
+							this.refreshTypeTree();
+						} else {
+							showError(result.message);
+						}
 					}
 				});
 			},
