@@ -17,4 +17,5 @@
 <TMaterialType id='a926a2a2-bb4f-4ee1-9b9b-c802abd00815' parentId='1b24ce39-9f30-4b28-b213-b3fac59c7c8f' number='MTT100012' name='布类' />
 <TMaterialType id='e76d9e32-0ca7-4dd2-862f-e79a96452d71' parentId='1b24ce39-9f30-4b28-b213-b3fac59c7c8f' number='MTT100013' name='珍珠棉' />
 <TMaterialType id='de559b7f-b51b-43cc-906a-1c4928c2fdde' parentId='6aec2db2-088e-44dd-bc02-0531c025d9a0' number='MTT100014' name='加工' />
+<TMaterialType id='eb6c1cbe-bd1d-43e1-b57e-ea07db3cf29a' parentId='1b24ce39-9f30-4b28-b213-b3fac59c7c8f' number='MTT100015' name='五金类' />
 </entity-engine-xml>
