@@ -3,19 +3,17 @@
 	may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
 	OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. -->
 <entity-engine-xml>
-<TMaterialType id='1b24ce39-9f30-4b28-b213-b3fac59c7c8f' parentId='' number='MTT100001' name='原材料' />
-<TMaterialType id='88e14774-d31c-4986-9f30-a2d1c4a1a752' parentId='' number='MTT100002' name='黑胚成品' />
-<TMaterialType id='4d47b411-1cf4-4f14-9b3c-b3ee20d92adc' parentId='' number='MTT100003' name='包装材料' />
-<TMaterialType id='6aec2db2-088e-44dd-bc02-0531c025d9a0' parentId='' number='MTT100004' name='半成品' />
-<TMaterialType id='cf3b8650-0fbc-4f86-83f3-e96f94272e2b' parentId='' number='MTT100005' name='产成品' />
-<TMaterialType id='01c190d4-d2ba-4f51-bfa4-e8b7e0177fce' parentId='1b24ce39-9f30-4b28-b213-b3fac59c7c8f' number='MTT100006' name='钢材' />
-<TMaterialType id='a43aa084-5ebc-4ee9-9556-6dc233f0e08b' parentId='1b24ce39-9f30-4b28-b213-b3fac59c7c8f' number='MTT100007' name='纸制品' />
-<TMaterialType id='e879b670-19fd-4434-aa95-fc72cde5e176' parentId='1b24ce39-9f30-4b28-b213-b3fac59c7c8f' number='MTT100008' name='胶袋' />
-<TMaterialType id='8bed42f3-ae14-45c6-8618-507500fb7894' parentId='1b24ce39-9f30-4b28-b213-b3fac59c7c8f' number='MTT100009' name='塑料' />
-<TMaterialType id='641a6769-fc29-4e52-8c5a-44c64f70f230' parentId='1b24ce39-9f30-4b28-b213-b3fac59c7c8f' number='MTT100010' name='标签' />
-<TMaterialType id='0d180330-e9f4-49fc-bd16-aff5005571f8' parentId='1b24ce39-9f30-4b28-b213-b3fac59c7c8f' number='MTT100011' name='玻璃' />
-<TMaterialType id='a926a2a2-bb4f-4ee1-9b9b-c802abd00815' parentId='1b24ce39-9f30-4b28-b213-b3fac59c7c8f' number='MTT100012' name='布类' />
-<TMaterialType id='e76d9e32-0ca7-4dd2-862f-e79a96452d71' parentId='1b24ce39-9f30-4b28-b213-b3fac59c7c8f' number='MTT100013' name='珍珠棉' />
-<TMaterialType id='de559b7f-b51b-43cc-906a-1c4928c2fdde' parentId='6aec2db2-088e-44dd-bc02-0531c025d9a0' number='MTT100014' name='加工' />
-<TMaterialType id='eb6c1cbe-bd1d-43e1-b57e-ea07db3cf29a' parentId='1b24ce39-9f30-4b28-b213-b3fac59c7c8f' number='MTT100015' name='五金类' />
+	<TMaterialType id='5a7467da-6a50-468f-b3aa-2f227b6458ca' parentId='' number='MTT100001' name='原材料' />
+	<TMaterialType id='d8c03f48-68c3-4be7-a443-1469f8a868b4' parentId='' number='MTT100002' name='半成品' />
+	<TMaterialType id='07680386-538c-4a88-91fb-31643e7822e6' parentId='' number='MTT100003' name='成品' />
+	<TMaterialType id='28c9238d-e6f3-4414-8cf3-32b4579e2173' parentId='5a7467da-6a50-468f-b3aa-2f227b6458ca' number='MTT100004' name='铁' />
+	<TMaterialType id='36316d97-f038-445b-a74b-32cb0c8301fe' parentId='28c9238d-e6f3-4414-8cf3-32b4579e2173' number='MTT100005' name='扁铁' />
+	<TMaterialType id='90c647fa-cb0f-4d00-88e9-1c6b6ffd2655' parentId='28c9238d-e6f3-4414-8cf3-32b4579e2173' number='MTT100006' name='平直' />
+	<TMaterialType id='fbbfae47-7831-463c-a14f-34fd0f49a4c3' parentId='28c9238d-e6f3-4414-8cf3-32b4579e2173' number='MTT100007' name='带钢' />
+	<TMaterialType id='635e0fa5-ab14-461f-ba05-2ec4c58f9480' parentId='28c9238d-e6f3-4414-8cf3-32b4579e2173' number='MTT100008' name='角铁' />
+	<TMaterialType id='a06c9c75-e04a-41ba-95e7-88c0f836891a' parentId='28c9238d-e6f3-4414-8cf3-32b4579e2173' number='MTT100009' name='方线' />
+	<TMaterialType id='7bd8377b-f747-48ef-8e4e-6b02af2fc1ef' parentId='28c9238d-e6f3-4414-8cf3-32b4579e2173' number='MTT100010' name='铆钉' />
+	<TMaterialType id='c46976a4-503d-4dfc-ba63-f51ab9ee1f6f' parentId='28c9238d-e6f3-4414-8cf3-32b4579e2173' number='MTT100011' name='拉丝' />
+	<TMaterialType id='48b4fd0b-3630-4d86-8c3e-285888b2e103' parentId='28c9238d-e6f3-4414-8cf3-32b4579e2173' number='MTT100012' name='螺母' />
+	<TMaterialType id='81a96d9c-74ff-4c79-96ee-aa752473647b' parentId='28c9238d-e6f3-4414-8cf3-32b4579e2173' number='MTT100013' name='圆管' />
 </entity-engine-xml>
