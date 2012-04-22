@@ -64,7 +64,15 @@
 		<member-entity entity-alias="CurMaterialBalanceV" entity-name="CurMaterialBalance"></member-entity>
 		<member-entity entity-alias="TMaterialV" entity-name="TMaterial"></member-entity>
 		<alias name="warehouseId" entity-alias="CurMaterialBalanceV" field="warehouseId"></alias>
-		<alias-all entity-alias="TMaterialV"></alias-all>
+		<alias name="id" entity-alias="TMaterialV" field="id"></alias>
+		<alias name="number" entity-alias="TMaterialV" field="number"></alias>
+		<alias name="name" entity-alias="TMaterialV" field="name"></alias>
+		<alias name="model" entity-alias="TMaterialV" field="model"></alias>
+		<alias name="defaultPrice" entity-alias="TMaterialV" field="defaultPrice"></alias>
+		<alias name="defaultSupplierId" entity-alias="TMaterialV" field="defaultSupplierId"></alias>
+		<alias name="safeStock" entity-alias="TMaterialV" field="safeStock"></alias>
+		<alias name="defaultUnitId" entity-alias="TMaterialV" field="defaultUnitId"></alias>
+		<alias name="materialTypeId" entity-alias="TMaterialV" field="materialTypeId"></alias>
 		<view-link entity-alias="CurMaterialBalanceV" rel-entity-alias="TMaterialV" rel-optional="true">
 			<key-map field-name="materialId" rel-field-name="id" />
 		</view-link>
@@ -75,7 +83,12 @@
 		<member-entity entity-alias="MaterialBomV" entity-name="MaterialBom"></member-entity>
 		<member-entity entity-alias="TMaterialV" entity-name="TMaterial"></member-entity>
 		<alias name="warehouseId" entity-alias="CurMaterialBalanceV" field="warehouseId"></alias>
-		<alias-all entity-alias="MaterialBomV"></alias-all>
+		<alias name="id" entity-alias="MaterialBomV" field="id"></alias>
+		<alias name="number" entity-alias="MaterialBomV" field="number"></alias>
+		<alias name="materialId" entity-alias="MaterialBomV" field="materialId"></alias>
+		<alias name="note" entity-alias="MaterialBomV" field="note"></alias>
+		<alias name="status" entity-alias="MaterialBomV" field="status"></alias>
+		<alias name="valid" entity-alias="MaterialBomV" field="valid"></alias>
 		<alias name="materialName" entity-alias="TMaterialV" field="name"></alias>
 		<alias name="materialNumber" entity-alias="TMaterialV" field="number"></alias>
 		<view-link entity-alias="CurMaterialBalanceV" rel-entity-alias="MaterialBomV" rel-optional="true">
