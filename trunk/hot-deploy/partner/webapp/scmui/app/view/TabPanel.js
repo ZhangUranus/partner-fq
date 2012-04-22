@@ -12,9 +12,6 @@ Ext.define('SCM.view.TabPanel', {
 							id : 'main-content',
 							region : 'center',
 							hidden : true,
-							defaults : {
-								autoScroll : true
-							},
 							plugins : Ext.create('Ext.ux.TabCloseMenu', {}), // 增加Tab页右键菜单插件
 							activeTab : 0,
 							border : false,
