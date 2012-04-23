@@ -11,6 +11,7 @@ Ext.define('SCM.ux.combobox.ComboGrid', {
 			minChars : 1,
 			typeAhead : true,
 			forceSelection : true,
+			queryCaching : false,
 			autoSelect : true,//暂时没有实现自动选中功能该值不允许为true;
 
 			/**

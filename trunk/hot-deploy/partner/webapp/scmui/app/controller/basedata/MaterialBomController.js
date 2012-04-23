@@ -2,7 +2,7 @@ Ext.define('SCM.controller.basedata.MaterialBomController', {
 			extend : 'Ext.app.Controller',
 			mixins : ['SCM.extend.exporter.Exporter', 'SCM.extend.controller.CommonGridController'],
 			views : ['basedata.materialbom.ListUI', 'basedata.materialbom.EditUI'],
-			stores : ['basedata.MaterialBomStore', 'basedata.MaterialBomEditStore', 'basedata.MaterialBomEditEntryStore', 'basedata.MaterialBomComboStore'],
+			stores : ['basedata.MaterialBomStore', 'basedata.MaterialBomEditStore', 'basedata.MaterialBomEditEntryStore', 'basedata.MaterialBomComboStore', 'basedata.MaterialBomWarehouseComboStore'],
 			requires : ['SCM.model.basedata.MaterialBomActionModel'],
 			gridTitle : 'BOM单',
 			gridName : 'bombillinfomaintaince',
