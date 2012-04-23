@@ -293,8 +293,8 @@ public class ConsignPriceMgr {
 		conds.add(EntityCondition.makeCondition("materialId", EntityOperator.EQUALS, materialId));
 		conds.add(EntityCondition.makeCondition("checkStatus", EntityOperator.NOT_EQUAL, 2));
 		condition = EntityCondition.makeCondition(conds);
-		List<GenericValue> entryList = delegator.findByAnd("ConsignReturnProductList", condition);
-		if(entryList.size() > 0){
+		long count = delegator.findCountByCondition("ConsignReturnProductList", condition, null, null);
+		if(count > 0){
 			return false;
 		}else{
 			return true;

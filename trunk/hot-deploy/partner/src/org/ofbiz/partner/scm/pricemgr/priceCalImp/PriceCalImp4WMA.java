@@ -73,14 +73,14 @@ public class PriceCalImp4WMA implements IPriceCal {
 		List<GenericValue> curValueList = delegator.findByAnd("CurMaterialBalance",
 				UtilMisc.toMap("year", new Integer(year), "month", new Integer(month), "warehouseId", item.getWarehouseId(), "materialId", item.getMaterialId()));
 		GenericValue curValue = null;
-		BigDecimal curAmount = null;// 当前数量
-		BigDecimal curSum = null;// 当前金额
-		BigDecimal curInVolume = null;// 当前收入数量
-		BigDecimal curInSum = null;// 当前收入金额
-		BigDecimal curOutVolume = null;// 当前发出数量
-		BigDecimal curOutSum = null;// 当前发出金额
-		BigDecimal calAmount = null;// 计算后数量
-		BigDecimal calSum = null;// 计算后金额
+		BigDecimal curAmount = BigDecimal.ZERO;// 当前数量
+		BigDecimal curSum = BigDecimal.ZERO;// 当前金额
+		BigDecimal curInVolume = BigDecimal.ZERO;// 当前收入数量
+		BigDecimal curInSum = BigDecimal.ZERO;// 当前收入金额
+		BigDecimal curOutVolume = BigDecimal.ZERO;// 当前发出数量
+		BigDecimal curOutSum = BigDecimal.ZERO;// 当前发出金额
+		BigDecimal calAmount = BigDecimal.ZERO;// 计算后数量
+		BigDecimal calSum = BigDecimal.ZERO;// 计算后金额
 		BigDecimal inVolume = BigDecimal.ZERO;// 计算后收入数量
 		BigDecimal inSum = BigDecimal.ZERO;// 计算后收入金额
 		BigDecimal outVolume = BigDecimal.ZERO;// 计算后发出数量
@@ -89,13 +89,24 @@ public class PriceCalImp4WMA implements IPriceCal {
 			// 取第一条匹配记录
 			curValue = curValueList.get(0);
 			Debug.logInfo("计算前物料数量单价" + curValue.getString("volume") + ";" + curValue.getString("totalSum"), module);
-			curAmount = curValue.getBigDecimal("volume");// 设置当前数量
-			curSum = curValue.getBigDecimal("totalSum");// 设置当前金额
-			curInVolume = curValue.getBigDecimal("inVolume");// 设置当前收入金额
-			curInSum = curValue.getBigDecimal("inSum");// 设置当前收入金额
-			curOutVolume = curValue.getBigDecimal("outVolume");// 设置当前发出金额
-			curOutSum = curValue.getBigDecimal("outSum");// 设置当前发出金额
-			
+			if(curValue.getBigDecimal("volume") != null){
+				curAmount = curValue.getBigDecimal("volume");// 设置当前数量
+			}
+			if(curValue.getBigDecimal("totalSum") != null){
+				curSum = curValue.getBigDecimal("totalSum");// 设置当前金额
+			}
+			if(curValue.getBigDecimal("inVolume") != null){
+				curInVolume = curValue.getBigDecimal("inVolume");// 设置当前收入金额
+			}
+			if(curValue.getBigDecimal("inSum") != null){
+				curInSum = curValue.getBigDecimal("inSum");// 设置当前收入金额
+			}
+			if(curValue.getBigDecimal("outVolume") != null){
+				curOutVolume = curValue.getBigDecimal("outVolume");// 设置当前发出金额
+			}
+			if(curValue.getBigDecimal("outSum") != null){
+				curOutSum = curValue.getBigDecimal("outSum");// 设置当前发出金额
+			}
 			BigDecimal amount = item.getAmount();// 数量
 			BigDecimal sum = item.getSum();// 金额
 			
