@@ -185,7 +185,7 @@ Ext.define('SCM.view.WorkshopDrawMaterial.EditUI', {
 																	xtype : 'combogrid',
 																	valueField : 'id',
 																	displayField : 'name',
-																	store : Ext.create('MaterialComboStore'),
+																	store : Ext.create('MaterialWarehouseComboStore'),
 																	matchFieldWidth : false,
 																	listeners : {
 																		scope : this,

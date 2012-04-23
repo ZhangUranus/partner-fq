@@ -1,10 +1,13 @@
 // 定义数据模型
-Ext.define('SCM.model.basedata.MaterialBomComboModel', {
+Ext.define('SCM.model.basedata.MaterialBomWarehouseComboModel', {
 			extend : 'Ext.data.Model',
 			requires : ['Ext.data.UuidGenerator', 'SCM.extend.proxy.JsonAjax'],
-			alias : 'MaterialBomComboModel',
+			alias : 'MaterialBomWarehouseComboModel',
 			fields : [// 字段
 					{
+						name : 'warehouseId',
+						type : 'string'
+					}, {
 						name : 'id',
 						type : 'string'
 					}, {
@@ -33,7 +36,7 @@ Ext.define('SCM.model.basedata.MaterialBomComboModel', {
 			proxy : {
 				type : 'jsonajax',
 				api : {
-					read : '../../scm/control/requestJsonData?entity=MaterialBomView'
+					read : '../../scm/control/requestJsonData?entity=MaterialBOMWithWarehouseView'
 				},
 				extraParams : {
 					queryField : 'number,materialName'
