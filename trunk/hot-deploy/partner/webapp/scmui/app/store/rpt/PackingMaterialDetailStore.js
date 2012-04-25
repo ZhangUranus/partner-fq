@@ -2,6 +2,7 @@ Ext.define('SCM.store.rpt.PackingMaterialDetailStore', {
 			extend : 'Ext.data.Store',
 			model : 'SCM.model.rpt.PackingMaterialDetailModel',
 			alias : 'PackingMaterialDetailStore',
+			pageSize : 100, // 每页行数
 			remoteSort : true, // 服务器排序
 			autoLoad : false,
 			autoSync : false,
