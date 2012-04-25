@@ -2,7 +2,7 @@ Ext.define('SCM.store.basedata.MaterialComboStore', {
 			extend : 'Ext.data.Store',
 			model : 'SCM.model.basedata.MaterialModel',
 			alias : 'MaterialComboStore',
-			pageSize : 10000, // 每页行数
+			pageSize : SCM.unpageSize, // 每页行数
 			remoteSort : true, // 服务器排序
 			autoLoad : false,
 			autoSync : true,
