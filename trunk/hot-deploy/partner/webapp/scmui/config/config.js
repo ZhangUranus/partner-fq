@@ -41,3 +41,11 @@ SCM.MaxSize = Ext.apply({//label等于5－6个中文字
 			COMBOGRID_HEIGHT : 250,
 			COMBOGRID_EXTRA_WIDTH : 320
 		}, SCM.MaxSize || {});
+
+/**
+ * 列表每页条数配置
+ */
+SCM.pageSize=20;		//整页面页大小
+SCM.halfPageSize=10;	//一半页面页大小
+SCM.billPageSize=15;	//单据页大小
+SCM.unpageSize=10000;	//不分页大小

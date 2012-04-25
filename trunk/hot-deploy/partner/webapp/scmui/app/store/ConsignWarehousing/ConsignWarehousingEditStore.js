@@ -4,7 +4,7 @@ Ext.define('SCM.store.ConsignWarehousing.ConsignWarehousingEditStore', {
 			alias : 'ConsignWarehousingEditStore',
 			autoLoad : false,
 			autoSync : false,
-			pageSize : 16, // 每页行数
+			pageSize : SCM.billPageSize, // 每页行数
 			sorters : [{// 根据number字段排序
 				property : 'number',
 				direction : 'ASC'
