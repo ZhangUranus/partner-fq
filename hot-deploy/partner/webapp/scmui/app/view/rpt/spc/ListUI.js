@@ -176,7 +176,13 @@ Ext.define('SCM.view.rpt.spc.ListUI', {
 												}],
 										viewConfig : {
 
-										}
+										},
+										dockedItems: [{
+											dock : 'bottom',
+											xtype : 'pagingtoolbar',
+											store : 'rpt.SemiProductCostReportStore',
+											displayInfo : true
+										}]
 									}, {
 										xtype : 'gridpanel',
 										title : '',

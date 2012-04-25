@@ -150,7 +150,13 @@ Ext.define('SCM.view.rpt.pkm.ListUI', {
 												}],
 										viewConfig : {
 
-										}
+										},
+										dockedItems: [{
+											dock : 'bottom',
+											xtype : 'pagingtoolbar',
+											store : 'rpt.PackingMaterialReportStore',
+											displayInfo : true
+										}]
 									}, {
 										xtype : 'gridpanel',
 										title : '',
