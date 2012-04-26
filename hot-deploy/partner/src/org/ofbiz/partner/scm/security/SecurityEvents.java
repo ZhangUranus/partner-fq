@@ -3,6 +3,7 @@ package org.ofbiz.partner.scm.security;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -258,28 +259,14 @@ public class SecurityEvents {
 	}
 	
 	public static void deleteUserLoginById(String userId) throws Exception {
-		Connection conn = ConnectionFactory.getConnection(org.ofbiz.partner.scm.common.Utils.getConnectionHelperName());
+		Connection conn = null;
 		try {
-			
-			String sql1 = "DELETE FROM User_Login_Password_History WHERE USER_LOGIN_ID = '" + userId +"'";
-			String sql2 = "DELETE FROM User_Login_History WHERE USER_LOGIN_ID = '" + userId +"'";
-			String sql3 = "DELETE FROM User_Login_Session WHERE USER_LOGIN_ID = '" + userId +"'";
-			String sql4 = "DELETE FROM User_Login_Security_Group WHERE USER_LOGIN_ID = '" + userId +"'";
-			String sql5 = "DELETE FROM Server_Hit WHERE USER_LOGIN_ID = '" + userId +"'";
-			String sql6 = "DELETE FROM Visitor WHERE USER_LOGIN_ID = '" + userId +"'";
-			String sql7 = "DELETE FROM User_Login_Password_History WHERE USER_LOGIN_ID = '" + userId +"'";
-			String sql8 = "DELETE FROM USER_LOGIN WHERE USER_LOGIN_ID = '" + userId +"'";
+			conn = ConnectionFactory.getConnection(org.ofbiz.partner.scm.common.Utils.getConnectionHelperName());
+			String sql = "DELETE FROM USER_LOGIN WHERE USER_LOGIN_ID = '" + userId +"'";
 			Statement ps = conn.createStatement();
-			ps.addBatch(sql1);
-			ps.addBatch(sql2);
-			ps.addBatch(sql3);
-			ps.addBatch(sql4);
-			ps.addBatch(sql5);
-			ps.addBatch(sql6);
-			ps.addBatch(sql7);
-			ps.addBatch(sql8);
-			
-			ps.executeBatch();
+			ps.executeUpdate(sql);
+		} catch(Exception e){
+			throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "cannotDeleteTheUserException"));
 		} finally {
 			if (conn != null) {
 				conn.close();
