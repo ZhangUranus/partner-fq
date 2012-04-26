@@ -1,5 +1,9 @@
 package org.ofbiz.partner.scm.security;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -24,6 +28,7 @@ import org.ofbiz.entity.GenericEntityException;
 import org.ofbiz.entity.GenericValue;
 import org.ofbiz.entity.condition.EntityCondition;
 import org.ofbiz.entity.condition.EntityConditionList;
+import org.ofbiz.entity.jdbc.ConnectionFactory;
 import org.ofbiz.entity.model.ModelEntity;
 import org.ofbiz.entity.model.ModelField;
 import org.ofbiz.entity.transaction.TransactionUtil;
@@ -237,7 +242,8 @@ public class SecurityEvents {
 				beganTransaction = TransactionUtil.begin();
 				delegator.removeByCondition(roleEntityName, EntityCondition.makeCondition("userId", record.getString("userId")));
 				delegator.removeValue(v);
-				delegator.removeValue(sv);
+				//delegator.removeValue(sv);
+				deleteUserLoginById(record.getString("userId"));
 				TransactionUtil.commit(beganTransaction);
 			} catch (GenericEntityException e) {
 				try {
@@ -249,6 +255,36 @@ public class SecurityEvents {
 			}
 		}
 		return "success";
+	}
+	
+	public static void deleteUserLoginById(String userId) throws Exception {
+		Connection conn = ConnectionFactory.getConnection(org.ofbiz.partner.scm.common.Utils.getConnectionHelperName());
+		try {
+			
+			String sql1 = "DELETE FROM User_Login_Password_History WHERE USER_LOGIN_ID = '" + userId +"'";
+			String sql2 = "DELETE FROM User_Login_History WHERE USER_LOGIN_ID = '" + userId +"'";
+			String sql3 = "DELETE FROM User_Login_Session WHERE USER_LOGIN_ID = '" + userId +"'";
+			String sql4 = "DELETE FROM User_Login_Security_Group WHERE USER_LOGIN_ID = '" + userId +"'";
+			String sql5 = "DELETE FROM Server_Hit WHERE USER_LOGIN_ID = '" + userId +"'";
+			String sql6 = "DELETE FROM Visitor WHERE USER_LOGIN_ID = '" + userId +"'";
+			String sql7 = "DELETE FROM User_Login_Password_History WHERE USER_LOGIN_ID = '" + userId +"'";
+			String sql8 = "DELETE FROM USER_LOGIN WHERE USER_LOGIN_ID = '" + userId +"'";
+			Statement ps = conn.createStatement();
+			ps.addBatch(sql1);
+			ps.addBatch(sql2);
+			ps.addBatch(sql3);
+			ps.addBatch(sql4);
+			ps.addBatch(sql5);
+			ps.addBatch(sql6);
+			ps.addBatch(sql7);
+			ps.addBatch(sql8);
+			
+			ps.executeBatch();
+		} finally {
+			if (conn != null) {
+				conn.close();
+			}
+		}
 	}
 	
     /**
