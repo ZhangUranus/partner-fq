@@ -575,9 +575,13 @@ public class MonthlySettlement {
 		Utils.setCurPeriod(year, month);
 	}
 	/**
-	 *检查是否当前期间的提交单据 
+	 *检查是否当前期间的提交单据 ,检查当前月份是否是初始化月份
 	 */
 	private void checkCanRollback() throws Exception{
+		boolean isInitPeriod=Utils.isSysInitMonth();
+		if(isInitPeriod){
+			throw new Exception("当前月份是初始化月份，不允许反结算！");
+		}
 		Debug.logInfo("检查是否当前期间的提交单据，操作开始~~~~~~", module);
 		//过滤条件 ,系统期间时间段，单据状态为提交状态(4)
 		Calendar cal=Calendar.getInstance();
