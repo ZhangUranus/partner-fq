@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.rpc.Call;
 
 import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilMisc;
@@ -43,6 +44,58 @@ public class Utils {
 			return null;
 		}
 	}
+	
+	/**
+	 * 获取初始化年月
+	 * 
+	 * @return
+	 */
+	public static Date getSysInitDate() {
+		Delegator delegator = DelegatorFactory.getDelegator("default");
+		try {
+			GenericValue value = delegator.findByPrimaryKey("PriceMgrParamters", UtilMisc.toMap("id", "002"));
+			String dateStr = value.getString("value");
+			SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:SS.sss");
+			return timeFormat.parse(dateStr);
+		} catch (GenericEntityException e) {
+			Debug.logError("-----------获取当期年月出错", "common");
+			return null;
+		} catch (ParseException e) {
+			Debug.logError("-----------获取当期年月出错，日期格式出错", "common");
+			return null;
+		}
+	}
+	
+	/**
+	 * 判断系统是否处于初始化月份
+	 * @return
+	 */
+	public static boolean isSysInitMonth() throws Exception{
+		Date curDate=getCurDate(); //当前期间
+		Date initDate=getSysInitDate();//初始化期间
+		
+		if(curDate==null||initDate==null){
+			throw new Exception("当前期间或者初始化期间为空，请联系管理员！");
+		}
+		
+		Calendar cal=Calendar.getInstance();
+		cal.setTime(curDate);
+		int curYear=cal.get(Calendar.YEAR);
+		int curMonth=cal.get(Calendar.MONTH);
+		
+		cal.setTime(initDate);
+		int initYear=cal.get(Calendar.YEAR);
+		int initMonth=cal.get(Calendar.MONTH);
+		
+		if(curYear==initYear&&curMonth==initMonth){
+			return true;
+		}else{
+			return false;
+		}
+		
+	}
+	
+	
 	/**
 	 * 设置当前期间
 	 * @param year
