@@ -3,5 +3,8 @@
 	may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
 	OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. -->
 <entity-engine-xml>
-	<Warehouse id="9fbc04b0-5ce8-4c43-a8e1-92113a6be783" wsTypeId="2a752e91-1d23-4bee-a8c9-69e88c23b8bd" number="WH100001" name="仓库" description="" />
+	<Warehouse id="9fbc04b0-5ce8-4c43-a8e1-92113a6be783" wsTypeId="2a752e91-1d23-4bee-a8c9-69e88c23b8bd" number="WH100001" name="原料仓" description="" />
+	<Warehouse id="d0671107-b2c4-49f1-add9-ad38b2cc02b8" wsTypeId="583d2212-cb68-423b-b1db-0c5dc6043845" number="WH100002" name="半成品仓" description="" />
+	<Warehouse id="a7eafabe-44cb-4ea2-9b59-1d4809b22115" wsTypeId="3b46137e-f1f9-4477-9d63-5ec058fb07c9" number="WH100003" name="成品仓" description="" />
+	<Warehouse id="c4f97d86-9fdb-4667-af03-4de6f9882c38" wsTypeId="28805bc1-c49b-4947-9185-cc0b9d9141a5" number="WH100004" name="黑坯仓" description="" />
 </entity-engine-xml>

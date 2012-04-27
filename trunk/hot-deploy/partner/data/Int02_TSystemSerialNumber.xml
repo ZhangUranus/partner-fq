@@ -5,7 +5,7 @@
 <entity-engine-xml>
 	<TSystemSerialNumber id='1a093050-2265-48a5-88d6-ce80e2b9e82d' serialDate='20120101' entityName='Unit' prefix='UNT' serialNumber='100006' initNumber='100001' description='计量单位编号' hasDate='0' />
 	<TSystemSerialNumber id='b4ee20a0-9e90-4f92-99bc-ed680643f49d' serialDate='20120101' entityName='WarehouseType' prefix='WHT' serialNumber='100005' initNumber='100001' description='仓库类型编号' hasDate='0' />
-	<TSystemSerialNumber id='3e0f56cc-b81d-4005-900a-95ea2540ae8f' serialDate='20120101' entityName='Warehouse' prefix='WH' serialNumber='100002' initNumber='100001' description='仓库编号' hasDate='0' />
+	<TSystemSerialNumber id='3e0f56cc-b81d-4005-900a-95ea2540ae8f' serialDate='20120101' entityName='Warehouse' prefix='WH' serialNumber='100005' initNumber='100001' description='仓库编号' hasDate='0' />
 	<TSystemSerialNumber id='43f31cd1-6003-4888-af95-77a05500b4e2' serialDate='20120101' entityName='Workshop' prefix='WS' serialNumber='100001' initNumber='100001' description='车间编号' hasDate='0' />
 	<TSystemSerialNumber id='8bc0a8a3-b86b-4f9f-b152-65b8365e0e7b' serialDate='20120101' entityName='Supplier' prefix='SUP' serialNumber='100008' initNumber='100001' description='供应商编号' hasDate='0' />
 	<TSystemSerialNumber id='75cd7906-84ff-428d-bdf2-75483fe29d5d' serialDate='20120101' entityName='Customer' prefix='CUST' serialNumber='100001' initNumber='100001' description='客户编号' hasDate='0' />
