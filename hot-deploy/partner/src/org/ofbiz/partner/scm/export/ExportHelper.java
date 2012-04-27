@@ -60,22 +60,26 @@ public class ExportHelper {
 					HSSFCell cell = row.createCell(i);
 					cell.setCellStyle(style);
 					String tempText = "";
-					if ("status".equals(dataIndex[i].toLowerCase())) {
-						if ("0".equals(v.get(dataIndex[i]).toString())) {
-							tempText = "保存";
-						} else if ("1".equals(v.get(dataIndex[i]).toString())) {
-							tempText = "已审核";
-						} else if ("2".equals(v.get(dataIndex[i]).toString())) {
-							tempText = "审核不通过";
-						} else if ("3".equals(v.get(dataIndex[i]).toString())) {
-							tempText = "已结算";
-						} else if ("4".equals(v.get(dataIndex[i]).toString())) {
-							tempText = "已提交";
+					if(v.get(dataIndex[i]) != null){
+						if ("status".equals(dataIndex[i].toLowerCase())) {
+							if ("0".equals(v.get(dataIndex[i]).toString())) {
+								tempText = "保存";
+							} else if ("1".equals(v.get(dataIndex[i]).toString())) {
+								tempText = "已审核";
+							} else if ("2".equals(v.get(dataIndex[i]).toString())) {
+								tempText = "审核不通过";
+							} else if ("3".equals(v.get(dataIndex[i]).toString())) {
+								tempText = "已结算";
+							} else if ("4".equals(v.get(dataIndex[i]).toString())) {
+								tempText = "已提交";
+							} else {
+								tempText = "未知";
+							}
 						} else {
-							tempText = "未知";
+							tempText = v.get(dataIndex[i]).toString();
 						}
 					} else {
-						tempText = v.get(dataIndex[i]).toString();
+						tempText = "";
 					}
 					HSSFRichTextString text = new HSSFRichTextString(tempText);
 					cell.setCellValue(text);
