@@ -337,13 +337,7 @@ Ext.define('SCM.view.PurchaseReturn.EditUI', {
 				//根据所选仓库过滤物料
 				var materialEntryStore = qe.combo.store;
 				if(materialEntryStore){
-					materialEntryStore.getProxy().extraParams.whereStr = "warehouse_Id ='" + selRec.get('warehouseWarehouseId') +"'";;
-					materialEntryStore.load({
-					    scope: this,
-					    callback: function(records, operation, success) {
-					        materialEntryStore.getProxy().extraParams.whereStr = "";
-					    }
-					});
+					materialEntryStore.getProxy().extraParams.whereStr = "warehouse_Id ='" + selRec.get('warehouseWarehouseId') +"'";
 				}
 				return true;
 			}
