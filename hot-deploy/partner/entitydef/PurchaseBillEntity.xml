@@ -73,6 +73,31 @@
 			<key-map field-name="approverSystemUserId" rel-field-name="id" />
 		</view-link>
 	</view-entity>
+	<!-- 导出视图 -->
+	<view-entity entity-name="PurchaseBillExportView" package-name="org.ofbiz.scm.PurchaseBill" title="PurchaseBillExportView  Entity">
+		<member-entity entity-alias="PurchaseBillV" entity-name="PurchaseBill"></member-entity>
+		<member-entity entity-alias="supplierSupplierV" entity-name="Supplier"></member-entity>
+		<member-entity entity-alias="submitSystemUserV" entity-name="SystemUser"></member-entity>
+		<member-entity entity-alias="buyerSystemUserV" entity-name="SystemUser"></member-entity>
+		<member-entity entity-alias="approverSystemUserV" entity-name="SystemUser"></member-entity>
+		<alias-all entity-alias="PurchaseBillV"></alias-all>
+		<alias name="supplierSupplierName" entity-alias="supplierSupplierV" field="name"></alias>
+		<alias name="submitUserName" entity-alias="submitSystemUserV" field="name"></alias>
+		<alias name="buyerSystemUserName" entity-alias="buyerSystemUserV" field="name"></alias>
+		<alias name="approverSystemUserName" entity-alias="approverSystemUserV" field="name"></alias>
+		<view-link entity-alias="PurchaseBillV" rel-entity-alias="supplierSupplierV" rel-optional="true">
+			<key-map field-name="supplierSupplierId" rel-field-name="id" />
+		</view-link>
+		<view-link entity-alias="PurchaseBillV" rel-entity-alias="submitSystemUserV" rel-optional="true">
+			<key-map field-name="submitUserId" rel-field-name="id" />
+		</view-link>
+		<view-link entity-alias="PurchaseBillV" rel-entity-alias="buyerSystemUserV" rel-optional="true">
+			<key-map field-name="buyerSystemUserId" rel-field-name="id" />
+		</view-link>
+		<view-link entity-alias="PurchaseBillV" rel-entity-alias="approverSystemUserV" rel-optional="true">
+			<key-map field-name="approverSystemUserId" rel-field-name="id" />
+		</view-link>
+	</view-entity>
 	<!--表体视图 -->
 	<view-entity entity-name="PurchaseBillEntryView" package-name="org.ofbiz.scm.PurchaseBill" title="PurchaseBillEntryView  Entity">
 		<member-entity entity-alias="PurchaseBillEntryV" entity-name="PurchaseBillEntry"></member-entity>
