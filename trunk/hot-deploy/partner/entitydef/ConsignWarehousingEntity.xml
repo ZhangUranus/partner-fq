@@ -84,6 +84,26 @@
 			<key-map field-name="submitterSystemUserId" rel-field-name="id" />
 		</view-link>
 	</view-entity>
+	<!-- 导出视图 -->
+	<view-entity entity-name="ConsignWarehousingExportView" package-name="org.ofbiz.scm.ConsignWarehousing" title="ConsignWarehousingExportView  Entity">
+		<member-entity entity-alias="ConsignWarehousingV" entity-name="ConsignWarehousing"></member-entity>
+		<member-entity entity-alias="processorSupplierV" entity-name="Supplier"></member-entity>
+		<member-entity entity-alias="checkerSystemUserV" entity-name="SystemUser"></member-entity>
+		<member-entity entity-alias="submitterSystemUserV" entity-name="SystemUser"></member-entity>
+		<alias-all entity-alias="ConsignWarehousingV"></alias-all>
+		<alias name="processorSupplierName" entity-alias="processorSupplierV" field="name"></alias>
+		<alias name="checkerSystemUserName" entity-alias="checkerSystemUserV" field="name"></alias>
+		<alias name="submitterSystemUserName" entity-alias="submitterSystemUserV" field="name"></alias>
+		<view-link entity-alias="ConsignWarehousingV" rel-entity-alias="processorSupplierV" rel-optional="true">
+			<key-map field-name="processorSupplierId" rel-field-name="id" />
+		</view-link>
+		<view-link entity-alias="ConsignWarehousingV" rel-entity-alias="checkerSystemUserV" rel-optional="true">
+			<key-map field-name="checkerSystemUserId" rel-field-name="id" />
+		</view-link>
+		<view-link entity-alias="ConsignWarehousingV" rel-entity-alias="submitterSystemUserV" rel-optional="true">
+			<key-map field-name="submitterSystemUserId" rel-field-name="id" />
+		</view-link>
+	</view-entity>
 	<!--表体视图 -->
 	<view-entity entity-name="ConsignWarehousingEntryView" package-name="org.ofbiz.scm.ConsignWarehousing" title="ConsignWarehousingEntryView  Entity">
 		<member-entity entity-alias="ConsignWarehousingEntryV" entity-name="ConsignWarehousingEntry"></member-entity>

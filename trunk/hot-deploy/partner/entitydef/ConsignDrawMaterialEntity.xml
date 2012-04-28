@@ -79,6 +79,35 @@
 			<key-map field-name="materialId" rel-field-name="id" />
 		</view-link>
 	</view-entity>
+	<!-- 导出视图 -->
+	<view-entity entity-name="ConsignDrawMaterialExportView" package-name="org.ofbiz.scm.ConsignDrawMaterial" title="ConsignDrawMaterialExportView  Entity">
+		<member-entity entity-alias="ConsignDrawMaterialV" entity-name="ConsignDrawMaterial"></member-entity>
+		<member-entity entity-alias="processorSupplierV" entity-name="Supplier"></member-entity>
+		<member-entity entity-alias="issuerSystemUserV" entity-name="SystemUser"></member-entity>
+		<member-entity entity-alias="submitterSystemUserV" entity-name="SystemUser"></member-entity>
+		<member-entity entity-alias="MaterialBomV" entity-name="MaterialBom"></member-entity>
+		<member-entity entity-alias="processedMaterialMaterialV" entity-name="Material"></member-entity>
+		<alias-all entity-alias="ConsignDrawMaterialV"></alias-all>
+		<alias name="processorSupplierName" entity-alias="processorSupplierV" field="name"></alias>
+		<alias name="issuerSystemUserName" entity-alias="issuerSystemUserV" field="name"></alias>
+		<alias name="submitterSystemUserName" entity-alias="submitterSystemUserV" field="name"></alias>
+		<alias name="processedMaterialMaterialName" entity-alias="processedMaterialMaterialV" field="name"></alias>
+		<view-link entity-alias="ConsignDrawMaterialV" rel-entity-alias="processorSupplierV" rel-optional="true">
+			<key-map field-name="processorSupplierId" rel-field-name="id" />
+		</view-link>
+		<view-link entity-alias="ConsignDrawMaterialV" rel-entity-alias="issuerSystemUserV" rel-optional="true">
+			<key-map field-name="issuerSystemUserId" rel-field-name="id" />
+		</view-link>
+		<view-link entity-alias="ConsignDrawMaterialV" rel-entity-alias="submitterSystemUserV" rel-optional="true">
+			<key-map field-name="submitterSystemUserId" rel-field-name="id" />
+		</view-link>
+		<view-link entity-alias="ConsignDrawMaterialV" rel-entity-alias="MaterialBomV" rel-optional="true">
+			<key-map field-name="processedBomId" rel-field-name="id" />
+		</view-link>
+		<view-link entity-alias="MaterialBomV" rel-entity-alias="processedMaterialMaterialV" rel-optional="true">
+			<key-map field-name="materialId" rel-field-name="id" />
+		</view-link>
+	</view-entity>
 	<!--表体视图 -->
 	<view-entity entity-name="ConsignDrawMaterialEntryView" package-name="org.ofbiz.scm.ConsignDrawMaterial" title="ConsignDrawMaterialEntryView  Entity">
 		<member-entity entity-alias="ConsignDrawMaterialEntryV" entity-name="ConsignDrawMaterialEntry"></member-entity>

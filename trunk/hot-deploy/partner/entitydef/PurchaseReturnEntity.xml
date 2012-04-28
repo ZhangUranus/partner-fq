@@ -69,6 +69,26 @@
 			<key-map field-name="submitterSystemUserId" rel-field-name="id" />
 		</view-link>
 	</view-entity>
+	<!-- 导出视图 -->
+	<view-entity entity-name="PurchaseReturnExportView" package-name="org.ofbiz.scm.PurchaseReturn" title="PurchaseReturnExportView  Entity">
+		<member-entity entity-alias="PurchaseReturnV" entity-name="PurchaseReturn"></member-entity>
+		<member-entity entity-alias="supplierSupplierV" entity-name="Supplier"></member-entity>
+		<member-entity entity-alias="returnerSystemUserV" entity-name="SystemUser"></member-entity>
+		<member-entity entity-alias="submitterSystemUserV" entity-name="SystemUser"></member-entity>
+		<alias-all entity-alias="PurchaseReturnV"></alias-all>
+		<alias name="supplierSupplierName" entity-alias="supplierSupplierV" field="name"></alias>
+		<alias name="returnerSystemUserName" entity-alias="returnerSystemUserV" field="name"></alias>
+		<alias name="submitterSystemUserName" entity-alias="submitterSystemUserV" field="name"></alias>
+		<view-link entity-alias="PurchaseReturnV" rel-entity-alias="supplierSupplierV" rel-optional="true">
+			<key-map field-name="supplierSupplierId" rel-field-name="id" />
+		</view-link>
+		<view-link entity-alias="PurchaseReturnV" rel-entity-alias="returnerSystemUserV" rel-optional="true">
+			<key-map field-name="returnerSystemUserId" rel-field-name="id" />
+		</view-link>
+		<view-link entity-alias="PurchaseReturnV" rel-entity-alias="submitterSystemUserV" rel-optional="true">
+			<key-map field-name="submitterSystemUserId" rel-field-name="id" />
+		</view-link>
+	</view-entity>
 	<!--表体视图 -->
 	<view-entity entity-name="PurchaseReturnEntryView" package-name="org.ofbiz.scm.PurchaseReturn" title="PurchaseReturnEntryView  Entity">
 		<member-entity entity-alias="PurchaseReturnEntryV" entity-name="PurchaseReturnEntry"></member-entity>

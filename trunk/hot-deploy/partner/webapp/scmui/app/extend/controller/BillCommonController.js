@@ -688,7 +688,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 						filter : Ext.encode(filters.items),
 
 						// 页面参数
-						entity : this.entityName + 'View', // 导出实体名称，一般为视图名称。
+						entity : this.entityName + 'ExportView', // 导出实体名称，一般为视图名称。
 						title : this.gridTitle, // sheet页名称
 						header : header, // 表头
 						dataIndex : dataIndex, // 数据引用
