@@ -69,69 +69,70 @@ Ext.define('SCM.view.rpt.pmr.ListUI', {
 													iconCls : 'system-exportDetail',
 													action : 'exportDetail'
 												}]
-									}, {
-										xtype : 'panel',
-										margin : '1 0 0 0',
-										region : 'center',
-										layout:'fit',
-										minWidth : 300,
-										minHeight : 200,
-										items : {
-											xtype : 'chart',
-											animate : true,
-											shadow : true,
-											store : 'rpt.PurchaseMatchingChartStore',
-											legend : {
-												position : 'right'
-											},
-											axes : [{
-														type : 'Numeric',
-														position : 'left',
-														fields : ['ENTRY_SUM'],
-														minimum : 0,
-														label : {
-															renderer : Ext.util.Format.numberRenderer('0,000.00'),
-															font : '12px 宋体'
-														},
-														grid : true,
-														title : '金额'
-													}, {
-														type : 'Category',
-														position : 'bottom',
-														fields : ['SUPPLIER_NAME'],
-														label : {
-															font : '12px 宋体'
-														},
-														title : '供应商'
-													}],
-											series : [{
-														type : 'column',
-														axis : 'left',
-														xField : 'SUPPLIER_NAME',
-														yField : ['ENTRY_SUM'],
-														title : ['金额'],
-														tips : {
-															trackMouse : true,
-															width : 140,
-															height : 28,
-															renderer : function(storeItem, item) {
-																this.setTitle(item.value[1] + '元');
-															}
-														},
-														label : {
-															display : 'over',
-															'text-anchor' : 'middle',
-															field : ['ENTRY_SUM'],
-															renderer : Ext.util.Format.numberRenderer('0,000.00')
-														}
-													}]
-										}
-									}, {
+									}, 
+//									{
+//										xtype : 'panel',
+//										margin : '1 0 0 0',
+//										region : 'center',
+//										layout:'fit',
+//										minWidth : 300,
+//										minHeight : 200,
+//										items : {
+//											xtype : 'chart',
+//											animate : true,
+//											shadow : true,
+//											store : 'rpt.PurchaseMatchingChartStore',
+//											legend : {
+//												position : 'right'
+//											},
+//											axes : [{
+//														type : 'Numeric',
+//														position : 'left',
+//														fields : ['ENTRY_SUM'],
+//														minimum : 0,
+//														label : {
+//															renderer : Ext.util.Format.numberRenderer('0,000.00'),
+//															font : '12px 宋体'
+//														},
+//														grid : true,
+//														title : '金额'
+//													}, {
+//														type : 'Category',
+//														position : 'bottom',
+//														fields : ['SUPPLIER_NAME'],
+//														label : {
+//															font : '12px 宋体'
+//														},
+//														title : '供应商'
+//													}],
+//											series : [{
+//														type : 'column',
+//														axis : 'left',
+//														xField : 'SUPPLIER_NAME',
+//														yField : ['ENTRY_SUM'],
+//														title : ['金额'],
+//														tips : {
+//															trackMouse : true,
+//															width : 140,
+//															height : 28,
+//															renderer : function(storeItem, item) {
+//																this.setTitle(item.value[1] + '元');
+//															}
+//														},
+//														label : {
+//															display : 'over',
+//															'text-anchor' : 'middle',
+//															field : ['ENTRY_SUM'],
+//															renderer : Ext.util.Format.numberRenderer('0,000.00')
+//														}
+//													}]
+//										}
+//									}, 
+									{
 										xtype : 'gridpanel',
 										margin : '1 0 0 0',
-										region : 'south',
+										region : 'center',
 										split : true,
-										height : 300,
 										store : 'rpt.PurchaseMatchingReportStore',
 										features: [{
 									        ftype: 'summary'
