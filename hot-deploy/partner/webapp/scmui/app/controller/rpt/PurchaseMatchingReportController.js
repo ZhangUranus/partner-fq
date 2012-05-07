@@ -37,7 +37,7 @@ Ext.define('SCM.controller.rpt.PurchaseMatchingReportController', {
 			 */
 			initComponent : function(view) {
 				this.listPanel = view.down('gridpanel');
-				this.chartPanel = view.down('panel chart');
+//				this.chartPanel = view.down('panel chart');
 				this.searchMonth = view.down('combobox[name=searchMonth]');
 				this.searchSupplierId = view.down('combogrid[name=searchSupplierId]');
 				this.searchMonth.store.load({
@@ -59,8 +59,8 @@ Ext.define('SCM.controller.rpt.PurchaseMatchingReportController', {
 					var tempStr = this.searchMonth.getValue().split('-');
 					this.listPanel.store.getProxy().extraParams.year = tempStr[0];
 					this.listPanel.store.getProxy().extraParams.month = tempStr[1];
-					this.chartPanel.store.getProxy().extraParams.year = tempStr[0];
-					this.chartPanel.store.getProxy().extraParams.month = tempStr[1];
+//					this.chartPanel.store.getProxy().extraParams.year = tempStr[0];
+//					this.chartPanel.store.getProxy().extraParams.month = tempStr[1];
 				} else {
 					showWarning('请选择月份！');
 					return;
@@ -71,17 +71,17 @@ Ext.define('SCM.controller.rpt.PurchaseMatchingReportController', {
 					this.listPanel.store.getProxy().extraParams.supplier = "";
 				}
 				this.listPanel.store.load();
-				this.chartPanel.store.load({
-							scope : this,
-							callback : function(records, operation, success) {
-								if(records.length==0){
-									this.chartPanel.setVisible(false);
-								} else {
-									this.chartPanel.setVisible(true);
-									this.chartPanel.redraw();
-								}
-							}
-						});
+//				this.chartPanel.store.load({
+//							scope : this,
+//							callback : function(records, operation, success) {
+//								if(records.length==0){
+//									this.chartPanel.setVisible(false);
+//								} else {
+//									this.chartPanel.setVisible(true);
+//									this.chartPanel.redraw();
+//								}
+//							}
+//						});
 			},
 
 			/**

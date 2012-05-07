@@ -240,9 +240,9 @@ Ext.define('SCM.controller.ConsignWarehousing.ConsignWarehousingController', {
 				if (e.field == 'bomId') {
 					var record = this.MaterialStore.findRecord('id', e.value);
 					if (record) {
-						e.record.set('materialMaterialModel', record.get('bomMaterialModel'));
-						e.record.set('unitUnitId', record.get('unitId'));
-						e.record.set('unitUnitName', record.get('unitName'));
+						e.record.set('materialMaterialModel', record.get('bomModel'));
+						e.record.set('unitUnitId', record.get('bomUnitId'));
+						e.record.set('unitUnitName', record.get('bomUnitName'));
 					}
 				}
 			},

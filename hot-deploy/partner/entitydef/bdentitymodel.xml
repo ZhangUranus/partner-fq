@@ -166,6 +166,7 @@
 	<view-entity entity-name="MaterialBomListView" package-name="org.ofbiz.scm.basedata" title="MaterialBomListView  Entity">
 		<member-entity entity-alias="MaterialBomV" entity-name="MaterialBom"></member-entity>
 		<member-entity entity-alias="TMaterialV" entity-name="TMaterial"></member-entity>
+		<member-entity entity-alias="BomUnitV" entity-name="Unit"></member-entity>
 		<member-entity entity-alias="MaterialBomEntryV" entity-name="MaterialBomEntry"></member-entity>
 		<member-entity entity-alias="TEntryMaterialV" entity-name="TMaterial"></member-entity>
 		<member-entity entity-alias="UnitV" entity-name="Unit"></member-entity>
@@ -176,6 +177,9 @@
 		<alias name="valid" entity-alias="MaterialBomV" field="valid"></alias>
 		<alias name="materialId" entity-alias="TMaterialV" field="id"></alias>
 		<alias name="materialName" entity-alias="TMaterialV" field="name"></alias>
+		<alias name="bomModel" entity-alias="TMaterialV" field="model"></alias>
+		<alias name="bomUnitId" entity-alias="BomUnitV" field="id"></alias>
+		<alias name="bomUnitName" entity-alias="BomUnitV" field="name"></alias>
 		<alias name="bomMaterialId" entity-alias="TEntryMaterialV" field="id"></alias>
 		<alias name="bomMaterialName" entity-alias="TEntryMaterialV" field="name"></alias>
 		<alias name="bomMaterialModel" entity-alias="TEntryMaterialV" field="model"></alias>
@@ -184,6 +188,9 @@
 		<alias name="unitName" entity-alias="UnitV" field="name"></alias>
 		<view-link entity-alias="MaterialBomV" rel-entity-alias="TMaterialV" rel-optional="true">
 			<key-map field-name="materialId" rel-field-name="id" />
+		</view-link>
+		<view-link entity-alias="TMaterialV" rel-entity-alias="BomUnitV" rel-optional="true">
+			<key-map field-name="defaultUnitId" rel-field-name="id" />
 		</view-link>
 		<view-link entity-alias="MaterialBomV" rel-entity-alias="MaterialBomEntryV" rel-optional="true">
 			<key-map field-name="id" rel-field-name="parentId" />

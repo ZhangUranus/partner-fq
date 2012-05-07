@@ -1,4 +1,4 @@
-﻿// 定义数据模型
+// 定义数据模型
 Ext.define('SCM.model.basedata.MaterialBomModel', {
 			extend : 'Ext.data.Model',
 			requires : ['SCM.extend.proxy.JsonAjax'],
@@ -21,6 +21,15 @@ Ext.define('SCM.model.basedata.MaterialBomModel', {
 						type : 'int'
 					}, {
 						name : 'valid',
+						type : 'string'
+					}, {
+						name : 'bomModel',
+						type : 'string'
+					}, {
+						name : 'bomUnitId',
+						type : 'string'
+					}, {
+						name : 'bomUnitName',
 						type : 'string'
 					}, {
 						name : 'materialId',

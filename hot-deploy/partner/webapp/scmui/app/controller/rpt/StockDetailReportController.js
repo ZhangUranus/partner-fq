@@ -33,7 +33,7 @@ Ext.define('SCM.controller.rpt.StockDetailReportController', {
 			 */
 			initComponent : function(view) {
 				this.listPanel = view.down('gridpanel');
-				this.chartPanel = view.down('panel chart');
+//				this.chartPanel = view.down('panel chart');
 				this.searchMonth = view.down('combobox[name=searchMonth]');
 				this.searchWarehouseId = view.down('combogrid[name=searchWarehouseId]');
 				this.searchMaterialId = view.down('combogrid[name=searchMaterialId]');
@@ -55,18 +55,18 @@ Ext.define('SCM.controller.rpt.StockDetailReportController', {
 					var tempStr = this.searchMonth.getValue().split('-');
 					this.listPanel.store.getProxy().extraParams.year = tempStr[0];
 					this.listPanel.store.getProxy().extraParams.month = tempStr[1];
-					this.chartPanel.store.getProxy().extraParams.year = tempStr[0];
-					this.chartPanel.store.getProxy().extraParams.month = tempStr[1];
+//					this.chartPanel.store.getProxy().extraParams.year = tempStr[0];
+//					this.chartPanel.store.getProxy().extraParams.month = tempStr[1];
 				} else {
 					showWarning('请选择月份！');
 					return;
 				}
 				if (!Ext.isEmpty(this.searchWarehouseId.getValue())) {
 					this.listPanel.store.getProxy().extraParams.warehouseId = this.searchWarehouseId.getValue();
-					this.chartPanel.store.getProxy().extraParams.warehouseId = this.searchWarehouseId.getValue();
+//					this.chartPanel.store.getProxy().extraParams.warehouseId = this.searchWarehouseId.getValue();
 				} else {
 					this.listPanel.store.getProxy().extraParams.warehouseId = "";
-					this.chartPanel.store.getProxy().extraParams.warehouseId = "";
+//					this.chartPanel.store.getProxy().extraParams.warehouseId = "";
 				}
 				if (!Ext.isEmpty(this.searchMaterialId.getValue())) {
 					this.listPanel.store.getProxy().extraParams.materialId = this.searchMaterialId.getValue();
@@ -74,17 +74,17 @@ Ext.define('SCM.controller.rpt.StockDetailReportController', {
 					this.listPanel.store.getProxy().extraParams.materialId = "";
 				}
 				this.listPanel.store.load();
-				this.chartPanel.store.load({
-							scope : this,
-							callback : function(records, operation, success) {
-								if(records.length==0){
-									this.chartPanel.setVisible(false);
-								} else {
-									this.chartPanel.setVisible(true);
-									this.chartPanel.redraw();
-								}
-							}
-						});
+//				this.chartPanel.store.load({
+//							scope : this,
+//							callback : function(records, operation, success) {
+//								if(records.length==0){
+//									this.chartPanel.setVisible(false);
+//								} else {
+//									this.chartPanel.setVisible(true);
+//									this.chartPanel.redraw();
+//								}
+//							}
+//						});
 			},
 
 			/**

@@ -91,69 +91,70 @@ Ext.define('SCM.view.rpt.sdr.ListUI', {
 													iconCls : 'system-export',
 													action : 'export'
 												}]
-									}, {
-										xtype : 'panel',
-										margin : '1 0 0 0',
-										region : 'center',
-										layout : 'fit',
-										minWidth : 300,
-										minHeight : 200,
-										items : {
-											xtype : 'chart',
-											animate : true,
-											shadow : true,
-											store : 'rpt.StockDetailChartStore',
-											legend : {
-												position : 'right'
-											},
-											axes : [{
-														type : 'Numeric',
-														position : 'left',
-														fields : ['ENDSUM'],
-														minimum : 0,
-														label : {
-															renderer : Ext.util.Format.numberRenderer('0,000.00'),
-															font : '12px 宋体'
-														},
-														grid : true,
-														title : '结存金额'
-													}, {
-														type : 'Category',
-														position : 'bottom',
-														fields : ['MATERIAL_NAME'],
-														label : {
-															font : '12px 宋体'
-														},
-														title : '物料'
-													}],
-											series : [{
-														type : 'column',
-														axis : 'left',
-														xField : 'MATERIAL_NAME',
-														yField : ['ENDSUM'],
-														title : ['结存金额'],
-														tips : {
-															trackMouse : true,
-															width : 140,
-															height : 28,
-															renderer : function(storeItem, item) {
-																this.setTitle(item.value[1] + '元');
-															}
-														},
-														label : {
-															display : 'over',
-															'text-anchor' : 'middle',
-															field : ['ENDSUM'],
-															renderer : Ext.util.Format.numberRenderer('0,000.00')
-														}
-													}]
-										}
-									}, {
+									}, 
+//									{
+//										xtype : 'panel',
+//										margin : '1 0 0 0',
+//										region : 'center',
+//										layout : 'fit',
+//										minWidth : 300,
+//										minHeight : 200,
+//										items : {
+//											xtype : 'chart',
+//											animate : true,
+//											shadow : true,
+//											store : 'rpt.StockDetailChartStore',
+//											legend : {
+//												position : 'right'
+//											},
+//											axes : [{
+//														type : 'Numeric',
+//														position : 'left',
+//														fields : ['ENDSUM'],
+//														minimum : 0,
+//														label : {
+//															renderer : Ext.util.Format.numberRenderer('0,000.00'),
+//															font : '12px 宋体'
+//														},
+//														grid : true,
+//														title : '结存金额'
+//													}, {
+//														type : 'Category',
+//														position : 'bottom',
+//														fields : ['MATERIAL_NAME'],
+//														label : {
+//															font : '12px 宋体'
+//														},
+//														title : '物料'
+//													}],
+//											series : [{
+//														type : 'column',
+//														axis : 'left',
+//														xField : 'MATERIAL_NAME',
+//														yField : ['ENDSUM'],
+//														title : ['结存金额'],
+//														tips : {
+//															trackMouse : true,
+//															width : 140,
+//															height : 28,
+//															renderer : function(storeItem, item) {
+//																this.setTitle(item.value[1] + '元');
+//															}
+//														},
+//														label : {
+//															display : 'over',
+//															'text-anchor' : 'middle',
+//															field : ['ENDSUM'],
+//															renderer : Ext.util.Format.numberRenderer('0,000.00')
+//														}
+//													}]
+//										}
+//									}, 
+									{
 										xtype : 'gridpanel',
 										margin : '1 0 0 0',
-										region : 'south',
+										region : 'center',
 										split : true,
-										height : 300,
 										store : 'rpt.StockDetailReportStore',
 										columns : [{
 													header : '序号',
