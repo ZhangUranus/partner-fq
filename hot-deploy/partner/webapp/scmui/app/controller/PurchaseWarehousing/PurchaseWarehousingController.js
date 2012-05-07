@@ -277,6 +277,7 @@ Ext.define('SCM.controller.PurchaseWarehousing.PurchaseWarehousingController', {
 				+"</tr> "
 				+"</table>" 
 				+"<div class='field' style='width:30%;float:left;'>验收员:<span class='dataField' fieldindex='data.checkerSystemUserName' width=150px></span></div>"
+				+"<div class='field' style='width:30%;float:left;'>金额合计:<span class='dataField' fieldindex='data.totalsum' width=150px></span></div>"
 				+"<div class='field' style='width:80px;float:right;'>第<span class='dataField' fieldindex='data.curPage'></span>页/共<span class='dataField' fieldindex='data.totalPages'></span>页</div>"
 				+"</div>";
 			}
