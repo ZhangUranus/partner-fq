@@ -284,6 +284,7 @@ function getBlock(jo) {
      this.loopBodyDiv='';//循环页样式
      this.tailDiv='';//尾页样式
      this.loopCount=9; //循环数
+     this.useTailWhenOnePage=false;//当打印只有一页的时候，如果tailDiv!=undefinded 就使用tailDiv打印
      this.loopEntryIndex='data.entry';//循环体数据索引
     };
     
@@ -331,7 +332,13 @@ function getBlock(jo) {
            
          //写入第一页
     	   var mainBodyDiv=doc.createElement('div');
-    	   mainBodyDiv.innerHTML=printConfig.mainBodyDiv;
+    	   
+    	   //如果只有一页判断是否使用尾页样式
+    	   if(pagesCount==1&&printConfig.useTailWhenOnePage&&!(printConfig.tailDiv==undefined||printConfig.tailDiv=='')){
+    		   mainBodyDiv.innerHTML=printConfig.tailDiv;
+    	   }else{
+    		   mainBodyDiv.innerHTML=printConfig.mainBodyDiv;  
+    	   }
     	   doc.body.appendChild(mainBodyDiv);
     	   this.fillPage(mainBodyDiv, data, fromCount, endCount,printConfig.loopCount);
            
