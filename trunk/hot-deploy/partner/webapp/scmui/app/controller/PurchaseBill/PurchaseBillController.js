@@ -344,11 +344,11 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 				+"<div class='nextLine'></div>"
 				+"<table  cellspacing='0' class='dataEntry' fieldindex='data.entry'>" 
 				+"<tr> "
-				+"<th bindfield='materialMaterialName'>材料名称</th> "
-				+"<th bindfield='materialMaterialModel'>规格</th> "
-				+"<th bindfield='empty'>质量要求</th> "
-				+"<th bindfield='unitUnitName'>单位</th>" 
-				+"<th bindfield='volume'>数量</th> "
+				+"<th bindfield='materialMaterialName' width='30%'>材料名称</th> "
+				+"<th bindfield='materialMaterialModel' width='20%'>规格</th> "
+				+"<th bindfield='empty' width='20%'>质量要求</th> "
+				+"<th bindfield='unitUnitName' width='10%'>单位</th>" 
+				+"<th bindfield='volume' width='20%'>数量</th> "
 				+"</tr> "
 				+"</table>" 
 				+"<div class='field' style='width:30%;float:left;'>供应商确认:</div>"
@@ -358,7 +358,7 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 			},
 			getPrintCfg:function(){
 				var cfg=new PrintConfig();
-				cfg.loopCount=28;
+				cfg.loopCount=24;
 				cfg.mainBodyDiv=this.getMainPrintHTML();
 				cfg.loopBodyDiv=this.getLoopPrintHTML();
 				cfg.tailDiv=this.getTailPrintHTML();

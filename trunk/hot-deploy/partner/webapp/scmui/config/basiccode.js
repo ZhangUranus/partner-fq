@@ -283,7 +283,7 @@ function getBlock(jo) {
      this.mainBodyDiv='';//主页样式
      this.loopBodyDiv='';//循环页样式
      this.tailDiv='';//尾页样式
-     this.loopCount=9; //循环数
+     this.loopCount=7; //循环数
      this.useTailWhenOnePage=false;//当打印只有一页的时候，如果tailDiv!=undefinded 就使用tailDiv打印
      this.loopEntryIndex='data.entry';//循环体数据索引
     };
