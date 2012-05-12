@@ -34,7 +34,7 @@ Ext.define('SCM.extend.toolbar.BillSearchToolbar', {
 							fieldLabel : '物料',
 							valueField : 'id',
 							displayField : 'name',
-							store : Ext.create('MaterialComboStore'),
+							store : Ext.data.StoreManager.lookup('MComboStore'),
 							matchFieldWidth : false,
 							emptyText : '所有物料',
 							listConfig : {
@@ -62,15 +62,15 @@ Ext.define('SCM.extend.toolbar.BillSearchToolbar', {
 					if (me.custType == 'supplier') {
 						label = '供应商';
 						labelWidth = 45;
-						custStore = Ext.create('SupplierStore');
+						custStore = Ext.data.StoreManager.lookup('SPComboStore');
 					} else if (me.custType == 'workshop') {
 						label = '车间';
 						labelWidth = 35;
-						custStore = Ext.create('WorkshopStore');
+						custStore = Ext.data.StoreManager.lookup('WSComboStore');
 					} else if (me.custType == 'processor') {
 						label = '加工商';
 						labelWidth = 45;
-						custStore = Ext.create('SupplierStore');
+						custStore = Ext.data.StoreManager.lookup('SPComboStore');
 					} else if (me.custType == 'customer') {
 						label = '客户';
 						labelWidth = 35;

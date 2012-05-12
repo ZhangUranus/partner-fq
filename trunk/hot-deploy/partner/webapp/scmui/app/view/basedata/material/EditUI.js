@@ -73,7 +73,8 @@ Ext.define('SCM.view.basedata.material.EditUI', {
 													name : 'defaultSupplierId',
 													valueField : 'id',
 													displayField : 'name',
-													store : 'Supplier.SupplierStore',
+													initStore : Ext.data.StoreManager.lookup('SPComboInitStore'),
+													store : Ext.data.StoreManager.lookup('SPComboStore'),
 													listConfig : {
 														height : SCM.MaxSize.COMBOGRID_HEIGHT,
 														columns : [{
@@ -99,7 +100,8 @@ Ext.define('SCM.view.basedata.material.EditUI', {
 													name : 'defaultUnitId',
 													valueField : 'id',
 													displayField : 'name',
-													store : 'basedata.UnitStore',
+													initStore : Ext.data.StoreManager.lookup('UComboInitStore'),
+													store : Ext.data.StoreManager.lookup('UComboStore'),
 													listConfig : {
 														height : SCM.MaxSize.COMBOGRID_HEIGHT,
 														columns : [{

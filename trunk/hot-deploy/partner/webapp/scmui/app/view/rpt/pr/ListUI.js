@@ -3,7 +3,7 @@
  */
 Ext.define('SCM.view.rpt.pr.ListUI', {
 			extend : 'Ext.container.Container',
-			requires : ['SCM.ux.combobox.ComboGrid', 'SCM.ux.grid.ComboColumn'],
+			requires : ['SCM.ux.combobox.ComboGrid'],
 			alias : 'widget.productreport',
 			title : '成品报表',
 			layout : {
@@ -26,7 +26,7 @@ Ext.define('SCM.view.rpt.pr.ListUI', {
 													width : 135,
 													labelWidth : 35,
 													fieldLabel : '月份',
-													store : Ext.create('MonthStore'),
+													store : Ext.data.StoreManager.lookup('MTHComboStore'),
 													displayField : 'name',
 													valueField : 'id',
 													editable : false
@@ -36,7 +36,7 @@ Ext.define('SCM.view.rpt.pr.ListUI', {
 													width : 145,
 													labelWidth : 35,
 													fieldLabel : '仓库',
-													store : Ext.create('WarehouseStore'),
+													store : Ext.data.StoreManager.lookup('WHComboStore'),
 													valueField : 'id',
 													displayField : 'name',
 													matchFieldWidth : false,
@@ -64,7 +64,7 @@ Ext.define('SCM.view.rpt.pr.ListUI', {
 													fieldLabel : '物料',
 													valueField : 'id',
 													displayField : 'name',
-													store : Ext.create('MaterialComboStore'),
+													store : Ext.data.StoreManager.lookup('MComboStore'),
 													matchFieldWidth : false,
 													emptyText : '所有物料',
 													listConfig : {

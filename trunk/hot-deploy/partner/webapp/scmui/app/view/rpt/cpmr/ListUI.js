@@ -3,7 +3,7 @@
  */
 Ext.define('SCM.view.rpt.cpmr.ListUI', {
 			extend : 'Ext.container.Container',
-			requires : ['SCM.ux.combobox.ComboGrid', 'SCM.ux.grid.ComboColumn'],
+			requires : ['SCM.ux.combobox.ComboGrid'],
 			alias : 'widget.consignprocessmatchingreport',
 			title : '发外加工对数表',
 			layout : {
@@ -26,7 +26,7 @@ Ext.define('SCM.view.rpt.cpmr.ListUI', {
 													width : 135,
 													labelWidth : 35,
 													fieldLabel : '月份',
-													store : Ext.create('MonthStore'),
+													store : Ext.data.StoreManager.lookup('MTHComboStore'),
 													displayField : 'name',
 													valueField : 'id',
 													editable : false
@@ -36,7 +36,7 @@ Ext.define('SCM.view.rpt.cpmr.ListUI', {
 													width : 155,
 													labelWidth : 45,
 													fieldLabel : '加工商',
-													store : Ext.create('SupplierStore'),
+													store : Ext.data.StoreManager.lookup('SPComboStore'),
 													valueField : 'id',
 													displayField : 'name',
 													matchFieldWidth : false,

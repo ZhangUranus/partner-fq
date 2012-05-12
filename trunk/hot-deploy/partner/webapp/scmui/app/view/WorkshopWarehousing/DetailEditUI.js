@@ -19,8 +19,6 @@ Ext.define('SCM.view.WorkshopWarehousing.DetailEditUI', {
 							clicksToEdit : 1
 						});
 				var entryStore = Ext.create('WorkshopWarehousingEntryDetailStore');
-				var unitStore = Ext.create('UnitStore');
-				unitStore.load();
 				Ext.applyIf(me, {
 							items : [{
 										xtype : 'gridpanel',
@@ -47,7 +45,8 @@ Ext.define('SCM.view.WorkshopWarehousing.DetailEditUI', {
 														xtype : 'combogrid',
 														valueField : 'id',
 														displayField : 'name',
-														store : Ext.create('MaterialComboStore'),
+														initStore : Ext.data.StoreManager.lookup('MComboInitStore'),
+														store : Ext.data.StoreManager.lookup('MComboStore'),
 														matchFieldWidth : false,
 														listConfig : {
 															width : 400,
@@ -88,7 +87,8 @@ Ext.define('SCM.view.WorkshopWarehousing.DetailEditUI', {
 														xtype : 'combobox',
 														valueField : 'id',
 														displayField : 'name',
-														store : unitStore,
+														initStore : Ext.data.StoreManager.lookup('UComboInitStore'),
+														store : Ext.data.StoreManager.lookup('UComboStore'),
 														readOnly : true
 													},
 													width : 80

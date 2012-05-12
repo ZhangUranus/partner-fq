@@ -3,7 +3,7 @@
  */
 Ext.define('SCM.view.ProductionPlan.ListUI', {
 			extend : 'Ext.container.Container',
-			requires : ['SCM.ux.combobox.ComboGrid', 'SCM.ux.grid.ComboColumn'],
+			requires : ['SCM.ux.combobox.ComboGrid'],
 			alias : 'widget.productionplan',
 			title : '生产计划',
 			layout : {
@@ -32,7 +32,7 @@ Ext.define('SCM.view.ProductionPlan.ListUI', {
 																name : 'processedBomId',
 																valueField : 'id',
 																displayField : 'materialName',
-																store : Ext.create('MaterialBomComboStore'),
+																store : Ext.data.StoreManager.lookup('MBComboStore'),
 																margin : 5,
 																matchFieldWidth : false,
 																allowBlank : false,

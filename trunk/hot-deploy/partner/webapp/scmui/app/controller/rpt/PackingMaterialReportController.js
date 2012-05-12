@@ -2,7 +2,7 @@ Ext.define('SCM.controller.rpt.PackingMaterialReportController', {
 			extend : 'Ext.app.Controller',
 			mixins : ['SCM.extend.exporter.Exporter'],
 			views : ['rpt.pkm.ListUI'],
-			stores : ['rpt.PackingMaterialReportStore', 'rpt.PackingMaterialDetailStore', 'rpt.MonthStore'],
+			stores : ['rpt.PackingMaterialReportStore', 'rpt.PackingMaterialDetailStore'],
 			models : ['rpt.PackingMaterialReportModel', 'rpt.PackingMaterialDetailModel', 'rpt.MonthModel'],
 
 			/**

@@ -3,7 +3,7 @@
  */
 Ext.define('SCM.view.homepage.ListUI', {
 			extend : 'Ext.container.Container',
-			requires : ['SCM.ux.combobox.ComboGrid', 'SCM.ux.grid.ComboColumn'],
+			requires : ['SCM.ux.combobox.ComboGrid'],
 			alias : 'widget.homepage',
 			title : '我的首页',
 			layout : {
@@ -36,7 +36,7 @@ Ext.define('SCM.view.homepage.ListUI', {
 																width : 200,
 																valueField : 'id',
 																displayField : 'name',
-																store : Ext.create('MaterialComboStore'),
+																store : Ext.data.StoreManager.lookup('MComboStore'),
 																matchFieldWidth : false,
 																emptyText : '所有物料 (取前8种物料)',
 																listConfig : {

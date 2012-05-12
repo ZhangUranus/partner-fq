@@ -2,7 +2,7 @@ Ext.define('SCM.controller.rpt.PurchaseMatchingReportController', {
 			extend : 'Ext.app.Controller',
 			mixins : ['SCM.extend.exporter.Exporter'],
 			views : ['rpt.pmr.ListUI'],
-			stores : ['rpt.PurchaseMatchingReportStore', 'rpt.PurchaseMatchingChartStore', 'rpt.MonthStore'],
+			stores : ['rpt.PurchaseMatchingReportStore', 'rpt.PurchaseMatchingChartStore'],
 			models : ['rpt.PurchaseMatchingReportModel', 'rpt.PurchaseMatchingChartModel', 'rpt.MonthModel'],
 
 			/**

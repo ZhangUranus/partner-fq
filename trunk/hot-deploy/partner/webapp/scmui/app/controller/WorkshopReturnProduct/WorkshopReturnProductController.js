@@ -130,7 +130,7 @@ Ext.define('SCM.controller.WorkshopReturnProduct.WorkshopReturnProductController
 				this.volumeColumn = this.editEntry.down('numbercolumn[dataIndex=volume]');
 				this.warehouseColumn = this.editEntry.down('combocolumn[dataIndex=warehouseWarehouseId]');
 				this.marterialColumn = this.editEntry.down('combocolumn[dataIndex=bomId]');
-				this.MaterialStore = Ext.create('SCM.store.basedata.MaterialBomStore');
+				this.MaterialStore = Ext.data.StoreManager.lookup('MBAllStore');
 				this.MaterialStore.load();
 				this.gridToolBar = this.editEntry.down('gridedittoolbar');
 				this.checkButton = this.win.down('button[action=check]');

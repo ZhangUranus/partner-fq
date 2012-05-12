@@ -60,5 +60,16 @@ Ext.define('SCM.controller.basedata.WorkshopController', {
 								change : this.fieldChange
 							}
 						});
+				
+				//初始化STORE
+				Ext.create('WorkshopStore', {
+					pageSize : SCM.comboPageSize,
+				    storeId: 'WSComboStore'		//下拉框－－选择时使用
+				});
+				
+				Ext.create('WorkshopStore', {
+				    storeId: 'WSComboInitStore'		//下拉框－－展现时使用
+				});
+				
 			}
 		});

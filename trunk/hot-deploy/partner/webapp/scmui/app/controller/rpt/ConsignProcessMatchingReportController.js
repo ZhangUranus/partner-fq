@@ -2,7 +2,7 @@ Ext.define('SCM.controller.rpt.ConsignProcessMatchingReportController', {
 			extend : 'Ext.app.Controller',
 			mixins : ['SCM.extend.exporter.Exporter'],
 			views : ['rpt.cpmr.ListUI'],
-			stores : ['rpt.ConsignProcessMatchingReportStore', 'rpt.ConsignProcessMatchingChartStore', 'rpt.MonthStore'],
+			stores : ['rpt.ConsignProcessMatchingReportStore', 'rpt.ConsignProcessMatchingChartStore'],
 			models : ['rpt.ConsignProcessMatchingReportModel', 'rpt.ConsignProcessMatchingChartModel', 'rpt.MonthModel'],
 
 			/**

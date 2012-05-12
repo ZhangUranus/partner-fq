@@ -2,7 +2,7 @@ Ext.define('SCM.controller.system.LogController', {
 			extend : 'Ext.app.Controller',
 			mixins : ['SCM.extend.exporter.Exporter'],
 			views : ['system.log.ListUI'],
-			stores : ['system.LogStore'],
+			stores : ['system.LogStore', 'rpt.MonthStore'],
 			models : ['system.LogModel'],
 
 			/**
@@ -23,6 +23,12 @@ Ext.define('SCM.controller.system.LogController', {
 								click : this.exportExcel
 							}
 						});
+				
+				//初始化STORE
+				Ext.create('MonthStore', {
+				    storeId: 'MTHComboStore'		//下拉框－－展现时使用
+				});
+				
 			},
 
 			/**
