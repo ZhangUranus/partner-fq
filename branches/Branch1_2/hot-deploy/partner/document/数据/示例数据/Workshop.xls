@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+ <Worksheet ss:Name="Table1">
+  <Table>
+   <Column ss:Index="1" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="2" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="3" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="4" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="5" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="6" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="7" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="8" ss:AutoFitWidth="0" ss:Width="110"/>   <Row>
+    <Cell><Data ss:Type="String">ID</Data></Cell>
+    <Cell><Data ss:Type="String">NUMBER</Data></Cell>
+    <Cell><Data ss:Type="String">NAME</Data></Cell>
+    <Cell><Data ss:Type="String">DESCRIPTION</Data></Cell>
+    <Cell><Data ss:Type="String">LAST_UPDATED_STAMP</Data></Cell>
+    <Cell><Data ss:Type="String">LAST_UPDATED_TX_STAMP</Data></Cell>
+    <Cell><Data ss:Type="String">CREATED_STAMP</Data></Cell>
+    <Cell><Data ss:Type="String">CREATED_TX_STAMP</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">26330cf0-a745-4f5c-9f9d-638cb83cd42c</Data></Cell>
+    <Cell><Data ss:Type="String">WS100002</Data></Cell>
+    <Cell><Data ss:Type="String">加工车间</Data></Cell>
+    <Cell><Data ss:Type="String">负责切割等加工</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:46:30</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:46:30</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:45:51</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:45:51</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">317b8c16-4e73-429b-8428-7e5700f393fb</Data></Cell>
+    <Cell><Data ss:Type="String">WS100004</Data></Cell>
+    <Cell><Data ss:Type="String">包装车间</Data></Cell>
+    <Cell><Data ss:Type="String">负责成品打包</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:46:14</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:46:14</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:46:14</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:46:14</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">3487eb04-0fb6-484e-9a1d-4a3d204c8a86</Data></Cell>
+    <Cell><Data ss:Type="String">WS100001</Data></Cell>
+    <Cell><Data ss:Type="String">喷漆车间</Data></Cell>
+    <Cell><Data ss:Type="String">负责呸件喷漆工作</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:45:26</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:45:26</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:45:26</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:45:26</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">7bbd3934-36c2-41ae-a2ff-2f9c0d83e344</Data></Cell>
+    <Cell><Data ss:Type="String">WS100003</Data></Cell>
+    <Cell><Data ss:Type="String">组装车间</Data></Cell>
+    <Cell><Data ss:Type="String">负责组装</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:46:05</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:46:05</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:46:05</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:46:05</Data></Cell>
+   </Row>
+  </Table>
+ </Worksheet>
+</Workbook>

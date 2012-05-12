@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements. See the NOTICE file distributed with this work for additional information regarding copyright ownership. The ASF licenses this file to you under the Apache License, Version 2.0 (the "License"); you 
+	may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
+	OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. -->
+<entity-engine-xml>
+<Warehouse id="ec28df2b-7e42-4f2a-bbf4-b0f4ee5f9731" wsTypeId="31cff0ff-0ca5-47d5-a3cd-3da56f0fe439" number="WH100001" name="原材料仓" description="" />
+<Warehouse id="6bcf5cbe-a816-4aac-91cd-45a1b1bdcb75" wsTypeId="8eb12e25-eaf5-4163-8388-74fdc8232f5e" number="WH100002" name="中间仓" description="" />
+<Warehouse id="e3001eb3-04b7-4c06-9ca8-ab80e81c41b9" wsTypeId="45111ad0-0484-4271-89ab-c577733ad041" number="WH100003" name="安一材料仓" description="" />
+<Warehouse id="c3db8103-e5d1-495e-9d3a-8cbe87b51662" wsTypeId="45111ad0-0484-4271-89ab-c577733ad041" number="WH100004" name="安二材料仓" description="" />
+<Warehouse id="59a924e6-212b-47e4-8ba4-238b9ab0cdb5" wsTypeId="b622c619-7ee2-4c94-a302-31f466dbcd38" number="WH100005" name="安装一仓" description="" />
+<Warehouse id="d05ae75f-f4c1-47ea-a4bc-6066ce4d75cb" wsTypeId="9d6dbeb8-4697-4a36-8c89-56dbb0adfbc8" number="WH100006" name="安一成品仓" description="" />
+<Warehouse id="1794e08a-bc23-45d7-97ee-cac26bc21d5d" wsTypeId="9d6dbeb8-4697-4a36-8c89-56dbb0adfbc8" number="WH100007" name="安二成品仓" description="" />
+</entity-engine-xml>

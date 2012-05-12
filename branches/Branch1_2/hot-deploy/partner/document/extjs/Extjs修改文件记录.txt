@@ -1,0 +1,28 @@
+1.修正combox，date控件的readonly样式：
+文件：ext-all-debug.js，ext-all.js
+类：Ext.define('Ext.form.field.Trigger', {
+方法：onRender: function(ct, position) {
+if (me.readOnly) {
+	me.setReadOnly(true);
+}
+
+2.小数点问题：
+文件：ext-lang-zh_CN.js
+thousandSeparator: ',',
+decimalSeparator: '.',
+
+
+3.修改ext-all.css文件
+- .x-item-disabled{filter:alpha(opacity=60);opacity:.6}
++ .x-item-disabled{filter:alpha(opacity=90);opacity:.9}
+
+4.修改前端小数点位数问题：
+文件：ext-lang-zh_CN.js
+增加代码：
+	if(exists('Ext.grid.NumberColumn')){
+        Ext.apply(Ext.grid.NumberColumn.prototype, {
+            format : '0,000.0000'
+        });
+    }
+另外在144行增加：
+decimalPrecision : 4

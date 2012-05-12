@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements. See the NOTICE file distributed with this work for additional information regarding copyright ownership. The ASF licenses this file to you under the Apache License, Version 2.0 (the "License"); you 
+	may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
+	OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. -->
+<entity-engine-xml>
+	<WorkshopReturnProductEntry id="1e0419d5-96b7-48ce-8ee6-28362847b3dc" parentId="00433696-b21c-4023-8b03-56837fbc1cba" warehouseWarehouseId="eb73af61-855a-438a-83af-02c02a35b2ec" bomId="b3c38640-9a6c-494e-85da-d80eb11229fc" materialMaterialModel="3MM" currentCheckVolume="0" checkedVolume="20" volume="20" unitUnitId="9751a815-3906-442d-98a2-1c933b0abef1" price="0.1575" entrysum="3.15" />
+	<WorkshopReturnProductEntry id="858bf6be-dcdb-46bb-8433-2caac6c205b4" parentId="20efa9e0-fdfb-4e76-bb9b-c0a51a89f70f" warehouseWarehouseId="eb73af61-855a-438a-83af-02c02a35b2ec" bomId="b3c38640-9a6c-494e-85da-d80eb11229fc" materialMaterialModel="3MM" currentCheckVolume="0" checkedVolume="4" volume="4" unitUnitId="9751a815-3906-442d-98a2-1c933b0abef1" price="0.1575" entrysum="0.63" />
+</entity-engine-xml>

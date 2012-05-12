@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements. See the NOTICE file distributed with this work for additional information regarding copyright ownership. The ASF licenses this file to you under the Apache License, Version 2.0 (the "License"); you 
+	may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
+	OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. -->
+<entity-engine-xml>
+	<WorkshopPriceDetail parentId="055f5336-bc89-47d3-a868-4b809622e7d0" materialId="a718a7a5-e465-4b82-866e-0faaf44d3043" volume="4" price="0.9595" />
+	<WorkshopPriceDetail parentId="36462cad-dc56-43b0-b954-1144d20d2657" materialId="98e6948d-8fcf-4c8e-a969-ed700e0103b4" volume="1" price="18.4984" />
+	<WorkshopPriceDetail parentId="40cbeca9-c780-4d13-9a74-70438ac34e17" materialId="fa745ff5-f75b-4ceb-8b68-a96b19031dfa" volume="1.5" price="0.105" />
+	<WorkshopPriceDetail parentId="42afec21-5073-4ba4-a7b3-8b0fad7ae453" materialId="6ab8ad39-3d27-4f7e-b39b-5b08976d426a" volume="1" price="5.0148" />
+	<WorkshopPriceDetail parentId="4e0980d6-fbae-4078-baf6-2fa6abfb5e2b" materialId="301e67c1-a1fb-4b44-957d-75720fa0cc6a" volume="30" price="0.1575" />
+	<WorkshopPriceDetail parentId="4e0980d6-fbae-4078-baf6-2fa6abfb5e2b" materialId="944bd0c0-d426-44ad-8718-4aa6b9ed8f1c" volume="30" price="19.8681" />
+	<WorkshopPriceDetail parentId="4e0980d6-fbae-4078-baf6-2fa6abfb5e2b" materialId="96b4cd81-8cd3-4c09-adbf-1167b33949f6" volume="120" price="4.7884" />
+	<WorkshopPriceDetail parentId="52ffd98f-a29c-4324-ac91-e742849fdb0b" materialId="301e67c1-a1fb-4b44-957d-75720fa0cc6a" volume="1" price="0.1575" />
+	<WorkshopPriceDetail parentId="52ffd98f-a29c-4324-ac91-e742849fdb0b" materialId="944bd0c0-d426-44ad-8718-4aa6b9ed8f1c" volume="1" price="19.8681" />
+	<WorkshopPriceDetail parentId="52ffd98f-a29c-4324-ac91-e742849fdb0b" materialId="96b4cd81-8cd3-4c09-adbf-1167b33949f6" volume="4" price="4.7884" />
+	<WorkshopPriceDetail parentId="57724949-5d9d-44ba-897b-03882f5b202f" materialId="6ab8ad39-3d27-4f7e-b39b-5b08976d426a" volume="1" price="4.7884" />
+	<WorkshopPriceDetail parentId="6eaade0c-896f-4068-a900-f3be62a18e75" materialId="6ab8ad39-3d27-4f7e-b39b-5b08976d426a" volume="1" price="4.9174" />
+	<WorkshopPriceDetail parentId="74c09d6f-7c86-4125-8af3-27e6e21dc7b2" materialId="301e67c1-a1fb-4b44-957d-75720fa0cc6a" volume="30" price="0.1575" />
+	<WorkshopPriceDetail parentId="74c09d6f-7c86-4125-8af3-27e6e21dc7b2" materialId="944bd0c0-d426-44ad-8718-4aa6b9ed8f1c" volume="30" price="19.6492" />
+	<WorkshopPriceDetail parentId="74c09d6f-7c86-4125-8af3-27e6e21dc7b2" materialId="96b4cd81-8cd3-4c09-adbf-1167b33949f6" volume="120" price="4.7109" />
+	<WorkshopPriceDetail parentId="89379312-f4af-42b0-9141-edfa754af77d" materialId="a718a7a5-e465-4b82-866e-0faaf44d3043" volume="18" price="0.9548" />
+	<WorkshopPriceDetail parentId="91eea11f-68d2-45e0-ab55-f1544097542d" materialId="6ab8ad39-3d27-4f7e-b39b-5b08976d426a" volume="1" price="4.5345" />
+	<WorkshopPriceDetail parentId="9c12e4a9-4731-4093-bc50-203632f43d3f" materialId="a718a7a5-e465-4b82-866e-0faaf44d3043" volume="18" price="0.9595" />
+	<WorkshopPriceDetail parentId="9d4265b4-9e1d-4f5a-9622-f44026d7fa03" materialId="301e67c1-a1fb-4b44-957d-75720fa0cc6a" volume="1" price="0.1575" />
+	<WorkshopPriceDetail parentId="9d4265b4-9e1d-4f5a-9622-f44026d7fa03" materialId="944bd0c0-d426-44ad-8718-4aa6b9ed8f1c" volume="1" price="19.4922" />
+	<WorkshopPriceDetail parentId="9d4265b4-9e1d-4f5a-9622-f44026d7fa03" materialId="96b4cd81-8cd3-4c09-adbf-1167b33949f6" volume="4" price="4.9782" />
+	<WorkshopPriceDetail parentId="a5fe61de-0b6a-44c7-b4b5-ce2c85462bc0" materialId="98e6948d-8fcf-4c8e-a969-ed700e0103b4" volume="1" price="19.7299" />
+	<WorkshopPriceDetail parentId="b0d35220-2bd9-4de2-8a80-74c73670ab9d" materialId="fa745ff5-f75b-4ceb-8b68-a96b19031dfa" volume="1.5" price="0.105" />
+	<WorkshopPriceDetail parentId="c9ce8c65-75a3-4707-8cb7-48ddfdbf25dd" materialId="301e67c1-a1fb-4b44-957d-75720fa0cc6a" volume="30" price="0.1575" />
+	<WorkshopPriceDetail parentId="c9ce8c65-75a3-4707-8cb7-48ddfdbf25dd" materialId="944bd0c0-d426-44ad-8718-4aa6b9ed8f1c" volume="30" price="19.4923" />
+	<WorkshopPriceDetail parentId="c9ce8c65-75a3-4707-8cb7-48ddfdbf25dd" materialId="96b4cd81-8cd3-4c09-adbf-1167b33949f6" volume="120" price="4.9782" />
+	<WorkshopPriceDetail parentId="de81e2b3-884d-49ba-a4db-a4140081ee1b" materialId="a718a7a5-e465-4b82-866e-0faaf44d3043" volume="4" price="0.9549" />
+	<WorkshopPriceDetail parentId="e93b0cde-0231-49e8-8b0e-af5c479ff8be" materialId="98e6948d-8fcf-4c8e-a969-ed700e0103b4" volume="1" price="19.8096" />
+	<WorkshopPriceDetail parentId="ea091f8f-e430-4790-83d7-ad55d60811e8" materialId="98e6948d-8fcf-4c8e-a969-ed700e0103b4" volume="1" price="19.8681" />
+	<WorkshopPriceDetail parentId="fc75db4a-fe19-486b-a33f-c5969fefa1d2" materialId="301e67c1-a1fb-4b44-957d-75720fa0cc6a" volume="30" price="0.1575" />
+	<WorkshopPriceDetail parentId="fc75db4a-fe19-486b-a33f-c5969fefa1d2" materialId="944bd0c0-d426-44ad-8718-4aa6b9ed8f1c" volume="30" price="18.7859" />
+	<WorkshopPriceDetail parentId="fc75db4a-fe19-486b-a33f-c5969fefa1d2" materialId="96b4cd81-8cd3-4c09-adbf-1167b33949f6" volume="120" price="4.8904" />
+</entity-engine-xml>
