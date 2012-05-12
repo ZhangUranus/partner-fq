@@ -15,9 +15,15 @@ Ext.define('SCM.ux.grid.ComboColumn', {
 			},
 			comboBoxRenderer : function(combo, gridId) {
 				var loadCount = 0;
+				var initStore ;
+				if(combo.initStore){
+					initStore = combo.initStore;
+				}else{
+					initStore = combo.store;
+				}
 				var getValue = function(value) {
-					var idx = combo.store.find(combo.valueField, value);
-					var rec = combo.store.getAt(idx);
+					var idx = initStore.find(combo.valueField, value);
+					var rec = initStore.getAt(idx);
 					if (rec) {
 						return rec.get(combo.displayField);
 					}
@@ -26,9 +32,9 @@ Ext.define('SCM.ux.grid.ComboColumn', {
 
 				return function(value) {
 					//如果store没有值，载入后重新刷新页面
-					if (combo.store && combo.store.getCount() == 0 && gridId && loadCount==0) {
+					if (initStore && initStore.getCount() == 0 && gridId && loadCount==0) {
 						loadCount ++;
-						combo.store.load({
+						initStore.load({
 									callback : function() {
 										var grid = Ext.getCmp(gridId);
 										if (grid) {

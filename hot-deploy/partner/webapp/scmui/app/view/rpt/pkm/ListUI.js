@@ -47,7 +47,7 @@ Ext.define('SCM.view.rpt.pkm.ListUI', {
 													width : 145,
 													labelWidth : 35,
 													fieldLabel : '仓库',
-													store : Ext.create('WarehouseStore'),
+													store : Ext.data.StoreManager.lookup('WHComboStore'),
 													valueField : 'id',
 													displayField : 'name',
 													matchFieldWidth : false,

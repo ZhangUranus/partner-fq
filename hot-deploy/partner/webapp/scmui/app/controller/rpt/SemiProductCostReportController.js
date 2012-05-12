@@ -2,7 +2,7 @@ Ext.define('SCM.controller.rpt.SemiProductCostReportController', {
 			extend : 'Ext.app.Controller',
 			mixins : ['SCM.extend.exporter.Exporter'],
 			views : ['rpt.spc.ListUI'],
-			stores : ['rpt.SemiProductCostReportStore', 'rpt.SemiProductCostDetailStore', 'rpt.MonthStore', 'basedata.SemiMaterialStore'],
+			stores : ['rpt.SemiProductCostReportStore', 'rpt.SemiProductCostDetailStore', 'basedata.SemiMaterialStore'],
 			models : ['rpt.SemiProductCostReportModel', 'rpt.SemiProductCostDetailModel', 'rpt.MonthModel', 'basedata.SemiMaterialModel'],
 
 			/**

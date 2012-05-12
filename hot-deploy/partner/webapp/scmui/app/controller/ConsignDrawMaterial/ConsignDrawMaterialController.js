@@ -106,7 +106,7 @@ Ext.define('SCM.controller.ConsignDrawMaterial.ConsignDrawMaterialController', {
 				this.processedBomIdFields.addListener('change', this.initMaterialGrid, this);
 				this.materialVolumeFields = this.editForm.down('numberfield[name=materialVolume]');
 				this.materialVolumeFields.addListener('change', this.materialVolumeChange, this);
-				this.MaterialStore = Ext.create('SCM.store.basedata.MaterialBomStore');
+				this.MaterialStore = Ext.data.StoreManager.lookup('MBAllStore');
 				this.editEntry.store.proxy.addListener('afterRequest', this.changeStockVolume, this);
 			},
 			
@@ -227,7 +227,7 @@ Ext.define('SCM.controller.ConsignDrawMaterial.ConsignDrawMaterialController', {
 				var me = this;
 				me.MaterialStore.getProxy().extraParams.whereStr = 'MaterialBomV.id = \'' + newValue + '\'';
 				me.MaterialStore.load(function(records, operation, success) {
-							me.editEntry.store.removeAll();
+							me.editEntry.store.remove(me.editEntry.store.data.items);
 							for (var i = 0; i < records.length; i++) {
 								var materialVolume = me.materialVolumeFields.getValue() ? me.materialVolumeFields.getValue() : 0;
 								var tempRecord = records[i];

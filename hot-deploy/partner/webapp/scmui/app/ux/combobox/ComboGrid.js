@@ -89,5 +89,17 @@ Ext.define('SCM.ux.combobox.ComboGrid', {
 
 				Ext.defer(keyNav.enable, 1, keyNav);
 				me.inputEl.focus();
-			}
+			},
+			
+			//查询、展现分store实现
+			findRecord: function(field, value) {
+				var ds ;
+				if(this.initStore){
+					ds = this.initStore;
+				}else{
+					ds = this.store;
+				}
+		        var idx = ds.findExact(field, value);
+		        return idx !== -1 ? ds.getAt(idx) : false;
+		    }
 		});

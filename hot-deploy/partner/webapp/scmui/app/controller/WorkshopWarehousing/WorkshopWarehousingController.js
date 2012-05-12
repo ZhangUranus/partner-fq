@@ -128,7 +128,7 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 				this.allColumn = this.editEntry.query('gridcolumn');
 				this.addLineButton = this.win.down('gridpanel button[action=addLine]');
 				this.deleteLineButton = this.win.down('gridpanel button[action=deleteLine]');
-				this.MaterialStore = Ext.create('SCM.store.basedata.MaterialBomStore');
+				this.MaterialStore = Ext.data.StoreManager.lookup('MBAllStore');
 				this.MaterialStore.load();
 				
 				// 耗料明细页面

@@ -51,6 +51,16 @@ Ext.define('SCM.controller.system.SystemController', {
 								change : this.userInfoFieldChange
 							}
 						});
+				
+				//初始化STORE
+				Ext.create('SystemUserStore', {
+					pageSize : SCM.comboPageSize,
+				    storeId: 'SUComboStore'		//下拉框－－选择时使用
+				});
+				
+				Ext.create('SystemUserStore', {
+				    storeId: 'SUComboInitStore'		//下拉框－－展现时使用
+				});
 			},
 
 			/**

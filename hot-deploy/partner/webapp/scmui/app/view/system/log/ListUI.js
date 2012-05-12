@@ -3,7 +3,7 @@
  */
 Ext.define('SCM.view.system.log.ListUI', {
 			extend : 'Ext.grid.Panel',
-			requires : ['SCM.ux.combobox.ComboGrid', 'SCM.ux.grid.ComboColumn'],
+			requires : ['SCM.ux.combobox.ComboGrid'],
 			alias : 'widget.logmanagement',
 			title : '日志查询',
 			initComponent : function() {
@@ -90,7 +90,8 @@ Ext.define('SCM.view.system.log.ListUI', {
 													fieldLabel : '用户',
 													valueField : 'id',
 													displayField : 'name',
-													store : Ext.create('SystemUserStore'),
+													initStore : Ext.data.StoreManager.lookup('SUComboInitStore'),
+													store : Ext.data.StoreManager.lookup('SUComboStore'),
 													matchFieldWidth : false,
 													listConfig : {
 														width : SCM.MaxSize.COMBOGRID_WIDTH,

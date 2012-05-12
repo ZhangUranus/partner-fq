@@ -2,7 +2,7 @@ Ext.define('SCM.controller.rpt.StockDetailReportController', {
 			extend : 'Ext.app.Controller',
 			mixins : ['SCM.extend.exporter.Exporter'],
 			views : ['rpt.sdr.ListUI'],
-			stores : ['rpt.StockDetailReportStore', 'rpt.StockDetailChartStore', 'rpt.MonthStore'],
+			stores : ['rpt.StockDetailReportStore', 'rpt.StockDetailChartStore'],
 			models : ['rpt.StockDetailReportModel', 'rpt.StockDetailChartModel', 'rpt.MonthModel'],
 
 			/**
