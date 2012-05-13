@@ -91,7 +91,7 @@ public class ConsignPriceMgr {
 			throw new Exception("supplierId or materialId is null");
 		}
 		// 根据入库加工件，获取耗料列表
-		List<GenericValue> entryList = delegator.findByAnd("MaterialBomListView", UtilMisc.toMap("materialId", materialId));
+		List<GenericValue> entryList = delegator.findByAnd("MaterialBomListView", UtilMisc.toMap("materialId", materialId, "status", "1", "valid", "Y"));
 		BigDecimal totalSum = BigDecimal.ZERO;
 		for(GenericValue value:entryList){
 			String bomMaterialId = value.getString("bomMaterialId");
