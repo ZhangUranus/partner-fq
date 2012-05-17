@@ -90,20 +90,26 @@ public class PurchaseReturnEvents {
 				if (bizDate == null || !Utils.isCurPeriod(bizDate)) {
 					throw new Exception("单据业务日期不在当前系统期间");
 				}
+				
 				// 供应商id
-				String supplierId = billHead.getString("supplierSupplierId");
-				if (supplierId == null || supplierId.length() < 1) {
-					throw new Exception("采购退货单供应商为空！！！");
-				}
-				// 获取单据id分录条目
-				List<GenericValue> entryList = delegator.findByAnd("PurchaseReturnEntry", UtilMisc.toMap("parentId", billId));
-
-				for (GenericValue v : entryList) {
-					String materialId = v.getString("materialMaterialId");// 物料id
-					BigDecimal volume = v.getBigDecimal("volume");// 数量
-
-					// 更新供应商可入库数量
-					PurPlanBalance.getInstance().updateInWarehouse(supplierId, materialId, volume);
+				int type = billHead.getInteger("type");
+				
+				if(type == 1){	//采购单，需要检查供应商，并更新供应商可入库数量
+					// 供应商id
+					String supplierId = billHead.getString("supplierSupplierId");
+					if (supplierId == null || supplierId.length() < 1) {
+						throw new Exception("采购退货单供应商为空！！！");
+					}
+					// 获取单据id分录条目
+					List<GenericValue> entryList = delegator.findByAnd("PurchaseReturnEntry", UtilMisc.toMap("parentId", billId));
+	
+					for (GenericValue v : entryList) {
+						String materialId = v.getString("materialMaterialId");// 物料id
+						BigDecimal volume = v.getBigDecimal("volume");// 数量
+	
+						// 更新供应商可入库数量
+						PurPlanBalance.getInstance().updateInWarehouse(supplierId, materialId, volume);
+					}
 				}
 
 				BizStockImpFactory.getBizStockImp(BillType.PurchaseReturn).updateStock(billHead, true, false);
@@ -150,21 +156,27 @@ public class PurchaseReturnEvents {
 				if (bizDate == null || !Utils.isCurPeriod(bizDate)) {
 					throw new Exception("单据业务日期不在当前系统期间");
 				}
+				
 				// 供应商id
-				String supplierId = billHead.getString("supplierSupplierId");
-				if (supplierId == null || supplierId.length() < 1) {
-					throw new Exception("采购退货单供应商为空！！！");
-				}
-
-				// 获取单据id分录条目
-				List<GenericValue> entryList = delegator.findByAnd("PurchaseReturnEntry", UtilMisc.toMap("parentId", billId));
-
-				for (GenericValue v : entryList) {
-					String materialId = v.getString("materialMaterialId");// 物料id
-					BigDecimal volume = v.getBigDecimal("volume");// 数量
-
-					// 更新供应商可入库数量
-					PurPlanBalance.getInstance().updateInWarehouse(supplierId, materialId, volume.negate());
+				int type = billHead.getInteger("type");
+				
+				if(type == 1){	//采购单，需要检查供应商，并更新供应商可入库数量
+					// 供应商id
+					String supplierId = billHead.getString("supplierSupplierId");
+					if (supplierId == null || supplierId.length() < 1) {
+						throw new Exception("采购退货单供应商为空！！！");
+					}
+	
+					// 获取单据id分录条目
+					List<GenericValue> entryList = delegator.findByAnd("PurchaseReturnEntry", UtilMisc.toMap("parentId", billId));
+	
+					for (GenericValue v : entryList) {
+						String materialId = v.getString("materialMaterialId");// 物料id
+						BigDecimal volume = v.getBigDecimal("volume");// 数量
+	
+						// 更新供应商可入库数量
+						PurPlanBalance.getInstance().updateInWarehouse(supplierId, materialId, volume.negate());
+					}
 				}
 
 				BizStockImpFactory.getBizStockImp(BillType.PurchaseReturn).updateStock(billHead, false, true);
