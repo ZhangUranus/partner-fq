@@ -73,36 +73,43 @@ Ext.define('SCM.view.homepage.ListUI', {
 																xtype : 'gridcolumn',
 																dataIndex : 'NAME',
 																width : 100,
+																sortable : false,
 																text : '物料'
 															}, {
 																xtype : 'numbercolumn',
 																dataIndex : 'WH_VOLUME',
 																width : 80,
+																sortable : false,
 																text : '仓库数量'
 															}, {
 																xtype : 'numbercolumn',
 																dataIndex : 'WH_SUM',
 																width : 80,
+																sortable : false,
 																text : '仓库金额'
 															}, {
 																xtype : 'numbercolumn',
 																dataIndex : 'WS_VOLUME',
 																width : 80,
+																sortable : false,
 																text : '车间数量'
 															}, {
 																xtype : 'numbercolumn',
 																dataIndex : 'WS_SUM',
 																width : 80,
+																sortable : false,
 																text : '车间金额'
 															}, {
 																xtype : 'numbercolumn',
 																dataIndex : 'CS_VOLUME',
 																width : 80,
+																sortable : false,
 																text : '加工商数量'
 															}, {
 																xtype : 'numbercolumn',
 																dataIndex : 'CS_SUM',
 																width : 80,
+																sortable : false,
 																text : '加工商金额'
 															}]
 
@@ -183,16 +190,19 @@ Ext.define('SCM.view.homepage.ListUI', {
 													xtype : 'gridcolumn',
 													dataIndex : 'MONTH',
 													width : 150,
+													sortable : false,
 													text : '单据期间'
 												}, {
 													xtype : 'gridcolumn',
 													dataIndex : 'NAME',
 													width : 150,
+													sortable : false,
 													text : '单据名称'
 												}, {
 													xtype : 'gridcolumn',
 													dataIndex : 'DETAIL',
 													width : 500,
+													sortable : false,
 													text : '完成情况'
 												}]
 									}]
