@@ -27,6 +27,16 @@ Ext.define('SCM.extend.toolbar.BillSearchToolbar', {
 							value : today,
 							editable : false
 						}, {
+							xtype : 'combobox',
+							name : 'status',
+							width : 145,
+							labelWidth : 60,
+							fieldLabel : '单据状态',
+							valueField : 'id',
+							displayField : 'name',
+							store : SCM.store.basiccode.billStatusStore,
+							emptyText : '所有状态'
+						}, {
 							xtype : 'combogrid',
 							name : 'searchMaterialId',
 							width : 145,
@@ -87,7 +97,7 @@ Ext.define('SCM.extend.toolbar.BillSearchToolbar', {
 								displayField : 'name',
 								store : custStore,
 								matchFieldWidth : false,
-								emptyText : '所有'+label,
+								emptyText : '所有' + label,
 								listConfig : {
 									width : 300,
 									height : SCM.MaxSize.COMBOGRID_HEIGHT,
@@ -112,7 +122,7 @@ Ext.define('SCM.extend.toolbar.BillSearchToolbar', {
 							iconCls : 'system-search',
 							action : 'search'
 						}]);
-				
+
 				Ext.applyIf(me, {
 							height : 28,
 							defaults : {

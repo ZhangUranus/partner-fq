@@ -101,6 +101,7 @@ Ext.define('SCM.controller.PurchaseWarehousing.PurchaseWarehousingController', {
 				this.searchEndDate = this.listPanel.down('datefield[name=searchEndDate]');
 				this.searchMaterialId = this.listPanel.down('combogrid[name=searchMaterialId]');
 				this.searchCustId = this.listPanel.down('combogrid[name=searchCustId]');
+				this.searchStatus = this.listPanel.down('combobox[name=status]');
 				this.totalFields = this.editForm.down('textfield[name=totalsum]');
 				this.supplierFields = this.editForm.down('textfield[name=supplierSupplierId]');
 				this.supplierFields.addListener('change', this.supplierChange, this);
@@ -146,6 +147,12 @@ Ext.define('SCM.controller.PurchaseWarehousing.PurchaseWarehousingController', {
 						tempString += ' and ';
 					}
 					tempString += 'PurchaseWarehousingV.supplier_supplier_id = \'' + this.searchCustId.getValue() + '\'';
+				}
+				if ((this.searchStatus.getValue() && this.searchStatus.getValue() != '') || this.searchStatus.getValue() == 0) {
+					if (tempString != '') {
+						tempString += ' and ';
+					}
+					tempString += 'PurchaseWarehousingV.status = \'' + this.searchStatus.getValue() + '\'';
 				}
 				this.listPanel.store.getProxy().extraParams.whereStr = tempString;
 				this.listPanel.store.load();

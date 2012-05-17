@@ -117,6 +117,7 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 				this.searchEndDate = this.listPanel.down('datefield[name=searchEndDate]');
 				this.searchMaterialId = this.listPanel.down('combogrid[name=searchMaterialId]');
 				this.searchCustId = this.listPanel.down('combogrid[name=searchCustId]');
+				this.searchStatus = this.listPanel.down('combobox[name=status]');
 				this.totalFields = this.editForm.down('textfield[name=totalsum]');
 				this.submitUserFields = this.editForm.down('combogrid[name=submitUserId]');
 				this.auditButton = this.listContainer.down('button[action=audit]');// 审核按钮
@@ -167,6 +168,12 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 						tempString += ' and ';
 					}
 					tempString += 'PurchaseBillV.supplier_supplier_id = \'' + this.searchCustId.getValue() + '\'';
+				}
+				if ((this.searchStatus.getValue() && this.searchStatus.getValue() != '') || this.searchStatus.getValue() == 0) {
+					if (tempString != '') {
+						tempString += ' and ';
+					}
+					tempString += 'PurchaseBillV.status = \'' + this.searchStatus.getValue() + '\'';
 				}
 				this.listPanel.store.getProxy().extraParams.whereStr = tempString;
 				this.listPanel.store.load();

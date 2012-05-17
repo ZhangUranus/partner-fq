@@ -101,6 +101,7 @@ Ext.define('SCM.controller.PurchaseReturn.PurchaseReturnController', {
 				this.searchEndDate = this.listPanel.down('datefield[name=searchEndDate]');
 				this.searchMaterialId = this.listPanel.down('combogrid[name=searchMaterialId]');
 				this.searchCustId = this.listPanel.down('combogrid[name=searchCustId]');
+				this.searchStatus = this.listPanel.down('combobox[name=status]');
 				this.totalFields = this.editForm.down('textfield[name=totalsum]');
 				this.editEntry.store.proxy.addListener('afterRequest', this.changeStockVolume, this);
 			},
@@ -143,6 +144,12 @@ Ext.define('SCM.controller.PurchaseReturn.PurchaseReturnController', {
 						tempString += ' and ';
 					}
 					tempString += 'PurchaseReturnV.supplier_supplier_id = \'' + this.searchCustId.getValue() + '\'';
+				}
+				if ((this.searchStatus.getValue() && this.searchStatus.getValue() != '') || this.searchStatus.getValue() == 0) {
+					if (tempString != '') {
+						tempString += ' and ';
+					}
+					tempString += 'PurchaseReturnV.status = \'' + this.searchStatus.getValue() + '\'';
 				}
 				this.listPanel.store.getProxy().extraParams.whereStr = tempString;
 				this.listPanel.store.load();
