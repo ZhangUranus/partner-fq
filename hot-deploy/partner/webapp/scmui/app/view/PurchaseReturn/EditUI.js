@@ -65,7 +65,6 @@ Ext.define('SCM.view.PurchaseReturn.EditUI', {
 																store : Ext.data.StoreManager.lookup('SPComboStore'),
 																margin : 5,
 																matchFieldWidth : false,
-																allowBlank : false,
 																listConfig : {
 																	width : 300,
 																	height : SCM.MaxSize.COMBOGRID_HEIGHT,
