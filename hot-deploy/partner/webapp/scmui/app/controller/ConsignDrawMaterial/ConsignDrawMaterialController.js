@@ -101,6 +101,7 @@ Ext.define('SCM.controller.ConsignDrawMaterial.ConsignDrawMaterialController', {
 				this.searchEndDate = this.listPanel.down('datefield[name=searchEndDate]');
 				this.searchMaterialId = this.listPanel.down('combogrid[name=searchMaterialId]');
 				this.searchCustId = this.listPanel.down('combogrid[name=searchCustId]');
+				this.searchStatus = this.listPanel.down('combobox[name=status]');
 				this.totalFields = this.editForm.down('textfield[name=totalsum]');
 				this.processedBomIdFields = this.editForm.down('combogrid[name=processedBomId]');
 				this.processedBomIdFields.addListener('change', this.initMaterialGrid, this);
@@ -148,6 +149,12 @@ Ext.define('SCM.controller.ConsignDrawMaterial.ConsignDrawMaterialController', {
 						tempString += ' and ';
 					}
 					tempString += 'ConsignDrawMaterialV.processor_supplier_id = \'' + this.searchCustId.getValue() + '\'';
+				}
+				if ((this.searchStatus.getValue() && this.searchStatus.getValue() != '') || this.searchStatus.getValue() == 0) {
+					if (tempString != '') {
+						tempString += ' and ';
+					}
+					tempString += 'ConsignDrawMaterialV.status = \'' + this.searchStatus.getValue() + '\'';
 				}
 				this.listPanel.store.getProxy().extraParams.whereStr = tempString;
 				this.listPanel.store.load();

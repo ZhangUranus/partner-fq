@@ -125,6 +125,7 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 				this.searchEndDate = this.listPanel.down('datefield[name=searchEndDate]');
 				this.searchMaterialId = this.listPanel.down('combogrid[name=searchMaterialId]');
 				this.searchCustId = this.listPanel.down('combogrid[name=searchCustId]');
+				this.searchStatus = this.listPanel.down('combobox[name=status]');
 				this.allColumn = this.editEntry.query('gridcolumn');
 				this.addLineButton = this.win.down('gridpanel button[action=addLine]');
 				this.deleteLineButton = this.win.down('gridpanel button[action=deleteLine]');
@@ -221,6 +222,12 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 						tempString += ' and ';
 					}
 					tempString += 'WorkshopWarehousingV.workshop_workshop_id = \'' + this.searchCustId.getValue() + '\'';
+				}
+				if ((this.searchStatus.getValue() && this.searchStatus.getValue() != '') || this.searchStatus.getValue() == 0) {
+					if (tempString != '') {
+						tempString += ' and ';
+					}
+					tempString += 'WorkshopWarehousingV.status = \'' + this.searchStatus.getValue() + '\'';
 				}
 				this.listPanel.store.getProxy().extraParams.whereStr = tempString;
 				this.listPanel.store.load();

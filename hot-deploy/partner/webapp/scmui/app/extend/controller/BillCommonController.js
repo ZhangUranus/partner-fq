@@ -705,6 +705,9 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				entryRecord.phantom = true;
 				// 设置父id
 				entryRecord.set('parentId', this.editForm.getValues().id);
+				if((entryRecord.get('warehouseWarehouseId') || entryRecord.get('warehouseWarehouseId')=="") && this.editEntry.store.first()){
+					entryRecord.set('warehouseWarehouseId', this.editEntry.store.first().get('warehouseWarehouseId'))
+				}
 				this.editEntry.store.add(entryRecord);
 			},
 			// 删除分录

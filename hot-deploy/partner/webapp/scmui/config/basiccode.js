@@ -46,9 +46,6 @@ SCM.store.basiccode.billStatusStore = new Ext.data.Store({
 						'id' : 2,
 						'name' : '审核不通过'
 					}, {
-						'id' : 3,
-						'name' : '已结算'
-					}, {
 						'id' : 4,
 						'name' : '已提交'
 					}]
@@ -60,8 +57,6 @@ SCM.store.basiccode.billStatusRenderer = function(value) {
 		return '已审核';
 	} else if (value == 2) {
 		return '审核不通过';
-	} else if (value == 3) {
-		return '已结算';
 	} else if (value == 4) {
 		return '已提交';
 	}
