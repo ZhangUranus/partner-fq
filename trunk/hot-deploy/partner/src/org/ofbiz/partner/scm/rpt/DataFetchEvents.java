@@ -55,6 +55,8 @@ public class DataFetchEvents {
 		List<Map<String, Object>> list = null;
 		if("SDR".equals(request.getParameter("report"))){
 			list = getStockDetailReportList(request);
+		} else if("WSDR".equals(request.getParameter("report"))){
+			list = getWorkshopStockDetailReportList(request);
 		} else if("PKM".equals(request.getParameter("report"))){
 			list = getPackingMaterialReportList(request);
 		} else if("CPMR".equals(request.getParameter("report"))){
@@ -108,7 +110,7 @@ public class DataFetchEvents {
 		String year = null;
 		String month = null;
 		String warehouseId = null;
-		String materialId = null;
+		String keyWord = null;
 		String tableName = null;
 		if(request.getParameter("year") != null && request.getParameter("month") != null){
 			year = request.getParameter("year");
@@ -129,8 +131,8 @@ public class DataFetchEvents {
 		if(request.getParameter("warehouseId") != null){
 			warehouseId = request.getParameter("warehouseId");
 		}
-		if(request.getParameter("materialId") != null){
-			materialId = request.getParameter("materialId");
+		if(request.getParameter("keyWord") != null){
+			keyWord = request.getParameter("keyWord");
 		}
 		
 		String sql =" SELECT "+
@@ -158,11 +160,11 @@ public class DataFetchEvents {
 					" LEFT JOIN UNIT UN ON TM.DEFAULT_UNIT_ID = UN.ID "+
 					" WHERE YEAR = " + year +
 					" AND MONTH = " + month ;
-		if(materialId != null && !"".equals(materialId)){
-			sql += " AND CMB.MATERIAL_ID = '" + materialId + "'";
-		}
 		if(warehouseId != null && !"".equals(warehouseId)){
 			sql += " AND CMB.WAREHOUSE_ID = '" + warehouseId + "'";
+		}
+		if(keyWord != null && !"".equals(keyWord)){
+			sql += " AND (TM.NUMBER LIKE '%" + keyWord + "%' OR TM.NAME LIKE '%" + keyWord + "%')";
 		}
 		return sql;
 	}
@@ -216,6 +218,91 @@ public class DataFetchEvents {
 		return "sucess";
 	}
 	
+	/**
+	 * 车间储备情况报表
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public static String queryWorkshopStockDetailReport(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(request,getWorkshopStockDetailReportSql(request)));
+		return "sucess";
+	}
+	
+	/**
+	 * 车间储备情况数据列表
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public static List<Map<String ,Object>> getWorkshopStockDetailReportList(HttpServletRequest request) throws Exception {
+		return getListWithSQL(request,getWorkshopStockDetailReportSql(request));
+	}
+	
+	/**
+	 * 车间储备情况报表SQL
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	public static String getWorkshopStockDetailReportSql(HttpServletRequest request) throws Exception {
+		String year = null;
+		String month = null;
+		String workshopId = null;
+		String keyWord = null;
+		String tableName = null;
+		if(request.getParameter("year") != null && request.getParameter("month") != null){
+			year = request.getParameter("year");
+			month = request.getParameter("month");
+		}else{
+			throw new Exception("找不到日期参数！");
+		}
+		Calendar cal= Calendar.getInstance();
+		//月份需要减一，月份是从0开始
+		cal.set(Integer.parseInt(year), Integer.parseInt(month)-1, 01, 0, 0, 0);
+		cal.set(Calendar.MILLISECOND, 0);
+		if(org.ofbiz.partner.scm.pricemgr.Utils.isCurPeriod(cal.getTime())){
+			tableName = " CUR_WORKSHOP_PRICE ";
+		} else {
+			tableName = " HIS_WORKSHOP_PRICE ";
+		}
+		
+		if(request.getParameter("workshopId") != null){
+			workshopId = request.getParameter("workshopId");
+		}
+		if(request.getParameter("keyWord") != null){
+			keyWord = request.getParameter("keyWord");
+		}
+		
+		String sql =" SELECT "+
+						" CWP.WORKSHOP_ID, "+
+						" WS.NAME AS WORKSHOP_NAME, "+
+						" CWP.MATERIAL_ID, "+
+						" TM.NAME AS MATERIAL_NAME, "+
+						" TM.DEFAULT_UNIT_ID, "+
+						" UN.NAME AS DEFAULT_UNIT_NAME, "+
+						" ROUND(IFNULL(CWP.BEGINVOLUME,0),4) AS BEGINVOLUME, "+
+						" ROUND(IFNULL(CWP.BEGINSUM,0),4) AS BEGINSUM, "+
+						" ROUND(IFNULL(CWP.BEGINSUM/CWP.BEGINVOLUME,0),4) AS BEGINPRICE, "+
+						" ROUND(IFNULL(CWP.VOLUME,0),4) AS ENDVOLUME, "+
+						" ROUND(IFNULL(CWP.TOTALSUM,0),4) AS ENDSUM, "+
+						" ROUND(IFNULL(CWP.TOTALSUM/CWP.VOLUME,0),4) AS ENDPRICE "+
+					" FROM " + tableName + " CWP "+
+					" LEFT JOIN WORKSHOP WS ON CWP.WORKSHOP_ID = WS.ID "+
+					" LEFT JOIN T_MATERIAL TM ON CWP.MATERIAL_ID = TM.ID "+
+					" LEFT JOIN UNIT UN ON TM.DEFAULT_UNIT_ID = UN.ID "+
+					" WHERE YEAR = " + year +
+					" AND MONTH = " + month ;
+		if(workshopId != null && !"".equals(workshopId)){
+			sql += " AND CWP.WORKSHOP_ID = '" + workshopId + "'";
+		}
+		if(keyWord != null && !"".equals(keyWord)){
+			sql += " AND (TM.NUMBER LIKE '%" + keyWord + "%' OR TM.NAME LIKE '%" + keyWord + "%')";
+		}
+		return sql;
+	}
 	
 	/**
 	 * 发外加工对数报表

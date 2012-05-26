@@ -371,6 +371,13 @@
 		<response name="success" type="none" />
 	</request-map>
 	
+	<!-- 车间储备情况报表 -->
+	<request-map uri="queryWorkshopStockDetailReport">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="queryWorkshopStockDetailReport" />
+		<response name="success" type="none" />
+	</request-map>
+	
 	<!-- 安装包装材料表 -->
 	<request-map uri="queryPackingMaterialReport">
 		<security https="false" auth="false" />

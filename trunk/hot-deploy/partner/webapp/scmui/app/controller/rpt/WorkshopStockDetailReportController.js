@@ -1,9 +1,9 @@
-Ext.define('SCM.controller.rpt.StockDetailReportController', {
+Ext.define('SCM.controller.rpt.WorkshopStockDetailReportController', {
 			extend : 'Ext.app.Controller',
 			mixins : ['SCM.extend.exporter.Exporter'],
-			views : ['rpt.sdr.ListUI'],
-			stores : ['rpt.StockDetailReportStore', 'rpt.StockDetailChartStore'],
-			models : ['rpt.StockDetailReportModel', 'rpt.StockDetailChartModel', 'rpt.MonthModel'],
+			views : ['rpt.wsdr.ListUI'],
+			stores : ['rpt.WorkshopStockDetailReportStore'],
+			models : ['rpt.WorkshopStockDetailReportModel', 'rpt.MonthModel'],
 
 			/**
 			 * 初始化controller 增加事件监控
@@ -11,15 +11,15 @@ Ext.define('SCM.controller.rpt.StockDetailReportController', {
 			init : function() {
 				this.control({
 							// 完成日志界面初始化后调用
-							'stockdetail' : {
+							'workshopstockdetail' : {
 								afterrender : this.initComponent
 							},
 							// 列表界面刷新
-							'stockdetail button[action=search]' : {
+							'workshopstockdetail button[action=search]' : {
 								click : this.refreshRecord
 							},
 							// 数据导出
-							'stockdetail button[action=export]' : {
+							'workshopstockdetail button[action=export]' : {
 								click : this.exportExcel
 							}
 						});
@@ -33,9 +33,8 @@ Ext.define('SCM.controller.rpt.StockDetailReportController', {
 			 */
 			initComponent : function(view) {
 				this.listPanel = view.down('gridpanel');
-//				this.chartPanel = view.down('panel chart');
 				this.searchMonth = view.down('combobox[name=searchMonth]');
-				this.searchWarehouseId = view.down('combogrid[name=searchWarehouseId]');
+				this.searchWorkshopId = view.down('combogrid[name=searchWorkshopId]');
 				this.searchKeyWord = view.down('textfield[name=searchKeyWord]');
 				this.searchMonth.store.load({
 							scope : this,
@@ -55,18 +54,14 @@ Ext.define('SCM.controller.rpt.StockDetailReportController', {
 					var tempStr = this.searchMonth.getValue().split('-');
 					this.listPanel.store.getProxy().extraParams.year = tempStr[0];
 					this.listPanel.store.getProxy().extraParams.month = tempStr[1];
-//					this.chartPanel.store.getProxy().extraParams.year = tempStr[0];
-//					this.chartPanel.store.getProxy().extraParams.month = tempStr[1];
 				} else {
 					showWarning('请选择月份！');
 					return;
 				}
-				if (!Ext.isEmpty(this.searchWarehouseId.getValue())) {
-					this.listPanel.store.getProxy().extraParams.warehouseId = this.searchWarehouseId.getValue();
-//					this.chartPanel.store.getProxy().extraParams.warehouseId = this.searchWarehouseId.getValue();
+				if (!Ext.isEmpty(this.searchWorkshopId.getValue())) {
+					this.listPanel.store.getProxy().extraParams.workshopId = this.searchWorkshopId.getValue();
 				} else {
-					this.listPanel.store.getProxy().extraParams.warehouseId = "";
-//					this.chartPanel.store.getProxy().extraParams.warehouseId = "";
+					this.listPanel.store.getProxy().extraParams.workshopId = "";
 				}
 				if (!Ext.isEmpty(this.searchKeyWord.getValue())) {
 					this.listPanel.store.getProxy().extraParams.keyWord = this.searchKeyWord.getValue();
@@ -74,17 +69,6 @@ Ext.define('SCM.controller.rpt.StockDetailReportController', {
 					this.listPanel.store.getProxy().extraParams.keyWord = "";
 				}
 				this.listPanel.store.load();
-//				this.chartPanel.store.load({
-//							scope : this,
-//							callback : function(records, operation, success) {
-//								if(records.length==0){
-//									this.chartPanel.setVisible(false);
-//								} else {
-//									this.chartPanel.setVisible(true);
-//									this.chartPanel.redraw();
-//								}
-//							}
-//						});
 			},
 
 			/**
@@ -114,8 +98,8 @@ Ext.define('SCM.controller.rpt.StockDetailReportController', {
 
 					// 页面参数
 					params.sort = Ext.encode(getSorters());
-					params.report = 'SDR';
-					params.title = '库存情况'; // sheet页名称
+					params.report = 'WSDR';
+					params.title = '车间储备情况'; // sheet页名称
 					params.header = header; // 表头
 					params.dataIndex = dataIndex; // 数据引用
 					params.pattern = 'SQL';

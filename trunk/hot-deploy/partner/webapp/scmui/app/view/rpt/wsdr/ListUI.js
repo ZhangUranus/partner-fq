@@ -1,11 +1,11 @@
 /*
  * 定义物料Bom列表界面 Mark
  */
-Ext.define('SCM.view.rpt.sdr.ListUI', {
+Ext.define('SCM.view.rpt.wsdr.ListUI', {
 			extend : 'Ext.container.Container',
 			requires : ['SCM.ux.combobox.ComboGrid'],
-			alias : 'widget.stockdetail',
-			title : '库存情况',
+			alias : 'widget.workshopstockdetail',
+			title : '车间储备情况',
 			layout : {
 				type : 'border'
 			},
@@ -32,15 +32,15 @@ Ext.define('SCM.view.rpt.sdr.ListUI', {
 													editable : false
 												}, {
 													xtype : 'combogrid',
-													name : 'searchWarehouseId',
+													name : 'searchWorkshopId',
 													width : 145,
 													labelWidth : 35,
-													fieldLabel : '仓库',
-													store : Ext.data.StoreManager.lookup('WHComboStore'),
+													fieldLabel : '车间',
+													store : Ext.data.StoreManager.lookup('WSComboStore'),
 													valueField : 'id',
 													displayField : 'name',
 													matchFieldWidth : false,
-													emptyText : '所有仓库',
+													emptyText : '所有车间',
 													listConfig : {
 														width : SCM.MaxSize.COMBOGRID_WIDTH,
 														height : SCM.MaxSize.COMBOGRID_HEIGHT,
@@ -70,84 +70,25 @@ Ext.define('SCM.view.rpt.sdr.ListUI', {
 													iconCls : 'system-export',
 													action : 'export'
 												}]
-									}, 
-//									{
-//										xtype : 'panel',
-//										margin : '1 0 0 0',
-//										region : 'center',
-//										layout : 'fit',
-//										minWidth : 300,
-//										minHeight : 200,
-//										items : {
-//											xtype : 'chart',
-//											animate : true,
-//											shadow : true,
-//											store : 'rpt.StockDetailChartStore',
-//											legend : {
-//												position : 'right'
-//											},
-//											axes : [{
-//														type : 'Numeric',
-//														position : 'left',
-//														fields : ['ENDSUM'],
-//														minimum : 0,
-//														label : {
-//															renderer : Ext.util.Format.numberRenderer('0,000.00'),
-//															font : '12px 宋体'
-//														},
-//														grid : true,
-//														title : '结存金额'
-//													}, {
-//														type : 'Category',
-//														position : 'bottom',
-//														fields : ['MATERIAL_NAME'],
-//														label : {
-//															font : '12px 宋体'
-//														},
-//														title : '物料'
-//													}],
-//											series : [{
-//														type : 'column',
-//														axis : 'left',
-//														xField : 'MATERIAL_NAME',
-//														yField : ['ENDSUM'],
-//														title : ['结存金额'],
-//														tips : {
-//															trackMouse : true,
-//															width : 140,
-//															height : 28,
-//															renderer : function(storeItem, item) {
-//																this.setTitle(item.value[1] + '元');
-//															}
-//														},
-//														label : {
-//															display : 'over',
-//															'text-anchor' : 'middle',
-//															field : ['ENDSUM'],
-//															renderer : Ext.util.Format.numberRenderer('0,000.00')
-//														}
-//													}]
-//										}
-//									}, 
-									{
+									}, {
 										xtype : 'gridpanel',
 										margin : '1 0 0 0',
 										region : 'center',
 										split : true,
-										store : 'rpt.StockDetailReportStore',
+										store : 'rpt.WorkshopStockDetailReportStore',
 										columns : [{
 													header : '序号',
 													xtype : 'rownumberer',
 													width : 40
 												}, {
 													xtype : 'gridcolumn',
-													dataIndex : 'WAREHOUSE_NAME',
-													width : 80,
-													text : '仓库'
+													dataIndex : 'WORKSHOP_NAME',
+													width : 150,
+													text : '车间'
 												}, {
 													xtype : 'gridcolumn',
 													dataIndex : 'MATERIAL_NAME',
-													width : 120,
+													width : 250,
 													text : '物料名称'
 												}, {
 													xtype : 'gridcolumn',
@@ -157,68 +98,38 @@ Ext.define('SCM.view.rpt.sdr.ListUI', {
 												}, {
 													xtype : 'numbercolumn',
 													dataIndex : 'BEGINVOLUME',
-													width : 80,
+													width : 90,
 													text : '期初数量'
 												}, {
 													xtype : 'numbercolumn',
 													dataIndex : 'BEGINPRICE',
-													width : 80,
+													width : 90,
 													text : '期初单价'
 												}, {
 													xtype : 'numbercolumn',
 													dataIndex : 'BEGINSUM',
-													width : 80,
+													width : 90,
 													text : '期初金额'
 												}, {
 													xtype : 'numbercolumn',
-													dataIndex : 'INVOLUME',
-													width : 80,
-													text : '本期收入数量'
-												}, {
-													xtype : 'numbercolumn',
-													dataIndex : 'INPRICE',
-													width : 80,
-													text : '本期收入单价'
-												}, {
-													xtype : 'numbercolumn',
-													dataIndex : 'INSUM',
-													width : 80,
-													text : '本期收入金额'
-												}, {
-													xtype : 'numbercolumn',
-													dataIndex : 'OUTVOLUME',
-													width : 80,
-													text : '本期发出数量'
-												}, {
-													xtype : 'numbercolumn',
-													dataIndex : 'OUTPRICE',
-													width : 80,
-													text : '本期发出单价'
-												}, {
-													xtype : 'numbercolumn',
-													dataIndex : 'OUTSUM',
-													width : 80,
-													text : '本期发出金额'
-												}, {
-													xtype : 'numbercolumn',
 													dataIndex : 'ENDVOLUME',
-													width : 80,
+													width : 90,
 													text : '期末数量'
 												}, {
 													xtype : 'numbercolumn',
 													dataIndex : 'ENDPRICE',
-													width : 80,
+													width : 90,
 													text : '期末单价'
 												}, {
 													xtype : 'numbercolumn',
 													dataIndex : 'ENDSUM',
-													width : 80,
+													width : 90,
 													text : '期末金额'
 												}],
 										dockedItems : [{
 													dock : 'bottom',
 													xtype : 'pagingtoolbar',
-													store : 'rpt.StockDetailReportStore',
+													store : 'rpt.WorkshopStockDetailReportStore',
 													displayInfo : true
 												}]
 									}]
