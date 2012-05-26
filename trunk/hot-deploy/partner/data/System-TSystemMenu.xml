@@ -21,7 +21,7 @@
 	<TSystemMenu menuId='productionPlan' menuName='生产计划' menuType='1' parentId='workshopManufacture' sort='135' hyperlink='productionplan' styleName='production-plan' display='1' description='生产计划' />
 	<TSystemMenu menuId='analyticStatistics' menuName='分析统计' menuType='0' parentId='warehouseManagement' sort='14' hyperlink='' styleName='analytic-statistics' display='1' description='分析统计' />
 	<TSystemMenu menuId='stockDetail' menuName='库存情况' menuType='1' parentId='analyticStatistics' sort='141' hyperlink='stockdetail' styleName='stock-detail' display='1' description='库存情况' />
-	<TSystemMenu menuId='workshopStockDetail' menuName='车间储备情况' menuType='1' parentId='analyticStatistics' sort='142' hyperlink='workshop-stock-detail' styleName='workshop-stock-detail' display='1' description='车间储备情况' />
+	<TSystemMenu menuId='workshopStockDetail' menuName='车间储备情况' menuType='1' parentId='analyticStatistics' sort='142' hyperlink='workshopstockdetail' styleName='workshop-stock-detail' display='1' description='车间储备情况' />
 	<TSystemMenu menuId='semiProductCostReport' menuName='黑坯材料耗用表' menuType='1' parentId='analyticStatistics' sort='143' hyperlink='semiproductcostreport' styleName='semi-product-cost-report' display='1' description='黑胚材料耗用表' />
 	<TSystemMenu menuId='consignProcessMatchingReport' menuName='发外加工对数表' menuType='1' parentId='analyticStatistics' sort='144' hyperlink='consignprocessmatchingreport' styleName='consign-process-matching-report' display='1' description='发外加工对数表' />
 	<TSystemMenu menuId='purchaseMatchingReport' menuName='采购对数表' menuType='1' parentId='analyticStatistics' sort='145' hyperlink='purchasematchingreport' styleName='purchase-matching-report' display='1' description='采购对数表' />
