@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+ <Worksheet ss:Name="Table1">
+  <Table>
+   <Column ss:Index="1" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="2" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="3" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="4" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="5" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="6" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="8" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="10" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="11" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="12" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="13" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="14" ss:AutoFitWidth="0" ss:Width="110"/>   <Row>
+    <Cell><Data ss:Type="String">ID</Data></Cell>
+    <Cell><Data ss:Type="String">NUMBER</Data></Cell>
+    <Cell><Data ss:Type="String">BIZ_DATE</Data></Cell>
+    <Cell><Data ss:Type="String">SUPPLIER_SUPPLIER_ID</Data></Cell>
+    <Cell><Data ss:Type="String">RETURNER_SYSTEM_USER_ID</Data></Cell>
+    <Cell><Data ss:Type="String">SUBMITTER_SYSTEM_USER_ID</Data></Cell>
+    <Cell><Data ss:Type="String">TOTALSUM</Data></Cell>
+    <Cell><Data ss:Type="String">NOTE</Data></Cell>
+    <Cell><Data ss:Type="String">STATUS</Data></Cell>
+    <Cell><Data ss:Type="String">CREATED_STAMP</Data></Cell>
+    <Cell><Data ss:Type="String">LAST_UPDATED_STAMP</Data></Cell>
+    <Cell><Data ss:Type="String">SUBMIT_STAMP</Data></Cell>
+    <Cell><Data ss:Type="String">LAST_UPDATED_TX_STAMP</Data></Cell>
+    <Cell><Data ss:Type="String">CREATED_TX_STAMP</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">635d3605-0a8b-4c2f-b45d-346c770cf764</Data></Cell>
+    <Cell><Data ss:Type="String">PRT20120102100001</Data></Cell>
+    <Cell><Data ss:Type="String">2012-01-02 08:00:00</Data></Cell>
+    <Cell><Data ss:Type="String">95cf10dd-d19e-4881-a55b-7db7c464e87b</Data></Cell>
+    <Cell><Data ss:Type="String">18f85a5d-1c39-44f4-9f2f-e7d64056ff7b</Data></Cell>
+    <Cell><Data ss:Type="String">18f85a5d-1c39-44f4-9f2f-e7d64056ff7b</Data></Cell>
+    <Cell><Data ss:Type="Number">1000.000000</Data></Cell>
+    <Cell><Data ss:Type="String"></Data></Cell>
+    <Cell><Data ss:Type="Number">4</Data></Cell>
+    <Cell><Data ss:Type="String">2012-01-02 23:42:46</Data></Cell>
+    <Cell><Data ss:Type="String">2012-01-02 23:42:46</Data></Cell>
+    <Cell><Data ss:Type="String">2012-01-02 23:42:47</Data></Cell>
+    <Cell><Data ss:Type="String">2012-01-02 23:42:46</Data></Cell>
+    <Cell><Data ss:Type="String">2012-01-02 23:42:46</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">ab8298bc-bf0d-4b17-be06-3684dcfe0128</Data></Cell>
+    <Cell><Data ss:Type="String">PRT20111102100001</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 08:00:00</Data></Cell>
+    <Cell><Data ss:Type="String">95cf10dd-d19e-4881-a55b-7db7c464e87b</Data></Cell>
+    <Cell><Data ss:Type="String">18f85a5d-1c39-44f4-9f2f-e7d64056ff7b</Data></Cell>
+    <Cell><Data ss:Type="String">18f85a5d-1c39-44f4-9f2f-e7d64056ff7b</Data></Cell>
+    <Cell><Data ss:Type="Number">900.000000</Data></Cell>
+    <Cell><Data ss:Type="String">木材质量有问题。</Data></Cell>
+    <Cell><Data ss:Type="Number">4</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 17:05:45</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 17:05:45</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 17:05:48</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 17:05:44</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 17:05:44</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">c05b8b8c-71c2-4794-9a3f-5c81896424ea</Data></Cell>
+    <Cell><Data ss:Type="String">PRT20120209100001</Data></Cell>
+    <Cell><Data ss:Type="String">2012-02-22 08:00:00</Data></Cell>
+    <Cell><Data ss:Type="String">95cf10dd-d19e-4881-a55b-7db7c464e87b</Data></Cell>
+    <Cell><Data ss:Type="String">18f85a5d-1c39-44f4-9f2f-e7d64056ff7b</Data></Cell>
+    <Cell><Data ss:Type="String">18f85a5d-1c39-44f4-9f2f-e7d64056ff7b</Data></Cell>
+    <Cell><Data ss:Type="Number">180.000000</Data></Cell>
+    <Cell><Data ss:Type="String"></Data></Cell>
+    <Cell><Data ss:Type="Number">4</Data></Cell>
+    <Cell><Data ss:Type="String">2012-02-09 09:59:52</Data></Cell>
+    <Cell><Data ss:Type="String">2012-02-09 09:59:52</Data></Cell>
+    <Cell><Data ss:Type="String">2012-02-09 09:59:55</Data></Cell>
+    <Cell><Data ss:Type="String">2012-02-09 09:59:52</Data></Cell>
+    <Cell><Data ss:Type="String">2012-02-09 09:59:52</Data></Cell>
+   </Row>
+  </Table>
+ </Worksheet>
+</Workbook>

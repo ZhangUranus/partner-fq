@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+ <Worksheet ss:Name="Table1">
+  <Table>
+   <Column ss:Index="1" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="2" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="3" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="4" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="5" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="6" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="7" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="8" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="9" ss:AutoFitWidth="0" ss:Width="110"/>   <Row>
+    <Cell><Data ss:Type="String">ID</Data></Cell>
+    <Cell><Data ss:Type="String">NUMBER</Data></Cell>
+    <Cell><Data ss:Type="String">NAME</Data></Cell>
+    <Cell><Data ss:Type="String">PHONE_NUM</Data></Cell>
+    <Cell><Data ss:Type="String">ADDRESS</Data></Cell>
+    <Cell><Data ss:Type="String">CREATED_STAMP</Data></Cell>
+    <Cell><Data ss:Type="String">LAST_UPDATED_STAMP</Data></Cell>
+    <Cell><Data ss:Type="String">LAST_UPDATED_TX_STAMP</Data></Cell>
+    <Cell><Data ss:Type="String">CREATED_TX_STAMP</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">5ec0c46e-0039-4576-92f1-3dccc3c31a23</Data></Cell>
+    <Cell><Data ss:Type="String">SUP100007</Data></Cell>
+    <Cell><Data ss:Type="String">家私加工商</Data></Cell>
+    <Cell><Data ss:Type="String">02034948544</Data></Cell>
+    <Cell><Data ss:Type="String">广东省广州</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:14:55</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:14:55</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:14:55</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:14:55</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">80e07116-26a9-4ace-b09c-b2b1fd5bdd32</Data></Cell>
+    <Cell><Data ss:Type="String">SUP100006</Data></Cell>
+    <Cell><Data ss:Type="String">五金供应商</Data></Cell>
+    <Cell><Data ss:Type="String">07589838848</Data></Cell>
+    <Cell><Data ss:Type="String">广东省江门</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:14:23</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:14:23</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:14:23</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:14:23</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">95cf10dd-d19e-4881-a55b-7db7c464e87b</Data></Cell>
+    <Cell><Data ss:Type="String">SUP100005</Data></Cell>
+    <Cell><Data ss:Type="String">木材供应商</Data></Cell>
+    <Cell><Data ss:Type="String">02039495544</Data></Cell>
+    <Cell><Data ss:Type="String">广东省广州</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:14:04</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:14:04</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:14:04</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:14:04</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">b576993b-aa4f-4125-bae3-d131d566ec0e</Data></Cell>
+    <Cell><Data ss:Type="String">SUP100008</Data></Cell>
+    <Cell><Data ss:Type="String">五金加工商</Data></Cell>
+    <Cell><Data ss:Type="String">02094858448</Data></Cell>
+    <Cell><Data ss:Type="String">广东省广州</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:15:21</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:15:21</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:15:21</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:15:21</Data></Cell>
+   </Row>
+  </Table>
+ </Worksheet>
+</Workbook>
