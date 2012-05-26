@@ -114,6 +114,9 @@
 .stock-detail {
 	background-image: url( ../images/icons/stock-detail.png ) !important;
 }
+.workshop-stock-detail {
+	background-image: url( ../images/icons/workshop-stock-detail.png ) !important;
+}
 .semi-product-cost-report {
 	background-image: url( ../images/icons/semi-product-cost-report.png ) !important;
 }
