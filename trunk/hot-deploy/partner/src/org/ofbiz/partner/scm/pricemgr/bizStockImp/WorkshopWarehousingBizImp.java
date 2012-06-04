@@ -43,15 +43,15 @@ public class WorkshopWarehousingBizImp implements IBizStock {
 			}
 			BigDecimal sum = null;
 			if (!isOut) {
-				BigDecimal price = WorkshopPriceMgr.getInstance().CreateWorkshopPriceDetailList(workshopId, materialId, v.getString("id"));
+				BigDecimal price = WorkshopPriceMgr.getInstance().CreateWorkshopPriceDetailList(workshopId, v.getString("bomId"), v.getString("id"));
 				sum = price.multiply(volume);
 				
 				//增加额外耗料金额
-				BigDecimal extraSum = WorkshopPriceMgr.getInstance().updateWarehousingExtraCommit(v);
-				sum = sum.add(extraSum);
+//				BigDecimal extraSum = WorkshopPriceMgr.getInstance().updateWarehousingExtraCommit(v);
+//				sum = sum.add(extraSum);
 				
 				//返填单价，金额
-				v.set("price", sum.divide(volume));
+				v.set("price", price);
 				v.set("entrysum", sum);
 				
 				// 将金额加到总金额中
@@ -60,7 +60,7 @@ public class WorkshopWarehousingBizImp implements IBizStock {
 				sum = v.getBigDecimal("entrysum");// 金额
 				
 				//回滚额外耗料计算
-				WorkshopPriceMgr.getInstance().updateWarehousingExtraRollback(v);
+//				WorkshopPriceMgr.getInstance().updateWarehousingExtraRollback(v);
 				
 				// 如果是出库业务，数量、金额转换为负数
 				volume = volume.negate();

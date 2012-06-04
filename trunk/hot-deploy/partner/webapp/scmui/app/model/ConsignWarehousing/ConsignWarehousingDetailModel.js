@@ -4,7 +4,13 @@ Ext.define('SCM.model.ConsignWarehousing.ConsignWarehousingDetailModel', {
 			requires : ['Ext.data.UuidGenerator', 'SCM.extend.proxy.JsonAjax'],
 			alias : 'ConsignWarehousingDetailModel',
 			fields : [{
+						name : 'id',
+						type : 'string'
+					}, {
 						name : 'parentId',
+						type : 'string'
+					}, {
+						name : 'bomId',
 						type : 'string'
 					}, {
 						name : 'materialId',
@@ -29,7 +35,10 @@ Ext.define('SCM.model.ConsignWarehousing.ConsignWarehousingDetailModel', {
 			proxy : {
 				type : 'jsonajax',
 				api : {
-					read : '../../scm/control/requestJsonData?entity=ConsignPriceDetailView'
+					read : '../../scm/control/requestJsonData?entity=ConsignPriceDetailView',
+					create : '../../scm/control/addnewJsonData?entity=ConsignPriceDetail',
+					update : '../../scm/control/updateJsonData?entity=ConsignPriceDetail',
+					destroy : '../../scm/control/deleteJsonData?entity=ConsignPriceDetail'
 				}
 			}
 		});

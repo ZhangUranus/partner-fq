@@ -4,8 +4,8 @@ Ext.define('SCM.view.WorkshopWarehousing.DetailEditUI', {
 			alias : 'widget.WorkshopWarehousingdetailedit',
 			height : SCM.DefaultSize.WINDOW_HEIGHT,
 			width : 550,
-			title : '额外耗料明细',
-			layout : 'fit',
+			title : '耗料明细',
+			layout : 'border',
 			modal : true,// 背景变灰，不能编辑
 			collapsible : true,
 			resizable : false,
@@ -18,7 +18,7 @@ Ext.define('SCM.view.WorkshopWarehousing.DetailEditUI', {
 				var cellEditing = Ext.create('Ext.grid.plugin.CellEditing', {
 							clicksToEdit : 1
 						});
-				var entryStore = Ext.create('WorkshopWarehousingEntryDetailStore');
+				var entryStore = Ext.create('WorkshopWarehousingDetailStore');
 				Ext.applyIf(me, {
 							items : [{
 										xtype : 'gridpanel',
@@ -28,17 +28,12 @@ Ext.define('SCM.view.WorkshopWarehousing.DetailEditUI', {
 										store : entryStore,
 										columns : [{
 													xtype : 'gridcolumn',
-													dataIndex : 'id',
-													text : 'id',
-													hidden : true
-												}, {
-													xtype : 'gridcolumn',
-													dataIndex : 'entryId',
-													text : 'entryId',
+													dataIndex : 'parentId',
+													text : 'parentId',
 													hidden : true
 												}, {
 													xtype : 'combocolumn',
-													dataIndex : 'materialMaterialId',
+													dataIndex : 'materialId',
 													text : '物料',
 													gridId : 'WorkshopWarehousing-detail-edit-grid',
 													editor : {
@@ -47,26 +42,11 @@ Ext.define('SCM.view.WorkshopWarehousing.DetailEditUI', {
 														displayField : 'name',
 														initStore : Ext.data.StoreManager.lookup('MComboInitStore'),
 														store : Ext.data.StoreManager.lookup('MComboStore'),
-														matchFieldWidth : false,
-														listConfig : {
-															width : 400,
-															height : SCM.MaxSize.COMBOGRID_HEIGHT,
-															columns : [{
-																		header : '编码',
-																		dataIndex : 'number',
-																		width : 100,
-																		hideable : false
-																	}, {
-																		header : '名称',
-																		dataIndex : 'name',
-																		width : 280,
-																		hideable : false
-																	}]
-														}
+														readOnly : true
 													}
 												}, {
 													xtype : 'gridcolumn',
-													dataIndex : 'materialMaterialModel',
+													dataIndex : 'materialModel',
 													text : '规格型号'
 												}, {
 													xtype : 'numbercolumn',
@@ -80,7 +60,7 @@ Ext.define('SCM.view.WorkshopWarehousing.DetailEditUI', {
 													width : 80
 												}, {
 													xtype : 'combocolumn',
-													dataIndex : 'unitUnitId',
+													dataIndex : 'materialUnitId',
 													text : '单位',
 													gridId : 'WorkshopWarehousing-detail-edit-grid',
 													editor : {
@@ -95,21 +75,25 @@ Ext.define('SCM.view.WorkshopWarehousing.DetailEditUI', {
 												}, {
 													xtype : 'numbercolumn',
 													dataIndex : 'price',
-													text : '参考单价',
+													text : '单价',
 													width : 80
 												}, {
 													xtype : 'numbercolumn',
 													dataIndex : 'entrysum',
-													text : '参考金额',
+													text : '金额',
 													width : 80
 												}],
 										viewConfig : {},
-										plugins : [cellEditing],
-										dockedItems : [{
-													xtype : 'gridedittoolbar',
-													dock : 'top'
-												}]
-									}],
+										plugins : [cellEditing]
+									}, {
+								        xtype: 'label',
+										region : 'south',
+										height : 20,
+								        text: '该列表为单个加工件的耗料列表，其中单价、金额在单据提交后才能显示！',
+						                style: {
+								            color: 'red'
+								        }
+								    }],
 							dockedItems : [{
 										xtype : 'savetoolbar',
 										type : 'simple',

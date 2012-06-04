@@ -51,7 +51,7 @@ Ext.define('SCM.view.ConsignWarehousing.DetailListUI', {
 													xtype : 'combocolumn',
 													dataIndex : 'materialUnitId',
 													text : '单位',
-													gridId : 'ConsignReturnProduct-edit-grid',
+													gridId : 'ConsignWarehousing-list-grid',
 													editor : {
 														xtype : 'combobox',
 														valueField : 'id',

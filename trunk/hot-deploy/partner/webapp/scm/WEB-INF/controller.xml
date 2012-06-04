@@ -230,6 +230,13 @@
 		<event type="java" path="org.ofbiz.partner.scm.stock.ConsignWarehousingEvents" invoke="rollbackBill" />
 		<response name="success" type="none" />
 	</request-map>
+	<!-- 清理委外加工件耗料列表 -->
+	<request-map uri="removeConsignPriceDetail">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ConsignWarehousingEvents" invoke="removeConsignPriceDetail" />
+		<response name="success" type="none" />
+	</request-map>
+	
 	<!-- 委外退货单提交 -->
 	<request-map uri="submitConsignReturnProduct">
 		<security https="false" auth="false" />
@@ -279,6 +286,13 @@
 		<event type="java" path="org.ofbiz.partner.scm.stock.WorkshopWarehousingEvents" invoke="rollbackBill" />
 		<response name="success" type="none" />
 	</request-map>
+	<!-- 清理车间加工件耗料列表 -->
+	<request-map uri="removeWorkshopPriceDetail">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.WorkshopWarehousingEvents" invoke="removeWorkshopPriceDetail" />
+		<response name="success" type="none" />
+	</request-map>
+	
 	<!-- 制造退货单提交 -->
 	<request-map uri="submitWorkshopReturnProduct">
 		<security https="false" auth="false" />

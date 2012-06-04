@@ -4,7 +4,13 @@ Ext.define('SCM.model.WorkshopWarehousing.WorkshopWarehousingDetailModel', {
 			requires : ['Ext.data.UuidGenerator', 'SCM.extend.proxy.JsonAjax'],
 			alias : 'WorkshopWarehousingDetailModel',
 			fields : [{
+						name : 'id',
+						type : 'string'
+					}, {
 						name : 'parentId',
+						type : 'string'
+					}, {
+						name : 'bomId',
 						type : 'string'
 					}, {
 						name : 'materialId',
@@ -29,7 +35,10 @@ Ext.define('SCM.model.WorkshopWarehousing.WorkshopWarehousingDetailModel', {
 			proxy : {
 				type : 'jsonajax',
 				api : {
-					read : '../../scm/control/requestJsonData?entity=WorkshopPriceDetailView'
+					read : '../../scm/control/requestJsonData?entity=WorkshopPriceDetailView',
+					create : '../../scm/control/addnewJsonData?entity=WorkshopPriceDetail',
+					update : '../../scm/control/updateJsonData?entity=WorkshopPriceDetail',
+					destroy : '../../scm/control/deleteJsonData?entity=WorkshopPriceDetail'
 				}
 			}
 		});
