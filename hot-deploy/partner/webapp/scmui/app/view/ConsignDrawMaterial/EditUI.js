@@ -241,6 +241,11 @@ Ext.define('SCM.view.ConsignDrawMaterial.EditUI', {
 															}, {
 																xtype : 'numbercolumn',
 																dataIndex : 'volume',
+																editor : {
+																	xtype : 'numberfield',
+																	allowBlank : false,
+																	hideTrigger : true
+																},
 																text : '数量',
 																width : 80
 															}, {

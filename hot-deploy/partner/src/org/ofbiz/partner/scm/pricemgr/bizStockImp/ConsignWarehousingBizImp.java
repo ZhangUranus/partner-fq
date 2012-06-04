@@ -48,19 +48,19 @@ public class ConsignWarehousingBizImp implements IBizStock {
 				if(!ConsignPriceMgr.getInstance().checkReturnProductWarehousingStatus(processorId, materialId)){
 					throw new Exception("供应商存在未验收加工件，不允许进行入库操作，请访问“委外退货”页面进行验收！");
 				}
-				BigDecimal price = ConsignPriceMgr.getInstance().CreateConsignPriceDetailList(processorId, materialId, v.getString("id"));
+				BigDecimal price = ConsignPriceMgr.getInstance().CreateConsignPriceDetailList(processorId, v.getString("bomId"), v.getString("id"));
 				sum = price.add(v.getBigDecimal("processPrice")).multiply(volume);
 				
 				//耗料金额
-				BigDecimal costSum = price.multiply(volume);
+//				BigDecimal costSum = price.multiply(volume);
 				
 				//增加额外耗料金额
-				BigDecimal extraSum = ConsignPriceMgr.getInstance().updateWarehousingExtraCommit(v);
-				sum = sum.add(extraSum);
-				costSum = costSum.add(extraSum);
+//				BigDecimal extraSum = ConsignPriceMgr.getInstance().updateWarehousingExtraCommit(v);
+//				sum = sum.add(extraSum);
+//				costSum = costSum.add(extraSum);
 				
 				//返填单价，金额
-				v.set("price", costSum.divide(volume));
+				v.set("price", price);
 				v.set("entrysum", sum);
 				
 				// 将金额加到总金额中
@@ -69,7 +69,7 @@ public class ConsignWarehousingBizImp implements IBizStock {
 				sum = v.getBigDecimal("entrysum");// 金额
 				
 				//回滚额外耗料计算
-				ConsignPriceMgr.getInstance().updateWarehousingExtraRollback(v);
+//				ConsignPriceMgr.getInstance().updateWarehousingExtraRollback(v);
 				
 				// 如果是出库业务，数量、金额转换为负数
 				volume = volume.negate();

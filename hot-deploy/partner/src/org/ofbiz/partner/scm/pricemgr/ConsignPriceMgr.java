@@ -5,6 +5,7 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.UUID;
 
 import javolution.util.FastList;
 
@@ -83,28 +84,33 @@ public class ConsignPriceMgr {
 	 * @param supplierId
 	 *            加工商id
 	 * @param materialId
-	 *            加工件物料id
+	 *            加工件bomId
 	 * @return
 	 */
-	public BigDecimal CreateConsignPriceDetailList(String supplierId, String materialId, String entryId) throws Exception {
-		if (supplierId == null || materialId == null) {
-			throw new Exception("supplierId or materialId is null");
+	public BigDecimal CreateConsignPriceDetailList(String supplierId, String bomId, String entryId) throws Exception {
+		if (supplierId == null || bomId == null) {
+			throw new Exception("supplierId or bomId is null");
 		}
 		// 根据入库加工件，获取耗料列表
-		List<GenericValue> entryList = delegator.findByAnd("MaterialBomListView", UtilMisc.toMap("materialId", materialId, "status", "1", "valid", "Y"));
+		List<GenericValue> entryList = delegator.findByAnd("MaterialBomListView", UtilMisc.toMap("id", bomId, "status", "1", "valid", "Y"));
 		BigDecimal totalSum = BigDecimal.ZERO;
 		for(GenericValue value:entryList){
 			String bomMaterialId = value.getString("bomMaterialId");
 			BigDecimal price = this.getPrice(supplierId, bomMaterialId);
 			BigDecimal volume =  value.getBigDecimal("volume");
-			GenericValue gv = delegator.findOne("ConsignPriceDetail", UtilMisc.toMap("parentId", entryId, "materialId", bomMaterialId), false);
-			if (gv != null) {
-				gv.set("volume", volume);
+			List<GenericValue> valusList = delegator.findByAnd("ConsignPriceDetail", UtilMisc.toMap("parentId", entryId, "bomId", bomId));
+			GenericValue gv = null;
+			if (valusList.size() > 0) {
+				gv = valusList.get(0);
+				// gv.set("volume", volume);
+				volume = gv.getBigDecimal("volume");
 				gv.set("price", price);
 				gv.store();
-			}else{
+			} else {
 				gv = delegator.makeValue("ConsignPriceDetail");// 新建一个值对象
+				gv.set("id", UUID.randomUUID().toString());
 				gv.set("parentId", entryId);
+				gv.set("bomId", bomId);
 				gv.set("materialId", bomMaterialId);
 				gv.set("volume", volume);
 				gv.set("price", price);
@@ -160,53 +166,53 @@ public class ConsignPriceMgr {
 		return totalSum;
 	}
 	
-	/**
-	 * 提交制造入库额外耗料，返回金额（并返填耗料的单价、金额到额外耗料金额）
-	 */
-	public BigDecimal updateWarehousingExtraCommit(GenericValue value) throws Exception {
-		List<GenericValue> entryList = delegator.findByAnd("ConsignWarehousingEntryExtra", UtilMisc.toMap("entryId", value.getString("id")));
-		BigDecimal sum = BigDecimal.ZERO;
-		BigDecimal totalSum = sum ;
-		for (GenericValue entryValue : entryList) {
-			// 通过制造退货单获取车间编码
-			GenericValue gv = delegator.findOne("ConsignWarehousing", UtilMisc.toMap("id", value.getString("parentId")), false);
-			
-			BigDecimal price = this.getPrice(gv.getString("processorSupplierId"), entryValue.getString("materialMaterialId"));
-			BigDecimal volume = entryValue.getBigDecimal("volume");
-			entryValue.set("price", price);
-			sum = volume.multiply(price);
-			totalSum = totalSum.add(sum);
-			entryValue.set("entrysum", sum);
-			entryValue.store();
-			
-			// 更新车间库存表，车间物料出库
-			this.update(gv.getString("processorSupplierId"), entryValue.getString("materialMaterialId"), volume.negate(), sum.negate());
-		}
-		return totalSum;
-	}
+//	/**
+//	 * 提交制造入库额外耗料，返回金额（并返填耗料的单价、金额到额外耗料金额）
+//	 */
+//	public BigDecimal updateWarehousingExtraCommit(GenericValue value) throws Exception {
+//		List<GenericValue> entryList = delegator.findByAnd("ConsignWarehousingEntryExtra", UtilMisc.toMap("entryId", value.getString("id")));
+//		BigDecimal sum = BigDecimal.ZERO;
+//		BigDecimal totalSum = sum ;
+//		for (GenericValue entryValue : entryList) {
+//			// 通过制造退货单获取车间编码
+//			GenericValue gv = delegator.findOne("ConsignWarehousing", UtilMisc.toMap("id", value.getString("parentId")), false);
+//			
+//			BigDecimal price = this.getPrice(gv.getString("processorSupplierId"), entryValue.getString("materialMaterialId"));
+//			BigDecimal volume = entryValue.getBigDecimal("volume");
+//			entryValue.set("price", price);
+//			sum = volume.multiply(price);
+//			totalSum = totalSum.add(sum);
+//			entryValue.set("entrysum", sum);
+//			entryValue.store();
+//			
+//			// 更新车间库存表，车间物料出库
+//			this.update(gv.getString("processorSupplierId"), entryValue.getString("materialMaterialId"), volume.negate(), sum.negate());
+//		}
+//		return totalSum;
+//	}
 	
-	/**
-	 * 回滚制造入库额外耗料（并返填耗料的单价、金额到额外耗料金额）
-	 */
-	public void updateWarehousingExtraRollback(GenericValue value) throws Exception {
-		List<GenericValue> entryList = delegator.findByAnd("ConsignWarehousingEntryExtra", UtilMisc.toMap("entryId", value.getString("id")));
-		BigDecimal sum = BigDecimal.ZERO;
-		for (GenericValue entryValue : entryList) {
-			// 通过制造退货单获取车间编码
-			GenericValue gv = delegator.findOne("ConsignWarehousing", UtilMisc.toMap("id", value.getString("parentId")), false);
-						
-			BigDecimal volume = entryValue.getBigDecimal("volume");
-			sum = entryValue.getBigDecimal("entrysum");
-			
-			//将金额和单价返填为零
-			entryValue.set("price", BigDecimal.ZERO);
-			entryValue.set("entrysum", BigDecimal.ZERO);
-			entryValue.store();
-			
-			// 更新车间库存表，车间物料出库
-			this.update(gv.getString("processorSupplierId"), entryValue.getString("materialMaterialId"), volume, sum);
-		}
-	}
+//	/**
+//	 * 回滚制造入库额外耗料（并返填耗料的单价、金额到额外耗料金额）
+//	 */
+//	public void updateWarehousingExtraRollback(GenericValue value) throws Exception {
+//		List<GenericValue> entryList = delegator.findByAnd("ConsignWarehousingEntryExtra", UtilMisc.toMap("entryId", value.getString("id")));
+//		BigDecimal sum = BigDecimal.ZERO;
+//		for (GenericValue entryValue : entryList) {
+//			// 通过制造退货单获取车间编码
+//			GenericValue gv = delegator.findOne("ConsignWarehousing", UtilMisc.toMap("id", value.getString("parentId")), false);
+//						
+//			BigDecimal volume = entryValue.getBigDecimal("volume");
+//			sum = entryValue.getBigDecimal("entrysum");
+//			
+//			//将金额和单价返填为零
+//			entryValue.set("price", BigDecimal.ZERO);
+//			entryValue.set("entrysum", BigDecimal.ZERO);
+//			entryValue.store();
+//			
+//			// 更新车间库存表，车间物料出库
+//			this.update(gv.getString("processorSupplierId"), entryValue.getString("materialMaterialId"), volume, sum);
+//		}
+//	}
 
 	/**
 	 * 更新累计金额数量

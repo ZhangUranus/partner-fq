@@ -2,7 +2,8 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 			extend : 'Ext.app.Controller',
 			mixins : ['SCM.extend.exporter.Exporter', 'SCM.extend.controller.BillCommonController'],
 			views : ['WorkshopWarehousing.ListUI', 'WorkshopWarehousing.EditUI', 'WorkshopWarehousing.DetailListUI', 'WorkshopWarehousing.DetailEditUI'],
-			stores : ['WorkshopWarehousing.WorkshopWarehousingStore', 'WorkshopWarehousing.WorkshopWarehousingEditStore', 'WorkshopWarehousing.WorkshopWarehousingEditEntryStore', 'WorkshopWarehousing.WorkshopWarehousingDetailStore', 'WorkshopWarehousing.WorkshopWarehousingEntryDetailStore'],
+			stores : ['WorkshopWarehousing.WorkshopWarehousingStore', 'WorkshopWarehousing.WorkshopWarehousingEditStore', 'WorkshopWarehousing.WorkshopWarehousingEditEntryStore',
+					'WorkshopWarehousing.WorkshopWarehousingDetailStore', 'WorkshopWarehousing.WorkshopWarehousingEntryDetailStore'],
 			requires : ['SCM.model.WorkshopWarehousing.WorkshopWarehousingActionModel', 'SCM.model.WorkshopWarehousing.WorkshopWarehousingEntryDetailModel'],
 			gridTitle : '制造入库单',
 			editName : 'WorkshopWarehousingedit',
@@ -69,14 +70,16 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 							'WorkshopWarehousingedit gridpanel button[action=editDetail]' : {
 								click : this.editDetailRecord
 							},
-							// 编辑额外耗料明细界面分录新增
-							'WorkshopWarehousingdetailedit gridpanel button[action=addLine]' : {
-								click : this.addDetailLine
-							},
-							// 编辑额外耗料明细界面分录删除
-							'WorkshopWarehousingdetailedit gridpanel button[action=deleteLine]' : {
-								click : this.deleteDetailLine
-							},
+							// // 编辑额外耗料明细界面分录新增
+							// 'WorkshopWarehousingdetailedit gridpanel
+							// button[action=addLine]' : {
+							// click : this.addDetailLine
+							// },
+							// // 编辑额外耗料明细界面分录删除
+							// 'WorkshopWarehousingdetailedit gridpanel
+							// button[action=deleteLine]' : {
+							// click : this.deleteDetailLine
+							// },
 							// 编辑额外耗料明细界面取消
 							'WorkshopWarehousingdetailedit button[action=cancel]' : {
 								click : this.cancelDetail
@@ -131,27 +134,30 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 				this.deleteLineButton = this.win.down('gridpanel button[action=deleteLine]');
 				this.MaterialStore = Ext.data.StoreManager.lookup('MBAllStore');
 				this.MaterialStore.load();
-				
+
 				// 耗料明细页面
 				this.viewDetailButton = this.win.down('gridpanel button[action=viewDetail]');
 				this.detailWin = Ext.widget('WorkshopWarehousingdetaillist');
 				this.detailEntry = this.detailWin.down('gridpanel');
-				
+
 				// 额外耗料明细界面
 				this.editDetailButton = this.win.down('gridpanel button[action=editDetail]');
 				this.detailEditWin = Ext.widget('WorkshopWarehousingdetailedit');
 				this.detailEditEntry = this.detailEditWin.down('gridpanel');
-				this.detailEditEntry.addListener('edit', this.initDetailList, this); // 监控列表编辑事件
+				// this.detailEditEntry.addListener('edit', this.initDetailList,
+				// this); // 监控列表编辑事件
 			},
-			
+
 			/**
 			 * 初始化用户选择
-			 * @param {} record
+			 * 
+			 * @param {}
+			 *            record
 			 */
-			initCurrentUserSelect : function(record){
-				record.set('checkerSystemUserId',SCM.CurrentUser.id);
+			initCurrentUserSelect : function(record) {
+				record.set('checkerSystemUserId', SCM.CurrentUser.id);
 			},
-			
+
 			/**
 			 * 根据状态设置编辑界面状态
 			 * 
@@ -177,21 +183,23 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 					this.editDetailButton.setVisible(false);
 				}
 			},
-			
+
 			/**
 			 * 设置分录列表是否可编辑
-			 * @param {} editAble
+			 * 
+			 * @param {}
+			 *            editAble
 			 */
-			setGridEditAble : function(editAble){
+			setGridEditAble : function(editAble) {
 				this.addLineButton.setDisabled(!editAble);
 				this.deleteLineButton.setDisabled(!editAble);
 				Ext.each(this.allColumn, function(item, index, length) {
-							if(item.getEditor()){
+							if (item.getEditor()) {
 								item.getEditor().setDisabled(!editAble);
 							}
 						})
 			},
-			
+
 			/**
 			 * 重写刷新方法
 			 * 
@@ -251,9 +259,25 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 						e.record.set('unitUnitId', record.get('bomUnitId'));
 						e.record.set('unitUnitName', record.get('bomUnitName'));
 					}
+					if (e.originalValue != e.value) {
+						Ext.Ajax.request({
+									params : {
+										entryId : e.record.get('id')
+									},
+									url : '../../scm/control/removeWorkshopPriceDetail',
+									success : function(response, option) {
+										var result = Ext.decode(response.responseText)
+										if (result.success) {
+											Ext.Msg.alert("提示", "由于变更加工件，已经成功清理原来加工件耗料列表！");
+										} else {
+											showError(result.message);
+										}
+									}
+								});
+					}
 				}
 			},
-			
+
 			/**
 			 * 获取单据提交URL
 			 */
@@ -267,7 +291,7 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 			getRollbackBillUrl : function() {
 				return '../../scm/control/rollbackWorkshopWarehousing';
 			},
-			
+
 			/**
 			 * 查看加工件耗料情况
 			 */
@@ -282,29 +306,31 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 				} else {
 					showWarning('未选中物料！');
 				}
-				
+
 			},
-			
-			/**
-			 * 当用户编辑grid时，同步更新相关表单数据
-			 * 
-			 * @param {}
-			 *            editor
-			 * @param {}
-			 *            e
-			 */
-			initDetailList : function(editor, e) {
-				if (e.field == 'materialMaterialId') {
-					var record = this.searchMaterialId.store.findRecord('id', e.value);
-					if (record) {
-						e.record.set('materialMaterialModel', record.get('model'));
-						e.record.set('unitUnitId', record.get('defaultUnitId'));
-						e.record.set('unitUnitName', record.get('defaultUnitName'));
-						e.record.set('price', record.get('defaultPrice'));
-					}
-				}
-				e.record.set('entrysum', e.record.get('price') * e.record.get('volume'));
-			},
+
+			// /**
+			// * 当用户编辑grid时，同步更新相关表单数据
+			// *
+			// * @param {}
+			// * editor
+			// * @param {}
+			// * e
+			// */
+			// initDetailList : function(editor, e) {
+			// if (e.field == 'materialMaterialId') {
+			// var record = this.searchMaterialId.store.findRecord('id',
+			// e.value);
+			// if (record) {
+			// e.record.set('materialMaterialModel', record.get('model'));
+			// e.record.set('unitUnitId', record.get('defaultUnitId'));
+			// e.record.set('unitUnitName', record.get('defaultUnitName'));
+			// e.record.set('price', record.get('defaultPrice'));
+			// }
+			// }
+			// e.record.set('entrysum', e.record.get('price') *
+			// e.record.get('volume'));
+			// },
 
 			/**
 			 * 编辑事件
@@ -315,13 +341,39 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 			 *            record 选中记录
 			 */
 			modifyDetailRecord : function(grid, record) {
-				this.currentRecord = record;
-				this.detailEditWin.uiStatus = 'Modify';
-				// 根据选择的id加载编辑界面数据
-				this.detailEditEntryId = record.get('id');
-
-				this.detailEditEntry.store.getProxy().extraParams.whereStr = "entry_id = '" + this.detailEditEntryId + "'";
-				this.detailEditEntry.store.load();
+				var me = this;
+				me.currentRecord = record;
+				me.detailEditWin.uiStatus = 'Modify';
+				
+				// 获取耗料列表
+				me.detailEditEntry.store.getProxy().extraParams.whereStr = 'parent_id = \'' + record.get('id') + '\'';
+				me.detailEditEntry.store.load(function(records, operation, success) {
+						if(records.length <= 0){//如果不存在耗料列表，获取初始列表
+							me.MaterialStore.getProxy().extraParams.whereStr = 'MaterialBomV.id = \'' + record.get('bomId') + '\'';
+							me.MaterialStore.load(function(records, operation, success) {
+										me.detailEditEntry.store.remove(me.detailEditEntry.store.data.items);
+										for (var i = 0; i < records.length; i++) {
+											var tempRecord = records[i];
+											var entryRecord = Ext.create('WorkshopWarehousingDetailModel');
+											entryRecord.phantom = true;
+		
+											// 设置父id
+											entryRecord.set('parentId', record.get('id'));
+											entryRecord.set('bomId', record.get('bomId'));
+											entryRecord.set('materialId', tempRecord.get('bomMaterialId'));
+											entryRecord.set('materialModel', tempRecord.get('bomMaterialModel'));
+											entryRecord.set('volume', tempRecord.get('volume'));
+											entryRecord.set('price', 0);
+											entryRecord.set('entrysum', 0);
+											entryRecord.set('materialUnitId', tempRecord.get('unitId'));
+											me.detailEditEntry.store.add(entryRecord);
+										}
+										me.MaterialStore.getProxy().extraParams.whereStr = "";
+									});
+						}
+					}
+				);
+				me.detailEditEntry.store.getProxy().extraParams.whereStr = "";
 				this.detailEditWin.show();
 			},
 
@@ -343,32 +395,33 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 				}
 			},
 
-			/**
-			 * 新增额外耗料
-			 * 
-			 * @param {}
-			 *            button
-			 */
-			addDetailLine : function(button) {
-				var detailRecord = Ext.create('WorkshopWarehousingEntryDetailModel');
-				detailRecord.phantom = true;
-
-				// 设置分录id
-				detailRecord.set('entryId', this.detailEditEntryId);
-				this.detailEditEntry.store.add(detailRecord);
-			},
-			/**
-			 * 删除额外耗料
-			 * 
-			 * @param {}
-			 *            button
-			 */
-			deleteDetailLine : function(button) {
-				var selMod = this.detailEditEntry.getSelectionModel();
-				if (selMod != null) {
-					this.detailEditEntry.store.remove(selMod.getLastSelected());
-				}
-			},
+			// /**
+			// * 新增额外耗料
+			// *
+			// * @param {}
+			// * button
+			// */
+			// addDetailLine : function(button) {
+			// var detailRecord =
+			// Ext.create('WorkshopWarehousingEntryDetailModel');
+			// detailRecord.phantom = true;
+			//
+			// // 设置分录id
+			// detailRecord.set('entryId', this.detailEditEntryId);
+			// this.detailEditEntry.store.add(detailRecord);
+			// },
+			// /**
+			// * 删除额外耗料
+			// *
+			// * @param {}
+			// * button
+			// */
+			// deleteDetailLine : function(button) {
+			// var selMod = this.detailEditEntry.getSelectionModel();
+			// if (selMod != null) {
+			// this.detailEditEntry.store.remove(selMod.getLastSelected());
+			// }
+			// },
 
 			/**
 			 * 保存额外耗料列表
@@ -377,10 +430,17 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 			 *            button 保存按钮
 			 */
 			saveDetailRecord : function(button) {
-				this.detailEditEntry.store.sync();
-				if (this.detailEditWin.isVisible()) {
-					this.detailEditWin.close();
-				}
+				var me = this;
+				me.detailEditEntry.store.sync({
+							callback : function(batch, options) {
+								if (!batch.hasException) {
+									if (me.detailEditWin.isVisible()) {
+										me.detailEditWin.close();
+									}
+									Ext.Msg.alert("提示", "保存成功！");
+								}
+							}
+						});
 			},
 
 			/**
@@ -389,28 +449,28 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 			cancelDetail : function() {
 				this.detailEditWin.close();
 			},
-			getMainPrintHTML:function(){
+			getMainPrintHTML : function() {
 				return "<div>"
-				+"<div class='caption' >江门市蓬江区富桥旅游用品厂有限公司</div>"
-				+"<div class='caption' >车间半成品入库单</div>"
-				+"<div class='field' style='width:45%;float:left;'  >单据编号:<span class='dataField' fieldindex='data.number' width=150px></span></div>"
-				+"<div class='field' align='right' style='width:45%;float:right;'>打印时间:<span class='dataField' fieldindex='data.printTime' width=150px ></span></div>"
-				+"<div class='field' style='width:25%;float:left;'>发货车间:<span class='dataField' fieldindex='data.workshopWorkshopName' width=150px></span></div>"
-				+"<div class='field' style='width:25%;float:left;'>发货人:<span style='width:150px'></span></div>"
-				+"<div class='field' align='right' style='width:35%;float:right;'>日期:<span class='dataField' fieldindex='data.bizDate' width=150px></span></div>"
-				+"<div class='nextLine'></div>"
-				+"<table  cellspacing='0' class='dataEntry' fieldindex='data.entry'>" 
-				+"<tr> "
-				+"<th bindfield='materialMaterialNumber' width='13%'>货号</th>" 
-				+"<th bindfield='warehouseWarehouseName'>仓库</th> "
-				+"<th bindfield='materialMaterialName' width='28%'>物料名称</th>" 
-				+"<th bindfield='materialMaterialModel' width='15%'>规格型号</th> "
-				+"<th bindfield='volume'  width='13%'>数量</th> "
-				+"<th bindfield='unitUnitName' width='8%'>单位</th> "
-				+"<th bindfield='note' width='13%'>备注</th> "
-				+"</tr> "
-				+"</table>"
-				+"<div class='field' style='width:80px;float:right;'>第<span class='dataField' fieldindex='data.curPage'></span>页/共<span class='dataField' fieldindex='data.totalPages'></span>页</div>"
-				+"</div>";
+						+ "<div class='caption' >江门市蓬江区富桥旅游用品厂有限公司</div>"
+						+ "<div class='caption' >车间半成品入库单</div>"
+						+ "<div class='field' style='width:45%;float:left;'  >单据编号:<span class='dataField' fieldindex='data.number' width=150px></span></div>"
+						+ "<div class='field' align='right' style='width:45%;float:right;'>打印时间:<span class='dataField' fieldindex='data.printTime' width=150px ></span></div>"
+						+ "<div class='field' style='width:25%;float:left;'>发货车间:<span class='dataField' fieldindex='data.workshopWorkshopName' width=150px></span></div>"
+						+ "<div class='field' style='width:25%;float:left;'>发货人:<span style='width:150px'></span></div>"
+						+ "<div class='field' align='right' style='width:35%;float:right;'>日期:<span class='dataField' fieldindex='data.bizDate' width=150px></span></div>"
+						+ "<div class='nextLine'></div>"
+						+ "<table  cellspacing='0' class='dataEntry' fieldindex='data.entry'>"
+						+ "<tr> "
+						+ "<th bindfield='materialMaterialNumber' width='13%'>货号</th>"
+						+ "<th bindfield='warehouseWarehouseName'>仓库</th> "
+						+ "<th bindfield='materialMaterialName' width='28%'>物料名称</th>"
+						+ "<th bindfield='materialMaterialModel' width='15%'>规格型号</th> "
+						+ "<th bindfield='volume'  width='13%'>数量</th> "
+						+ "<th bindfield='unitUnitName' width='8%'>单位</th> "
+						+ "<th bindfield='note' width='13%'>备注</th> "
+						+ "</tr> "
+						+ "</table>"
+						+ "<div class='field' style='width:80px;float:right;'>第<span class='dataField' fieldindex='data.curPage'></span>页/共<span class='dataField' fieldindex='data.totalPages'></span>页</div>"
+						+ "</div>";
 			}
 		});
