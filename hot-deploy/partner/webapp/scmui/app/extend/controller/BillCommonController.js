@@ -114,7 +114,8 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 						}
 						me.doSubmitBill();
 					} else if (request.action == 'destroy') {
-						Ext.Msg.alert("提示", "删除成功！", this.refreshRecord);
+						Ext.Msg.alert("提示", "删除成功！");
+						me.refreshRecord();
 					}
 					if (request.action != 'read' && me.win.isVisible()) {
 						me.win.close();
