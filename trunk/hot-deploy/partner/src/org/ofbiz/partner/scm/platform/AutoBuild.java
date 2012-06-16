@@ -22,43 +22,53 @@ public static void main(String[] args){
 	
 	/* first, we init the runtime engine.  Defaults are fine. */
 
-//	String tname="WorkshopOtherDrawBill";//修改这个变量生成不同的单据第一个字母一定要大写
-//	String talias="车间其它领料";
-//	//field type : int , float ,string ,date ,boolean ,entity,enum
-//	Vector<Map<String, String>>	headFields=new Vector<Map<String,String>>();
-//	Vector<Map<String, String>>	entryFields=new Vector<Map<String,String>>();
+	String tname="ProductInwarehouse";//修改这个变量生成不同的单据第一个字母一定要大写
+	String talias="成品进仓单";
+	//field type : int , float ,string ,date ,boolean ,entity,enum
+	Vector<Map<String, String>>	headFields=new Vector<Map<String,String>>();
+	Vector<Map<String, String>>	entryFields=new Vector<Map<String,String>>();
 //	Field testfield1=new Field("workshop", "车间","entity","Workshop"); 
-//	Field testfield2=new Field("buyer", "领料人","entity","SystemUser"); 
-//	Field testfield3=new Field("submitter", "提交人","entity","SystemUser");
-//	Field testfield4=new Field("totalsum", "总金额","float");
+	Field testfield2=new Field("inspector", "领料人","entity","SystemUser"); 
+	Field testfield3=new Field("submitter", "提交人","entity","SystemUser");
+	Field testfield4=new Field("totalsum", "总金额","float");
 //	headFields.add(testfield1.getMap());
-//	headFields.add(testfield2.getMap());
-//	headFields.add(testfield3.getMap());
-//	headFields.add(testfield4.getMap());
-//	Field testentryfield0=new Field("warehouse", "仓库","entity","Warehouse");
-//	Field testentryfield1=new Field("material", "物料","entity","Material");
-//	Field testentryfield2=new Field("volume", "数量","float");
-//	Field testentryfield3=new Field("unit", "单位","entity","Unit");
-//	Field testentryfield4=new Field("price", "单价","float");
+	headFields.add(testfield2.getMap());
+	headFields.add(testfield3.getMap());
+	headFields.add(testfield4.getMap());
+	Field testentryfield0=new Field("workshop", "车间","entity","Workshop");
+	Field testentryfield1=new Field("warehouse", "仓库","entity","Warehouse");
+	Field testentryfield2=new Field("material", "物料","entity","Material");
+	Field testentryfield3=new Field("volume", "数量","float");
+	Field testentryfield4=new Field("unit", "单位","entity","Unit");
+	Field testentryfield5=new Field("price", "单价","float");
 //	Field testentryfield5=new Field("refPrice", "参考单价","float");
-//	Field testentryfield6=new Field("entrysum", "金额","float");
-//	
-//	entryFields.add(testentryfield0.getMap());
-//	entryFields.add(testentryfield1.getMap());
-//	entryFields.add(testentryfield2.getMap());
-//	entryFields.add(testentryfield3.getMap());
-//	entryFields.add(testentryfield4.getMap());
-//	entryFields.add(testentryfield5.getMap());
-//	entryFields.add(testentryfield6.getMap());
-//	
-//    VelocityContext context = new VelocityContext();
-//    //设置变量
-//    context.put("TemplateName", tname);
-//    context.put("TemplateAlias", talias);
-//    context.put("HeadFields", headFields);
-//    context.put("EntryFields", entryFields);
-//
-//    ab.buildBaseBill(tname, context);
+	Field testentryfield6=new Field("entrysum", "金额","float");
+	Field testentryfield7=new Field("barcode1", "条码1");
+	Field testentryfield8=new Field("barcode2", "条码2");
+	Field testentryfield9=new Field("inwarehouseType", "进仓类型","enum");
+	
+	testentryfield9.setEnumStore("SCM.store.basiccode.productInStatusStore");
+	testentryfield9.setEnumRender("SCM.store.basiccode.productInStatusRenderer");
+	
+	entryFields.add(testentryfield0.getMap());
+	entryFields.add(testentryfield1.getMap());
+	entryFields.add(testentryfield2.getMap());
+	entryFields.add(testentryfield3.getMap());
+	entryFields.add(testentryfield4.getMap());
+	entryFields.add(testentryfield5.getMap());
+	entryFields.add(testentryfield6.getMap());
+	entryFields.add(testentryfield7.getMap());
+	entryFields.add(testentryfield8.getMap());
+	entryFields.add(testentryfield9.getMap());
+	
+    VelocityContext context = new VelocityContext();
+    //设置变量
+    context.put("TemplateName", tname);
+    context.put("TemplateAlias", talias);
+    context.put("HeadFields", headFields);
+    context.put("EntryFields", entryFields);
+
+    ab.buildBaseBill(tname, context);
 
     
     //-------------生成基础资料
