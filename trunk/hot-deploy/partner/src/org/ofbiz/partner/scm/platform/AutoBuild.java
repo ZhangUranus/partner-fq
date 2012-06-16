@@ -2,6 +2,8 @@ package org.ofbiz.partner.scm.platform;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.util.Map;
+import java.util.Vector;
 
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
@@ -13,26 +15,27 @@ import org.apache.velocity.exception.ResourceNotFoundException;
 
 public class AutoBuild {
 	
-final String TARGET_FOLDER="D:\\Learning\\ofbiz\\apache-ofbiz-10.04\\hot-deploy\\partner\\";
+final String TARGET_FOLDER="F:\\apache\\ofbiz\\apache-ofbiz-10.04\\hot-deploy\\partner\\";
 
 public static void main(String[] args){
-//	AutoBuild ab=new AutoBuild();
+	AutoBuild ab=new AutoBuild();
 	
 	/* first, we init the runtime engine.  Defaults are fine. */
 
-//	String tname="PurchaseBill";//修改这个变量生成不同的单据第一个字母一定要大写
-//	String talias="采购单";
+//	String tname="WorkshopOtherDrawBill";//修改这个变量生成不同的单据第一个字母一定要大写
+//	String talias="车间其它领料";
 //	//field type : int , float ,string ,date ,boolean ,entity,enum
 //	Vector<Map<String, String>>	headFields=new Vector<Map<String,String>>();
 //	Vector<Map<String, String>>	entryFields=new Vector<Map<String,String>>();
-//	Field testfield1=new Field("supplier", "供应商","entity","Supplier"); 
-//	Field testfield2=new Field("buyer", "采购员","entity","SystemUser"); 
-//	Field testfield3=new Field("approver", "审核员","entity","SystemUser");
+//	Field testfield1=new Field("workshop", "车间","entity","Workshop"); 
+//	Field testfield2=new Field("buyer", "领料人","entity","SystemUser"); 
+//	Field testfield3=new Field("submitter", "提交人","entity","SystemUser");
 //	Field testfield4=new Field("totalsum", "总金额","float");
 //	headFields.add(testfield1.getMap());
 //	headFields.add(testfield2.getMap());
 //	headFields.add(testfield3.getMap());
 //	headFields.add(testfield4.getMap());
+//	Field testentryfield0=new Field("warehouse", "仓库","entity","Warehouse");
 //	Field testentryfield1=new Field("material", "物料","entity","Material");
 //	Field testentryfield2=new Field("volume", "数量","float");
 //	Field testentryfield3=new Field("unit", "单位","entity","Unit");
@@ -40,6 +43,7 @@ public static void main(String[] args){
 //	Field testentryfield5=new Field("refPrice", "参考单价","float");
 //	Field testentryfield6=new Field("entrysum", "金额","float");
 //	
+//	entryFields.add(testentryfield0.getMap());
 //	entryFields.add(testentryfield1.getMap());
 //	entryFields.add(testentryfield2.getMap());
 //	entryFields.add(testentryfield3.getMap());

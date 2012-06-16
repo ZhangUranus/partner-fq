@@ -186,6 +186,8 @@ public class MonthlySettlement {
 		
 		if(checkExist("WorkshopReturnProduct", cond))throw new Exception("本期间存在保存状态的车间退库单，不能进行结算！！");
 		
+		if(checkExist("WorkshopOtherDrawBill", cond))throw new Exception("本期间存在保存状态的车间其它领料单，不能进行结算！！");
+		
 		if(checkExist("ReturnProductWarehousing", cond))throw new Exception("本期间存在保存状态的进货单，不能进行结算！！");
 		
 		Debug.logInfo("检查是否当前期间的保存单据，操作结束~~~~~~", module);
@@ -614,6 +616,8 @@ public class MonthlySettlement {
 		if(checkExist("WorkshopWarehousing", cond))throw new Exception("本期间存在提交状态的车间入库单，不能进行反结算！！");
 		
 		if(checkExist("WorkshopReturnProduct", cond))throw new Exception("本期间存在提交状态的车间退库单，不能进行反结算！！");
+		
+		if(checkExist("WorkshopOtherDrawBill", cond))throw new Exception("本期间存在提交状态的车间其它领料单，不能进行反结算！！");
 		
 		if(checkExist("ReturnProductWarehousing", cond))throw new Exception("本期间存在提交状态的进货单，不能进行反结算！！");
 		

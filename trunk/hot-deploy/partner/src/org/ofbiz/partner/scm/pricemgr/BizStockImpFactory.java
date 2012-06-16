@@ -8,6 +8,7 @@ import org.ofbiz.partner.scm.pricemgr.bizStockImp.InspectiveBizImp;
 import org.ofbiz.partner.scm.pricemgr.bizStockImp.PurchaseReturnBizImp;
 import org.ofbiz.partner.scm.pricemgr.bizStockImp.ReturnProductWarehousingBizImp;
 import org.ofbiz.partner.scm.pricemgr.bizStockImp.WorkshopDrawMaterialBizImp;
+import org.ofbiz.partner.scm.pricemgr.bizStockImp.WorkshopOtherDrawBizImp;
 import org.ofbiz.partner.scm.pricemgr.bizStockImp.WorkshopReturnMaterialBizImp;
 import org.ofbiz.partner.scm.pricemgr.bizStockImp.WorkshopReturnProductBizImp;
 import org.ofbiz.partner.scm.pricemgr.bizStockImp.WorkshopWarehousingBizImp;
@@ -23,6 +24,7 @@ public class BizStockImpFactory {
 	private static IBizStock workshopReturnMaterialBizImp =new WorkshopReturnMaterialBizImp();
 	private static IBizStock workshopReturnProductBizImp =new WorkshopReturnProductBizImp();
 	private static IBizStock workshopWarehousingBizImp =new WorkshopWarehousingBizImp();
+	private static IBizStock workshopOtherDrawBizImp =new WorkshopOtherDrawBizImp();
 	private static IBizStock returnProductWarehousingBizImp =new ReturnProductWarehousingBizImp();
 	public static IBizStock getBizStockImp(BillType billType) throws Exception{
 		switch (billType) {
@@ -46,6 +48,8 @@ public class BizStockImpFactory {
 			return  workshopReturnProductBizImp;
 		case WorkshopWarehousing:
 			return  workshopWarehousingBizImp;
+		case WorkshopOtherDrawBill:
+			return workshopOtherDrawBizImp;
 		case ReturnProductWarehousing:
 			return returnProductWarehousingBizImp;
 		default:

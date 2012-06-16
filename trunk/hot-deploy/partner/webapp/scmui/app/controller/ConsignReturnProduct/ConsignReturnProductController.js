@@ -108,6 +108,9 @@ Ext.define('SCM.controller.ConsignReturnProduct.ConsignReturnProductController',
 				this.searchStatus = this.listPanel.down('combobox[name=status]');
 				this.currentCheckVolumeColumn = this.editEntry.down('numbercolumn[dataIndex=currentCheckVolume]');
 				this.volumeColumn = this.editEntry.down('numbercolumn[dataIndex=volume]');
+				//add by mark 2012-5-26 添加输入单价列
+				this.inputpriceColumn = this.editEntry.down('numbercolumn[dataIndex=inputprice]');
+				
 				this.warehouseColumn = this.editEntry.down('combocolumn[dataIndex=warehouseWarehouseId]');
 				this.marterialColumn = this.editEntry.down('combocolumn[dataIndex=bomId]');
 				this.MaterialStore = Ext.data.StoreManager.lookup('MBAllStore');
@@ -144,6 +147,8 @@ Ext.define('SCM.controller.ConsignReturnProduct.ConsignReturnProductController',
 					this.submitEditButton.setDisabled(false);
 					this.checkButton.setVisible(false);
 					this.volumeColumn.setEditor(this.numberEditor);
+					this.inputpriceColumn.setEditor(this.numberEditor);//控制输入单据字段编辑状态 add by mark 2012-5-26
+					
 					this.currentCheckVolumeColumn.setEditor(null);
 					this.warehouseColumn.getEditor().setDisabled(false);
 					this.marterialColumn.getEditor().setDisabled(false);
@@ -156,6 +161,7 @@ Ext.define('SCM.controller.ConsignReturnProduct.ConsignReturnProductController',
 					this.submitEditButton.setDisabled(true);
 					this.checkButton.setVisible(true);
 					this.volumeColumn.setEditor(null);
+					this.inputpriceColumn.setEditor(null);//控制输入单据字段编辑状态 add by mark 2012-5-26
 					this.currentCheckVolumeColumn.setEditor(this.numberEditor);
 					this.warehouseColumn.getEditor().setDisabled(true);
 					this.marterialColumn.getEditor().setDisabled(true);
@@ -230,6 +236,8 @@ Ext.define('SCM.controller.ConsignReturnProduct.ConsignReturnProductController',
 						e.record.set('unitUnitId', record.get('bomUnitId'));
 						e.record.set('unitUnitName', record.get('bomUnitName'));
 					}
+				}else if (e.field == 'inputprice'||e.field == 'volume'){//add by mark 2012-5-26 计算输入金额
+					e.record.set('inputentrysum', e.record.get('inputprice') * e.record.get('volume'));
 				}
 			},
 
@@ -324,8 +332,8 @@ Ext.define('SCM.controller.ConsignReturnProduct.ConsignReturnProductController',
 				+"<th bindfield='materialMaterialModel' width='15%'>规格型号</th> "
 				+"<th bindfield='unitUnitName' width='8%'>单位</th> "
 				+"<th bindfield='volume' width='12%'>数量</th> "
-				+"<th bindfield='price' width='12%'>单价</th> "
-				+"<th bindfield='entrysum' width='12%'>金额</th> "
+				+"<th bindfield='inputprice' width='12%'>单价</th> "
+				+"<th bindfield='inputentrysum' width='12%'>金额</th> "
 				+"</table>" 
 				+"<div class='field' style='width:50%;'></div>"
 				+"<div class='field' style='width:30%;float:left;'>退货员:<span class='dataField' fieldindex='data.returnerSystemUserName' width=150px></span></div>"

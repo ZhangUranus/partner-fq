@@ -129,6 +129,7 @@ Ext.define('SCM.controller.WorkshopReturnProduct.WorkshopReturnProductController
 				this.searchStatus = this.listPanel.down('combobox[name=status]');
 				this.currentCheckVolumeColumn = this.editEntry.down('numbercolumn[dataIndex=currentCheckVolume]');
 				this.volumeColumn = this.editEntry.down('numbercolumn[dataIndex=volume]');
+				this.inputpriceColumn = this.editEntry.down('numbercolumn[dataIndex=inputprice]');
 				this.warehouseColumn = this.editEntry.down('combocolumn[dataIndex=warehouseWarehouseId]');
 				this.marterialColumn = this.editEntry.down('combocolumn[dataIndex=bomId]');
 				this.MaterialStore = Ext.data.StoreManager.lookup('MBAllStore');
@@ -175,6 +176,7 @@ Ext.define('SCM.controller.WorkshopReturnProduct.WorkshopReturnProductController
 					this.submitEditButton.setDisabled(false);
 					this.checkButton.setVisible(false);
 					this.volumeColumn.setEditor(this.numberEditor);
+					this.inputpriceColumn.setEditor(this.numberEditor);
 					this.currentCheckVolumeColumn.setEditor(null);
 					this.warehouseColumn.getEditor().setDisabled(false);
 					this.marterialColumn.getEditor().setDisabled(false);
@@ -189,6 +191,7 @@ Ext.define('SCM.controller.WorkshopReturnProduct.WorkshopReturnProductController
 					this.submitEditButton.setDisabled(true);
 					this.checkButton.setVisible(true);
 					this.volumeColumn.setEditor(null);
+					this.inputpriceColumn.setEditor(null);
 					this.currentCheckVolumeColumn.setEditor(this.numberEditor);
 					this.warehouseColumn.getEditor().setDisabled(true);
 					this.marterialColumn.getEditor().setDisabled(true);
@@ -267,6 +270,8 @@ Ext.define('SCM.controller.WorkshopReturnProduct.WorkshopReturnProductController
 						e.record.set('unitUnitId', record.get('bomUnitId'));
 						e.record.set('unitUnitName', record.get('bomUnitName'));
 					}
+				}else if (e.field == 'inputprice'||e.field == 'volume'){//add by mark 2012-5-26 计算输入金额
+					e.record.set('inputentrysum', e.record.get('inputprice') * e.record.get('volume'));
 				}
 			},
 
@@ -367,6 +372,10 @@ Ext.define('SCM.controller.WorkshopReturnProduct.WorkshopReturnProductController
 						e.record.set('price', record.get('defaultPrice'));
 					}
 				}
+				else if (e.field == 'inputprice'||e.field == 'volume'){//add by mark 2012-5-26 计算输入金额
+					e.record.set('inputentrysum', e.record.get('inputprice') * e.record.get('volume'));
+				}
+				
 				e.record.set('entrysum', e.record.get('price') * e.record.get('volume'));
 			},
 

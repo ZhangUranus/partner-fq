@@ -24,4 +24,5 @@
 	<TSystemSerialNumber id='caca485d-3e34-412e-bac7-5d6377e91d74' serialDate='20120101' entityName='WorkshopReturnMaterial' prefix='WRM' serialNumber='100001' initNumber='100001' description='制造退料单编号' hasDate='1' />
 	<TSystemSerialNumber id='2b5a51ce-e920-47c0-990a-1976843a856b' serialDate='20120101' entityName='WorkshopWarehousing' prefix='WWS' serialNumber='100001' initNumber='100001' description='制造入库单编号' hasDate='1' />
 	<TSystemSerialNumber id='d6549ba2-c2b8-457b-bb87-437787b38624' serialDate='20120101' entityName='WorkshopReturnProduct' prefix='WRP' serialNumber='100001' initNumber='100001' description='制造退货单编号' hasDate='1' />
+	<TSystemSerialNumber id='fcdf44d3d-a49b-4da2-ae6f-3a2c9f052d2' serialDate='20120101' entityName='WorkshopOtherDrawBill' prefix='WOD' serialNumber='100001' initNumber='100001' description='制造其它领料单编号' hasDate='1' />
 </entity-engine-xml>
