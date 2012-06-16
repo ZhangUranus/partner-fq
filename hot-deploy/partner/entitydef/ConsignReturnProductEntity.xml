@@ -43,6 +43,8 @@
 		<field name="unitUnitId" type="id-long"></field>
 		<field name="price" type="fixed-point"></field>
 		<field name="entrysum" type="fixed-point"></field>
+		<field name="inputprice" type="fixed-point"></field>
+		<field name="inputentrysum" type="fixed-point"></field>
 		<prim-key field="id" />
 	</entity>
 	<!-- 未验收物料列表 -->

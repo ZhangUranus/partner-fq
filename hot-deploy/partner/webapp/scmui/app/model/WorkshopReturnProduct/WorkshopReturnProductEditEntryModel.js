@@ -52,6 +52,12 @@ Ext.define('SCM.model.WorkshopReturnProduct.WorkshopReturnProductEditEntryModel'
 					}, {
 						name : 'entrysum',
 						type : 'float'
+					}, {
+						name : 'inputprice',
+						type : 'float'
+					}, {
+						name : 'inputentrysum',
+						type : 'float'
 					}],
 			idgen : 'uuid', // 使用uuid生成记录id 每个模型必须要有id字段
 			proxy : {

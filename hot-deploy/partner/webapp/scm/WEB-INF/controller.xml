@@ -305,7 +305,18 @@
 		<event type="java" path="org.ofbiz.partner.scm.stock.WorkshopReturnProductEvents" invoke="rollbackBill" />
 		<response name="success" type="none" />
 	</request-map>
-	
+	<!-- 制造其它领料单提交 -->
+	<request-map uri="submitWorkshopOtherDraw">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.WorkshopOtherDrawBillEvents" invoke="submitBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 制造其它领料单撤销 -->
+	<request-map uri="rollbackWorkshopOtherDraw">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.WorkshopOtherDrawBillEvents" invoke="rollbackBill" />
+		<response name="success" type="none" />
+	</request-map>
 	
 	<!-- 系统结算 -->
 	<request-map uri="monthlySettle">

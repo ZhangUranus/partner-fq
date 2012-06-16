@@ -94,13 +94,28 @@ Ext.define('SCM.view.WorkshopReturnProduct.DetailEditUI', {
 													width : 80
 												}, {
 													xtype : 'numbercolumn',
+													dataIndex : 'inputprice',
+													editor : {
+														xtype : 'numberfield',
+														allowBlank : false,
+														hideTrigger : true
+													},
+													text : '输入单价',
+													width : 80
+												}, {
+													xtype : 'numbercolumn',
+													dataIndex : 'inputentrysum',
+													text : '输入金额',
+													width : 80
+												}, {
+													xtype : 'numbercolumn',
 													dataIndex : 'price',
-													text : '参考单价',
+													text : '系统单价',
 													width : 80
 												}, {
 													xtype : 'numbercolumn',
 													dataIndex : 'entrysum',
-													text : '参考金额',
+													text : '系统金额',
 													width : 80
 												}],
 										viewConfig : {},

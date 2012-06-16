@@ -18,7 +18,7 @@ import org.ofbiz.partner.scm.pricemgr.Utils;
 public class WorkshopReturnProductBizImp implements IBizStock {
 	private Delegator delegator = org.ofbiz.partner.scm.common.Utils.getDefaultDelegator();
 
-	public void updateStock(GenericValue billValue, boolean isOut, boolean isCancel) throws Exception {
+	public synchronized void updateStock(GenericValue billValue, boolean isOut, boolean isCancel) throws Exception {
 		// 注意不能使用billHead.getDate方法，出产生castException异常
 		Date bizDate = (Date) billValue.get("bizDate");
 		if (bizDate == null || !Utils.isCurPeriod(bizDate)) {

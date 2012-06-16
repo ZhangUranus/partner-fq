@@ -17,6 +17,7 @@ public enum BillType {
 	,WorkshopReturnMaterial//车间退料
 	,WorkshopWarehousing//车间入库
 	,WorkshopReturnProduct//车间退货
+	,WorkshopOtherDrawBill//车间其他领料
 	,ProductionPlan//采购计划
 	,ReturnProductWarehousing//已退货的进库单
 

@@ -17,7 +17,7 @@ import org.ofbiz.partner.scm.pricemgr.PurchasePriceMgr;
 public class InspectiveBizImp implements IBizStock {
 	private Delegator delegator = org.ofbiz.partner.scm.common.Utils.getDefaultDelegator();
 
-	public void updateStock(GenericValue billValue, boolean isOut, boolean isCancel) throws Exception {
+	public synchronized void updateStock(GenericValue billValue, boolean isOut, boolean isCancel) throws Exception {
 		Date bizDate = (Date) billValue.get("bizDate");
 		
 		int billType = billValue.getInteger("type");

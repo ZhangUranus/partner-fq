@@ -140,12 +140,20 @@ Ext.define('SCM.view.WorkshopReturnProduct.ListUI', {
 													text : '单位'
 												}, {
 													xtype : 'numbercolumn',
+													dataIndex : 'inputprice',
+													text : '输入单价'
+												}, {
+													xtype : 'numbercolumn',
+													dataIndex : 'inputentrysum',
+													text : '输入金额'
+												}, {
+													xtype : 'numbercolumn',
 													dataIndex : 'price',
-													text : '单价'
+													text : '系统单价'
 												}, {
 													xtype : 'numbercolumn',
 													dataIndex : 'entrysum',
-													text : '金额'
+													text : '系统金额'
 												}]
 									}]
 						});

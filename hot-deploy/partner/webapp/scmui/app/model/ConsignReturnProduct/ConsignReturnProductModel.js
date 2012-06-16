@@ -95,6 +95,12 @@ Ext.define('SCM.model.ConsignReturnProduct.ConsignReturnProductModel', {
 					}, {
 						name : 'entrysum',
 						type : 'float'
+					}, {
+						name : 'inputprice',
+						type : 'float'
+					}, {
+						name : 'inputentrysum',
+						type : 'float'
 					}],
 			// ,idProperty:'emptyId'//设置一个没用的id，这样才能支持显示多分录
 			proxy : {
