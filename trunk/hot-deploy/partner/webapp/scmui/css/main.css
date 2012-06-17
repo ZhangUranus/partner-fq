@@ -183,6 +183,9 @@
 .workshop-maintaince{
 	background-image: url( ../images/icons/workshop-maintaince.png ) !important;
 }
+.region-maintaince{
+	background-image: url( ../images/icons/region-maintaince.png ) !important;
+}
 .flag-green{
 	background-image: url( ../images/icons/flag-green.png ) !important;
 }
