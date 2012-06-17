@@ -47,4 +47,5 @@
 	<TSystemMenu menuId='WarehousetTypeMaintaince' menuName='仓库类型维护' menuType='1' parentId='basicSetting' sort='39' hyperlink='warehousetypelist' styleName='warehouse-type-maintaince' display='1' description='仓库类型维护' />
 	<TSystemMenu menuId='SupplierMaintaince' menuName='供应商资料维护' menuType='1' parentId='basicSetting' sort='40' hyperlink='Supplierlist' styleName='supplier-maintaince' display='1' description='供应商管理' />
 	<TSystemMenu menuId='WorkshopMaintaince' menuName='车间资料维护' menuType='1' parentId='basicSetting' sort='41' hyperlink='workshoplist' styleName='workshop-maintaince' display='1' description='车间管理' />
+	<TSystemMenu menuId='RegionMaintaince' menuName='地区表维护' menuType='1' parentId='basicSetting' sort='42' hyperlink='regionlist' styleName='region-maintaince' display='1' description='地区表维护' />
 </entity-engine-xml>
