@@ -3,15 +3,15 @@
 	may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
 	OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. -->
 <entity-engine-xml>
-	<TSystemSerialNumber id='37d74b11-1892-4b2a-b294-6e1a18c04eb2' serialDate='20120101' entityName='Unit' prefix='UNT' serialNumber='100012' initNumber='100001' description='计量单位编号' hasDate='0' />
+	<TSystemSerialNumber id='37d74b11-1892-4b2a-b294-6e1a18c04eb2' serialDate='20120101' entityName='Unit' prefix='UNT' serialNumber='100016' initNumber='100001' description='计量单位编号' hasDate='0' />
 	<TSystemSerialNumber id='42d56212-9b88-4fbb-b078-697172bfdbff' serialDate='20120101' entityName='WarehouseType' prefix='WHT' serialNumber='100006' initNumber='100001' description='仓库类型编号' hasDate='0' />
-	<TSystemSerialNumber id='db96e0df-3de8-4ce2-8525-5b88b335e38b' serialDate='20120101' entityName='Warehouse' prefix='WH' serialNumber='100008' initNumber='100001' description='仓库编号' hasDate='0' />
+	<TSystemSerialNumber id='db96e0df-3de8-4ce2-8525-5b88b335e38b' serialDate='20120101' entityName='Warehouse' prefix='WH' serialNumber='100006' initNumber='100001' description='仓库编号' hasDate='0' />
 	<TSystemSerialNumber id='4c0229a5-a545-43a3-afae-5abb821e3f1f' serialDate='20120101' entityName='Workshop' prefix='WS' serialNumber='100001' initNumber='100001' description='车间编号' hasDate='0' />
 	<TSystemSerialNumber id='ce306606-e30c-48cc-8a55-41157650567e' serialDate='20120101' entityName='Supplier' prefix='SUP' serialNumber='100059' initNumber='100001' description='供应商编号' hasDate='0' />
 	<TSystemSerialNumber id='d5d058f1-dd2d-42b3-a0c6-f0a80d33bb67' serialDate='20120101' entityName='Customer' prefix='CUST' serialNumber='100001' initNumber='100001' description='客户编号' hasDate='0' />
-	<TSystemSerialNumber id='6b29460f-9b22-4c11-a22f-84f9deb2534b' serialDate='20120101' entityName='TMaterialType' prefix='MTT' serialNumber='100007' initNumber='100001' description='物料类别编号' hasDate='0' />
+	<TSystemSerialNumber id='6b29460f-9b22-4c11-a22f-84f9deb2534b' serialDate='20120101' entityName='TMaterialType' prefix='MTT' serialNumber='100016' initNumber='100001' description='物料类别编号' hasDate='0' />
 	<TSystemSerialNumber id='3d7fc939-616e-4ff2-8312-5be37be67a8c' serialDate='20120101' entityName='TMaterial' prefix='MT' serialNumber='100001' initNumber='100001' description='物料编号' hasDate='0' />
-	<TSystemSerialNumber id='72889726-10a4-4241-ac9a-66d0f12d91b7' serialDate='20120101' entityName='MaterialBom' prefix='MTB' serialNumber='100344' initNumber='100001' description='BOM单编号' hasDate='0' />
+	<TSystemSerialNumber id='72889726-10a4-4241-ac9a-66d0f12d91b7' serialDate='20120101' entityName='MaterialBom' prefix='MTB' serialNumber='100396' initNumber='100001' description='BOM单编号' hasDate='0' />
 	<TSystemSerialNumber id='4fcd7765-38b6-4bd8-811d-e2225116411f' serialDate='20120101' entityName='Department' prefix='DPM' serialNumber='100005' initNumber='100001' description='部门编号' hasDate='0' />
 	<TSystemSerialNumber id='df110cae-1dcb-483a-81dc-43990471e8af' serialDate='20120101' entityName='PurchaseBill' prefix='PUR' serialNumber='100001' initNumber='100001' description='采购单编号' hasDate='1' />
 	<TSystemSerialNumber id='825bd0d4-3dc4-4c1c-92d7-28b7972bb004' serialDate='20120101' entityName='PurchaseWarehousing' prefix='PWS' serialNumber='100001' initNumber='100001' description='采购入库单编号' hasDate='1' />
