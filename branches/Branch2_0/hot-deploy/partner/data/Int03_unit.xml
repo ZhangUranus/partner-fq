@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements. See the NOTICE file distributed with this work for additional information regarding copyright ownership. The ASF licenses this file to you under the Apache License, Version 2.0 (the "License"); you 
+	may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
+	OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. -->
+<entity-engine-xml>
+<Unit id="047c75df-3f41-430c-ae79-1c6bb8e10bbe" number="UNT100001" name="块" DESCRIPTION="" />
+<Unit id="8a5960f7-3725-4136-b2f6-9a9884496aff" number="UNT100002" name="个" DESCRIPTION="" />
+<Unit id="b7323088-71fa-4367-877d-f6369fcceee6" number="UNT100003" name="KG" DESCRIPTION="" />
+<Unit id="0e866560-4148-4f8f-bbcc-823e0ad7cf7f" number="UNT100004" name="条" DESCRIPTION="" />
+<Unit id="e356b7fb-2ec3-4335-8834-db28f92930f9" number="UNT100005" name="对" DESCRIPTION="" />
+<Unit id="6e96c3d2-b30f-4e36-a1df-30f095db99cd" number="UNT100006" name="套" DESCRIPTION="" />
+<Unit id="cb6e8487-6410-4fda-a13b-35a0c65ee0b7" number="UNT100007" name="码" DESCRIPTION="" />
+<Unit id="3f0772e1-70da-4783-9159-7ba0e9efe4cb" number="UNT100008" name="片" DESCRIPTION="" />
+<Unit id="2a3ecfff-ed20-4dc0-bb3e-c664886c5806" number="UNT100009" name="扎" DESCRIPTION="" />
+<Unit id="f493feab-7b3a-4a6f-8d77-1d15508146f5" number="UNT100010" name="箱" DESCRIPTION="" />
+<Unit id="945342d4-79af-4dbd-ba0b-28c8064b76ef" number="UNT100011" name="卷" DESCRIPTION="" />
+<Unit id="6f0d5b98-9535-4675-bf66-a4d1865c4859" number="UNT100012" name="粒" DESCRIPTION="" />
+<Unit id="6866a9a2-f2c4-4c4e-975e-88ae0088771c" number="UNT100013" name="只" DESCRIPTION="" />
+<Unit id="7a2efe34-de81-4d4d-bf52-1aa7790b3fc6" number="UNT100014" name="张" DESCRIPTION="" />
+<Unit id="fee68453-9cfe-4b7b-835b-181f571fd84b" number="UNT100015" name="支" DESCRIPTION="" />
+<Unit id="bf868f17-f2be-4dd5-bbb8-6d64161972f2" number="UNT100016" name="把" DESCRIPTION="" />
+<Unit id="256034ad-e1ad-4db2-ad64-3fd1c0aa5b6c" number="UNT100017" name="件" DESCRIPTION="" />
+</entity-engine-xml>

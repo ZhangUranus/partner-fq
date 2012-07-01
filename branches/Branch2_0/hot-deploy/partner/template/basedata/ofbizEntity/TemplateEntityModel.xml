@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+
+<entitymodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/entitymodel.xsd">
+  <!-- ========================================================= -->
+  <!-- ======================== Defaults ======================= -->
+  <!-- ========================================================= -->
+    <title>Entity of an Open For Business Project Component</title>
+    <description>None</description>
+    <copyright>Copyright 2001-2009 The Apache Software Foundation</copyright>
+    <author>None</author>
+    <version>1.0</version>
+
+    <!-- 表头 -->
+    <entity entity-name="${TemplateName}"
+            package-name="org.ofbiz.scm.${TemplateName}"
+            title="${TemplateName} Entity">
+      <field name="id" type="id-long"></field>
+      <field name="number" type="name"></field>
+      <field name="name" type="value"></field>
+      #foreach($headfield in $HeadFields)
+      		#if($headfield.isPersis==true)<!-- \n -->
+	  <field name="#if($headfield.type=='entity')${headfield.name}${headfield.entity}Id#else${headfield.name}#end" type="#if($headfield.type=='string')value#elseif($headfield.type=='int')numeric#elseif($headfield.type=='float')fixed-point#elseif($headfield.type=='boolean')boolean#elseif($headfield.type=='date')date-time#elseif($headfield.type=='entity')id-long#elseif($headfield.type=='enum')value#end"></field>
+			#end 
+	  #end <!-- \n -->
+      <field name="createdStamp" type="date-time"></field>
+      <field name="lastUpdatedStamp" type="date-time"></field>
+      <prim-key field="id"/>
+    </entity>
+    
+   
+   <!-- 表头视图 -->
+    <view-entity entity-name="${TemplateName}View"
+            package-name="org.ofbiz.scm.${TemplateName}"
+            title="${TemplateName}View  Entity">
+      		<member-entity entity-alias="${TemplateName}V" entity-name="${TemplateName}"></member-entity>
+      		#foreach($headfield in $HeadFields)
+      		#if($headfield.isHidden==false&&$headfield.type=="entity"&&$headfield.isPersis==true)<!-- \n -->
+			<member-entity entity-alias="${headfield.name}${headfield.entity}V" entity-name="${headfield.entity}"></member-entity>
+			#end 
+	  		#end <!-- \n -->
+            <alias-all entity-alias="${TemplateName}V" ></alias-all>
+            #foreach($headfield in $HeadFields)
+      		#if($headfield.isHidden==false&&$headfield.type=="entity"&&$headfield.isPersis==true)<!-- \n -->
+			<alias name="${headfield.name}${headfield.entity}Name" entity-alias="${headfield.name}${headfield.entity}V" field="name"></alias>	
+			#end 
+	  		#end 
+	  		
+	  		#foreach($headfield in $HeadFields)
+      		#if($headfield.isHidden==false&&$headfield.type=="entity"&&$headfield.isPersis==true)<!-- \n -->
+			<view-link entity-alias="${TemplateName}V" rel-entity-alias="${headfield.name}${headfield.entity}V" rel-optional="true">
+				<key-map field-name="${headfield.name}${headfield.entity}Id" rel-field-name="id"/>
+			</view-link>
+			#end 
+	  		#end <!-- \n -->
+    </view-entity>
+</entitymodel>
+    
