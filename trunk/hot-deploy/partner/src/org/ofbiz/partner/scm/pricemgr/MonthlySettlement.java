@@ -190,6 +190,12 @@ public class MonthlySettlement {
 		
 		if(checkExist("ReturnProductWarehousing", cond))throw new Exception("本期间存在保存状态的进货单，不能进行结算！！");
 		
+		if(checkExist("StockAdjust", cond))throw new Exception("本期间存在保存状态的仓库调整单，不能进行结算！！");
+		
+		if(checkExist("WorkshopStockAdjust", cond))throw new Exception("本期间存在保存状态的车间调整单，不能进行结算！！");
+		
+		if(checkExist("SupplierStockAdjust", cond))throw new Exception("本期间存在保存状态的供应商调整单，不能进行结算！！");
+		
 		Debug.logInfo("检查是否当前期间的保存单据，操作结束~~~~~~", module);
 		
 	}
@@ -245,6 +251,14 @@ public class MonthlySettlement {
 		//进货单
 		mergeCompareValue("ReturnProductWarehousing",composeCond,allBillList);
 		
+		//库存调整单
+		mergeCompareValue("StockAdjust",composeCond,allBillList);
+		
+		//车间调整单
+		mergeCompareValue("WorkshopStockAdjust",composeCond,allBillList);
+				
+		//供应商调整单
+		mergeCompareValue("SupplierStockAdjust",composeCond,allBillList);
 		
 		//排序单据
 		Object[] billsArr=allBillList.toArray();
@@ -363,6 +377,15 @@ public class MonthlySettlement {
 		}else if(en.equalsIgnoreCase("ReturnProductWarehousing")){//进货单
 			return false;
 			
+		}else if(en.equalsIgnoreCase("StockAdjust")){//仓库调整单
+			return false;
+			
+		}else if(en.equalsIgnoreCase("WorkshopStockAdjust")){//车间调整单
+			return false;
+			
+		}else if(en.equalsIgnoreCase("SupplierStockAdjust")){//供应商调整单
+			return false;
+			
 		}else{
 			throw new Exception("没有对应的业务实现类");
 		}
@@ -407,6 +430,15 @@ public class MonthlySettlement {
 			
 		}else if(en.equalsIgnoreCase("ReturnProductWarehousing")){//进货单
 			return BizStockImpFactory.getBizStockImp(BillType.ReturnProductWarehousing);
+			
+		}else if(en.equalsIgnoreCase("StockAdjust")){//仓库调整单
+			return BizStockImpFactory.getBizStockImp(BillType.StockAdjust);
+			
+		}else if(en.equalsIgnoreCase("WorkshopStockAdjust")){//车间调整单
+			return BizStockImpFactory.getBizStockImp(BillType.WorkshopStockAdjust);
+			
+		}else if(en.equalsIgnoreCase("SupplierStockAdjust")){//供应商调整单
+			return BizStockImpFactory.getBizStockImp(BillType.SupplierStockAdjust);
 			
 		}else{
 			throw new Exception("没有对应的业务实现类");
@@ -620,6 +652,12 @@ public class MonthlySettlement {
 		if(checkExist("WorkshopOtherDrawBill", cond))throw new Exception("本期间存在提交状态的车间其它领料单，不能进行反结算！！");
 		
 		if(checkExist("ReturnProductWarehousing", cond))throw new Exception("本期间存在提交状态的进货单，不能进行反结算！！");
+		
+		if(checkExist("StockAdjust", cond))throw new Exception("本期间存在提交状态的库存调整单，不能进行反结算！！");
+		
+		if(checkExist("WorkshopStockAdjust", cond))throw new Exception("本期间存在提交状态的车间调整单，不能进行反结算！！");
+		
+		if(checkExist("SupplierStockAdjust", cond))throw new Exception("本期间存在提交状态的供应商调整单，不能进行反结算！！");
 		
 		Debug.logInfo("检查是否当前期间的提交单据，操作结束~~~~~~", module);
 		
