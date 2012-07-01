@@ -20,5 +20,7 @@ public enum BillType {
 	,WorkshopOtherDrawBill//车间其他领料
 	,ProductionPlan//采购计划
 	,ReturnProductWarehousing//已退货的进库单
-
+	,StockAdjust//仓库调整单
+	,WorkshopStockAdjust//车间调整单
+	,SupplierStockAdjust//供应商调整单
 }
