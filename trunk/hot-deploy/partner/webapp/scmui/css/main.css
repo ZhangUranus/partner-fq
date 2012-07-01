@@ -186,6 +186,18 @@
 .region-maintaince{
 	background-image: url( ../images/icons/region-maintaince.png ) !important;
 }
+.stock-adjust-management{
+	background-image: url( ../images/icons/stock-adjust-management.png ) !important;
+}
+.stock-adjust{
+	background-image: url( ../images/icons/stock-adjust.png ) !important;
+}
+.workshop-stock-adjust{
+	background-image: url( ../images/icons/workshop-stock-adjust.png ) !important;
+}
+.supplier-stock-adjust{
+	background-image: url( ../images/icons/supplier-stock-adjust.png ) !important;
+}
 .flag-green{
 	background-image: url( ../images/icons/flag-green.png ) !important;
 }

@@ -97,6 +97,23 @@ SCM.store.basiccode.purchaseTypeRenderer = function(value) {
 		return "调整单"
 };
 
+SCM.store.basiccode.billTypeStore = new Ext.data.Store({
+			fields : ['id', 'name'],
+			data : [{
+						'id' : '0',
+						'name' : '盈'
+					}, {
+						'id' : '1',
+						'name' : '亏'
+					}]
+		});
+SCM.store.basiccode.billTypeRenderer = function(value) {
+	if (value == '0') {
+		return "盈";
+	} else
+		return "亏"
+};
+
 
 SCM.store.basiccode.checkStatusStore = new Ext.data.Store({
 			fields : ['id', 'name'],
