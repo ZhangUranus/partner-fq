@@ -113,7 +113,6 @@
 		<alias-all entity-alias="PurchaseWarehousingEntryV"></alias-all>
 		<alias name="warehouseWarehouseName" entity-alias="warehouseWarehouseV" field="name"></alias>
 		<alias name="materialMaterialNumber" entity-alias="materialMaterialV" field="number"></alias>
-		<alias name="materialMaterialModel" entity-alias="materialMaterialV" field="model"></alias>
 		<alias name="materialMaterialName" entity-alias="materialMaterialV" field="name"></alias>
 		<alias name="unitUnitName" entity-alias="unitUnitV" field="name"></alias>
 		<view-link entity-alias="PurchaseWarehousingEntryV" rel-entity-alias="warehouseWarehouseV" rel-optional="true">
