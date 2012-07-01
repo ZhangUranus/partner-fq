@@ -3,7 +3,7 @@
 	may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
 	OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. -->
 <entity-engine-xml>
-	<TSystemSerialNumber id='37d74b11-1892-4b2a-b294-6e1a18c04eb2' serialDate='20120101' entityName='Unit' prefix='UNT' serialNumber='100016' initNumber='100001' description='计量单位编号' hasDate='0' />
+	<TSystemSerialNumber id='37d74b11-1892-4b2a-b294-6e1a18c04eb2' serialDate='20120101' entityName='Unit' prefix='UNT' serialNumber='100012' initNumber='100001' description='计量单位编号' hasDate='0' />
 	<TSystemSerialNumber id='42d56212-9b88-4fbb-b078-697172bfdbff' serialDate='20120101' entityName='WarehouseType' prefix='WHT' serialNumber='100006' initNumber='100001' description='仓库类型编号' hasDate='0' />
 	<TSystemSerialNumber id='db96e0df-3de8-4ce2-8525-5b88b335e38b' serialDate='20120101' entityName='Warehouse' prefix='WH' serialNumber='100006' initNumber='100001' description='仓库编号' hasDate='0' />
 	<TSystemSerialNumber id='4c0229a5-a545-43a3-afae-5abb821e3f1f' serialDate='20120101' entityName='Workshop' prefix='WS' serialNumber='100001' initNumber='100001' description='车间编号' hasDate='0' />
