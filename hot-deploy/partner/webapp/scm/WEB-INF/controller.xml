@@ -318,6 +318,45 @@
 		<response name="success" type="none" />
 	</request-map>
 	
+	<!-- 库存调整单提交 -->
+	<request-map uri="submitStockAdjust">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.StockAdjustEvents" invoke="submitBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 库存调整单撤销 -->
+	<request-map uri="rollbackStockAdjust">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.StockAdjustEvents" invoke="rollbackBill" />
+		<response name="success" type="none" />
+	</request-map>
+	
+	<!-- 车间调整单提交 -->
+	<request-map uri="submitWorkshopStockAdjust">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.WorkshopStockAdjustEvents" invoke="submitBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 车间调整单撤销 -->
+	<request-map uri="rollbackWorkshopStockAdjust">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.WorkshopStockAdjustEvents" invoke="rollbackBill" />
+		<response name="success" type="none" />
+	</request-map>
+	
+	<!-- 供应商调整单提交 -->
+	<request-map uri="submitSupplierStockAdjust">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.SupplierStockAdjustEvents" invoke="submitBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 供应商调整单撤销 -->
+	<request-map uri="rollbackSupplierStockAdjust">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.SupplierStockAdjustEvents" invoke="rollbackBill" />
+		<response name="success" type="none" />
+	</request-map>
+	
 	<!-- 系统结算 -->
 	<request-map uri="monthlySettle">
 		<security https="false" auth="false" />
