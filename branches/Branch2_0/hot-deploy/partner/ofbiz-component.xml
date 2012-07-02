@@ -25,6 +25,9 @@
 	<entity-resource type="model" reader-name="main" loader="main" location="entitydef/ReturnProductWarehousingEntity.xml"/>
 	<entity-resource type="model" reader-name="main" loader="main" location="entitydef/WorkshopOtherDrawBillEntity.xml"/>
 	<entity-resource type="model" reader-name="main" loader="main" location="entitydef/ProductInwarehouseEntity.xml"/>
+	<entity-resource type="model" reader-name="main" loader="main" location="entitydef/StockAdjustEntity.xml"/>
+	<entity-resource type="model" reader-name="main" loader="main" location="entitydef/WorkshopStockAdjustEntity.xml"/>
+	<entity-resource type="model" reader-name="main" loader="main" location="entitydef/SupplierStockAdjustEntity.xml"/>
 	<!-- 系统基础数据 -->
     <entity-resource type="data" reader-name="seed" loader="main" location="data/ContentTypeData.xml"/>
     <entity-resource type="data" reader-name="seed" loader="main" location="data/System-Department.xml"/>
