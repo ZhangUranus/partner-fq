@@ -5,8 +5,8 @@
 <entity-engine-xml>
 <TMaterialType id='59528f80-9380-4aa6-8c8e-d84f51620681' parentId='' number='MTT100001' name='原材料' />
 <TMaterialType id='0637d269-aa20-4ed6-a5cf-0e6dd6c7d7a6' parentId='' number='MTT100002' name='黑胚半成品' />
-<TMaterialType id='f1d10096-9e69-4d07-9e4d-d1ba37378eff' parentId='' number='MTT100003' name='黑胚成品' />
-<TMaterialType id='da2943bc-fd55-4ee3-8126-fc291fb977d2' parentId='' number='MTT100004' name='安装半成品' />
+<TMaterialType id='f1d10096-9e69-4d07-9e4d-d1ba37378eff' parentId='' number='MTT100003' name='安装半成品' />
+<TMaterialType id='da2943bc-fd55-4ee3-8126-fc291fb977d2' parentId='' number='MTT100004' name='黑胚成品' />
 <TMaterialType id='06634de3-8ffe-4aa6-a250-7dea4e256316' parentId='' number='MTT100005' name='安装成品' />
 <TMaterialType id='aaedcdfc-03df-46b0-8543-2dde7d10233e' parentId='59528f80-9380-4aa6-8c8e-d84f51620681' number='MTT100006' name='玻璃' />
 <TMaterialType id='d7cc0ff5-f8ee-4143-92d3-26694418ce51' parentId='59528f80-9380-4aa6-8c8e-d84f51620681' number='MTT100007' name='纸制品' />
@@ -30,15 +30,17 @@
 <TMaterialType id='c3e478c3-c164-4387-9c3b-bffdacb8c13f' parentId='59528f80-9380-4aa6-8c8e-d84f51620681' number='MTT100025' name='异形管' />
 <TMaterialType id='52029b48-9d6b-490d-b906-6c7fc4405b82' parentId='59528f80-9380-4aa6-8c8e-d84f51620681' number='MTT100026' name='平直板' />
 <TMaterialType id='62b231dc-ee8d-4fbe-b2f2-99febdf43353' parentId='59528f80-9380-4aa6-8c8e-d84f51620681' number='MTT100027' name='铁线' />
-<TMaterialType id='cdc92518-4a63-4601-b4ad-9e888429bcd9' parentId='59528f80-9380-4aa6-8c8e-d84f51620681' number='MTT100028' name='扁铁' />
-<TMaterialType id='ba34cd60-fbcc-44d4-813e-e0bde871dd8f' parentId='59528f80-9380-4aa6-8c8e-d84f51620681' number='MTT100029' name='带钢' />
-<TMaterialType id='7a7a1692-0f67-4897-870b-1d1e73246049' parentId='0637d269-aa20-4ed6-a5cf-0e6dd6c7d7a6' number='MTT100030' name='加工' />
-<TMaterialType id='37bd93d2-6e17-4bb4-922b-1bf3ffd082d4' parentId='f1d10096-9e69-4d07-9e4d-d1ba37378eff' number='MTT100031' name='加工' />
-<TMaterialType id='cc13b858-2610-4895-9813-6511cc66a5df' parentId='da2943bc-fd55-4ee3-8126-fc291fb977d2' number='MTT100032' name='加工' />
-<TMaterialType id='0615f018-1442-47db-93e7-766630b58cb3' parentId='06634de3-8ffe-4aa6-a250-7dea4e256316' number='MTT100033' name='加工' />
-<TMaterialType id='94e241f5-5849-4a30-9fbb-28d820e9d52a' parentId='7a7a1692-0f67-4897-870b-1d1e73246049' number='MTT100034' name='黑胚件' />
-<TMaterialType id='97cf9b41-542a-499d-a282-5ba9c76d5df1' parentId='37bd93d2-6e17-4bb4-922b-1bf3ffd082d4' number='MTT100035' name='黑胚件' />
-<TMaterialType id='0f76afff-4031-47eb-b8d6-ad71f73f4ba6' parentId='cc13b858-2610-4895-9813-6511cc66a5df' number='MTT100036' name='喷涂件' />
-<TMaterialType id='7c4b2fdf-f92f-42ae-ae2c-c8ba4a561156' parentId='cc13b858-2610-4895-9813-6511cc66a5df' number='MTT100037' name='电镀件' />
-<TMaterialType id='feb83198-cc30-4ce3-b084-0905d8fae142' parentId='0615f018-1442-47db-93e7-766630b58cb3' number='MTT100038' name='包装件' />
+<TMaterialType id='cdc92518-4a63-4601-b4ad-9e888429bcd9' parentId='59528f80-9380-4aa6-8c8e-d84f51620681' number='MTT100028' name='发外加工件' />
+<TMaterialType id='ba34cd60-fbcc-44d4-813e-e0bde871dd8f' parentId='59528f80-9380-4aa6-8c8e-d84f51620681' number='MTT100029' name='扁铁' />
+<TMaterialType id='7a7a1692-0f67-4897-870b-1d1e73246049' parentId='59528f80-9380-4aa6-8c8e-d84f51620681' number='MTT100030' name='带钢' />
+<TMaterialType id='37bd93d2-6e17-4bb4-922b-1bf3ffd082d4' parentId='0637d269-aa20-4ed6-a5cf-0e6dd6c7d7a6' number='MTT100031' name='加工' />
+<TMaterialType id='cc13b858-2610-4895-9813-6511cc66a5df' parentId='f1d10096-9e69-4d07-9e4d-d1ba37378eff' number='MTT100032' name='加工' />
+<TMaterialType id='0615f018-1442-47db-93e7-766630b58cb3' parentId='f1d10096-9e69-4d07-9e4d-d1ba37378eff' number='MTT100033' name='加工' />
+<TMaterialType id='94e241f5-5849-4a30-9fbb-28d820e9d52a' parentId='da2943bc-fd55-4ee3-8126-fc291fb977d2' number='MTT100034' name='加工' />
+<TMaterialType id='97cf9b41-542a-499d-a282-5ba9c76d5df1' parentId='06634de3-8ffe-4aa6-a250-7dea4e256316' number='MTT100035' name='加工' />
+<TMaterialType id='0f76afff-4031-47eb-b8d6-ad71f73f4ba6' parentId='37bd93d2-6e17-4bb4-922b-1bf3ffd082d4' number='MTT100036' name='黑胚件' />
+<TMaterialType id='7c4b2fdf-f92f-42ae-ae2c-c8ba4a561156' parentId='cc13b858-2610-4895-9813-6511cc66a5df' number='MTT100037' name='喷涂件' />
+<TMaterialType id='feb83198-cc30-4ce3-b084-0905d8fae142' parentId='0615f018-1442-47db-93e7-766630b58cb3' number='MTT100038' name='电镀件' />
+<TMaterialType id='612d8ffe-4a58-4685-9528-b1362097d46f' parentId='94e241f5-5849-4a30-9fbb-28d820e9d52a' number='MTT100039' name='黑胚件' />
+<TMaterialType id='302e71e0-db8a-4f25-90f7-c2c4f6db4d14' parentId='97cf9b41-542a-499d-a282-5ba9c76d5df1' number='MTT100040' name='包装件' />
 </entity-engine-xml>
