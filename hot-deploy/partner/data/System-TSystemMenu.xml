@@ -20,8 +20,6 @@
 	<TSystemMenu menuId='workshopReturnProduct' menuName='制造退货' menuType='1' parentId='workshopManufacture' sort='134' hyperlink='WorkshopReturnProductlist' styleName='workshop-return-product' display='1' description='制造退货' />
 	<TSystemMenu menuId='WorkshopOtherDrawBill' menuName='制造其它领料' menuType='1' parentId='workshopManufacture' sort='135' hyperlink='WorkshopOtherDrawBilllist' styleName='workshop-return-product' display='1' description='制造其它领料' />
 	<TSystemMenu menuId='productionPlan' menuName='生产计划' menuType='1' parentId='workshopManufacture' sort='136' hyperlink='productionplan' styleName='production-plan' display='1' description='生产计划' />
-	<TSystemMenu menuId='productMgr' menuName='成品管理' menuType='0' parentId='warehouseManagement' sort='14' hyperlink='' styleName='workshop-manufacture' display='1' description='成品管理' />
-	<TSystemMenu menuId='productInwarehouse' menuName='成品进仓单' menuType='1' parentId='productMgr' sort='141' hyperlink='ProductInwarehouselist' styleName='production-plan' display='1' description='成品进仓单' />
 	<TSystemMenu menuId='analyticStatistics' menuName='分析统计' menuType='0' parentId='warehouseManagement' sort='15' hyperlink='' styleName='analytic-statistics' display='1' description='分析统计' />
 	<TSystemMenu menuId='stockDetail' menuName='库存情况' menuType='1' parentId='analyticStatistics' sort='151' hyperlink='stockdetail' styleName='stock-detail' display='1' description='库存情况' />
 	<TSystemMenu menuId='workshopStockDetail' menuName='车间储备情况' menuType='1' parentId='analyticStatistics' sort='152' hyperlink='workshopstockdetail' styleName='workshop-stock-detail' display='1' description='车间储备情况' />
