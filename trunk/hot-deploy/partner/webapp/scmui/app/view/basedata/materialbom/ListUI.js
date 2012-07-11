@@ -97,6 +97,12 @@ Ext.define('SCM.view.basedata.materialbom.ListUI', {
 													dataIndex : 'entryUnitName',
 													width : 120,
 													text : '计量单位'
+												}, {
+													xtype : 'gridcolumn',
+													renderer : SCM.store.basiccode.validRenderer,
+													dataIndex : 'isBomMaterial',
+													width : 100,
+													text : '是否BOM物料'
 												}]
 									}]
 						});
