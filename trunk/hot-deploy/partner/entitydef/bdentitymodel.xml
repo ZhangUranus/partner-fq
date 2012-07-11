@@ -126,7 +126,7 @@
 		<field name="materialId" type="id-long"></field>
 		<field name="note" type="description"></field>
 		<field name="status" type="int"></field>
-		<field name="valid" type="indicator"/>
+		<field name="valid" type="indicator" />
 		<prim-key field="id" />
 	</entity>
 	<view-entity entity-name="MaterialBomView" package-name="org.ofbiz.scm.basedata" title="MaterialBomView  Entity">
@@ -146,6 +146,7 @@
 		<field name="entryMaterialId" type="id-long"></field>
 		<field name="volume" type="floating-point"></field>
 		<field name="entryUnitId" type="id-long"></field>
+		<field name="isBomMaterial" type="indicator" ></field><!-- 是否bom物料 -->
 		<prim-key field="id" />
 	</entity>
 	<view-entity entity-name="MaterialBomEntryView" package-name="org.ofbiz.scm.basedata" title="MaterialBomEntryView  Entity">
@@ -204,7 +205,7 @@
 	</view-entity>
 	<!-- 部门实体 -->
 	<entity entity-name="Department" package-name="org.ofbiz.scm.basedata" title="Department  Entity">
-		<field name="id" type="id-long"></field>
+		<field name="id" type="id-long" ></field>
 		<field name="parentId" type="id-long"></field>
 		<field name="number" type="name"></field>
 		<field name="name" type="name"></field>
