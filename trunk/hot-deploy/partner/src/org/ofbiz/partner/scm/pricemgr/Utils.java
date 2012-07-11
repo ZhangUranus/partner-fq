@@ -1,14 +1,16 @@
 package org.ofbiz.partner.scm.pricemgr;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.xml.rpc.Call;
 
 import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilMisc;
@@ -263,5 +265,80 @@ public class Utils {
 			return 12;
 		}
 	}
+	
+	/**
+	 * 根据日期返回当年周数
+	 *  	1 . 一周开始时间是从星期天开始
+	 * 		2 . 一年的第一周最少是3天以及以上才算是当年第一周，否则算是上一年最后一周
+	 * 
+	 * @author Mark 2012-7-11
+	 */
+	public static int getWeekOfYear(Calendar cl) throws Exception{
+        cl.setFirstDayOfWeek(Calendar.SUNDAY);// 每周以周日开始
+        cl.setMinimalDaysInFirstWeek(3);  // 每年的第一周必须大于或等于3天，否则就算上一年的最后一周
+        return cl.get(Calendar.WEEK_OF_YEAR);
+	}
+	
+	/**
+	 * 根据日期返回当年周数字符串(含年度)
+	 * @author Mark 2012-7-11
+	 */
+	public static String getYearWeekStr(Date d) throws Exception{
+		Calendar cl = Calendar.getInstance();
+		cl.setTime(d);
+		int year=cl.get(Calendar.YEAR);
+		int week=getWeekOfYear(cl);
+		//计算年度,是上一年、本年、或者下一年
+		if(cl.get(Calendar.MONTH)==Calendar.JANUARY && cl.get(Calendar.WEEK_OF_YEAR)>50){
+			year--; //上一年
+		}else if(cl.get(Calendar.MONTH)==Calendar.DECEMBER && cl.get(Calendar.WEEK_OF_YEAR)==1){
+			year++; //下一年
+		}
+        return ""+year+"-"+week+"W";
+	}
+	
+	
+	/**
+	 * 根据物料id获取明细物料，获取该物料的第一个bom单，
+	 * 如果bom单明细物料是bom物料，则对该bom物料进行递归操作，递归的次数不能超过10层 ，对物料不进行合并
+	 * @author Mark 2012-06-28
+	 * @param materialId 物料id
+	 * @param level 递归层次
+	 */
+	public static List<ConsumeMaterial> getBomMaterialDetail(String materialId, int level) throws Exception{
+		//防止死循环
+		level++;
+		if(level>10)throw new Exception("Recursion level is higher than 10 !!");
+		
+		Delegator delegator = org.ofbiz.partner.scm.common.Utils.getDefaultDelegator();
+		
+		
+		/* 1.  查找第一个bom单 , 已经核准 、 有效*/
+		GenericValue bomBill =delegator.findOne("MaterialBom",false,"materialId", materialId,"status",1,"valid","Y");
+		
+		List<ConsumeMaterial> consumeList=new ArrayList<ConsumeMaterial>();
+		/* 2.  获取明细物料列表*/
+		if(bomBill!=null){
+			List<GenericValue> bomEntry=delegator.findByAnd("MaterialBomEntry", UtilMisc.toMap());
+			if(bomEntry!=null){
+				for(GenericValue v:bomEntry){
+					/*2.1 是否bom物料，递归获取物料*/
+					String isBomMaterial=v.getString("isBomMaterial");
+					String entryMaterialId=v.getString("entryMaterialId");
+					BigDecimal qty=v.getBigDecimal("volume");
+					if(isBomMaterial.equals("Y")&&entryMaterialId!=null){
+						List<ConsumeMaterial> detailBomMaterialList=getBomMaterialDetail(entryMaterialId, level);
+						if(detailBomMaterialList==null||detailBomMaterialList.size()<1)throw new Exception("Can`t find bom material for  "+entryMaterialId);
+						consumeList.addAll(detailBomMaterialList);//添加返回的物料列表
+					}else{
+						/*2.2 添加到物料列表*/
+						consumeList.add(new ConsumeMaterial(entryMaterialId,qty,null));
+					}
+				}
+			}
+		}
+		return consumeList;
+	}
+	
 	
 }
