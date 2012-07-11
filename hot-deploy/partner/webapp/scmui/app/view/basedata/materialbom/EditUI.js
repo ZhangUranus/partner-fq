@@ -153,6 +153,17 @@ Ext.define('SCM.view.basedata.materialbom.EditUI', {
 																				}]
 																	}
 																}
+															},{
+																xtype : 'combocolumn',
+																name : 'isBomMaterial',
+																text:'是否BOM物料',
+																dataIndex : 'isBomMaterial',
+																editor:{
+																	xtype : 'combobox',
+																	store : SCM.store.basiccode.validStore,
+																	displayField : 'name',// 显示字段
+																	valueField : 'id'// 值字段，后台通过该字段传递
+																}
 															}],
 													viewConfig : {
 
