@@ -31,6 +31,9 @@ Ext.define('SCM.model.basedata.MaterialBomEditEntryModel', {
 						name : 'entryUnitName',
 						type : 'string',
 						persist : false
+					},{
+						name : 'isBomMaterial',
+						type : 'string'
 					}],
 			idgen : 'uuid', // 使用uuid生成记录id 每个模型必须要有id字段
 			proxy : {
