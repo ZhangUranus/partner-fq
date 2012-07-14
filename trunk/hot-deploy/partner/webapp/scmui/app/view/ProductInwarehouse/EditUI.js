@@ -56,7 +56,6 @@ Ext.define('SCM.view.ProductInwarehouse.EditUI', {
 								  fieldLabel: '日期',
 								  allowBlank : false
 								}
-																//\n
 								,{
 								    xtype : 'combogrid',
 								    fieldLabel : '领料人',
@@ -82,7 +81,6 @@ Ext.define('SCM.view.ProductInwarehouse.EditUI', {
 													}]
 									}
 								}
-																								//\n
 								,{
 								    xtype : 'combogrid',
 								    fieldLabel : '提交人',
@@ -108,19 +106,17 @@ Ext.define('SCM.view.ProductInwarehouse.EditUI', {
 													}]
 									}
 								}
-																								//\n
 								,{
-								  								  								  //\n
 								  xtype: 'numberfield'
 								  ,hideTrigger:true
 								  ,fieldLabel: '总金额'
-								  								  								  //\n
-								   //\n
 								  ,name : 'totalsum'
 								  ,margin: 5
 								  
 								}
-																 //\n
+								,{
+										xtype : 'label'
+								}
 								,{
 								  xtype: 'textarea',
 								  name : 'note',
@@ -158,7 +154,6 @@ Ext.define('SCM.view.ProductInwarehouse.EditUI', {
 									hidden:true
 
 								}
-																//\n
 								,{
 								xtype : 'combocolumn'
 								,dataIndex : 'workshopWorkshopId'
@@ -188,7 +183,6 @@ Ext.define('SCM.view.ProductInwarehouse.EditUI', {
 									}
 								}
 							 }
-																								//\n
 								,{
 								xtype : 'combocolumn'
 								,dataIndex : 'warehouseWarehouseId'
@@ -218,19 +212,18 @@ Ext.define('SCM.view.ProductInwarehouse.EditUI', {
 									}
 								}
 							 }
-																								//\n
 								,{
 								xtype : 'combocolumn'
 								,dataIndex : 'materialMaterialId'
 								,text : '物料'
 								,gridId : 'ProductInwarehouse-edit-grid'
+								,width:300
 								,editor : {
 									xtype : 'combogrid',
 									valueField : 'id',
 									displayField : 'name',
 									store : Ext.create('MaterialStore'),
 									matchFieldWidth : false,
-									
 									listConfig : {
 										width : SCM.MaxSize.COMBOGRID_WIDTH,
 										height : SCM.MaxSize.COMBOGRID_HEIGHT,
@@ -248,22 +241,17 @@ Ext.define('SCM.view.ProductInwarehouse.EditUI', {
 									}
 								}
 							 }
-																								//\n
 								,{
-								  								  								  //\n
 								  xtype: 'numbercolumn'
 								   ,editor: {
 											xtype: 'numberfield'
 											,allowBlank: false
 											,hideTrigger:true
 										}
-								  								  								  //\n
-								  //\n
 								  ,dataIndex:'volume'
 								  ,text: '数量'
 								  
 								}
-																								//\n
 								,{
 								xtype : 'combocolumn'
 								,dataIndex : 'unitUnitId'
@@ -293,66 +281,47 @@ Ext.define('SCM.view.ProductInwarehouse.EditUI', {
 									}
 								}
 							 }
-																								//\n
 								,{
-								  								  								  //\n
 								  xtype: 'numbercolumn'
 								   ,editor: {
 											xtype: 'numberfield'
 											,allowBlank: false
 											,hideTrigger:true
 										}
-								  								  								  //\n
-								  //\n
 								  ,dataIndex:'price'
 								  ,text: '单价'
 								  
 								}
-																								//\n
 								,{
-								  								  								  //\n
 								  xtype: 'numbercolumn'
 								   ,editor: {
 											xtype: 'numberfield'
 											,allowBlank: false
 											,hideTrigger:true
 										}
-								  								  								  //\n
-								  //\n
 								  ,dataIndex:'entrysum'
 								  ,text: '金额'
 								  
 								}
-																								//\n
 								,{
-								  //\n
 								  xtype: 'gridcolumn'
 								  ,editor: {
 											xtype: 'textfield'
 										}
-								  								  								  								  								  //\n
-								  //\n
 								  ,dataIndex:'barcode1'
 								  ,text: '条码1'
 								  
 								}
-																								//\n
 								,{
-								  //\n
 								  xtype: 'gridcolumn'
 								  ,editor: {
 											xtype: 'textfield'
 										}
-								  								  								  								  								  //\n
-								  //\n
 								  ,dataIndex:'barcode2'
 								  ,text: '条码2'
 								  
 								}
-																								//\n
 								,{
-								  								  								  								  								  //\n
-								  //\n
 								  xtype: 'gridcolumn'
 								  ,renderer:SCM.store.basiccode.productInStatusRenderer
 								  ,editor: {
@@ -361,12 +330,10 @@ Ext.define('SCM.view.ProductInwarehouse.EditUI', {
 										,displayField:'name'
 										,valueField:'id'
 								   }
-								  //\n
 								  ,dataIndex:'inwarehouseType'
 								  ,text: '进仓类型'
 								  
 								}
-																 //\n
 							],//end columns
 							viewConfig: {
 

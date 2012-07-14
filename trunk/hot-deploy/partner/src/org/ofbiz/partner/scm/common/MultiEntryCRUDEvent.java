@@ -2,8 +2,10 @@ package org.ofbiz.partner.scm.common;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +18,7 @@ import net.sf.json.JSONObject;
 import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericValue;
+import org.ofbiz.entity.condition.EntityCondition;
 import org.ofbiz.entity.model.ModelEntity;
 import org.ofbiz.entity.model.ModelField;
 import org.ofbiz.entity.transaction.TransactionUtil;
@@ -117,6 +120,10 @@ public class MultiEntryCRUDEvent {
 	 * @param response
 	 * @return
 	 * @throws Exception
+	 * 
+	 * 修改记录：
+	 * 2012-7-8  @author mark ，添加分录级联删除功能，关联字段固定为id,和parentId 。需要请求传递需要级联删除的实体名 ,多个实体时格式 cascadeDelete=entity1|entity2|....
+	 * 
 	 */
 	public static String updateEnityWithEntry(HttpServletRequest request,HttpServletResponse response)  throws Exception {
 		if(request.getParameter("record")==null
@@ -157,12 +164,22 @@ public class MultiEntryCRUDEvent {
 				updateList.add(ev);
 		    }
 		    delegator.storeAll(updateList);
-		  //删除分录
+		  //删除分录以及级联的实体
+		    String cascadeDelete=request.getParameter("cascadeDelete");//获取级联删除实体参数
+		    String[] casDelArr=cascadeDelete==null?null:cascadeDelete.split("\\|");//实体列表
 		    for(Object o:deleteEntryRecords){
 		    	JSONObject jo=(JSONObject) o;
 		    	GenericValue ev = delegator.makeValue(entryEntityName);
 				setGenValFromJsonObj(jo, ev);
 				delegator.removeValue(ev);
+				/**
+				 * @author mark 2012-7-8 级联删除
+				 */
+				if(casDelArr!=null&&casDelArr.length>0&&ev.getString("id")!=null){
+					for(int i=0;i<casDelArr.length;i++){
+						delegator.removeByAnd(casDelArr[i], "parentId",ev.getString("id"));
+					}
+				}
 		    }
 			
 			TransactionUtil.commit();
@@ -178,6 +195,9 @@ public class MultiEntryCRUDEvent {
 	 * @param response
 	 * @return
 	 * @throws Exception
+	 * 
+	 * 修改记录：
+	 * 2012-7-8  @author mark ，添加分录级联删除功能，关联字段固定为id,和parentId 。需要请求传递需要级联删除的实体名 ,多个实体时格式 cascadeDelete=entity1|entity2|....
 	 */
 	public static String deleteEnityWithEntry(HttpServletRequest request,HttpServletResponse response)  throws Exception {
 		if(request.getParameter("records")==null
@@ -193,11 +213,35 @@ public class MultiEntryCRUDEvent {
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
 		try {
 			TransactionUtil.begin();
+
+			/**
+			 * @author mark 2012-7-8 级联删除
+			 */
+			String cascadeDelete=request.getParameter("cascadeDelete");//获取级联删除实体参数
+		    String[] casDelArr=cascadeDelete==null?null:cascadeDelete.split("\\|");//实体列表
+		    Set<String> selFields=new HashSet<String>();//查询的字段，只查id
+		    selFields.add("id");
+		    
 			for(Object o:records){
 				JSONObject jo=(JSONObject) o;
 				String headId=jo.getString("id");
 				delegator.removeByAnd(headEntityName, UtilMisc.toMap("id", headId));//删除表头记录
+				
+				if(casDelArr!=null&&casDelArr.length>0){
+					//查询所有分录id
+					List<GenericValue> entryIds=delegator.findList(entryEntityName, EntityCondition.makeCondition("parentId", headId), selFields, null, null, false);
+					//删除级联实体记录
+					if(entryIds!=null&&entryIds.size()>0){
+						for(GenericValue v:entryIds){
+							for(int i=0;i<casDelArr.length;i++){
+								delegator.removeByAnd(casDelArr[i], "parentId",v.getString("id"));
+							}
+						}
+					}
+				}
+				
 				delegator.removeByAnd(entryEntityName, UtilMisc.toMap("parentId", headId));//删除分录
+				
 			}
 			TransactionUtil.commit();
 		} catch (Exception e) {

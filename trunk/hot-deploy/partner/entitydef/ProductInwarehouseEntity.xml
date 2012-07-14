@@ -36,13 +36,9 @@ under the License.
       <field name="id" type="id-long"></field>
       <field name="number" type="name"></field>
       <field name="bizDate" type="date-time"></field>
-            		<!-- \n -->
 	  <field name="inspectorSystemUserId" type="id-long"></field>
-				        		<!-- \n -->
 	  <field name="submitterSystemUserId" type="id-long"></field>
-				        		<!-- \n -->
 	  <field name="totalsum" type="fixed-point"></field>
-				   <!-- \n -->
       <field name="note" type="description"></field>
       <field name="status" type="int"></field>
       <field name="createdStamp" type="date-time"></field>
@@ -56,99 +52,80 @@ under the License.
             title="ProductInwarehouseEntry Entity">
       <field name="id" type="id-long"></field>
       <field name="parentId" type="id-long"></field>
-            <!-- \n -->
 	  <field name="workshopWorkshopId" type="id-long"></field>
-	  	        <!-- \n -->
 	  <field name="warehouseWarehouseId" type="id-long"></field>
-	  	        <!-- \n -->
 	  <field name="materialMaterialId" type="id-long"></field>
-	  	        <!-- \n -->
 	  <field name="volume" type="fixed-point"></field>
-	  	        <!-- \n -->
 	  <field name="unitUnitId" type="id-long"></field>
-	  	        <!-- \n -->
 	  <field name="price" type="fixed-point"></field>
-	  	        <!-- \n -->
 	  <field name="entrysum" type="fixed-point"></field>
-	  	        <!-- \n -->
 	  <field name="barcode1" type="value"></field>
-	  	        <!-- \n -->
 	  <field name="barcode2" type="value"></field>
-	  	        <!-- \n -->
 	  <field name="inwarehouseType" type="value"></field>
-	  	   <!-- \n -->
       <prim-key field="id"/>
     </entity>
-   
+   <!-- 
+   		进仓单分录额外耗料表
+   		记录进仓单每一个成品的实际耗料数 
+   -->
+	<entity entity-name="ProductInwarehouseEntryDetail" package-name="org.ofbiz.scm.ProductInwarehouse" title="ProductInwarehouseEntryDetail Entity">
+		<field name="id" type="id-long"></field>
+		<field name="parentId" type="id-long"></field>
+		<field name="materialId" type="id-long"></field>
+		<field name="model" type="value"></field>
+		<field name="quantity" type="fixed-point"></field>
+		<field name="unitUnitId" type="id-long"></field>
+		<field name="price" type="fixed-point"></field>
+		<field name="amount" type="fixed-point"></field>
+		<prim-key field="id" />
+	</entity>
    <!-- 表头视图 -->
     <view-entity entity-name="ProductInwarehouseView"
             package-name="org.ofbiz.scm.ProductInwarehouse"
             title="ProductInwarehouseView  Entity">
       		<member-entity entity-alias="ProductInwarehouseV" entity-name="ProductInwarehouse"></member-entity>
       		<member-entity entity-alias="ProductInwarehouseEntryV" entity-name="ProductInwarehouseEntry"></member-entity>
-      		      		<!-- \n -->
 			<member-entity entity-alias="inspectorSystemUserV" entity-name="SystemUser"></member-entity>
-				  		      		<!-- \n -->
 			<member-entity entity-alias="submitterSystemUserV" entity-name="SystemUser"></member-entity>
-				  		      			  		 <!-- \n -->
             <alias-all entity-alias="ProductInwarehouseV" ></alias-all>
             <alias name="materialMaterialId" entity-alias="ProductInwarehouseEntryV" field="materialMaterialId"></alias>
-                  		<!-- \n -->
-			<alias name="inspectorSystemUserName" entity-alias="inspectorSystemUserV" field="name"></alias>	
-				  		      		<!-- \n -->
-			<alias name="submitterSystemUserName" entity-alias="submitterSystemUserV" field="name"></alias>	
-				  		      			  			  		
+			<alias name="inspectorSystemUserName" entity-alias="inspectorSystemUserV" field="name"></alias>
+			<alias name="submitterSystemUserName" entity-alias="submitterSystemUserV" field="name"></alias>
 	  		<view-link entity-alias="ProductInwarehouseV" rel-entity-alias="ProductInwarehouseEntryV" rel-optional="true">
 				<key-map field-name="id" rel-field-name="parentId"/>
 			</view-link>
-	  		      		<!-- \n -->
 			<view-link entity-alias="ProductInwarehouseV" rel-entity-alias="inspectorSystemUserV" rel-optional="true">
 				<key-map field-name="inspectorSystemUserId" rel-field-name="id"/>
 			</view-link>
-				  		      		<!-- \n -->
 			<view-link entity-alias="ProductInwarehouseV" rel-entity-alias="submitterSystemUserV" rel-optional="true">
 				<key-map field-name="submitterSystemUserId" rel-field-name="id"/>
 			</view-link>
-				  		      			  		 <!-- \n -->
     </view-entity>
 	<!--表体视图  -->
     <view-entity entity-name="ProductInwarehouseEntryView"
             package-name="org.ofbiz.scm.ProductInwarehouse"
             title="ProductInwarehouseEntryView  Entity">
             <member-entity entity-alias="ProductInwarehouseEntryV" entity-name="ProductInwarehouseEntry"></member-entity>
-                  		<!-- \n -->
 			<member-entity entity-alias="workshopWorkshopV" entity-name="Workshop"></member-entity>
-				  		      		<!-- \n -->
 			<member-entity entity-alias="warehouseWarehouseV" entity-name="Warehouse"></member-entity>
-				  		      		<!-- \n -->
 			<member-entity entity-alias="materialMaterialV" entity-name="Material"></member-entity>
-				  		      			  		      		<!-- \n -->
 			<member-entity entity-alias="unitUnitV" entity-name="Unit"></member-entity>
 				  		      			  		      			  		      			  		      			  		      			  		 <!-- \n -->
             
             <alias-all entity-alias="ProductInwarehouseEntryV" ></alias-all>
-                  		<!-- \n -->
-			<alias name="workshopWorkshopName" entity-alias="workshopWorkshopV" field="name"></alias>	
-				  		      		<!-- \n -->
-			<alias name="warehouseWarehouseName" entity-alias="warehouseWarehouseV" field="name"></alias>	
-				  		      		<!-- \n -->
-			<alias name="materialMaterialName" entity-alias="materialMaterialV" field="name"></alias>	
-				  		      			  		      		<!-- \n -->
-			<alias name="unitUnitName" entity-alias="unitUnitV" field="name"></alias>	
-				  		      			  		      			  		      			  		      			  		      			  		            
-                  		<!-- \n -->
+			<alias name="workshopWorkshopName" entity-alias="workshopWorkshopV" field="name"></alias>
+			<alias name="warehouseWarehouseName" entity-alias="warehouseWarehouseV" field="name"></alias>
+			<alias name="materialMaterialName" entity-alias="materialMaterialV" field="name"></alias>
+			<alias name="unitUnitName" entity-alias="unitUnitV" field="name"></alias>
 			<view-link entity-alias="ProductInwarehouseEntryV" rel-entity-alias="workshopWorkshopV" rel-optional="true">
 				<key-map field-name="workshopWorkshopId" rel-field-name="id"/>
 			</view-link>
-				  		      		<!-- \n -->
 			<view-link entity-alias="ProductInwarehouseEntryV" rel-entity-alias="warehouseWarehouseV" rel-optional="true">
 				<key-map field-name="warehouseWarehouseId" rel-field-name="id"/>
 			</view-link>
-				  		      		<!-- \n -->
 			<view-link entity-alias="ProductInwarehouseEntryV" rel-entity-alias="materialMaterialV" rel-optional="true">
 				<key-map field-name="materialMaterialId" rel-field-name="id"/>
 			</view-link>
-				  		      			  		      		<!-- \n -->
 			<view-link entity-alias="ProductInwarehouseEntryV" rel-entity-alias="unitUnitV" rel-optional="true">
 				<key-map field-name="unitUnitId" rel-field-name="id"/>
 			</view-link>
@@ -170,5 +147,25 @@ under the License.
 			 -->
     </view-entity>
      
+     <!-- 分录明细耗料视图 -->
+     <view-entity entity-name="ProductInwarehouseEntryDetailView"
+            package-name="org.ofbiz.scm.ProductInwarehouse"
+            title="ProductInwarehouseEntryDetailView  Entity">
+            <member-entity entity-alias="ProductInwarehouseEntryDetailV" entity-name="ProductInwarehouseEntryDetail"></member-entity>
+			<member-entity entity-alias="materialMaterialV" entity-name="Material"></member-entity>
+			<member-entity entity-alias="unitUnitV" entity-name="Unit"></member-entity>
+				  		      			  		      			  		      			  		      			  		      			  		 <!-- \n -->
+            
+            <alias-all entity-alias="ProductInwarehouseEntryDetailV" ></alias-all>
+			<alias name="materialMaterialName" entity-alias="materialMaterialV" field="name"></alias>
+			<alias name="unitUnitName" entity-alias="unitUnitV" field="name"></alias>
+			
+			<view-link entity-alias="ProductInwarehouseEntryDetailV" rel-entity-alias="materialMaterialV" rel-optional="true">
+				<key-map field-name="materialId" rel-field-name="id"/>
+			</view-link>
+			<view-link entity-alias="ProductInwarehouseEntryDetailV" rel-entity-alias="unitUnitV" rel-optional="true">
+				<key-map field-name="unitUnitId" rel-field-name="id"/>
+			</view-link>
+    </view-entity>
 </entitymodel>
     

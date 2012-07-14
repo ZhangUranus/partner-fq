@@ -9,7 +9,7 @@ Ext.define('SCM.model.ProductInwarehouse.ProductInwarehouseActionModel', {
 				type : 'jsonajax',
 				api : {
 					create : '../../scm/control/createWithEntry?headEntity=ProductInwarehouse&entryEntity=ProductInwarehouseEntry',
-					update : '../../scm/control/updateWithEntry?headEntity=ProductInwarehouse&entryEntity=ProductInwarehouseEntry'
+					update : '../../scm/control/updateWithEntry?headEntity=ProductInwarehouse&entryEntity=ProductInwarehouseEntry&cascadeDelete=ProductInwarehouseEntryDetail'
 				},
 				reader : {
 					type : 'json',

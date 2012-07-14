@@ -130,6 +130,15 @@
 		<response name="success" type="none" />
 	</request-map>
 	
+	
+	<!-- 检查是否存在实体记录 -->
+	<request-map uri="checkExist">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.common.Utils" invoke="isExist" />
+		<response name="success" type="none" />
+	</request-map>
+	
+	
 	<!-- business request -->
 	<!-- 采购申请单提交 -->
 	<request-map uri="submitPurchaseBill">
@@ -356,6 +365,21 @@
 		<event type="java" path="org.ofbiz.partner.scm.stock.SupplierStockAdjustEvents" invoke="rollbackBill" />
 		<response name="success" type="none" />
 	</request-map>
+	
+	
+	<!-- 成品进仓单提交 -->
+	<request-map uri="submitProductInwarehouse">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductInwarehouseEvents" invoke="submitBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 成品进仓单撤销 -->
+	<request-map uri="rollbackProductInwarehouse">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductInwarehouseEvents" invoke="rollbackBill" />
+		<response name="success" type="none" />
+	</request-map>
+	
 	
 	<!-- 系统结算 -->
 	<request-map uri="monthlySettle">
