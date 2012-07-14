@@ -164,7 +164,7 @@ SCM.store.basiccode.productInStatusStore = new Ext.data.Store({
 				'name' : '正常进仓'
 			}, {
 				'id' : 2,
-				'name' : '改变进仓'
+				'name' : '改板进仓'
 			}, {
 				'id' : 3,
 				'name' : '返工进仓'
@@ -174,7 +174,7 @@ SCM.store.basiccode.productInStatusRenderer = function(value) {
 if (value == 1) {
 return '正常进仓';
 } else if (value == 2) {
-return '改变进仓';
+return '改板进仓';
 } else if (value == 3) {
 return '返工进仓';
 }
@@ -188,7 +188,7 @@ SCM.store.basiccode.productOutStatusStore = new Ext.data.Store({
 				'name' : '正常出仓'
 			}, {
 				'id' : 2,
-				'name' : '改变出仓'
+				'name' : '改板出仓'
 			}, {
 				'id' : 3,
 				'name' : '返工出仓'
@@ -198,7 +198,7 @@ SCM.store.basiccode.productOutStatusRenderer = function(value) {
 if (value == 1) {
 return '正常出仓';
 } else if (value == 2) {
-return '改变出仓';
+return '改板出仓';
 } else if (value == 3) {
 return '返工出仓';
 }

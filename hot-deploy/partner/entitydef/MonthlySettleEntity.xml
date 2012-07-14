@@ -306,4 +306,48 @@
 		<prim-key field="customerId" />
 		<prim-key field="materialId" />
 	</entity>
+	
+	
+	
+	<!-- 
+		周汇总表
+		汇总每周成品进出仓情况 
+	-->
+	<entity entity-name="PrdInOutWeekDetail" package-name="org.ofbiz.scm.pricemgr" title="PrdInOutWeekDetail Entity">
+		<field name="materialId" type="id-long"></field>
+		<field name="week" type="value"></field>
+		<field name="monNorInQty" type="fixed-point"></field>
+		<field name="monNorOutQty" type="fixed-point"></field>
+		<field name="monChgBrdQty" type="fixed-point"></field>
+		
+		<field name="tueNorInQty" type="fixed-point"></field>
+		<field name="tueNorOutQty" type="fixed-point"></field>
+		<field name="tueChgBrdQty" type="fixed-point"></field>
+		
+		<field name="wenNorInQty" type="fixed-point"></field>
+		<field name="wenNorOutQty" type="fixed-point"></field>
+		<field name="wenChgBrdQty" type="fixed-point"></field>
+		
+		<field name="thuNorInQty" type="fixed-point"></field>
+		<field name="thuNorOutQty" type="fixed-point"></field>
+		<field name="thuChgBrdQty" type="fixed-point"></field>
+		
+		<field name="friNorInQty" type="fixed-point"></field>
+		<field name="friNorOutQty" type="fixed-point"></field>
+		<field name="friChgBrdQty" type="fixed-point"></field>
+		
+		<field name="staNorInQty" type="fixed-point"></field>
+		<field name="staNorOutQty" type="fixed-point"></field>
+		<field name="staChgBrdQty" type="fixed-point"></field>
+		
+		<field name="sunNorInQty" type="fixed-point"></field>
+		<field name="sunNorOutQty" type="fixed-point"></field>
+		<field name="sunChgBrdQty" type="fixed-point"></field>
+
+		<prim-key field="materialId" />
+		<prim-key field="week" />
+	</entity>
+	
+	
+	
 </entitymodel>

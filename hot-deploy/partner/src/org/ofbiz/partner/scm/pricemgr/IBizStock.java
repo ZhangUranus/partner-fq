@@ -13,7 +13,9 @@ import org.ofbiz.entity.GenericValue;
 public interface IBizStock {
 	/**
 	 * 
-	 * @param calItem
+	 * @param billValue 业务单据值对象
+	 * @param isOut   是否出库
+	 * @param isCancel 是否撤销
 	 * @throws Exception
 	 */
 	public void updateStock(GenericValue billValue, boolean isOut, boolean isCancel) throws Exception;

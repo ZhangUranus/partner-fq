@@ -92,15 +92,15 @@
 
 	 <!-- 初始化数据-->
 	
-	<entity-resource type="data" reader-name="seed" loader="main" location="data/Int02_MaterialBom.xml"/>
-	<entity-resource type="data" reader-name="seed" loader="main" location="data/Int02_MaterialBomEntry.xml"/>
-	<entity-resource type="data" reader-name="seed" loader="main" location="data/Int02_Suppiler.xml"/>
-	<entity-resource type="data" reader-name="seed" loader="main" location="data/Int02_TMaterial.xml"/>
-	<entity-resource type="data" reader-name="seed" loader="main" location="data/Int02_TMaterialType.xml"/>
-	<entity-resource type="data" reader-name="seed" loader="main" location="data/Int02_unit.xml"/>
-	<entity-resource type="data" reader-name="seed" loader="main" location="data/Int02_WarehouseType.xml"/>
-	<entity-resource type="data" reader-name="seed" loader="main" location="data/Int02_Warehouse.xml"/>
-	<entity-resource type="data" reader-name="seed" loader="main" location="data/Int02_CurMaterialBalance.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Int03_MaterialBom.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Int03_MaterialBomEntry.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Int03_Suppiler.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Int03_TMaterial.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Int03_TMaterialType.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Int03_unit.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Int03_WarehouseType.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Int03_Warehouse.xml"/>
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Int03_CurMaterialBalance.xml"/>
 
 	<!-- 计划任务数据 -->
 	<entity-resource type="data" reader-name="seed" loader="main" location="data/System-ScheduledServices.xml"/>
