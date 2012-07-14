@@ -12,7 +12,7 @@ import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericValue;
 
 /**
- * 委外单价管理类
+ * 车间单价管理类
  * 
  * @author Mark
  * 
@@ -22,12 +22,16 @@ public class WorkshopPriceMgr {
 
 	Delegator delegator = null;
 
-	private Object updateLock = new Object();// 余额表更新锁
+	private final Object updateLock = new Object();// 余额表更新锁
 
 	private static WorkshopPriceMgr instance = null;
 
 	private int year, month;// 当期年月
-
+	
+	public Object getUpdateLock(){
+		return updateLock;
+	}
+	
 	private WorkshopPriceMgr() {
 		refreshPeriod();
 	}
