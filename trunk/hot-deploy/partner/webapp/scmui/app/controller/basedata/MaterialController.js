@@ -121,6 +121,22 @@ Ext.define('SCM.controller.basedata.MaterialController', {
 				this.numberField = this.editForm.down('[name=number]');
 				
 				this.treePanel=this.listContainer.down('treepanel');
+				
+				
+
+				/**
+				 * add by marklam 2012-7-15 注册键盘事件，取消选择物料分类
+				 */
+				var nav = new Ext.util.KeyNav({
+				    target : this.treePanel.id,
+				    esc: {
+				        fn: function(){this.treePanel.getSelectionModel().deselectAll(true);},
+				        defaultEventAction: false
+				    },
+				    scope : this
+				});
+				
+				
 			},
 
 			/**
@@ -173,14 +189,9 @@ Ext.define('SCM.controller.basedata.MaterialController', {
 //				//如果选择了物料分类，添加物料分类过滤  lrf 2012-4-19 
 				var selItem=this.getSelType();
 				var selTypeId;
+				lstore.filters.clear();
 				if(selItem!=null){
-					lstore.filters.clear();
 					lstore.filter([{property:'materialTypeId',value:selItem.get('id')}]);
-//					this.listPanel.store.loadPage(1,{
-//						params : {
-//							'filter' : '[{property:\'materialTypeId\',value:\''+selItem.get('id')+'\'}]'
-//						}	
-//					});
 				}else{
 					this.listPanel.store.loadPage(1);
 				}
@@ -299,7 +310,7 @@ Ext.define('SCM.controller.basedata.MaterialController', {
 			//返回选择的分类
 			getSelType : function(){
 				if(this.treePanel!=undefined&&this.treePanel!=null ){
-					return this.treePanel.getSelectionModel().getLastSelected( );
+					return this.treePanel.getSelectionModel().getSelection()[0];
 				}
 			}
 			
