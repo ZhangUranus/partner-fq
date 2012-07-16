@@ -64,13 +64,15 @@ public class WeeklyStockMgr {
 		    	  record.setString("week", week);
 		      }else{
 		    	  curQty=record.getBigDecimal(updateFieldName);
+		    	  if(curQty==null)curQty=BigDecimal.ZERO;
 		      }
 		      /*2.  如果是反操作需要减数量*/
 		      if(isCancel) qty=qty.negate();
 		      
 		      /*3. 更新数据库记录*/
 		      record.set(updateFieldName, curQty.add(qty));
-		      delegator.store(record);
+		      /*4. 新增或者更新*/
+		      delegator.createOrStore(record);
 		      
 	}
 	

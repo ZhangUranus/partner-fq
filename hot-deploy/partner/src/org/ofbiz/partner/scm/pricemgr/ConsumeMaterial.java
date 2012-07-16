@@ -5,11 +5,13 @@ import java.math.BigDecimal;
 public class ConsumeMaterial{
 	private String materialId;
 	private BigDecimal consumeQty;
+	private BigDecimal price; //单价
 	private String detailId;//辅助字段，该字段有值时表示耗料是手工定义的
-	public ConsumeMaterial( String materialId,BigDecimal consumeQty,String detailId) {
+	public ConsumeMaterial( String materialId,BigDecimal consumeQty,BigDecimal price,String detailId) {
 		super();
 		this.consumeQty = consumeQty;
 		this.materialId = materialId;
+		this.price=price;
 		this.detailId=detailId;
 	}
 	public String getMaterialId() {
@@ -29,6 +31,12 @@ public class ConsumeMaterial{
 	}
 	public void setDetailId(String detailId) {
 		this.detailId = detailId;
+	}
+	public BigDecimal getPrice() {
+		return price;
+	}
+	public void setPrice(BigDecimal price) {
+		this.price = price;
 	}
 	
 	
