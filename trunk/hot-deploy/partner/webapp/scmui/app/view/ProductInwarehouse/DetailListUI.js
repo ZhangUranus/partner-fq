@@ -3,7 +3,7 @@ Ext.define('SCM.view.ProductInwarehouse.DetailListUI', {
 			requires : ['SCM.extend.toolbar.SaveToolbar', 'SCM.extend.toolbar.GridEditToolbar', 'SCM.ux.combobox.ComboGrid', 'SCM.ux.grid.ComboColumn'],
 			alias : 'widget.ProductInwarehousedetaillist',
 			height : SCM.DefaultSize.WINDOW_HEIGHT,
-			width : 580,
+			width : 750,
 			title : '耗料明细',
 			layout : 'border',
 			modal : true,// 背景变灰，不能编辑
@@ -12,7 +12,7 @@ Ext.define('SCM.view.ProductInwarehouse.DetailListUI', {
 			closeAction : 'hide',
 			initComponent : function() {
 				var me = this;
-				var entryStore = Ext.create('ProductInwarehouseDetailStore');
+				var entryStore = Ext.create('ProductInwarehouseEntryDetailStore');
 				Ext.applyIf(me, {
 							items : [{
 										xtype : 'gridpanel',
@@ -29,6 +29,7 @@ Ext.define('SCM.view.ProductInwarehouse.DetailListUI', {
 													xtype : 'combocolumn',
 													dataIndex : 'materialId',
 													text : '物料',
+													width:300,
 													gridId : 'ProductInwarehouse-detail-list-grid',
 													editor : {
 														xtype : 'combogrid',
@@ -40,16 +41,11 @@ Ext.define('SCM.view.ProductInwarehouse.DetailListUI', {
 													}
 												}, {
 													xtype : 'gridcolumn',
-													dataIndex : 'materialModel',
+													dataIndex : 'model',
 													text : '规格型号'
 												}, {
-													xtype : 'numbercolumn',
-													dataIndex : 'volume',
-													text : '数量',
-													width : 80
-												}, {
 													xtype : 'combocolumn',
-													dataIndex : 'materialUnitId',
+													dataIndex : 'unitUnitId',
 													text : '单位',
 													gridId : 'ProductInwarehouse-list-grid',
 													editor : {
@@ -63,12 +59,17 @@ Ext.define('SCM.view.ProductInwarehouse.DetailListUI', {
 													width : 80
 												}, {
 													xtype : 'numbercolumn',
+													dataIndex : 'quantity',
+													text : '数量',
+													width : 80
+												}, {
+													xtype : 'numbercolumn',
 													dataIndex : 'price',
 													text : '单价',
 													width : 80
 												}, {
 													xtype : 'numbercolumn',
-													dataIndex : 'entrysum',
+													dataIndex : 'amount',
 													text : '金额',
 													width : 80
 												}],
@@ -77,7 +78,7 @@ Ext.define('SCM.view.ProductInwarehouse.DetailListUI', {
 								        xtype: 'label',
 										region : 'south',
 										height : 20,
-								        text: '该列表为单个加工件的耗料列表！',
+								        text: '该列表为单个成品的耗料列表！',
 						                style: {
 								            color: 'red'
 								        }

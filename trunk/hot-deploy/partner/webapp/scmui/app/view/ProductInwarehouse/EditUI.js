@@ -62,9 +62,11 @@ Ext.define('SCM.view.ProductInwarehouse.EditUI', {
 								    name : 'inspectorSystemUserId',
 									valueField : 'id',
 									displayField : 'name',
-									store : Ext.create('SystemUserStore'),
+									initStore : Ext.data.StoreManager.lookup('SUComboInitStore'),
+									store : Ext.data.StoreManager.lookup('SUComboStore'),
 									margin: 5,
 									matchFieldWidth:false,
+									readOnly : true,
 									listConfig : {
 										width:185,
 										height : SCM.MaxSize.COMBOGRID_HEIGHT,
@@ -90,6 +92,7 @@ Ext.define('SCM.view.ProductInwarehouse.EditUI', {
 									store : Ext.create('SystemUserStore'),
 									margin: 5,
 									matchFieldWidth:false,
+									readOnly : true,
 									listConfig : {
 										width:185,
 										height : SCM.MaxSize.COMBOGRID_HEIGHT,
@@ -222,7 +225,8 @@ Ext.define('SCM.view.ProductInwarehouse.EditUI', {
 									xtype : 'combogrid',
 									valueField : 'id',
 									displayField : 'name',
-									store : Ext.create('MaterialStore'),
+									initStore : Ext.data.StoreManager.lookup('MComboInitStore'),
+									store : Ext.data.StoreManager.lookup('MComboStore'),
 									matchFieldWidth : false,
 									listConfig : {
 										width : SCM.MaxSize.COMBOGRID_WIDTH,
@@ -261,9 +265,10 @@ Ext.define('SCM.view.ProductInwarehouse.EditUI', {
 									xtype : 'combogrid',
 									valueField : 'id',
 									displayField : 'name',
-									store : Ext.create('UnitStore'),
+									initStore : Ext.data.StoreManager.lookup('UComboInitStore'),
+									store : Ext.data.StoreManager.lookup('UComboStore'),
 									matchFieldWidth : false,
-									
+									readOnly : true,
 									listConfig : {
 										width : SCM.MaxSize.COMBOGRID_WIDTH,
 										height : SCM.MaxSize.COMBOGRID_HEIGHT,

@@ -69,6 +69,10 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 							'ProductInwarehouseedit gridpanel button[action=editDetail]' : {
 								click : this.editDetailRecord
 							},
+							// 编辑界面直接提交
+							'ProductInwarehouseedit button[action=submit]' : {
+								click : this.saveAndSubmitRecord
+							},
 							// 编辑界面保存
 							'ProductInwarehouseedit button[action=save]' : {
 								click : this.saveRecord
@@ -355,10 +359,15 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 					if (record) {
 						//e.record.set('materialMaterialModel', record.get('model'));
 						e.record.set('unitUnitId', record.get('defaultUnitId'));
-						e.record.set('unitUnitName', record.get('defaultUnitName'));
-
 					}
 				}
+			},
+			/**
+			 * 初始化用户选择
+			 * @param {} record
+			 */
+			initCurrentUserSelect : function(record){
+				record.set('inspectorSystemUserId',SCM.CurrentUser.id);
 			},
 			/**
 			 * 耗料明细编辑事情
