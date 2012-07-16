@@ -1,5 +1,9 @@
 package org.ofbiz.partner.scm.stock;
 
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -12,6 +16,7 @@ import org.ofbiz.entity.transaction.TransactionUtil;
 import org.ofbiz.partner.scm.common.BillBaseEvent;
 import org.ofbiz.partner.scm.pricemgr.BillType;
 import org.ofbiz.partner.scm.pricemgr.BizStockImpFactory;
+import org.ofbiz.partner.scm.pricemgr.Utils;
 
 /**
  * 成品进仓 业务处理事件
@@ -35,18 +40,34 @@ public class ProductInwarehouseEvents {
 
 			Delegator delegator = (Delegator) request.getAttribute("delegator");
 			String billId = request.getParameter("billId");// 单据id
+			Date bizDate =null;
 			if (delegator != null && billId != null) {
 				Debug.log("成品入库单提交:" + billId, module);
 				GenericValue billHead = delegator.findOne("ProductInwarehouse", UtilMisc.toMap("id", billId), false);
+
 				if (billHead == null || billHead.get("bizDate") == null) {
 					throw new Exception("can`t find ProductInwarehouse bill or bizdate is null");
 				}
-
+				//注意不能使用billHead.getDate方法，出产生castException异常
+				bizDate= (Date) billHead.get("bizDate");
+				
 				BizStockImpFactory.getBizStockImp(BillType.ProductWarehouse).updateStock(billHead, false, false);
 
 				
 				BillBaseEvent.submitBill(request, response);// 更新单据状态
 			}
+			
+			//更新周汇总表
+			// 获取单据分录条目
+			List<GenericValue> entryList = delegator.findByAnd("ProductInwarehouseEntry", UtilMisc.toMap("parentId", billId));
+			 
+			for (GenericValue v : entryList) {
+				String materialId = v.getString("materialMaterialId");// 打板物料id
+				BigDecimal volume=v.getBigDecimal("volume");//入库数量（板）
+				ProductStockType type=ProductStockType.valueOf(Integer.valueOf(v.getString("inwarehouseType")));//成品入库类型 
+				WeeklyStockMgr.getInstance().updateStock(materialId, bizDate, type, volume, false);
+			}
+			
 			TransactionUtil.commit(beganTransaction);
 		} catch (Exception e) {
 			Debug.logError(e, module);
@@ -74,17 +95,38 @@ public class ProductInwarehouseEvents {
 
 			Delegator delegator = (Delegator) request.getAttribute("delegator");
 			String billId = request.getParameter("billId");// 单据id
+			Date bizDate =null;
 			if (delegator != null && billId != null) {
 				Debug.log("入库单撤销:" + billId, module);
 				GenericValue billHead = delegator.findOne("ProductInwarehouse", UtilMisc.toMap("id", billId), false);
-				if (billHead == null || billHead.get("bizDate") == null) {
+
+				if (billHead == null ||billHead.get("bizDate") == null) {
 					throw new Exception("can`t find ProductInwarehouse bill or bizdate is null");
 				}
 
+
+				//注意不能使用billHead.getDate方法，出产生castException异常
+				bizDate= (Date) billHead.get("bizDate");
+				
+				
 				BizStockImpFactory.getBizStockImp(BillType.ProductWarehouse).updateStock(billHead, true, true);
 
 				BillBaseEvent.rollbackBill(request, response);// 撤销单据
 			}
+			
+
+			//更新周汇总表
+			// 获取单据分录条目
+			List<GenericValue> entryList = delegator.findByAnd("ProductInwarehouseEntry", UtilMisc.toMap("parentId", billId));
+			 
+			for (GenericValue v : entryList) {
+				String materialId = v.getString("materialMaterialId");// 打板物料id
+				BigDecimal volume=v.getBigDecimal("volume");//入库数量（板）
+				ProductStockType type=ProductStockType.valueOf(Integer.valueOf(v.getString("inwarehouseType")));//成品入库类型 
+				WeeklyStockMgr.getInstance().updateStock(materialId, bizDate, type, volume, true);
+			}
+			
+			
 			TransactionUtil.commit(beganTransaction);
 		} catch (Exception e) {
 			Debug.logError(e, module);
@@ -94,7 +136,6 @@ public class ProductInwarehouseEvents {
 				Debug.logError(e2, "Unable to rollback transaction", module);
 			}
 			throw e;
-		}
-		return "success";
+		}return "success";
 	}
 }

@@ -314,12 +314,18 @@ public class Utils {
 		
 		
 		/* 1.  查找第一个bom单 , 已经核准 、 有效*/
-		GenericValue bomBill =delegator.findOne("MaterialBom",false,"materialId", materialId,"status",1,"valid","Y");
+		List<GenericValue> bomBillList =delegator.findByAnd("MaterialBom","materialId", materialId,"status",1,"valid","Y");
+		if(bomBillList==null||bomBillList.size()<1){
+			GenericValue mv=delegator.findOne("TMaterial", false, "id",materialId);
+			throw new Exception("系统没有定义物料【"+mv.getString("name")+"】bom单");
+		}
+		
+		GenericValue bomBill=bomBillList.get(0);
 		
 		List<ConsumeMaterial> consumeList=new ArrayList<ConsumeMaterial>();
 		/* 2.  获取明细物料列表*/
 		if(bomBill!=null){
-			List<GenericValue> bomEntry=delegator.findByAnd("MaterialBomEntry", UtilMisc.toMap());
+			List<GenericValue> bomEntry=delegator.findByAnd("MaterialBomEntry", "parentId",bomBill.getString("id"));
 			if(bomEntry!=null){
 				for(GenericValue v:bomEntry){
 					/*2.1 是否bom物料，递归获取物料*/
@@ -332,7 +338,7 @@ public class Utils {
 						consumeList.addAll(detailBomMaterialList);//添加返回的物料列表
 					}else{
 						/*2.2 添加到物料列表*/
-						consumeList.add(new ConsumeMaterial(entryMaterialId,qty,null));
+						consumeList.add(new ConsumeMaterial(entryMaterialId,qty,null,null));
 					}
 				}
 			}

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilMisc;
@@ -27,12 +28,17 @@ public class ProductWarehouseBizImp implements IBizStock {
 	private static final String module = org.ofbiz.partner.scm.pricemgr.bizStockImp.ProductWarehouseBizImp.class.getName();
 	
 	/**
-	 * 成品进仓单业务实现类，结算时会调用该接口进行计算
+	 * 
+	 * @author  Mark 
+	 * @lastUpdated 2012-7-14
+	 * 
+	 * 成品进仓单业务实现类，结算时会调用该接口进行计算,应该在一个事务中执行
 	 * 
 	 * 更新库存余额表，更新打板物料库存
-	 * 1. 计算bom单耗料 ，从车间物料单价表获取物料单价
+	 * 1. 计算实际耗料 ，从车间物料单价表获取物料单价
 	 * 2. 计算耗料列表的成本，合计成为本打板物料的成品
 	 * 3. 打板物料入仓
+	 * 4. 更新进仓成品的实际耗料表单价，如果没有定义耗料表，就新增实际耗料记录
 	 */
 	public synchronized  void updateStock(GenericValue billValue, boolean isOut, boolean isCancel) throws Exception {
 		// 注意不能使用billHead.getDate方法，出产生castException异常
@@ -42,8 +48,8 @@ public class ProductWarehouseBizImp implements IBizStock {
 		}
 		
 		//判断业务类型合法性 ，成品进仓单只支持 ，非撤销进仓(!isOut&&!isCancel) 和 撤销出仓(isOut&&isCancel) 两种情况
-		if(!(isOut&&isCancel)){
-			throw new Exception("成品进仓单业务操作出错！isOut&&isCancel=false");
+		if(isOut!=isCancel){
+			throw new Exception("成品进仓单业务操作出错!");
 		}
 		
 		// 获取单据分录条目
@@ -53,6 +59,7 @@ public class ProductWarehouseBizImp implements IBizStock {
 		//整单的成本
 		BigDecimal totalSum = BigDecimal.ZERO;
 		for (GenericValue v : entryList) {
+			String entryId=v.getString("id");//分录id
 			String workshopId=v.getString("workshopWorkshopId");//车间id
 			String warehouseId = v.getString("warehouseWarehouseId");// 仓库id
 			String materialId = v.getString("materialMaterialId");// 打板物料id
@@ -61,13 +68,14 @@ public class ProductWarehouseBizImp implements IBizStock {
 				throw new Exception("成品进仓数量不能小于等于零！");
 			}
 			/*1. 获取实际耗料列表  ， 支持10层的bom物料查找*/
-			List<ConsumeMaterial> materialList = getMaterialList(v.getString("id"),materialId);
+			List<ConsumeMaterial> materialList = getMaterialList(entryId,materialId);
+			
 			
 			BigDecimal cost=BigDecimal.ZERO;//打板成品单一板的成本
 			
-			/*2. 更新车间库存表的耗料 ,对每个耗料更新车间库存表,同时更新耗料明细表*/
+			/*2. 更新耗料明细表,如果没有明细则新增明细信息*/
 			for (ConsumeMaterial element : materialList) {
-				/*2.1  取每个耗料物料id和耗料数量*/
+				/*2.1  取每个耗料物料id和耗料金额*/
 				String bomMaterialId = element.getMaterialId();
 				BigDecimal bomAmount = volume.multiply(element.getConsumeQty());
 				/*2.2  从车间库存表查找耗料单价*/
@@ -75,24 +83,46 @@ public class ProductWarehouseBizImp implements IBizStock {
 				/*2.3 计算成本 并汇总总成本*/
 				cost=cost.add(bomAmount.multiply(curPrice));
 				
-				/*2.4 更新耗料明细单价和金额*/
-				if(!isOut&&!isCancel&&element.getDetailId()!=null){
+				/*2.4 更新耗料明细单价和金额，更新车间单价表*/
+				if(!isOut&&!isCancel){
 					/*2.4.1 进仓操作更新耗料明细单价和金额*/
-					delegator.storeByCondition("ProductInwarehouseEntryDetail", UtilMisc.toMap("price",curPrice ,"amount",cost), EntityCondition.makeCondition("id", element.getDetailId()));
+					if(element.getDetailId()==null){
+						 /*新增耗料明细*/
+					     GenericValue entryDetailValue=delegator.makeValue("ProductInwarehouseEntryDetail");
+					     entryDetailValue.set("id", UUID.randomUUID().toString());
+					     entryDetailValue.set("parentId", entryId);
+					     /* 设置物料信息, 规格型号、计量单位*/
+					     entryDetailValue.set("materialId", bomMaterialId);
+					     
+					     GenericValue mv=delegator.findOne("TMaterial", false, "id",bomMaterialId);
+					     entryDetailValue.set("model", mv.getString("model"));
+					     entryDetailValue.set("quantity", element.getConsumeQty());
+					     entryDetailValue.set("unitUnitId", mv.getString("defaultUnitId"));
+					     
+					     entryDetailValue.set("price", curPrice);
+					     entryDetailValue.set("amount", cost);
+					     delegator.create(entryDetailValue);
+					}else{
+						/* 更新耗料明细*/
+						delegator.storeByCondition("ProductInwarehouseEntryDetail", UtilMisc.toMap("price",curPrice ,"amount",cost), EntityCondition.makeCondition("id", element.getDetailId()));
+					}
+					/*2.4.2 扣减车间单价表数量、金额*/
+					WorkshopPriceMgr.getInstance().update(workshopId, bomMaterialId, bomAmount.negate(), bomAmount.multiply(curPrice).negate());
 				}else if (isOut&&isCancel){//撤销出仓
-					/*2.4.2 其他情况，清楚明细单价和金额*/
+					/*2.4.3 清除明细单价和金额*/
 					delegator.storeByCondition("ProductInwarehouseEntryDetail", UtilMisc.toMap("price",BigDecimal.ZERO ,"amount",BigDecimal.ZERO), EntityCondition.makeCondition("id", element.getDetailId()));
-				}
+					/*2.4.4 仓库出仓到车间返回扣减的耗料*/
+					WorkshopPriceMgr.getInstance().update(workshopId, bomMaterialId, bomAmount, bomAmount.multiply(curPrice));
+				} 
 			}
+			
+			/*3. 计算分录成品单价和成本 */
 			
 			BigDecimal entryCost=cost.multiply(volume);//计算分录总成本
 			
 			if (!isOut&&!isCancel) {//进仓非撤销
-				//增加额外耗料金额
-//				BigDecimal extraSum = WorkshopPriceMgr.getInstance().updateWarehousingExtraCommit(v);
-//				sum = sum.add(extraSum);
 				
-				//返填单价，金额
+				//返填分录单价，金额
 				v.set("price", cost);
 				v.set("entrysum", entryCost);
 				
@@ -101,9 +131,6 @@ public class ProductWarehouseBizImp implements IBizStock {
 				Debug.log("成品入库单价计算:物料id" + materialId + ";数量" + volume + ";金额" + entryCost, module);
 			} else  if (isOut&&isCancel){//出仓 ，进仓反操作，清空进仓操作
 				entryCost = v.getBigDecimal("entrysum");// 金额
-				
-				//回滚额外耗料计算
-//				WorkshopPriceMgr.getInstance().updateWarehousingExtraRollback(v);
 				
 				// 如果是出库业务，数量、金额转换为负数
 				volume = volume.negate();
@@ -119,26 +146,6 @@ public class ProductWarehouseBizImp implements IBizStock {
 
 			// 计算板成品单价
 			PriceMgr.getInstance().calPrice(item);
-
-			/*3. 更新车间库存表余额，对每个耗料进行扣减*/
-			for (ConsumeMaterial element : materialList) {
-				/*3.1  取每个耗料物料id和耗料数量*/
-				String bomMaterialId = element.getMaterialId();
-				BigDecimal bomAmount = volume.multiply(element.getConsumeQty());
-				/*3.2  从车间库存表查找耗料单价*/
-				BigDecimal curPrice=WorkshopPriceMgr.getInstance().getPrice(workshopId, bomMaterialId);
-				/*3.3 计算成本 */
-				if(!isOut){
-					/*3.3.1 进仓扣减耗料 */
-					WorkshopPriceMgr.getInstance().update(workshopId, bomMaterialId, bomAmount.negate(), bomAmount.multiply(curPrice).negate());
-				}else{
-					/*3.3.2 出仓返回扣减的耗料*/
-					WorkshopPriceMgr.getInstance().update(workshopId, bomMaterialId, bomAmount, bomAmount.multiply(curPrice));
-				}
-				
-			}
-			
-			
 			v.store();
 		}
 		// 返填总金额
@@ -162,7 +169,7 @@ public class ProductWarehouseBizImp implements IBizStock {
 		/*2. 实际耗料表存在耗料信息*/
 		if(actualMaterialList!=null&&actualMaterialList.size()>0){
 			for(GenericValue v:actualMaterialList){
-				consumeMaterialList.add(new ConsumeMaterial(v.getString("materialId"),v.getBigDecimal("quantity"),v.getString("id")));
+				consumeMaterialList.add(new ConsumeMaterial(v.getString("materialId"),v.getBigDecimal("quantity"),v.getBigDecimal("price"),v.getString("id")));
 			}
 		}else{
 		/*3. 实际耗料表不存在耗料信息，需要从bom单计算理论耗料*/
