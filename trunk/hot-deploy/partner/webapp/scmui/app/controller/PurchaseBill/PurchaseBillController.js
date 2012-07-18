@@ -126,16 +126,17 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 				this.approverWin = Ext.widget('purchasebillapproveredit');
 				this.approverStatus = this.approverWin.down('combobox[name=status]');
 				this.approverNote = this.approverWin.down('textarea[name=approverNote]');
-
 			},
-			
+
 			/**
 			 * 初始化用户选择
-			 * @param {} record
+			 * 
+			 * @param {}
+			 *            record
 			 */
-			initCurrentUserSelect : function(record){
-				record.set('buyerSystemUserId',SCM.CurrentUser.id);
-				record.set('submitUserId',SCM.CurrentUser.id);
+			initCurrentUserSelect : function(record) {
+				record.set('buyerSystemUserId', SCM.CurrentUser.id);
+				record.set('submitUserId', SCM.CurrentUser.id);
 			},
 
 			/**
@@ -208,28 +209,30 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 				}
 				this.totalFields.setValue(sum);
 			},
-			
+
 			/**
 			 * 判断用户是否属于同一部门，属于同一部门才有权限进行审批
 			 */
-			hasAuditPermission : function(id){
-				var record = this.submitUserFields.store.findRecord("id",id);
-				if(SCM.CurrentUser.departmentId == record.get("departmentId")){
+			hasAuditPermission : function(id) {
+				var record = this.submitUserFields.store.findRecord("id", id);
+				if (SCM.CurrentUser.departmentId == record.get("departmentId")) {
 					return true;
 				}
 				return false;
 			},
-			
+
 			/**
 			 * 审核单据
-			 * @param {} button
-			 */ 
+			 * 
+			 * @param {}
+			 *            button
+			 */
 			auditBill : function(button) {
 				sm = this.listPanel.getSelectionModel();
 
 				if (sm.hasSelection()) {// 判断是否选择行记录
 					record = sm.getLastSelected();
-					if(!this.hasAuditPermission(record.get("submitUserId"))){
+					if (!this.hasAuditPermission(record.get("submitUserId"))) {
 						showError('您没有权限审核该小组采购单！');
 						return;
 					}
@@ -251,7 +254,7 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 
 				if (sm.hasSelection()) {// 判断是否选择行记录
 					record = sm.getLastSelected();
-					if(!this.hasAuditPermission(record.get("submitUserId"))){
+					if (!this.hasAuditPermission(record.get("submitUserId"))) {
 						showError('您没有权限反审核该小组采购单！');
 						return;
 					}
@@ -262,24 +265,31 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 					Ext.Msg.confirm('提示', '确定反审核该' + this.gridTitle + '？', confirmChange, this);
 					function confirmChange(id) {
 						if (id == 'yes') {
-							Ext.Ajax.request({
-										scope : this,
-										params : {
-											billId : record.get('id'),
-											entity : this.entityName,
-											isValid : record.get('status') == '1' ? true : false
-										},
-										url : '../../scm/control/unauditPurchaseBill',
-										success : function(response) {
-											var result = Ext.decode(response.responseText)
-											if (result.success) {
-												Ext.Msg.alert("提示", "反审核成功！");
-											} else {
-												showError(result.message);
+							/* 判断是否可提交 */
+							if (this.hasSubmitLock()) {
+								this.getSubmitLock();// 获取提交锁
+								Ext.Ajax.request({
+											scope : this,
+											params : {
+												billId : record.get('id'),
+												entity : this.entityName,
+												isValid : record.get('status') == '1' ? true : false
+											},
+											url : '../../scm/control/unauditPurchaseBill',
+											success : function(response) {
+												var result = Ext.decode(response.responseText)
+												if (result.success) {
+													Ext.Msg.alert("提示", "反审核成功！");
+												} else {
+													showError(result.message);
+												}
+												this.refreshRecord();
+												this.releaseSubmitLock();
 											}
-											this.refreshRecord();
-										}
-									});
+										});
+							} else {
+								showWarning('上一次操作还未完成，请稍等！');
+							}
 						}
 					}
 
@@ -293,29 +303,34 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 				if (!this.approverNote.isValid() || !this.approverStatus.isValid()) {
 					return;
 				}
-				var note = this.approverNote.getValue();
-				var status = this.approverStatus.getValue();
-				this.approverCancel();
-				Ext.Ajax.request({
-							scope : this,
-							params : {
-								billId : this.approverWin.billId,
-								entity : this.entityName,
-								approverNote : note,
-								status : status,
-								isValid : status == '1' ? true : false
-							},
-							url : '../../scm/control/auditPurchaseBill',
-							success : function(response) {
-								var result = Ext.decode(response.responseText)
-								if (result.success) {
-									Ext.Msg.alert("提示", "审核成功！");
-								} else {
-									showError(result.message);
+				/* 判断是否可提交 */
+				if (this.hasSubmitLock()) {
+					this.getSubmitLock();// 获取提交锁
+					Ext.Ajax.request({
+								scope : this,
+								params : {
+									billId : this.approverWin.billId,
+									entity : this.entityName,
+									approverNote : this.approverNote.getValue(),
+									status : this.approverStatus.getValue(),
+									isValid : this.approverStatus.getValue() == '1' ? true : false
+								},
+								url : '../../scm/control/auditPurchaseBill',
+								success : function(response) {
+									var result = Ext.decode(response.responseText)
+									if (result.success) {
+										Ext.Msg.alert("提示", "审核成功！");
+									} else {
+										showError(result.message);
+									}
+									this.refreshRecord();
+									this.approverCancel();
+									this.releaseSubmitLock();
 								}
-								this.refreshRecord();
-							}
-						});
+							});
+				} else {
+					showWarning('上一次操作还未完成，请稍等！');
+				}
 			},
 
 			/**
@@ -326,51 +341,42 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 				this.approverStatus.setValue('');
 				this.approverWin.close();
 			},
-			
+
 			/**
 			 * 获取单据提交URL
 			 */
-			getSubmitBillUrl : function(){
+			getSubmitBillUrl : function() {
 				return '../../scm/control/submitPurchaseBill';
 			},
-			
+
 			/**
 			 * 获取单据撤销URL
 			 */
-			getRollbackBillUrl : function(){
+			getRollbackBillUrl : function() {
 				return '../../scm/control/rollbackPurchaseBill';
 			},
-			
-			getMainPrintHTML:function(){
-				return "<div>"
-				+"<div class='caption' >江门市蓬江区富桥旅游用品厂有限公司</div>"
-				+"<div class='caption' >材料备货计划</div>"
-				+"<div class='field' >单据编号:<span class='dataField' fieldindex='data.number' width=150px></span></div>"
-				+"<div class='field' style='width:45%;float:left;'>供应商:<span class='dataField' fieldindex='data.supplierSupplierName' width=150px></span></div>"
-				+"<div class='field' align='right' style='width:45%;float:right;'>发出日期:<span class='dataField' fieldindex='data.bizDate' width=150px></span></div>"
-				+"<div class='field' align='right' style='width:45%;float:right;'>采购员:<span class='dataField' fieldindex='data.buyerSystemUserName' width=150px></span></div>"
-				+"<div class='field' align='left' style='width:45%;float:left;'>预备交货期:<span class='dataField' fieldindex='data.receiveStamp' width=150px></span></div>"
-				+"<div class='nextLine'></div>"
-				+"<table  cellspacing='0' class='dataEntry' fieldindex='data.entry'>" 
-				+"<tr> "
-				+"<th bindfield='materialMaterialName' width='30%'>材料名称</th> "
-				+"<th bindfield='materialMaterialModel' width='20%'>规格</th> "
-				+"<th bindfield='empty' width='20%'>质量要求</th> "
-				+"<th bindfield='unitUnitName' width='10%'>单位</th>" 
-				+"<th bindfield='volume' width='20%'>数量</th> "
-				+"</tr> "
-				+"</table>" 
-				+"<div class='field' style='width:30%;float:left;'>供应商确认:</div>"
-				+"<div class='field' style='width:50%;'>打印时间:<span class='dataField' fieldindex='data.printTime'></span></div>"
-				+"<div class='field' style='width:50%;'>第<span class='dataField' fieldindex='data.curPage'></span>页/共<span class='dataField' fieldindex='data.totalPages'></span>页</div>"
-				+"</div>";
+
+			getMainPrintHTML : function() {
+				return "<div>" + "<div class='caption' >江门市蓬江区富桥旅游用品厂有限公司</div>" + "<div class='caption' >材料备货计划</div>"
+						+ "<div class='field' >单据编号:<span class='dataField' fieldindex='data.number' width=150px></span></div>"
+						+ "<div class='field' style='width:45%;float:left;'>供应商:<span class='dataField' fieldindex='data.supplierSupplierName' width=150px></span></div>"
+						+ "<div class='field' align='right' style='width:45%;float:right;'>发出日期:<span class='dataField' fieldindex='data.bizDate' width=150px></span></div>"
+						+ "<div class='field' align='right' style='width:45%;float:right;'>采购员:<span class='dataField' fieldindex='data.buyerSystemUserName' width=150px></span></div>"
+						+ "<div class='field' align='left' style='width:45%;float:left;'>预备交货期:<span class='dataField' fieldindex='data.receiveStamp' width=150px></span></div>"
+						+ "<div class='nextLine'></div>" + "<table  cellspacing='0' class='dataEntry' fieldindex='data.entry'>" + "<tr> "
+						+ "<th bindfield='materialMaterialName' width='30%'>材料名称</th> " + "<th bindfield='materialMaterialModel' width='20%'>规格</th> " + "<th bindfield='empty' width='20%'>质量要求</th> "
+						+ "<th bindfield='unitUnitName' width='10%'>单位</th>" + "<th bindfield='volume' width='20%'>数量</th> " + "</tr> " + "</table>"
+						+ "<div class='field' style='width:30%;float:left;'>供应商确认:</div>"
+						+ "<div class='field' style='width:50%;'>打印时间:<span class='dataField' fieldindex='data.printTime'></span></div>"
+						+ "<div class='field' style='width:50%;'>第<span class='dataField' fieldindex='data.curPage'></span>页/共<span class='dataField' fieldindex='data.totalPages'></span>页</div>"
+						+ "</div>";
 			},
-			getPrintCfg:function(){
-				var cfg=new PrintConfig();
-				cfg.loopCount=24;
-				cfg.mainBodyDiv=this.getMainPrintHTML();
-				cfg.loopBodyDiv=this.getLoopPrintHTML();
-				cfg.tailDiv=this.getTailPrintHTML();
+			getPrintCfg : function() {
+				var cfg = new PrintConfig();
+				cfg.loopCount = 24;
+				cfg.mainBodyDiv = this.getMainPrintHTML();
+				cfg.loopBodyDiv = this.getLoopPrintHTML();
+				cfg.tailDiv = this.getTailPrintHTML();
 				return cfg;
 			}
 		});
