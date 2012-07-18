@@ -293,14 +293,17 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 				if (!this.approverNote.isValid() || !this.approverStatus.isValid()) {
 					return;
 				}
+				var note = this.approverNote.getValue();
+				var status = this.approverStatus.getValue();
+				this.approverCancel();
 				Ext.Ajax.request({
 							scope : this,
 							params : {
 								billId : this.approverWin.billId,
 								entity : this.entityName,
-								approverNote : this.approverNote.getValue(),
-								status : this.approverStatus.getValue(),
-								isValid : this.approverStatus.getValue() == '1' ? true : false
+								approverNote : note,
+								status : status,
+								isValid : status == '1' ? true : false
 							},
 							url : '../../scm/control/auditPurchaseBill',
 							success : function(response) {
@@ -311,7 +314,6 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 									showError(result.message);
 								}
 								this.refreshRecord();
-								this.approverCancel();
 							}
 						});
 			},
