@@ -37,8 +37,9 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				this.initEnterEvent();
 				this.refreshRecord();
 				this.searchMaterialId.store.load(); // 初始化物料列表
-				
+
 				this.printdata;
+				this.submitLock = false;
 			},
 
 			afterInitComponent : Ext.emptyFn,
@@ -99,16 +100,17 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 			afterRequest : function(request, success) {
 				var me = this;
 				if (success && request.operation.success) {
+					me.releaseSubmitLock();
 					if (request.action == 'read') {
 						me.changeComponentsState();
 					} else if (request.action == 'create') {
-						if(!me.isSubmitWhenSave){
+						if (!me.isSubmitWhenSave) {
 							Ext.Msg.alert("提示", "新增成功！");
 							me.refreshRecord();
 						}
 						me.doSubmitBill();
 					} else if (request.action == 'update') {
-						if(!me.isSubmitWhenSave){
+						if (!me.isSubmitWhenSave) {
 							Ext.Msg.alert("提示", "更新成功！");
 							me.refreshRecord();
 						}
@@ -363,12 +365,12 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				this.editEntry.getView().refresh();
 				this.showEdit();
 			},
-			
+
 			/**
 			 * 初始化用户选择框
 			 * @type 
 			 */
-			initCurrentUserSelect : Ext.emptyFn ,
+			initCurrentUserSelect : Ext.emptyFn,
 
 			/**
 			 * 点击删除按钮
@@ -392,10 +394,17 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				Ext.Msg.confirm('提示', '确定删除该' + this.gridTitle + '？', confirmChange, this);
 				function confirmChange(id) {
 					if (id == 'yes') {
-						this.listPanel.store.remove(record);
-						this.listPanel.store.sync();
+						/* 判断是否可提交 */
+						if (this.hasSubmitLock()) {
+							this.getSubmitLock();//获取提交锁
+							this.listPanel.store.remove(record);
+							this.listPanel.store.sync();
+						} else {
+							showWarning('上一次操作还未完成，请稍等！');
+						}
 					}
 				}
+
 			},
 			/**
 			 * 刷新页面数据(必须重写该方法)
@@ -429,30 +438,37 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				if (!me.isSubmitAble(record)) {
 					return;
 				}
-				if(!me.isSubmitWhenSave){//如果是直接提交触发，不需要确认
+				if (!me.isSubmitWhenSave) {//如果是直接提交触发，不需要确认
 					Ext.Msg.confirm('提示', '确定提交该' + me.gridTitle + '？', confirmChange, me);
-				}else{
+				} else {
 					confirmChange('yes');
 				}
 				function confirmChange(id) {
 					if (id == 'yes') {
-						Ext.Ajax.request({
-									params : {
-										billId : record.get('id'),
-										entity : me.entityName
-									},
-									url : me.getSubmitBillUrl(),
-									success : function(response, option) {
-										var result = Ext.decode(response.responseText)
-                						if(result.success){
-											me.submitBillSuccess(response, option);
-											Ext.Msg.alert("提示", "处理成功！");
-                						} else {
-                							showError(result.message);
-                						}
-                						me.refreshRecord();
-									}
-								});
+						/* 判断是否可提交 */
+						if (this.hasSubmitLock()) {
+							this.getSubmitLock();//获取提交锁
+							Ext.Ajax.request({
+										params : {
+											billId : record.get('id'),
+											entity : me.entityName
+										},
+										url : me.getSubmitBillUrl(),
+										success : function(response, option) {
+											var result = Ext.decode(response.responseText)
+											if (result.success) {
+												me.submitBillSuccess(response, option);
+												Ext.Msg.alert("提示", "处理成功！");
+											} else {
+												showError(result.message);
+											}
+											me.refreshRecord();
+											me.releaseSubmitLock();
+										}
+									});
+						} else {
+							showWarning('上一次操作还未完成，请稍等！');
+						}
 					}
 				}
 			},
@@ -500,24 +516,31 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				Ext.Msg.confirm('提示', '确定撤销该' + this.gridTitle + '？', confirmChange, this);
 				function confirmChange(id) {
 					if (id == 'yes') {
-						Ext.Ajax.request({
-									scope : this,
-									params : {
-										billId : record.get('id'),
-										entity : this.entityName
-									},
-									url : this.getRollbackBillUrl(),
-									success : function(response, option) {
-										var result = Ext.decode(response.responseText)
-                						if(result.success){
-                							this.rollbackBillSuccess(response, option);
-											Ext.Msg.alert("提示", "撤销成功！");
-                						} else {
-                							showError(result.message);
-                						}
-										this.refreshRecord();
-									}
-								});
+						/* 判断是否可提交 */
+						if (this.hasSubmitLock()) {
+							this.getSubmitLock();//获取提交锁
+							Ext.Ajax.request({
+										scope : this,
+										params : {
+											billId : record.get('id'),
+											entity : this.entityName
+										},
+										url : this.getRollbackBillUrl(),
+										success : function(response, option) {
+											var result = Ext.decode(response.responseText)
+											if (result.success) {
+												this.rollbackBillSuccess(response, option);
+												Ext.Msg.alert("提示", "撤销成功！");
+											} else {
+												showError(result.message);
+											}
+											this.refreshRecord();
+											this.releaseSubmitLock();
+										}
+									});
+						} else {
+							showWarning('上一次操作还未完成，请稍等！');
+						}
 					}
 				}
 			},
@@ -593,7 +616,6 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 					record = me.editForm.getRecord();
 					record.set(values);
 					var entryStore = me.editEntry.store;
-
 					var removed = entryStore.getRemovedRecords();
 					var updated = entryStore.getUpdatedRecords();
 					var newed = entryStore.getNewRecords();
@@ -606,7 +628,6 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 					record = Ext.create(me.modelName);
 					record.phantom = true;
 					record.set(values);
-
 					me.commitSave(record, me.editEntry.store);
 				}
 				if (me.win.isVisible()) {
@@ -627,7 +648,13 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				var oneEntryModel = Ext.create(this.actionModelName);
 				oneEntryModel.proxy.addListener('afterRequest', this.afterRequest, this); // 监听请求回调
 				oneEntryModel = processOneEntryModel(oneEntryModel, record, store);
-				oneEntryModel.save();
+				/* 判断是否可提交 */
+				if (this.hasSubmitLock()) {
+					this.getSubmitLock();//获取提交锁
+					oneEntryModel.save();
+				} else {
+					showWarning('上一次操作还未完成，请稍等！');
+				}
 			},
 
 			/**
@@ -706,7 +733,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				entryRecord.phantom = true;
 				// 设置父id
 				entryRecord.set('parentId', this.editForm.getValues().id);
-				if((entryRecord.get('warehouseWarehouseId') || entryRecord.get('warehouseWarehouseId')=="") && this.editEntry.store.first()){
+				if ((entryRecord.get('warehouseWarehouseId') || entryRecord.get('warehouseWarehouseId') == "") && this.editEntry.store.first()) {
 					entryRecord.set('warehouseWarehouseId', this.editEntry.store.first().get('warehouseWarehouseId'))
 				}
 				this.editEntry.store.add(entryRecord);
@@ -746,85 +773,105 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 					showError("请选择打印记录");
 					return;
 				}
-				
-				var record=sm.getLastSelected();
-				if(this.canPrint(record)){
+
+				var record = sm.getLastSelected();
+				if (this.canPrint(record)) {
 					this.getPrintData(record.get('id'));
-				}else{
+				} else {
 					showError('单据不能打印！');
 				}
-				
-				
+
 			},
 			/**
 			 *返回单据打印模板,html样式
 			 *抽象方法，具体单据需要进行定义
 			 */
-			getMainPrintHTML:Ext.emptyFn,//返回主页样式
-			getLoopPrintHTML:Ext.emptyFn,//返回循环页样式
-			getTailPrintHTML:Ext.emptyFn,//返回尾页样式
+			getMainPrintHTML : Ext.emptyFn,//返回主页样式
+			getLoopPrintHTML : Ext.emptyFn,//返回循环页样式
+			getTailPrintHTML : Ext.emptyFn,//返回尾页样式
 			/**
 			 * 返回单据打印数据
 			 * 打印的内容，json对象 {billNumber:'001',bizDate:'2012-08-09',supplierName:'江门开发' ,entries:[{materialName:'钢条',volume:10},{materialName:'钢条',volume:10}]}
 			 */
-//			getPrintData:Ext.emptyFn
-//			getPrintData: function(){
-//				return {billNumber:'001',bizDate:'2012-08-09',supplierName:'江门开发' ,entries:[{materialName:'钢条',volume:10},{materialName:'钢条',volume:10}]};
-//			}
+			//			getPrintData:Ext.emptyFn
+			//			getPrintData: function(){
+			//				return {billNumber:'001',bizDate:'2012-08-09',supplierName:'江门开发' ,entries:[{materialName:'钢条',volume:10},{materialName:'钢条',volume:10}]};
+			//			}
 			//取打印数据公共方法
-			getPrintData: function(id){
+			getPrintData : function(id) {
 				Ext.Ajax.request({
-					scope : this,
-					params : {
-						headId : id,
-						headView : this.entityName+'View',
-						entryView : this.entityName+'EntryView'
-					},
-					url : '../../scm/control/getPrintData',
-					success : function(response) {
-						var responseObj=Ext.decode(response.responseText);
-						if(responseObj.success){
-							var printData=responseObj.printData;
-							if(printData){
-								//添加打印时间
-								printData.printTime=printHelper.getPrintTime();
+							scope : this,
+							params : {
+								headId : id,
+								headView : this.entityName + 'View',
+								entryView : this.entityName + 'EntryView'
+							},
+							url : '../../scm/control/getPrintData',
+							success : function(response) {
+								var responseObj = Ext.decode(response.responseText);
+								if (responseObj.success) {
+									var printData = responseObj.printData;
+									if (printData) {
+										//添加打印时间
+										printData.printTime = printHelper.getPrintTime();
+									}
+									this.doPrint(printData);
+								} else {
+									showError("打印数据格式出错");
+								}
 							}
-							this.doPrint(printData);
-						}else{
-							showError("打印数据格式出错");
-						}
-					}
-				});
+						});
 			},
 			//调用打印
-			doPrint: function(data){
-				if(window.printframe){
-					var printDom=window.printframe.document;
+			doPrint : function(data) {
+				if (window.printframe) {
+					var printDom = window.printframe.document;
 					printDom.clear();//清除旧打印内容
-					
+
 					//构建打印设置对象
 					var printConfig
-					if(this.getPrintCfg!=undefined){
-						printConfig=this.getPrintCfg();
-					}else{
-						printConfig=new PrintConfig();
-						printConfig.mainBodyDiv=this.getMainPrintHTML();
-						printConfig.loopBodyDiv=this.getLoopPrintHTML();
-						printConfig.tailDiv=this.getTailPrintHTML();
+					if (this.getPrintCfg != undefined) {
+						printConfig = this.getPrintCfg();
+					} else {
+						printConfig = new PrintConfig();
+						printConfig.mainBodyDiv = this.getMainPrintHTML();
+						printConfig.loopBodyDiv = this.getLoopPrintHTML();
+						printConfig.tailDiv = this.getTailPrintHTML();
 					}
-				    printHelper.writePrintContent(printDom,data,printConfig);     
-				    printDom.close();
+					printHelper.writePrintContent(printDom, data, printConfig);
+					printDom.close();
 					window.printframe.print();
 				}
 			},
 			//判断是否能打印
-			canPrint:function(record){
+			canPrint : function(record) {
 				//单据状态为已提交或者已审核才能打印
-				if(record.get('status')==4||record.get('status')==1){
+				if (record.get('status') == 4 || record.get('status') == 1) {
 					return true;
-				}else{
+				} else {
 					return false;
 				}
-				
+
+			},
+
+			/**
+			 * 获取提交锁
+			 */
+			getSubmitLock : function() {
+				this.submitLock = true;
+			},
+
+			/**
+			 * 释放提交锁
+			 */
+			releaseSubmitLock : function() {
+				this.submitLock = false;
+			},
+
+			/**
+			 * 判断是否可以提交
+			 */
+			hasSubmitLock : function() {
+				return !this.submitLock
 			}
 		})

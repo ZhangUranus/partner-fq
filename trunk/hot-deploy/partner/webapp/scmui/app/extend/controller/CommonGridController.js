@@ -35,6 +35,7 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 				this.changeComponentsState();
 				this.initEnterEvent();
 				this.afterInitComponent();
+				this.submitLock = false;
 			},
 
 			afterInitComponent : Ext.emptyFn,
@@ -95,6 +96,7 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 					if (this.win.isVisible()) {
 						this.win.close();
 					}
+					this.releaseSubmitLock();
 				} else {
 					// 不需要处理，由服务器抛出异常即可
 				}
@@ -121,16 +123,16 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 				}
 
 			},
-			
+
 			/**
 			 * 检查Session是否过期，如果过期弹出登录页面
 			 */
-			checkSession : function(){
-				if(!this.listContainer.permission.view){
-					Ext.Msg.alert("提示","Session过期，请重新登录！",new Function("window.location = window.location;"));
+			checkSession : function() {
+				if (!this.listContainer.permission.view) {
+					Ext.Msg.alert("提示", "Session过期，请重新登录！", new Function("window.location = window.location;"));
 				}
 			},
-			
+
 			/**
 			 * 用户操作触发改变界面控件状态 如：选中记录
 			 */
@@ -205,15 +207,15 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 							}
 						});
 			},
-			
+
 			/**
 			 * 编辑时，将不可编辑的属性设置为只读
 			 * @param {} record
 			 */
-			changeEditStatus : function(record){
+			changeEditStatus : function(record) {
 				//空方法
 			},
-			
+
 			/**
 			 * 编辑事件
 			 * 
@@ -271,8 +273,14 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 					Ext.Msg.confirm('提示', '确定删除该' + this.gridTitle + '？', confirmChange, this);
 					function confirmChange(id) {
 						if (id == 'yes') {
-							this.listPanel.store.remove(records);
-							Ext.Msg.alert("提示", "删除成功");
+							/* 判断是否可提交 */
+							if (this.hasSubmitLock()) {
+								this.getSubmitLock();//获取提交锁
+								this.listPanel.store.remove(records);
+								Ext.Msg.alert("提示", "删除成功");
+							} else {
+								showWarning('上一次操作还未完成，请稍等！');
+							}
 						}
 					}
 				}
@@ -310,23 +318,30 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 					return;
 				}
 				var record;
-				if (this.win.uiStatus == 'Modify') {// 修改记录
-					this.editForm.getForm().updateRecord(this.editForm.getRecord());
-				} else if (this.win.uiStatus == 'AddNew') {// 新增记录
-					record = Ext.create(this.modelName);
-					record.phantom = true;
-					record.set(values);
-					if (this.listPanel.store.indexOf(this.oldRecord) != -1) {// 避免重复添加
-						this.listPanel.store.remove(this.oldRecord);
-					}
-					this.oldRecord = record;
-					this.listPanel.store.add(record);
+				/* 判断是否可提交 */
+				if (this.hasSubmitLock()) {
+					this.getSubmitLock();//获取提交锁
+					if (this.win.uiStatus == 'Modify') {// 修改记录
+						this.editForm.getForm().updateRecord(this.editForm.getRecord());
+					} else if (this.win.uiStatus == 'AddNew') {// 新增记录
+						record = Ext.create(this.modelName);
+						record.phantom = true;
+						record.set(values);
+						if (this.listPanel.store.indexOf(this.oldRecord) != -1) {// 避免重复添加
+							this.listPanel.store.remove(this.oldRecord);
+						}
+						this.oldRecord = record;
+						this.listPanel.store.add(record);
 
+					}
+				} else {
+					showWarning('上一次操作还未完成，请稍等！');
 				}
 				if (this.win.isVisible()) {
 					this.win.close();
 				}
 				this.changeComponentsState();
+
 			},
 
 			/**
@@ -419,5 +434,26 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 			},
 			getPrintContent : function() {
 				return 'test';
+			},
+
+			/**
+			 * 获取提交锁
+			 */
+			getSubmitLock : function() {
+				this.submitLock = true;
+			},
+
+			/**
+			 * 释放提交锁
+			 */
+			releaseSubmitLock : function() {
+				this.submitLock = false;
+			},
+
+			/**
+			 * 判断是否可以提交
+			 */
+			hasSubmitLock : function() {
+				return !this.submitLock
 			}
 		})
