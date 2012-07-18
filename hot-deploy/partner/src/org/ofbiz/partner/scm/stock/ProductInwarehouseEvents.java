@@ -64,8 +64,8 @@ public class ProductInwarehouseEvents {
 			for (GenericValue v : entryList) {
 				String materialId = v.getString("materialMaterialId");// 打板物料id
 				BigDecimal volume=v.getBigDecimal("volume");//入库数量（板）
-				ProductStockType type=ProductStockType.valueOf(Integer.valueOf(v.getString("inwarehouseType")));//成品入库类型 
-				WeeklyStockMgr.getInstance().updateStock(materialId, bizDate, type, volume, false);
+				//成品进仓 
+				WeeklyStockMgr.getInstance().updateStock(materialId, bizDate, ProductStockType.IN, volume, false);
 			}
 			
 			TransactionUtil.commit(beganTransaction);
@@ -122,8 +122,9 @@ public class ProductInwarehouseEvents {
 			for (GenericValue v : entryList) {
 				String materialId = v.getString("materialMaterialId");// 打板物料id
 				BigDecimal volume=v.getBigDecimal("volume");//入库数量（板）
-				ProductStockType type=ProductStockType.valueOf(Integer.valueOf(v.getString("inwarehouseType")));//成品入库类型 
-				WeeklyStockMgr.getInstance().updateStock(materialId, bizDate, type, volume, true);
+				
+				//成品进仓撤销，负数
+				WeeklyStockMgr.getInstance().updateStock(materialId, bizDate, ProductStockType.IN, volume.negate(), true);
 			}
 			
 			
