@@ -88,7 +88,7 @@ Ext.define('SCM.view.SupplierStockAdjust.EditUI', {
 																xtype : 'textarea',
 																name : 'note',
 																margin : 5,
-																fieldLabel : '退货原因',
+																fieldLabel : '备注',
 																maxLength : 50,
 																colspan : 3,
 																width : 785
@@ -167,7 +167,7 @@ Ext.define('SCM.view.SupplierStockAdjust.EditUI', {
 																	store : Ext.data.StoreManager.lookup('MWHComboStore'),
 																	matchFieldWidth : false,
 																	listConfig : {
-																		width : 400,
+																		width : SCM.MaxSize.COMBOGRID_WIDTH,
 																		height : SCM.MaxSize.COMBOGRID_HEIGHT,
 																		columns : [{
 																					header : '编码',
