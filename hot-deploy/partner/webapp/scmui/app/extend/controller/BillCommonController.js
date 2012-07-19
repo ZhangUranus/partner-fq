@@ -446,8 +446,8 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				function confirmChange(id) {
 					if (id == 'yes') {
 						/* 判断是否可提交 */
-						if (this.hasSubmitLock()) {
-							this.getSubmitLock();//获取提交锁
+						if (me.hasSubmitLock()) {
+							me.getSubmitLock();//获取提交锁
 							Ext.Ajax.request({
 										params : {
 											billId : record.get('id'),
