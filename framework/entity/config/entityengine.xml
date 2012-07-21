@@ -327,7 +327,7 @@ access. For a detailed description see the core/docs/entityconfig.html file.
         <read-data reader-name="ext"/>
         <inline-jdbc
                 jdbc-driver="com.mysql.jdbc.Driver"
-                jdbc-uri="jdbc:mysql://127.0.0.1/ofbiz?autoReconnect=true"
+                jdbc-uri="jdbc:mysql://127.0.0.1/ofbiz4?autoReconnect=true"
                 jdbc-username="root"
                 jdbc-password="123"
                 isolation-level="ReadCommitted"
