@@ -85,6 +85,10 @@ Ext.define('SCM.extend.toolbar.BillSearchToolbar', {
 						label = '客户';
 						labelWidth = 35;
 						custStore = Ext.create('CustomerStore');
+					} else if (me.custType == 'warehouse') {
+						label = '仓库';
+						labelWidth = 35;
+						custStore = Ext.data.StoreManager.lookup('WHComboStore');
 					}
 
 					tools = tools.concat([{
