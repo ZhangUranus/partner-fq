@@ -380,6 +380,19 @@
 		<response name="success" type="none" />
 	</request-map>
 	
+	<!-- 成品出仓单提交 -->
+	<request-map uri="submitProductOutwarehouse">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductOutwarehouseEvents" invoke="submitBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 成品出仓单撤销 -->
+	<request-map uri="rollbackProductOutwarehouse">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductOutwarehouseEvents" invoke="rollbackBill" />
+		<response name="success" type="none" />
+	</request-map>
+	
 	
 	<!-- 系统结算 -->
 	<request-map uri="monthlySettle">

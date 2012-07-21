@@ -184,22 +184,22 @@ return '返工进仓';
 SCM.store.basiccode.productOutStatusStore = new Ext.data.Store({
 	fields : ['id', 'name'],
 	data : [{
-				'id' : 1,
+				'id' : '1',
 				'name' : '正常出仓'
 			}, {
-				'id' : 2,
+				'id' : '2',
 				'name' : '改板出仓'
 			}, {
-				'id' : 3,
+				'id' : '3',
 				'name' : '返工出仓'
 			}]
 });
 SCM.store.basiccode.productOutStatusRenderer = function(value) {
-if (value == 1) {
+if (value == '1') {
 return '正常出仓';
-} else if (value == 2) {
+} else if (value == '2') {
 return '改板出仓';
-} else if (value == 3) {
+} else if (value == '3') {
 return '返工出仓';
 }
 };

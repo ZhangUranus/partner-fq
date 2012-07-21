@@ -24,4 +24,5 @@ public enum BillType {
 	,StockAdjust//仓库调整单
 	,WorkshopStockAdjust//车间调整单
 	,SupplierStockAdjust//供应商调整单
+	,ProductOutwarehouse//成品出仓单
 }
