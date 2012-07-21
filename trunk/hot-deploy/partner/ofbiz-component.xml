@@ -28,6 +28,7 @@
 	<entity-resource type="model" reader-name="main" loader="main" location="entitydef/StockAdjustEntity.xml"/>
 	<entity-resource type="model" reader-name="main" loader="main" location="entitydef/WorkshopStockAdjustEntity.xml"/>
 	<entity-resource type="model" reader-name="main" loader="main" location="entitydef/SupplierStockAdjustEntity.xml"/>
+	<entity-resource type="model" reader-name="main" loader="main" location="entitydef/ProductOutwarehouseEntity.xml"/>
 	<!-- 系统基础数据 -->
     <entity-resource type="data" reader-name="seed" loader="main" location="data/ContentTypeData.xml"/>
     <entity-resource type="data" reader-name="seed" loader="main" location="data/System-Department.xml"/>
@@ -90,7 +91,7 @@
 	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-HisPurchasePrice.xml"/>
 	 -->
 
-	 <!-- 初始化数据-->
+	 <!-- 初始化数据
 	
 	<entity-resource type="data" reader-name="seed" loader="main" location="data/Int03_MaterialBom.xml"/>
 	<entity-resource type="data" reader-name="seed" loader="main" location="data/Int03_MaterialBomEntry.xml"/>
@@ -101,7 +102,7 @@
 	<entity-resource type="data" reader-name="seed" loader="main" location="data/Int03_WarehouseType.xml"/>
 	<entity-resource type="data" reader-name="seed" loader="main" location="data/Int03_Warehouse.xml"/>
 	<entity-resource type="data" reader-name="seed" loader="main" location="data/Int03_CurMaterialBalance.xml"/>
-
+-->
 	<!-- 计划任务数据 -->
 	<entity-resource type="data" reader-name="seed" loader="main" location="data/System-ScheduledServices.xml"/>
 	

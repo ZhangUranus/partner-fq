@@ -42,7 +42,7 @@ public class MaterialTypeEvents {
 			
 			//设置物料类型长编码
 			String longNum=null;
-			if(newTypeV.get("parentId")!=null){
+			if(!"".equals(newTypeV.get("parentId")) && newTypeV.get("parentId")!=null){
 				GenericValue parentV=delegator.findOne("TMaterialType", false, "id",newTypeV.get("parentId"));	
 				longNum=parentV.getString("longnumber")+newTypeV.getString("number")+"$";
 			}else{

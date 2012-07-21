@@ -124,6 +124,7 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 				this.searchEndDate = this.listContainer.down('datefield[name=searchEndDate]');
 				this.searchMaterialId = this.listContainer.down('combogrid[name=searchMaterialId]');
 				this.searchCustId = this.listContainer.down('combogrid[name=searchCustId]');
+				this.searchStatus = this.listPanel.down('combobox[name=status]');
 				this.allColumn = this.editEntry.query('gridcolumn');
 				this.addLineButton = this.win.down('gridpanel button[action=addLine]');
 				this.deleteLineButton = this.win.down('gridpanel button[action=deleteLine]');
@@ -288,6 +289,12 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 						tempString += ' and ';
 					}
 					tempString += 'ProductInwarehouseV.supplier_supplier_id = \'' + this.searchCustId.getValue() + '\'';
+				}
+				if ((this.searchStatus.getValue() && this.searchStatus.getValue() != '') || this.searchStatus.getValue() == 0) {
+					if (tempString != '') {
+						tempString += ' and ';
+					}
+					tempString += 'ProductInwarehouseV.status = \'' + this.searchStatus.getValue() + '\'';
 				}
 				this.listPanel.store.getProxy().extraParams.whereStr = tempString;
 				this.listPanel.store.load();
