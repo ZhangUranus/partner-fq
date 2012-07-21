@@ -226,7 +226,9 @@ Ext.define('SCM.controller.basedata.MaterialController', {
 				var selectedType=this.getSelType();
 				var newTypeRecord=Ext.create('MaterialTypeModel');
 				newTypeRecord.phantom=true;//标识为新增
-				newTypeRecord.set('parentId',selectedType.get('id'));
+				if(selectedType){
+					newTypeRecord.set('parentId',selectedType.get('id'));
+				}
 				
 				this.typeWin.down('[name=parentId]').setDisabled(false);//设置可编辑
 				this.typeWin.down('[name=number]').setDisabled(false);//设置可编辑

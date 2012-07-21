@@ -417,7 +417,11 @@ public class EntityCRUDEvent {
 				JSONArray array = JSONArray.fromObject(request.getParameter("filter").toString());
 				for(int i = 0; i < array.size(); i++) {
 					FilterPojo filter = objectMapper.readValue(array.getString(i), FilterPojo.class); 
-					conds.add(EntityCondition.makeCondition(filter.getProperty(),filter.getValue()));
+					if("status".equals(filter.getProperty())){//系统状态字段都为int类型。
+						conds.add(EntityCondition.makeCondition(filter.getProperty(),Integer.parseInt(filter.getValue())));
+					}else{
+						conds.add(EntityCondition.makeCondition(filter.getProperty(),filter.getValue()));
+					}
 				}
 			}
 			//处理whereStr过滤，覆盖filter条件
