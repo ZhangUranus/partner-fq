@@ -60,14 +60,5 @@ Ext.define('SCM.controller.basedata.UnitController', {
 								change : this.fieldChange
 							}
 						});
-				
-				//初始化STORE
-				Ext.create('UnitStore', {
-					pageSize : SCM.comboPageSize,
-				    storeId: 'UComboStore'			//下拉框－－选择时使用
-				});
-				Ext.create('UnitStore', {
-				    storeId: 'UComboInitStore'		//下拉框－－展现时使用
-				});
 			}
 		});

@@ -60,14 +60,5 @@ Ext.define('SCM.controller.basedata.RegionController', {
 								change : this.fieldChange
 							}
 						});
-				
-				//初始化STORE
-				Ext.create('RegionStore', {
-					pageSize : SCM.comboPageSize,
-				    storeId: 'RGComboStore'			//下拉框－－选择时使用
-				});
-				Ext.create('RegionStore', {
-				    storeId: 'RGComboInitStore'		//下拉框－－展现时使用
-				});
 			}
 		});
