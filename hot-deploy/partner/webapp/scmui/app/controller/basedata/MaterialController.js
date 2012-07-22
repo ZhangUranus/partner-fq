@@ -90,26 +90,6 @@ Ext.define('SCM.controller.basedata.MaterialController', {
 				if (!this.typeWin || this.typeWin.isDestroyed) {
 					this.typeWin = Ext.widget('materialtypeedit');
 				}
-				
-				//初始化STORE
-				Ext.create('MaterialComboStore', {
-					pageSize : SCM.comboPageSize,
-				    storeId: 'MComboStore'			//下拉框－－选择时使用
-				});
-				Ext.create('MaterialComboStore', {
-				    storeId: 'MComboInitStore'		//下拉框－－展现时使用
-				});
-				
-				//初始化STORE
-				Ext.create('MaterialWarehouseComboStore', {
-					pageSize : SCM.comboPageSize,
-				    storeId: 'MWHComboStore'			//下拉框－－选择时使用
-				});
-				Ext.create('MaterialWarehouseComboStore', {
-				    storeId: 'MWHComboInitStore'		//下拉框－－展现时使用
-				});
-				
-				
 			},
 
 			/**

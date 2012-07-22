@@ -84,28 +84,6 @@ Ext.define('SCM.controller.basedata.MaterialBomController', {
 								click : this.deleteLine
 							}
 						});
-				
-				//初始化STORE
-				Ext.create('MaterialBomComboStore', {
-					pageSize : SCM.comboPageSize,
-				    storeId : 'MBComboStore'			//下拉框－－选择时使用
-				});
-				Ext.create('MaterialBomComboStore', {
-				    storeId : 'MBComboInitStore'		//下拉框－－展现时使用
-				});
-				
-				Ext.create('MaterialBomWarehouseComboStore', {
-					pageSize : SCM.comboPageSize,
-				    storeId: 'MBWHComboStore'			//下拉框－－选择时使用
-				});
-				Ext.create('MaterialBomWarehouseComboStore', {
-				    storeId: 'MBWHComboInitStore'		//下拉框－－展现时使用
-				});
-				
-				Ext.create('MaterialBomStore', {
-				    storeId: 'MBAllStore'		//物料BOM的Store
-				});
-				
 			},
 			/**
 			 * 重写空方法

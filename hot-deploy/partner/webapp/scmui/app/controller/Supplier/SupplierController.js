@@ -56,16 +56,5 @@ Ext.define('SCM.controller.Supplier.SupplierController', {
 								change : this.fieldChange
 							}
 						});
-				
-				//初始化STORE
-				Ext.create('SupplierStore', {
-					pageSize : SCM.comboPageSize,
-				    storeId: 'SPComboStore'		//下拉框－－选择时使用
-				});
-				
-				Ext.create('SupplierStore', {
-				    storeId: 'SPComboInitStore'		//下拉框－－展现时使用
-				});
-				
 			}
 		});

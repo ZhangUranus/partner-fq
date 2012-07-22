@@ -60,15 +60,6 @@ Ext.define('SCM.controller.basedata.WarehouseController', {
 								change : this.fieldChange
 							}
 						});
-				
-				//初始化STORE
-				Ext.create('WarehouseStore', {
-					pageSize : SCM.comboPageSize,
-				    storeId: 'WHComboStore'			//下拉框－－选择时使用
-				});
-				Ext.create('WarehouseStore', {
-				    storeId: 'WHComboInitStore'		//下拉框－－展现时使用
-				});
 			},
 			/**
 			 * 增加this.wsTypeFeild的定义

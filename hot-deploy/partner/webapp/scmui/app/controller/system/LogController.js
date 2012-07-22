@@ -23,12 +23,6 @@ Ext.define('SCM.controller.system.LogController', {
 								click : this.exportExcel
 							}
 						});
-				
-				//初始化STORE
-				Ext.create('MonthStore', {
-				    storeId: 'MTHComboStore'		//下拉框－－展现时使用
-				});
-				
 			},
 
 			/**
