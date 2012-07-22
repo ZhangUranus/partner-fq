@@ -22,8 +22,7 @@ Ext.application({
 					'ConsignReturnProduct.ConsignReturnProductController', 'WorkshopReturnProduct.WorkshopReturnProductController', 'WorkshopOtherDrawBill.WorkshopOtherDrawBillController','StockAdjust.StockAdjustController','WorkshopStockAdjust.WorkshopStockAdjustController','SupplierStockAdjust.SupplierStockAdjustController','rpt.ConsignProcessMatchingReportController',
 					'ProductInwarehouse.ProductInwarehouseController', 'ProductOutwarehouse.ProductOutwarehouseController', 'basedata.RegionController',
 					'rpt.StockDetailReportController', 'rpt.WorkshopStockDetailReportController', 'rpt.PackingMaterialReportController', 'ProductionPlan.ProductionPlanController', 'rpt.ProductReportController', 'rpt.SemiProductCostReportController', 'rpt.PurchaseMatchingReportController'],
-			onLaunch : function() {
-				
+			initStore : function() {
 				/* 初始化物料的STORE */
 				/* 普通物料 */
 				Ext.create('MaterialComboStore', {
@@ -133,8 +132,8 @@ Ext.application({
 			launch : function() {
 				var viewport = Ext.create('SCM.view.Viewport');
 				viewport.doLayout(); // 刷新布局
-
 				
+				this.initStore();
 //				Ext.override(Ext.form.field.Number,{decimalPrecision:4});
 //				//4.1B2版本已经解决改问题，屏蔽代码。
 //				// 修正treestoreload的bug
