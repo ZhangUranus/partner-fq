@@ -1,8 +1,8 @@
 // 定义数据模型
-Ext.define('SCM.model.ProductInwarehouse.ProductInwarehouseEntryDetailModel', {
+Ext.define('SCM.model.ProductInwarehouseConfirm.ProductInwarehouseConfirmDetailModel', {
 			extend : 'Ext.data.Model',
 			requires : ['Ext.data.UuidGenerator', 'SCM.extend.proxy.JsonAjax'],
-			alias : 'ProductInwarehouseEntryDetailModel',
+			alias : 'ProductInwarehouseConfirmDetailModel',
 			fields : [{
 						name : 'id',
 						type : 'string'
@@ -32,10 +32,10 @@ Ext.define('SCM.model.ProductInwarehouse.ProductInwarehouseEntryDetailModel', {
 			proxy : {
 				type : 'jsonajax',
 				api : {
-					read : '../../scm/control/requestJsonData?entity=ProductInwarehouseEntryDetailView',
-					create : '../../scm/control/addnewJsonData?entity=ProductInwarehouseEntryDetail',
-					update : '../../scm/control/updateJsonData?entity=ProductInwarehouseEntryDetail',
-					destroy : '../../scm/control/deleteJsonData?entity=ProductInwarehouseEntryDetail'
+					read : '../../scm/control/requestJsonData?entity=ProductInwarehouseConfirmDetailView',
+					create : '../../scm/control/addnewJsonData?entity=ProductInwarehouseConfirmDetail',
+					update : '../../scm/control/updateJsonData?entity=ProductInwarehouseConfirmDetail',
+					destroy : '../../scm/control/deleteJsonData?entity=ProductInwarehouseConfirmDetail'
 				}
 			}
 		});
