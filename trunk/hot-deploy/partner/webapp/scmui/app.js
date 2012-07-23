@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @Purpose 系统框架类
  * @author jeff-liu
  * @Date 2011-11-24
@@ -20,7 +20,7 @@ Ext.application({
 					'ConsignDrawMaterial.ConsignDrawMaterialController', 'ConsignReturnMaterial.ConsignReturnMaterialController', 'WorkshopDrawMaterial.WorkshopDrawMaterialController',
 					'WorkshopReturnMaterial.WorkshopReturnMaterialController', 'ConsignWarehousing.ConsignWarehousingController', 'WorkshopWarehousing.WorkshopWarehousingController',
 					'ConsignReturnProduct.ConsignReturnProductController', 'WorkshopReturnProduct.WorkshopReturnProductController', 'WorkshopOtherDrawBill.WorkshopOtherDrawBillController','StockAdjust.StockAdjustController','WorkshopStockAdjust.WorkshopStockAdjustController','SupplierStockAdjust.SupplierStockAdjustController','rpt.ConsignProcessMatchingReportController',
-					'ProductInwarehouse.ProductInwarehouseController','ProductInwarehouseConfirm.ProductInwarehouseConfirmController','ProductOutwarehouse.ProductOutwarehouseController', 'basedata.RegionController',
+					'ProductInwarehouse.ProductInwarehouseController','ProductInwarehouseConfirm.ProductInwarehouseConfirmController','ProductOutwarehouse.ProductOutwarehouseController', 'basedata.RegionController', 'ProductMap.ProductMapController',
 					'rpt.StockDetailReportController', 'rpt.WorkshopStockDetailReportController', 'rpt.PackingMaterialReportController', 'ProductionPlan.ProductionPlanController', 'rpt.ProductReportController', 'rpt.SemiProductCostReportController', 'rpt.PurchaseMatchingReportController'],
 			
 			launch : function() {
