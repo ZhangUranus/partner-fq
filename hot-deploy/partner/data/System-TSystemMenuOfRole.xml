@@ -75,6 +75,13 @@
 	<TSystemMenuOfRole id='b19a999e-ad83-48b2-84b6-633602aac298' menuId='purchaseWarehousing' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='D' />
 	<TSystemMenuOfRole id='6042525d-8ac6-4b5d-849c-51d0c82dea40' menuId='purchaseWarehousing' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='N' />
 	<TSystemMenuOfRole id='10e54122-4f03-41be-9a5a-dd9c7f71afae' menuId='purchaseWarehousing' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='S' />
+	
+	<TSystemMenuOfRole id='10ca4d59-8ea4-4c75-a594-5368c7691a1e' menuId='productInwarehouseConfirm' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='V' />
+	<TSystemMenuOfRole id='f18f2b0b-8fe3-45f1-9aa4-82b0a78d4029' menuId='productInwarehouseConfirm' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='E' />
+	<TSystemMenuOfRole id='b19a999e-ad83-48b2-84b6-633602aac238' menuId='productInwarehouseConfirm' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='D' />
+	<TSystemMenuOfRole id='6042525d-8ac6-4b5d-849c-51d0c82dec40' menuId='productInwarehouseConfirm' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='N' />
+	<TSystemMenuOfRole id='10e54122-4f03-41be-9a5a-dd9c7f73afae' menuId='productInwarehouseConfirm' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='S' />
+	
 	<TSystemMenuOfRole id='273cf4fc-acb7-4678-b6bb-a20aa4997de8' menuId='purchaseReturn' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='V' />
 	<TSystemMenuOfRole id='29fa79ee-d645-47ef-b84a-13e9e8b9e584' menuId='purchaseReturn' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='E' />
 	<TSystemMenuOfRole id='34125f66-ff31-414d-a5ea-b4013528ac81' menuId='purchaseReturn' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='D' />

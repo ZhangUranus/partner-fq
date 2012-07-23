@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements. See the NOTICE file distributed with this work for additional information regarding copyright ownership. The ASF licenses this file to you under the Apache License, Version 2.0 (the "License"); you 
 	may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
 	OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. -->
@@ -22,6 +22,7 @@
 	<TSystemMenu menuId='productionPlan' menuName='生产计划' menuType='1' parentId='workshopManufacture' sort='136' hyperlink='productionplan' styleName='production-plan' display='1' description='生产计划' />
 	<TSystemMenu menuId='productMgr' menuName='成品管理' menuType='0' parentId='warehouseManagement' sort='14' hyperlink='' styleName='workshop-manufacture' display='1' description='成品管理' />
 	<TSystemMenu menuId='productInwarehouse' menuName='成品进仓单' menuType='1' parentId='productMgr' sort='141' hyperlink='ProductInwarehouselist' styleName='production-plan' display='1' description='成品进仓单' />
+	<TSystemMenu menuId='productInwarehouseConfirm' menuName='成品进仓确认单' menuType='1' parentId='productMgr' sort='142' hyperlink='ProductInwarehouseConfirmlist' styleName='production-plan' display='1' description='成品进仓确认单' />
 	<TSystemMenu menuId='productOutwarehouse' menuName='成品出仓单' menuType='1' parentId='productMgr' sort='142' hyperlink='ProductOutwarehouselist' styleName='product-outwarehouse' display='1' description='成品出仓单' />
 	<TSystemMenu menuId='analyticStatistics' menuName='分析统计' menuType='0' parentId='warehouseManagement' sort='15' hyperlink='' styleName='analytic-statistics' display='1' description='分析统计' />
 	<TSystemMenu menuId='stockDetail' menuName='库存情况' menuType='1' parentId='analyticStatistics' sort='151' hyperlink='stockdetail' styleName='stock-detail' display='1' description='库存情况' />

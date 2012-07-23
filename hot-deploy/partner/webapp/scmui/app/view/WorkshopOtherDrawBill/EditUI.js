@@ -94,6 +94,7 @@ Ext.define('SCM.view.WorkshopOtherDrawBill.EditUI', {
 									margin: 5,
 									matchFieldWidth:false,
 									allowBlank : false,
+									readOnly : true,
 									listConfig : {
 										width:185,
 										height : SCM.MaxSize.COMBOGRID_HEIGHT,
@@ -120,7 +121,7 @@ Ext.define('SCM.view.WorkshopOtherDrawBill.EditUI', {
 									store : Ext.create('SystemUserStore'),
 									margin: 5,
 									matchFieldWidth:false,
-									allowBlank : false,
+									readOnly : true,
 									listConfig : {
 										width:185,
 										height : SCM.MaxSize.COMBOGRID_HEIGHT,
@@ -190,7 +191,7 @@ Ext.define('SCM.view.WorkshopOtherDrawBill.EditUI', {
 									xtype : 'combocolumn',
 									dataIndex : 'warehouseWarehouseId',
 									text : '仓库',
-									gridId : 'WorkshopDrawMaterial-edit-grid',
+									gridId : 'WorkshopOtherDrawBill-edit-grid',
 									editor : {
 										xtype : 'combogrid',
 										valueField : 'id',
@@ -220,7 +221,7 @@ Ext.define('SCM.view.WorkshopOtherDrawBill.EditUI', {
 									xtype : 'combocolumn',
 									dataIndex : 'materialMaterialId',
 									text : '物料',
-									gridId : 'WorkshopDrawMaterial-edit-grid',
+									gridId : 'WorkshopOtherDrawBill-edit-grid',
 									editor : {
 										xtype : 'combogrid',
 										valueField : 'id',
@@ -271,7 +272,7 @@ Ext.define('SCM.view.WorkshopOtherDrawBill.EditUI', {
 									xtype : 'combocolumn',
 									dataIndex : 'unitUnitId',
 									text : '单位',
-									gridId : 'WorkshopDrawMaterial-edit-grid',
+									gridId : 'WorkshopOtherDrawBill-edit-grid',
 									editor : {
 										xtype : 'combobox',
 										valueField : 'id',
@@ -288,18 +289,13 @@ Ext.define('SCM.view.WorkshopOtherDrawBill.EditUI', {
 								  ,text: '单价'
 									  
 								}											
-								,{		  								  
-								  xtype: 'numbercolumn'
-								  ,dataIndex:'refPrice'
-								  ,text: '参考单价'
-								}												
+//								,{		  								  
+//								  xtype: 'numbercolumn'
+//								  ,dataIndex:'refPrice'
+//								  ,text: '参考单价'
+//								}												
 								,{				  								 
 								  xtype: 'numbercolumn'
-								   ,editor: {
-											xtype: 'numberfield'
-											,allowBlank: false
-											,hideTrigger:true
-										}
 								  ,dataIndex:'entrysum'
 								  ,text: '金额'
 								  
