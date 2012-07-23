@@ -182,18 +182,7 @@ Ext.define('SCM.view.WorkshopOtherDrawBill.ListUI' ,{
 								  ,dataIndex:'price'
 								  ,text: '单价'
 								  
-								}
-																								//\n
-								,{
-								  								  								  //\n
-								  xtype: 'numbercolumn'
-								  								  								  //\n
-								  //\n
-								  ,dataIndex:'refPrice'
-								  ,text: '参考单价'
-								  
-								}
-																								//\n
+								}															//\n
 								,{
 								  								  								  //\n
 								  xtype: 'numbercolumn'

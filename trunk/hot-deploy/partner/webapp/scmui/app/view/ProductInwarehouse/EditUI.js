@@ -166,7 +166,8 @@ Ext.define('SCM.view.ProductInwarehouse.EditUI', {
 									xtype : 'combogrid',
 									valueField : 'id',
 									displayField : 'name',
-									store : Ext.create('WorkshopStore'),
+									initStore : Ext.data.StoreManager.lookup('WSComboInitStore'),
+									store : Ext.data.StoreManager.lookup('WSComboStore'),
 									matchFieldWidth : false,
 									
 									listConfig : {
@@ -197,7 +198,6 @@ Ext.define('SCM.view.ProductInwarehouse.EditUI', {
 									displayField : 'name',
 									store : Ext.create('WarehouseStore'),
 									matchFieldWidth : false,
-									
 									listConfig : {
 										width : SCM.MaxSize.COMBOGRID_WIDTH,
 										height : SCM.MaxSize.COMBOGRID_HEIGHT,
@@ -288,22 +288,12 @@ Ext.define('SCM.view.ProductInwarehouse.EditUI', {
 							 }
 								,{
 								  xtype: 'numbercolumn'
-								   ,editor: {
-											xtype: 'numberfield'
-											,allowBlank: false
-											,hideTrigger:true
-										}
 								  ,dataIndex:'price'
 								  ,text: '单价'
 								  
 								}
 								,{
 								  xtype: 'numbercolumn'
-								   ,editor: {
-											xtype: 'numberfield'
-											,allowBlank: false
-											,hideTrigger:true
-										}
 								  ,dataIndex:'entrysum'
 								  ,text: '金额'
 								  

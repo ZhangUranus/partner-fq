@@ -169,13 +169,19 @@ Ext.define('SCM.controller.WorkshopOtherDrawBill.WorkshopOtherDrawBillController
 			 */
 			initMaterialInfo : function(editor, e) {
 				if (e.field == 'materialMaterialId') {
-					var record = this.searchMaterialId.store.findRecord('id', e.value);
+					var record = Ext.data.StoreManager.lookup('MWHComboInitStore').findRecord('id', e.value);
 					if (record) {
 						e.record.set('materialMaterialModel', record.get('model'));
 						e.record.set('unitUnitId', record.get('defaultUnitId'));
-						e.record.set('unitUnitName', record.get('defaultUnitName'));
 					}
 				}
+			},
+			/**
+			 * 初始化用户选择
+			 * @param {} record
+			 */
+			initCurrentUserSelect : function(record){
+				record.set('buyerSystemUserId',SCM.CurrentUser.id);
 			},
 			getMainPrintHTML:function(){
 				return "";

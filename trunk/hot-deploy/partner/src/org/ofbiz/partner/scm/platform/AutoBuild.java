@@ -22,8 +22,8 @@ public static void main(String[] args){
 	
 	/* first, we init the runtime engine.  Defaults are fine. */
 
-	String tname="ProductInwarehouse";//修改这个变量生成不同的单据第一个字母一定要大写
-	String talias="成品进仓单";
+	String tname="ProductInwarehouseConfirm";//修改这个变量生成不同的单据第一个字母一定要大写
+	String talias="成品进仓单确认";
 	//field type : int , float ,string ,date ,boolean ,entity,enum
 	Vector<Map<String, String>>	headFields=new Vector<Map<String,String>>();
 	Vector<Map<String, String>>	entryFields=new Vector<Map<String,String>>();
