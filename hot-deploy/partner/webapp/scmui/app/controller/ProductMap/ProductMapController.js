@@ -60,5 +60,13 @@ Ext.define('SCM.controller.ProductMap.ProductMapController', {
 								change : this.fieldChange
 							}
 						});
+			},
+			
+			/**
+			 * 重写空方法
+			 */
+			afterInitComponent : function() {
+				this.editGridMaterial = this.editForm.down('[name=materialId]');
+				this.editGridMaterial.store.load(); // 初始物料下拉框数据
 			}
 		});

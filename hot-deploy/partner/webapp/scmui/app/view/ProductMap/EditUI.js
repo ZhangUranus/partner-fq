@@ -1,6 +1,6 @@
 Ext.define('SCM.view.ProductMap.EditUI', {
 			extend : 'Ext.window.Window',
-			requires : ['SCM.extend.toolbar.SaveToolbar'],
+			requires : ['SCM.extend.toolbar.SaveToolbar', 'SCM.ux.combobox.ComboGrid'],
 			alias : 'widget.productmapedit',
 			title : '产品资料表',
 			layout : 'fit',
@@ -45,7 +45,7 @@ Ext.define('SCM.view.ProductMap.EditUI', {
 													name : 'materialId',
 													valueField : 'id',
 													displayField : 'name',
-													initStore : Ext.data.StoreManager.lookup('MComboInitStore'),
+													allowBlank : false,
 													store : Ext.data.StoreManager.lookup('MComboStore'),
 													listConfig : {
 														width : 400,
@@ -66,11 +66,13 @@ Ext.define('SCM.view.ProductMap.EditUI', {
 													xtype : 'numberfield',
 													name : 'boardCount',
 													fieldLabel : '板数量',
+													allowBlank : false,
 													hideTrigger : true
 												}, {
 													xtype : 'combobox',
 													name : 'packageType',
 													fieldLabel : '打板类型',
+													allowBlank : false,
 													store : SCM.store.basiccode.packageTypeStore,
 													displayField : 'name',
 													valueField : 'id'
