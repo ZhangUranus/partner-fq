@@ -118,6 +118,7 @@ Ext.define('SCM.controller.ProductInwarehouseConfirm.ProductInwarehouseConfirmCo
 				this.searchStartDate = this.listContainer.down('datefield[name=searchStartDate]');
 				this.searchEndDate = this.listContainer.down('datefield[name=searchEndDate]');
 				this.searchMaterialId = this.listContainer.down('combogrid[name=searchMaterialId]');
+				this.searchStatus = this.listContainer.down('combobox[name=status]');
 //				this.searchCustId = this.listContainer.down('combogrid[name=searchCustId]');
 //				this.allColumn = this.editEntry.query('gridcolumn');
 //				this.addLineButton = this.win.down('gridpanel button[action=addLine]');
@@ -319,6 +320,12 @@ Ext.define('SCM.controller.ProductInwarehouseConfirm.ProductInwarehouseConfirmCo
 					}
 					tempString += 'ProductInwarehouseConfirmV.material_material_id = \'' + this.searchMaterialId.getValue() + '\'';
 				}
+				if ((this.searchStatus.getValue() && this.searchStatus.getValue() != '') || this.searchStatus.getValue() == 0) {
+					if (tempString != '') {
+						tempString += ' and ';
+					}
+					tempString += 'ProductInwarehouseConfirmV.status = \'' + this.searchStatus.getValue() + '\'';
+				}
 				
 				this.listPanel.store.getProxy().extraParams.whereStr = tempString;
 				this.listPanel.store.load();
@@ -447,19 +454,5 @@ Ext.define('SCM.controller.ProductInwarehouseConfirm.ProductInwarehouseConfirmCo
 					showWarning('未选中物料！');
 				}
 				
-			},
-			
-			/**
-			 * 获取单据提交URL
-			 */
-			getSubmitBillUrl : function(){
-				return '../../scm/control/submitProductInwarehouse';
-			},
-			
-			/**
-			 * 获取单据撤销URL
-			 */
-			getRollbackBillUrl : function(){
-				return '../../scm/control/rollbackProductInwarehouse';
 			}
 		});
