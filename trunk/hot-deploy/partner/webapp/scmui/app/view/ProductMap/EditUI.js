@@ -46,6 +46,7 @@ Ext.define('SCM.view.ProductMap.EditUI', {
 													valueField : 'id',
 													displayField : 'name',
 													allowBlank : false,
+													initStore : Ext.data.StoreManager.lookup('MComboInitStore'),
 													store : Ext.data.StoreManager.lookup('MComboStore'),
 													listConfig : {
 														width : 400,

@@ -68,5 +68,6 @@ Ext.define('SCM.controller.ProductMap.ProductMapController', {
 			afterInitComponent : function() {
 				this.editGridMaterial = this.editForm.down('[name=materialId]');
 				this.editGridMaterial.store.load(); // 初始物料下拉框数据
+				this.editGridMaterial.initStore.load(); // 初始物料下拉框数据
 			}
 		});
