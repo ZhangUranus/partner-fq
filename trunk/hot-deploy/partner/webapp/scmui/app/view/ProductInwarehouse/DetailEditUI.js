@@ -1,7 +1,7 @@
-Ext.define('SCM.view.ProductInwarehouseConfirm.DetailEditUI', {
+Ext.define('SCM.view.ProductInwarehouse.DetailEditUI', {
 			extend : 'Ext.window.Window',
 			requires : ['SCM.extend.toolbar.SaveToolbar', 'SCM.extend.toolbar.GridEditToolbar', 'SCM.ux.combobox.ComboGrid', 'SCM.ux.grid.ComboColumn'],
-			alias : 'widget.ProductInwarehouseConfirmDetailEdit',
+			alias : 'widget.ProductInwarehousedetailedit',
 			height : SCM.DefaultSize.WINDOW_HEIGHT,
 			width : 750,
 			title : '耗料明细编辑',
@@ -18,11 +18,11 @@ Ext.define('SCM.view.ProductInwarehouseConfirm.DetailEditUI', {
 				var cellEditing = Ext.create('Ext.grid.plugin.CellEditing', {
 							clicksToEdit : 1
 						});
-				var entryStore = Ext.create('ProductInwarehouseConfirmDetailStore');
+				var entryStore = Ext.create('ProductInwarehouseEntryDetailStore');
 				Ext.applyIf(me, {
 							items : [{
 										xtype : 'gridpanel',
-										id : 'ProductInwarehouseConfirm-detail-edit-grid',
+										id : 'ProductInwarehouse-detail-edit-grid',
 										region : 'center',
 										border : 0,
 										store : entryStore,
@@ -35,7 +35,7 @@ Ext.define('SCM.view.ProductInwarehouseConfirm.DetailEditUI', {
 													xtype : 'combocolumn',
 													dataIndex : 'materialId',
 													text : '物料',
-													gridId : 'ProductInwarehouseConfirm-detail-edit-grid',
+													gridId : 'ProductInwarehouse-detail-edit-grid',
 													width:300,
 													editor : {
 														xtype : 'combogrid',
@@ -77,9 +77,8 @@ Ext.define('SCM.view.ProductInwarehouseConfirm.DetailEditUI', {
 													xtype : 'combocolumn',
 													dataIndex : 'unitUnitId',
 													text : '单位',
-													gridId : 'ProductInwarehouseConfirm-detail-edit-grid',
-													width : 80,
-													readOnly:true
+													gridId : 'ProductInwarehouse-detail-edit-grid',
+													width : 80
 													,editor : {
 														xtype : 'combogrid',
 														valueField : 'id',
