@@ -335,6 +335,11 @@ public class Utils {
 					if(isBomMaterial.equals("Y")&&entryMaterialId!=null){
 						List<ConsumeMaterial> detailBomMaterialList=getBomMaterialDetail(entryMaterialId, level);
 						if(detailBomMaterialList==null||detailBomMaterialList.size()<1)throw new Exception("Can`t find bom material for  "+entryMaterialId);
+						
+						//剩余上层物料数量
+						for(ConsumeMaterial c:detailBomMaterialList){
+							c.setConsumeQty(qty.multiply(c.getConsumeQty()));
+						}
 						consumeList.addAll(detailBomMaterialList);//添加返回的物料列表
 					}else{
 						/*2.2 添加到物料列表*/
