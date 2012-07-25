@@ -38,7 +38,7 @@ Ext.define('SCM.model.ProductInwarehouse.ProductInwarehouseEditModel', {
 				type : 'jsonajax',
 				api : {
 					read : '../../scm/control/requestJsonData?entity=ProductInwarehouseView',
-					destroy : '../../scm/control/deleteWithEntry?headEntity=ProductInwarehouse&entryEntity=ProductInwarehouseEntry'
+					destroy :  '../../scm/control/deleteWithEntry?headEntity=ProductInwarehouse&entryEntity=ProductInwarehouseEntry&cascadeDelete=ProductInwarehouseEntryDetail'
 				},
 				remoteFilter : true
 			}
