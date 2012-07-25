@@ -2,7 +2,7 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 			extend : 'Ext.app.Controller',
 			mixins : ['SCM.extend.exporter.Exporter', 'SCM.extend.controller.BillCommonController'],
 			views : ['ProductInwarehouse.ListUI', 'ProductInwarehouse.EditUI','ProductInwarehouse.DetailListUI', 'ProductInwarehouse.DetailEditUI'],
-			stores : ['ProductInwarehouse.ProductInwarehouseStore', 'ProductInwarehouse.ProductInwarehouseEditStore', 'ProductInwarehouse.ProductInwarehouseEditEntryStore','ProductInwarehouse.ProductInwarehouseDetailStore', 'ProductInwarehouse.ProductInwarehouseEntryDetailStore'],
+			stores : ['ProductInwarehouse.ProductInwarehouseStore', 'ProductInwarehouse.ProductInwarehouseEditStore', 'ProductInwarehouse.ProductInwarehouseEditEntryStore', 'ProductInwarehouse.ProductInwarehouseEntryDetailStore'],
 			requires : ['SCM.model.ProductInwarehouse.ProductInwarehouseActionModel'],
 			gridTitle : '成品进仓单',
 			editName : 'ProductInwarehouseedit',
