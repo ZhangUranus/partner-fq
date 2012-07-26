@@ -150,71 +150,74 @@
 .user-info {
 	background-image: url( ../images/icons/user-info.png ) !important;
 }
-.basic-setting{
+.basic-setting {
 	background-image: url( ../images/icons/basic-setting.png ) !important;
 }
-.basic-coding-maintaince{
+.basic-coding-maintaince {
 	background-image: url( ../images/icons/basic-coding-maintaince.png ) !important;
 }
-.cust-info-maintaince{
+.cust-info-maintaince {
 	background-image: url( ../images/icons/cust-info-maintaince.png ) !important;
 }
-.warehouse-info-maintaince{
+.warehouse-info-maintaince {
 	background-image: url( ../images/icons/warehouse-info-maintaince.png ) !important;
 }
-.material-info-maintaince{
+.material-info-maintaince {
 	background-image: url( ../images/icons/material-info-maintaince.png ) !important;
 }
-.department-info-maintaince{
+.department-info-maintaince {
 	background-image: url( ../images/icons/department-info-maintaince.png ) !important;
 }
-.staff-info-maintaince{
+.staff-info-maintaince {
 	background-image: url( ../images/icons/staff-info-maintaince.png ) !important;
 }
-.BOM-bill-info-maintaince{
+.BOM-bill-info-maintaince {
 	background-image: url( ../images/icons/BOM-bill-info-maintaince.png ) !important;
 }
-.unit-info-maintaince{
+.unit-info-maintaince {
 	background-image: url( ../images/icons/unit-info-maintaince.png ) !important;
 }
-.warehouse-type-maintaince{
+.warehouse-type-maintaince {
 	background-image: url( ../images/icons/warehouse-type-maintaince.png ) !important;
 }
-.supplier-maintaince{
+.supplier-maintaince {
 	background-image: url( ../images/icons/supplier-maintaince.png ) !important;
 }
-.workshop-maintaince{
+.workshop-maintaince {
 	background-image: url( ../images/icons/workshop-maintaince.png ) !important;
 }
-.region-maintaince{
+.region-maintaince {
 	background-image: url( ../images/icons/region-maintaince.png ) !important;
 }
-.stock-adjust-management{
+.stock-adjust-management {
 	background-image: url( ../images/icons/stock-adjust-management.png ) !important;
 }
-.stock-adjust{
+.stock-adjust {
 	background-image: url( ../images/icons/stock-adjust.png ) !important;
 }
-.workshop-stock-adjust{
+.workshop-stock-adjust {
 	background-image: url( ../images/icons/workshop-stock-adjust.png ) !important;
 }
-.supplier-stock-adjust{
+.supplier-stock-adjust {
 	background-image: url( ../images/icons/supplier-stock-adjust.png ) !important;
 }
-.product-mgr{
+.product-mgr {
 	background-image: url( ../images/icons/product-mgr.png ) !important;
 }
-.product-inwarehouse{
+.product-inwarehouse {
 	background-image: url( ../images/icons/product-inwarehouse.png ) !important;
 }
-.product-inwarehouse-confirm{
+.product-inwarehouse-confirm {
 	background-image: url( ../images/icons/product-inwarehouse-confirm.png ) !important;
 }
 .product-outwarehouse{
 	background-image: url( ../images/icons/product-outwarehouse.png ) !important;
 }
-.product-outwarehouse-confirm{
+.product-outwarehouse-confirm {
 	background-image: url( ../images/icons/product-outwarehouse-confirm.png ) !important;
+}
+.product-map-maintaince {
+	background-image: url( ../images/icons/product-map-maintaince.png ) !important;
 }
 
 .flag-green{
