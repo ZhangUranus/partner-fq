@@ -105,6 +105,9 @@
 .workshop-return-product {
 	background-image: url( ../images/icons/workshop-return-product.png ) !important;
 }
+.workshop-other-draw-material {
+	background-image: url( ../images/icons/workshop-other-draw-material.png ) !important;
+}
 .production-plan {
 	background-image: url( ../images/icons/production-plan.png ) !important;
 }
@@ -124,7 +127,7 @@
 	background-image: url( ../images/icons/consign-process-matching-report.png ) !important;
 }
 .purchase-matching-report {
-	background-image: url( ../images/icons/consign-process-matching-report.png ) !important;
+	background-image: url( ../images/icons/purchase-matching-report.png ) !important;
 }
 .packing-material-report {
 	background-image: url( ../images/icons/packing-material-report.png ) !important;
@@ -198,6 +201,22 @@
 .supplier-stock-adjust{
 	background-image: url( ../images/icons/supplier-stock-adjust.png ) !important;
 }
+.product-mgr{
+	background-image: url( ../images/icons/product-mgr.png ) !important;
+}
+.product-inwarehouse{
+	background-image: url( ../images/icons/product-inwarehouse.png ) !important;
+}
+.product-inwarehouse-confirm{
+	background-image: url( ../images/icons/product-inwarehouse-confirm.png ) !important;
+}
+.product-outwarehouse{
+	background-image: url( ../images/icons/product-outwarehouse.png ) !important;
+}
+.product-outwarehouse-confirm{
+	background-image: url( ../images/icons/product-outwarehouse-confirm.png ) !important;
+}
+
 .flag-green{
 	background-image: url( ../images/icons/flag-green.png ) !important;
 }
