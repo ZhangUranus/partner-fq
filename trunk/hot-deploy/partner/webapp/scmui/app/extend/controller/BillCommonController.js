@@ -513,6 +513,10 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				if (!this.isRollbackBillAble(record)) {
 					return;
 				}
+				if(!this.isSubmitUser(record)){
+					showWarning('非该单据提交人，无法进行撤销操作！');
+					return;
+				}
 				Ext.Msg.confirm('提示', '确定撤销该' + this.gridTitle + '？', confirmChange, this);
 				function confirmChange(id) {
 					if (id == 'yes') {
@@ -544,7 +548,20 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 					}
 				}
 			},
-
+			
+			/**
+			 * 判断操作人是否为提交人
+			 * @type 
+			 */
+			isSubmitUser : function(record){
+				debugger;
+				if(record.get("submitterSystemUserId")==SCM.CurrentUser.id){
+					return true;
+				} else {
+					return false;
+				}
+			},
+			
 			/**
 			 * 撤销提交成功后处理方法
 			 * 
@@ -736,6 +753,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				if ((entryRecord.get('warehouseWarehouseId') || entryRecord.get('warehouseWarehouseId') == "") && this.editEntry.store.first()) {
 					entryRecord.set('warehouseWarehouseId', this.editEntry.store.first().get('warehouseWarehouseId'))
 				}
+				entryRecord.set('sort', this.editEntry.store.getCount()+1);
 				this.editEntry.store.add(entryRecord);
 			},
 			// 删除分录
