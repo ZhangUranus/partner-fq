@@ -4,31 +4,52 @@ Ext.define('SCM.model.WorkshopOtherDrawBill.WorkshopOtherDrawBillEditEntryModel'
 			requires : ['Ext.data.UuidGenerator', 'SCM.extend.proxy.JsonAjax'],
 			alias : 'WorkshopOtherDrawBillEditEntryModel',
 			// 字段
-			fields: [
-	             {name: 'id',  type: 'string'}
-				 ,{name: 'parentId',  type: 'string'}
-				 				 // \n
-				 ,{name: 'warehouseWarehouseId',type:'string'  }
-				 ,{name: 'warehouseWarehouseName',type:'string',persist:false }
-				 				 				 // \n
-				 ,{name: 'materialMaterialId',type:'string'  }
-				 ,{name: 'materialMaterialName',type:'string',persist:false }
-				 , {
+			fields : [{
+						name : 'id',
+						type : 'string'
+					}, {
+						name : 'parentId',
+						type : 'string'
+					}, {
+						name : 'warehouseWarehouseId',
+						type : 'string'
+					}, {
+						name : 'warehouseWarehouseName',
+						type : 'string',
+						persist : false
+					}, {
+						name : 'materialMaterialId',
+						type : 'string'
+					}, {
+						name : 'materialMaterialName',
+						type : 'string',
+						persist : false
+					}, {
 						name : 'materialMaterialModel',
 						type : 'string'
-					}
-				 ,{name: 'volume' ,type:'float'  }
-				 				 				 // \n
-				 ,{name: 'unitUnitId',type:'string'  }
-				 ,{name: 'unitUnitName',type:'string',persist:false }
-				 				 				 // \n
-				 ,{name: 'price' ,type:'float'  }
-				 				 				 // \n
-				 ,{name: 'refPrice' ,type:'float'  }
-				 				 				 // \n
-				 ,{name: 'entrysum' ,type:'float'  }
-				 				 // \n
-			],
+					}, {
+						name : 'volume',
+						type : 'float'
+					}, {
+						name : 'unitUnitId',
+						type : 'string'
+					}, {
+						name : 'unitUnitName',
+						type : 'string',
+						persist : false
+					}, {
+						name : 'price',
+						type : 'float'
+					}, {
+						name : 'refPrice',
+						type : 'float'
+					}, {
+						name : 'entrysum',
+						type : 'float'
+					}, {
+						name : 'sort',
+						type : 'int'
+					}],
 			idgen : 'uuid', // 使用uuid生成记录id 每个模型必须要有id字段
 			proxy : {
 				type : 'jsonajax',
