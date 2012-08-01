@@ -24,10 +24,15 @@ Ext.define('SCM.extend.toolbar.GridEditToolbar', {
 										hidden : true,
 										action : 'viewDetail'
 									}, {
-										text : '编辑额外耗料',
+										text : '编辑实际耗料',
 										iconCls : 'detail-edit',
 										hidden : true,
 										action : 'editDetail'
+									}, {
+										text : '编辑额外耗料',
+										iconCls : 'detail-edit',
+										hidden : true,
+										action : 'editDetailExtra'
 									}]
 						});
 				me.callParent();
