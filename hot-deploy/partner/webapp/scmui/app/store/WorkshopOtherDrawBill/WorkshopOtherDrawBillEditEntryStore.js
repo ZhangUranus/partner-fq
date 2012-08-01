@@ -3,5 +3,9 @@ Ext.define('SCM.store.WorkshopOtherDrawBill.WorkshopOtherDrawBillEditEntryStore'
 			model : 'SCM.model.WorkshopOtherDrawBill.WorkshopOtherDrawBillEditEntryModel',
 			alias : 'WorkshopOtherDrawBillEditEntryStore',
 			autoLoad : false,
-			autoSync : false
+			autoSync : false,
+			sorters : [{// 根据sort字段排序
+				property : 'sort',
+				direction : 'ASC'
+			}]
 		});
