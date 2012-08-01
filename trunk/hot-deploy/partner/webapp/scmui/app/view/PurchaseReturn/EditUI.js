@@ -152,6 +152,18 @@ Ext.define('SCM.view.PurchaseReturn.EditUI', {
 													region : 'center',
 													store : Ext.create('PurchaseReturnEditEntryStore'),
 													columns : [{
+																xtype : 'numbercolumn',
+																dataIndex : 'sort',
+																editor : {
+																	xtype : 'numberfield',
+																	format : '0',
+																	allowBlank : false,
+																	hideTrigger : true
+																},
+																format : '0',
+																text : '序号',
+																width : 40
+															}, {
 																xtype : 'combocolumn',
 																dataIndex : 'warehouseWarehouseId',
 																text : '仓库',
