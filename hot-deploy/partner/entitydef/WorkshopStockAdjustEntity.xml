@@ -38,6 +38,7 @@
 		<field name="unitUnitId" type="id-long"></field>
 		<field name="price" type="fixed-point"></field>
 		<field name="entrysum" type="fixed-point"></field>
+		<field name="sort" type="int"></field>
 		<prim-key field="id" />
 	</entity>
 	<!-- 表头视图 -->

@@ -46,6 +46,7 @@
 		<field name="price" type="fixed-point"></field>
 		<field name="refPrice" type="fixed-point"></field>
 		<field name="entrysum" type="fixed-point"></field>
+		<field name="sort" type="int"></field>
 		<prim-key field="id" />
 	</entity>
 

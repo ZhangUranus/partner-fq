@@ -45,6 +45,7 @@
 		<field name="entrysum" type="fixed-point"></field>
 		<field name="inputprice" type="fixed-point"></field>
 		<field name="inputentrysum" type="fixed-point"></field>
+		<field name="sort" type="int"></field>
 		<prim-key field="id" />
 	</entity>
 	<!-- 未验收物料列表 -->

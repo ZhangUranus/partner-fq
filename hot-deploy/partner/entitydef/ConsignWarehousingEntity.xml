@@ -40,6 +40,7 @@
 		<field name="price" type="fixed-point"></field>
 		<field name="processPrice" type="fixed-point"></field>
 		<field name="entrysum" type="fixed-point"></field>
+		<field name="sort" type="int"></field>
 		<prim-key field="id" />
 	</entity>
 	<!-- 额外耗料表 -->
