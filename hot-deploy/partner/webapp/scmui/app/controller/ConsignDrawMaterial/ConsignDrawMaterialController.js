@@ -234,7 +234,7 @@ Ext.define('SCM.controller.ConsignDrawMaterial.ConsignDrawMaterialController', {
 				var me = this;
 				me.MaterialStore.getProxy().extraParams.whereStr = 'MaterialBomV.id = \'' + newValue + '\'';
 				me.MaterialStore.load(function(records, operation, success) {
-							me.editEntry.store.remove(me.editEntry.store.data.items);
+							me.editEntry.store.removeAll();
 							for (var i = 0; i < records.length; i++) {
 								var materialVolume = me.materialVolumeFields.getValue() ? me.materialVolumeFields.getValue() : 0;
 								var tempRecord = records[i];
@@ -250,6 +250,7 @@ Ext.define('SCM.controller.ConsignDrawMaterial.ConsignDrawMaterialController', {
 								entryRecord.set('volume', materialVolume * tempRecord.get('volume'));
 								entryRecord.set('unitUnitId', tempRecord.get('unitId'));
 								entryRecord.set('unitUnitName', tempRecord.get('unitName'));
+								entryRecord.set('sort', i+1);
 								me.editEntry.store.add(entryRecord);
 							}
 							me.MaterialStore.getProxy().extraParams.whereStr = "";
