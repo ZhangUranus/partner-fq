@@ -47,6 +47,7 @@
 		<field name="inputentrysum" type="fixed-point"></field>
 		<field name="la004" type="value"></field>
 		<field name="la005" type="value"></field>
+		<field name="sort" type="int"></field>
 		<prim-key field="id" />
 	</entity>
 	<!-- 表头视图 -->
