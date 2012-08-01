@@ -63,7 +63,7 @@ Ext.define('SCM.controller.WorkshopReturnProduct.WorkshopReturnProductController
 								click : this.deleteLine
 							},
 							// 编辑界面分录额外耗料明细
-							'WorkshopReturnProductedit gridpanel button[action=editDetail]' : {
+							'WorkshopReturnProductedit gridpanel button[action=editDetailExtra]' : {
 								click : this.editDetailRecord
 							},
 							// 编辑额外耗料明细界面分录新增
@@ -138,7 +138,7 @@ Ext.define('SCM.controller.WorkshopReturnProduct.WorkshopReturnProductController
 				this.checkButton = this.win.down('button[action=check]');
 				this.addLineButton = this.win.down('gridpanel button[action=addLine]');
 				this.deleteLineButton = this.win.down('gridpanel button[action=deleteLine]');
-				this.editDetailButton = this.win.down('gridpanel button[action=editDetail]');
+				this.editDetailButton = this.win.down('gridpanel button[action=editDetailExtra]');
 				this.checkBill = false;
 
 				// 额外耗料明细页面
