@@ -86,7 +86,7 @@ Ext.define('SCM.extend.utils.Barcode', {
 			/**
 			 * 获取板数量
 			 */
-			getQantity : function() {
+			getQuantity : function() {
 				if(this.type == 1){
 					return this.code.substring(26,this.code.length);
 				} else {
