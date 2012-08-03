@@ -89,7 +89,7 @@ Ext.define('SCM.view.WorkshopWarehousing.DetailEditUI', {
 								        xtype: 'label',
 										region : 'south',
 										height : 20,
-								        text: '该列表为单个加工件的耗料列表，其中单价、金额在单据提交后才能显示！',
+								        text: '该列表为加工件的总耗料，其中单价、金额在单据提交后才能显示！',
 						                style: {
 								            color: 'red'
 								        }
