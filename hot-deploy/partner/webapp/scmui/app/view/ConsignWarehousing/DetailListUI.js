@@ -77,7 +77,7 @@ Ext.define('SCM.view.ConsignWarehousing.DetailListUI', {
 								        xtype: 'label',
 										region : 'south',
 										height : 20,
-								        text: '该列表为单个加工件的耗料列表！',
+								        text: '该列表为加工件的总耗料！',
 						                style: {
 								            color: 'red'
 								        }
