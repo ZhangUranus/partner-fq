@@ -146,6 +146,8 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 				this.detailEditEntry = this.detailEditWin.down('gridpanel');
 				// this.detailEditEntry.addListener('edit', this.initDetailList,
 				// this); // 监控列表编辑事件
+				
+				this.entryMaterialVolume = 1;	//记录加工件数量
 			},
 
 			/**
@@ -296,13 +298,21 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 			 * 查看加工件耗料情况
 			 */
 			viewDetailList : function() {
-				var sm = this.editEntry.getSelectionModel();
+				var me = this ;
+				var sm = me.editEntry.getSelectionModel();
 				if (sm.hasSelection()) {// 判断是否选择行记录
 					record = sm.getLastSelected();
+					me.entryMaterialVolume = record.get('volume');	//初始化加工件数量
 
-					this.detailEntry.store.getProxy().extraParams.whereStr = "parent_id = '" + record.get('id') + "'";
-					this.detailEntry.store.load();
-					this.detailWin.show();
+					me.detailEntry.store.getProxy().extraParams.whereStr = "parent_id = '" + record.get('id') + "'";
+					me.detailEntry.store.load(function(records, operation, success) {
+						for (var i = 0; i < records.length; i++) {
+							records[i].set('volume',records[i].get('volume') * me.entryMaterialVolume);
+							records[i].set('entrysum',records[i].get('entrysum') * me.entryMaterialVolume);
+						}
+					});
+					
+					me.detailWin.show();
 				} else {
 					showWarning('未选中物料！');
 				}
@@ -345,6 +355,8 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 				me.currentRecord = record;
 				me.detailEditWin.uiStatus = 'Modify';
 				
+				me.entryMaterialVolume = record.get('volume');	//初始化加工件数量
+				
 				// 获取耗料列表
 				me.detailEditEntry.store.getProxy().extraParams.whereStr = 'parent_id = \'' + record.get('id') + '\'';
 				me.detailEditEntry.store.load(function(records, operation, success) {
@@ -362,7 +374,7 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 											entryRecord.set('bomId', record.get('bomId'));
 											entryRecord.set('materialId', tempRecord.get('bomMaterialId'));
 											entryRecord.set('materialModel', tempRecord.get('bomMaterialModel'));
-											entryRecord.set('volume', tempRecord.get('volume'));
+											entryRecord.set('volume', tempRecord.get('volume') * me.entryMaterialVolume);	//计算总耗料
 											entryRecord.set('price', 0);
 											entryRecord.set('entrysum', 0);
 											entryRecord.set('materialUnitId', tempRecord.get('unitId'));
@@ -370,6 +382,11 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 										}
 										me.MaterialStore.getProxy().extraParams.whereStr = "";
 									});
+						} else {
+							for (var i = 0; i < records.length; i++) {
+								records[i].set('volume',records[i].get('volume') * me.entryMaterialVolume);
+								records[i].set('entrysum',records[i].get('entrysum') * me.entryMaterialVolume);
+							}
 						}
 					}
 				);
@@ -431,16 +448,21 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 			 */
 			saveDetailRecord : function(button) {
 				var me = this;
+				var records = me.detailEditEntry.store.data.items;
+				for (var i = 0; i < records.length; i++) {
+					records[i].set('volume',records[i].get('volume') / me.entryMaterialVolume);
+					records[i].set('entrysum',records[i].get('entrysum') / me.entryMaterialVolume);
+				}
 				me.detailEditEntry.store.sync({
 							callback : function(batch, options) {
 								if (!batch.hasException) {
-									if (me.detailEditWin.isVisible()) {
-										me.detailEditWin.close();
-									}
 									Ext.Msg.alert("提示", "保存成功！");
 								}
 							}
 						});
+				if (me.detailEditWin.isVisible()) {
+					me.detailEditWin.close();
+				}
 			},
 
 			/**
