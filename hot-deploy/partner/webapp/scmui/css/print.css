@@ -5,6 +5,7 @@ div{
 font-size: 7px;
 font-family:黑体;
 font-weight:bold;
+letter-spacing: 0px; 
 }
 /*打印单据标题*/
 div.caption { 
@@ -12,6 +13,7 @@ div.caption {
 	font-size:15px;
 	font-weight:bold;
 	text-align: center; 
+	letter-spacing: 0px; 
 }
 div.field{
 	left:0px;
@@ -20,8 +22,8 @@ div.field{
 	white-space: nowrap; 
 	/*内容超过规定宽度时截取超长部分*/
 	overflow:hidden;
-	padding: 6px 6px 6px 12px; 
-	
+	padding: 1px 1px 1px 2px; 
+	letter-spacing: 0px; 
 }
 /*打印元素分页该元素后面内容会在另外页打印*/
 div.nextPage{
@@ -41,22 +43,21 @@ table{
  position: relative;
  border-collapse:collapse;
  table-layout:fixed;
+ letter-spacing: 0px; 
 }
 th {  
  font: bold 9px ; 
  border: none ; 
- letter-spacing: 2px; 
  text-align: left; 
- padding: 2px; 
+ padding: 1px; 
 }
 td{
  border: none ; 
- letter-spacing: 2px; 
  text-align: left; 
  height:30px;
  text-overflow:ellipsis;
  --overflow:hidden;
  --white-space: nowrap;
  word-break:break-all;
- padding:2px;
+ padding:1px;
 }

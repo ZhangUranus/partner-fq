@@ -35,14 +35,16 @@ Ext.define('SCM.view.ProductInwarehouseConfirm.ListUI' ,{
 								text : '提交',
 								iconCls : 'system-submit',
 								action : 'submit'
-							}, {
-								text : '撤销',
-								iconCls : 'system-rollback',
-								action : 'rollback'
 							},{
 								text : '耗料明细',
 								iconCls : 'detail',
 								action : 'showDetail'
+							},{
+								text: '向下同步选择',
+								iconCls:'syncDownSel',
+						        enableToggle: true,
+						        pressed: true,
+						        action:'syncDownSel'
 							}
 					]
                 },
@@ -155,18 +157,18 @@ Ext.define('SCM.view.ProductInwarehouseConfirm.ListUI' ,{
 							dataIndex: 'unitUnitName',
 							text: '单位'
 						}
-						,{
-						  xtype: 'numbercolumn'
-						  ,dataIndex:'price'
-						  ,text: '单价'
-						  
-						}
-						,{		  								  
-						  xtype: 'numbercolumn'
-						  ,dataIndex:'totalsum'
-						  ,text: '金额'
-						  
-						}
+//						,{
+//						  xtype: 'numbercolumn'
+//						  ,dataIndex:'price'
+//						  ,text: '单价'
+//						  
+//						}
+//						,{		  								  
+//						  xtype: 'numbercolumn'
+//						  ,dataIndex:'totalsum'
+//						  ,text: '金额'
+//						  
+//						}
 						,{
 						  xtype: 'gridcolumn'
 						  ,dataIndex:'barcode1'

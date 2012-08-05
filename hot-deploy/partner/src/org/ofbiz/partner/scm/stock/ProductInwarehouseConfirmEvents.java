@@ -27,6 +27,7 @@ import org.ofbiz.partner.scm.common.CommonEvents;
 import org.ofbiz.partner.scm.common.SerialNumberHelper;
 import org.ofbiz.partner.scm.pricemgr.BillType;
 import org.ofbiz.partner.scm.pricemgr.BizStockImpFactory;
+import org.ofbiz.partner.scm.services.ProductInwarehouseServices;
 
 import sun.net.www.content.text.Generic;
 
@@ -221,6 +222,7 @@ public class ProductInwarehouseConfirmEvents {
 	 * @throws Exception
 	 */
 	public static String synchronizeRecords(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ProductInwarehouseServices.syncRecord();
 		return "success";
 	}
 	

@@ -268,3 +268,7 @@
 .x-ie6 .x-form-readonly {
 	filter: none
 }
+.syncDownSel{
+		background-image: url( ../images/icons/sync_down_sel.png ) !important;
+}
+

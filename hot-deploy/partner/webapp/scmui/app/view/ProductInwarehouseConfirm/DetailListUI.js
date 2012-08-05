@@ -1,7 +1,7 @@
-Ext.define('SCM.view.ProductInwarehouse.DetailListUI', {
+Ext.define('SCM.view.ProductInwarehouseConfirm.DetailListUI', {
 			extend : 'Ext.window.Window',
 			requires : ['SCM.extend.toolbar.SaveToolbar', 'SCM.extend.toolbar.GridEditToolbar', 'SCM.ux.combobox.ComboGrid', 'SCM.ux.grid.ComboColumn'],
-			alias : 'widget.ProductInwarehousedetaillist',
+			alias : 'widget.ProductInwarehouseConfirmdetaillist',
 			height : SCM.DefaultSize.WINDOW_HEIGHT,
 			width : 750,
 			title : '耗料明细',
@@ -12,11 +12,11 @@ Ext.define('SCM.view.ProductInwarehouse.DetailListUI', {
 			closeAction : 'hide',
 			initComponent : function() {
 				var me = this;
-				var entryStore = Ext.create('ProductInwarehouseEntryDetailStore');
+				var entryStore = Ext.create('ProductInwarehouseConfirmDetailStore');
 				Ext.applyIf(me, {
 							items : [{
 										xtype : 'gridpanel',
-										id : 'ProductInwarehouse-detail-list-grid',
+										id : 'ProductInwarehouseConfirm-detail-list-grid',
 										region : 'center',
 										border : 0,
 										store : entryStore,
@@ -30,7 +30,7 @@ Ext.define('SCM.view.ProductInwarehouse.DetailListUI', {
 													dataIndex : 'materialId',
 													text : '物料',
 													width:300,
-													gridId : 'ProductInwarehouse-detail-list-grid',
+													gridId : 'ProductInwarehouseConfirm-detail-list-grid',
 													editor : {
 														xtype : 'combogrid',
 														valueField : 'id',
