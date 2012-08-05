@@ -1,7 +1,7 @@
 Ext.define('SCM.controller.ProductInwarehouseConfirm.ProductInwarehouseConfirmController', {
 			extend : 'Ext.app.Controller',
 			mixins : ['SCM.extend.exporter.Exporter'],
-			views : ['ProductInwarehouseConfirm.ListUI', 'ProductInwarehouseConfirm.DetailEditUI'],
+			views : ['ProductInwarehouseConfirm.ListUI', 'ProductInwarehouseConfirm.DetailEditUI','ProductInwarehouseConfirm.DetailListUI'],
 			stores : ['ProductInwarehouseConfirm.ProductInwarehouseConfirmStore','ProductInwarehouseConfirm.ProductInwarehouseConfirmDetailStore'],
 			
 			init : function() {
@@ -119,12 +119,16 @@ Ext.define('SCM.controller.ProductInwarehouseConfirm.ProductInwarehouseConfirmCo
 				this.searchEndDate = this.listContainer.down('datefield[name=searchEndDate]');
 				this.searchMaterialId = this.listContainer.down('combogrid[name=searchMaterialId]');
 				this.searchStatus = this.listContainer.down('combobox[name=status]');
+				this.syncDownSel=this.listContainer.down('toolbar button[action=syncDownSel]');
 //				this.searchCustId = this.listContainer.down('combogrid[name=searchCustId]');
 //				this.allColumn = this.editEntry.query('gridcolumn');
 //				this.addLineButton = this.win.down('gridpanel button[action=addLine]');
 //				this.deleteLineButton = this.win.down('gridpanel button[action=deleteLine]');
 //				this.MaterialStore = Ext.data.StoreManager.lookup('MBAllStore');
 //				this.MaterialStore.load();
+				
+				this.listPanel.addListener('edit',this.listPanelEditActin,this);
+				
 				//重新更新仓库数据
 				Ext.data.StoreManager.lookup('WHComboInitStore').load();
 				
@@ -132,8 +136,8 @@ Ext.define('SCM.controller.ProductInwarehouseConfirm.ProductInwarehouseConfirmCo
 				Ext.data.StoreManager.lookup('MWHComboInitStore').load();
 				
 				// 耗料明细页面
-//				this.detailWin = Ext.widget('ProductInwarehousedetaillist');
-//				this.detailEntry = this.detailWin.down('gridpanel');
+				this.detailWin = Ext.widget('ProductInwarehouseConfirmdetaillist');
+				this.detailEntry = this.detailWin.down('gridpanel');
 				//耗料编辑
 				this.detailEditWin = Ext.widget('ProductInwarehouseConfirmDetailEdit');
 				this.detailEditEntry = this.detailEditWin.down('gridpanel');
@@ -193,8 +197,10 @@ Ext.define('SCM.controller.ProductInwarehouseConfirm.ProductInwarehouseConfirmCo
 					
 					/*如果单据为已提交，或者审核，则不能编辑*/
 					if(record.get('status')=='4'){
+						this.detailEntry.store.removeAll(false);
 						this.detailEntry.store.getProxy().extraParams.whereStr = "parent_id = '" + record.get('id') + "'";
 						this.detailEntry.store.load();
+						this.detailEntry.store.getProxy().extraParams.whereStr ="";
 						this.detailWin.show();
 					}else{//编辑耗料
 						this.currentRecord = record;
@@ -398,6 +404,26 @@ Ext.define('SCM.controller.ProductInwarehouseConfirm.ProductInwarehouseConfirmCo
 					}
 				}
 			},
+			
+			/**
+			 * 进仓确认单列表界面编辑事件
+			 */
+			listPanelEditActin : function(editor,e){
+				if(this.syncDownSel.pressed==true){
+					//从fromRow行复制值
+					this.syncRecordByField(e.field,e.value,this.listPanel.store,e.rowIdx+1);
+				}
+			},
+			//从fromRow行复制值
+			syncRecordByField : function (field,value,store,fromRow){
+				if(fromRow<store.getCount()){
+					var records=store.getRange(fromRow);
+					Ext.Array.each(records,function(record,index,records){
+							record.set(field,value);
+					});
+				}
+			},
+			
 			/**
 			 * 获取当前操作的Record
 			 * 

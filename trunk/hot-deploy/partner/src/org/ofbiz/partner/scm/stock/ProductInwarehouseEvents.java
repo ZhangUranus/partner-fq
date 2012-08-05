@@ -14,6 +14,7 @@ import org.ofbiz.entity.GenericValue;
 import org.ofbiz.entity.transaction.GenericTransactionException;
 import org.ofbiz.entity.transaction.TransactionUtil;
 import org.ofbiz.partner.scm.common.BillBaseEvent;
+import org.ofbiz.partner.scm.common.CommonEvents;
 import org.ofbiz.partner.scm.pricemgr.BillType;
 import org.ofbiz.partner.scm.pricemgr.BizStockImpFactory;
 import org.ofbiz.partner.scm.pricemgr.Utils;
@@ -127,6 +128,20 @@ public class ProductInwarehouseEvents {
 				WeeklyStockMgr.getInstance().updateStock(materialId, bizDate, ProductStockType.IN, volume.negate(), true);
 			}
 			
+			
+			
+			/*
+			 *撤销关联的进仓确认单
+			 * */
+			List<GenericValue> prdtCfmEntrys=delegator.findByAnd("ProductInwarehouseConfirm", "productInwarehouseId",billId);
+			
+			if(prdtCfmEntrys!=null&&prdtCfmEntrys.size()>0){
+				for(GenericValue v:prdtCfmEntrys){
+					v.put("status", 0);// 设置为已提交状态
+					v.put("submitterSystemUserId", null);
+				}
+				delegator.storeAll(prdtCfmEntrys);
+			}
 			
 			TransactionUtil.commit(beganTransaction);
 		} catch (Exception e) {
