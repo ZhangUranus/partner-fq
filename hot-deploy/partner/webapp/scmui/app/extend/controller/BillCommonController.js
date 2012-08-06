@@ -554,11 +554,20 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 			 * @type 
 			 */
 			isSubmitUser : function(record){
-				debugger;
-				if(record.get("submitterSystemUserId")==SCM.CurrentUser.id){
-					return true;
+				if(!Ext.isEmpty(record.get("submitterSystemUserId"))){
+					if(record.get("submitterSystemUserId")==SCM.CurrentUser.id){
+						return true;
+					} else {
+						return false;
+					}
+				} else if(!Ext.isEmpty(record.get("submitUserId"))){
+					if(record.get("submitUserId")==SCM.CurrentUser.id){
+						return true;
+					} else {
+						return false;
+					}
 				} else {
-					return false;
+					return true;
 				}
 			},
 			
