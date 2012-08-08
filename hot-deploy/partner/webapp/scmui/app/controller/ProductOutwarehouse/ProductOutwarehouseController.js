@@ -102,7 +102,8 @@ Ext.define('SCM.controller.ProductOutwarehouse.ProductOutwarehouseController', {
 				this.searchMaterialId = this.listPanel.down('combogrid[name=searchMaterialId]');
 				this.searchCustId = this.listPanel.down('combogrid[name=searchCustId]');
 				this.searchStatus = this.listPanel.down('combobox[name=status]');
-				this.totalFields = this.editForm.down('textfield[name=totalsum]');
+				this.MaterialStore = Ext.data.StoreManager.lookup('MBAllStore');
+				this.MaterialStore.load();
 			},
 			
 			/**
@@ -157,22 +158,65 @@ Ext.define('SCM.controller.ProductOutwarehouse.ProductOutwarehouseController', {
 			 *            e
 			 */
 			initMaterialInfo : function(editor, e) {
-				if (e.field == 'materialMaterialId') {
-					var record = this.searchMaterialId.store.findRecord('id', e.value);
-					if (record) {
-						e.record.set('materialMaterialModel', record.get('model'));
-						e.record.set('unitUnitId', record.get('defaultUnitId'));
-						e.record.set('unitUnitName', record.get('defaultUnitName'));
-						e.record.set('volume', 1);
+				var me = this;
+				if (e.field == 'barcode1' || e.field == 'barcode2') {
+					if(!Ext.isEmpty(e.record.get('barcode1')) && !Ext.isEmpty(e.record.get('barcode2'))){
+						var barcode = Ext.create('SCM.extend.utils.Barcode', e.record.get('barcode1'), e.record.get('barcode2'));
+						var pWeek = barcode.getProductWeek();
+						var quantity = barcode.getQuantity();
+						e.record.set('prdWeek',pWeek);
+						e.record.set('qantity',quantity);
+						
+						//获取产品编码
+						Ext.Ajax.request({
+									scope : me,
+									params : {
+										ikeaId : barcode.getCodeForIkea(),
+										qantity : barcode.getQuantity()
+									},
+									url : '../../scm/control/getMaterialIdByIkea',
+									success : function(response, option) {
+										var result = Ext.decode(response.responseText)
+										if (result.success) {
+											e.record.set('materialMaterialId', result.materialId);
+											var record = me.MaterialStore.findRecord('materialId', result.materialId);
+											if (record) {
+												e.record.set('materialModel', record.get('bomModel'));
+												e.record.set('unitUnitId', record.get('bomUnitId'));
+											}
+										} else {
+											showError('获取产品编码失败！');
+										}
+									}
+								});
 					}
 				}
-				e.record.set('entrysum', e.record.get('price') * e.record.get('volume'));
-				var count = e.grid.store.getCount();
-				var sum = 0;
-				for (var i = 0; i < count; i++) {
-					sum += e.grid.store.getAt(i).get('entrysum');
+			},
+			
+			/**
+			 * 根据宜家产品编码，获取物料编码
+			 * @param ikeaId 宜家产品编码
+			 * @return 物料编码
+			 */
+			getMaterialIdByIkea : function(ikeaId){
+				if (!Ext.isEmpty(ikeaId)) {
+					Ext.Ajax.request({
+								scope : this,
+								params : {
+									supplierId : supplierId,
+									materialId : materialId
+								},
+								url : '../../scm/control/getPlanBalance',
+								success : function(response, option) {
+									var result = Ext.decode(response.responseText)
+									if (result.success) {
+										record.set('scheduleVolume', result.count);
+									} else {
+										showError('获取供应商待验收数量失败！');
+									}
+								}
+							});
 				}
-				this.totalFields.setValue(sum);
 			},
 			
 			/**
