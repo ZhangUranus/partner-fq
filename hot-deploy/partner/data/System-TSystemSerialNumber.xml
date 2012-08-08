@@ -32,4 +32,5 @@
 	<TSystemSerialNumber id='1db3d595-9724-41ba-b66b-eae6428029d3' serialDate='20120101' entityName='SupplierStockAdjust' prefix='SSA' serialNumber='100001' initNumber='100001' description='供应商调整单' hasDate='1' />
 	<TSystemSerialNumber id='66d08e91-28cb-406b-8137-ee6ba85930b3' serialDate='20120101' entityName='ProductInwarehouse' prefix='PIW' serialNumber='100001' initNumber='100001' description='成品进仓单' hasDate='1' />
 	<TSystemSerialNumber id='045fdd40-714a-4390-8292-08f514ade377' serialDate='20120201' entityName='ProductOutwarehouse' prefix='POW' serialNumber='100001' initNumber='100001' description='成品出仓单' hasDate='1' />
+	<TSystemSerialNumber id='f7dc7aa0-4287-44f6-9072-204d40fcd8cc' serialDate='20120201' entityName='ProductOutNotification' prefix='PON' serialNumber='100001' initNumber='100001' description='出货通知单' hasDate='1' />
 </entity-engine-xml>
