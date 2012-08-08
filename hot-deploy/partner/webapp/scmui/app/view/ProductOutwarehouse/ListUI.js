@@ -55,15 +55,15 @@ Ext.define('SCM.view.ProductOutwarehouse.ListUI', {
 												}, {
 													xtype : 'gridcolumn',
 													dataIndex : 'submitterSystemUserName',
-													width : 80,
+													width : 120,
 													groupable : false,
 													text : '提交人'
 												}, {
-													xtype : 'numbercolumn',
-													dataIndex : 'totalsum',
-													width : 100,
+													xtype : 'gridcolumn',
+													dataIndex : 'note',
+													width : 300,
 													groupable : false,
-													text : '总金额'
+													text : '备注'
 												}],
 										viewConfig : {
 
@@ -97,42 +97,57 @@ Ext.define('SCM.view.ProductOutwarehouse.ListUI', {
 													xtype : 'gridcolumn',
 													renderer : SCM.store.basiccode.productInStatusRenderer,
 													dataIndex : 'outwarehouseType',
-													text : '出仓类型'
+													text : '出仓类型',
+													width : 60
 												}, {
 													xtype : 'gridcolumn',
 													dataIndex : 'workshopWorkshopName',
 													text : '车间'
 												}, {
 													xtype : 'gridcolumn',
-													dataIndex : 'materialMaterialName',
-													text : '物料'
+													dataIndex : 'barcode1',
+													text : '产品条码'
 												}, {
-													xtype : 'numbercolumn',
-													dataIndex : 'volume',
-													text : '数量'
+													xtype : 'gridcolumn',
+													dataIndex : 'barcode2',
+													text : '序列号'
+												}, {
+													xtype : 'gridcolumn',
+													dataIndex : 'goodNumber',
+													text : '货号'
+												}, {
+													xtype : 'gridcolumn',
+													dataIndex : 'destinhouseNumber',
+													text : '订舱号'
+												}, {
+													xtype : 'gridcolumn',
+													dataIndex : 'containerNumber',
+													text : '货柜号'
+												}, {
+													xtype : 'gridcolumn',
+													dataIndex : 'sealNumber',
+													text : '封条号'
+												}, {
+													xtype : 'gridcolumn',
+													dataIndex : 'prdWeek',
+													text : '生产周'
+												}, {
+													xtype : 'gridcolumn',
+													dataIndex : 'materialMaterialName',
+													text : '板名称'
+												}, {
+													xtype : 'gridcolumn',
+													dataIndex : 'materialModel',
+													text : '规格型号'
 												}, {
 													xtype : 'gridcolumn',
 													dataIndex : 'unitUnitName',
 													text : '单位'
 												}, {
 													xtype : 'numbercolumn',
-													dataIndex : 'price',
-													text : '单价'
-												}, {
-													xtype : 'numbercolumn',
-													dataIndex : 'entrysum',
-													text : '金额'
-
-												}, {
-													xtype : 'gridcolumn',
-													dataIndex : 'barcode1',
-													text : '条码1'
-
-												}, {
-													xtype : 'gridcolumn',
-													dataIndex : 'barcode2',
-													text : '条码2'
-
+													dataIndex : 'qantity',
+													format : '0',
+													text : '板数量'
 												}]
 									}]
 						});
