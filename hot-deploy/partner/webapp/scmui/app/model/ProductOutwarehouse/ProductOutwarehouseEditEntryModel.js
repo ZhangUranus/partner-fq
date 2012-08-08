@@ -32,7 +32,12 @@ Ext.define('SCM.model.ProductOutwarehouse.ProductOutwarehouseEditEntryModel', {
 						type : 'string',
 						persist : false
 					}, {
+						name : 'materialModel',
+						type : 'string',
+						persist : false
+					}, {
 						name : 'volume',
+						defaultValue : 1,
 						type : 'float'
 					}, {
 						name : 'unitUnitId',
