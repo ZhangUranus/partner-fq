@@ -71,126 +71,126 @@ Ext.define('SCM.controller.Main', {
 				Ext.create('MaterialComboStore', {
 							pageSize : SCM.comboPageSize,
 							storeId : 'MComboStore' //下拉框－－选择时使用
-						});
+						}).load();
 				Ext.create('MaterialComboStore', {
 							pageSize : SCM.unpageSize,
 							storeId : 'MComboInitStore' //下拉框－－展现时使用
-						});
+						}).load();
 
 				/* 包括仓库字段的物料 store */
 				Ext.create('MaterialWarehouseComboStore', {
 							pageSize : SCM.comboPageSize,
 							storeId : 'MWHComboStore' //下拉框－－选择时使用
-						});
+						}).load();
 				Ext.create('MaterialWarehouseComboStore', {
 							pageSize : SCM.unpageSize,
 							storeId : 'MWHComboInitStore' //下拉框－－展现时使用
-						});
+						}).load();
 
 				/* 初始化物料BOM的STORE */
 				/* 普通物料BOM */
 				Ext.create('MaterialBomComboStore', {
 							pageSize : SCM.comboPageSize,
 							storeId : 'MBComboStore' //下拉框－－选择时使用
-						});
+						}).load();
 				Ext.create('MaterialBomComboStore', {
 							pageSize : SCM.unpageSize,
 							storeId : 'MBComboInitStore' //下拉框－－展现时使用
-						});
+						}).load();
 
 				/* 包括仓库字段的物料BOM store */
 				Ext.create('MaterialBomWarehouseComboStore', {
 							pageSize : SCM.comboPageSize,
 							storeId : 'MBWHComboStore' //下拉框－－选择时使用
-						});
+						}).load();
 				Ext.create('MaterialBomWarehouseComboStore', {
 							pageSize : SCM.unpageSize,
 							storeId : 'MBWHComboInitStore' //下拉框－－展现时使用
-						});
+						}).load();
 
 				/* 只用于物料BOM查找，下拉框不能使用该store */
 				Ext.create('MaterialBomStore', {
 							storeId : 'MBAllStore' //物料BOM的Store
-						});
+						}).load();
 
 				/* 初始化供应商的STORE */
 				Ext.create('SupplierStore', {
 							pageSize : SCM.comboPageSize,
 							storeId : 'SPComboStore' //下拉框－－选择时使用
-						});
+						}).load();
 
 				Ext.create('SupplierStore', {
 							pageSize : SCM.unpageSize,
 							storeId : 'SPComboInitStore' //下拉框－－展现时使用
-						});
+						}).load();
 				
 				/* 初始化客户的STORE */
 				Ext.create('CustomerStore', {
 							pageSize : SCM.comboPageSize,
 							storeId : 'CComboStore' //下拉框－－选择时使用
-						});
+						}).load();
 
 				Ext.create('CustomerStore', {
 							pageSize : SCM.unpageSize,
 							storeId : 'CComboInitStore' //下拉框－－展现时使用
-						});
+						}).load();
 
 				/* 初始化车间的STORE */
 				Ext.create('WorkshopStore', {
 							pageSize : SCM.comboPageSize,
 							storeId : 'WSComboStore' //下拉框－－选择时使用
-						});
+						}).load();
 
 				Ext.create('WorkshopStore', {
 							pageSize : SCM.unpageSize,
 							storeId : 'WSComboInitStore' //下拉框－－展现时使用
-						});
+						}).load();
 
 				/* 初始化仓库的STORE */
 				Ext.create('WarehouseStore', {
 							pageSize : SCM.comboPageSize,
 							storeId : 'WHComboStore' //下拉框－－选择时使用
-						});
+						}).load();
 				Ext.create('WarehouseStore', {
 							pageSize : SCM.unpageSize,
 							storeId : 'WHComboInitStore' //下拉框－－展现时使用
-						});
+						}).load();
 
 				/* 初始化计量单位的STORE */
 				Ext.create('UnitStore', {
 							pageSize : SCM.comboPageSize,
 							storeId : 'UComboStore' //下拉框－－选择时使用
-						});
+						}).load();
 				Ext.create('UnitStore', {
 							pageSize : SCM.unpageSize,
 							storeId : 'UComboInitStore' //下拉框－－展现时使用
-						});
+						}).load();
 
 				/* 初始化系统用户的STORE */
 				Ext.create('SystemUserStore', {
 							pageSize : SCM.comboPageSize,
 							storeId : 'SUComboStore' //下拉框－－选择时使用
-						});
+						}).load();
 
 				Ext.create('SystemUserStore', {
 							pageSize : SCM.unpageSize,
 							storeId : 'SUComboInitStore' //下拉框－－展现时使用
-						});
+						}).load();
 
 				/* 初始化地区的STORE */
 				Ext.create('RegionStore', {
 							pageSize : SCM.comboPageSize,
 							storeId : 'RGComboStore' //下拉框－－选择时使用
-						});
+						}).load();
 				Ext.create('RegionStore', {
 							pageSize : SCM.unpageSize,
 							storeId : 'RGComboInitStore' //下拉框－－展现时使用
-						});
+						}).load();
 
 				/* 初始化月份的STORE */
 				Ext.create('MonthStore', {
 							storeId : 'MTHComboStore' //下拉框－－展现时使用
-						});
+						}).load();
 			},
 
 			initTreePanel : function() {//初始化功能模块
