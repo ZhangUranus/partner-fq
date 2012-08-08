@@ -35,18 +35,30 @@ Ext.define('SCM.extend.utils.Barcode', {
 			 * 初始化条形码
 			 */
 		    constructor: function(barcode1,barcode2,codeType) {
+		    	var me = this;
 		    	if(Ext.isEmpty(barcode1) || Ext.isEmpty(barcode2)){
-		    		showWarning('条形码不能为空！');
+		    		showWarning('产品条码不能为空！');
 		    		return ;
 		    	}
-				this.code = barcode1 ;
-				this.serie = barcode2 ;
+				me.code = barcode1 ;
+				me.serie = barcode2 ;
 				if(Ext.isEmpty(codeType)){
-					if(barcode1.indexOf('240') != 0){
-						codeType = 2
+					if(me.code.indexOf('240') != 0){
+						codeType = 2;
+					} else {
+						codeType = 1;
 					}
 				}
-				this.type = codeType ;  //编码类型，保留字段
+				me.type = codeType ;  //编码类型
+				if(me.type == 1){
+					if(!(me.code.length > 24)){
+						showWarning('产品条码格式错误，请检查后重新输入！');
+					}
+				} else {
+					if(!(me.code.length > 18)){
+						showWarning('产品条码格式错误，请检查后重新输入！');
+					}
+				}
 		    },
 			
 			/**
@@ -88,7 +100,7 @@ Ext.define('SCM.extend.utils.Barcode', {
 			 */
 			getQuantity : function() {
 				if(this.type == 1){
-					return this.code.substring(26,this.code.length);
+					return this.code.substring(24,this.code.length);
 				} else {
 					return this.code.substring(18,this.code.length);
 				}
