@@ -174,6 +174,13 @@
 	<TSystemMenuOfRole id='6507349b-4380-4a0a-8f7d-844f7809c74d' menuId='productOutwarehouseConfirm' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='V' />
 	<TSystemMenuOfRole id='5f424a10-1eb2-4c44-8395-a16b9f3e9ac2' menuId='productOutwarehouseConfirm' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='D' />
 	<TSystemMenuOfRole id='6118e5d0-693a-41fb-b878-7e0c1ac38d27' menuId='productOutwarehouseConfirm' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='S' />
+	
+	<TSystemMenuOfRole id='6e8bc1c4-5239-4a35-a360-08acc0709ae5' menuId='productOutNotification' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='V' />
+	<TSystemMenuOfRole id='050e6782-eb04-41bc-a191-07007b28f3ed' menuId='productOutNotification' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='E' />
+	<TSystemMenuOfRole id='5f5ba1c1-8a99-4590-b40a-3bd3d3d78c16' menuId='productOutNotification' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='D' />
+	<TSystemMenuOfRole id='a3a61b33-2cb0-4e0b-be1e-19ff66e58af3' menuId='productOutNotification' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='N' />
+	<TSystemMenuOfRole id='e27006af-947a-4073-b2d9-f3e5756a8d47' menuId='productOutNotification' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='S' />
+	
 	<TSystemMenuOfRole id='286030a3-ad3a-40e7-9ef0-64287827173e' menuId='warehouseManagement' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='V' />
 	<TSystemMenuOfRole id='363f88bb-891f-4ed6-8111-24addd353e6f' menuId='systemManagement' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='V' />
 	<TSystemMenuOfRole id='2f9701c3-aed9-4d66-bdf6-fc8be7f86516' menuId='basicSetting' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='V' />
