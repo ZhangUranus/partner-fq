@@ -54,6 +54,7 @@ Ext.define('SCM.model.ProductOutwarehouse.ProductOutwarehouseModel', {
 						persist : false
 					}, {
 						name : 'volume',
+						defaultValue : 1,
 						type : 'float'
 					}, {
 						name : 'unitUnitId',
