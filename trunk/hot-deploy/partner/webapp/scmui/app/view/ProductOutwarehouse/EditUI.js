@@ -27,7 +27,7 @@ Ext.define('SCM.view.ProductOutwarehouse.EditUI', {
 										layout : 'border',
 										items : [{
 													xtype : 'container',
-													height : 200,
+													height : 100,
 													layout : {
 														columns : 3,
 														type : 'table'
@@ -78,12 +78,9 @@ Ext.define('SCM.view.ProductOutwarehouse.EditUI', {
 																hideTrigger : true,
 																fieldLabel : '总金额',
 																readOnly : true,
+																hidden : true,
 																name : 'totalsum',
 																margin : 5
-															}, {
-																xtype : 'label'
-															}, {
-																xtype : 'label'
 															}, {
 																xtype : 'textarea',
 																name : 'note',
@@ -104,6 +101,18 @@ Ext.define('SCM.view.ProductOutwarehouse.EditUI', {
 													region : 'center',
 													store : Ext.create('ProductOutwarehouseEditEntryStore'),
 													columns : [{
+																xtype : 'numbercolumn',
+																dataIndex : 'sort',
+																editor : {
+																	xtype : 'numberfield',
+																	format : '0',
+																	allowBlank : false,
+																	hideTrigger : true
+																},
+																format : '0',
+																text : '序号',
+																width : 40
+															}, {
 																xtype : 'combocolumn',
 																dataIndex : 'warehouseWarehouseId',
 																text : '仓库',
@@ -182,6 +191,46 @@ Ext.define('SCM.view.ProductOutwarehouse.EditUI', {
 																	}
 																}
 															}, {
+																xtype : 'gridcolumn',
+																editor : {
+																	xtype : 'textfield'
+																},
+																dataIndex : 'barcode1',
+																text : '产品条码'
+															}, {
+																xtype : 'gridcolumn',
+																editor : {
+																	xtype : 'textfield'
+																},
+																dataIndex : 'barcode2',
+																text : '序列号'
+															}, {
+																xtype : 'gridcolumn',
+																editor : {
+																	xtype : 'textfield'
+																},
+																dataIndex : 'goodNumber',
+																text : '货号'
+															}, {
+																xtype : 'gridcolumn',
+																editor : {
+																	xtype : 'textfield'
+																},
+																dataIndex : 'destinhouseNumber',
+																text : '订舱号'
+															}, {
+																xtype : 'gridcolumn',
+																dataIndex : 'containerNumber',
+																text : '货柜号'
+															}, {
+																xtype : 'gridcolumn',
+																dataIndex : 'sealNumber',
+																text : '封条号'
+															}, {
+																xtype : 'gridcolumn',
+																dataIndex : 'prdWeek',
+																text : '生产周'
+															}, {
 																xtype : 'combocolumn',
 																dataIndex : 'materialMaterialId',
 																text : '物料',
@@ -193,25 +242,11 @@ Ext.define('SCM.view.ProductOutwarehouse.EditUI', {
 																	initStore : Ext.data.StoreManager.lookup('MComboInitStore'),
 																	store : Ext.data.StoreManager.lookup('MComboStore'),
 																	matchFieldWidth : false,
-																	listConfig : {
-																		width : SCM.MaxSize.COMBOGRID_WIDTH,
-																		height : SCM.MaxSize.COMBOGRID_HEIGHT,
-																		columns : [{
-																					header : '编码',
-																					dataIndex : 'number',
-																					width : 100,
-																					hideable : false
-																				}, {
-																					header : '名称',
-																					dataIndex : 'name',
-																					width : 280,
-																					hideable : false
-																				}]
-																	}
+																	readOnly : true
 																}
 															}, {
 																xtype : 'gridcolumn',
-																dataIndex : 'materialMaterialModel',
+																dataIndex : 'materialModel',
 																text : '规格型号'
 															}, {
 																xtype : 'combocolumn',
@@ -228,33 +263,10 @@ Ext.define('SCM.view.ProductOutwarehouse.EditUI', {
 																},
 																width : 80
 															}, {
-																xtype : 'gridcolumn',
-																editor : {
-																	xtype : 'textfield'
-																},
-																dataIndex : 'barcode1',
-																text : '条码1'
-															}, {
-																xtype : 'gridcolumn',
-																editor : {
-																	xtype : 'textfield'
-																},
-																dataIndex : 'barcode2',
-																text : '条码2'
-															}, {
 																xtype : 'numbercolumn',
-																dataIndex : 'volume',
-																text : '数量',
-																width : 80
-															}, {
-																xtype : 'numbercolumn',
-																dataIndex : 'price',
-																text : '单价',
-																width : 80
-															}, {
-																xtype : 'numbercolumn',
-																dataIndex : 'entrysum',
-																text : '金额',
+																dataIndex : 'qantity',
+																format : '0',
+																text : '板数量',
 																width : 80
 															}],
 													viewConfig : {
