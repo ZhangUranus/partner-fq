@@ -39,11 +39,12 @@
 		<field name="barcode1" type="value"></field>
 		<field name="barcode2" type="value"></field>
 		<field name="outwarehouseType" type="value"></field>
-		<field name="qantity" type="numeric"></field>
-		<field name="goodNumber" type="id-long"></field>
-		<field name="destinhouseNumber" type="id-long"></field>
-		<field name="containerNumber" type="id-long"></field>
-		<field name="sealNumber" type="id-long"></field>
+		<field name="qantity" type="numeric"></field><!-- 板数量 -->
+		<field name="goodNumber" type="id-long"></field><!-- 货号 -->
+		<field name="destinhouseNumber" type="id-long"></field><!-- 订舱号 -->
+		<field name="containerNumber" type="id-long"></field><!-- 货柜号 -->
+		<field name="sealNumber" type="id-long"></field><!-- 封条号 -->
+		<field name="sort" type="int"></field>
 		<prim-key field="id" />
 	</entity>
 	<!-- 表头视图 -->
@@ -72,6 +73,7 @@
 		<alias name="warehouseWarehouseName" entity-alias="warehouseWarehouseV" field="name"></alias>
 		<alias name="workshopWorkshopName" entity-alias="workshopWorkshopV" field="name"></alias>
 		<alias name="materialMaterialName" entity-alias="materialMaterialV" field="name"></alias>
+		<alias name="materialModel" entity-alias="materialMaterialV" field="model"></alias>
 		<alias name="unitUnitName" entity-alias="unitUnitV" field="name"></alias>
 		<view-link entity-alias="ProductOutwarehouseEntryV" rel-entity-alias="warehouseWarehouseV" rel-optional="true">
 			<key-map field-name="warehouseWarehouseId" rel-field-name="id" />
