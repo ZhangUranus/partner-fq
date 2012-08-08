@@ -70,6 +70,7 @@ public class ProductOutwarehouseEvents {
 					type=ProductStockType.OUT;
 				}
 				WeeklyStockMgr.getInstance().updateStock(materialId, bizDate, type, volume, false);
+				updateNotification(v,delegator,materialId,volume,v.getString("goodNumber"),v.getString("destinhouseNumber"));
 			}
 			
 			TransactionUtil.commit(beganTransaction);
@@ -129,6 +130,7 @@ public class ProductOutwarehouseEvents {
 					type=ProductStockType.OUT;
 				}
 				WeeklyStockMgr.getInstance().updateStock(materialId, bizDate, type, volume.negate(), false);
+				updateNotification(v,delegator,materialId,volume.negate(),v.getString("goodNumber"),v.getString("destinhouseNumber"));
 			}
 			
 			TransactionUtil.commit(beganTransaction);
@@ -142,5 +144,38 @@ public class ProductOutwarehouseEvents {
 			throw e;
 		}
 		return "success";
+	}
+	
+	public static void updateNotification(GenericValue headValue,Delegator delegator,String materialId,BigDecimal volume,String goodNumber,String destinhouseNumber) throws Exception {
+		List<GenericValue> mainList = delegator.findByAnd("ProductOutNotification", UtilMisc.toMap("goodNumber", goodNumber, "finalHouseNumber", destinhouseNumber));
+		boolean isUpdate = false;
+		if(mainList.size()>0){
+			GenericValue v = mainList.get(0);	//只取第一条，默认一个货号、订舱号只能唯一对应一条通知单
+			headValue.set("containerNumber", v.getString("finalContainerNumber"));
+			headValue.set("sealNumber", v.getString("sealNumber"));
+			List<GenericValue> entryList = delegator.findByAnd("ProductOutNotificationEntry", UtilMisc.toMap("parentId", v.getString("id")));
+			for (GenericValue entry : entryList) {
+				List<GenericValue> detailList = delegator.findByAnd("ProductOutNotificationEntryDetail", UtilMisc.toMap("parentId", entry.getString("id")));
+				for (GenericValue detail : detailList) {
+					//更新未完成入柜的记录
+					if(materialId.equals(detail.getString("materialId")) && "N".equals(detail.getString("isFinished"))){
+						detail.set("sentQty", detail.getBigDecimal("sentQty").add(volume));
+						if(detail.getBigDecimal("sentQty").compareTo(detail.getBigDecimal("orderQty")) == 0){
+							detail.set("isFinished", "Y");
+						}
+						detail.store();
+						isUpdate = true;
+						break;
+					}
+				}
+				if(isUpdate){
+					break;
+				}
+			}
+			if(!isUpdate){
+				throw new Exception("未找到产品对应的出货通知单，请先提交通知单！");
+			}
+			headValue.store();
+		}
 	}
 }
