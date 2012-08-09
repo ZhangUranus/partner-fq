@@ -1,5 +1,6 @@
 package org.ofbiz.partner.scm.common;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -19,7 +20,6 @@ import net.sf.json.JSONObject;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.ofbiz.base.util.Debug;
-import org.ofbiz.base.util.StringUtil;
 import org.ofbiz.base.util.UtilProperties;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericEntityException;
@@ -231,6 +231,22 @@ public class EntityCRUDEvent {
 						}else{
 							throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "NameIsExist"));
 						}
+					}else if (record.get(fieldName)!=null&&vModelField.getType().equals("date-time")){//时间字段的转换
+						long tsl=Long.valueOf(record.get(fieldName).toString());
+						Timestamp ts=new Timestamp(tsl);
+						v.set(fieldName, ts);
+					}else if(record.get(fieldName)!=null&&vModelField.getType().equals("boolean")){ 
+						//布尔值处理，客户端传来的事ture or false 转换为 整数 1 or 0
+						Boolean bv=Boolean.valueOf(record.get(fieldName).toString());
+						if(bv){
+							v.set(fieldName,Integer.valueOf(1));
+						}else{
+							v.set(fieldName,Integer.valueOf(0));
+						}
+						
+					}else if(record.get(fieldName)!=null && vModelField.getType().equals("fixed-point")){
+						BigDecimal bd = new BigDecimal(record.get(fieldName).toString());
+						v.set(fieldName, bd);
 					}else{
 						v.set(fieldName, record.get(fieldName));
 					}

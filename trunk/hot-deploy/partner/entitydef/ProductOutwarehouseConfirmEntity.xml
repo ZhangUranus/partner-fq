@@ -18,6 +18,7 @@
 		<field name="bizDate" type="date-time"></field>
 		<field name="warehouseWarehouseId" type="id-long"></field>
 		<field name="workshopWorkshopId" type="id-long"></field>
+		<field name="prdWeek" type="id"></field>
 		<field name="materialMaterialId" type="id-long"></field>
 		<field name="volume" type="fixed-point"></field>
 		<field name="unitUnitId" type="id-long"></field>
@@ -27,12 +28,9 @@
 		<field name="barcode2" type="value"></field>
 		<field name="outwarehouseType" type="value"></field>
 		<field name="submitterSystemUserId" type="id-long"></field>
-		<field name="totalsum" type="fixed-point"></field>
 		<field name="qantity" type="numeric"></field><!-- 板数量 -->
 		<field name="goodNumber" type="id-long"></field><!-- 货号 -->
 		<field name="destinhouseNumber" type="id-long"></field><!-- 订舱号 -->
-		<field name="containerNumber" type="id-long"></field><!-- 货柜号 -->
-		<field name="sealNumber" type="id-long"></field><!-- 封条号 -->
 		<field name="status" type="int"></field>
 		<field name="productOutwarehouseId" type="id-long"></field>
 		<field name="productOutwarehouseEntryId" type="id-long"></field>

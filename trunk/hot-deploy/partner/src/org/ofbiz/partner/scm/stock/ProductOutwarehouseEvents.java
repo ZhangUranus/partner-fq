@@ -147,7 +147,7 @@ public class ProductOutwarehouseEvents {
 	}
 	
 	public static void updateNotification(GenericValue headValue,Delegator delegator,String materialId,BigDecimal volume,String goodNumber,String destinhouseNumber) throws Exception {
-		List<GenericValue> mainList = delegator.findByAnd("ProductOutNotification", UtilMisc.toMap("goodNumber", goodNumber, "finalHouseNumber", destinhouseNumber));
+		List<GenericValue> mainList = delegator.findByAnd("ProductOutNotification", UtilMisc.toMap("goodNumber", goodNumber, "finalHouseNumber", destinhouseNumber, "status", "4"));
 		boolean isUpdate = false;
 		if(mainList.size()>0){
 			GenericValue v = mainList.get(0);	//只取第一条，默认一个货号、订舱号只能唯一对应一条通知单
