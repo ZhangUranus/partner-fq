@@ -74,8 +74,14 @@ public static final String module = ProductPriceMgr.class.getName();
 			Delegator delegator=org.ofbiz.partner.scm.common.Utils.getDefaultDelegator();
 			GenericValue gv=delegator.findOne("CurProductPrice", UtilMisc.toMap("customerId", customerId, "materialId", materialId), false);
 			if(gv!=null){
-				BigDecimal oldVolume=gv.getBigDecimal("volume");
-				BigDecimal oldSum=gv.getBigDecimal("totalsum");
+				BigDecimal oldVolume = BigDecimal.ZERO;
+				if(gv.getBigDecimal("volume") != null){
+					oldVolume = gv.getBigDecimal("volume");
+				}
+				BigDecimal oldSum = BigDecimal.ZERO;
+				if(gv.getBigDecimal("totalsum") != null){
+					oldSum = gv.getBigDecimal("totalsum");
+				}
 				gv.set("volume", oldVolume.add(volume));
 				gv.set("totalsum", oldSum.add(totalsum));
 				delegator.store(gv);

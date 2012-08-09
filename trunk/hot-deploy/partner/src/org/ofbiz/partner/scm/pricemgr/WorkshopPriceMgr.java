@@ -270,8 +270,14 @@ public class WorkshopPriceMgr {
 			// 查找供应商可入库余额表
 			GenericValue gv = delegator.findOne("CurWorkshopPrice", UtilMisc.toMap("year", new Integer(year), "month", new Integer(month), "workshopId", workshopId, "materialId", materialId), false);
 			if (gv != null) {
-				BigDecimal oldVolume = gv.getBigDecimal("volume");
-				BigDecimal oldSum = gv.getBigDecimal("totalsum");
+				BigDecimal oldVolume = BigDecimal.ZERO;
+				if(gv.getBigDecimal("volume") != null){
+					oldVolume = gv.getBigDecimal("volume");
+				}
+				BigDecimal oldSum = BigDecimal.ZERO;
+				if(gv.getBigDecimal("totalsum") != null){
+					oldSum = gv.getBigDecimal("totalsum");
+				}
 				BigDecimal curVolume = oldVolume.add(volume);
 				gv.set("volume", curVolume);
 
