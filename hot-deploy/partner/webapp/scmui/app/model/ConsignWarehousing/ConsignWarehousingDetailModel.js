@@ -23,13 +23,13 @@ Ext.define('SCM.model.ConsignWarehousing.ConsignWarehousingDetailModel', {
 						type : 'string'
 					}, {
 						name : 'volume',
-						type : 'string'
+						type : 'float'
 					}, {
 						name : 'price',
-						type : 'string'
+						type : 'float'
 					}, {
 						name : 'entrysum',
-						type : 'string'
+						type : 'float'
 					}],
 			idgen : 'uuid', // 使用uuid生成记录id 每个模型必须要有id字段
 			proxy : {
