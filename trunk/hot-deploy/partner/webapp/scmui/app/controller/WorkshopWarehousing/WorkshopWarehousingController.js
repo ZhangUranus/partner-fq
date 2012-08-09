@@ -302,8 +302,9 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 				var sm = me.editEntry.getSelectionModel();
 				if (sm.hasSelection()) {// 判断是否选择行记录
 					record = sm.getLastSelected();
-					me.entryMaterialVolume = record.get('volume');	//初始化加工件数量
-
+					if(record.get('volume') != 0){
+						me.entryMaterialVolume = record.get('volume');	//初始化加工件数量
+					}
 					me.detailEntry.store.getProxy().extraParams.whereStr = "parent_id = '" + record.get('id') + "'";
 					me.detailEntry.store.load(function(records, operation, success) {
 						for (var i = 0; i < records.length; i++) {
@@ -355,8 +356,9 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 				me.currentRecord = record;
 				me.detailEditWin.uiStatus = 'Modify';
 				
-				me.entryMaterialVolume = record.get('volume');	//初始化加工件数量
-				
+				if(record.get('volume')!=0){
+					me.entryMaterialVolume = record.get('volume');	//初始化加工件数量
+				}
 				// 获取耗料列表
 				me.detailEditEntry.store.getProxy().extraParams.whereStr = 'parent_id = \'' + record.get('id') + '\'';
 				me.detailEditEntry.store.load(function(records, operation, success) {

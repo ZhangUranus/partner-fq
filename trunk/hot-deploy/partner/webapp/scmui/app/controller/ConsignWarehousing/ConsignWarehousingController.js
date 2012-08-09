@@ -302,7 +302,9 @@ Ext.define('SCM.controller.ConsignWarehousing.ConsignWarehousingController', {
 				var sm = me.editEntry.getSelectionModel();
 				if (sm.hasSelection()) {// 判断是否选择行记录
 					record = sm.getLastSelected();
-					me.entryMaterialVolume = record.get('volume');	//初始化加工件数量
+					if(record.get('volume') != 0){
+						me.entryMaterialVolume = record.get('volume');	//初始化加工件数量
+					}
 
 					me.detailEntry.store.getProxy().extraParams.whereStr = "parent_id = '" + record.get('id') + "'";
 					me.detailEntry.store.load(function(records, operation, success) {
@@ -354,7 +356,9 @@ Ext.define('SCM.controller.ConsignWarehousing.ConsignWarehousingController', {
 				me.currentRecord = record;
 				me.detailEditWin.uiStatus = 'Modify';
 				
-				me.entryMaterialVolume = record.get('volume');	//初始化加工件数量
+				if(record.get('volume')!=0){
+					me.entryMaterialVolume = record.get('volume');	//初始化加工件数量
+				}
 				
 				// 获取耗料列表
 				me.detailEditEntry.store.getProxy().extraParams.whereStr = 'parent_id = \'' + record.get('id') + '\'';
@@ -447,6 +451,7 @@ Ext.define('SCM.controller.ConsignWarehousing.ConsignWarehousingController', {
 			 */
 			saveDetailRecord : function(button) {
 				var me = this;
+				debugger;
 				var records = me.detailEditEntry.store.data.items;
 				for (var i = 0; i < records.length; i++) {
 					records[i].set('volume',records[i].get('volume') / me.entryMaterialVolume);
