@@ -20,6 +20,12 @@ Ext.define('SCM.model.Supplier.SupplierEditModel', {
 						name : 'address',
 						type : 'string'
 					}, {
+						name : 'faxNum',
+						type : 'string'
+					}, {
+						name : 'linkman',
+						type : 'string'
+					}, {
 						name : 'createdStamp',
 						defaultValue : new Date(),
 						type : 'date',

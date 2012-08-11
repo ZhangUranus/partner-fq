@@ -33,8 +33,18 @@ Ext.define('SCM.view.Supplier.ListUI', {
 										width : 150,
 										groupable : false
 									}, {
+										header : '供应商传真',
+										dataIndex : 'faxNum',
+										width : 150,
+										groupable : false
+									}, {
 										header : '供应商地址',
 										dataIndex : 'address',
+										width : 150,
+										groupable : false
+									}, {
+										header : '联系人',
+										dataIndex : 'linkman',
 										width : 150,
 										groupable : false
 									}],

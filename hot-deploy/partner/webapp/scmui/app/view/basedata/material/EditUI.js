@@ -18,10 +18,10 @@ Ext.define('SCM.view.basedata.material.EditUI', {
 				var materialTypeStore=Ext.create('SCM.store.basedata.MaterialTypeStore');
 				materialTypeStore.pageSize=100000;//取出所有记录
 				materialTypeStore.load();
-				var spStore=Ext.data.StoreManager.lookup('SPComboInitStore');
-				spStore.pageSize=100000;
-				spStore.load();
-				Ext.data.StoreManager.lookup('UComboInitStore').load();
+//				var spStore=Ext.data.StoreManager.lookup('SPComboInitStore');
+//				spStore.pageSize=100000;
+//				spStore.load();
+//				Ext.data.StoreManager.lookup('UComboInitStore').load();
 				Ext.applyIf(me, {
 							items : [{
 										xtype : 'form',

@@ -42,6 +42,19 @@ Ext.define('SCM.model.PurchaseBill.PurchaseBillEditEntryModel', {
 					}, {
 						name : 'sort',
 						type : 'int'
+					}, {
+						name : 'qualityReq',
+						type : 'string'
+					}, {
+						name : 'deliveryDate',
+						type : 'date',
+						defaultValue : new Date(),
+						convert : function(value, record) {
+							return new Date(value);
+						}
+					}, {
+						name : 'deliveryQty',
+						type : 'float'
 					}],
 			idgen : 'uuid', // 使用uuid生成记录id 每个模型必须要有id字段
 			proxy : {

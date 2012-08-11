@@ -169,9 +169,27 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 																fieldLabel : '返货时间',
 																allowBlank : false
 															}, {
-																xtype : 'label'
+																xtype : 'textfield',
+																name : 'payType',
+																margin : 5,
+																fieldLabel : '付款方式'
 															}, {
-																xtype : 'label'
+																xtype : 'textfield',
+																name : 'tax',
+																margin : 5,
+																fieldLabel : '税金'
+															}, {
+																xtype : 'textfield',
+																name : 'deliveryAddr',
+																margin : 5,
+																colspan : 2,
+																width : 520,
+																fieldLabel : '送货地址'
+															}, {
+																xtype : 'textfield',
+																name : 'revision',
+																margin : 5,
+																fieldLabel : 'Revision'
 															}, {
 																xtype : 'textarea',
 																name : 'note',
@@ -267,6 +285,13 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 																dataIndex : 'price',
 																text : '单价'
 															}, {
+																xtype : 'gridcolumn',
+																dataIndex : 'qualityReq',
+																text : '质量要求',
+																editor : {
+																	xtype : 'textfield'
+																},
+															}, {
 																xtype : 'numbercolumn',
 																dataIndex : 'refPrice',
 																text : '参考单价'
@@ -274,6 +299,24 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 																xtype : 'numbercolumn',
 																dataIndex : 'entrysum',
 																text : '金额'
+															}, {
+																xtype : 'datecolumn',
+																editor : {
+																	xtype : 'datefield',
+																	format : 'Y-m-d'
+																},
+																format : 'Y-m-d',
+																dataIndex : 'deliveryDate',
+																text : '交货日期'
+															}, {
+																xtype : 'numbercolumn',
+																editor : {
+																	xtype : 'numberfield',
+																	allowBlank : false,
+																	hideTrigger : true
+																},
+																dataIndex : 'deliveryQty',
+																text : '交货数量'
 															}],
 													viewConfig : {
 
