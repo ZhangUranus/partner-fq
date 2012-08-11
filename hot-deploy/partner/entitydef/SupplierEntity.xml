@@ -36,11 +36,10 @@ under the License.
       <field name="id" type="id-long"></field>
       <field name="number" type="name"></field>
       <field name="name" type="value"></field>
-            		<!-- \n -->
 	  <field name="phoneNum" type="value"></field>
-				        		<!-- \n -->
+	  <field name="faxNum" type="value"></field>
 	  <field name="address" type="value"></field>
-				   <!-- \n -->
+	  <field name="linkman" type="value"></field>
       <field name="createdStamp" type="date-time"></field>
       <field name="lastUpdatedStamp" type="date-time"></field>
       <prim-key field="id"/>

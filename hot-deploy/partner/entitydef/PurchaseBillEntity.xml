@@ -23,6 +23,10 @@
 		<field name="approverSystemUserId" type="id-long"></field>
 		<field name="totalsum" type="fixed-point"></field>
 		<field name="receiveStamp" type="date-time"></field>
+		<field name="payType" type="value"></field><!-- 付款方式 -->
+		<field name="tax" type="value"></field><!--税金  -->
+		<field name="deliveryAddr" type="description"></field><!-- 送货地址 -->
+		<field name="revision" type="value"></field><!--revision  -->
 		<field name="note" type="description"></field>
 		<field name="approverNote" type="description"></field>
 		<field name="status" type="int"></field>
@@ -30,7 +34,7 @@
 		<field name="lastUpdatedStamp" type="date-time"></field>
 		<prim-key field="id" />
 	</entity>
-	<!-- 分录 -->
+	<!-- 分录 --> 
 	<entity entity-name="PurchaseBillEntry" package-name="org.ofbiz.scm.PurchaseBill" title="PurchaseBillEntry Entity">
 		<field name="id" type="id-long"></field>
 		<field name="parentId" type="id-long"></field>
@@ -42,6 +46,9 @@
 		<field name="refPrice" type="fixed-point"></field>
 		<field name="entrysum" type="fixed-point"></field>
 		<field name="sort" type="int"></field>
+		<field name="qualityReq" type="value"></field><!--质量要求  -->
+		<field name="deliveryDate" type="date-time"></field><!--交货日期  -->
+		<field name="deliveryQty" type="fixed-point"></field><!-- 交货数量 -->
 		<prim-key field="id" />
 	</entity>
 	<!-- 表头视图 -->
@@ -51,13 +58,22 @@
 		<member-entity entity-alias="supplierSupplierV" entity-name="Supplier"></member-entity>
 		<member-entity entity-alias="submitSystemUserV" entity-name="SystemUser"></member-entity>
 		<member-entity entity-alias="buyerSystemUserV" entity-name="SystemUser"></member-entity>
+		<member-entity entity-alias="buyerDepartmentV" entity-name="Department"></member-entity>
 		<member-entity entity-alias="approverSystemUserV" entity-name="SystemUser"></member-entity>
 		<alias-all entity-alias="PurchaseBillV"></alias-all>
 		<alias name="materialMaterialId" entity-alias="PurchaseBillEntryV" field="materialMaterialId"></alias>
+		<alias name="entrySeq" entity-alias="PurchaseBillEntryV" field="sort" ></alias>
 		<alias name="supplierSupplierName" entity-alias="supplierSupplierV" field="name"></alias>
+		<alias name="supplierSupplierPhoneNum" entity-alias="supplierSupplierV" field="phoneNum"></alias>
+		<alias name="supplierSupplierFaxNum" entity-alias="supplierSupplierV" field="faxNum"></alias>
+		<alias name="supplierSupplierAddress" entity-alias="supplierSupplierV" field="address"></alias>
+		<alias name="supplierSupplierLinkman" entity-alias="supplierSupplierV" field="linkman"></alias>
 		<alias name="submitUserName" entity-alias="submitSystemUserV" field="name"></alias>
 		<alias name="buyerSystemUserName" entity-alias="buyerSystemUserV" field="name"></alias>
+		<alias name="buyerDepartmentName" entity-alias="buyerDepartmentV" field="name"></alias>
 		<alias name="approverSystemUserName" entity-alias="approverSystemUserV" field="name"></alias>
+		
+		
 		<view-link entity-alias="PurchaseBillV" rel-entity-alias="PurchaseBillEntryV" rel-optional="true">
 			<key-map field-name="id" rel-field-name="parentId" />
 		</view-link>
@@ -69,6 +85,9 @@
 		</view-link>
 		<view-link entity-alias="PurchaseBillV" rel-entity-alias="buyerSystemUserV" rel-optional="true">
 			<key-map field-name="buyerSystemUserId" rel-field-name="id" />
+		</view-link>
+		<view-link entity-alias="buyerSystemUserV" rel-entity-alias="buyerDepartmentV" rel-optional="true">
+			<key-map field-name="departmentId" rel-field-name="id" />
 		</view-link>
 		<view-link entity-alias="PurchaseBillV" rel-entity-alias="approverSystemUserV" rel-optional="true">
 			<key-map field-name="approverSystemUserId" rel-field-name="id" />
@@ -113,5 +132,6 @@
 		<view-link entity-alias="PurchaseBillEntryV" rel-entity-alias="unitUnitV" rel-optional="true">
 			<key-map field-name="unitUnitId" rel-field-name="id" />
 		</view-link>
+		<entity-condition> <order-by field-name="sort ASC" /> </entity-condition>
 	</view-entity>
 </entitymodel>
