@@ -20,6 +20,12 @@ Ext.define('SCM.model.Supplier.SupplierModel', {
 						name : 'address',
 						type : 'string'
 					}, {
+						name : 'faxNum',
+						type : 'string'
+					}, {
+						name : 'linkman',
+						type : 'string'
+					}, {
 						name : 'entryId',
 						type : 'string'
 					}],

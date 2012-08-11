@@ -135,6 +135,10 @@ Ext.define('SCM.view.PurchaseBill.ListUI', {
 													dataIndex : 'unitUnitName',
 													text : '单位'
 												}, {
+													xtype : 'gridcolumn',
+													dataIndex : 'qualityReq',
+													text : '质量要求'
+												}, {
 													xtype : 'numbercolumn',
 													dataIndex : 'price',
 													text : '单价'
@@ -142,6 +146,16 @@ Ext.define('SCM.view.PurchaseBill.ListUI', {
 													xtype : 'numbercolumn',
 													dataIndex : 'entrysum',
 													text : '金额'
+												}, {
+													xtype : 'datecolumn',
+													dataIndex : 'deliveryDate',
+													format : 'Y-m-d',
+													groupable : false,
+													text : '交货日期'
+												}, {
+													xtype : 'numbercolumn',
+													dataIndex : 'deliveryQty',
+													text : '交货数量'
 												}]
 									}]
 						});

@@ -42,8 +42,14 @@ Ext.define('SCM.view.Supplier.EditUI', {
 													fieldLabel : '供应商电话',
 													name : 'phoneNum'
 												}, {
+													fieldLabel : '供应商传真',
+													name : 'faxNum'
+												}, {
 													fieldLabel : '供应商地址',
 													name : 'address'
+												}, {
+													fieldLabel : '联系人',
+													name : 'linkman'
 												}]
 									}],
 							dockedItems : [{
