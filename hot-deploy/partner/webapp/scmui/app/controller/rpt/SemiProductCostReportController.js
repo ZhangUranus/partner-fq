@@ -88,8 +88,9 @@ Ext.define('SCM.controller.rpt.SemiProductCostReportController', {
 			 * @param {} eOpts
 			 */
 			showDetail : function(me, record, index, eOpts) {
-				if (record != null && record.get("NUMBER") != null) {
+				if (record != null && record.get("NUMBER") != null && record.get("BOM_ID") != null) {
 					this.detailPanel.store.getProxy().extraParams.number = record.get("NUMBER");
+					this.detailPanel.store.getProxy().extraParams.bomId = record.get("BOM_ID");
 					this.detailPanel.store.load();
 				}
 			},
