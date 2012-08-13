@@ -21,6 +21,9 @@ Ext.define('SCM.model.rpt.PackingMaterialReportModel', {
 						name : 'WAREHOUSENAME',
 						type : 'string'
 					}, {
+						name : 'BOM_ID',
+						type : 'string'
+					}, {
 						name : 'MATERIALNAME',
 						type : 'string'
 					}, {

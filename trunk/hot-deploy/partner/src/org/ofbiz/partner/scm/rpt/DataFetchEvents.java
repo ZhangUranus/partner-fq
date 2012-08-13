@@ -799,6 +799,7 @@ public class DataFetchEvents {
 						" WW.NUMBER, " +
 						" WW.STATUS, " +
 						" WH.NAME AS WAREHOUSENAME, " +
+						" WWE.BOM_ID AS BOM_ID, " +
 						" TM.NAME AS MATERIALNAME, " +
 						" WWE.MATERIAL_MATERIAL_MODEL AS MATERIALMODEL, " +
 						" UIT.NAME AS UNITNAME, " +
@@ -832,9 +833,14 @@ public class DataFetchEvents {
 	 */
 	public static String queryPackingMaterialDetail(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String number = null;
+		String bomId = null;
 		
 		if(request.getParameter("number") != null){
 			number = request.getParameter("number");
+		}
+		
+		if(request.getParameter("bomId") != null){
+			bomId = request.getParameter("bomId");
 		}
 		String sql =" SELECT " +
 						" WW.NUMBER, " +
@@ -852,7 +858,8 @@ public class DataFetchEvents {
 					" LEFT JOIN WORKSHOP_PRICE_DETAIL WPD ON WWE.ID = WPD.PARENT_ID " +
 					" LEFT JOIN T_MATERIAL TM ON WPD.MATERIAL_ID = TM.ID " +
 					" LEFT JOIN UNIT UIT ON TM.DEFAULT_UNIT_ID = UIT.ID " +
-					" WHERE WW.NUMBER = '" + number + "'";
+					" WHERE WW.NUMBER = '" + number + "'" +
+					" AND WWE.BOM_ID = '" + bomId + "'";
 		sql += " GROUP BY WW.NUMBER,WWE.WAREHOUSE_WAREHOUSE_ID,MB.MATERIAL_ID,TM.NUMBER,TM.NAME,WWE.VOLUME ";
 		
 		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(request,sql));
@@ -1105,6 +1112,7 @@ public class DataFetchEvents {
 						" WW.NUMBER, " +
 						" WW.STATUS, " +
 						" WH.NAME AS WAREHOUSENAME, " +
+						" WWE.BOM_ID AS BOM_ID, " +
 						" TM.NAME AS MATERIALNAME, " +
 						" WWE.MATERIAL_MATERIAL_MODEL AS MATERIALMODEL, " +
 						" UIT.NAME AS UNITNAME, " +
@@ -1127,13 +1135,14 @@ public class DataFetchEvents {
 		if(materialId != null && !"".equals(materialId)){
 			sql += " AND TM.ID = '" + materialId + "'";
 		}
-		sql += " GROUP BY WW.NUMBER,WH.NAME,TM.NAME,WWE.MATERIAL_MATERIAL_MODEL,UIT.NAME ";
+		sql += " GROUP BY WW.NUMBER,WH.NAME,WWE.BOM_ID,TM.NAME,WWE.MATERIAL_MATERIAL_MODEL,UIT.NAME ";
 		sql += " union ";
 		sql += " SELECT ";
 		sql += " 	CW.BIZ_DATE, ";
 		sql += " 	CW.NUMBER, ";
 		sql += " 	CW.STATUS, ";
 		sql += " 	WH.NAME AS WAREHOUSENAME, ";
+		sql += " 	CWE.BOM_ID AS BOM_ID, ";
 		sql += " 	TM.NAME AS MATERIALNAME, ";
 		sql += " 	CWE.MATERIAL_MATERIAL_MODEL AS MATERIALMODEL, ";
 		sql += " 	UIT.NAME AS UNITNAME, ";
@@ -1156,7 +1165,7 @@ public class DataFetchEvents {
 		if(materialId != null && !"".equals(materialId)){
 			sql += " AND TM.ID = '" + materialId + "'";
 		}
-		sql += " GROUP BY CW.NUMBER,WH.NAME,TM.NAME,CWE.MATERIAL_MATERIAL_MODEL,UIT.NAME ";
+		sql += " GROUP BY CW.NUMBER,WH.NAME,CWE.BOM_ID,TM.NAME,CWE.MATERIAL_MATERIAL_MODEL,UIT.NAME ";
 		return sql;
 	}
 	
@@ -1169,9 +1178,13 @@ public class DataFetchEvents {
 	 */
 	public static String querySemiProductCostDetail(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String number = null;
+		String bomId = null;
 		
 		if(request.getParameter("number") != null){
 			number = request.getParameter("number");
+		}
+		if(request.getParameter("bomId") != null){
+			bomId = request.getParameter("bomId");
 		}
 		String sql =" SELECT " +
 						" WW.NUMBER, " +
@@ -1189,7 +1202,8 @@ public class DataFetchEvents {
 					" LEFT JOIN WORKSHOP_PRICE_DETAIL WPD ON WWE.ID = WPD.PARENT_ID " +
 					" LEFT JOIN T_MATERIAL TM ON WPD.MATERIAL_ID = TM.ID " +
 					" LEFT JOIN UNIT UIT ON TM.DEFAULT_UNIT_ID = UIT.ID " +
-					" WHERE WW.NUMBER = '" + number + "'";
+					" WHERE WW.NUMBER = '" + number + "'" +
+					" AND WWE.BOM_ID = '" + bomId + "'";
 		sql += " GROUP BY WW.NUMBER,WWE.WAREHOUSE_WAREHOUSE_ID,MB.MATERIAL_ID,TM.NUMBER,TM.NAME,WWE.VOLUME ";
 		sql += " UNION ";
 		sql += " SELECT ";
@@ -1208,7 +1222,8 @@ public class DataFetchEvents {
 		sql += " LEFT JOIN CONSIGN_PRICE_DETAIL CPD ON CWE.ID = CPD.PARENT_ID ";
 		sql += " LEFT JOIN T_MATERIAL TM ON CPD.MATERIAL_ID = TM.ID ";
 		sql += " LEFT JOIN UNIT UIT ON TM.DEFAULT_UNIT_ID = UIT.ID ";
-		sql += " WHERE CW.NUMBER = '" + number + "'";
+		sql += " WHERE CW.NUMBER = '" + number + "'" ;
+		sql += " AND CWE.BOM_ID = '" + bomId + "'" ;
 		sql += " GROUP BY CW.NUMBER,CWE.WAREHOUSE_WAREHOUSE_ID,MB.MATERIAL_ID,TM.NUMBER,TM.NAME,CWE.VOLUME ";
 		
 		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(request,sql));
