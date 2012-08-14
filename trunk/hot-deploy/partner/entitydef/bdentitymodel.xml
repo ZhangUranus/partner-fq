@@ -178,6 +178,7 @@
 		<alias name="valid" entity-alias="MaterialBomV" field="valid"></alias>
 		<alias name="materialId" entity-alias="TMaterialV" field="id"></alias>
 		<alias name="materialName" entity-alias="TMaterialV" field="name"></alias>
+		<alias name="materialNumber" entity-alias="TMaterialV" field="number"></alias>
 		<alias name="bomModel" entity-alias="TMaterialV" field="model"></alias>
 		<alias name="bomUnitId" entity-alias="BomUnitV" field="id"></alias>
 		<alias name="bomUnitName" entity-alias="BomUnitV" field="name"></alias>
