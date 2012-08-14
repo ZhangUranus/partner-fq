@@ -82,6 +82,10 @@ Ext.define('SCM.controller.basedata.MaterialBomController', {
 							// 编辑界面分录删除
 							'materialbomedit gridpanel button[action=deleteLine]' : {
 								click : this.deleteLine
+							},
+							//核准BOM
+							'bombillinfomaintaince button[action=exportDetail]' : {
+								click : this.exportDetailExcel
 							}
 						});
 			},
@@ -433,5 +437,44 @@ Ext.define('SCM.controller.basedata.MaterialBomController', {
 					}
 				}
 				this.changeComponentsState();
+			},
+			
+			/**
+			 * 获取报表参数
+			 * 
+			 * @return {}
+			 */
+			getDetailParams : function() {
+				var tempheader = this.detailPanel.headerCt.query('{isVisible()}');
+				var header = "";
+				var dataIndex = "";
+				var count = 0;
+				Ext.each(tempheader, function(column, index, length) {
+							if (column.xtype != 'rownumberer') {
+								if (count != 0) {
+									header += ",";
+									dataIndex += ",";
+								}
+								header += column.text;
+								dataIndex += column.dataIndex;
+								count++;
+							}
+						})
+				with (this.detailPanel.store) {
+					var params = {
+						// Store参数
+						sort : Ext.encode(getSorters()),
+						filter : Ext.encode(filters.items),
+
+						// 页面参数
+						entity : 'MaterialBomEntryView', // 导出实体名称，一般为视图名称。
+						title : this.gridTitle, // sheet页名称
+						header : header, // 表头
+						dataIndex : dataIndex, // 数据引用
+						type : 'EXCEL',
+						whereStr : getProxy().extraParams.whereStr
+					}
+					return params;
+				}
 			}
 		});

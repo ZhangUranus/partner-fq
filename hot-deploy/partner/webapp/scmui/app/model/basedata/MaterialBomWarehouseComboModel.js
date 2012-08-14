@@ -21,6 +21,10 @@ Ext.define('SCM.model.basedata.MaterialBomWarehouseComboModel', {
 						type : 'string',
 						persist : false
 					}, {
+						name : 'materialNumber',
+						type : 'string',
+						persist : false
+					}, {
 						name : 'note',
 						type : 'string'
 					}, {
@@ -39,7 +43,7 @@ Ext.define('SCM.model.basedata.MaterialBomWarehouseComboModel', {
 					read : '../../scm/control/requestJsonData?entity=MaterialBOMWithWarehouseView'
 				},
 				extraParams : {
-					queryField : 'number,materialName'
+					queryField : 'materialNumber,materialName'
 				}
 			}
 		});
