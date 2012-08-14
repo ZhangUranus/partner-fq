@@ -43,8 +43,9 @@ public class WorkshopWarehousingBizImp implements IBizStock {
 			}
 			BigDecimal sum = null;
 			if (!isOut) {
-				BigDecimal price = WorkshopPriceMgr.getInstance().CreateWorkshopPriceDetailList(workshopId, v.getString("bomId"), v.getString("id"));
-				sum = price.multiply(volume);
+				//log 20120814 jeff 将单件耗料改为总耗料
+				sum = WorkshopPriceMgr.getInstance().CreateWorkshopPriceDetailList(workshopId, v.getString("bomId"), v.getString("id"), volume);
+				BigDecimal price = sum.divide(volume);
 				
 				//增加额外耗料金额
 //				BigDecimal extraSum = WorkshopPriceMgr.getInstance().updateWarehousingExtraCommit(v);
@@ -83,9 +84,14 @@ public class WorkshopWarehousingBizImp implements IBizStock {
 			for (List element : materialList) {
 				String bomMaterialId = (String) element.get(0);
 				// 取出的耗料数量、金额只是单个加工件的，需要乘于加工件数量
-				BigDecimal bomAmount = volume.multiply((BigDecimal) element.get(1));
-				BigDecimal bomSum = volume.multiply((BigDecimal) element.get(2));
-				WorkshopPriceMgr.getInstance().update(workshopId, bomMaterialId, bomAmount.negate(), bomSum.negate());
+				// log 20120814 jeff 将单件耗料改为总耗料
+				BigDecimal bomAmount = (BigDecimal) element.get(1);
+				BigDecimal bomSum = (BigDecimal) element.get(2);
+				if(!isOut){
+					bomAmount = bomAmount.negate();
+					bomSum = bomSum.negate();
+				}
+				WorkshopPriceMgr.getInstance().update(workshopId, bomMaterialId, bomAmount, bomSum);
 			}
 			if(isOut){
 				WorkshopPriceMgr.getInstance().removeMaterialList(v.getString("id"));

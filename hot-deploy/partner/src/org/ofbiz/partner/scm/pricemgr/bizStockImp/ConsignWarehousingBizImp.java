@@ -48,8 +48,10 @@ public class ConsignWarehousingBizImp implements IBizStock {
 				if(!ConsignPriceMgr.getInstance().checkReturnProductWarehousingStatus(processorId, materialId)){
 					throw new Exception("供应商存在未验收加工件，不允许进行入库操作，请访问“委外退货”页面进行验收！");
 				}
-				BigDecimal price = ConsignPriceMgr.getInstance().CreateConsignPriceDetailList(processorId, v.getString("bomId"), v.getString("id"));
-				sum = price.add(v.getBigDecimal("processPrice")).multiply(volume);
+				// log 20120814 jeff 将单件耗料改为总耗料
+				BigDecimal materialSum = ConsignPriceMgr.getInstance().CreateConsignPriceDetailList(processorId, v.getString("bomId"), v.getString("id"), volume);
+				sum = materialSum.add(v.getBigDecimal("processPrice").multiply(volume));
+				BigDecimal price = materialSum.divide(volume);
 				
 				//耗料金额
 //				BigDecimal costSum = price.multiply(volume);
@@ -92,9 +94,13 @@ public class ConsignWarehousingBizImp implements IBizStock {
 			for (List element : materialList) {
 				String bomMaterialId = (String) element.get(0);
 				//取出的耗料数量、金额只是单个加工件的，需要乘于加工件数量
-				BigDecimal bomAmount = volume.multiply((BigDecimal) element.get(1));
-				BigDecimal bomSum = volume.multiply((BigDecimal) element.get(2));
-				ConsignPriceMgr.getInstance().update(processorId, bomMaterialId, bomAmount.negate(), bomSum.negate());
+				BigDecimal bomAmount = (BigDecimal) element.get(1);
+				BigDecimal bomSum = (BigDecimal) element.get(2);
+				if(!isOut){
+					bomAmount = bomAmount.negate();
+					bomSum = bomSum.negate();
+				}
+				ConsignPriceMgr.getInstance().update(processorId, bomMaterialId, bomAmount, bomSum);
 			}
 			if(isOut){
 				ConsignPriceMgr.getInstance().removeMaterialList(v.getString("id"));

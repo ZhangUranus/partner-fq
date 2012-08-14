@@ -87,7 +87,7 @@ public class ConsignPriceMgr {
 	 *            加工件bomId
 	 * @return
 	 */
-	public BigDecimal CreateConsignPriceDetailList(String supplierId, String bomId, String entryId) throws Exception {
+	public BigDecimal CreateConsignPriceDetailList(String supplierId, String bomId, String entryId, BigDecimal entryVolume) throws Exception {
 		if (supplierId == null || bomId == null) {
 			throw new Exception("supplierId or bomId is null");
 		}
@@ -98,15 +98,15 @@ public class ConsignPriceMgr {
 			String bomMaterialId = value.getString("bomMaterialId");
 			BigDecimal price = this.getPrice(supplierId, bomMaterialId);
 			BigDecimal volume =  value.getBigDecimal("volume");
-			List<GenericValue> valusList = delegator.findByAnd("ConsignPriceDetail", UtilMisc.toMap("parentId", entryId, "bomId", bomId));
+			List<GenericValue> valusList = delegator.findByAnd("ConsignPriceDetail", UtilMisc.toMap("parentId", entryId, "bomId", bomId, "materialId", bomMaterialId));//修复bug
 			GenericValue gv = null;
 			if (valusList.size() > 0) {
 				gv = valusList.get(0);
-				// gv.set("volume", volume);
 				volume = gv.getBigDecimal("volume");
 				gv.set("price", price);
 				gv.store();
 			} else {
+				volume = entryVolume.multiply(volume);	//将单件耗料改为总耗料
 				gv = delegator.makeValue("ConsignPriceDetail");// 新建一个值对象
 				gv.set("id", UUID.randomUUID().toString());
 				gv.set("parentId", entryId);
@@ -135,6 +135,7 @@ public class ConsignPriceMgr {
 	 * @param entryId
 	 * @return
 	 * @throws Exception
+	 * @log 20120814 jeff 将单件耗料改为总耗料
 	 */
 	public List<List> getMaterialList(String entryId) throws Exception {
 		// 根据入库加工件，获取耗料列表
@@ -143,8 +144,8 @@ public class ConsignPriceMgr {
 		for(GenericValue value:entryList){
 			List<Object> element = new ArrayList<Object>();
 			element.add(value.getString("materialId"));
-			element.add(value.getBigDecimal("volume"));		//每个加工件耗料
-			element.add(value.getBigDecimal("volume").multiply(value.getBigDecimal("price")));	//每个加工件金额
+			element.add(value.getBigDecimal("volume"));		//加工件总耗料
+			element.add(value.getBigDecimal("volume").multiply(value.getBigDecimal("price")));	//加工件总金额
 			result.add(element);
 		}
 		return result;
@@ -155,6 +156,7 @@ public class ConsignPriceMgr {
 	 * @param entryId
 	 * @return
 	 * @throws Exception
+	 * @log 20120814 jeff 将单件耗料改为总耗料
 	 */
 	public BigDecimal getMaterialCostPrice(String entryId) throws Exception {
 		// 根据入库加工件，获取耗料列表
