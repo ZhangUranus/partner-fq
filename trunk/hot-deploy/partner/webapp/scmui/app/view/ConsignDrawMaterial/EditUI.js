@@ -142,7 +142,7 @@ Ext.define('SCM.view.ConsignDrawMaterial.EditUI', {
 																	height : SCM.MaxSize.COMBOGRID_HEIGHT,
 																	columns : [{
 																				header : '编码',
-																				dataIndex : 'number',
+																				dataIndex : 'materialNumber',
 																				width : 100,
 																				hideable : false
 																			}, {
