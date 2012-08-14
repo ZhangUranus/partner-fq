@@ -34,6 +34,10 @@ Ext.define('SCM.extend.toolbar.BaseToolbar', {
 								text : '核准',
 								iconCls : 'system-audit',
 								action : 'audit'
+							}, {
+								text : '导出明细',
+								iconCls : 'system-exportDetail',
+								action : 'exportDetail'
 							}]);
 				}
 				tools = tools.concat([{
@@ -41,7 +45,7 @@ Ext.define('SCM.extend.toolbar.BaseToolbar', {
 							iconCls : 'system-export',
 							action : 'export'
 						}]);
-				
+
 				Ext.applyIf(me, {
 							xtype : 'toolbar',
 							height : 28,
