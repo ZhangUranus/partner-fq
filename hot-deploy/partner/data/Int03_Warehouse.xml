@@ -4,7 +4,7 @@
 	OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. -->
 <entity-engine-xml>
 <Warehouse id="686d7d01-b48f-4693-b6a1-823ba1072d63" wsTypeId="4f3bfaf4-db1a-4644-8f9f-2c81106d73c6" number="WH100001" name="安装材料仓" description="" />
-<Warehouse id="dabd4ec3-33ea-4f89-bd72-6d0fe449f5ff" wsTypeId="4f3bfaf4-db1a-4644-8f9f-2c81106d73c6" number="WH100002" name="黑胚原材料仓" description="" />
+<Warehouse id="dabd4ec3-33ea-4f89-bd72-6d0fe449f5ff" wsTypeId="4f3bfaf4-db1a-4644-8f9f-2c81106d73c6" number="WH100002" name="黑胚材料仓" description="" />
 <Warehouse id="e09da97a-ef7b-408a-861d-a47f20575f8e" wsTypeId="940f93be-63ac-4dfa-b643-e7dfa624c84e" number="WH100003" name="黑胚仓" description="" />
 <Warehouse id="0e77867f-4013-4f5f-ae2e-5ee4d5b18260" wsTypeId="2899f47d-3d45-4854-ad11-307dd64a4ab3" number="WH100004" name="成品仓" description="" />
 </entity-engine-xml>
