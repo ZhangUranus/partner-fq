@@ -156,8 +156,15 @@ Ext.define('SCM.view.ProductInwarehouse.EditUI', {
 									text: 'parentId',
 									hidden:true
 
-								}
-								,{
+								},{
+									xtype: 'gridcolumn'
+									,editor: {
+											xtype: 'textfield'
+										}
+									,dataIndex:'productWeek'
+									,text: '生产周'
+									  
+								},{
 								xtype : 'combocolumn'
 								,dataIndex : 'workshopWorkshopId'
 								,text : '车间'

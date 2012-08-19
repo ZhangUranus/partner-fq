@@ -135,4 +135,18 @@
 			<key-map field-name="warehouseId" rel-field-name="id" />
 		</view-link>
 	</view-entity>
+	<!-- 通知单打印分录数据源，汇总 -->
+	<view-entity entity-name="ProductOutNotificationPrintEntryView" package-name="org.ofbiz.scm.ProductOutNotification" title="ProductOutNotificationPrintView  Entity">
+		<member-entity entity-alias="productOutNotificationEntryV" entity-name="ProductOutNotificationEntry"></member-entity>
+		<member-entity entity-alias="materialMaterialV" entity-name="Material"></member-entity>
+		<alias name="parentId" entity-alias="productOutNotificationEntryV" field="parentId" group-by="true" ></alias>
+		<alias name="materialId" entity-alias="productOutNotificationEntryV" field="materialId"  group-by="true"></alias>
+		<alias name="materialName" entity-alias="materialMaterialV" field="name"  group-by="true"></alias>
+		<alias name="sumVolume" entity-alias="productOutNotificationEntryV" field="volume"  function="sum"></alias>
+		<view-link entity-alias="productOutNotificationEntryV" rel-entity-alias="materialMaterialV" rel-optional="true">
+			<key-map field-name="materialId" rel-field-name="id" />
+		</view-link>
+	</view-entity>
+	
+	
 </entitymodel>

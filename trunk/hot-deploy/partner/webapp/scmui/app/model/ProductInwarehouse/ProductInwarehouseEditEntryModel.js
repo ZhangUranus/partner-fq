@@ -7,6 +7,7 @@ Ext.define('SCM.model.ProductInwarehouse.ProductInwarehouseEditEntryModel', {
 			fields: [
 	             {name: 'id',  type: 'string'}
 				 ,{name: 'parentId',  type: 'string'}
+				 ,{name: 'productWeek',  type: 'string'}
 				 				 // \n
 				 ,{name: 'workshopWorkshopId',type:'string'  }
 				 ,{name: 'workshopWorkshopName',type:'string',persist:false }

@@ -68,6 +68,41 @@ public class Utils {
 		}
 	}
 	
+	
+
+	/**
+	 * 获取进仓单最后同步日期记录
+	 * @return
+	 */
+	public static Date getLastPrdInhouseConfDate(){
+		Delegator delegator = DelegatorFactory.getDelegator("default");
+		try {
+			GenericValue value = delegator.findByPrimaryKey("PriceMgrParamters", UtilMisc.toMap("id", "003"));
+			String dateStr = value.getString("value");
+			SimpleDateFormat timeFormat = new SimpleDateFormat("yyyyMMdd");
+			return timeFormat.parse(dateStr);
+		} catch (GenericEntityException e) {
+			Debug.logError("-----------获取进仓单最后同步日期出错", "common");
+			return null;
+		} catch (ParseException e) {
+			Debug.logError("-----------获取进仓单最后同步日期出错，日期格式出错", "common");
+			return null;
+		}
+	}
+	
+	/**
+	 * 获取进仓单最后同步日期记录
+	 * @return
+	 */
+	private static Object lLock=new Object();//003参数更新锁
+	public static void updateLastPrdInhouseConfDate(Date d) throws Exception{
+		Delegator delegator = DelegatorFactory.getDelegator("default");
+		GenericValue value = delegator.makeValue("PriceMgrParamters");
+		value.setString("id", "003");
+		SimpleDateFormat timeFormat = new SimpleDateFormat("yyyyMMdd");
+		value.setString("value", timeFormat.format(d));
+	}
+	
 	/**
 	 * 判断系统是否处于初始化月份
 	 * @return

@@ -66,15 +66,22 @@ Ext.define('SCM.view.ProductInwarehouseConfirm.ListUI' ,{
                             dataIndex: 'id',
                             text: 'id',
 							hidden:true
-                        }
+                        },{
+                        	xtype: 'gridcolumn'
+      							,dataIndex:'productWeek'
+      							,text: '生产周'
+      					}
 						,{
                             xtype: 'datecolumn',
                             dataIndex: 'bizDate',
 							format : 'Y-m-d',
 							groupable: false,
                             text: '日期'
-                        }
-                        ,{
+                        },{
+                        	xtype: 'gridcolumn'
+  							,dataIndex:'productWeek'
+  							,text: '生产周'
+  						},{
 							xtype: 'combocolumn',
 							dataIndex: 'workshopWorkshopId',
 							text: '车间'

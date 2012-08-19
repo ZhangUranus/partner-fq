@@ -17,6 +17,7 @@ import org.ofbiz.base.util.Debug;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericEntityException;
 import org.ofbiz.entity.GenericValue;
+import org.ofbiz.entity.condition.EntityCondition;
 import org.ofbiz.entity.jdbc.ConnectionFactory;
 import org.ofbiz.entity.transaction.GenericTransactionException;
 import org.ofbiz.entity.transaction.TransactionUtil;
@@ -35,41 +36,45 @@ public class ProductInwarehouseServices {
 	
 	//宜家产品对照表
 	private static Map<String, String> ikeaNum2Material=new HashMap<String, String>();
-	
-	private static void refreshIkeaMap(){
-		Delegator delegator=org.ofbiz.partner.scm.common.Utils.getDefaultDelegator();
-		try {
-			List<GenericValue> ikeaList=delegator.findList("ProductMap", null, null, null, null, false);
-			if(ikeaList!=null){
-				ikeaNum2Material=new HashMap<String, String>(ikeaList.size());
-				for(GenericValue ikeamap:ikeaList){
-					ikeaNum2Material.put(ikeamap.getString("ikeaId")+ikeamap.getString("boardCount"), ikeamap.getString("materialId"));
+	private static Object ikeaMapLock=new Object();//对应ikeaNum2Material的更新锁
+	private static  void refreshIkeaMap(){
+		synchronized (ikeaMapLock) {
+			Delegator delegator=org.ofbiz.partner.scm.common.Utils.getDefaultDelegator();
+			try {
+				List<GenericValue> ikeaList=delegator.findList("ProductMap", null, null, null, null, false);
+				if(ikeaList!=null){
+					ikeaNum2Material=new HashMap<String, String>(ikeaList.size());
+					for(GenericValue ikeamap:ikeaList){
+						ikeaNum2Material.put(ikeamap.getString("ikeaId")+ikeamap.getString("boardCount"), ikeamap.getString("materialId"));
+					}
 				}
+			} catch (GenericEntityException e) {
+				Debug.logError("宜家产品对照列表出错", module);
+				e.printStackTrace();
 			}
-		} catch (GenericEntityException e) {
-			Debug.logError("宜家产品对照列表出错", module);
-			e.printStackTrace();
 		}
 	}
 	
-	//料品编码和物料对象对应表
+	//料品id和物料对象对应表
 	private static Map<String, GenericValue> material2ObjMap=new HashMap<String, GenericValue>();
-	//private static Object mtrMapLock=new Object();//对应matrerialNbr2IdMap的更新锁
+	private static Object mtrMapLock=new Object();//对应material2ObjMap的更新锁
 	
 	//刷新matrerial2ObjMap表
 	private static void refreshMtrMap(){
-		Delegator delegator=org.ofbiz.partner.scm.common.Utils.getDefaultDelegator();
-		try {
-			List<GenericValue> mtrList=delegator.findList("TMaterial", null, null, null, null, false);
-			if(mtrList!=null){
-				material2ObjMap=new HashMap<String, GenericValue>(mtrList.size());
-				for(GenericValue mtrValue:mtrList){
-					material2ObjMap.put(mtrValue.getString("id"), mtrValue);
+		synchronized (mtrMapLock) {
+			Delegator delegator=org.ofbiz.partner.scm.common.Utils.getDefaultDelegator();
+			try {
+				List<GenericValue> mtrList=delegator.findList("TMaterial", null, null, null, null, false);
+				if(mtrList!=null){
+					material2ObjMap=new HashMap<String, GenericValue>(mtrList.size());
+					for(GenericValue mtrValue:mtrList){
+						material2ObjMap.put(mtrValue.getString("id"), mtrValue);
+					}
 				}
+			} catch (GenericEntityException e) {
+				Debug.logError("刷新物料列表出错", module);
+				e.printStackTrace();
 			}
-		} catch (GenericEntityException e) {
-			Debug.logError("刷新物料列表出错", module);
-			e.printStackTrace();
 		}
 	}
 	/**
@@ -121,15 +126,15 @@ public class ProductInwarehouseServices {
 			ps.setTimestamp(1, new Timestamp(fd.getTime()));
 			ps.setTimestamp(2, new Timestamp(ed.getTime()));
 			ResultSet rs=ps.executeQuery();
-			Debug.logInfo("获取成品记录确认单完成，开始拼凑LA004和LA005字段过滤字符串", module);
+			Debug.logInfo("获取成品记录确认单完成，开始拼凑barcode1和barcode2字段过滤字符串", module);
 			while(rs.next()){
-				la4Str.append(",'").append(rs.getString("LA004")).append("'");
-				la5Str.append(",'").append(rs.getString("LA005")).append("'");
+				la4Str.append(",'").append(rs.getString("barcode1")).append("'");
+				la5Str.append(",'").append(rs.getString("barcode2")).append("'");
 			}
 			la4Str.append(")");
 			la5Str.append(")");
 			
-			Debug.logInfo("拼凑LA004和LA005字段过滤字符串完成", module);
+			Debug.logInfo("拼凑barcode1和barcode2字段过滤字符串完成", module);
 			return new String[]{la4Str.toString(),la5Str.toString()};
 		} catch (SQLException e) {
 			Debug.logError("查询车间成品入库确认单记录出错", module);
@@ -156,38 +161,14 @@ public class ProductInwarehouseServices {
 	
 	public static synchronized void syncRecord() throws Exception{
 
-		//获取本期间开始结束时间
-		Date fromDate=null;//开始时间
-		Date endDate=null;//结束时间
+		//获取同步开始时间
+		Date fromDate=Utils.getLastPrdInhouseConfDate();//开始时间
 		
-		String fromStr=null;//开始时间年月日
-		String endStr=null;//结束时间年月日
+		if(fromDate==null)throw new Exception("成品进仓确认单开始时间为空");
 		
-		Calendar cal=Calendar.getInstance();
-		Date curDate=Utils.getCurDate();
-		cal.setTime(curDate);
-		cal.set(Calendar.DATE, 1);
-		cal.set(Calendar.HOUR, 0);
-		cal.set(Calendar.MINUTE, 0);
-		cal.set(Calendar.SECOND, 0);
-		cal.set(Calendar.MILLISECOND, 0);
-		fromDate=cal.getTime();
-		fromStr=df.format(fromDate);
+		String fromStr=df.format(fromDate);;//开始时间年月日
 		
-		cal.add(Calendar.MONDAY, 1);
-		cal.add(Calendar.DATE, -1);
-		cal.set(Calendar.HOUR, 23);
-		cal.set(Calendar.MINUTE, 59);
-		cal.set(Calendar.SECOND, 59);
-		cal.set(Calendar.MILLISECOND, 999);
-		endDate=cal.getTime();
-		endStr=df.format(endDate);
-		
-		
-		//获取库存系统车间入库 LA004 和LA005字段过滤字符串
-		String[] idStrArr=getSysExistWhr(fromDate, endDate); 
-		if(idStrArr==null)throw new Exception("获取LA004 和 LA005 过滤字符串出错"); 
-		
+	
 		
 		//读取中间表车间成品入库记录
 		Connection midconn=null;
@@ -207,8 +188,8 @@ public class ProductInwarehouseServices {
 		//获取时间段记录，排除已经处理过的记录
 		ResultSet rs=null;
 		try {
-			Debug.logInfo("开始查询成品库入库记录，排除已经处理过的记录，开始时间"+fromStr+"  结束时间"+endStr, module);
-			String sql="select * from jxcla where LA002>='"+fromStr+"' and LA002<='"+endStr+"' and LA008='A' and LA011='1' and LA004 not in "+idStrArr[0]+" and LA005 not in "+idStrArr[1];
+			Debug.logInfo("开始查询成品库入库记录，开始时间"+fromStr, module);
+			String sql="select * from jxcla where LA002>='"+fromStr+"' and LA011='1' order by LA002 desc";//降序排序
 			PreparedStatement ps=midconn.prepareStatement(sql);
 			rs=ps.executeQuery();
 			
@@ -218,25 +199,39 @@ public class ProductInwarehouseServices {
 			//启动事务
 			TransactionUtil.begin();
 			//生成成品进仓确认单
+			
+			Date lastUpdateDate=null;//最新更新日期
+			
 			while(rs.next()){
-				String billId=UUID.randomUUID().toString();//单头id
 				Date bizDate=df.parse(rs.getString("LA002"));//单头日期
-				int perPkg=rs.getInt("LA010");//每板数量
+				
+				if(lastUpdateDate==null)lastUpdateDate=bizDate;
+				
+//				int perPkg=rs.getInt("LA010");//每板数量
 				
 				GenericValue materialValue=getLocalMaterialNbr(rs.getString("LA004"));//本地系统物料
+				
+				//判断是否有相同的标签1、2，如果标签相同，认为已经同步过
+				long isLocalExist=delegator.findCountByCondition("ProductInwarehouseConfirm", EntityCondition.makeCondition("id", rs.getString("LA004")+rs.getString("LA005")), null, null);
+				if(isLocalExist>0)continue;//已经存在相同标签的记录
+				
 				if(materialValue!=null){
 					GenericValue prdInConf= delegator.makeValue("ProductInwarehouseConfirm");
-					prdInConf.set("id", billId);//设置id
+					prdInConf.set("id", rs.getString("LA004")+rs.getString("LA005"));//使用标签组合作为主键
 					prdInConf.set("number", rs.getString("LA004")+rs.getString("LA005"));//设置编码
 					prdInConf.set("bizDate", new Timestamp(bizDate.getTime()));//设置业务日期
 					prdInConf.set("materialMaterialId", materialValue.get("id"));//设置物料id
 					prdInConf.set("volume", rs.getBigDecimal("LA007"));//设置入库数量
+					prdInConf.set("barcode1", rs.getString("LA004"));//标签1
+					prdInConf.set("barcode2", rs.getString("LA004"));//标签2
 					prdInConf.set("unitUnitId", materialValue.get("defaultUnitId"));//设置计量单位id
 					delegator.create(prdInConf);//保存分录
 				}
 				
 				
 			}
+			//更新最新日期
+			Utils.updateLastPrdInhouseConfDate(lastUpdateDate);
 			//事务提交
 			TransactionUtil.commit();
 		} catch (Exception e) {
@@ -249,7 +244,9 @@ public class ProductInwarehouseServices {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 				Debug.logError("事务回滚失败~", module);
+				throw e1;
 			}
+			throw e;
 		}
 		
 		
@@ -260,7 +257,7 @@ public class ProductInwarehouseServices {
 	 * @return
 	 */
 	private static GenericValue getLocalMaterialNbr(String barcode1) {
-		if(barcode1==null&&barcode1.length()!=32){
+		if(barcode1==null||barcode1.length()!=32){
 			Debug.logError("barcode1 为空，或者barcode1长度不为32错误", module);
 			return null;
 		}

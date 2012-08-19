@@ -221,6 +221,7 @@ public class ProductInwarehouseConfirmEvents {
 	 */
 	public static String synchronizeRecords(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ProductInwarehouseServices.syncRecord();
+		BillBaseEvent.writeSuccessMessageToExt(response, "同步完成");
 		return "success";
 	}
 	

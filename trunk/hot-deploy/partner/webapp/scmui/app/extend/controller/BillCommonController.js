@@ -826,12 +826,27 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 			//			}
 			//取打印数据公共方法
 			getPrintData : function(id) {
+				
+				
+				/**
+				 * added by mark 2012-8-18 添加自定义打印表头表体view方法
+				 * 覆盖getPrintHeadView 和 getPrintEntryView 
+				 */
+				var headView=this.entityName + 'View';
+				var entryView= this.entityName + 'EntryView'
+				if(this.getPrintHeadView){
+					headView=this.getPrintHeadView();
+				}
+				if(this.getPrintEntryView){
+					entryView=this.getPrintEntryView();
+				}
+				
 				Ext.Ajax.request({
 							scope : this,
 							params : {
 								headId : id,
-								headView : this.entityName + 'View',
-								entryView : this.entityName + 'EntryView'
+								headView : headView,
+								entryView : entryView
 							},
 							url : '../../scm/control/getPrintData',
 							success : function(response) {

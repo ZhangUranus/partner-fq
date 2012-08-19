@@ -410,5 +410,38 @@ Ext.define('SCM.controller.ProductOutNotification.ProductOutNotificationControll
 			 */
 			cancelDetail : function() {
 				this.detailEditWin.close();
+			},
+			
+			/**
+			 * 覆盖打印分录方法，汇总打印分录
+			 */
+			getPrintEntryView : function(){
+				return 'ProductOutNotificationPrintEntryView';
+			},
+			getMainPrintHTML:function(){
+				return "<div>"
+				+"<div class='caption' >富桥旅游用品厂有限公司送货清单</div>"
+				+"<div class='field'  style='width:45%;float:left;'  >单据编号:<span class='dataField' fieldindex='data.number' width=150px></span></div>"
+				+"<div class='field' align='right' style='width:45%;float:right;'>打印时间:<span class='dataField' fieldindex='data.printTime' width=150px ></span></div>"
+				+"<div class='field' style='width:45%;float:left;'>收货单位:<span class='dataField' fieldindex='data.customerName' width=150px></span></div>"
+				+"<div class='field' style='width:30%;float:left;'>货号:<span class='dataField' fieldindex='data.goodNumber' width=150px></span></div>"
+				+"<div class='field' align='right' style='width:20%;float:right;'>日期:<span class='dataField' fieldindex='data.bizDate' width=150px></span></div>"
+				+"<div class='nextLine'></div>"
+				+"<table  cellspacing='0' class='dataEntry' fieldindex='data.entry'>" 
+				+"<tr> "
+				+"<th bindfield='materialName' width='45%'>产品名称</th>" 
+				+"<th bindfield='sumVolume' width='20%'>数量</th> "
+				+"<th bindfield='unitUnitName' width='15%'>板数</th> "
+				+"<th bindfield='volume' width='15%'>备注</th> "
+				+"</table>" 
+				+"<div class='field' style='width:25%;float:left;'>订仓号:<span class='dataField' fieldindex='data.finalHouseNumber' width=150px></span></div>"
+				+"<div class='field' style='width:35%;float:left;'>车牌:<span class='dataField' fieldindex='data.carNumber' width=150px></span></div>"
+				+"<div class='field' style='width:30%;float:left;'>柜号:<span class='dataField' fieldindex='data.finalContainerNumber' width=150px></span></div>"
+				+"<div class='field' style='width:25%;float:left;'>封条号:<span class='dataField' fieldindex='data.sealNumber' width=150px></span></div>"
+				+"<div class='field' style='width:35%;float:left;'>收货单位及经手人(盖章):<span class='dataField' fieldindex='data.returnerSystemUserName' width=150px></span></div>"
+				+"<div class='field' style='width:35%;float:left;'>送货单位及经手人(盖章):<span class='dataField' fieldindex='data.submitterSystemUserName' width=150px></span></div>"
+				+"<div class='field' style='width:80px;float:right;'>第<span class='dataField' fieldindex='data.curPage'></span>页/共<span class='dataField' fieldindex='data.totalPages'></span>页</div>"
+				+"</div>";
 			}
+			
 		});
