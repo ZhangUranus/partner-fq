@@ -178,10 +178,6 @@ Ext.define('SCM.view.rpt.pkm.ListUI', {
 													text : '物料名称'
 												}, {
 													xtype : 'gridcolumn',
-													dataIndex : 'PERVOLUME',
-													text : '单位耗料'
-												}, {
-													xtype : 'gridcolumn',
 													dataIndex : 'VOLUME',
 													text : '总耗料'
 												}, {
