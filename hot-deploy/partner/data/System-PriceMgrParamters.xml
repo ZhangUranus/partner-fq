@@ -4,4 +4,6 @@
 	OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. -->
 <entity-engine-xml>
 	<PriceMgrParamters id='001' value='2012-07-01 00:00:00.000' />
+	<PriceMgrParamters id='002' value='2012-07-01 00:00:00.000' />
+	<PriceMgrParamters id='003' value='20120701' /><!-- 成品进仓确认最后同步日期 -->
 </entity-engine-xml>
