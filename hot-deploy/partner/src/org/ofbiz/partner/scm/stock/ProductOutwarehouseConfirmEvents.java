@@ -28,6 +28,7 @@ import org.ofbiz.partner.scm.pricemgr.BillType;
 import org.ofbiz.partner.scm.pricemgr.BizStockImpFactory;
 import org.ofbiz.partner.scm.pricemgr.Utils;
 import org.ofbiz.partner.scm.services.ProductInwarehouseServices;
+import org.ofbiz.partner.scm.services.SyncScanDataServices;
 
 
 
@@ -223,9 +224,14 @@ public class ProductOutwarehouseConfirmEvents {
 	 * @param response
 	 * @return
 	 * @throws Exception
+	 * 
+	 * 出仓同步过程
+	 * 
 	 */
 	public static String synchronizeRecords(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		//ProductInwarehouseServices.syncRecord();
+		// 从扫描库中同步数据
+		SyncScanDataServices.syncRecord();
+		
 		return "success";
 	}
 	
