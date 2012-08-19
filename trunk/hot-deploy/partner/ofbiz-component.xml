@@ -33,15 +33,17 @@
 	<entity-resource type="model" reader-name="main" loader="main" location="entitydef/ProductOutwarehouseConfirmEntity.xml"/>
 	<entity-resource type="model" reader-name="main" loader="main" location="entitydef/ProductMapEntity.xml"/>
 	<entity-resource type="model" reader-name="main" loader="main" location="entitydef/ProductOutNotificationEntity.xml"/>
+	<entity-resource type="model" reader-name="main" loader="main" location="entitydef/ProductScanEntity.xml"/>
+	
 	<!-- 系统基础数据 -->
     <entity-resource type="data" reader-name="seed" loader="main" location="data/ContentTypeData.xml"/>
     <entity-resource type="data" reader-name="seed" loader="main" location="data/System-Department.xml"/>
-	<entity-resource type="data" reader-name="seed" loader="main" location="data/System-PriceMgrParamters.xml"/>
+	<!-- entity-resource type="data" reader-name="seed" loader="main" location="data/System-PriceMgrParamters.xml"/-->
 	<entity-resource type="data" reader-name="seed" loader="main" location="data/System-TSystemLogType.xml"/>
 	<entity-resource type="data" reader-name="seed" loader="main" location="data/System-TSystemMenu.xml"/>
 	<entity-resource type="data" reader-name="seed" loader="main" location="data/System-TSystemMenuOfRole.xml"/>
 	<entity-resource type="data" reader-name="seed" loader="main" location="data/System-TSystemRole.xml"/>
-	<entity-resource type="data" reader-name="seed" loader="main" location="data/System-TSystemSerialNumber.xml"/>
+	<!-- entity-resource type="data" reader-name="seed" loader="main" location="data/System-TSystemSerialNumber.xml"/-->
 	<entity-resource type="data" reader-name="seed" loader="main" location="data/System-TSystemUser.xml"/>
 	<entity-resource type="data" reader-name="seed" loader="main" location="data/System-TSystemUserOfRole.xml"/>
 	
@@ -93,10 +95,10 @@
 	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-WorkshopWarehousingEntry.xml"/>
 	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-CurPurchasePrice.xml"/>
 	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-HisPurchasePrice.xml"/>
-	 -->
-
+	<entity-resource type="data" reader-name="seed" loader="main" location="data/Example-ProductScan.xml"/>
+	-->
+	 
 	 <!-- 初始化数据
-	
 	<entity-resource type="data" reader-name="seed" loader="main" location="data/Int03_MaterialBom.xml"/>
 	<entity-resource type="data" reader-name="seed" loader="main" location="data/Int03_MaterialBomEntry.xml"/>
 	<entity-resource type="data" reader-name="seed" loader="main" location="data/Int03_Suppiler.xml"/>
