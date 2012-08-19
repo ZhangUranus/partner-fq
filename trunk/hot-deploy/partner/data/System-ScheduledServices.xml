@@ -19,4 +19,5 @@ under the License.
 -->
 <entity-engine-xml>
     <JobSandbox jobId="LOG_CLEAN" jobName="logCleanJobService" runTime="2000-01-01 00:00:00.000" serviceName="logCleanJobService" poolId="pool" runAsUser="system" tempExprId="HOUR_00" maxRecurrenceCount="-1"/>
+    <JobSandbox jobId="SYNC_SCAN" jobName="syncScanDataService" runTime="2000-01-01 00:00:00.000" serviceName="syncScanDataService" poolId="pool" runAsUser="system" tempExprId="HOUR_00" maxRecurrenceCount="-1"/>
 </entity-engine-xml>
