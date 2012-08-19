@@ -52,6 +52,7 @@ under the License.
             title="ProductInwarehouseEntry Entity">
       <field name="id" type="id-long"></field>
       <field name="parentId" type="id-long"></field>
+      <field name="productWeek" type="value"></field>
 	  <field name="workshopWorkshopId" type="id-long"></field>
 	  <field name="warehouseWarehouseId" type="id-long"></field>
 	  <field name="materialMaterialId" type="id-long"></field>

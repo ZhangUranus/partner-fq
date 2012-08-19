@@ -133,7 +133,11 @@ Ext.define('SCM.view.ProductInwarehouse.ListUI' ,{
 									hidden:true
 
 								}
-																//\n
+								,{
+									xtype: 'gridcolumn',
+									dataIndex: 'productWeek',
+									text: '生产周'
+								}
 								,{
 									xtype: 'gridcolumn',
 									dataIndex: 'workshopWorkshopName',

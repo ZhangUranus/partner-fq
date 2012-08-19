@@ -14,7 +14,7 @@ Ext.define('SCM.model.ProductInwarehouseConfirm.ProductInwarehouseConfirmModel',
 						name : 'bizDate',
 						type : 'date',
 						dateFormat : 'time'
-					}
+					} ,{name: 'productWeek',type:'string'  }
 						 ,{name: 'submitterSystemUserId',type:'string'  }
 						 ,{name: 'submitterSystemUserName',type:'string' ,persist:false }
 						 										
