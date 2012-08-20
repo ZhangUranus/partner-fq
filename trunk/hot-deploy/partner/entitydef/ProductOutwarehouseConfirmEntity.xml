@@ -31,7 +31,7 @@
 		<field name="qantity" type="numeric"></field><!-- 板数量 -->
 		<field name="goodNumber" type="id-long"></field><!-- 货号 -->
 		<field name="destinhouseNumber" type="id-long"></field><!-- 订舱号 -->
-		<field name="status" type="int"></field>
+		<field name="status" type="int"></field><!-- 状态 0：已保存，4：已提交 -->
 		<field name="productOutwarehouseId" type="id-long"></field>
 		<field name="productOutwarehouseEntryId" type="id-long"></field>
 		<field name="note" type="description"></field>
