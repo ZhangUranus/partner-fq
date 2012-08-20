@@ -345,6 +345,11 @@ Ext.define('SCM.controller.ConsignWarehousing.ConsignWarehousingController', {
 				me.currentRecord = record;
 				me.detailEditWin.uiStatus = 'Modify';
 				
+				var materialVolume = 1;
+				if( record.get('volume') != 0 ) {
+					materialVolume = record.get('volume');
+				}
+				
 				// 获取耗料列表
 				me.detailEditEntry.store.getProxy().extraParams.whereStr = 'parent_id = \'' + record.get('id') + '\'';
 				me.detailEditEntry.store.load(function(records, operation, success) {
@@ -362,7 +367,7 @@ Ext.define('SCM.controller.ConsignWarehousing.ConsignWarehousingController', {
 											entryRecord.set('bomId', record.get('bomId'));
 											entryRecord.set('materialId', tempRecord.get('bomMaterialId'));
 											entryRecord.set('materialModel', tempRecord.get('bomMaterialModel'));
-											entryRecord.set('volume', tempRecord.get('volume'));
+											entryRecord.set('volume', tempRecord.get('volume') * materialVolume);
 											entryRecord.set('price', 0);
 											entryRecord.set('entrysum', 0);
 											entryRecord.set('materialUnitId', tempRecord.get('unitId'));
