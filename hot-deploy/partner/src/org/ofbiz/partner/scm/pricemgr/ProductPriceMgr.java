@@ -82,10 +82,24 @@ public static final String module = ProductPriceMgr.class.getName();
 				if(gv.getBigDecimal("totalsum") != null){
 					oldSum = gv.getBigDecimal("totalsum");
 				}
-				gv.set("volume", oldVolume.add(volume));
-				gv.set("totalsum", oldSum.add(totalsum));
+				BigDecimal curAmount = oldVolume.add(volume);
+				gv.set("volume", curAmount);
+				if(curAmount.compareTo(BigDecimal.ZERO)<0){
+					throw new Exception("库存成品数量小于出库数量，请检查并调整出库数量！");
+				}
+				BigDecimal curSum = oldSum.add(totalsum);
+				gv.set("totalsum", curSum);
+				if(curSum.compareTo(BigDecimal.ZERO)<0){
+					throw new Exception("库存成品金额小于出库金额，请检查并调整出库单价！");
+				}
 				delegator.store(gv);
 			}else{//新增记录
+				if (volume.compareTo(BigDecimal.ZERO) < 0) {
+					throw new Exception("库存成品出库数量小于零，请检查并调整出库数量！");
+				}
+				if (totalsum.compareTo(BigDecimal.ZERO) < 0) {
+					throw new Exception("库存成品出库金额小于零，请检查并调整出库金额！");
+				}
 				BigDecimal beginVolume=BigDecimal.ZERO;//月初数量
 				BigDecimal beginSum=BigDecimal.ZERO;//月初金额
 				gv=delegator.makeValue("CurProductPrice");
