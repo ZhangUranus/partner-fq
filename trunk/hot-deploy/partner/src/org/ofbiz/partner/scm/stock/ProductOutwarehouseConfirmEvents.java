@@ -29,7 +29,6 @@ import org.ofbiz.partner.scm.dao.TMaterial;
 import org.ofbiz.partner.scm.pricemgr.BillType;
 import org.ofbiz.partner.scm.pricemgr.BizStockImpFactory;
 import org.ofbiz.partner.scm.pricemgr.Utils;
-import org.ofbiz.partner.scm.services.ProductInwarehouseServices;
 import org.ofbiz.partner.scm.services.SyncScanDataServices;
 
 
