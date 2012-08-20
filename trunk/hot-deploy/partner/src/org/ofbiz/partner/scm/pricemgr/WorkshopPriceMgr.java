@@ -287,12 +287,20 @@ public class WorkshopPriceMgr {
 				if (curVolume.compareTo(BigDecimal.ZERO) < 0) {
 					throw new Exception("车间物料数量小于车间出库数量，请检查并调整车间出库数量！");
 				}
-
-				gv.set("totalsum", oldSum.add(totalsum));
+				BigDecimal curSum = oldSum.add(totalsum);
+				gv.set("totalsum", curSum);
+				
+				if (curSum.compareTo(BigDecimal.ZERO) < 0) {
+					throw new Exception("车间物料金额小于车间出库金额，请检查并调整车间出库单价！");
+				}
+				
 				delegator.store(gv);
 			} else {// 新增记录
 				if (volume.compareTo(BigDecimal.ZERO) < 0) {
-					throw new Exception("车间物料数量小于车间出库数量，请检查并调整车间出库数量！");
+					throw new Exception("车间物料出库数量小于零，请检查并调整车间出库数量！");
+				}
+				if (totalsum.compareTo(BigDecimal.ZERO) < 0) {
+					throw new Exception("车间物料出库金额小于零，请检查并调整车间出库金额！");
 				}
 				BigDecimal beginVolume = BigDecimal.ZERO;// 月初数量
 				BigDecimal beginSum = BigDecimal.ZERO;// 月初金额

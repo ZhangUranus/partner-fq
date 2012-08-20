@@ -115,6 +115,9 @@ public class PriceCalImp4WMA implements IPriceCal {
 				throw new Exception("库存物料数量小于出库数量，请检查并调整出库数量！");
 			}
 			calSum = curSum.add(sum);// 计算后金额
+			if(calSum.compareTo(BigDecimal.ZERO)<0){
+				throw new Exception("库存物料金额小于出库金额，请检查并调整出库单价！");
+			}
 			
 			if(item.isOut() == item.isCancel()){//取消操作并非正常出入库
 				inVolume = amount;
@@ -148,6 +151,9 @@ public class PriceCalImp4WMA implements IPriceCal {
 			
 			if(calAmount.compareTo(BigDecimal.ZERO)<0){
 				throw new Exception("库存物料数量小于出库数量，请检查并调整出库数量！");
+			}
+			if(calSum.compareTo(BigDecimal.ZERO)<0){
+				throw new Exception("库存物料金额小于出库金额，请检查并调整出库金额！");
 			}
 			
 			// 如果库存余额表没有改物料，则新增

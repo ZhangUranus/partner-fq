@@ -247,12 +247,19 @@ public class ConsignPriceMgr {
 				if(curVolume.compareTo(BigDecimal.ZERO)<0){
 					throw new Exception("供应商物料数量小于供应商出库数量，请检查并调整供应商出库数量！");
 				}
+				BigDecimal curSum = oldSum.add(totalsum);
+				gv.set("totalsum", curSum);
 				
-				gv.set("totalsum", oldSum.add(totalsum));
+				if (curSum.compareTo(BigDecimal.ZERO) < 0) {
+					throw new Exception("供应商物料金额小于供应商出库金额，请检查并调整供应商出库单价！");
+				}
 				delegator.store(gv);
 			} else {// 新增记录
 				if(volume.compareTo(BigDecimal.ZERO)<0){
 					throw new Exception("供应商物料数量小于供应商出库数量，请检查并调整供应商出库数量！");
+				}
+				if(totalsum.compareTo(BigDecimal.ZERO) < 0) {
+					throw new Exception("供应商物料出库金额小于零，请检查并调整供应商出库金额！");
 				}
 				BigDecimal beginVolume=BigDecimal.ZERO;//月初数量
 				BigDecimal beginSum=BigDecimal.ZERO;//月初金额
