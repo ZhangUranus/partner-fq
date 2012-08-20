@@ -387,5 +387,21 @@ public class Utils {
 		return consumeList;
 	}
 	
+	/**
+	 * 根据宜家编码和板数量，获取物料编码
+	 * @param ikeaId
+	 * @param qantity
+	 * @return
+	 * @throws Exception
+	 */
+	public static String getMaterialIdByIkea(String ikeaId, String qantity) throws Exception{
+		Delegator delegator = DelegatorFactory.getDelegator("default");
+		List<GenericValue> entryList = delegator.findByAnd("ProductMap", UtilMisc.toMap("ikeaId", ikeaId, "boardCount", qantity));
+		if(entryList.size() > 0 && !"".equals(entryList.get(0).getString("materialId")) && entryList.get(0).getString("materialId") != null){
+			return entryList.get(0).getString("materialId");
+		} else {
+			throw new Exception("未找到产品条码对应的产品编码，请检查“产品资料表”！");
+		}
+	}
 	
 }
