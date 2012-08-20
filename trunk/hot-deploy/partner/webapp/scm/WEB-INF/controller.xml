@@ -417,6 +417,14 @@
 		<event type="java" path="org.ofbiz.partner.scm.stock.ProductOutwarehouseConfirmEvents" invoke="submitBill" />
 		<response name="success" type="none" />
 	</request-map>
+	<!-- 成品确认出仓单同步-->
+	<request-map uri="syncProductOutwarehouseConfirm">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductOutwarehouseConfirmEvents" invoke="synchronizeRecords" />
+		<response name="success" type="none" />
+	</request-map>
+	
+	
 	
 	<!-- 出货通知单提交 -->
 	<request-map uri="submitProductOutNotification">

@@ -45,9 +45,9 @@ public class SyncScanDataServices {
 
 	/**
 	 * 同步进仓单记录，处理当期月份的数据
-	 * 1.从扫描库中获取新增扫描记录，将状态更新为2（处理中）。
-	 * 2.将扫描库中状态为2（处理中）的数据同步到仓库管理系统数据库中。
-	 * 3.将扫描库中状态为2（处理中）的数据更新为状态3（已处理）。
+	 * 1.从扫描库中获取新增扫描记录，将状态为0（初始状态）更新为1（处理中）。
+	 * 2.将扫描库中状态为1（处理中）的数据同步到仓库管理系统数据库中。
+	 * 3.将扫描库中状态为1（处理中）的数据更新为状态2（已处理）。
 	 */
 	public static synchronized void syncRecord() throws Exception {
 		Delegator delegator = org.ofbiz.partner.scm.common.Utils.getDefaultDelegator();
@@ -69,14 +69,14 @@ public class SyncScanDataServices {
 		// 获取时间段记录，排除已经处理过的记录
 		ResultSet rs = null;
 		try {
-			Debug.logInfo("开始更新扫描数据，更新数据状态为2（处理中）", module);
-			String updateSql1 = "update jxcla set LA007 = 2 where LA007 = 1";
+			Debug.logInfo("开始更新扫描数据，更新数据状态为1（处理中）", module);
+			String updateSql1 = "update jxcla set LA012 = 1 where LA012 = 0";
 			PreparedStatement ps = midconn.prepareStatement(updateSql1);
 			int updateCount = ps.executeUpdate();
-			Debug.logInfo("完成更新扫描数据，更新数据状态2（处理中），总共更新" + updateCount + "条记录", module);
+			Debug.logInfo("完成更新扫描数据，更新数据状态1（处理中），总共更新" + updateCount + "条记录", module);
 			
 			Debug.logInfo("开始查询成品库入库记录，排除已经处理过的记录", module);
-			String selectSql = "select * from jxcla where LA007 = 2";
+			String selectSql = "select * from jxcla where LA012 = 1";
 			ps = midconn.prepareStatement(selectSql);
 			rs = ps.executeQuery();
 
@@ -96,7 +96,7 @@ public class SyncScanDataServices {
 				productScan.set("inOutType", rs.getString("LA008"));// 出入类别（A正常出入，B非正常出入）
 				productScan.set("description", rs.getString("LA009"));// 描述（产品范围，客户要求的，本系统用于区分包装类型的文字描述）
 				productScan.set("qantity", rs.getBigDecimal("LA010"));// 板数量
-				productScan.set("warehouseType", rs.getBigDecimal("LA011"));// 交易类别(按单据性质的交易类别判断码(1.入库,2.销货,3.领用,4.调拨,5.调整))
+				productScan.set("warehouseType", rs.getInt("LA011"));// 交易类别(按单据性质的交易类别判断码(1.入库,2.销货,3.领用,4.调拨,5.调整))
 				productScan.set("status", 0);// 状态(0：待处理，1：处理中，2：已处理) 
 				delegator.create(productScan);// 保存分录
 			}
@@ -104,11 +104,11 @@ public class SyncScanDataServices {
 			TransactionUtil.commit();
 			Debug.logInfo("完成查询成品库入库记录，排除已经处理过的记录", module);
 			
-			Debug.logInfo("开始更新扫描数据，更新数据状态为3（已处理）", module);
-			String updateSql2 = "update jxcla set LA007 = 3 where LA007 = 2";
+			Debug.logInfo("开始更新扫描数据，更新数据状态为2（已处理）", module);
+			String updateSql2 = "update jxcla set LA012 = 2 where LA012 = 1";
 			ps = midconn.prepareStatement(updateSql2);
 			updateCount = ps.executeUpdate();
-			Debug.logInfo("完成更新扫描数据，更新数据状态3（已处理），总共更新" + updateCount + "条记录", module);
+			Debug.logInfo("完成更新扫描数据，更新数据状态2（已处理），总共更新" + updateCount + "条记录", module);
 		} catch (Exception e) {
 			Debug.logError("查询成品库或者生成车间出入库单出错", module);
 			e.printStackTrace();
