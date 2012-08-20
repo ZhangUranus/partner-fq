@@ -1,14 +1,9 @@
 package org.ofbiz.partner.scm.stock;
 
-import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import net.sf.json.JSONObject;
-
 import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.entity.Delegator;
@@ -17,10 +12,7 @@ import org.ofbiz.entity.transaction.GenericTransactionException;
 import org.ofbiz.entity.transaction.TransactionUtil;
 import org.ofbiz.partner.scm.common.BillBaseEvent;
 import org.ofbiz.partner.scm.common.CommonEvents;
-import org.ofbiz.partner.scm.pricemgr.BillType;
-import org.ofbiz.partner.scm.pricemgr.BizStockImpFactory;
 import org.ofbiz.partner.scm.pricemgr.Utils;
-import org.ofbiz.partner.scm.purplan.PurPlanBalance;
 /**
  * 出货通知单业务事件类
  * 
@@ -117,20 +109,13 @@ public class ProductOutNotificationEvents {
 	 * @throws Exception
 	 */
 	public static String getMaterialIdByIkea(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		Delegator delegator = (Delegator) request.getAttribute("delegator");
 		String ikeaId = request.getParameter("ikeaId");
 		String qantity = request.getParameter("qantity");
-		List<GenericValue> entryList = delegator.findByAnd("ProductMap", UtilMisc.toMap("ikeaId", ikeaId, "boardCount", qantity));
-		if(entryList.size() > 0){
-			JSONObject jsonStr = new JSONObject();
-			jsonStr.put("success", true);
-			if (!"".equals(entryList.get(0).getString("materialId")) && entryList.get(0).getString("materialId") != null) {
-				jsonStr.put("materialId", entryList.get(0).getString("materialId"));
-			}
-			CommonEvents.writeJsonDataToExt(response, jsonStr.toString());
-		} else {
-			throw new Exception("未找到产品条码对应的产品编码，请检查“产品资料表”！");
-		}
+		String materialId = Utils.getMaterialIdByIkea(ikeaId, qantity);
+		JSONObject jsonStr = new JSONObject();
+		jsonStr.put("success", true);
+		jsonStr.put("materialId", materialId);
+		CommonEvents.writeJsonDataToExt(response, jsonStr.toString());
 		return "success";
 	}
 }
