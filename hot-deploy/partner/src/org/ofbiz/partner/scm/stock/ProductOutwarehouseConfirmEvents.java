@@ -250,7 +250,7 @@ public class ProductOutwarehouseConfirmEvents {
 	 */
 	public static synchronized void generateConfirmBill(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
-		List<GenericValue> entryList = delegator.findByAnd("ProductScan", UtilMisc.toMap("status", "0"));
+		List<GenericValue> entryList = delegator.findByAnd("ProductScan", UtilMisc.toMap("status", "0", "warehouseType", "2"));
 		for (GenericValue v : entryList) {
 			/* 1.生成出库确认记录 */
 			Date bizDate = (Date) v.get("bizDate");
