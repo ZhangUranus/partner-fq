@@ -182,6 +182,11 @@ Ext.define('SCM.view.ProductOutwarehouseConfirm.ListUI', {
 										dockedItems : [{
 													xtype : 'billsearchtoolbar',// 工具栏
 													border : '0 1 1 1'
+												}, {
+													dock : 'bottom',
+													xtype : 'pagingtoolbar',
+													store : 'ProductOutwarehouseConfirm.ProductOutwarehouseConfirmStore',
+													displayInfo : true
 												}]
 									}// end gridpanel
 							]
