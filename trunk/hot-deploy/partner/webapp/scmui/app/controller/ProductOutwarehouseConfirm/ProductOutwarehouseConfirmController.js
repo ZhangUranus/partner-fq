@@ -20,6 +20,10 @@ Ext.define('SCM.controller.ProductOutwarehouseConfirm.ProductOutwarehouseConfirm
 							// 列表审核按钮
 							'ProductOutwarehouseConfirmlist button[action=submit]' : {
 								click : this.submitBill
+							},
+							// 列表反审核按钮
+							'ProductOutwarehouseConfirmlist button[action=sync]' : {
+								click : this.syncBill
 							}
 						});
 			},
@@ -169,5 +173,38 @@ Ext.define('SCM.controller.ProductOutwarehouseConfirm.ProductOutwarehouseConfirm
 					showWarning('未选中物料！');
 				}
 				
+			},
+			
+			/**
+			 * 同步后台记录
+			 */
+			syncBill : function(){
+				Ext.getBody().mask('系统正在进行同步操作，请稍等....');
+				
+				Ext.Ajax.request({ 
+					scope : this,
+					timeout : 1800000,
+					url : "../../scm/control/syncProductOutwarehouseConfirm",
+					success : function(response, option) {
+						if(response.responseText.length<1){
+							taskMask.hide();
+							showError("服务器没有回应");
+						}
+			 			var responseArray = Ext.JSON.decode(response.responseText);
+			 			if(responseArray.success){
+			 				showInfo("同步完成");
+			 				Ext.getBody().unmask();
+			 				this.refreshRecord();
+			 			}else{
+			 				showError(responseArray.message);
+			 			}
+			 			Ext.getBody().unmask();
+						
+					},
+					failure: function(response, opts) {
+						showError("系统错误"+response.status);
+						Ext.getBody().unmask();
+				    }
+				});
 			}
 		});
