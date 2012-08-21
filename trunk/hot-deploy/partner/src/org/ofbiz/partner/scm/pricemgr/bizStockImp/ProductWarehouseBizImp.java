@@ -77,7 +77,8 @@ public class ProductWarehouseBizImp implements IBizStock {
 			for (ConsumeMaterial element : materialList) {
 				/*2.1  取每个耗料物料id和耗料金额*/
 				String bomMaterialId = element.getMaterialId();
-				BigDecimal bomAmount = volume.multiply(element.getConsumeQty());
+				//手工定义是总耗料
+				BigDecimal bomAmount =element.getDetailId()==null? volume.multiply(element.getConsumeQty()):element.getConsumeQty();
 				/*2.2  从车间库存表查找耗料单价*/
 				BigDecimal curPrice=WorkshopPriceMgr.getInstance().getPrice(workshopId, bomMaterialId);
 				/*2.3 计算成本 并汇总总成本*/
@@ -96,7 +97,7 @@ public class ProductWarehouseBizImp implements IBizStock {
 					     
 					     GenericValue mv=delegator.findOne("TMaterial", false, "id",bomMaterialId);
 					     entryDetailValue.set("model", mv.getString("model"));
-					     entryDetailValue.set("quantity", element.getConsumeQty());
+					     entryDetailValue.set("quantity",volume.multiply(element.getConsumeQty()));//保存总耗料
 					     entryDetailValue.set("unitUnitId", mv.getString("defaultUnitId"));
 					     
 					     entryDetailValue.set("price", curPrice);
