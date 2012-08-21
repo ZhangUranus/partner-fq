@@ -9,24 +9,11 @@ Ext.define('SCM.controller.ProductInwarehouseConfirm.ProductInwarehouseConfirmCo
 							'ProductInwarehouseConfirmlist' : {
 								afterrender : this.initComponent
 							},
-//							// 列表新增按钮
-//							'ProductInwarehouselist button[action=addNew]' : {
-//								click : this.addNewRecord
-//							},
-//							// 列表事件
-//							'ProductInwarehouselist gridpanel[region=center]' : {
-//								select : this.showDetail,
-//								itemdblclick : this.modifyRecord
-//							},
-//							// 列表修改按钮
-//							'ProductInwarehouselist button[action=modify]' : {
-//								click : this.editRecord
-//							},
 							// 列表删除按钮
 							'ProductInwarehouseConfirmlist button[action=delete]' : {
 								click : this.deleteRecord
 							},
-//							// 列表界面刷新
+							// 列表界面刷新
 							'ProductInwarehouseConfirmlist button[action=search]' : {
 								click : this.refreshRecord
 							},
@@ -42,67 +29,19 @@ Ext.define('SCM.controller.ProductInwarehouseConfirm.ProductInwarehouseConfirmCo
 							'ProductInwarehouseConfirmlist button[action=sync]' : {
 								click : this.syncBill
 							},
-//							// 列表打印按钮
-//							'ProductInwarehouselist button[action=print]' : {
-//								click : this.print
-//							},
-//							//列表导出
-//							'ProductInwarehouselist button[action=export]' : {
-//								click : this.exportExcel
-//							},
-//							// 编辑界面分录新增
-//							'ProductInwarehouseedit  gridpanel button[action=addLine]' : {
-//								click : this.addLine
-//							},
-//							// 编辑界面分录删除
-//							'ProductInwarehouseedit  gridpanel button[action=deleteLine]' : {
-//								click : this.deleteLine
-//							},
 							// 查看分录耗料明细
 							'ProductInwarehouseConfirmlist  button[action=showDetail]' : {
 								click : this.viewDetailList
 							},
-//							// 编辑界面分录额外耗料明细
-//							'ProductInwarehouseedit gridpanel button[action=editDetail]' : {
-//								click : this.editDetailRecord
-//							},
-//							// 编辑界面直接提交
-//							'ProductInwarehouseedit button[action=submit]' : {
-//								click : this.saveAndSubmitRecord
-//							},
-//							// 编辑界面保存
-//							'ProductInwarehouseedit button[action=save]' : {
-//								click : this.saveRecord
-//							},
-//							// 编辑界面打印
-//							'ProductInwarehouseedit button[action=print]' : {
-//								click : this.print
-//							},
-//							// 编辑界面重填
-//							'ProductInwarehouseedit button[action=clear]' : {
-//								click : this.clear
-//							},
-//							// 编辑界面取消
-//							'ProductInwarehouseedit button[action=cancel]' : {
-//								click : this.cancel
-//							},
-//							// 监听各field值变动事件，只监听可见控件
-//							'ProductInwarehouseedit form textfield{isVisible()}' : {
-//								change : this.fieldChange
-//							},
-//							// 角色列表更新事件
-//							'ProductInwarehouseedit grid' : {
-//								selectionchange : this.fieldChange
-//							},
 							//耗料明细添加行
 							'ProductInwarehouseConfirmDetailEdit button[action=addLine]':{
 								click:this.detailAddLine
 							},
-//							//耗料明细删除行
+							//耗料明细删除行
 							'ProductInwarehouseConfirmDetailEdit button[action=deleteLine]':{
 								click:this.detailRemoveLine
 							},
-//							// 耗料明细界面取消
+							// 耗料明细界面取消
 							'ProductInwarehouseConfirmDetailEdit button[action=cancel]' : {
 								click : this.cancelDetail
 							},
@@ -124,12 +63,6 @@ Ext.define('SCM.controller.ProductInwarehouseConfirm.ProductInwarehouseConfirmCo
 				this.searchMaterialId = this.listContainer.down('combogrid[name=searchMaterialId]');
 				this.searchStatus = this.listContainer.down('combobox[name=status]');
 				this.syncDownSel=this.listContainer.down('toolbar button[action=syncDownSel]');
-//				this.searchCustId = this.listContainer.down('combogrid[name=searchCustId]');
-//				this.allColumn = this.editEntry.query('gridcolumn');
-//				this.addLineButton = this.win.down('gridpanel button[action=addLine]');
-//				this.deleteLineButton = this.win.down('gridpanel button[action=deleteLine]');
-//				this.MaterialStore = Ext.data.StoreManager.lookup('MBAllStore');
-//				this.MaterialStore.load();
 				
 				this.listPanel.addListener('edit',this.listPanelEditActin,this);
 				
@@ -222,64 +155,6 @@ Ext.define('SCM.controller.ProductInwarehouseConfirm.ProductInwarehouseConfirmCo
 				}
 
 			},
-			/**
-			 * 编辑事件
-			 * 
-			 * @param {}
-			 *            grid 当前表格
-			 * @param {}
-			 *            record 选中记录
-			 */
-//			modifyDetailRecord : function(grid, record) {
-//				var me = this;
-//				me.currentRecord = record;
-//				me.detailEditWin.uiStatus = 'Modify';
-//				
-//				me.detailEditEntry.store.removeAll(false);
-//				// 获取耗料列表
-//				me.detailEditEntry.store.getProxy().extraParams.whereStr = 'parent_id = \'' + record.get('id') + '\'';
-//				me.detailEditEntry.store.load(function(records, operation, success) {}
-//				);
-//				me.detailEditEntry.store.getProxy().extraParams.whereStr = "";
-//				this.detailEditWin.show();
-//			},
-
-			/**
-			 * 点击修改按钮
-			 * 
-			 * @param {}
-			 *            button 按钮控件
-			 */
-//			editDetailRecord : function(button) {
-//				var sm = this.editEntry.getSelectionModel();
-//				if (sm.hasSelection()) {// 判断是否选择行记录
-//					record = sm.getLastSelected();
-//					Ext.Ajax.request({ 
-//						scope : this,
-//						url : "../../scm/control/checkExist",
-//						params:{entity:'ProductInwarehouseEntry',id:record.get('id')},
-//						success : function(response, option) {
-//							if(response.responseText.length<1){
-//								showError('系统没有返回结果');
-//							}
-//				 			var responseArray = Ext.JSON.decode(response.responseText);
-//				 			if(responseArray.success){
-//				 				if(responseArray.isExist){
-//				 				// 如果单据状态是已提交、已审核或者已经结算则不能修改
-//									this.modifyDetailRecord(this.editEntry, record);
-//				 				}else{
-//				 					showError('请先保存!');
-//				 				}
-//				 			}else{
-//				 				showError(responseArray.message);
-//				 			}
-//						}
-//					});
-//					
-//				} else {
-//					showWarning('未选中物料！');
-//				}
-//			},
 			/*
 			 * 删除记录
 			 * */
@@ -340,7 +215,6 @@ Ext.define('SCM.controller.ProductInwarehouseConfirm.ProductInwarehouseConfirmCo
 				this.listPanel.store.getProxy().extraParams.whereStr = tempString;
 				this.listPanel.store.load();
 				
-//				this.changeComponentsState();
 			},
 			/**
 			 * 添加耗料记录

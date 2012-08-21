@@ -18,43 +18,76 @@ Ext.define('SCM.model.ProductInwarehouse.ProductInwarehouseModel', {
 						name : 'bizDate',
 						type : 'date',
 						dateFormat : 'time'
-					}
-											 //\n
-						 ,{name: 'inspectorSystemUserId',type:'string'  }
-						 ,{name: 'inspectorSystemUserName',type:'string' ,persist:false }
-						 											 //\n
-						 ,{name: 'submitterSystemUserId',type:'string'  }
-						 ,{name: 'submitterSystemUserName',type:'string' ,persist:false }
-						 											 //\n
-						 ,{name: 'totalsum'  ,type:'float'  }
-						 					 //\n
-						 ,{name: 'entryId', type: 'string'}
-											 //\n
-						 ,{name: 'workshopWorkshopId',type:'string'  }
-						 ,{name: 'workshopWorkshopName',type:'string' ,persist:false }
-						 											 //\n
-						 ,{name: 'warehouseWarehouseId',type:'string'  }
-						 ,{name: 'warehouseWarehouseName',type:'string' ,persist:false }
-						 											 //\n
-						 ,{name: 'materialMaterialId',type:'string'  }
-						 ,{name: 'materialMaterialName',type:'string' ,persist:false }
-						 											 //\n
-						 ,{name: 'volume'  ,type:'float'   }
-						 											 //\n
-						 ,{name: 'unitUnitId',type:'string'  }
-						 ,{name: 'unitUnitName',type:'string' ,persist:false }
-						 											 //\n
-						 ,{name: 'price'  ,type:'float'   }
-						 											 //\n
-						 ,{name: 'entrysum'  ,type:'float'   }
-						 											 //\n
-						 ,{name: 'barcode1'  ,type:'string'   }
-						 											 //\n
-						 ,{name: 'barcode2'  ,type:'string'   }
-						 											 //\n
-						 ,{name: 'inwarehouseType' ,type:'string'    }
-						 					 //\n
-			],
+					}, {
+						name : 'inspectorSystemUserId',
+						type : 'string'
+					}, {
+						name : 'inspectorSystemUserName',
+						type : 'string',
+						persist : false
+					}, {
+						name : 'submitterSystemUserId',
+						type : 'string'
+					}, {
+						name : 'submitterSystemUserName',
+						type : 'string',
+						persist : false
+					}, {
+						name : 'totalsum',
+						type : 'float'
+					}, {
+						name : 'entryId',
+						type : 'string'
+					}, {
+						name : 'workshopWorkshopId',
+						type : 'string'
+					}, {
+						name : 'workshopWorkshopName',
+						type : 'string',
+						persist : false
+					}, {
+						name : 'warehouseWarehouseId',
+						type : 'string'
+					}, {
+						name : 'warehouseWarehouseName',
+						type : 'string',
+						persist : false
+					}, {
+						name : 'materialMaterialId',
+						type : 'string'
+					}, {
+						name : 'materialMaterialName',
+						type : 'string',
+						persist : false
+					}, {
+						name : 'volume',
+						type : 'float'
+					}, {
+						name : 'unitUnitId',
+						type : 'string'
+					}, {
+						name : 'unitUnitName',
+						type : 'string',
+						persist : false
+					}, {
+						name : 'price',
+						type : 'float'
+					}, {
+						name : 'entrysum',
+						type : 'float'
+					}, {
+						name : 'barcode1',
+						type : 'string'
+					}, {
+						name : 'barcode2',
+						type : 'string'
+					}, {
+						name : 'qantity',
+						type : 'int'
+					}, {
+						name : 'inwarehouseType',
+						type : 'string'
+					}],
 			// ,idProperty:'emptyId'//设置一个没用的id，这样才能支持显示多分录
 			proxy : {
 				type : 'jsonajax',

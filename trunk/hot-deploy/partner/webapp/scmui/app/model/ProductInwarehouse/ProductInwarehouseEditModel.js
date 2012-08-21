@@ -17,28 +17,56 @@ Ext.define('SCM.model.ProductInwarehouse.ProductInwarehouseEditModel', {
 						convert : function(value, record) {
 							return new Date(value);
 						}
+					}, {
+						name : 'inspectorSystemUserId',
+						type : 'string'
+					}, {
+						name : 'inspectorSystemUserName',
+						type : 'string',
+						persist : false
+					}, {
+						name : 'submitterSystemUserId',
+						type : 'string'
+					}, {
+						name : 'submitterSystemUserName',
+						type : 'string',
+						persist : false
+					}, {
+						name : 'totalsum',
+						type : 'float'
+					}, {
+						name : 'createdStamp',
+						defaultValue : new Date(),
+						type : 'date',
+						format : 'time',
+						convert : function(value, record) {
+							return new Date(value);
+						},
+						persist : false
+					}, {
+						name : 'lastUpdatedStamp',
+						defaultValue : new Date(),
+						type : 'date',
+						format : 'time',
+						convert : function(value, record) {
+							return new Date(value);
+						},
+						persist : false
+					}, {
+						name : 'note',
+						type : 'string'
+					}, {
+						name : 'status',
+						type : 'int'
 					}
-										//\n
-					,{name: 'inspectorSystemUserId',type:'string'  }
-					,{name: 'inspectorSystemUserName',type:'string',persist:false }
-															//\n
-					,{name: 'submitterSystemUserId',type:'string'  }
-					,{name: 'submitterSystemUserName',type:'string',persist:false }
-															//\n
-					,{name: 'totalsum' ,type:'float'  }
-										//\n
-					,{name: 'createdStamp', defaultValue:new Date(), type: 'date',format:'time',convert: function(value, record) {return new Date(value);},persist:false}
-					,{name: 'lastUpdatedStamp', defaultValue:new Date(), type: 'date',format:'time',convert: function(value, record) {return new Date(value);},persist:false}
-					,{name: 'note',  type: 'string'}
-					,{name: 'status',  type: 'int'}
 
 			],
 			idgen : 'uuid', // 使用uuid生成记录id 每个模型必须要有id字段
 			proxy : {
 				type : 'jsonajax',
 				api : {
-					read : '../../scm/control/requestJsonData?entity=ProductInwarehouseView',
-					destroy :  '../../scm/control/deleteWithEntry?headEntity=ProductInwarehouse&entryEntity=ProductInwarehouseEntry&cascadeDelete=ProductInwarehouseEntryDetail'
+					read : '../../scm/control/requestJsonData?entity=ProductInwarehouseView&distinct=true&fields=id,number,bizDate,inspectorSystemUserId,inspectorSystemUserName,submitterSystemUserId,submitterSystemUserName,totalsum,createdStamp,lastUpdatedStamp,note,status',
+					destroy : '../../scm/control/deleteWithEntry?headEntity=ProductInwarehouse&entryEntity=ProductInwarehouseEntry&cascadeDelete=ProductInwarehouseEntryDetail'
 				},
 				remoteFilter : true
 			}

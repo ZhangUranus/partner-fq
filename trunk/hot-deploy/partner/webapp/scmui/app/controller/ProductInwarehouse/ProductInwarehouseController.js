@@ -211,13 +211,41 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 			 */
 			modifyDetailRecord : function(grid, record) {
 				var me = this;
+				
 				me.currentRecord = record;
 				me.detailEditWin.uiStatus = 'Modify';
 				
-				me.detailEditEntry.store.removeAll(false);
+				var materialVolume = 1;
+				if( record.get('volume') != 0 ) {
+					materialVolume = record.get('volume');
+				}
+				
 				// 获取耗料列表
 				me.detailEditEntry.store.getProxy().extraParams.whereStr = 'parent_id = \'' + record.get('id') + '\'';
-				me.detailEditEntry.store.load(function(records, operation, success) {}
+				me.detailEditEntry.store.load(function(records, operation, success) {
+						if(records.length <= 0){//如果不存在耗料列表，获取初始列表
+							me.MaterialStore.getProxy().extraParams.whereStr = 'TMaterialV.ID = \'' + record.get('materialMaterialId') + '\'';
+							me.MaterialStore.load(function(records, operation, success) {
+										me.detailEditEntry.store.remove(me.detailEditEntry.store.data.items);
+										for (var i = 0; i < records.length; i++) {
+											var tempRecord = records[i];
+											var entryRecord = Ext.create('ProductInwarehouseEntryDetailModel');
+											entryRecord.phantom = true;
+		
+											// 设置父id
+											entryRecord.set('parentId', record.get('id'));
+											entryRecord.set('materialId', tempRecord.get('bomMaterialId'));
+											entryRecord.set('model', tempRecord.get('bomMaterialModel'));
+											entryRecord.set('quantity', tempRecord.get('volume') * materialVolume);
+											entryRecord.set('unitUnitId', tempRecord.get('bomUnitId'));
+											entryRecord.set('price', 0);
+											entryRecord.set('amount', 0);
+											me.detailEditEntry.store.add(entryRecord);
+										}
+										me.MaterialStore.getProxy().extraParams.whereStr = "";
+									});
+						}
+					}
 				);
 				me.detailEditEntry.store.getProxy().extraParams.whereStr = "";
 				this.detailEditWin.show();
@@ -361,11 +389,37 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 			 *            e
 			 */
 			initMaterialInfo : function(editor, e) {
-				if (e.field == 'materialMaterialId') {
-					var record = this.searchMaterialId.store.findRecord('id', e.value);
-					if (record) {
-						//e.record.set('materialMaterialModel', record.get('model'));
-						e.record.set('unitUnitId', record.get('defaultUnitId'));
+				var me = this;
+				if (e.field == 'barcode1' || e.field == 'barcode2') {
+					if(!Ext.isEmpty(e.record.get('barcode1')) && !Ext.isEmpty(e.record.get('barcode2'))){
+						var barcode = Ext.create('SCM.extend.utils.Barcode', e.record.get('barcode1'), e.record.get('barcode2'));
+						var pWeek = barcode.getProductWeek();
+						var quantity = barcode.getQuantity();
+						e.record.set('productWeek',pWeek);
+						e.record.set('qantity',quantity);
+						
+						//获取产品编码
+						Ext.Ajax.request({
+									scope : me,
+									params : {
+										ikeaId : barcode.getCodeForIkea(),
+										qantity : barcode.getQuantity()
+									},
+									url : '../../scm/control/getMaterialIdByIkea',
+									success : function(response, option) {
+										var result = Ext.decode(response.responseText)
+										if (result.success) {
+											e.record.set('materialMaterialId', result.materialId);
+											var record = me.MaterialStore.findRecord('materialId', result.materialId);
+											if (record) {
+												e.record.set('materialModel', record.get('bomModel'));
+												e.record.set('unitUnitId', record.get('bomUnitId'));
+											}
+										} else {
+											showError('获取产品编码失败！');
+										}
+									}
+								});
 					}
 				}
 			},
