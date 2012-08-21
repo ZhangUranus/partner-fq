@@ -148,7 +148,8 @@ Ext.define('SCM.view.ProductInwarehouse.EditUI', {
 																	xtype : 'combogrid',
 																	valueField : 'id',
 																	displayField : 'name',
-																	store : Ext.create('WarehouseStore'),
+																	initStore : Ext.data.StoreManager.lookup('WHComboInitStore'),
+																	store : Ext.data.StoreManager.lookup('WHComboStore'),
 																	matchFieldWidth : false,
 																	listConfig : {
 																		width : SCM.MaxSize.COMBOGRID_WIDTH,
