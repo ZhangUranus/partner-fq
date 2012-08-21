@@ -79,6 +79,9 @@ Ext.define('SCM.model.ProductOutwarehouse.ProductOutwarehouseEditEntryModel', {
 					}, {
 						name : 'sealNumber',
 						type : 'string'
+					}, {
+						name : 'sort',
+						type : 'int'
 					}],
 			idgen : 'uuid', // 使用uuid生成记录id 每个模型必须要有id字段
 			proxy : {
