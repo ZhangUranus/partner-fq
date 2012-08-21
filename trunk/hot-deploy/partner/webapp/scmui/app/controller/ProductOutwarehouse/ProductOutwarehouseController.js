@@ -102,7 +102,7 @@ Ext.define('SCM.controller.ProductOutwarehouse.ProductOutwarehouseController', {
 				this.searchMaterialId = this.listPanel.down('combogrid[name=searchMaterialId]');
 				this.searchCustId = this.listPanel.down('combogrid[name=searchCustId]');
 				this.searchStatus = this.listPanel.down('combobox[name=status]');
-				this.MaterialStore = Ext.data.StoreManager.lookup('MBAllStore');
+				this.MaterialStore = Ext.data.StoreManager.lookup('MComboInitStore');
 				this.MaterialStore.load();
 			},
 			
@@ -179,10 +179,10 @@ Ext.define('SCM.controller.ProductOutwarehouse.ProductOutwarehouseController', {
 										var result = Ext.decode(response.responseText)
 										if (result.success) {
 											e.record.set('materialMaterialId', result.materialId);
-											var record = me.MaterialStore.findRecord('materialId', result.materialId);
+											var record = me.MaterialStore.findRecord('id', result.materialId);
 											if (record) {
-												e.record.set('materialModel', record.get('bomModel'));
-												e.record.set('unitUnitId', record.get('bomUnitId'));
+												e.record.set('materialModel', record.get('model'));
+												e.record.set('unitUnitId', record.get('defaultUnitId'));
 											}
 										} else {
 											showError('获取产品编码失败！');
@@ -190,32 +190,6 @@ Ext.define('SCM.controller.ProductOutwarehouse.ProductOutwarehouseController', {
 									}
 								});
 					}
-				}
-			},
-			
-			/**
-			 * 根据宜家产品编码，获取物料编码
-			 * @param ikeaId 宜家产品编码
-			 * @return 物料编码
-			 */
-			getMaterialIdByIkea : function(ikeaId){
-				if (!Ext.isEmpty(ikeaId)) {
-					Ext.Ajax.request({
-								scope : this,
-								params : {
-									supplierId : supplierId,
-									materialId : materialId
-								},
-								url : '../../scm/control/getPlanBalance',
-								success : function(response, option) {
-									var result = Ext.decode(response.responseText)
-									if (result.success) {
-										record.set('scheduleVolume', result.count);
-									} else {
-										showError('获取供应商待验收数量失败！');
-									}
-								}
-							});
 				}
 			},
 			
