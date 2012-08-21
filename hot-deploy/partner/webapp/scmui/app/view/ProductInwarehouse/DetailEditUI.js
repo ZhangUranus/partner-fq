@@ -41,7 +41,8 @@ Ext.define('SCM.view.ProductInwarehouse.DetailEditUI', {
 														xtype : 'combogrid',
 														valueField : 'id',
 														displayField : 'name',
-														store : Ext.create('MaterialStore'),
+														initStore : Ext.data.StoreManager.lookup('MComboInitStore'),
+														store : Ext.data.StoreManager.lookup('MComboStore'),
 														matchFieldWidth : false,
 														listConfig : {
 															width : SCM.MaxSize.COMBOGRID_WIDTH,
@@ -83,7 +84,8 @@ Ext.define('SCM.view.ProductInwarehouse.DetailEditUI', {
 														xtype : 'combogrid',
 														valueField : 'id',
 														displayField : 'name',
-														store : Ext.create('UnitStore'),
+														initStore : Ext.data.StoreManager.lookup('UComboInitStore'),
+														store : Ext.data.StoreManager.lookup('UComboStore'),
 														matchFieldWidth : false,
 														listConfig : {
 															width : SCM.MaxSize.COMBOGRID_WIDTH,
