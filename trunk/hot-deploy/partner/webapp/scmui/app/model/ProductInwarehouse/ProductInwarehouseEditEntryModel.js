@@ -40,6 +40,7 @@ Ext.define('SCM.model.ProductInwarehouse.ProductInwarehouseEditEntryModel', {
 						persist : false
 					}, {
 						name : 'volume',
+						defaultValue : 1,
 						type : 'float'
 					}, {
 						name : 'unitUnitId',
