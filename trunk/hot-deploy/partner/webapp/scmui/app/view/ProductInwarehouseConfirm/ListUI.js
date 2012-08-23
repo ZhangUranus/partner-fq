@@ -151,24 +151,18 @@ Ext.define('SCM.view.ProductInwarehouseConfirm.ListUI', {
 												}, {
 													xtype : 'gridcolumn',
 													dataIndex : 'barcode1',
-													text : '条码1'
+													text : '产品条码'
 
 												}, {
 													xtype : 'gridcolumn',
 													dataIndex : 'barcode2',
-													text : '条码2'
+													text : '序列号'
 
 												}, {
 													xtype : 'gridcolumn',
 													dataIndex : 'submitterSystemUserName',
 													text : '提交人'
-												}, {
-													xtype : 'gridcolumn',
-													renderer : SCM.store.basiccode.billStatusRenderer,
-													dataIndex : 'status',
-													text : '单据状态'
 												}
-
 										],
 										viewConfig : {
 
