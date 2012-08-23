@@ -62,6 +62,7 @@ Ext.define('SCM.controller.ProductInwarehouseConfirm.ProductInwarehouseConfirmCo
 				this.searchEndDate = this.listContainer.down('datefield[name=searchEndDate]');
 				this.searchMaterialId = this.listContainer.down('combogrid[name=searchMaterialId]');
 				this.searchStatus = this.listContainer.down('combobox[name=status]');
+				this.searchStatus.setVisible(false);
 				this.syncDownSel=this.listContainer.down('toolbar button[action=syncDownSel]');
 				
 				this.listPanel.addListener('edit',this.listPanelEditActin,this);
@@ -205,12 +206,7 @@ Ext.define('SCM.controller.ProductInwarehouseConfirm.ProductInwarehouseConfirmCo
 					}
 					tempString += 'ProductInwarehouseConfirmV.material_material_id = \'' + this.searchMaterialId.getValue() + '\'';
 				}
-				if ((this.searchStatus.getValue() && this.searchStatus.getValue() != '') || this.searchStatus.getValue() == 0) {
-					if (tempString != '') {
-						tempString += ' and ';
-					}
-					tempString += 'ProductInwarehouseConfirmV.status = \'' + this.searchStatus.getValue() + '\'';
-				}
+				tempString += ' and ProductInwarehouseConfirmV.status != \'' + 4 + '\'';
 				
 				this.listPanel.store.getProxy().extraParams.whereStr = tempString;
 				this.listPanel.store.load();
@@ -329,7 +325,8 @@ Ext.define('SCM.controller.ProductInwarehouseConfirm.ProductInwarehouseConfirmCo
 			 * 提交单据
 			 */
 			submitBill : function(){
-				var records=this.getAllSelectRecords()
+				var me = this;
+				var records=me.getAllSelectRecords()
 				if(records){
 					var recordsData=[];
 					for(var r in records){
@@ -338,7 +335,7 @@ Ext.define('SCM.controller.ProductInwarehouseConfirm.ProductInwarehouseConfirmCo
 					var json=Ext.encode(recordsData);
 					
 					Ext.Ajax.request({ 
-						scope : this,
+						scope : me,
 						url : "../../scm/control/submitProductInwarehouseConfirm",
 						params:{records:json},
 						success : function(response, option) {
@@ -347,7 +344,8 @@ Ext.define('SCM.controller.ProductInwarehouseConfirm.ProductInwarehouseConfirmCo
 							}
 				 			var responseArray = Ext.JSON.decode(response.responseText);
 				 			if(responseArray.success){
-				 				showInfo('成功');
+				 				showInfo('提交成功');
+				 				me.refreshRecord();
 				 			}else{
 				 				showError(responseArray.message);
 				 			}
