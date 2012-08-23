@@ -63,7 +63,7 @@ public class ProductOutwarehouseConfirmEvents {
 			String billId=UUID.randomUUID().toString();
 			billHead.setString("id", billId);
 			billHead.setString("number", new SerialNumberHelper().getSerialNumber(request, "ProductOutwarehouse"));
-			billHead.set("bizDate", Utils.getCurDate());
+			billHead.set("bizDate", new Date());
 			billHead.set("submitterSystemUserId", CommonEvents.getAttributeFormSession(request, "uid"));
 			billHead.set("status", "0");//保存状态
 			
@@ -127,7 +127,7 @@ public class ProductOutwarehouseConfirmEvents {
 				GenericValue ev=delegator.makeValue("ProductOutwarehouseEntry");
 				ev.setString("id", entryId);
 				ev.setString("parentId", billId);
-				ev.setString("prdWeek", prdWeek);
+				ev.setString("prdWeek", Utils.getYearWeekStr(new Date()));
 				ev.setString("workshopWorkshopId", workshopId);
 				ev.setString("warehouseWarehouseId", warehouseId);
 				ev.setString("materialMaterialId", materialId);
@@ -254,7 +254,7 @@ public class ProductOutwarehouseConfirmEvents {
 		for (GenericValue v : entryList) {
 			/* 1.生成出库确认记录 */
 			Date bizDate = (Date) v.get("bizDate");
-			String materialId = Utils.getMaterialIdByIkea(v.getString("id"), v.getString("qantityC"));
+			String materialId = Utils.getMaterialIdByIkea(v.getString("productId"), v.getString("qantityC"));
 			TMaterial material = new TMaterial(materialId);
 			BarCode barCode = new BarCode(v.getString("barcode1"),v.getString("barcode2"));
 			
@@ -267,7 +267,7 @@ public class ProductOutwarehouseConfirmEvents {
 			prdOutConf.set("barcode1", v.getString("barcode1"));//标签1
 			prdOutConf.set("barcode2", v.getString("barcode2"));//标签2
 			prdOutConf.set("unitUnitId", material.getUnitId());//设置计量单位id
-			prdOutConf.set("prdWeek", barCode.getProductWeek());//设置生产周
+//			prdOutConf.set("prdWeek", barCode.getProductWeek());//设置生产周
 
 			prdOutConf.set("submitterSystemUserId", CommonEvents.getAttributeFormSession(request, "uid"));//提交人
 			prdOutConf.set("qantity", Long.parseLong(barCode.getQuantity()));//设置板数量

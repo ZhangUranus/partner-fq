@@ -67,6 +67,8 @@ public class ProductInwarehouseEvents {
 				BigDecimal volume=v.getBigDecimal("volume");//入库数量（板）
 				//成品进仓 
 				WeeklyStockMgr.getInstance().updateStock(materialId, bizDate, ProductStockType.IN, volume, false);
+				v.set("productWeek", Utils.getYearWeekStr(bizDate));
+				v.store();
 			}
 			
 			TransactionUtil.commit(beganTransaction);
@@ -130,18 +132,18 @@ public class ProductInwarehouseEvents {
 			
 			
 			
-			/*
-			 *撤销关联的进仓确认单
-			 * */
-			List<GenericValue> prdtCfmEntrys=delegator.findByAnd("ProductInwarehouseConfirm", "productInwarehouseId",billId);
-			
-			if(prdtCfmEntrys!=null&&prdtCfmEntrys.size()>0){
-				for(GenericValue v:prdtCfmEntrys){
-					v.put("status", 0);// 设置为已提交状态
-					v.put("submitterSystemUserId", null);
-				}
-				delegator.storeAll(prdtCfmEntrys);
-			}
+//			/*
+//			 *撤销关联的进仓确认单
+//			 * */
+//			List<GenericValue> prdtCfmEntrys=delegator.findByAnd("ProductInwarehouseConfirm", "productInwarehouseId",billId);
+//			
+//			if(prdtCfmEntrys!=null&&prdtCfmEntrys.size()>0){
+//				for(GenericValue v:prdtCfmEntrys){
+//					v.put("status", 0);// 设置为已提交状态
+//					v.put("submitterSystemUserId", null);
+//				}
+//				delegator.storeAll(prdtCfmEntrys);
+//			}
 			
 			TransactionUtil.commit(beganTransaction);
 		} catch (Exception e) {
