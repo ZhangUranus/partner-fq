@@ -344,6 +344,8 @@
 		<field name="sunNorOutQty" type="fixed-point"></field>
 		<field name="sunChgBrdQty" type="fixed-point"></field>
 
+		<field name="weekBalQty" type="fixed-point"></field><!-- added by mark 2012-8-22 添加汇总字段 本周出入库盈余 ，非本周余额 -->
+		
 		<prim-key field="materialId" />
 		<prim-key field="week" />
 	</entity>

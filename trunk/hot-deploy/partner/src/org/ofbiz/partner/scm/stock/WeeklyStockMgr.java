@@ -56,6 +56,7 @@ public class WeeklyStockMgr {
 		      GenericValue record=delegator.findOne("PrdInOutWeekDetail", false, "materialId",materialId,"week",week);
 		      
 		      BigDecimal curQty=BigDecimal.ZERO;
+		      BigDecimal curBalQty=BigDecimal.ZERO;
 		      
 		      String updateFieldName=getFieldName(type, dayOfWeek);
 		      if(record==null){
@@ -65,12 +66,32 @@ public class WeeklyStockMgr {
 		      }else{
 		    	  curQty=record.getBigDecimal(updateFieldName);
 		    	  if(curQty==null)curQty=BigDecimal.ZERO;
+		    	  
+		    	  curBalQty=record.getBigDecimal("weekBalQty");
+		    	  if(curBalQty==null)curBalQty=BigDecimal.ZERO;
+		    	  
 		      }
 		      /*2.  如果是反操作需要减数量*/
 		      if(isCancel) qty=qty.negate();
 		      
 		      /*3. 更新数据库记录*/
 		      record.set(updateFieldName, curQty.add(qty));
+		      
+		      //added by mark 2012-8-22 
+		      switch (type) {
+				case IN:
+					record.set("weekBalQty", curBalQty.add(qty));
+					break;
+				case OUT:
+					record.set("weekBalQty", curBalQty.add(qty.negate()));
+					break;
+				case CHG:
+					record.set("weekBalQty", curBalQty.add(qty));
+					break;	
+				default:
+					break;
+				}
+		      
 		      /*4. 新增或者更新*/
 		      delegator.createOrStore(record);
 		      
