@@ -115,6 +115,7 @@ public class ProductInwarehouseConfirmEvents {
 				ev.setString("workshopWorkshopId", workshopId);
 				ev.setString("warehouseWarehouseId", warehouseId);
 				ev.setString("materialMaterialId", materialId);
+				ev.setString("productWeek", Utils.getYearWeekStr(new Date()));
 				ev.setString("unitUnitId", unitId);
 				ev.set("volume", volume);
 				ev.setString("barcode1", barcode1);
@@ -245,7 +246,7 @@ public class ProductInwarehouseConfirmEvents {
 		for (GenericValue v : entryList) {
 			/* 1.生成入仓确认记录 */
 			Date bizDate = (Date) v.get("bizDate");
-			String materialId = Utils.getMaterialIdByIkea(v.getString("id"), v.getString("qantityC"));
+			String materialId = Utils.getMaterialIdByIkea(v.getString("productId"), v.getString("qantityC"));
 			TMaterial material = new TMaterial(materialId);
 			BarCode barCode = new BarCode(v.getString("barcode1"),v.getString("barcode2"));
 			
@@ -261,12 +262,12 @@ public class ProductInwarehouseConfirmEvents {
 //			prdInConf.set("productWeek", barCode.getProductWeek());//设置生产周
 
 			prdInConf.set("submitterSystemUserId", CommonEvents.getAttributeFormSession(request, "uid"));//提交人
-			prdInConf.set("volume", Long.parseLong(barCode.getQuantity()));//设置板数量
+			prdInConf.set("qantity", Long.parseLong(barCode.getQuantity()));//设置板数量
 			prdInConf.set("status", 0);	//状态为保存
 			if("A".equals(v.getString("inOutType"))){
-				prdInConf.set("outwarehouseType", "1");//正常
+				prdInConf.set("inwarehouseType", "1");//正常
 			}else{
-				prdInConf.set("outwarehouseType", "2");//非正常
+				prdInConf.set("inwarehouseType", "2");//非正常
 			}
 			delegator.create(prdInConf);//保存分录
 			

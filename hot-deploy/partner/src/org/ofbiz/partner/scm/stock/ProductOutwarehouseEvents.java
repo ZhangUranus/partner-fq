@@ -16,6 +16,7 @@ import org.ofbiz.entity.transaction.TransactionUtil;
 import org.ofbiz.partner.scm.common.BillBaseEvent;
 import org.ofbiz.partner.scm.pricemgr.BillType;
 import org.ofbiz.partner.scm.pricemgr.BizStockImpFactory;
+import org.ofbiz.partner.scm.pricemgr.Utils;
 /**
  * 成品出仓单业务事件类
  * 
@@ -71,6 +72,8 @@ public class ProductOutwarehouseEvents {
 				}
 				WeeklyStockMgr.getInstance().updateStock(materialId, bizDate, type, volume, false);
 				updateNotification(v,delegator,materialId,volume,v.getString("goodNumber"),v.getString("destinhouseNumber"));
+				v.set("prdWeek", Utils.getYearWeekStr(bizDate));
+				v.store();
 			}
 			
 			TransactionUtil.commit(beganTransaction);

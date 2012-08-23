@@ -29,7 +29,7 @@ public class ProductInwarehouseServices {
 	
 	public static final String module = ProductInwarehouseServices.class.getName();
 	//配置成品数据库数据源名称
-	private static String midDatabaseHelperName="localmysql";
+	private static String midDatabaseHelperName="localscan";
 	
 	
 	private static final SimpleDateFormat df= new SimpleDateFormat("yyyyMMdd");
