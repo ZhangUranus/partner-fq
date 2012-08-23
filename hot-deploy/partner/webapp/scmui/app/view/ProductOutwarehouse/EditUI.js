@@ -205,6 +205,64 @@ Ext.define('SCM.view.ProductOutwarehouse.EditUI', {
 																dataIndex : 'barcode2',
 																text : '序列号'
 															}, {
+																xtype : 'combocolumn',
+																dataIndex : 'materialMaterialId',
+																text : '物料',
+																gridId : 'ProductOutwarehouse-edit-grid',
+																editor : {
+																	xtype : 'combogrid',
+																	valueField : 'id',
+																	displayField : 'name',
+																	initStore : Ext.data.StoreManager.lookup('MComboInitStore'),
+																	store : Ext.data.StoreManager.lookup('MComboStore'),
+																	matchFieldWidth : false,
+																	listConfig : {
+																		width : 400,
+																		height : SCM.MaxSize.COMBOGRID_HEIGHT,
+																		columns : [{
+																					header : '编码',
+																					dataIndex : 'number',
+																					width : 100,
+																					hideable : false
+																				}, {
+																					header : '名称',
+																					dataIndex : 'name',
+																					width : 280,
+																					hideable : false
+																				}]
+																	}
+																}
+															}, {
+																xtype : 'gridcolumn',
+																dataIndex : 'materialModel',
+																text : '规格型号'
+															}, {
+																xtype : 'combocolumn',
+																dataIndex : 'unitUnitId',
+																text : '单位',
+																gridId : 'ProductOutwarehouse-edit-grid',
+																editor : {
+																	xtype : 'combogrid',
+																	valueField : 'id',
+																	displayField : 'name',
+																	initStore : Ext.data.StoreManager.lookup('UComboInitStore'),
+																	store : Ext.data.StoreManager.lookup('UComboStore'),
+																	readOnly : true
+																},
+																width : 80
+															}, {
+																xtype : 'numbercolumn',
+																dataIndex : 'qantity',
+																editor : {
+																	xtype : 'numberfield',
+																	format : '0',
+																	allowBlank : false,
+																	hideTrigger : true
+																},
+																format : '0',
+																text : '板数量',
+																width : 80
+															}, {
 																xtype : 'gridcolumn',
 																editor : {
 																	xtype : 'textfield'
@@ -230,44 +288,6 @@ Ext.define('SCM.view.ProductOutwarehouse.EditUI', {
 																xtype : 'gridcolumn',
 																dataIndex : 'prdWeek',
 																text : '生产周'
-															}, {
-																xtype : 'combocolumn',
-																dataIndex : 'materialMaterialId',
-																text : '物料',
-																gridId : 'ProductOutwarehouse-edit-grid',
-																editor : {
-																	xtype : 'combogrid',
-																	valueField : 'id',
-																	displayField : 'name',
-																	initStore : Ext.data.StoreManager.lookup('MComboInitStore'),
-																	store : Ext.data.StoreManager.lookup('MComboStore'),
-																	matchFieldWidth : false,
-																	readOnly : true
-																}
-															}, {
-																xtype : 'gridcolumn',
-																dataIndex : 'materialModel',
-																text : '规格型号'
-															}, {
-																xtype : 'combocolumn',
-																dataIndex : 'unitUnitId',
-																text : '单位',
-																gridId : 'ProductOutwarehouse-edit-grid',
-																editor : {
-																	xtype : 'combogrid',
-																	valueField : 'id',
-																	displayField : 'name',
-																	initStore : Ext.data.StoreManager.lookup('UComboInitStore'),
-																	store : Ext.data.StoreManager.lookup('UComboStore'),
-																	readOnly : true
-																},
-																width : 80
-															}, {
-																xtype : 'numbercolumn',
-																dataIndex : 'qantity',
-																format : '0',
-																text : '板数量',
-																width : 80
 															}],
 													viewConfig : {
 
