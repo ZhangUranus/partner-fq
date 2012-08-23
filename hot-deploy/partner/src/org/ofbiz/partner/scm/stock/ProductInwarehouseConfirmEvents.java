@@ -21,12 +21,16 @@ import org.ofbiz.entity.GenericValue;
 import org.ofbiz.entity.condition.EntityCondition;
 import org.ofbiz.entity.transaction.GenericTransactionException;
 import org.ofbiz.entity.transaction.TransactionUtil;
+import org.ofbiz.partner.scm.common.BarCode;
 import org.ofbiz.partner.scm.common.BillBaseEvent;
 import org.ofbiz.partner.scm.common.CommonEvents;
 import org.ofbiz.partner.scm.common.SerialNumberHelper;
+import org.ofbiz.partner.scm.dao.TMaterial;
 import org.ofbiz.partner.scm.pricemgr.BillType;
 import org.ofbiz.partner.scm.pricemgr.BizStockImpFactory;
+import org.ofbiz.partner.scm.pricemgr.Utils;
 import org.ofbiz.partner.scm.services.ProductInwarehouseServices;
+import org.ofbiz.partner.scm.services.SyncScanDataServices;
 
 
 
@@ -220,9 +224,55 @@ public class ProductInwarehouseConfirmEvents {
 	 * @throws Exception
 	 */
 	public static String synchronizeRecords(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		ProductInwarehouseServices.syncRecord();
-		BillBaseEvent.writeSuccessMessageToExt(response, "同步完成");
+		/* 1.从扫描库中同步数据 */
+		SyncScanDataServices.syncRecord();
+		
+		/* 2.生成出库确认记录  */
+		generateConfirmBill(request, response);
+		
+		/* 3.返回结果给前端 */
+		BillBaseEvent.writeSuccessMessageToExt(response, "同步成功！");
 		return "success";
 	}
-	
+	/**
+	 * 生成入仓确认记录
+	 * 1.生成入仓确认记录
+	 * 2.更新扫描数据状态
+	 */
+	public static synchronized void generateConfirmBill(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		List<GenericValue> entryList = delegator.findByAnd("ProductScan", UtilMisc.toMap("status", "0","warehouseType","1"));
+		for (GenericValue v : entryList) {
+			/* 1.生成入仓确认记录 */
+			Date bizDate = (Date) v.get("bizDate");
+			String materialId = Utils.getMaterialIdByIkea(v.getString("id"), v.getString("qantityC"));
+			TMaterial material = new TMaterial(materialId);
+			BarCode barCode = new BarCode(v.getString("barcode1"),v.getString("barcode2"));
+			
+			GenericValue prdInConf= delegator.makeValue("ProductInwarehouseConfirm");
+			prdInConf.set("id", UUID.randomUUID().toString());
+			prdInConf.set("number", v.getString("barcode1")+v.getString("barcode2"));//设置编码
+			prdInConf.set("bizDate", new Timestamp(bizDate.getTime()));//设置业务日期
+			prdInConf.set("materialMaterialId", materialId);//设置物料id
+			prdInConf.set("volume", v.getBigDecimal("volume"));//设置入库数量
+			prdInConf.set("barcode1", v.getString("barcode1"));//标签1
+			prdInConf.set("barcode2", v.getString("barcode2"));//标签2
+			prdInConf.set("unitUnitId", material.getUnitId());//设置计量单位id
+//			prdInConf.set("productWeek", barCode.getProductWeek());//设置生产周
+
+			prdInConf.set("submitterSystemUserId", CommonEvents.getAttributeFormSession(request, "uid"));//提交人
+			prdInConf.set("volume", Long.parseLong(barCode.getQuantity()));//设置板数量
+			prdInConf.set("status", 0);	//状态为保存
+			if("A".equals(v.getString("inOutType"))){
+				prdInConf.set("outwarehouseType", "1");//正常
+			}else{
+				prdInConf.set("outwarehouseType", "2");//非正常
+			}
+			delegator.create(prdInConf);//保存分录
+			
+			/* 2.更新扫描数据状态 */
+			v.set("status", 2);
+			v.store();
+		}
+	}
 }
