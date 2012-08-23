@@ -421,6 +421,12 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 									}
 								});
 					}
+				} else if (e.field == 'materialMaterialId' ) {
+					var record = me.MaterialStore.findRecord('materialId', e.value);
+					if (record) {
+						e.record.set('materialModel', record.get('bomModel'));
+						e.record.set('unitUnitId', record.get('bomUnitId'));
+					}
 				}
 			},
 			/**

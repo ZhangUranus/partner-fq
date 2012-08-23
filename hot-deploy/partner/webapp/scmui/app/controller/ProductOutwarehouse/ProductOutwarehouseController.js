@@ -190,6 +190,12 @@ Ext.define('SCM.controller.ProductOutwarehouse.ProductOutwarehouseController', {
 									}
 								});
 					}
+				} else if (e.field == 'materialMaterialId' ) {
+					var record = me.MaterialStore.findRecord('id', e.value);
+					if (record) {
+						e.record.set('materialModel', record.get('model'));
+						e.record.set('unitUnitId', record.get('defaultUnitId'));
+					}
 				}
 			},
 			
