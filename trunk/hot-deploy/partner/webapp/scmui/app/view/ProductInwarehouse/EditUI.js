@@ -221,10 +221,6 @@ Ext.define('SCM.view.ProductInwarehouse.EditUI', {
 																dataIndex : 'barcode2',
 																text : '序列号'
 															}, {
-																xtype : 'gridcolumn',
-																dataIndex : 'productWeek',
-																text : '生产周'
-															}, {
 																xtype : 'combocolumn',
 																dataIndex : 'materialMaterialId',
 																text : '物料',
@@ -236,7 +232,21 @@ Ext.define('SCM.view.ProductInwarehouse.EditUI', {
 																	initStore : Ext.data.StoreManager.lookup('MComboInitStore'),
 																	store : Ext.data.StoreManager.lookup('MComboStore'),
 																	matchFieldWidth : false,
-																	readOnly : true
+																	listConfig : {
+																		width : 400,
+																		height : SCM.MaxSize.COMBOGRID_HEIGHT,
+																		columns : [{
+																					header : '编码',
+																					dataIndex : 'number',
+																					width : 100,
+																					hideable : false
+																				}, {
+																					header : '名称',
+																					dataIndex : 'name',
+																					width : 280,
+																					hideable : false
+																				}]
+																	}
 																}
 															}, {
 																xtype : 'gridcolumn',
@@ -259,6 +269,12 @@ Ext.define('SCM.view.ProductInwarehouse.EditUI', {
 															}, {
 																xtype : 'numbercolumn',
 																dataIndex : 'qantity',
+																editor : {
+																	xtype : 'numberfield',
+																	format : '0',
+																	allowBlank : false,
+																	hideTrigger : true
+																},
 																format : '0',
 																text : '板数量',
 																width : 80
@@ -266,12 +282,14 @@ Ext.define('SCM.view.ProductInwarehouse.EditUI', {
 																xtype : 'numbercolumn',
 																dataIndex : 'price',
 																text : '单价'
-
 															}, {
 																xtype : 'numbercolumn',
 																dataIndex : 'entrysum',
 																text : '金额'
-
+															}, {
+																xtype : 'gridcolumn',
+																dataIndex : 'productWeek',
+																text : '生产周'
 															}],//end columns
 													viewConfig : {
 
