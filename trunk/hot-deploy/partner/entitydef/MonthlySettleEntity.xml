@@ -350,6 +350,20 @@
 		<prim-key field="week" />
 	</entity>
 	
-	
+	<!-- 综合成品账 -->
+	<entity entity-name="ProInOutDateDetail" package-name="org.ofbiz.scm.pricemgr" title="ConsignPrice Entity">
+		<field name="tradDate" type="id"></field><!-- 交易日期YYYYMMDD -->
+		<field name="materialId" type="id-long"></field>
+		<field name="qantity" type="numeric"></field><!-- 板数量 -->
+		<field name="preMonthVolume" type="fixed-point"></field><!-- 上月数量 -->
+		<field name="todayInVolume" type="fixed-point"></field><!-- 本日入库数量 -->
+		<field name="todayOutVolume" type="fixed-point"></field><!-- 本日出库数量 -->
+		<field name="todayVolume" type="fixed-point"></field><!-- 本日结存数量 -->
+		<field name="thisMonthInVolume" type="fixed-point"></field><!-- 当月累计入库数量 -->
+		<field name="thisMonthOutVolume" type="fixed-point"></field><!-- 当月累计出库数量 -->
+		<prim-key field="tradDate" />
+		<prim-key field="materialId" />
+		<prim-key field="qantity" />
+	</entity>
 	
 </entitymodel>

@@ -32,6 +32,10 @@ under the License.
             location="org.ofbiz.partner.scm.services.SyncScanDataServices" invoke="syncService" auth="false" use-transaction="false" semaphore="wait">
         <description>syncService</description>
     </service>
+    <service name="rollNextDateService" engine="java"
+            location="org.ofbiz.partner.scm.services.RollProductInOutStockServices" invoke="rollService" auth="false" use-transaction="false" semaphore="wait">
+        <description>syncService</description>
+    </service>
     <service name="productInwarehouseServices" engine="java"
             location="org.ofbiz.partner.scm.services.ProductInwarehouseServices" invoke="syncProduct" auth="false" use-transaction="false" semaphore="wait">
         <description>productInwarehouse</description>
