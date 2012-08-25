@@ -63,14 +63,12 @@ public class ProductOutwarehouseEvents {
 			 
 			for (GenericValue v : entryList) {
 				String materialId = v.getString("materialMaterialId");// 打板物料id
-				BigDecimal volume=v.getBigDecimal("volume");//出库数量（板）
-				ProductStockType type = null;
-				if("2".equals(v.getString("outwarehouseType"))){
-					type=ProductStockType.CHG;
-				} else {
-					type=ProductStockType.OUT;
-				}
-				WeeklyStockMgr.getInstance().updateStock(materialId, bizDate, type, volume, false);
+				BigDecimal volume = v.getBigDecimal("volume");//出库数量（板）
+				Long qantity = v.getLong("qantity");//板数量（一板有多少产品）
+
+				
+				WeeklyStockMgr.getInstance().updateStock(materialId, bizDate, ProductStockType.OUT, volume, false);
+				ProductInOutStockMgr.getInstance().updateStock(materialId, ProductStockType.OUT, qantity, volume, false);
 				updateNotification(v,delegator,materialId,volume,v.getString("goodNumber"),v.getString("destinhouseNumber"));
 				v.set("prdWeek", Utils.getYearWeekStr(bizDate));
 				v.store();
@@ -125,14 +123,11 @@ public class ProductOutwarehouseEvents {
 			 
 			for (GenericValue v : entryList) {
 				String materialId = v.getString("materialMaterialId");// 打板物料id
-				BigDecimal volume=v.getBigDecimal("volume");//出库数量（板）
-				ProductStockType type = null;
-				if("2".equals(v.getString("outwarehouseType"))){
-					type=ProductStockType.CHG;
-				} else {
-					type=ProductStockType.OUT;
-				}
-				WeeklyStockMgr.getInstance().updateStock(materialId, bizDate, type, volume.negate(), false);
+				BigDecimal volume = v.getBigDecimal("volume");//出库数量（板）
+				Long qantity = v.getLong("qantity");//板数量（一板有多少产品）
+				
+				WeeklyStockMgr.getInstance().updateStock(materialId, bizDate, ProductStockType.OUT, volume, true);
+				ProductInOutStockMgr.getInstance().updateStock(materialId, ProductStockType.OUT, qantity, volume, true);
 				updateNotification(v,delegator,materialId,volume.negate(),v.getString("goodNumber"),v.getString("destinhouseNumber"));
 			}
 			

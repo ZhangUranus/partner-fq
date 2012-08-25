@@ -29,7 +29,6 @@ import org.ofbiz.partner.scm.dao.TMaterial;
 import org.ofbiz.partner.scm.pricemgr.BillType;
 import org.ofbiz.partner.scm.pricemgr.BizStockImpFactory;
 import org.ofbiz.partner.scm.pricemgr.Utils;
-import org.ofbiz.partner.scm.services.ProductInwarehouseServices;
 import org.ofbiz.partner.scm.services.SyncScanDataServices;
 
 
@@ -185,9 +184,11 @@ public class ProductInwarehouseConfirmEvents {
 			 
 			for (GenericValue v : entryList) {
 				String materialId = v.getString("materialMaterialId");// 打板物料id
-				BigDecimal volume=v.getBigDecimal("volume");//入库数量（板）
+				BigDecimal volume = v.getBigDecimal("volume");//入库数量（板）
+				Long qantity = v.getLong("qantity");//板数量（一板有多少产品）
 				//成品进仓 
 				WeeklyStockMgr.getInstance().updateStock(materialId, bizDate, ProductStockType.IN, volume, false);
+				ProductInOutStockMgr.getInstance().updateStock(materialId, ProductStockType.IN, qantity, volume, false);
 			}
 			
 			//---------------------------------------------------------
