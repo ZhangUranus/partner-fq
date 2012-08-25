@@ -19,6 +19,7 @@ import org.ofbiz.entity.DelegatorFactory;
 import org.ofbiz.entity.GenericEntityException;
 import org.ofbiz.entity.GenericValue;
 import org.ofbiz.partner.scm.common.CommonEvents;
+import org.ofbiz.partner.scm.common.DatePeriod;
 
 /**
  * 
@@ -333,6 +334,41 @@ public class Utils {
         return ""+year+"-"+week+"W";
 	}
 	
+	
+	/**
+	 * 根据周返回开始介绍日期 周格式为 2012-11W
+	 * @param s
+	 * @return
+	 * @throws Exception
+	 */
+	public static DatePeriod getDatePeriodFromWeekStr(String s ) throws Exception{
+		if(s==null||s.length()<1||s.length()>8)throw new Exception("周字符长度出错");
+		
+		DatePeriod dp=new DatePeriod();
+		
+		int year =Integer.valueOf(s.substring(0,4));
+		int week =Integer.valueOf(s.substring(5,s.length()-1));
+		
+		Calendar c = Calendar.getInstance();
+		c.setFirstDayOfWeek(Calendar.SUNDAY);
+		c.setMinimalDaysInFirstWeek(3);
+		c.set(Calendar.YEAR,year);
+		c.set(Calendar.WEEK_OF_YEAR,week);
+		c.set(Calendar.DAY_OF_WEEK, 1);
+		c.set(Calendar.HOUR_OF_DAY, 0);
+		c.set(Calendar.MINUTE, 0);
+		c.set(Calendar.SECOND, 0);
+		c.set(Calendar.MILLISECOND, 0);
+		dp.fromDate=c.getTime();
+		c.set(Calendar.DAY_OF_WEEK,7);
+		c.set(Calendar.HOUR_OF_DAY, 23);
+		c.set(Calendar.MINUTE, 59);
+		c.set(Calendar.SECOND, 59);
+		c.set(Calendar.MILLISECOND, 999);
+		dp.endDate=c.getTime();
+
+		return dp;
+	}
 	
 	/**
 	 * 根据物料id获取明细物料，获取该物料的第一个bom单，
