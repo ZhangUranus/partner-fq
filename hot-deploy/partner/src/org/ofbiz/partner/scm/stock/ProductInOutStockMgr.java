@@ -3,8 +3,10 @@ package org.ofbiz.partner.scm.stock;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import org.ofbiz.base.util.Debug;
+import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericValue;
 import org.ofbiz.partner.scm.common.Utils;
@@ -65,8 +67,21 @@ public class ProductInOutStockMgr {
 		BigDecimal curTodayVolume = BigDecimal.ZERO;
 		BigDecimal curThisMonthInVolume = BigDecimal.ZERO;
 		BigDecimal curThisMonthOutVolume = BigDecimal.ZERO;
+//		
+//		<field name="preMonthVolume" type="fixed-point"></field><!-- 上月数量 -->
+//		<field name="todayInVolume" type="fixed-point"></field><!-- 本日入库数量 -->
+//		<field name="todayOutVolume" type="fixed-point"></field><!-- 本日出库数量 -->
+//		<field name="todayVolume" type="fixed-point"></field><!-- 本日结存数量 -->
+//		<field name="thisMonthInVolume" type="fixed-point"></field><!-- 当月累计入库数量 -->
+//		<field name="thisMonthOutVolume" type="fixed-point"></field><!-- 当月累计出库数量 -->
 		
 		if (record == null) {
+			List<GenericValue> balanceList = delegator.findByAnd("CurMaterialBalance", UtilMisc.toMap("materialId", materialId));
+			for(GenericValue bv : balanceList){
+				if(bv.getBigDecimal("volume")!=null){
+					curPreMonthVolume = curPreMonthVolume.add(bv.getBigDecimal("volume"));
+				}
+			}
 			record = delegator.makeValue("ProInOutDateDetail");
 			record.setString("tradDate", sdf.format(date));
 			record.setString("materialId", materialId);
