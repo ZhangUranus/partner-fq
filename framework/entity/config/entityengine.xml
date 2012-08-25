@@ -327,7 +327,37 @@ access. For a detailed description see the core/docs/entityconfig.html file.
         <read-data reader-name="ext"/>
         <inline-jdbc
                 jdbc-driver="com.mysql.jdbc.Driver"
-                jdbc-uri="jdbc:mysql://127.0.0.1/ofbiz4?autoReconnect=true"
+                jdbc-uri="jdbc:mysql://127.0.0.1/ofbiz?autoReconnect=true"
+                jdbc-username="root"
+                jdbc-password="123"
+                isolation-level="ReadCommitted"
+                pool-minsize="2"
+                pool-maxsize="250"
+                time-between-eviction-runs-millis="600000"/><!-- Please note that at least one person has experienced a problem with this value with MySQL
+                and had to set it to -1 in order to avoid this issue.
+                For more look at http://markmail.org/thread/5sivpykv7xkl66px and http://commons.apache.org/dbcp/configuration.html-->
+        <!-- <jndi-jdbc jndi-server-name="localjndi" jndi-name="java:/MySqlDataSource" isolation-level="Serializable"/> -->
+    </datasource>
+        <datasource name="localscan"
+            helper-class="org.ofbiz.entity.datasource.GenericHelperDAO"
+            field-type-name="mysql"
+            check-on-start="true"
+            add-missing-on-start="true"
+            check-pks-on-start="false"
+            use-foreign-keys="true"
+            join-style="ansi-no-parenthesis"
+            alias-view-columns="false"
+            drop-fk-use-foreign-key-keyword="true"
+            table-type="InnoDB"
+            character-set="utf8"
+            collate="utf8_general_ci">
+        <read-data reader-name="seed"/>
+        <read-data reader-name="seed-initial"/>
+        <read-data reader-name="demo"/>
+        <read-data reader-name="ext"/>
+        <inline-jdbc
+                jdbc-driver="com.mysql.jdbc.Driver"
+                jdbc-uri="jdbc:mysql://127.0.0.1/leader?autoReconnect=true"
                 jdbc-username="root"
                 jdbc-password="123"
                 isolation-level="ReadCommitted"
@@ -430,7 +460,7 @@ access. For a detailed description see the core/docs/entityconfig.html file.
 
     <datasource name="localoracle"
             helper-class="org.ofbiz.entity.datasource.GenericHelperDAO"
-            schema-name="OFBIZ"
+            schema-name="CAS"
             field-type-name="oracle"
             check-on-start="true"
             add-missing-on-start="true"
@@ -442,11 +472,11 @@ access. For a detailed description see the core/docs/entityconfig.html file.
         <read-data reader-name="ext"/>
         <inline-jdbc
                 jdbc-driver="oracle.jdbc.driver.OracleDriver"
-                jdbc-uri="jdbc:oracle:thin:@127.0.0.1:1521:ofbiz"
-                jdbc-username="ofbiz"
-                jdbc-password="ofbiz"
-                pool-minsize="2"
-                pool-maxsize="250"
+                jdbc-uri="jdbc:oracle:thin:@127.0.0.1:1521:casdb"
+                jdbc-username="cas"
+                jdbc-password="cas"
+                pool-minsize="1"
+                pool-maxsize="10"
                 time-between-eviction-runs-millis="600000"/>
     </datasource>
     <datasource name="localoracledd"
