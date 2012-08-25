@@ -115,7 +115,7 @@ public class ProductOutwarehouseConfirmEvents {
 					if(workshopId==null) workshopId = "";
 				}
 				
-				BigDecimal qantity=new BigDecimal(entry.getString("qantity"));
+				Long qantity=new Long(entry.getString("qantity"));
 				
 				String goodNumber=entry.getString("goodNumber");
 				if(goodNumber==null)throw new Exception("货号为空！");
@@ -183,14 +183,11 @@ public class ProductOutwarehouseConfirmEvents {
 			 
 			for (GenericValue v : entryList) {
 				String materialId = v.getString("materialMaterialId");// 打板物料id
-				BigDecimal volume=v.getBigDecimal("volume");//出库数量（板）
-				ProductStockType type = null;
-				if("2".equals(v.getString("outwarehouseType"))){
-					type=ProductStockType.CHG;
-				} else {
-					type=ProductStockType.OUT;
-				}
-				WeeklyStockMgr.getInstance().updateStock(materialId, bizDate, type, volume, false);
+				BigDecimal volume = v.getBigDecimal("volume");//出库数量（板）
+				Long qantity = v.getLong("qantity");//板数量（一板有多少产品）
+				
+				WeeklyStockMgr.getInstance().updateStock(materialId, bizDate, ProductStockType.OUT, volume, false);
+				ProductInOutStockMgr.getInstance().updateStock(materialId, ProductStockType.OUT, qantity, volume, false);
 				ProductOutwarehouseEvents.updateNotification(v,delegator,materialId,volume,v.getString("goodNumber"),v.getString("destinhouseNumber"));
 			}
 			
