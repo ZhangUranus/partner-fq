@@ -43,6 +43,7 @@ Ext.define('SCM.controller.rpt.ProductSendOweReportController', {
 				this.searchBlurMaterialName = view.down('textfield[name=blurMaterialName]');
 				
 				this.listPanel.store.removeAll(true);
+				this.detailPanel.store.removeAll(true);
 			},
 
 			/**
@@ -68,9 +69,14 @@ Ext.define('SCM.controller.rpt.ProductSendOweReportController', {
 				}
 				this.listPanel.store.load();
 			},
-
-			showDetail : function(){
-				alert('f');
+			/**
+			 * 显示分录明细
+			 */
+			showDetail : function(me,record, index,eOpts){
+				this.detailPanel.store.getProxy().extraParams.week =record.get('WEEK'); 
+				this.detailPanel.store.getProxy().extraParams.materialId =record.get('MATERIAL_ID');
+				this.detailPanel.store.getProxy().extraParams.preWeekBal =record.get('LAST_WEEK_BAL_QTY');
+				this.detailPanel.store.load();
 			},
 			/**
 			 * 获取报表参数
