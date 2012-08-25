@@ -95,7 +95,7 @@ public class SyncScanDataServices {
 				productScan.set("volume", rs.getBigDecimal("LA007"));// 数量（代表每次扫描一个托板，基本值为1）
 				productScan.set("inOutType", rs.getString("LA008"));// 出入类别（A正常出入，B非正常出入）
 				productScan.set("description", rs.getString("LA009"));// 描述（产品范围，客户要求的，本系统用于区分包装类型的文字描述）
-				productScan.set("qantity", rs.getBigDecimal("LA010"));// 板数量
+				productScan.set("qantity", rs.getLong("LA010"));// 板数量
 				productScan.set("warehouseType", rs.getInt("LA011"));// 交易类别(按单据性质的交易类别判断码(1.入库,2.销货,3.领用,4.调拨,5.调整))
 				productScan.set("status", 0);// 状态(0：待处理，1：处理中，2：已处理) 
 				delegator.create(productScan);// 保存分录
