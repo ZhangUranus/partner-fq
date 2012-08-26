@@ -59,6 +59,7 @@ public class WorkshopPriceMgr {
 	 * @param materialId
 	 *            物料id
 	 * @return
+	 * 说明：出库时，单价计算时使用舍弃法取小数点六位（防止出库后，金额为负数情况）
 	 */
 	public BigDecimal getPrice(String workshopId, String materialId) throws Exception {
 		if (workshopId == null || materialId == null) {
@@ -70,7 +71,7 @@ public class WorkshopPriceMgr {
 			if (gv.getBigDecimal("volume").compareTo(BigDecimal.ZERO) == 0) {
 				return BigDecimal.ZERO;
 			} else {
-				return gv.getBigDecimal("totalsum").divide(gv.getBigDecimal("volume"), 4, RoundingMode.HALF_UP);
+				return gv.getBigDecimal("totalsum").divide(gv.getBigDecimal("volume"), 6, RoundingMode.DOWN);
 			}
 		} else {
 			return BigDecimal.ZERO;
