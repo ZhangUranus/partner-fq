@@ -41,25 +41,30 @@ Ext.define('SCM.view.ProductMap.EditUI', {
 													maxLength : 50
 												}, {
 													xtype : 'combogrid',
-													fieldLabel : '物料名称',
+													fieldLabel : '安装包装名称',
 													name : 'materialId',
-													valueField : 'id',
-													displayField : 'name',
+													valueField : 'materialId',
+													displayField : 'materialName',
 													allowBlank : false,
-													initStore : Ext.data.StoreManager.lookup('MComboInitStore'),
-													store : Ext.data.StoreManager.lookup('MComboStore'),
+													initStore : Ext.data.StoreManager.lookup('MBComboInitStore'),
+													store : Ext.data.StoreManager.lookup('MBComboStore'),
 													listConfig : {
 														width : 400,
 														height : SCM.MaxSize.COMBOGRID_HEIGHT,
 														columns : [{
 																	header : '编码',
-																	dataIndex : 'number',
+																	dataIndex : 'materialNumber',
 																	width : 100,
 																	hideable : false
 																}, {
 																	header : '名称',
-																	dataIndex : 'name',
+																	dataIndex : 'materialName',
 																	width : 280,
+																	hideable : false
+																}, {
+																	header : '备注',
+																	dataIndex : 'note',
+																	width : 100,
 																	hideable : false
 																}]
 													}
