@@ -60,6 +60,8 @@ public class ConsignPriceMgr {
 	 * @param materialId
 	 *            物料id
 	 * @return
+	 * 
+	 * 说明：出库时，单价计算时使用舍弃法取小数点六位（防止出库后，金额为负数情况）
 	 */
 	public BigDecimal getPrice(String supplierId, String materialId) throws Exception {
 		if (supplierId == null || materialId == null) {
@@ -71,7 +73,7 @@ public class ConsignPriceMgr {
 			if (gv.getBigDecimal("volume").compareTo(BigDecimal.ZERO) == 0) {
 				return BigDecimal.ZERO;
 			} else {
-				return gv.getBigDecimal("totalsum").divide(gv.getBigDecimal("volume"), 4, RoundingMode.HALF_UP);
+				return gv.getBigDecimal("totalsum").divide(gv.getBigDecimal("volume"), 6, RoundingMode.DOWN);
 			}
 		} else {
 			return BigDecimal.ZERO;

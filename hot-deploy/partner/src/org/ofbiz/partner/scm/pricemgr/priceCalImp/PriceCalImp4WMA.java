@@ -16,6 +16,8 @@ import org.ofbiz.partner.scm.pricemgr.Utils;
 /**
  * 移动加权平均法实现类
  * 
+ * 说明：为了避免出库后，金额为负数，出库时，单价计算使用舍弃法保存小数点后六位
+ * 
  * @author Mark
  * 
  */
@@ -208,6 +210,7 @@ public class PriceCalImp4WMA implements IPriceCal {
 	
 	/**
 	 * 获取物料加权平均单价
+	 * 说明：出库时，单价计算时使用舍弃法取小数点六位（防止出库后，金额为负数情况）
 	 */
 	public BigDecimal getPrice(String warehouseId, String materialId) throws Exception {
 		GenericValue value = this.getCurMaterialBalanceValue(warehouseId, materialId);
@@ -217,7 +220,7 @@ public class PriceCalImp4WMA implements IPriceCal {
 			if(value.getBigDecimal("volume").compareTo(BigDecimal.ZERO) == 0){
 				return BigDecimal.ZERO;
 			}else{
-				return value.getBigDecimal("totalSum").divide(value.getBigDecimal("volume"),4,RoundingMode.HALF_UP);
+				return value.getBigDecimal("totalSum").divide(value.getBigDecimal("volume"),6,RoundingMode.DOWN);
 			}
 		}
 	}

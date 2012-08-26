@@ -1,6 +1,7 @@
 package org.ofbiz.partner.scm.stock;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 import java.util.List;
 
@@ -56,7 +57,7 @@ public class PurchaseReturnEvents {
 			curSum = value.getBigDecimal("totalSum");
 			jsonStr.put("stockVolume", curAmount);
 			if (curAmount != null && curAmount.compareTo(BigDecimal.ZERO) != 0)
-				jsonStr.put("price", curSum.divide(curAmount, 4, BigDecimal.ROUND_HALF_UP));
+				jsonStr.put("price", curSum.divide(curAmount, 4, RoundingMode.DOWN));
 			else
 				jsonStr.put("price", 0);
 		}
