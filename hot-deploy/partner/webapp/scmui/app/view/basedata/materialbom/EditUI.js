@@ -89,6 +89,7 @@ Ext.define('SCM.view.basedata.materialbom.EditUI', {
 																dataIndex : 'entryMaterialId',
 																text : '物料编码',
 																gridId : 'material-bom-edit-grid',
+																width : 100,
 																editor : {
 																	xtype : 'combogrid',
 																	valueField : 'id',
@@ -117,6 +118,7 @@ Ext.define('SCM.view.basedata.materialbom.EditUI', {
 																xtype : 'numbercolumn',
 																dataIndex : 'volume',
 																text : '数量',
+																width : 60,
 																editor : {
 																	xtype : 'numberfield',
 																	allowBlank : false,
@@ -128,6 +130,7 @@ Ext.define('SCM.view.basedata.materialbom.EditUI', {
 																name : 'unitId',
 																dataIndex : 'entryUnitId',
 																text : '计量单位',
+																width : 60,
 																gridId : 'material-bom-edit-grid',
 																editor : {
 																	xtype : 'combogrid',
@@ -157,6 +160,7 @@ Ext.define('SCM.view.basedata.materialbom.EditUI', {
 																xtype : 'combocolumn',
 																name : 'isBomMaterial',
 																text:'是否BOM物料',
+																width : 80,
 																dataIndex : 'isBomMaterial',
 																editor:{
 																	xtype : 'combobox',
