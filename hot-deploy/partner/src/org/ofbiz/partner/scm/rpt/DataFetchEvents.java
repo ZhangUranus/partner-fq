@@ -705,7 +705,7 @@ public class DataFetchEvents {
 				" AND YEAR(BIZ_DATE) = " + year +
 				" AND MONTH(BIZ_DATE) = " + month +
 				supplierSeleteStr2 +
-				" ORDER BY BIZ_DATE" ;
+				" ORDER BY BIZ_DATE,SUPPLIER_NAME" ;
 		return sql;
 	}
 	
