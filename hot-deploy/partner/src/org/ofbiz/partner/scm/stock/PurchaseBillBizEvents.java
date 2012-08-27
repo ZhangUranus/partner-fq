@@ -37,6 +37,7 @@ public class PurchaseBillBizEvents {
 	 * @param response
 	 * @return
 	 * @throws Exception
+	 * 说明：提交采购申请单，修改单据状态。
 	 */
 	public static String submitBill(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		boolean beganTransaction = false;
@@ -77,6 +78,7 @@ public class PurchaseBillBizEvents {
 	 * @param response
 	 * @return
 	 * @throws Exception
+	 * 说明：撤销提交申请
 	 */
 	public static String rollbackBill(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		boolean beganTransaction = false;
@@ -116,6 +118,9 @@ public class PurchaseBillBizEvents {
 	 * @param response
 	 * @return
 	 * @throws Exception
+	 * 步骤：
+	 * 1.将采购单所有的物料更新到PurPlanBalance表，即供应商未验收物料数量。
+	 * 2.更新采购申请单状态为已审核
 	 */
 	public static String auditBill(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		boolean beganTransaction = false;
@@ -171,6 +176,7 @@ public class PurchaseBillBizEvents {
 	 * @param response
 	 * @return
 	 * @throws Exception
+	 * 说明：撤销审核操作。
 	 */
 	public static String unauditBill(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		boolean beganTransaction = false;
