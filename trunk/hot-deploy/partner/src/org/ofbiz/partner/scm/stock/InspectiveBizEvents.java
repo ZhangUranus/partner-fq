@@ -35,6 +35,11 @@ public class InspectiveBizEvents {
 	 * @param response
 	 * @return
 	 * @throws Exception
+	 * 步骤：
+	 * 1.修改了，类型只会是1，即采购单（调整单已经独立）。
+	 * 2.将采购单所有的物料更新到PurPlanBalance表，即供应商未验收物料数量。
+	 * 3.调用采购入库结算业务类，更新系统库存，并更新采购对数表。
+	 * 
 	 */
 	public static String submitBill(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		boolean beganTransaction = false;
@@ -101,6 +106,7 @@ public class InspectiveBizEvents {
 	 * @param response
 	 * @return
 	 * @throws Exception
+	 * 说明：撤销提交的操作
 	 */
 	public static String rollbackBill(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		boolean beganTransaction = false;
@@ -112,7 +118,7 @@ public class InspectiveBizEvents {
 			if (delegator != null && billId != null) {
 				Debug.log("入库单撤销:" + billId, module);
 				GenericValue billHead = delegator.findOne("PurchaseWarehousing", UtilMisc.toMap("id", billId), false);
-				if (billHead == null && billHead.get("bizDate") == null) {
+				if (billHead == null || billHead.get("bizDate") == null) {
 					throw new Exception("can`t find PurchaseWarehousing bill or bizdate is null");
 				}
 				// 注意不能使用billHead.getDate方法，会产生castException异常
@@ -127,7 +133,7 @@ public class InspectiveBizEvents {
 				if(type == 1){	//采购单，需要检查供应商，并更新供应商可入库数量
 					// 供应商id
 					String supplierId = billHead.getString("supplierSupplierId");
-					if (supplierId == null && supplierId.length() < 1) {
+					if (supplierId == null || supplierId.length() < 1) {
 						throw new Exception("采购入库单供应商为空！！！");
 					}
 	
