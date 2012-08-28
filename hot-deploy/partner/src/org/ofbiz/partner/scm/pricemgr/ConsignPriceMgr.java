@@ -258,10 +258,10 @@ public class ConsignPriceMgr {
 				delegator.store(gv);
 			} else {// 新增记录
 				if(volume.compareTo(BigDecimal.ZERO)<0){
-					throw new Exception("供应商物料数量小于供应商出库数量，请检查并调整供应商出库数量！");
+					throw new Exception("供应商物料库存数量不足，请检查并调整供应商出库数量！");
 				}
 				if(totalsum.compareTo(BigDecimal.ZERO) < 0) {
-					throw new Exception("供应商物料出库金额小于零，请检查并调整供应商出库金额！");
+					throw new Exception("供应商物料库存金额不足，请检查并调整供应商出库金额！");
 				}
 				BigDecimal beginVolume=BigDecimal.ZERO;//月初数量
 				BigDecimal beginSum=BigDecimal.ZERO;//月初金额
