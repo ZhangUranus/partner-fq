@@ -253,6 +253,7 @@ Ext.define('SCM.controller.ConsignWarehousing.ConsignWarehousingController', {
 			 */
 			initMaterialInfo : function(editor, e) {
 				if (e.field == 'bomId') {
+					debugger;
 					var record = this.MaterialStore.findRecord('id', e.value);
 					if (record) {
 						e.record.set('materialMaterialModel', record.get('bomModel'));
@@ -374,6 +375,7 @@ Ext.define('SCM.controller.ConsignWarehousing.ConsignWarehousingController', {
 											me.detailEditEntry.store.add(entryRecord);
 										}
 										me.MaterialStore.getProxy().extraParams.whereStr = "";
+										me.MaterialStore.load();	//重新加载，避免获取不到单位。
 									});
 						}
 					}

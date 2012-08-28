@@ -254,6 +254,7 @@ Ext.define('SCM.controller.ConsignDrawMaterial.ConsignDrawMaterialController', {
 								me.editEntry.store.add(entryRecord);
 							}
 							me.MaterialStore.getProxy().extraParams.whereStr = "";
+							me.MaterialStore.load();	//重新加载，避免获取不到单位。
 						});
 			},
 
