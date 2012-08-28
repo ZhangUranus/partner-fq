@@ -57,7 +57,7 @@ public class PurchaseReturnEvents {
 			curSum = value.getBigDecimal("totalSum");
 			jsonStr.put("stockVolume", curAmount);
 			if (curAmount != null && curAmount.compareTo(BigDecimal.ZERO) != 0)
-				jsonStr.put("price", curSum.divide(curAmount, 4, RoundingMode.DOWN));
+				jsonStr.put("price", curSum.divide(curAmount, 6, RoundingMode.DOWN));
 			else
 				jsonStr.put("price", 0);
 		}
