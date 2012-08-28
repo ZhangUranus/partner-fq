@@ -374,6 +374,7 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 											me.detailEditEntry.store.add(entryRecord);
 										}
 										me.MaterialStore.getProxy().extraParams.whereStr = "";
+										me.MaterialStore.load();	//重新加载，避免获取不到单位。
 									});
 						}
 					}
