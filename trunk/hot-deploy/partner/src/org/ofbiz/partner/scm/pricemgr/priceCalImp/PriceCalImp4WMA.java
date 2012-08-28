@@ -187,7 +187,7 @@ public class PriceCalImp4WMA implements IPriceCal {
 		if(calAmount.compareTo(BigDecimal.ZERO) == 0){
 			return BigDecimal.ZERO;
 		}else{
-			return calSum.divide(calAmount,4,RoundingMode.HALF_UP);
+			return calSum.divide(calAmount,6,RoundingMode.DOWN);
 		}
 	}
 	
