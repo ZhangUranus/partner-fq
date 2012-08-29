@@ -79,6 +79,7 @@ Ext.define('SCM.view.WorkshopDrawMaterial.ListUI', {
 										dockedItems: [{
 											xtype : 'billsearchtoolbar',// 工具栏
 											custType : 'workshop',
+											keyWord : true,
 											border : '0 1 1 1'
 										}, {
 											dock : 'bottom',
