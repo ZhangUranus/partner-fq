@@ -221,7 +221,7 @@ public class Utils {
 			tempEntry.set("volume", entryValue.getBigDecimal("volume"));
 			tempEntry.set("price", entryValue.getBigDecimal("price"));
 			tempEntry.set("entrysum", entryValue.getBigDecimal("entrysum"));
-			tempEntry.set("sort", entryValue.getBigDecimal("sort"));
+			tempEntry.set("sort", entryValue.getInteger("sort"));
 			tempEntry.create();
 		}
 	}

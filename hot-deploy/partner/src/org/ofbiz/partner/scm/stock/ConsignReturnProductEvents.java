@@ -49,6 +49,11 @@ public class ConsignReturnProductEvents {
 					throw new Exception("can`t find ConsignReturnProduct bill or bizdate is null");
 				}
 				
+				/*
+				 *  处理：
+				 *  1.保存状态时，执行委外退货业务类，并更新单据状态
+				 *  2.非保存状态时，进行退货验收
+				 */
 				if (billHead.getInteger("status") == 0) {
 					BizStockImpFactory.getBizStockImp(BillType.ConsignReturnProduct).updateStock(billHead, true, false);
 					BillBaseEvent.submitBill(request, response);// 更新单据状态
@@ -74,7 +79,7 @@ public class ConsignReturnProductEvents {
 					
 					//当状态为未验收时，创建进货单，并置状态为验收中
 					if(billHead.getInteger("checkStatus")==0){
-						billHead.set("checkStatus", 1);// 设置验收状态为验收中
+						billHead.set("checkStatus", 1);// 设置验收状态为验收中，验收中状态不允许撤销操作
 					}
 					
 					//当所有物料都完成验收时，将状态改为完成验收，并提交进货单
