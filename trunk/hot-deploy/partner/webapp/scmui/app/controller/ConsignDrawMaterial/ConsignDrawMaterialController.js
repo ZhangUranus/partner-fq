@@ -261,8 +261,8 @@ Ext.define('SCM.controller.ConsignDrawMaterial.ConsignDrawMaterialController', {
 								entryRecord.set('sort', i+1);
 								me.editEntry.store.add(entryRecord);
 							}
-//							me.MaterialBOMStore.getProxy().extraParams.whereStr = "";
-//							me.MaterialBOMStore.load();	//重新加载，避免获取不到单位。
+							me.MaterialBOMStore.getProxy().extraParams.whereStr = "";
+							me.MaterialBOMStore.load();	//重新加载，避免获取不到单位。
 						});
 			},
 
