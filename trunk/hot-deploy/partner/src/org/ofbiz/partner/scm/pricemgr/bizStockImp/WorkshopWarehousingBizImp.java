@@ -80,8 +80,8 @@ public class WorkshopWarehousingBizImp implements IBizStock {
 			PriceMgr.getInstance().calPrice(item);
 
 			// 更新车间库存表
-			List<List> materialList = WorkshopPriceMgr.getInstance().getMaterialList(v.getString("id"));
-			for (List element : materialList) {
+			List<List<Object>> materialList = WorkshopPriceMgr.getInstance().getMaterialList(v.getString("id"));
+			for (List<Object> element : materialList) {
 				String bomMaterialId = (String) element.get(0);
 				// 取出的耗料数量、金额只是单个加工件的，需要乘于加工件数量
 				// log 20120814 jeff 将单件耗料改为总耗料
