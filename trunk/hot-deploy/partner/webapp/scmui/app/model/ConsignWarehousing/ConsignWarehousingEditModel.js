@@ -71,7 +71,7 @@ Ext.define('SCM.model.ConsignWarehousing.ConsignWarehousingEditModel', {
 		type : 'jsonajax',
 		api : {
 			read : '../../scm/control/requestJsonData?entity=ConsignWarehousingView&distinct=true&fields=id,number,bizDate,processorSupplierId,processorSupplierName,checkerSystemUserId,checkerSystemUserName,submitterSystemUserId,submitterSystemUserName,totalsum,createdStamp,lastUpdatedStamp,note,status',
-			destroy : '../../scm/control/deleteWithEntry?headEntity=ConsignWarehousing&entryEntity=ConsignWarehousingEntry'
+			destroy : '../../scm/control/deleteWithEntry?headEntity=ConsignWarehousing&entryEntity=ConsignWarehousingEntry&cascadeDelete=ConsignPriceDetail'
 		},
 		remoteFilter : true
 	}

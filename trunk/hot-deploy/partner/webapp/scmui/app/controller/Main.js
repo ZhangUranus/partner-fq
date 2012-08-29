@@ -86,6 +86,11 @@ Ext.define('SCM.controller.Main', {
 							pageSize : SCM.unpageSize,
 							storeId : 'MWHComboInitStore' //下拉框－－展现时使用
 						}).load();
+				/* 只用于物料查找，下拉框不能使用该store */
+				Ext.create('MaterialComboStore', {
+							pageSize : SCM.unpageSize,
+							storeId : 'MAllStore' //物料的Store
+						}).load();
 
 				/* 初始化物料BOM的STORE */
 				/* 普通物料BOM */

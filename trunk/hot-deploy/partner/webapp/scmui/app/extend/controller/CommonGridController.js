@@ -408,6 +408,7 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 						title : this.gridTitle, // sheet页名称
 						header : header, // 表头
 						dataIndex : dataIndex, // 数据引用
+						distinct : true,
 						type : 'EXCEL',
 						whereStr : getProxy().extraParams.whereStr
 					}

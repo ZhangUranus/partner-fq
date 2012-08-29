@@ -5,7 +5,7 @@ Ext.define('SCM.extend.toolbar.BillSearchToolbar', {
 				var me = this;
 				var today = new Date();
 				var startDay = new Date(today.getFullYear(), today.getMonth(), 1);
-				
+
 				var tools = [{
 							xtype : 'datefield',
 							name : 'searchStartDate',
@@ -36,32 +36,6 @@ Ext.define('SCM.extend.toolbar.BillSearchToolbar', {
 							displayField : 'name',
 							store : SCM.store.basiccode.billStatusStore,
 							emptyText : '所有状态'
-						}, {
-							xtype : 'combogrid',
-							name : 'searchMaterialId',
-							width : 145,
-							labelWidth : 35,
-							fieldLabel : '物料',
-							valueField : 'id',
-							displayField : 'name',
-							store : Ext.data.StoreManager.lookup('MComboStore'),
-							matchFieldWidth : false,
-							emptyText : '所有物料',
-							listConfig : {
-								width : 400,
-								height : SCM.MaxSize.COMBOGRID_HEIGHT,
-								columns : [{
-											header : '编码',
-											dataIndex : 'number',
-											width : 100,
-											hideable : false
-										}, {
-											header : '名称',
-											dataIndex : 'name',
-											width : 280,
-											hideable : false
-										}]
-							}
 						}];
 
 				// 增加供应商/车间/加工商/客户等条件
@@ -114,6 +88,43 @@ Ext.define('SCM.extend.toolbar.BillSearchToolbar', {
 												header : '名称',
 												dataIndex : 'name',
 												width : 180,
+												hideable : false
+											}]
+								}
+							}]);
+				}
+				
+				if (me.keyWord) {
+					tools = tools.concat([{
+								xtype : 'textfield',
+								name : 'searchKeyWord',
+								minWidth : 150,
+								emptyText : '请输入物料名称或编码'
+							}]);
+				} else {
+					tools = tools.concat([{
+								xtype : 'combogrid',
+								name : 'searchMaterialId',
+								width : 145,
+								labelWidth : 35,
+								fieldLabel : '物料',
+								valueField : 'id',
+								displayField : 'name',
+								store : Ext.data.StoreManager.lookup('MComboStore'),
+								matchFieldWidth : false,
+								emptyText : '所有物料',
+								listConfig : {
+									width : 400,
+									height : SCM.MaxSize.COMBOGRID_HEIGHT,
+									columns : [{
+												header : '编码',
+												dataIndex : 'number',
+												width : 100,
+												hideable : false
+											}, {
+												header : '名称',
+												dataIndex : 'name',
+												width : 280,
 												hideable : false
 											}]
 								}
