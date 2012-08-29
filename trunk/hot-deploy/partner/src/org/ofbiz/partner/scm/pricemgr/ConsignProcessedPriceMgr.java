@@ -50,6 +50,10 @@ public class ConsignProcessedPriceMgr {
 	 * @param volume
 	 * @param totalsum
 	 * @throws Exception
+	 * 
+	 * 说明：
+	 * 	1.正常出入库，类型为入库的提交或者撤销，需要更新入库金额（加工金额）
+	 *  2.退货验收出入库，不需要更新入库金额（不需要加工金额）
 	 */
 	public void update(int type, String supplierId, String materialId, BigDecimal volume, BigDecimal processPrice, boolean isOut, boolean isCancel) throws Exception {
 		synchronized (updateLock) {

@@ -90,10 +90,10 @@ public class ConsignWarehousingBizImp implements IBizStock {
 			PriceMgr.getInstance().calPrice(item);
 
 			// 更新加工商库存表
-			List<List> materialList = ConsignPriceMgr.getInstance().getMaterialList(v.getString("id"));
-			for (List element : materialList) {
+			List<List<Object>> materialList = ConsignPriceMgr.getInstance().getMaterialList(v.getString("id"));
+			for (List<Object> element : materialList) {
 				String bomMaterialId = (String) element.get(0);
-				//取出的耗料数量、金额只是单个加工件的，需要乘于加工件数量
+				//取出的耗料数量、金额加工件的总耗料
 				BigDecimal bomAmount = (BigDecimal) element.get(1);
 				BigDecimal bomSum = (BigDecimal) element.get(2);
 				if(!isOut){
