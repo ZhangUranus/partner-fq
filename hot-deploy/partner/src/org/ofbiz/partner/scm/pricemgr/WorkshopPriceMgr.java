@@ -140,10 +140,10 @@ public class WorkshopPriceMgr {
 	 * @throws Exception
 	 * @log 20120814 jeff 将单件耗料改为总耗料
 	 */
-	public List<List> getMaterialList(String entryId) throws Exception {
+	public List<List<Object>> getMaterialList(String entryId) throws Exception {
 		// 根据入库加工件，获取耗料列表
 		List<GenericValue> entryList = delegator.findByAnd("WorkshopPriceDetail", UtilMisc.toMap("parentId", entryId));
-		List<List> result = new ArrayList<List>();
+		List<List<Object>> result = new ArrayList<List<Object>>();
 		for (GenericValue value : entryList) {
 			List<Object> element = new ArrayList<Object>();
 			element.add(value.getString("materialId"));
