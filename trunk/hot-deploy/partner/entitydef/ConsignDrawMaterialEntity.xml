@@ -50,6 +50,7 @@
 	<view-entity entity-name="ConsignDrawMaterialView" package-name="org.ofbiz.scm.ConsignDrawMaterial" title="ConsignDrawMaterialView  Entity">
 		<member-entity entity-alias="ConsignDrawMaterialV" entity-name="ConsignDrawMaterial"></member-entity>
 		<member-entity entity-alias="ConsignDrawMaterialEntryV" entity-name="ConsignDrawMaterialEntry"></member-entity>
+		<member-entity entity-alias="materialMaterialV" entity-name="TMaterial"></member-entity>
 		<member-entity entity-alias="processorSupplierV" entity-name="Supplier"></member-entity>
 		<member-entity entity-alias="issuerSystemUserV" entity-name="SystemUser"></member-entity>
 		<member-entity entity-alias="submitterSystemUserV" entity-name="SystemUser"></member-entity>
@@ -61,9 +62,16 @@
 		<alias name="issuerSystemUserName" entity-alias="issuerSystemUserV" field="name"></alias>
 		<alias name="submitterSystemUserName" entity-alias="submitterSystemUserV" field="name"></alias>
 		<alias name="processedMaterialMaterialName" entity-alias="processedMaterialMaterialV" field="name"></alias>
+		
+		<!-- 查询条件需要取物料编码、物料名称，在查询数据中需要distinct -->
 		<view-link entity-alias="ConsignDrawMaterialV" rel-entity-alias="ConsignDrawMaterialEntryV" rel-optional="true">
 			<key-map field-name="id" rel-field-name="parentId" />
 		</view-link>
+		<view-link entity-alias="ConsignDrawMaterialEntryV" rel-entity-alias="materialMaterialV" rel-optional="true">
+			<key-map field-name="materialMaterialId" rel-field-name="id" />
+		</view-link>
+		<!-- 查询条件需要取物料编码、物料名称，在查询数据中需要distinct -->
+		
 		<view-link entity-alias="ConsignDrawMaterialV" rel-entity-alias="processorSupplierV" rel-optional="true">
 			<key-map field-name="processorSupplierId" rel-field-name="id" />
 		</view-link>
@@ -83,6 +91,8 @@
 	<!-- 导出视图 -->
 	<view-entity entity-name="ConsignDrawMaterialExportView" package-name="org.ofbiz.scm.ConsignDrawMaterial" title="ConsignDrawMaterialExportView  Entity">
 		<member-entity entity-alias="ConsignDrawMaterialV" entity-name="ConsignDrawMaterial"></member-entity>
+		<member-entity entity-alias="ConsignDrawMaterialEntryV" entity-name="ConsignDrawMaterialEntry"></member-entity>
+		<member-entity entity-alias="materialMaterialV" entity-name="TMaterial"></member-entity>
 		<member-entity entity-alias="processorSupplierV" entity-name="Supplier"></member-entity>
 		<member-entity entity-alias="issuerSystemUserV" entity-name="SystemUser"></member-entity>
 		<member-entity entity-alias="submitterSystemUserV" entity-name="SystemUser"></member-entity>
@@ -93,6 +103,16 @@
 		<alias name="issuerSystemUserName" entity-alias="issuerSystemUserV" field="name"></alias>
 		<alias name="submitterSystemUserName" entity-alias="submitterSystemUserV" field="name"></alias>
 		<alias name="processedMaterialMaterialName" entity-alias="processedMaterialMaterialV" field="name"></alias>
+		
+		<!-- 查询条件需要取物料编码、物料名称，在查询数据中需要distinct -->
+		<view-link entity-alias="ConsignDrawMaterialV" rel-entity-alias="ConsignDrawMaterialEntryV" rel-optional="true">
+			<key-map field-name="id" rel-field-name="parentId" />
+		</view-link>
+		<view-link entity-alias="ConsignDrawMaterialEntryV" rel-entity-alias="materialMaterialV" rel-optional="true">
+			<key-map field-name="materialMaterialId" rel-field-name="id" />
+		</view-link>
+		<!-- 查询条件需要取物料编码、物料名称，在查询数据中需要distinct -->
+		
 		<view-link entity-alias="ConsignDrawMaterialV" rel-entity-alias="processorSupplierV" rel-optional="true">
 			<key-map field-name="processorSupplierId" rel-field-name="id" />
 		</view-link>
