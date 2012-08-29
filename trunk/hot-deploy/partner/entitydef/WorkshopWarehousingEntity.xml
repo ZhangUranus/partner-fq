@@ -58,22 +58,30 @@
 	<view-entity entity-name="WorkshopWarehousingView" package-name="org.ofbiz.scm.WorkshopWarehousing" title="WorkshopWarehousingView  Entity">
 		<member-entity entity-alias="WorkshopWarehousingV" entity-name="WorkshopWarehousing"></member-entity>
 		<member-entity entity-alias="WorkshopWarehousingEntryV" entity-name="WorkshopWarehousingEntry"></member-entity>
+		<member-entity entity-alias="MaterialBomV" entity-name="MaterialBom"></member-entity>
+		<member-entity entity-alias="materialMaterialV" entity-name="TMaterial"></member-entity>
 		<member-entity entity-alias="workshopWorkshopV" entity-name="Workshop"></member-entity>
 		<member-entity entity-alias="checkerSystemUserV" entity-name="SystemUser"></member-entity>
 		<member-entity entity-alias="submitterSystemUserV" entity-name="SystemUser"></member-entity>
-		<member-entity entity-alias="MaterialBomV" entity-name="MaterialBom"></member-entity>
 		<alias-all entity-alias="WorkshopWarehousingV"></alias-all>
 		<alias name="materialMaterialId" entity-alias="MaterialBomV" field="materialId"></alias>
 		<alias name="bomId" entity-alias="WorkshopWarehousingEntryV" field="bomId"></alias>
 		<alias name="workshopWorkshopName" entity-alias="workshopWorkshopV" field="name"></alias>
 		<alias name="checkerSystemUserName" entity-alias="checkerSystemUserV" field="name"></alias>
 		<alias name="submitterSystemUserName" entity-alias="submitterSystemUserV" field="name"></alias>
+		
+		<!-- 查询条件需要取物料编码、物料名称，在查询数据中需要distinct -->
 		<view-link entity-alias="WorkshopWarehousingV" rel-entity-alias="WorkshopWarehousingEntryV" rel-optional="true">
 			<key-map field-name="id" rel-field-name="parentId" />
 		</view-link>
 		<view-link entity-alias="WorkshopWarehousingEntryV" rel-entity-alias="MaterialBomV" rel-optional="true">
 			<key-map field-name="bomId" rel-field-name="id" />
 		</view-link>
+		<view-link entity-alias="MaterialBomV" rel-entity-alias="materialMaterialV" rel-optional="true">
+			<key-map field-name="materialId" rel-field-name="id" />
+		</view-link>
+		<!-- 查询条件需要取物料编码、物料名称，在查询数据中需要distinct -->
+		
 		<view-link entity-alias="WorkshopWarehousingV" rel-entity-alias="workshopWorkshopV" rel-optional="true">
 			<key-map field-name="workshopWorkshopId" rel-field-name="id" />
 		</view-link>
@@ -87,6 +95,9 @@
 	<!-- 导出视图 -->
 	<view-entity entity-name="WorkshopWarehousingExportView" package-name="org.ofbiz.scm.WorkshopWarehousing" title="WorkshopWarehousingExportView  Entity">
 		<member-entity entity-alias="WorkshopWarehousingV" entity-name="WorkshopWarehousing"></member-entity>
+		<member-entity entity-alias="WorkshopWarehousingEntryV" entity-name="WorkshopWarehousingEntry"></member-entity>
+		<member-entity entity-alias="MaterialBomV" entity-name="MaterialBom"></member-entity>
+		<member-entity entity-alias="materialMaterialV" entity-name="TMaterial"></member-entity>
 		<member-entity entity-alias="workshopWorkshopV" entity-name="Workshop"></member-entity>
 		<member-entity entity-alias="checkerSystemUserV" entity-name="SystemUser"></member-entity>
 		<member-entity entity-alias="submitterSystemUserV" entity-name="SystemUser"></member-entity>
@@ -94,6 +105,19 @@
 		<alias name="workshopWorkshopName" entity-alias="workshopWorkshopV" field="name"></alias>
 		<alias name="checkerSystemUserName" entity-alias="checkerSystemUserV" field="name"></alias>
 		<alias name="submitterSystemUserName" entity-alias="submitterSystemUserV" field="name"></alias>
+		
+		<!-- 查询条件需要取物料编码、物料名称，在查询数据中需要distinct -->
+		<view-link entity-alias="WorkshopWarehousingV" rel-entity-alias="WorkshopWarehousingEntryV" rel-optional="true">
+			<key-map field-name="id" rel-field-name="parentId" />
+		</view-link>
+		<view-link entity-alias="WorkshopWarehousingEntryV" rel-entity-alias="MaterialBomV" rel-optional="true">
+			<key-map field-name="bomId" rel-field-name="id" />
+		</view-link>
+		<view-link entity-alias="MaterialBomV" rel-entity-alias="materialMaterialV" rel-optional="true">
+			<key-map field-name="materialId" rel-field-name="id" />
+		</view-link>
+		<!-- 查询条件需要取物料编码、物料名称，在查询数据中需要distinct -->
+		
 		<view-link entity-alias="WorkshopWarehousingV" rel-entity-alias="workshopWorkshopV" rel-optional="true">
 			<key-map field-name="workshopWorkshopId" rel-field-name="id" />
 		</view-link>

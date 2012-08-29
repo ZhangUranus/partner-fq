@@ -99,7 +99,10 @@ Ext.define('SCM.controller.WorkshopReturnMaterial.WorkshopReturnMaterialControll
 			afterInitComponent : function() {
 				this.searchStartDate = this.listPanel.down('datefield[name=searchStartDate]');
 				this.searchEndDate = this.listPanel.down('datefield[name=searchEndDate]');
-				this.searchMaterialId = this.listPanel.down('combogrid[name=searchMaterialId]');
+//				this.searchMaterialId = this.listPanel.down('combogrid[name=searchMaterialId]');
+				this.searchKeyWord = this.listPanel.down('textfield[name=searchKeyWord]');
+				this.MaterialStore = Ext.data.StoreManager.lookup('MAllStore');
+				
 				this.searchCustId = this.listPanel.down('combogrid[name=searchCustId]');
 				this.searchStatus = this.listPanel.down('combobox[name=status]');
 				this.totalFields = this.editForm.down('textfield[name=totalsum]');
@@ -120,10 +123,10 @@ Ext.define('SCM.controller.WorkshopReturnMaterial.WorkshopReturnMaterialControll
 			 */
 			refreshRecord : function() {
 				var tempString = '';
-				if (this.searchStartDate.getValue()) {
+				if (!Ext.isEmpty(this.searchStartDate.getValue())) {
 					tempString += 'WorkshopReturnMaterialV.biz_date >= \'' + this.searchStartDate.getRawValue() + ' 00:00:00\'';
 				}
-				if (this.searchEndDate.getValue()) {
+				if (!Ext.isEmpty(this.searchEndDate.getValue())) {
 					if (tempString != '') {
 						if (this.searchStartDate.getRawValue() > this.searchEndDate.getRawValue()) {
 							showWarning('开始日期不允许大于结束日期，请重新选择！');
@@ -133,19 +136,25 @@ Ext.define('SCM.controller.WorkshopReturnMaterial.WorkshopReturnMaterialControll
 					}
 					tempString += 'WorkshopReturnMaterialV.biz_date <= \'' + this.searchEndDate.getRawValue() + ' 23:59:59\'';
 				}
-				if (this.searchMaterialId.getValue() && this.searchMaterialId.getValue() != '') {
+//				if (this.searchMaterialId.getValue() && this.searchMaterialId.getValue() != '') {
+//					if (tempString != '') {
+//						tempString += ' and ';
+//					}
+//					tempString += 'WorkshopReturnMaterialEntryV.material_material_id = \'' + this.searchMaterialId.getValue() + '\'';
+//				}
+				if (!Ext.isEmpty(this.searchKeyWord.getValue())){
 					if (tempString != '') {
 						tempString += ' and ';
 					}
-					tempString += 'WorkshopReturnMaterialEntryV.material_material_id = \'' + this.searchMaterialId.getValue() + '\'';
+					tempString += '(materialMaterialV.name like \'%' + this.searchKeyWord.getValue() + '%\' or materialMaterialV.number like \'%' + this.searchKeyWord.getValue() + '%\')';
 				}
-				if (this.searchCustId.getValue() && this.searchCustId.getValue() != '') {
+				if (!Ext.isEmpty(this.searchCustId.getValue())) {
 					if (tempString != '') {
 						tempString += ' and ';
 					}
 					tempString += 'WorkshopReturnMaterialV.workshop_workshop_id = \'' + this.searchCustId.getValue() + '\'';
 				}
-				if ((this.searchStatus.getValue() && this.searchStatus.getValue() != '') || this.searchStatus.getValue() == 0) {
+				if ((!Ext.isEmpty(this.searchStatus.getValue())) || this.searchStatus.getValue() == 0) {
 					if (tempString != '') {
 						tempString += ' and ';
 					}
@@ -167,7 +176,7 @@ Ext.define('SCM.controller.WorkshopReturnMaterial.WorkshopReturnMaterialControll
 			 */
 			initMaterialInfo : function(editor, e) {
 				if (e.field == 'materialMaterialId') {
-					var record = this.searchMaterialId.store.findRecord('id', e.value);
+					var record = this.MaterialStore.findRecord('id', e.value);
 					if (record) {
 						e.record.set('materialMaterialModel', record.get('model'));
 						e.record.set('unitUnitId', record.get('defaultUnitId'));

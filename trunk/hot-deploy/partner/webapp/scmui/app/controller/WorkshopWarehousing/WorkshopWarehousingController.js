@@ -126,14 +126,15 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 			afterInitComponent : function() {
 				this.searchStartDate = this.listPanel.down('datefield[name=searchStartDate]');
 				this.searchEndDate = this.listPanel.down('datefield[name=searchEndDate]');
-				this.searchMaterialId = this.listPanel.down('combogrid[name=searchMaterialId]');
+//				this.searchMaterialId = this.listPanel.down('combogrid[name=searchMaterialId]');
+				this.searchKeyWord = this.listPanel.down('textfield[name=searchKeyWord]');
+				
 				this.searchCustId = this.listPanel.down('combogrid[name=searchCustId]');
 				this.searchStatus = this.listPanel.down('combobox[name=status]');
 				this.allColumn = this.editEntry.query('gridcolumn');
 				this.addLineButton = this.win.down('gridpanel button[action=addLine]');
 				this.deleteLineButton = this.win.down('gridpanel button[action=deleteLine]');
-				this.MaterialStore = Ext.data.StoreManager.lookup('MBAllStore');
-				this.MaterialStore.load();
+				this.MaterialBOMStore = Ext.data.StoreManager.lookup('MBAllStore');
 
 				// 耗料明细页面
 				this.viewDetailButton = this.win.down('gridpanel button[action=viewDetail]');
@@ -144,8 +145,6 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 				this.editDetailButton = this.win.down('gridpanel button[action=editDetail]');
 				this.detailEditWin = Ext.widget('WorkshopWarehousingdetailedit');
 				this.detailEditEntry = this.detailEditWin.down('gridpanel');
-				// this.detailEditEntry.addListener('edit', this.initDetailList,
-				// this); // 监控列表编辑事件
 			},
 
 			/**
@@ -206,10 +205,10 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 			 */
 			refreshRecord : function() {
 				var tempString = '';
-				if (this.searchStartDate.getValue()) {
+				if (!Ext.isEmpty(this.searchStartDate.getValue())) {
 					tempString += 'WorkshopWarehousingV.biz_date >= \'' + this.searchStartDate.getRawValue() + ' 00:00:00\'';
 				}
-				if (this.searchEndDate.getValue()) {
+				if (!Ext.isEmpty(this.searchEndDate.getValue())) {
 					if (tempString != '') {
 						if (this.searchStartDate.getRawValue() > this.searchEndDate.getRawValue()) {
 							showWarning('开始日期不允许大于结束日期，请重新选择！');
@@ -219,19 +218,25 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 					}
 					tempString += 'WorkshopWarehousingV.biz_date <= \'' + this.searchEndDate.getRawValue() + ' 23:59:59\'';
 				}
-				if (this.searchMaterialId.getValue() && this.searchMaterialId.getValue() != '') {
+//				if (this.searchMaterialId.getValue() && this.searchMaterialId.getValue() != '') {
+//					if (tempString != '') {
+//						tempString += ' and ';
+//					}
+//					tempString += 'materialMaterialV.material_material_id = \'' + this.searchMaterialId.getValue() + '\'';
+//				}
+				if (!Ext.isEmpty(this.searchKeyWord.getValue())){
 					if (tempString != '') {
 						tempString += ' and ';
 					}
-					tempString += 'materialMaterialV.material_material_id = \'' + this.searchMaterialId.getValue() + '\'';
+					tempString += '(materialMaterialV.name like \'%' + this.searchKeyWord.getValue() + '%\' or materialMaterialV.number like \'%' + this.searchKeyWord.getValue() + '%\')';
 				}
-				if (this.searchCustId.getValue() && this.searchCustId.getValue() != '') {
+				if (!Ext.isEmpty(this.searchCustId.getValue())) {
 					if (tempString != '') {
 						tempString += ' and ';
 					}
 					tempString += 'WorkshopWarehousingV.workshop_workshop_id = \'' + this.searchCustId.getValue() + '\'';
 				}
-				if ((this.searchStatus.getValue() && this.searchStatus.getValue() != '') || this.searchStatus.getValue() == 0) {
+				if ((!Ext.isEmpty(this.searchStatus.getValue())) || this.searchStatus.getValue() == 0) {
 					if (tempString != '') {
 						tempString += ' and ';
 					}
@@ -253,7 +258,7 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 			 */
 			initMaterialInfo : function(editor, e) {
 				if (e.field == 'bomId') {
-					var record = this.MaterialStore.findRecord('id', e.value);
+					var record = this.MaterialBOMStore.findRecord('id', e.value);
 					if (record) {
 						e.record.set('materialMaterialModel', record.get('bomModel'));
 						e.record.set('unitUnitId', record.get('bomUnitId'));
@@ -309,29 +314,6 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 
 			},
 
-			// /**
-			// * 当用户编辑grid时，同步更新相关表单数据
-			// *
-			// * @param {}
-			// * editor
-			// * @param {}
-			// * e
-			// */
-			// initDetailList : function(editor, e) {
-			// if (e.field == 'materialMaterialId') {
-			// var record = this.searchMaterialId.store.findRecord('id',
-			// e.value);
-			// if (record) {
-			// e.record.set('materialMaterialModel', record.get('model'));
-			// e.record.set('unitUnitId', record.get('defaultUnitId'));
-			// e.record.set('unitUnitName', record.get('defaultUnitName'));
-			// e.record.set('price', record.get('defaultPrice'));
-			// }
-			// }
-			// e.record.set('entrysum', e.record.get('price') *
-			// e.record.get('volume'));
-			// },
-
 			/**
 			 * 编辑事件
 			 * 
@@ -342,7 +324,7 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 			 */
 			modifyDetailRecord : function(grid, record) {
 				var me = this;
-				me.currentRecord = record;
+//				me.currentRecord = record;
 				me.detailEditWin.uiStatus = 'Modify';
 				
 				var materialVolume = 1;
@@ -354,8 +336,8 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 				me.detailEditEntry.store.getProxy().extraParams.whereStr = 'parent_id = \'' + record.get('id') + '\'';
 				me.detailEditEntry.store.load(function(records, operation, success) {
 						if(records.length <= 0){//如果不存在耗料列表，获取初始列表
-							me.MaterialStore.getProxy().extraParams.whereStr = 'MaterialBomV.id = \'' + record.get('bomId') + '\'';
-							me.MaterialStore.load(function(records, operation, success) {
+							me.MaterialBOMStore.getProxy().extraParams.whereStr = 'MaterialBomV.id = \'' + record.get('bomId') + '\'';
+							me.MaterialBOMStore.load(function(records, operation, success) {
 										me.detailEditEntry.store.remove(me.detailEditEntry.store.data.items);
 										for (var i = 0; i < records.length; i++) {
 											var tempRecord = records[i];
@@ -373,8 +355,8 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 											entryRecord.set('materialUnitId', tempRecord.get('unitId'));
 											me.detailEditEntry.store.add(entryRecord);
 										}
-										me.MaterialStore.getProxy().extraParams.whereStr = "";
-										me.MaterialStore.load();	//重新加载，避免获取不到单位。
+										me.MaterialBOMStore.getProxy().extraParams.whereStr = "";
+										me.MaterialBOMStore.load();	//重新加载，避免获取不到单位。
 									});
 						}
 					}
@@ -390,44 +372,36 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 			 *            button 按钮控件
 			 */
 			editDetailRecord : function(button) {
-				var sm = this.editEntry.getSelectionModel();
+				var me = this;
+				var sm = me.editEntry.getSelectionModel();
 				if (sm.hasSelection()) {// 判断是否选择行记录
 					record = sm.getLastSelected();
-
-					// 如果单据状态是已提交、已审核或者已经结算则不能修改
-					this.modifyDetailRecord(this.editEntry, record);
+					Ext.Ajax.request({ 
+						scope : me,
+						url : "../../scm/control/checkExist",
+						params:{entity:'WorkshopWarehousingEntry',id:record.get('id')},
+						success : function(response, option) {
+							if(response.responseText.length<1){
+								showError('系统没有返回结果');
+							}
+				 			var responseArray = Ext.JSON.decode(response.responseText);
+				 			if(responseArray.success){
+				 				if(responseArray.isExist){
+									// 如果单据状态是已提交、已审核或者已经结算则不能修改
+									me.modifyDetailRecord(me.editEntry, record);
+				 				}else{
+				 					showError('请先保存!');
+				 				}
+				 			}else{
+				 				showError(responseArray.message);
+				 			}
+						}
+					});
+					
 				} else {
 					showWarning('未选中物料！');
 				}
 			},
-
-			// /**
-			// * 新增额外耗料
-			// *
-			// * @param {}
-			// * button
-			// */
-			// addDetailLine : function(button) {
-			// var detailRecord =
-			// Ext.create('WorkshopWarehousingEntryDetailModel');
-			// detailRecord.phantom = true;
-			//
-			// // 设置分录id
-			// detailRecord.set('entryId', this.detailEditEntryId);
-			// this.detailEditEntry.store.add(detailRecord);
-			// },
-			// /**
-			// * 删除额外耗料
-			// *
-			// * @param {}
-			// * button
-			// */
-			// deleteDetailLine : function(button) {
-			// var selMod = this.detailEditEntry.getSelectionModel();
-			// if (selMod != null) {
-			// this.detailEditEntry.store.remove(selMod.getLastSelected());
-			// }
-			// },
 
 			/**
 			 * 保存额外耗料列表
