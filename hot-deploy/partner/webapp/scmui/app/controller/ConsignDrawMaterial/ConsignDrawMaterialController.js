@@ -99,7 +99,9 @@ Ext.define('SCM.controller.ConsignDrawMaterial.ConsignDrawMaterialController', {
 			afterInitComponent : function() {
 				this.searchStartDate = this.listPanel.down('datefield[name=searchStartDate]');
 				this.searchEndDate = this.listPanel.down('datefield[name=searchEndDate]');
-				this.searchMaterialId = this.listPanel.down('combogrid[name=searchMaterialId]');
+//				this.searchMaterialId = this.listPanel.down('combogrid[name=searchMaterialId]');
+				this.searchKeyWord = this.listPanel.down('textfield[name=searchKeyWord]');
+				
 				this.searchCustId = this.listPanel.down('combogrid[name=searchCustId]');
 				this.searchStatus = this.listPanel.down('combobox[name=status]');
 				this.totalFields = this.editForm.down('textfield[name=totalsum]');
@@ -107,7 +109,7 @@ Ext.define('SCM.controller.ConsignDrawMaterial.ConsignDrawMaterialController', {
 				this.processedBomIdFields.addListener('change', this.initMaterialGrid, this);
 				this.materialVolumeFields = this.editForm.down('numberfield[name=materialVolume]');
 				this.materialVolumeFields.addListener('change', this.materialVolumeChange, this);
-				this.MaterialStore = Ext.data.StoreManager.lookup('MBAllStore');
+				this.MaterialBOMStore = Ext.data.StoreManager.lookup('MBAllStore');
 				this.editEntry.store.proxy.addListener('afterRequest', this.changeStockVolume, this);
 			},
 			
@@ -125,10 +127,10 @@ Ext.define('SCM.controller.ConsignDrawMaterial.ConsignDrawMaterialController', {
 			 */
 			refreshRecord : function() {
 				var tempString = '';
-				if (this.searchStartDate.getValue()) {
+				if (!Ext.isEmpty(this.searchStartDate.getValue())) {
 					tempString += 'ConsignDrawMaterialV.biz_date >= \'' + this.searchStartDate.getRawValue() + ' 00:00:00\'';
 				}
-				if (this.searchEndDate.getValue()) {
+				if (!Ext.isEmpty(this.searchEndDate.getValue())) {
 					if (tempString != '') {
 						if (this.searchStartDate.getRawValue() > this.searchEndDate.getRawValue()) {
 							showWarning('开始日期不允许大于结束日期，请重新选择！');
@@ -138,19 +140,25 @@ Ext.define('SCM.controller.ConsignDrawMaterial.ConsignDrawMaterialController', {
 					}
 					tempString += 'ConsignDrawMaterialV.biz_date <= \'' + this.searchEndDate.getRawValue() + ' 23:59:59\'';
 				}
-				if (this.searchMaterialId.getValue() && this.searchMaterialId.getValue() != '') {
+//				if (this.searchMaterialId.getValue() && this.searchMaterialId.getValue() != '') {
+//					if (tempString != '') {
+//						tempString += ' and ';
+//					}
+//					tempString += 'ConsignDrawMaterialEntryV.material_material_id = \'' + this.searchMaterialId.getValue() + '\'';
+//				}
+				if (!Ext.isEmpty(this.searchKeyWord.getValue())){
 					if (tempString != '') {
 						tempString += ' and ';
 					}
-					tempString += 'ConsignDrawMaterialEntryV.material_material_id = \'' + this.searchMaterialId.getValue() + '\'';
+					tempString += '(materialMaterialV.name like \'%' + this.searchKeyWord.getValue() + '%\' or materialMaterialV.number like \'%' + this.searchKeyWord.getValue() + '%\')';
 				}
-				if (this.searchCustId.getValue() && this.searchCustId.getValue() != '') {
+				if (!Ext.isEmpty(this.searchCustId.getValue())) {
 					if (tempString != '') {
 						tempString += ' and ';
 					}
 					tempString += 'ConsignDrawMaterialV.processor_supplier_id = \'' + this.searchCustId.getValue() + '\'';
 				}
-				if ((this.searchStatus.getValue() && this.searchStatus.getValue() != '') || this.searchStatus.getValue() == 0) {
+				if ((!Ext.isEmpty(this.searchStatus.getValue())) || this.searchStatus.getValue() == 0) {
 					if (tempString != '') {
 						tempString += ' and ';
 					}
@@ -232,8 +240,8 @@ Ext.define('SCM.controller.ConsignDrawMaterial.ConsignDrawMaterialController', {
 			 */
 			initMaterialGrid : function(field, newValue, oldValue) {
 				var me = this;
-				me.MaterialStore.getProxy().extraParams.whereStr = 'MaterialBomV.id = \'' + newValue + '\'';
-				me.MaterialStore.load(function(records, operation, success) {
+				me.MaterialBOMStore.getProxy().extraParams.whereStr = 'MaterialBomV.id = \'' + newValue + '\'';
+				me.MaterialBOMStore.load(function(records, operation, success) {
 							me.editEntry.store.removeAll();
 							for (var i = 0; i < records.length; i++) {
 								var materialVolume = me.materialVolumeFields.getValue() ? me.materialVolumeFields.getValue() : 0;
@@ -253,8 +261,8 @@ Ext.define('SCM.controller.ConsignDrawMaterial.ConsignDrawMaterialController', {
 								entryRecord.set('sort', i+1);
 								me.editEntry.store.add(entryRecord);
 							}
-							me.MaterialStore.getProxy().extraParams.whereStr = "";
-							me.MaterialStore.load();	//重新加载，避免获取不到单位。
+//							me.MaterialBOMStore.getProxy().extraParams.whereStr = "";
+//							me.MaterialBOMStore.load();	//重新加载，避免获取不到单位。
 						});
 			},
 

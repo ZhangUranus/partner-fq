@@ -36,7 +36,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				this.changeComponentsState();
 				this.initEnterEvent();
 				this.refreshRecord();
-				this.searchMaterialId.store.load(); // 初始化物料列表
+				//this.searchMaterialId.store.load(); // 初始化物料列表
 
 				this.printdata;
 				this.submitLock = false;
@@ -746,6 +746,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 						title : this.gridTitle, // sheet页名称
 						header : header, // 表头
 						dataIndex : dataIndex, // 数据引用
+						distinct : true,
 						type : 'EXCEL',
 						whereStr : getProxy().extraParams.whereStr
 					}
