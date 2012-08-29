@@ -71,7 +71,7 @@ Ext.define('SCM.model.WorkshopWarehousing.WorkshopWarehousingEditModel', {
 		type : 'jsonajax',
 		api : {
 			read : '../../scm/control/requestJsonData?entity=WorkshopWarehousingView&distinct=true&fields=id,number,bizDate,workshopWorkshopId,workshopWorkshopName,checkerSystemUserId,checkerSystemUserName,submitterSystemUserId,submitterSystemUserName,totalsum,createdStamp,lastUpdatedStamp,note,status',
-			destroy : '../../scm/control/deleteWithEntry?headEntity=WorkshopWarehousing&entryEntity=WorkshopWarehousingEntry'
+			destroy : '../../scm/control/deleteWithEntry?headEntity=WorkshopWarehousing&entryEntity=WorkshopWarehousingEntry&cascadeDelete=WorkshopPriceDetail'
 		},
 		remoteFilter : true
 	}
