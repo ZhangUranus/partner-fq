@@ -49,6 +49,7 @@
 	<view-entity entity-name="PurchaseReturnView" package-name="org.ofbiz.scm.PurchaseReturn" title="PurchaseReturnView  Entity">
 		<member-entity entity-alias="PurchaseReturnV" entity-name="PurchaseReturn"></member-entity>
 		<member-entity entity-alias="PurchaseReturnEntryV" entity-name="PurchaseReturnEntry"></member-entity>
+		<member-entity entity-alias="materialMaterialV" entity-name="TMaterial"></member-entity>
 		<member-entity entity-alias="supplierSupplierV" entity-name="Supplier"></member-entity>
 		<member-entity entity-alias="returnerSystemUserV" entity-name="SystemUser"></member-entity>
 		<member-entity entity-alias="submitterSystemUserV" entity-name="SystemUser"></member-entity>
@@ -57,9 +58,16 @@
 		<alias name="supplierSupplierName" entity-alias="supplierSupplierV" field="name"></alias>
 		<alias name="returnerSystemUserName" entity-alias="returnerSystemUserV" field="name"></alias>
 		<alias name="submitterSystemUserName" entity-alias="submitterSystemUserV" field="name"></alias>
+		
+		<!-- 查询条件需要取物料编码、物料名称，在查询数据中需要distinct -->
 		<view-link entity-alias="PurchaseReturnV" rel-entity-alias="PurchaseReturnEntryV" rel-optional="true">
 			<key-map field-name="id" rel-field-name="parentId" />
 		</view-link>
+		<view-link entity-alias="PurchaseReturnEntryV" rel-entity-alias="materialMaterialV" rel-optional="true">
+			<key-map field-name="materialMaterialId" rel-field-name="id" />
+		</view-link>
+		<!-- 查询条件需要取物料编码、物料名称，在查询数据中需要distinct -->
+		
 		<view-link entity-alias="PurchaseReturnV" rel-entity-alias="supplierSupplierV" rel-optional="true">
 			<key-map field-name="supplierSupplierId" rel-field-name="id" />
 		</view-link>
@@ -73,6 +81,8 @@
 	<!-- 导出视图 -->
 	<view-entity entity-name="PurchaseReturnExportView" package-name="org.ofbiz.scm.PurchaseReturn" title="PurchaseReturnExportView  Entity">
 		<member-entity entity-alias="PurchaseReturnV" entity-name="PurchaseReturn"></member-entity>
+		<member-entity entity-alias="PurchaseReturnEntryV" entity-name="PurchaseReturnEntry"></member-entity>
+		<member-entity entity-alias="materialMaterialV" entity-name="TMaterial"></member-entity>
 		<member-entity entity-alias="supplierSupplierV" entity-name="Supplier"></member-entity>
 		<member-entity entity-alias="returnerSystemUserV" entity-name="SystemUser"></member-entity>
 		<member-entity entity-alias="submitterSystemUserV" entity-name="SystemUser"></member-entity>
@@ -80,6 +90,16 @@
 		<alias name="supplierSupplierName" entity-alias="supplierSupplierV" field="name"></alias>
 		<alias name="returnerSystemUserName" entity-alias="returnerSystemUserV" field="name"></alias>
 		<alias name="submitterSystemUserName" entity-alias="submitterSystemUserV" field="name"></alias>
+		
+		<!-- 查询条件需要取物料编码、物料名称，在查询数据中需要distinct -->
+		<view-link entity-alias="PurchaseReturnV" rel-entity-alias="PurchaseReturnEntryV" rel-optional="true">
+			<key-map field-name="id" rel-field-name="parentId" />
+		</view-link>
+		<view-link entity-alias="PurchaseReturnEntryV" rel-entity-alias="materialMaterialV" rel-optional="true">
+			<key-map field-name="materialMaterialId" rel-field-name="id" />
+		</view-link>
+		<!-- 查询条件需要取物料编码、物料名称，在查询数据中需要distinct -->
+		
 		<view-link entity-alias="PurchaseReturnV" rel-entity-alias="supplierSupplierV" rel-optional="true">
 			<key-map field-name="supplierSupplierId" rel-field-name="id" />
 		</view-link>
