@@ -91,6 +91,7 @@ Ext.define('SCM.view.ConsignReturnProduct.ListUI', {
 										dockedItems: [{
 											xtype : 'billsearchtoolbar',// 工具栏
 											custType : 'processor',
+											keyWord : true,
 											border : '0 1 1 1'
 										}, {
 											dock : 'bottom',

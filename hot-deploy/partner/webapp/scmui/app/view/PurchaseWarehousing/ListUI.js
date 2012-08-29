@@ -87,6 +87,7 @@ Ext.define('SCM.view.PurchaseWarehousing.ListUI', {
 										dockedItems: [{
 											xtype : 'billsearchtoolbar',// 工具栏
 											custType : 'supplier',
+											keyWord : true,
 											border : '0 1 1 1'
 										}, {
 											dock : 'bottom',
