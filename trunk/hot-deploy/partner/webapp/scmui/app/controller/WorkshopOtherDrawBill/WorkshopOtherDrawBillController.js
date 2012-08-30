@@ -98,7 +98,10 @@ Ext.define('SCM.controller.WorkshopOtherDrawBill.WorkshopOtherDrawBillController
 			afterInitComponent : function() {
 				this.searchStartDate = this.listContainer.down('datefield[name=searchStartDate]');
 				this.searchEndDate = this.listContainer.down('datefield[name=searchEndDate]');
-				this.searchMaterialId = this.listContainer.down('combogrid[name=searchMaterialId]');
+//				this.searchMaterialId = this.listContainer.down('combogrid[name=searchMaterialId]');
+				this.searchKeyWord = this.listPanel.down('textfield[name=searchKeyWord]');
+				this.MaterialStore = Ext.data.StoreManager.lookup('MAllStore');
+				
 				this.searchCustId = this.listContainer.down('combogrid[name=searchCustId]');
 				this.searchStatus = this.listPanel.down('combobox[name=status]');
 			},
@@ -123,10 +126,10 @@ Ext.define('SCM.controller.WorkshopOtherDrawBill.WorkshopOtherDrawBillController
 			 */
 			refreshRecord : function() {
 				var tempString = '';
-				if(this.searchStartDate.getValue()){
+				if (!Ext.isEmpty(this.searchStartDate.getValue())) {
 					tempString += 'WorkshopOtherDrawBillV.biz_date >= \'' + this.searchStartDate.getRawValue() + ' 00:00:00\'';
 				}
-				if(this.searchEndDate.getValue()){
+				if (!Ext.isEmpty(this.searchEndDate.getValue())) {
 					if(tempString != ''){
 						if(this.searchStartDate.getRawValue()>this.searchEndDate.getRawValue()){
 							showWarning('开始日期不允许大于结束日期，请重新选择！');
@@ -136,19 +139,25 @@ Ext.define('SCM.controller.WorkshopOtherDrawBill.WorkshopOtherDrawBillController
 					}
 					tempString += 'WorkshopOtherDrawBillV.biz_date <= \'' + this.searchEndDate.getRawValue() + ' 23:59:59\'';
 				}
-				if(this.searchMaterialId.getValue() && this.searchMaterialId.getValue() != ''){
+//				if(this.searchMaterialId.getValue() && this.searchMaterialId.getValue() != ''){
+//					if(tempString != ''){
+//						tempString += ' and ';
+//					}
+//					tempString += 'WorkshopOtherDrawBillEntryV.material_material_id = \'' + this.searchMaterialId.getValue() + '\'';
+//				}
+				if (!Ext.isEmpty(this.searchKeyWord.getValue())){
+					if (tempString != '') {
+						tempString += ' and ';
+					}
+					tempString += '(materialMaterialV.name like \'%' + this.searchKeyWord.getValue() + '%\' or materialMaterialV.number like \'%' + this.searchKeyWord.getValue() + '%\')';
+				}
+				if (!Ext.isEmpty(this.searchCustId.getValue())) {
 					if(tempString != ''){
 						tempString += ' and ';
 					}
-					tempString += 'WorkshopOtherDrawBillEntryV.material_material_id = \'' + this.searchMaterialId.getValue() + '\'';
+					tempString += 'WorkshopOtherDrawBillV.workshop_workshop_id = \'' + this.searchCustId.getValue() + '\'';
 				}
-				if(this.searchCustId.getValue() && this.searchCustId.getValue() != ''){
-					if(tempString != ''){
-						tempString += ' and ';
-					}
-					tempString += 'WorkshopOtherDrawBillV.supplier_supplier_id = \'' + this.searchCustId.getValue() + '\'';
-				}
-				if ((this.searchStatus.getValue() && this.searchStatus.getValue() != '') || this.searchStatus.getValue() == 0) {
+				if ((!Ext.isEmpty(this.searchStatus.getValue())) || this.searchStatus.getValue() == 0) {
 					if (tempString != '') {
 						tempString += ' and ';
 					}
@@ -169,7 +178,7 @@ Ext.define('SCM.controller.WorkshopOtherDrawBill.WorkshopOtherDrawBillController
 			 */
 			initMaterialInfo : function(editor, e) {
 				if (e.field == 'materialMaterialId') {
-					var record = Ext.data.StoreManager.lookup('MWHComboInitStore').findRecord('id', e.value);
+					var record = this.MaterialStore.findRecord('id', e.value);
 					if (record) {
 						e.record.set('materialMaterialModel', record.get('model'));
 						e.record.set('unitUnitId', record.get('defaultUnitId'));
