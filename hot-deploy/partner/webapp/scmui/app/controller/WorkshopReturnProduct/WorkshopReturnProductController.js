@@ -124,7 +124,10 @@ Ext.define('SCM.controller.WorkshopReturnProduct.WorkshopReturnProductController
 			afterInitComponent : function() {
 				this.searchStartDate = this.listPanel.down('datefield[name=searchStartDate]');
 				this.searchEndDate = this.listPanel.down('datefield[name=searchEndDate]');
-				this.searchMaterialId = this.listPanel.down('combogrid[name=searchMaterialId]');
+//				this.searchMaterialId = this.listPanel.down('combogrid[name=searchMaterialId]');
+				this.searchKeyWord = this.listPanel.down('textfield[name=searchKeyWord]');
+				this.MaterialStore = Ext.data.StoreManager.lookup('MAllStore');
+				
 				this.searchCustId = this.listPanel.down('combogrid[name=searchCustId]');
 				this.searchStatus = this.listPanel.down('combobox[name=status]');
 				this.currentCheckVolumeColumn = this.editEntry.down('numbercolumn[dataIndex=currentCheckVolume]');
@@ -132,8 +135,8 @@ Ext.define('SCM.controller.WorkshopReturnProduct.WorkshopReturnProductController
 				this.inputpriceColumn = this.editEntry.down('numbercolumn[dataIndex=inputprice]');
 				this.warehouseColumn = this.editEntry.down('combocolumn[dataIndex=warehouseWarehouseId]');
 				this.marterialColumn = this.editEntry.down('combocolumn[dataIndex=bomId]');
-				this.MaterialStore = Ext.data.StoreManager.lookup('MBAllStore');
-				this.MaterialStore.load();
+				this.MaterialBOMStore = Ext.data.StoreManager.lookup('MBAllStore');
+
 				this.gridToolBar = this.editEntry.down('gridedittoolbar');
 				this.checkButton = this.win.down('button[action=check]');
 				this.addLineButton = this.win.down('gridpanel button[action=addLine]');
@@ -217,10 +220,10 @@ Ext.define('SCM.controller.WorkshopReturnProduct.WorkshopReturnProductController
 			 */
 			refreshRecord : function() {
 				var tempString = '';
-				if (this.searchStartDate.getValue()) {
+				if (!Ext.isEmpty(this.searchStartDate.getValue())) {
 					tempString += 'WorkshopReturnProductV.biz_date >= \'' + this.searchStartDate.getRawValue() + ' 00:00:00\'';
 				}
-				if (this.searchEndDate.getValue()) {
+				if (!Ext.isEmpty(this.searchEndDate.getValue())) {
 					if (tempString != '') {
 						if (this.searchStartDate.getRawValue() > this.searchEndDate.getRawValue()) {
 							showWarning('开始日期不允许大于结束日期，请重新选择！');
@@ -230,19 +233,25 @@ Ext.define('SCM.controller.WorkshopReturnProduct.WorkshopReturnProductController
 					}
 					tempString += 'WorkshopReturnProductV.biz_date <= \'' + this.searchEndDate.getRawValue() + ' 23:59:59\'';
 				}
-				if (this.searchMaterialId.getValue() && this.searchMaterialId.getValue() != '') {
+//				if (this.searchMaterialId.getValue() && this.searchMaterialId.getValue() != '') {
+//					if (tempString != '') {
+//						tempString += ' and ';
+//					}
+//					tempString += 'materialMaterialV.material_material_id = \'' + this.searchMaterialId.getValue() + '\'';
+//				}
+				if (!Ext.isEmpty(this.searchKeyWord.getValue())){
 					if (tempString != '') {
 						tempString += ' and ';
 					}
-					tempString += 'materialMaterialV.material_material_id = \'' + this.searchMaterialId.getValue() + '\'';
+					tempString += '(materialMaterialV.name like \'%' + this.searchKeyWord.getValue() + '%\' or materialMaterialV.number like \'%' + this.searchKeyWord.getValue() + '%\')';
 				}
-				if (this.searchCustId.getValue() && this.searchCustId.getValue() != '') {
+				if (!Ext.isEmpty(this.searchCustId.getValue())) {
 					if (tempString != '') {
 						tempString += ' and ';
 					}
 					tempString += 'WorkshopReturnProductV.workshop_workshop_id = \'' + this.searchCustId.getValue() + '\'';
 				}
-				if ((this.searchStatus.getValue() && this.searchStatus.getValue() != '') || this.searchStatus.getValue() == 0) {
+				if ((!Ext.isEmpty(this.searchStatus.getValue())) || this.searchStatus.getValue() == 0) {
 					if (tempString != '') {
 						tempString += ' and ';
 					}
@@ -264,7 +273,7 @@ Ext.define('SCM.controller.WorkshopReturnProduct.WorkshopReturnProductController
 			 */
 			initMaterialInfo : function(editor, e) {
 				if (e.field == 'bomId') {
-					var record = this.MaterialStore.findRecord('id', e.value);
+					var record = this.MaterialBOMStore.findRecord('id', e.value);
 					if (record) {
 						e.record.set('materialMaterialModel', record.get('bomModel'));
 						e.record.set('unitUnitId', record.get('bomUnitId'));
@@ -364,7 +373,7 @@ Ext.define('SCM.controller.WorkshopReturnProduct.WorkshopReturnProductController
 			 */
 			initDetailList : function(editor, e) {
 				if (e.field == 'materialMaterialId') {
-					var record = this.searchMaterialId.store.findRecord('id', e.value);
+					var record = this.MaterialStore.findRecord('id', e.value);
 					if (record) {
 						e.record.set('materialMaterialModel', record.get('model'));
 						e.record.set('unitUnitId', record.get('defaultUnitId'));
@@ -388,7 +397,7 @@ Ext.define('SCM.controller.WorkshopReturnProduct.WorkshopReturnProductController
 			 *            record 选中记录
 			 */
 			modifyDetailRecord : function(grid, record) {
-				this.currentRecord = record;
+				//this.currentRecord = record;
 				this.detailWin.uiStatus = 'Modify';
 				// 根据选择的id加载编辑界面数据
 				this.detailEntryId = record.get('id');
