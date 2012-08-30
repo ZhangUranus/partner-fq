@@ -28,7 +28,7 @@ public class WorkshopReturnProductBizImp implements IBizStock {
 		// 供应商id
 		String workshopId = billValue.getString("workshopWorkshopId");
 		if (workshopId == null || workshopId.length() < 1) {
-			throw new Exception("制造领料单车间为空！！！");
+			throw new Exception("制造退货单车间为空！！！");
 		}
 
 		// 获取单据id分录条目
