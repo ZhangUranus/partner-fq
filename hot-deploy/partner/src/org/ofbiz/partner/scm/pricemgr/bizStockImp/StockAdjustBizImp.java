@@ -35,15 +35,18 @@ public class StockAdjustBizImp implements IBizStock {
 			String warehouseId = v.getString("warehouseWarehouseId");// 仓库id
 			String materialId = v.getString("materialMaterialId");// 物料id
 			BigDecimal volume = v.getBigDecimal("volume");// 数量
-			BigDecimal price = PriceMgr.getInstance().getPrice(warehouseId, materialId);
-			if(price == BigDecimal.ZERO){
-				price = v.getBigDecimal("price");
-			}
+			//2012-08-30 不允许用户输入单价，调整单没有单价
+//			BigDecimal price = PriceMgr.getInstance().getPrice(warehouseId, materialId);
+//			if(price == BigDecimal.ZERO){
+//				price = v.getBigDecimal("price");
+//			}
+			BigDecimal price = BigDecimal.ZERO;
 			
 			if(volume.compareTo(BigDecimal.ZERO)<=0){
 				throw new Exception("调整单入库物料数量不能小于等于零，请重新输入！");
 			}
-			BigDecimal sum = volume.multiply(price);// 金额
+//			BigDecimal sum = volume.multiply(price);// 金额
+			BigDecimal sum =  BigDecimal.ZERO;
 			Debug.log("调整单入库单价计算:物料id" + materialId + ";数量" + volume + ";金额" + sum, "StockAdjustBizImp");
 			
 			v.set("price", price);
