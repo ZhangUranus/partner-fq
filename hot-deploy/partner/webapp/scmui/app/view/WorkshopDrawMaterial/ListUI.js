@@ -1,6 +1,5 @@
 /*
- * 定义物料Bom列表界面
- * Mark
+ * 定义物料Bom列表界面 Mark
  */
 Ext.define('SCM.view.WorkshopDrawMaterial.ListUI', {
 			extend : 'Ext.container.Container',
@@ -17,7 +16,7 @@ Ext.define('SCM.view.WorkshopDrawMaterial.ListUI', {
 						});
 				Ext.applyIf(me, {
 							items : [{
-										xtype : 'billbasetoolbar',//工具栏
+										xtype : 'billbasetoolbar',// 工具栏
 										submit : true,
 										region : 'north',
 										border : '0 1 1 1'
@@ -76,17 +75,17 @@ Ext.define('SCM.view.WorkshopDrawMaterial.ListUI', {
 													text : '总金额'
 												}],
 										viewConfig : {},
-										dockedItems: [{
-											xtype : 'billsearchtoolbar',// 工具栏
-											custType : 'workshop',
-											keyWord : true,
-											border : '0 1 1 1'
-										}, {
-											dock : 'bottom',
-											xtype : 'pagingtoolbar',
-											store : 'WorkshopDrawMaterial.WorkshopDrawMaterialEditStore',
-											displayInfo : true
-										}]
+										dockedItems : [{
+													xtype : 'billsearchtoolbar',// 工具栏
+													custType : 'workshop',
+													keyWord : true,
+													border : '0 1 1 1'
+												}, {
+													dock : 'bottom',
+													xtype : 'pagingtoolbar',
+													store : 'WorkshopDrawMaterial.WorkshopDrawMaterialEditStore',
+													displayInfo : true
+												}]
 									}, {
 										xtype : 'gridpanel',
 										title : '',
@@ -130,6 +129,6 @@ Ext.define('SCM.view.WorkshopDrawMaterial.ListUI', {
 									}]
 						});
 				me.callParent(arguments);
-				//me.down('gridpanel').store.load();
+				// me.down('gridpanel').store.load();
 			}
 		});
