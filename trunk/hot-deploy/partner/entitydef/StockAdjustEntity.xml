@@ -45,13 +45,21 @@
 	<view-entity entity-name="StockAdjustView" package-name="org.ofbiz.scm.StockAdjust" title="StockAdjustView  Entity">
 		<member-entity entity-alias="StockAdjustV" entity-name="StockAdjust"></member-entity>
 		<member-entity entity-alias="StockAdjustEntryV" entity-name="StockAdjustEntry"></member-entity>
+		<member-entity entity-alias="materialMaterialV" entity-name="TMaterial"></member-entity>
 		<member-entity entity-alias="submitterSystemUserV" entity-name="SystemUser"></member-entity>
 		<alias-all entity-alias="StockAdjustV"></alias-all>
 		<alias name="materialMaterialId" entity-alias="StockAdjustEntryV" field="materialMaterialId"></alias>
 		<alias name="submitterSystemUserName" entity-alias="submitterSystemUserV" field="name"></alias>
+		
+		<!-- 查询条件需要取物料编码、物料名称，在查询数据中需要distinct -->
 		<view-link entity-alias="StockAdjustV" rel-entity-alias="StockAdjustEntryV" rel-optional="true">
 			<key-map field-name="id" rel-field-name="parentId" />
 		</view-link>
+		<view-link entity-alias="StockAdjustEntryV" rel-entity-alias="materialMaterialV" rel-optional="true">
+			<key-map field-name="materialMaterialId" rel-field-name="id" />
+		</view-link>
+		<!-- 查询条件需要取物料编码、物料名称，在查询数据中需要distinct -->
+		
 		<view-link entity-alias="StockAdjustV" rel-entity-alias="submitterSystemUserV" rel-optional="true">
 			<key-map field-name="submitterSystemUserId" rel-field-name="id" />
 		</view-link>
@@ -59,9 +67,21 @@
 	<!-- 导出视图 -->
 	<view-entity entity-name="StockAdjustExportView" package-name="org.ofbiz.scm.StockAdjust" title="StockAdjustExportView  Entity">
 		<member-entity entity-alias="StockAdjustV" entity-name="StockAdjust"></member-entity>
+		<member-entity entity-alias="StockAdjustEntryV" entity-name="StockAdjustEntry"></member-entity>
+		<member-entity entity-alias="materialMaterialV" entity-name="TMaterial"></member-entity>
 		<member-entity entity-alias="submitterSystemUserV" entity-name="SystemUser"></member-entity>
 		<alias-all entity-alias="StockAdjustV"></alias-all>
 		<alias name="submitterSystemUserName" entity-alias="submitterSystemUserV" field="name"></alias>
+		
+		<!-- 查询条件需要取物料编码、物料名称，在查询数据中需要distinct -->
+		<view-link entity-alias="StockAdjustV" rel-entity-alias="StockAdjustEntryV" rel-optional="true">
+			<key-map field-name="id" rel-field-name="parentId" />
+		</view-link>
+		<view-link entity-alias="StockAdjustEntryV" rel-entity-alias="materialMaterialV" rel-optional="true">
+			<key-map field-name="materialMaterialId" rel-field-name="id" />
+		</view-link>
+		<!-- 查询条件需要取物料编码、物料名称，在查询数据中需要distinct -->
+		
 		<view-link entity-alias="StockAdjustV" rel-entity-alias="submitterSystemUserV" rel-optional="true">
 			<key-map field-name="submitterSystemUserId" rel-field-name="id" />
 		</view-link>
