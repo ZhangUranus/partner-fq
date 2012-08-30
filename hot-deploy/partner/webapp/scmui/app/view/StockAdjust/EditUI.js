@@ -74,17 +74,6 @@ Ext.define('SCM.view.StockAdjust.EditUI', {
 																			}]
 																}
 															}, {
-																xtype : 'numberfield',
-																hideTrigger : true,
-																fieldLabel : '总金额',
-																readOnly : true,
-																name : 'totalsum',
-																margin : 5
-															}, {
-																xtype : 'label'
-															}, {
-																xtype : 'label'
-															}, {
 																xtype : 'textarea',
 																name : 'note',
 																margin : 5,
@@ -213,7 +202,7 @@ Ext.define('SCM.view.StockAdjust.EditUI', {
 																},
 																dataIndex : 'volume',
 																text : '数量',
-																width : 80
+																width : 120
 															}, {
 																xtype : 'combocolumn',
 																dataIndex : 'unitUnitId',
@@ -227,22 +216,7 @@ Ext.define('SCM.view.StockAdjust.EditUI', {
 																	store : Ext.data.StoreManager.lookup('UComboStore'),
 																	readOnly : true
 																},
-																width : 80
-															}, {
-																xtype : 'numbercolumn',
-																editor : {
-																	xtype : 'numberfield',
-																	allowBlank : false,
-																	hideTrigger : true
-																},
-																dataIndex : 'price',
-																text : '单价',
-																width : 80
-															}, {
-																xtype : 'numbercolumn',
-																dataIndex : 'entrysum',
-																text : '金额',
-																width : 80
+																width : 120
 															}],
 													viewConfig : {
 
