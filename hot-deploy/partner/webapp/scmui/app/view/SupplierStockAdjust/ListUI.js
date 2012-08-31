@@ -56,18 +56,13 @@ Ext.define('SCM.view.SupplierStockAdjust.ListUI', {
 													width : 80,
 													groupable : false,
 													text : '提交人'
-												}, {
-													xtype : 'numbercolumn',
-													dataIndex : 'totalsum',
-													width : 100,
-													groupable : false,
-													text : '总金额'
 												}],
 										viewConfig : {
 
 										},
 										dockedItems: [{
 											xtype : 'billsearchtoolbar',// 工具栏
+											keyWord : true,
 											border : '0 1 1 1'
 										}, {
 											dock : 'bottom',
@@ -111,14 +106,6 @@ Ext.define('SCM.view.SupplierStockAdjust.ListUI', {
 													xtype : 'gridcolumn',
 													dataIndex : 'unitUnitName',
 													text : '单位'
-												}, {
-													xtype : 'numbercolumn',
-													dataIndex : 'price',
-													text : '单价'
-												}, {
-													xtype : 'numbercolumn',
-													dataIndex : 'entrysum',
-													text : '金额'
 												}]
 									}]
 						});
