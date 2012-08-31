@@ -171,8 +171,8 @@ Ext.define('SCM.controller.StockAdjust.StockAdjustController', {
 					var record = this.MaterialStore.findRecord('id', e.value);
 					if (record) {
 						e.record.set('materialMaterialModel', record.get('model'));
-						e.record.set('price', record.get('defaultPrice'));
-						e.record.set('refPrice', record.get('defaultPrice'));
+//						e.record.set('price', record.get('defaultPrice'));
+//						e.record.set('refPrice', record.get('defaultPrice'));
 						e.record.set('unitUnitId', record.get('defaultUnitId'));
 						e.record.set('unitUnitName', record.get('defaultUnitName'));
 					}
