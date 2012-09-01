@@ -21,20 +21,18 @@ import org.ofbiz.entity.util.EntityFindOptions;
 import org.ofbiz.partner.scm.common.CommonEvents;
 import org.ofbiz.partner.scm.common.Utils;
 import org.ofbiz.partner.scm.pojo.OrderPojo;
-import org.ofbiz.service.GenericServiceException;
-import org.ofbiz.service.LocalDispatcher;
 
 public class DataFetchEvents {
 	
 	public static String fetchData(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		 LocalDispatcher dispatcher=(LocalDispatcher) request.getAttribute("dispatcher");
-		 Map<String, Object> result = null;
-         try {
-             result = dispatcher.runSync("productInwarehouseServices", null);
-         } catch (GenericServiceException e) {
-        	 
-         }
-         if(true)return "success";
+//		 LocalDispatcher dispatcher=(LocalDispatcher) request.getAttribute("dispatcher");
+//		 Map<String, Object> result = null;
+//         try {
+//             result = dispatcher.runSync("productInwarehouseServices", null);
+//         } catch (GenericServiceException e) {
+//        	 
+//         }
+//         if(true)return "success";
 		// 数据库连接
 		Connection conn = ConnectionFactory.getConnection(Utils.getConnectionHelperName());
 		try {
@@ -496,8 +494,7 @@ public class DataFetchEvents {
 				" AND YEAR(BIZ_DATE) = " + year +
 				" AND MONTH(BIZ_DATE) = " + month +
 				supplierSeleteStr3 +
-				" AND SP.NAME != ''" +
-				" ORDER BY BIZ_DATE" ;
+				" AND SP.NAME != ''";
 		return sql;
 	}
 	
@@ -633,7 +630,7 @@ public class DataFetchEvents {
 	}
 	
 	/**
-	 * 获取发外加工对数明细SQL
+	 * 获取采购供应对数明细SQL
 	 * @param request
 	 * @return
 	 * @throws Exception
@@ -710,7 +707,7 @@ public class DataFetchEvents {
 	}
 	
 	/**
-	 * 发外加工对数图形
+	 * 发外采购供应对数图形
 	 * @param request
 	 * @param response
 	 * @return
@@ -1092,7 +1089,7 @@ public class DataFetchEvents {
 		String startDate = null;
 		String endDate = null;
 		String warehouseId = null;
-		String materialId = null;
+		String keyWord = null;
 		if(request.getParameter("startDate") != null && request.getParameter("endDate") != null){
 			startDate = request.getParameter("startDate");
 			endDate = request.getParameter("endDate");
@@ -1103,8 +1100,8 @@ public class DataFetchEvents {
 		if(request.getParameter("warehouseId") != null){
 			warehouseId = request.getParameter("warehouseId");
 		}
-		if(request.getParameter("materialId") != null){
-			materialId = request.getParameter("materialId");
+		if(request.getParameter("keyWord") != null){
+			keyWord = request.getParameter("keyWord");
 		}
 		
 		String sql =" SELECT " +
@@ -1132,8 +1129,8 @@ public class DataFetchEvents {
 		if(warehouseId != null && !"".equals(warehouseId)){
 			sql += " AND WWE.WAREHOUSE_WAREHOUSE_ID = '" + warehouseId + "'";
 		}
-		if(materialId != null && !"".equals(materialId)){
-			sql += " AND TM.ID = '" + materialId + "'";
+		if(keyWord != null && !"".equals(keyWord)){
+			sql += " AND (TM.NUMBER LIKE '%" + keyWord + "%' OR TM.NAME LIKE '%" + keyWord + "%')";
 		}
 		sql += " GROUP BY WW.NUMBER,WH.NAME,WWE.BOM_ID,TM.NAME,WWE.MATERIAL_MATERIAL_MODEL,UIT.NAME ";
 		sql += " union ";
@@ -1162,8 +1159,8 @@ public class DataFetchEvents {
 		if(warehouseId != null && !"".equals(warehouseId)){
 			sql += " AND CWE.WAREHOUSE_WAREHOUSE_ID = '" + warehouseId + "'";
 		}
-		if(materialId != null && !"".equals(materialId)){
-			sql += " AND TM.ID = '" + materialId + "'";
+		if(keyWord != null && !"".equals(keyWord)){
+			sql += " AND (TM.NUMBER LIKE '%" + keyWord + "%' OR TM.NAME LIKE '%" + keyWord + "%')";
 		}
 		sql += " GROUP BY CW.NUMBER,WH.NAME,CWE.BOM_ID,TM.NAME,CWE.MATERIAL_MATERIAL_MODEL,UIT.NAME ";
 		return sql;
@@ -1305,6 +1302,8 @@ public class DataFetchEvents {
 				OrderPojo order = objMapper.readValue(array.getString(i), OrderPojo.class); 
 				if(i==0){
 					sql += " ORDER BY ";
+				} else {
+					sql += " , ";
 				}
 				sql += order.getProperty() + " " + order.getDirection();
 			}
