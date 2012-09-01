@@ -41,7 +41,8 @@ Ext.define('SCM.controller.rpt.SemiProductCostReportController', {
 				this.searchStartDate = view.down('datefield[name=searchStartDate]');
 				this.searchEndDate = view.down('datefield[name=searchEndDate]');
 				this.searchWarehouseId = view.down('combogrid[name=searchWarehouseId]');
-				this.searchMaterialId = view.down('combogrid[name=searchMaterialId]');
+				this.searchKeyWord = view.down('textfield[name=searchKeyWord]');
+//				this.searchMaterialId = view.down('combogrid[name=searchMaterialId]');
 				this.refreshRecord();
 			},
 
@@ -72,10 +73,15 @@ Ext.define('SCM.controller.rpt.SemiProductCostReportController', {
 				} else {
 					this.listPanel.store.getProxy().extraParams.warehouseId = "";
 				}
-				if (!Ext.isEmpty(this.searchMaterialId.getValue())) {
-					this.listPanel.store.getProxy().extraParams.materialId = this.searchMaterialId.getValue();
+//				if (!Ext.isEmpty(this.searchMaterialId.getValue())) {
+//					this.listPanel.store.getProxy().extraParams.materialId = this.searchMaterialId.getValue();
+//				} else {
+//					this.listPanel.store.getProxy().extraParams.materialId = "";
+//				}
+				if (!Ext.isEmpty(this.searchKeyWord.getValue())) {
+					this.listPanel.store.getProxy().extraParams.keyWord = this.searchKeyWord.getValue();
 				} else {
-					this.listPanel.store.getProxy().extraParams.materialId = "";
+					this.listPanel.store.getProxy().extraParams.keyWord = "";
 				}
 				this.listPanel.store.load();
 			},
