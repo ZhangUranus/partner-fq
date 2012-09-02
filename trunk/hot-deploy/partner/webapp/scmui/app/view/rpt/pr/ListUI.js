@@ -57,31 +57,10 @@ Ext.define('SCM.view.rpt.pr.ListUI', {
 																}]
 													}
 												}, {
-													xtype : 'combogrid',
-													name : 'searchMaterialId',
-													width : 145,
-													labelWidth : 35,
-													fieldLabel : '物料',
-													valueField : 'id',
-													displayField : 'name',
-													store : Ext.data.StoreManager.lookup('MComboStore'),
-													matchFieldWidth : false,
-													emptyText : '所有物料',
-													listConfig : {
-														width : 400,
-														height : SCM.MaxSize.COMBOGRID_HEIGHT,
-														columns : [{
-																	header : '编码',
-																	dataIndex : 'number',
-																	width : 100,
-																	hideable : false
-																}, {
-																	header : '名称',
-																	dataIndex : 'name',
-																	width : 280,
-																	hideable : false
-																}]
-													}
+													xtype : 'textfield',
+													name : 'searchKeyWord',
+													minWidth : 150,
+													emptyText : '请输入物料名称或编码'
 												}, {
 													text : '查询',
 													iconCls : 'system-search',

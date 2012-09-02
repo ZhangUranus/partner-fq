@@ -36,7 +36,8 @@ Ext.define('SCM.controller.rpt.ProductReportController', {
 				this.chartPanel = view.down('panel chart');
 				this.searchMonth = view.down('combobox[name=searchMonth]');
 				this.searchWarehouseId = view.down('combogrid[name=searchWarehouseId]');
-				this.searchMaterialId = view.down('combogrid[name=searchMaterialId]');
+				this.searchKeyWord = view.down('textfield[name=searchKeyWord]');
+//				this.searchMaterialId = view.down('combogrid[name=searchMaterialId]');
 				this.searchMonth.store.load({
 							scope : this,
 							callback : function(records, operation, success) {
@@ -66,11 +67,18 @@ Ext.define('SCM.controller.rpt.ProductReportController', {
 					this.listPanel.store.getProxy().extraParams.warehouseId = "";
 					this.chartPanel.store.getProxy().extraParams.warehouseId = "";
 				}
-				if (!Ext.isEmpty(this.searchMaterialId.getValue())) {
-					this.listPanel.store.getProxy().extraParams.materialId = this.searchMaterialId.getValue();
-					this.chartPanel.store.getProxy().extraParams.materialId = this.searchMaterialId.getValue();
+//				if (!Ext.isEmpty(this.searchMaterialId.getValue())) {
+//					this.listPanel.store.getProxy().extraParams.materialId = this.searchMaterialId.getValue();
+//					this.chartPanel.store.getProxy().extraParams.materialId = this.searchMaterialId.getValue();
+//				} else {
+//					this.listPanel.store.getProxy().extraParams.materialId = "";
+//					this.chartPanel.store.getProxy().extraParams.materialId = "";
+//				}
+				if (!Ext.isEmpty(this.searchKeyWord.getValue())) {
+					this.listPanel.store.getProxy().extraParams.keyWord = this.searchKeyWord.getValue();
+					this.chartPanel.store.getProxy().extraParams.keyWord = this.searchKeyWord.getValue();
 				} else {
-					this.listPanel.store.getProxy().extraParams.materialId = "";
+					this.listPanel.store.getProxy().extraParams.keyWord = "";
 					this.chartPanel.store.getProxy().extraParams.materialId = "";
 				}
 				this.listPanel.store.load();

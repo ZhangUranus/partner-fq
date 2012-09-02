@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -95,7 +94,7 @@ public class Utils {
 	 * 获取进仓单最后同步日期记录
 	 * @return
 	 */
-	private static Object lLock=new Object();//003参数更新锁
+//	private static Object lLock=new Object();//003参数更新锁
 	public static void updateLastPrdInhouseConfDate(Date d) throws Exception{
 		Delegator delegator = DelegatorFactory.getDelegator("default");
 		GenericValue value = delegator.makeValue("PriceMgrParamters");

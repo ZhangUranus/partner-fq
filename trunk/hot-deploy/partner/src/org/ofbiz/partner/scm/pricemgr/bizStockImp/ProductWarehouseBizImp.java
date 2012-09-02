@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import org.ofbiz.base.util.Debug;
@@ -13,11 +12,8 @@ import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericValue;
 import org.ofbiz.entity.condition.EntityCondition;
 import org.ofbiz.partner.scm.pricemgr.BillType;
-import org.ofbiz.partner.scm.pricemgr.ConsignPriceMgr;
-import org.ofbiz.partner.scm.pricemgr.ConsignProcessedPriceMgr;
 import org.ofbiz.partner.scm.pricemgr.ConsumeMaterial;
 import org.ofbiz.partner.scm.pricemgr.IBizStock;
-import org.ofbiz.partner.scm.pricemgr.MaterialBomMgr;
 import org.ofbiz.partner.scm.pricemgr.PriceCalItem;
 import org.ofbiz.partner.scm.pricemgr.PriceMgr;
 import org.ofbiz.partner.scm.pricemgr.Utils;
@@ -82,7 +78,10 @@ public class ProductWarehouseBizImp implements IBizStock {
 				/*2.2  从车间库存表查找耗料单价*/
 				BigDecimal curPrice=WorkshopPriceMgr.getInstance().getPrice(workshopId, bomMaterialId);
 				/*2.3 计算成本 并汇总总成本*/
-				cost=cost.add(bomAmount.multiply(curPrice));
+				BigDecimal curCost = bomAmount.multiply(curPrice);
+				/*2.4 计算成本 并汇总总成本*/
+				cost=cost.add(curCost);
+				
 				
 				/*2.4 更新耗料明细单价和金额，更新车间单价表*/
 				if(!isOut&&!isCancel){
@@ -101,11 +100,11 @@ public class ProductWarehouseBizImp implements IBizStock {
 					     entryDetailValue.set("unitUnitId", mv.getString("defaultUnitId"));
 					     
 					     entryDetailValue.set("price", curPrice);
-					     entryDetailValue.set("amount", cost);
+					     entryDetailValue.set("amount", curCost);
 					     delegator.create(entryDetailValue);
 					}else{
 						/* 更新耗料明细*/
-						delegator.storeByCondition("ProductInwarehouseEntryDetail", UtilMisc.toMap("price",curPrice ,"amount",cost), EntityCondition.makeCondition("id", element.getDetailId()));
+						delegator.storeByCondition("ProductInwarehouseEntryDetail", UtilMisc.toMap("price",curPrice ,"amount",curCost), EntityCondition.makeCondition("id", element.getDetailId()));
 					}
 					/*2.4.2 扣减车间单价表数量、金额*/
 					WorkshopPriceMgr.getInstance().update(workshopId, bomMaterialId, bomAmount.negate(), bomAmount.multiply(curPrice).negate());
