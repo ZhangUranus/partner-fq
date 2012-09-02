@@ -86,9 +86,9 @@ Ext.define('SCM.controller.rpt.PackingMaterialReportController', {
 			 *            eOpts
 			 */
 			showDetail : function(me, record, index, eOpts) {
-				if (record != null && record.get("NUMBER") != null && record.get("BOM_ID") != null) {
+				if (record != null && record.get("NUMBER") != null && record.get("MATERIALID") != null) {
 					this.detailPanel.store.getProxy().extraParams.number = record.get("NUMBER");
-					this.detailPanel.store.getProxy().extraParams.bomId = record.get("BOM_ID");
+					this.detailPanel.store.getProxy().extraParams.materialId = record.get("MATERIALID");
 					this.detailPanel.store.load();
 				}
 			},

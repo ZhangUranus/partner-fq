@@ -792,31 +792,30 @@ public class DataFetchEvents {
 			warehouseId = request.getParameter("warehouseId");
 		}
 		String sql =" SELECT " +
-						" WW.BIZ_DATE, " +
-						" WW.NUMBER, " +
-						" WW.STATUS, " +
+						" PI.BIZ_DATE, " +
+						" PI.NUMBER, " +
+						" PI.STATUS, " +
 						" WH.NAME AS WAREHOUSENAME, " +
-						" WWE.BOM_ID AS BOM_ID, " +
+						" PIE.MATERIAL_MATERIAL_ID AS MATERIALID, " +
 						" TM.NAME AS MATERIALNAME, " +
-						" WWE.MATERIAL_MATERIAL_MODEL AS MATERIALMODEL, " +
+						" TM.MODEL AS MATERIALMODEL, " +
 						" UIT.NAME AS UNITNAME, " +
-						" SUM(ROUND(IFNULL(WWE.VOLUME,0),4)) AS VOLUME, " +
-						" SUM(ROUND(IFNULL(WWE.PRICE,0),4)) AS PRICE, " +
-						" SUM(ROUND(IFNULL(WWE.ENTRYSUM,0),4)) AS ENTRYSUM " +
-					" FROM WORKSHOP_WAREHOUSING WW " +
-					" LEFT JOIN WORKSHOP_WAREHOUSING_ENTRY WWE ON WW.ID = WWE.PARENT_ID " +
-					" LEFT JOIN MATERIAL_BOM MB ON WWE.BOM_ID = MB.ID " +
-					" LEFT JOIN T_MATERIAL TM ON MB.MATERIAL_ID = TM.ID " +
+						" SUM(ROUND(IFNULL(PIE.VOLUME,0),4)) AS VOLUME, " +
+						" SUM(ROUND(IFNULL(PIE.PRICE,0),4)) AS PRICE, " +
+						" SUM(ROUND(IFNULL(PIE.ENTRYSUM,0),4)) AS ENTRYSUM " +
+					" FROM PRODUCT_INWAREHOUSE PI " +
+					" LEFT JOIN PRODUCT_INWAREHOUSE_ENTRY PIE ON PI.ID = PIE.PARENT_ID " +
+					" LEFT JOIN T_MATERIAL TM ON PIE.MATERIAL_MATERIAL_ID = TM.ID " +
 					" LEFT JOIN T_MATERIAL_TYPE TMT ON TM.MATERIAL_TYPE_ID = TMT.ID " +
-					" LEFT JOIN WAREHOUSE WH ON WWE.WAREHOUSE_WAREHOUSE_ID = WH.ID " +
-					" LEFT JOIN UNIT UIT ON WWE.UNIT_UNIT_ID = UIT.ID " +
+					" LEFT JOIN WAREHOUSE WH ON PIE.WAREHOUSE_WAREHOUSE_ID = WH.ID " +
+					" LEFT JOIN UNIT UIT ON PIE.UNIT_UNIT_ID = UIT.ID " +
 					" WHERE TMT.NUMBER = 'MTT100005' " +
-					" AND WW.BIZ_DATE >= '" + startDate + "'" +
-					" AND WW.BIZ_DATE <= '" + endDate + "'" ;
+					" AND PI.BIZ_DATE >= '" + startDate + "'" +
+					" AND PI.BIZ_DATE <= '" + endDate + "'" ;
 		if(warehouseId != null && !"".equals(warehouseId)){
-			sql += " AND WWE.WAREHOUSE_WAREHOUSE_ID = '" + warehouseId + "'";
+			sql += " AND PIE.WAREHOUSE_WAREHOUSE_ID = '" + warehouseId + "'";
 		}
-		sql += " GROUP BY WW.NUMBER,WH.NAME,TM.NAME,WWE.MATERIAL_MATERIAL_MODEL,UIT.NAME ";
+		sql += " GROUP BY PI.NUMBER,WH.NAME,TM.NAME,TM.MODEL,UIT.NAME ";
 		return sql;
 	}
 	
@@ -830,34 +829,33 @@ public class DataFetchEvents {
 	 */
 	public static String queryPackingMaterialDetail(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String number = null;
-		String bomId = null;
+		String materialId = null;
 		
 		if(request.getParameter("number") != null){
 			number = request.getParameter("number");
 		}
 		
-		if(request.getParameter("bomId") != null){
-			bomId = request.getParameter("bomId");
+		if(request.getParameter("materialId") != null){
+			materialId = request.getParameter("materialId");
 		}
 		String sql =" SELECT " +
-						" WW.NUMBER, " +
-						" WWE.WAREHOUSE_WAREHOUSE_ID AS WAREHOUSEID, " +
-						" MB.MATERIAL_ID AS MATERIALID, " +
+						" PI.NUMBER, " +
+						" PIE.WAREHOUSE_WAREHOUSE_ID AS WAREHOUSEID, " +
+						" PIE.MATERIAL_MATERIAL_ID AS MATERIALID, " +
 						" TM.NUMBER AS MATERIALNUMBER, " +
 						" TM.NAME AS MATERIALNAME, " +
-						" AVG(ROUND(IFNULL(WPD.VOLUME,0),4)) AS PERVOLUME, " +
-						" AVG(ROUND(IFNULL(WPD.PRICE,0),4)) AS PRICE, " +
-						" ROUND(IFNULL(AVG(WPD.VOLUME),0),4) AS VOLUME, " +
-						" ROUND(IFNULL(AVG(WPD.PRICE*WPD.VOLUME),0),4) AS ENTRYSUM " +
-					" FROM WORKSHOP_WAREHOUSING WW " +
-					" LEFT JOIN WORKSHOP_WAREHOUSING_ENTRY WWE ON WW.ID = WWE.PARENT_ID " +
-					" LEFT JOIN MATERIAL_BOM MB ON WWE.BOM_ID = MB.ID " +
-					" LEFT JOIN WORKSHOP_PRICE_DETAIL WPD ON WWE.ID = WPD.PARENT_ID " +
-					" LEFT JOIN T_MATERIAL TM ON WPD.MATERIAL_ID = TM.ID " +
+						" AVG(ROUND(IFNULL(PIED.QUANTITY,0),4)) AS PERVOLUME, " +
+						" AVG(ROUND(IFNULL(PIED.PRICE,0),4)) AS PRICE, " +
+						" ROUND(IFNULL(AVG(PIED.QUANTITY),0),4) AS VOLUME, " +
+						" ROUND(IFNULL(AVG(PIED.PRICE*PIED.QUANTITY),0),4) AS ENTRYSUM " +
+					" FROM PRODUCT_INWAREHOUSE PI " +
+					" LEFT JOIN PRODUCT_INWAREHOUSE_ENTRY PIE ON PI.ID = PIE.PARENT_ID " +
+					" LEFT JOIN PRODUCT_INWAREHOUSE_ENTRY_DETAIL PIED ON PIE.ID = PIED.PARENT_ID " +
+					" LEFT JOIN T_MATERIAL TM ON PIED.MATERIAL_ID = TM.ID " +
 					" LEFT JOIN UNIT UIT ON TM.DEFAULT_UNIT_ID = UIT.ID " +
-					" WHERE WW.NUMBER = '" + number + "'" +
-					" AND WWE.BOM_ID = '" + bomId + "'";
-		sql += " GROUP BY WW.NUMBER,WWE.WAREHOUSE_WAREHOUSE_ID,MB.MATERIAL_ID,TM.NUMBER,TM.NAME,WWE.VOLUME ";
+					" WHERE PI.NUMBER = '" + number + "'" +
+					" AND PIE.MATERIAL_MATERIAL_ID = '" + materialId + "'";
+		sql += " GROUP BY PI.NUMBER,PIE.WAREHOUSE_WAREHOUSE_ID,PIE.MATERIAL_MATERIAL_ID,TM.NUMBER,TM.NAME ";
 		
 		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(request,sql));
 		return "sucess";
@@ -935,7 +933,7 @@ public class DataFetchEvents {
 		String year = null;
 		String month = null;
 		String warehouseId = null;
-		String materialId = null;
+		String keyWord = null;
 		String tableName = null;
 		if(request.getParameter("year") != null && request.getParameter("month") != null){
 			year = request.getParameter("year");
@@ -956,8 +954,8 @@ public class DataFetchEvents {
 		if(request.getParameter("warehouseId") != null){
 			warehouseId = request.getParameter("warehouseId");
 		}
-		if(request.getParameter("materialId") != null){
-			materialId = request.getParameter("materialId");
+		if(request.getParameter("keyWord") != null){
+			keyWord = request.getParameter("keyWord");
 		}
 		
 		String sql =" SELECT "+
@@ -984,11 +982,11 @@ public class DataFetchEvents {
 					" LEFT JOIN T_MATERIAL TM ON CMB.MATERIAL_ID = TM.ID "+
 					" LEFT JOIN T_MATERIAL_TYPE TMT ON TM.MATERIAL_TYPE_ID = TMT.ID " +
 					" LEFT JOIN UNIT UN ON TM.DEFAULT_UNIT_ID = UN.ID "+
-					" WHERE TMT.NUMBER = 'MTT100004' " +
+					" WHERE TMT.NUMBER = 'MTT100005' " +
 					" AND YEAR = " + year +
 					" AND MONTH = " + month ;
-		if(materialId != null && !"".equals(materialId)){
-			sql += " AND CMB.MATERIAL_ID = '" + materialId + "'";
+		if(keyWord != null && !"".equals(keyWord)){
+			sql += " AND (TM.NUMBER LIKE '%" + keyWord + "%' OR TM.NAME LIKE '%" + keyWord + "%')";
 		}
 		if(warehouseId != null && !"".equals(warehouseId)){
 			sql += " AND CMB.WAREHOUSE_ID = '" + warehouseId + "'";
@@ -1005,13 +1003,13 @@ public class DataFetchEvents {
 	 */
 	public static String queryProductChart(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String warehouseId = null;
-		String materialId = null;
+		String keyWord = null;
 		
 		if(request.getParameter("warehouseId") != null){
 			warehouseId = request.getParameter("warehouseId");
 		}
-		if(request.getParameter("materialId") != null){
-			materialId = request.getParameter("materialId");
+		if(request.getParameter("keyWord") != null){
+			keyWord = request.getParameter("keyWord");
 		}
 		
 		String sql =" SELECT " +
@@ -1023,9 +1021,9 @@ public class DataFetchEvents {
 					" LEFT JOIN T_MATERIAL TM ON CMB.MATERIAL_ID = TM.ID " +
 					" LEFT JOIN T_MATERIAL_TYPE TMT ON TM.MATERIAL_TYPE_ID = TMT.ID " +
 					" LEFT JOIN UNIT UN ON TM.DEFAULT_UNIT_ID = UN.ID " +
-					" WHERE TMT.NUMBER = 'MTT100004' ";
-		if(materialId != null && !"".equals(materialId)){
-			sql += " AND CMB.MATERIAL_ID = '" + materialId + "'";
+					" WHERE TMT.NUMBER = 'MTT100005' ";
+		if(keyWord != null && !"".equals(keyWord)){
+			sql += " AND (TM.NUMBER LIKE '%" + keyWord + "%' OR TM.NAME LIKE '%" + keyWord + "%')";
 		}
 		if(warehouseId != null && !"".equals(warehouseId)){
 			sql += " AND CMB.WAREHOUSE_ID = '" + warehouseId + "'";
@@ -1042,9 +1040,9 @@ public class DataFetchEvents {
 		sql += " LEFT JOIN T_MATERIAL TM ON CMB.MATERIAL_ID = TM.ID " ;
 		sql += " LEFT JOIN T_MATERIAL_TYPE TMT ON TM.MATERIAL_TYPE_ID = TMT.ID ";
 		sql += " LEFT JOIN UNIT UN ON TM.DEFAULT_UNIT_ID = UN.ID " ;
-		sql += " WHERE TMT.NUMBER = 'MTT100004' " ;
-		if(materialId != null && !"".equals(materialId)){
-			sql += " AND CMB.MATERIAL_ID = '" + materialId + "'";
+		sql += " WHERE TMT.NUMBER = 'MTT100005' " ;
+		if(keyWord != null && !"".equals(keyWord)){
+			sql += " AND (TM.NUMBER LIKE '%" + keyWord + "%' OR TM.NAME LIKE '%" + keyWord + "%')";
 		}
 		if(warehouseId != null && !"".equals(warehouseId)){
 			sql += " AND CMB.WAREHOUSE_ID = '" + warehouseId + "'";
