@@ -105,7 +105,7 @@ public class ProductInwarehouseConfirmEvents {
 				String inwarehouseType=entry.getString("inwarehouseType");
 				if(inwarehouseType==null)throw new Exception("进仓类型为空！");
 				
-				
+				Long qantity=new Long(entry.getString("qantity"));
 				
 				//新成品进仓单分录
 				GenericValue ev=delegator.makeValue("ProductInwarehouseEntry");
@@ -120,6 +120,7 @@ public class ProductInwarehouseConfirmEvents {
 				ev.setString("barcode1", barcode1);
 				ev.setString("barcode2", barcode2);
 				ev.setString("inwarehouseType", inwarehouseType);
+				ev.set("qantity", qantity);
 				delegator.create(ev);
 				
 				
