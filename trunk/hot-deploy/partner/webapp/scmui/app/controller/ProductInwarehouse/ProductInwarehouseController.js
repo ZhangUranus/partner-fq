@@ -122,14 +122,15 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 			afterInitComponent : function() {
 				this.searchStartDate = this.listContainer.down('datefield[name=searchStartDate]');
 				this.searchEndDate = this.listContainer.down('datefield[name=searchEndDate]');
-				this.searchMaterialId = this.listContainer.down('combogrid[name=searchMaterialId]');
+//				this.searchMaterialId = this.listContainer.down('combogrid[name=searchMaterialId]');
+				this.searchKeyWord = this.listPanel.down('textfield[name=searchKeyWord]');
+				
 				this.searchCustId = this.listContainer.down('combogrid[name=searchCustId]');
 				this.searchStatus = this.listPanel.down('combobox[name=status]');
 				this.allColumn = this.editEntry.query('gridcolumn');
 				this.addLineButton = this.win.down('gridpanel button[action=addLine]');
 				this.deleteLineButton = this.win.down('gridpanel button[action=deleteLine]');
-				this.MaterialStore = Ext.data.StoreManager.lookup('MBAllStore');
-				this.MaterialStore.load();
+				this.MaterialBOMStore = Ext.data.StoreManager.lookup('MBAllStore');
 				
 				// 耗料明细页面
 				this.viewDetailButton = this.win.down('gridpanel button[action=viewDetail]');
@@ -224,8 +225,8 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 				me.detailEditEntry.store.getProxy().extraParams.whereStr = 'parent_id = \'' + record.get('id') + '\'';
 				me.detailEditEntry.store.load(function(records, operation, success) {
 						if(records.length <= 0){//如果不存在耗料列表，获取初始列表
-							me.MaterialStore.getProxy().extraParams.whereStr = 'TMaterialV.ID = \'' + record.get('materialMaterialId') + '\'';
-							me.MaterialStore.load(function(records, operation, success) {
+							me.MaterialBOMStore.getProxy().extraParams.whereStr = 'TMaterialV.ID = \'' + record.get('materialMaterialId') + '\'';
+							me.MaterialBOMStore.load(function(records, operation, success) {
 										me.detailEditEntry.store.remove(me.detailEditEntry.store.data.items);
 										for (var i = 0; i < records.length; i++) {
 											var tempRecord = records[i];
@@ -242,7 +243,8 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 											entryRecord.set('amount', 0);
 											me.detailEditEntry.store.add(entryRecord);
 										}
-										me.MaterialStore.getProxy().extraParams.whereStr = "";
+										me.MaterialBOMStore.getProxy().extraParams.whereStr = "";
+										me.MaterialBOMStore.load();
 									});
 						}
 					}
@@ -293,10 +295,10 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 			 */
 			refreshRecord : function() {
 				var tempString = '';
-				if(this.searchStartDate.getValue()){
+				if (!Ext.isEmpty(this.searchStartDate.getValue())) {
 					tempString += 'ProductInwarehouseV.biz_date >= \'' + this.searchStartDate.getRawValue() + ' 00:00:00\'';
 				}
-				if(this.searchEndDate.getValue()){
+				if (!Ext.isEmpty(this.searchEndDate.getValue())) {
 					if(tempString != ''){
 						if(this.searchStartDate.getRawValue()>this.searchEndDate.getRawValue()){
 							showWarning('开始日期不允许大于结束日期，请重新选择！');
@@ -306,19 +308,25 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 					}
 					tempString += 'ProductInwarehouseV.biz_date <= \'' + this.searchEndDate.getRawValue() + ' 23:59:59\'';
 				}
-				if(this.searchMaterialId.getValue() && this.searchMaterialId.getValue() != ''){
+//				if(this.searchMaterialId.getValue() && this.searchMaterialId.getValue() != ''){
+//					if(tempString != ''){
+//						tempString += ' and ';
+//					}
+//					tempString += 'ProductInwarehouseEntryV.material_material_id = \'' + this.searchMaterialId.getValue() + '\'';
+//				}
+				if (!Ext.isEmpty(this.searchKeyWord.getValue())){
+					if (tempString != '') {
+						tempString += ' and ';
+					}
+					tempString += '(materialMaterialV.name like \'%' + this.searchKeyWord.getValue() + '%\' or materialMaterialV.number like \'%' + this.searchKeyWord.getValue() + '%\')';
+				}
+				if (!Ext.isEmpty(this.searchCustId.getValue())) {
 					if(tempString != ''){
 						tempString += ' and ';
 					}
-					tempString += 'ProductInwarehouseEntryV.material_material_id = \'' + this.searchMaterialId.getValue() + '\'';
+					tempString += 'ProductInwarehouseEntryV.workshop_workshop_id = \'' + this.searchCustId.getValue() + '\'';
 				}
-				if(this.searchCustId.getValue() && this.searchCustId.getValue() != ''){
-					if(tempString != ''){
-						tempString += ' and ';
-					}
-					tempString += 'ProductInwarehouseV.supplier_supplier_id = \'' + this.searchCustId.getValue() + '\'';
-				}
-				if ((this.searchStatus.getValue() && this.searchStatus.getValue() != '') || this.searchStatus.getValue() == 0) {
+				if ((!Ext.isEmpty(this.searchStatus.getValue())) || this.searchStatus.getValue() == 0) {
 					if (tempString != '') {
 						tempString += ' and ';
 					}
@@ -410,7 +418,7 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 										var result = Ext.decode(response.responseText)
 										if (result.success) {
 											e.record.set('materialMaterialId', result.materialId);
-											var record = me.MaterialStore.findRecord('materialId', result.materialId);
+											var record = me.MaterialBOMStore.findRecord('materialId', result.materialId);
 											if (record) {
 												e.record.set('materialModel', record.get('bomModel'));
 												e.record.set('unitUnitId', record.get('bomUnitId'));
@@ -422,7 +430,7 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 								});
 					}
 				} else if (e.field == 'materialMaterialId' ) {
-					var record = me.MaterialStore.findRecord('materialId', e.value);
+					var record = me.MaterialBOMStore.findRecord('materialId', e.value);
 					if (record) {
 						e.record.set('materialModel', record.get('bomModel'));
 						e.record.set('unitUnitId', record.get('bomUnitId'));

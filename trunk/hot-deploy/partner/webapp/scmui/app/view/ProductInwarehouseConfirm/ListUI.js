@@ -170,7 +170,7 @@ Ext.define('SCM.view.ProductInwarehouseConfirm.ListUI', {
 										plugins : [cellEditing],
 										dockedItems : [{
 													xtype : 'billsearchtoolbar',// 工具栏
-
+													keyWord : true,
 													border : '0 1 1 1'
 												}]
 									}//end gridpanel

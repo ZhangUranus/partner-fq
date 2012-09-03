@@ -53,8 +53,6 @@ public class ProductOutwarehouseEvents {
 				bizDate= (Date) billHead.get("bizDate");
 
 				BizStockImpFactory.getBizStockImp(BillType.ProductOutwarehouse).updateStock(billHead, true, false);
-
-				BillBaseEvent.submitBill(request, response);// 更新单据状态
 			}
 			
 			//更新周汇总表
@@ -73,6 +71,8 @@ public class ProductOutwarehouseEvents {
 				v.set("prdWeek", Utils.getYearWeekStr(bizDate));
 				v.store();
 			}
+			
+			BillBaseEvent.submitBill(request, response);// 更新单据状态
 			
 			TransactionUtil.commit(beganTransaction);
 		} catch (Exception e) {
@@ -113,8 +113,6 @@ public class ProductOutwarehouseEvents {
 				bizDate= (Date) billHead.get("bizDate");
 
 				BizStockImpFactory.getBizStockImp(BillType.ProductOutwarehouse).updateStock(billHead, false, true);
-
-				BillBaseEvent.rollbackBill(request, response);// 撤销单据
 			}
 			
 			//更新周汇总表
@@ -130,6 +128,8 @@ public class ProductOutwarehouseEvents {
 				ProductInOutStockMgr.getInstance().updateStock(materialId, ProductStockType.OUT, qantity, volume, true);
 				updateNotification(v,delegator,materialId,volume.negate(),v.getString("goodNumber"),v.getString("destinhouseNumber"));
 			}
+			
+			BillBaseEvent.rollbackBill(request, response);// 撤销单据
 			
 			TransactionUtil.commit(beganTransaction);
 		} catch (Exception e) {
@@ -174,6 +174,8 @@ public class ProductOutwarehouseEvents {
 				throw new Exception("未找到产品对应的出货通知单，请先提交通知单！");
 			}
 			headValue.store();
+		} else {
+			throw new Exception("未找到产品对应的出货通知单，请先提交通知单！");
 		}
 	}
 }

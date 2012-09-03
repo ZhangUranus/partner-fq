@@ -60,7 +60,9 @@ Ext.define('SCM.controller.ProductInwarehouseConfirm.ProductInwarehouseConfirmCo
 				this.listPanel = view.down('gridpanel[region=center]');
 				this.searchStartDate = this.listContainer.down('datefield[name=searchStartDate]');
 				this.searchEndDate = this.listContainer.down('datefield[name=searchEndDate]');
-				this.searchMaterialId = this.listContainer.down('combogrid[name=searchMaterialId]');
+//				this.searchMaterialId = this.listContainer.down('combogrid[name=searchMaterialId]');
+				this.searchKeyWord = this.listPanel.down('textfield[name=searchKeyWord]');
+				
 				this.searchStatus = this.listContainer.down('combobox[name=status]');
 				this.searchStatus.setVisible(false);
 				this.syncDownSel=this.listContainer.down('toolbar button[action=syncDownSel]');
@@ -68,10 +70,10 @@ Ext.define('SCM.controller.ProductInwarehouseConfirm.ProductInwarehouseConfirmCo
 				this.listPanel.addListener('edit',this.listPanelEditActin,this);
 				
 				//重新更新仓库数据
-				Ext.data.StoreManager.lookup('WHComboInitStore').load();
+//				Ext.data.StoreManager.lookup('WHComboInitStore').load();
 				
 				//更新物料
-				Ext.data.StoreManager.lookup('MWHComboInitStore').load();
+//				Ext.data.StoreManager.lookup('MWHComboInitStore').load();
 				
 				// 耗料明细页面
 				this.detailWin = Ext.widget('ProductInwarehouseConfirmdetaillist');
@@ -187,10 +189,10 @@ Ext.define('SCM.controller.ProductInwarehouseConfirm.ProductInwarehouseConfirmCo
 			 */
 			refreshRecord : function() {
 				var tempString = '';
-				if(this.searchStartDate.getValue()){
+				if (!Ext.isEmpty(this.searchStartDate.getValue())) {
 					tempString += 'ProductInwarehouseConfirmV.biz_date >= \'' + this.searchStartDate.getRawValue() + ' 00:00:00\'';
 				}
-				if(this.searchEndDate.getValue()){
+				if (!Ext.isEmpty(this.searchEndDate.getValue())) {
 					if(tempString != ''){
 						if(this.searchStartDate.getRawValue()>this.searchEndDate.getRawValue()){
 							showWarning('开始日期不允许大于结束日期，请重新选择！');
@@ -200,11 +202,17 @@ Ext.define('SCM.controller.ProductInwarehouseConfirm.ProductInwarehouseConfirmCo
 					}
 					tempString += 'ProductInwarehouseConfirmV.biz_date <= \'' + this.searchEndDate.getRawValue() + ' 23:59:59\'';
 				}
-				if(this.searchMaterialId.getValue() && this.searchMaterialId.getValue() != ''){
-					if(tempString != ''){
+//				if(this.searchMaterialId.getValue() && this.searchMaterialId.getValue() != ''){
+//					if(tempString != ''){
+//						tempString += ' and ';
+//					}
+//					tempString += 'ProductInwarehouseConfirmV.material_material_id = \'' + this.searchMaterialId.getValue() + '\'';
+//				}
+				if (!Ext.isEmpty(this.searchKeyWord.getValue())){
+					if (tempString != '') {
 						tempString += ' and ';
 					}
-					tempString += 'ProductInwarehouseConfirmV.material_material_id = \'' + this.searchMaterialId.getValue() + '\'';
+					tempString += '(materialMaterialV.name like \'%' + this.searchKeyWord.getValue() + '%\' or materialMaterialV.number like \'%' + this.searchKeyWord.getValue() + '%\')';
 				}
 				tempString += ' and ProductInwarehouseConfirmV.status != \'' + 4 + '\'';
 				
