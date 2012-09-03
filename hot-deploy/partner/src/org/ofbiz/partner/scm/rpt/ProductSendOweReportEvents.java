@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.concurrent.ThreadPoolExecutor.CallerRunsPolicy;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,8 +18,6 @@ import org.ofbiz.entity.jdbc.ConnectionFactory;
 import org.ofbiz.partner.scm.common.CommonEvents;
 import org.ofbiz.partner.scm.common.DatePeriod;
 import org.ofbiz.partner.scm.pricemgr.Utils;
-
-import com.ibm.icu.text.Bidi;
 
 
 public class ProductSendOweReportEvents {
@@ -118,12 +115,12 @@ public class ProductSendOweReportEvents {
 		weekStr=request.getParameter("week");
 		weekDatePeriod=Utils.getDatePeriodFromWeekStr(weekStr);
 		
-		if(request.getParameter("searchMaterialId")!=null&&request.getParameter("searchMaterialId").trim().length()>0){
-			filterMaterial.append(" and  material.id='").append(request.getParameter("searchMaterialId")).append("'");
-		}
+//		if(request.getParameter("searchMaterialId")!=null&&request.getParameter("searchMaterialId").trim().length()>0){
+//			filterMaterial.append(" and  material.id='").append(request.getParameter("searchMaterialId")).append("'");
+//		}
 		
-		if(request.getParameter("blurMaterialName")!=null&&request.getParameter("blurMaterialName").trim().length()>0){
-			filterMaterial.append(" and  material.name like '%").append(request.getParameter("blurMaterialName")).append("%'");
+		if(request.getParameter("keyWord")!=null&&request.getParameter("keyWord").trim().length()>0){
+			filterMaterial.append(" and  (material.name like '%").append(request.getParameter("keyWord")).append("%' or material.number like '%").append(request.getParameter("keyWord")).append("%')");
 		}
 		
 		

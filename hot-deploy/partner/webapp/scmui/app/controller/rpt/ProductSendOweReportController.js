@@ -15,7 +15,7 @@ Ext.define('SCM.controller.rpt.ProductSendOweReportController', {
 								afterrender : this.initComponent
 							},
 							'productsendowereport gridpanel[region=center]' : {
-								select : this.showDetail,
+								select : this.showDetail
 							},
 							
 							// 列表界面刷新
@@ -39,8 +39,9 @@ Ext.define('SCM.controller.rpt.ProductSendOweReportController', {
 				this.listPanel = view.down('gridpanel[region=center]');
 				this.detailPanel = view.down('gridpanel[region=south]');
 				this.searchWeek = view.down('textfield[name=week]');
-				this.searchMaterialId = view.down('combogrid[name=searchMaterialId]');
-				this.searchBlurMaterialName = view.down('textfield[name=blurMaterialName]');
+//				this.searchMaterialId = view.down('combogrid[name=searchMaterialId]');
+//				this.searchBlurMaterialName = view.down('textfield[name=blurMaterialName]');
+				this.searchKeyWord = view.down('textfield[name=searchKeyWord]');
 				
 				this.listPanel.store.removeAll(true);
 				this.detailPanel.store.removeAll(true);
@@ -57,15 +58,15 @@ Ext.define('SCM.controller.rpt.ProductSendOweReportController', {
 					showWarning('请输入周！');
 					return;
 				}
-				if (!Ext.isEmpty(this.searchMaterialId.getValue())) {
-					this.listPanel.store.getProxy().extraParams.searchMaterialId = this.searchMaterialId.getValue();
+//				if (!Ext.isEmpty(this.searchMaterialId.getValue())) {
+//					this.listPanel.store.getProxy().extraParams.searchMaterialId = this.searchMaterialId.getValue();
+//				} else {
+//					this.listPanel.store.getProxy().extraParams.searchMaterialId = "";
+//				}
+				if (!Ext.isEmpty(this.searchKeyWord.getValue())) {
+					this.listPanel.store.getProxy().extraParams.keyWord = this.searchKeyWord.getValue();
 				} else {
-					this.listPanel.store.getProxy().extraParams.searchMaterialId = "";
-				}
-				if (!Ext.isEmpty(this.searchBlurMaterialName.getValue())) {
-					this.listPanel.store.getProxy().extraParams.blurMaterialName = this.searchBlurMaterialName.getValue();
-				} else {
-					this.listPanel.store.getProxy().extraParams.blurMaterialName = "";
+					this.listPanel.store.getProxy().extraParams.keyWord = "";
 				}
 				this.listPanel.store.load();
 			},
