@@ -3,7 +3,6 @@
  */
 Ext.define('SCM.view.rpt.pso.ListUI', {
 			extend : 'Ext.container.Container',
-			requires : ['SCM.ux.combobox.ComboGrid'],
 			alias : 'widget.productsendowereport',
 			title : '综合出货欠数表',
 			layout : {
@@ -30,38 +29,11 @@ Ext.define('SCM.view.rpt.pso.ListUI', {
 													fieldLabel : '周',
 													emptyText : '格式:2012-12W'
 												}, {
-													xtype : 'combogrid',
-													name : 'searchMaterialId',
-													width : 145,
-													labelWidth : 35,
-													fieldLabel : '物料',
-													valueField : 'id',
-													displayField : 'name',
-													store : Ext.data.StoreManager.lookup('MComboStore'),
-													matchFieldWidth : false,
-													emptyText : '所有物料',
-													listConfig : {
-														width : 400,
-														height : SCM.MaxSize.COMBOGRID_HEIGHT,
-														columns : [{
-																	header : '编码',
-																	dataIndex : 'number',
-																	width : 100,
-																	hideable : false
-																}, {
-																	header : '名称',
-																	dataIndex : 'name',
-																	width : 280,
-																	hideable : false
-																}]
-													}
-												},{
 													xtype : 'textfield',
-													name : 'blurMaterialName',
-													width : 180,
-													labelWidth : 60,
-													fieldLabel : '物料名称'
-												},{
+													name : 'searchKeyWord',
+													minWidth : 150,
+													emptyText : '请输入物料名称或编码'
+												}, {
 													text : '查询',
 													iconCls : 'system-search',
 													action : 'search'
@@ -71,12 +43,10 @@ Ext.define('SCM.view.rpt.pso.ListUI', {
 													action : 'export'
 												}]
 									}, {
-
 										xtype : 'gridpanel',
 										margin : '1 0 0 0',
+										title : '',
 										region : 'center',
-										split : true,
-										height : 300,
 										store : 'rpt.ProductSendOweReportStore',
 										columns : [{
 													header : '序号',
@@ -132,13 +102,22 @@ Ext.define('SCM.view.rpt.pso.ListUI', {
 													dataIndex : 'STOCKINGBAL',
 													width : 100,
 													text : '备货余欠情况'
-												}]
+												}],
+										viewConfig : {
+
+										},
+										dockedItems: [{
+											dock : 'bottom',
+											xtype : 'pagingtoolbar',
+											store : 'rpt.ProductSendOweReportStore',
+											displayInfo : true
+										}]
 									}, {
 										xtype : 'gridpanel',
-										margin : '1 0 0 0',
+										title : '',
 										region : 'south',
-										split : true,
 										height : 300,
+										split : true,
 										store : 'rpt.ProductSendOweDetailReportStore',
 										columns : [{
 													header : '序号',
