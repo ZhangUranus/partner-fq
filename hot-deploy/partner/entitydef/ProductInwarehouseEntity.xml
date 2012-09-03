@@ -60,15 +60,23 @@
 	<view-entity entity-name="ProductInwarehouseView" package-name="org.ofbiz.scm.ProductInwarehouse" title="ProductInwarehouseView  Entity">
 		<member-entity entity-alias="ProductInwarehouseV" entity-name="ProductInwarehouse"></member-entity>
 		<member-entity entity-alias="ProductInwarehouseEntryV" entity-name="ProductInwarehouseEntry"></member-entity>
+		<member-entity entity-alias="materialMaterialV" entity-name="TMaterial"></member-entity>
 		<member-entity entity-alias="inspectorSystemUserV" entity-name="SystemUser"></member-entity>
 		<member-entity entity-alias="submitterSystemUserV" entity-name="SystemUser"></member-entity>
 		<alias-all entity-alias="ProductInwarehouseV"></alias-all>
 		<alias name="materialMaterialId" entity-alias="ProductInwarehouseEntryV" field="materialMaterialId"></alias>
 		<alias name="inspectorSystemUserName" entity-alias="inspectorSystemUserV" field="name"></alias>
 		<alias name="submitterSystemUserName" entity-alias="submitterSystemUserV" field="name"></alias>
+		
+		<!-- 查询条件需要取物料编码、物料名称，在查询数据中需要distinct -->
 		<view-link entity-alias="ProductInwarehouseV" rel-entity-alias="ProductInwarehouseEntryV" rel-optional="true">
 			<key-map field-name="id" rel-field-name="parentId" />
 		</view-link>
+		<view-link entity-alias="ProductInwarehouseEntryV" rel-entity-alias="materialMaterialV" rel-optional="true">
+			<key-map field-name="materialMaterialId" rel-field-name="id" />
+		</view-link>
+		<!-- 查询条件需要取物料编码、物料名称，在查询数据中需要distinct -->
+		
 		<view-link entity-alias="ProductInwarehouseV" rel-entity-alias="inspectorSystemUserV" rel-optional="true">
 			<key-map field-name="inspectorSystemUserId" rel-field-name="id" />
 		</view-link>

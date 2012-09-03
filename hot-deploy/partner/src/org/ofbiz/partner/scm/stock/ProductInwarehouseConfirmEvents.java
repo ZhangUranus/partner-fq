@@ -63,7 +63,7 @@ public class ProductInwarehouseConfirmEvents {
 			String billId=UUID.randomUUID().toString();
 			billHead.setString("id", billId);
 			billHead.setString("number", new SerialNumberHelper().getSerialNumber(request, "ProductInwarehouse"));
-			billHead.set("bizDate", new Date());
+			billHead.set("bizDate", new Timestamp(new Date().getTime()));
 			billHead.set("inspectorSystemUserId", CommonEvents.getAttributeFormSession(request, "uid"));
 			billHead.set("status", "0");//保存状态
 			
@@ -193,7 +193,7 @@ public class ProductInwarehouseConfirmEvents {
 			}
 			
 			//---------------------------------------------------------
-			
+			BillBaseEvent.writeSuccessMessageToExt(response, "提交成功");
 			TransactionUtil.commit(beganTransaction);
 		} catch (Exception e) {
 			Debug.logError(e, module);
@@ -204,7 +204,6 @@ public class ProductInwarehouseConfirmEvents {
 			}
 			throw e;
 		}
-		BillBaseEvent.writeSuccessMessageToExt(response, "提交成功");
 		return "success";
 	}
 	

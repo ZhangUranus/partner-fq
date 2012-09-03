@@ -52,9 +52,6 @@ public class ProductInwarehouseEvents {
 				bizDate= (Date) billHead.get("bizDate");
 				
 				BizStockImpFactory.getBizStockImp(BillType.ProductWarehouse).updateStock(billHead, false, false);
-
-				
-				BillBaseEvent.submitBill(request, response);// 更新单据状态
 			}
 			
 			//更新周汇总表
@@ -71,7 +68,8 @@ public class ProductInwarehouseEvents {
 				v.set("productWeek", Utils.getYearWeekStr(bizDate));
 				v.store();
 			}
-			
+
+			BillBaseEvent.submitBill(request, response);// 更新单据状态
 			TransactionUtil.commit(beganTransaction);
 		} catch (Exception e) {
 			Debug.logError(e, module);
@@ -114,8 +112,6 @@ public class ProductInwarehouseEvents {
 				
 				
 				BizStockImpFactory.getBizStockImp(BillType.ProductWarehouse).updateStock(billHead, true, true);
-
-				BillBaseEvent.rollbackBill(request, response);// 撤销单据
 			}
 			
 
@@ -147,7 +143,7 @@ public class ProductInwarehouseEvents {
 //				}
 //				delegator.storeAll(prdtCfmEntrys);
 //			}
-			
+			BillBaseEvent.rollbackBill(request, response);// 撤销单据
 			TransactionUtil.commit(beganTransaction);
 		} catch (Exception e) {
 			Debug.logError(e, module);

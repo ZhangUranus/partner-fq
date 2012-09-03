@@ -247,6 +247,12 @@ public class EntityCRUDEvent {
 					}else if(record.get(fieldName)!=null && vModelField.getType().equals("fixed-point")){
 						BigDecimal bd = new BigDecimal(record.get(fieldName).toString());
 						v.set(fieldName, bd);
+					}else if(record.get(fieldName)!=null && vModelField.getType().equals("numeric")){
+						Long bd = Long.parseLong(record.get(fieldName).toString());
+						v.set(fieldName, bd);
+					}else if(record.get(fieldName)!=null && vModelField.getType().equals("int")){
+						int bd = Integer.parseInt(record.get(fieldName).toString());
+						v.set(fieldName, bd);
 					}else{
 						v.set(fieldName, record.get(fieldName));
 					}

@@ -63,9 +63,9 @@ public class ProductOutwarehouseConfirmEvents {
 			String billId=UUID.randomUUID().toString();
 			billHead.setString("id", billId);
 			billHead.setString("number", new SerialNumberHelper().getSerialNumber(request, "ProductOutwarehouse"));
-			billHead.set("bizDate", new Date());
+			billHead.set("bizDate", new Timestamp(new Date().getTime()));
 			billHead.set("submitterSystemUserId", CommonEvents.getAttributeFormSession(request, "uid"));
-			billHead.set("status", "0");//保存状态
+			billHead.set("status", 0);//保存状态
 			
 			
 			JSONArray entrys=JSONArray.fromObject(request.getParameter("records"));
@@ -190,7 +190,7 @@ public class ProductOutwarehouseConfirmEvents {
 				ProductInOutStockMgr.getInstance().updateStock(materialId, ProductStockType.OUT, qantity, volume, false);
 				ProductOutwarehouseEvents.updateNotification(v,delegator,materialId,volume,v.getString("goodNumber"),v.getString("destinhouseNumber"));
 			}
-			
+			BillBaseEvent.writeSuccessMessageToExt(response, "提交成功");
 			TransactionUtil.commit(beganTransaction);
 		} catch (Exception e) {
 			Debug.logError(e, module);
@@ -201,7 +201,6 @@ public class ProductOutwarehouseConfirmEvents {
 			}
 			throw e;
 		}
-		BillBaseEvent.writeSuccessMessageToExt(response, "提交成功");
 		return "success";
 	}
 	

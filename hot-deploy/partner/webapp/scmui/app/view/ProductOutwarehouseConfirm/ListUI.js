@@ -181,6 +181,7 @@ Ext.define('SCM.view.ProductOutwarehouseConfirm.ListUI', {
 										plugins : [cellEditing],
 										dockedItems : [{
 													xtype : 'billsearchtoolbar',// 工具栏
+													keyWord : true,
 													border : '0 1 1 1'
 												}, {
 													dock : 'bottom',
