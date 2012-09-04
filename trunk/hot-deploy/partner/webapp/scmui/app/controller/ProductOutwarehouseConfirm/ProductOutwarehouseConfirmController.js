@@ -175,13 +175,11 @@ Ext.define('SCM.controller.ProductOutwarehouseConfirm.ProductOutwarehouseConfirm
 									records : json
 								},
 								success : function(response, option) {
-									debugger;
 									if (response.responseText.length < 1) {
 										showError('系统没有返回结果');
 									}
 									var result = Ext.decode(response.responseText)
 									if (result.success) {
-										me.submitBillSuccess(response, option);
 										Ext.Msg.alert("提示", "提交成功！");
 										me.refreshRecord();
 									} else {

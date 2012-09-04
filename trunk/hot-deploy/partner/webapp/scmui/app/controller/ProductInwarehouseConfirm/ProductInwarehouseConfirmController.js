@@ -352,7 +352,7 @@ Ext.define('SCM.controller.ProductInwarehouseConfirm.ProductInwarehouseConfirmCo
 							}
 				 			var responseArray = Ext.JSON.decode(response.responseText);
 				 			if(responseArray.success){
-				 				showInfo('提交成功');
+				 				Ext.Msg.alert("提示", "提交成功！");
 				 				me.refreshRecord();
 				 			}else{
 				 				showError(responseArray.message);
