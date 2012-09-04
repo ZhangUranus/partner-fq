@@ -171,11 +171,11 @@ public class ProductOutwarehouseEvents {
 				}
 			}
 			if(!isUpdate){
-				throw new Exception("未找到产品对应的出货通知单，请先提交通知单！");
+				throw new Exception("未找到产品对应的出货通知单，请检查货号、订舱号是否填写正确。如果无相应出货通知单，请先提交通知单！");
 			}
 			headValue.store();
 		} else {
-			throw new Exception("未找到产品对应的出货通知单，请先提交通知单！");
+			throw new Exception("未找到产品对应的出货通知单，请检查货号、订舱号是否填写正确。如果无相应出货通知单，请先提交通知单！");
 		}
 	}
 }

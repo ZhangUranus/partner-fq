@@ -175,6 +175,7 @@ Ext.define('SCM.controller.ProductOutwarehouseConfirm.ProductOutwarehouseConfirm
 									records : json
 								},
 								success : function(response, option) {
+									debugger;
 									if (response.responseText.length < 1) {
 										showError('系统没有返回结果');
 									}

@@ -67,7 +67,7 @@ public class ProductInOutStockMgr {
 		BigDecimal curTodayVolume = BigDecimal.ZERO;
 		BigDecimal curThisMonthInVolume = BigDecimal.ZERO;
 		BigDecimal curThisMonthOutVolume = BigDecimal.ZERO;
-//		
+		
 //		<field name="preMonthVolume" type="fixed-point"></field><!-- 上月数量 -->
 //		<field name="todayInVolume" type="fixed-point"></field><!-- 本日入库数量 -->
 //		<field name="todayOutVolume" type="fixed-point"></field><!-- 本日出库数量 -->
@@ -82,11 +82,17 @@ public class ProductInOutStockMgr {
 					curPreMonthVolume = curPreMonthVolume.add(bv.getBigDecimal("volume"));
 				}
 			}
+			curPreMonthVolume = curPreMonthVolume.subtract(volume);//获取时已经加了本次更新数量
+			if(curPreMonthVolume.compareTo(BigDecimal.ZERO) < 0){
+				curPreMonthVolume = BigDecimal.ZERO;
+			}
+			curTodayVolume = curPreMonthVolume;
 			record = delegator.makeValue("ProInOutDateDetail");
 			record.setString("tradDate", sdf.format(date));
 			record.setString("materialId", materialId);
 			record.set("qantity", qantity);
 			record.set("preMonthVolume", curPreMonthVolume);
+			record.set("todayVolume", curTodayVolume);
 		} else {
 			if(record.getBigDecimal("todayInVolume") != null)curTodayInVolume = record.getBigDecimal("todayInVolume");
 			if(record.getBigDecimal("todayOutVolume") != null)curTodayOutVolume = record.getBigDecimal("todayOutVolume");
@@ -108,7 +114,7 @@ public class ProductInOutStockMgr {
 			break;
 		case OUT:
 			record.set("todayOutVolume", curTodayOutVolume.add(volume));
-			record.set("todayVolume", curTodayVolume.add(volume).negate());
+			record.set("todayVolume", curTodayVolume.subtract(volume));
 			record.set("thisMonthOutVolume", curThisMonthOutVolume.add(volume));
 			break;
 		default:
