@@ -554,6 +554,13 @@
 		<response name="success" type="none" />
 	</request-map>
 	
+	<!-- 综合成品帐报表 -->
+	<request-map uri="queryProductStaticsReport">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="queryProductStaticsReport" />
+		<response name="success" type="none" />
+	</request-map>
+	
 	<!-- 综合发货欠数报表 -->
 	<request-map uri="queryProductSendOweReport">
 		<security https="false" auth="false" />
