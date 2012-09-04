@@ -71,6 +71,8 @@ public class DataFetchEvents {
 			list = getPurchaseMatchReportList(request);
 		} else if("PMRD".equals(request.getParameter("report"))){
 			list = getPurchaseMatchReportDetailList(request);
+		} else if("PSR".equals(request.getParameter("report"))){
+			list = getProductStaticsReportList(request);
 		}
 		return list;
 	}
@@ -1052,6 +1054,75 @@ public class DataFetchEvents {
 		
 		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(request,sql));
 		return "sucess";
+	}
+	
+	/**
+	 * 综合成品帐报表
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public static String queryProductStaticsReport(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(request,getProductStaticsReportSql(request)));
+		return "sucess";
+	}
+	
+	/**
+	 * 获取综合成品帐数据列表
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public static List<Map<String ,Object>> getProductStaticsReportList(HttpServletRequest request) throws Exception {
+		return getListWithSQL(request,getProductStaticsReportSql(request));
+	}
+	
+	/**
+	 * 获取综合成品帐报表SQL
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	public static String getProductStaticsReportSql(HttpServletRequest request) throws Exception {
+		String searchDate = null;
+		String keyWord = null;
+
+		if(request.getParameter("searchDate") != null){
+			searchDate = request.getParameter("searchDate");
+		}
+		if(request.getParameter("keyWord") != null){
+			keyWord = request.getParameter("keyWord");
+		}
+		
+		String sql =" SELECT "+
+					" 	PIODD.TRAD_DATE, "+
+					" 	PIODD.MATERIAL_ID, "+
+					" 	TM.NAME AS MATERIAL_NAME, "+
+					" 	PIODD.QANTITY, "+
+					" 	ROUND(IFNULL(PIODD.PRE_MONTH_VOLUME,0),4) AS PRE_MONTH_VOLUME, "+
+					" 	ROUND(IFNULL(PIODD.PRE_MONTH_VOLUME*PIODD.QANTITY,0),4) AS PRE_MONTH_PRODUCT_VOLUME, "+
+					" 	ROUND(IFNULL(PIODD.TODAY_IN_VOLUME,0),4) AS TODAY_IN_VOLUME, "+
+					" 	ROUND(IFNULL(PIODD.TODAY_OUT_VOLUME,0),4) AS TODAY_OUT_VOLUME, "+
+					" 	ROUND(IFNULL(PIODD.TODAY_VOLUME,0),4) AS TODAY_VOLUME, "+
+					" 	ROUND(IFNULL(PIODD.TODAY_VOLUME*PIODD.QANTITY,0),4) AS TODAY_PRODUCT_VOLUME, "+
+					" 	ROUND(IFNULL(PIODD.THIS_MONTH_IN_VOLUME,0),4) AS THIS_MONTH_IN_VOLUME, "+
+					" 	ROUND(IFNULL(PIODD.THIS_MONTH_IN_VOLUME*PIODD.QANTITY,0),4) AS THIS_MONTH_IN_PRODUCT_VOLUME, "+
+					" 	ROUND(IFNULL(PIODD.THIS_MONTH_OUT_VOLUME,0),4) AS THIS_MONTH_OUT_VOLUME, "+
+					" 	ROUND(IFNULL(PIODD.THIS_MONTH_OUT_VOLUME*PIODD.QANTITY,0),4) AS THIS_MONTH_OUT_PRODUCT_VOLUME "+
+					" FROM PRO_IN_OUT_DATE_DETAIL PIODD "+
+					" LEFT JOIN T_MATERIAL TM ON PIODD.MATERIAL_ID = TM.ID "+
+					" WHERE ";
+		if(keyWord == null ){
+			keyWord = "";
+		}
+		sql += " (TM.NUMBER LIKE '%" + keyWord + "%' OR TM.NAME LIKE '%" + keyWord + "%')";
+		if(searchDate != null && !"".equals(searchDate)){
+			String dateStr = searchDate.substring(0, 4) + searchDate.substring(5, 7) + searchDate.substring(8, 10);
+			sql += " AND PIODD.TRAD_DATE = '" + dateStr + "'";
+		}
+		return sql;
 	}
 	
 	/**

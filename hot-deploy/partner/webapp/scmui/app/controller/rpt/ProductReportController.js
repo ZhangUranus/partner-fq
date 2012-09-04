@@ -79,7 +79,7 @@ Ext.define('SCM.controller.rpt.ProductReportController', {
 					this.chartPanel.store.getProxy().extraParams.keyWord = this.searchKeyWord.getValue();
 				} else {
 					this.listPanel.store.getProxy().extraParams.keyWord = "";
-					this.chartPanel.store.getProxy().extraParams.materialId = "";
+					this.chartPanel.store.getProxy().extraParams.keyWord = "";
 				}
 				this.listPanel.store.load();
 				this.chartPanel.store.load({
