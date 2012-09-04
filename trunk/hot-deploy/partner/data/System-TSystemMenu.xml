@@ -34,7 +34,7 @@
 	<TSystemMenu menuId='purchaseMatchingReport' menuName='采购对数表' menuType='1' parentId='analyticStatistics' sort='155' hyperlink='purchasematchingreport' styleName='purchase-matching-report' display='1' description='采购对数表' />
 	<TSystemMenu menuId='packingMaterialReport' menuName='安装包装材料表' menuType='1' parentId='analyticStatistics' sort='156' hyperlink='packingmaterialreport' styleName='packing-material-report' display='1' description='安装包装材料表' />
 	<TSystemMenu menuId='productReport' menuName='成品报表' menuType='1' parentId='analyticStatistics' sort='157' hyperlink='productreport' styleName='product-report' display='1' description='成品报表' />
-	<TSystemMenu menuId='productSendOweReport' menuName='综合出货欠数表' menuType='1' parentId='analyticStatistics' sort='160' hyperlink='productsendowereport' styleName='product-report' display='1' description='综合出货欠数表' />
+	<TSystemMenu menuId='productSendOweReport' menuName='综合出货欠数表' menuType='1' parentId='analyticStatistics' sort='160' hyperlink='productsendowereport' styleName='product-send-owe-report' display='1' description='综合出货欠数表' />
 	<TSystemMenu menuId='productStaticsReport' menuName='综合成品帐' menuType='1' parentId='analyticStatistics' sort='158' hyperlink='productstaticsreport' styleName='product-statics-report' display='1' description='综合成品帐' />
 	
 	<TSystemMenu menuId='stockAdjustManagement' menuName='库存调整' menuType='0' parentId='warehouseManagement' sort='16' hyperlink='' styleName='stock-adjust-management' display='1' description='库存调整' />
