@@ -40,4 +40,11 @@ under the License.
             location="org.ofbiz.partner.scm.services.ProductInwarehouseServices" invoke="syncProduct" auth="false" use-transaction="false" semaphore="wait">
         <description>productInwarehouse</description>
     </service>
+    <service name="SCMEntityExportAll" engine="java"
+            location="org.ofbiz.webtools.WebToolsServices" invoke="entityExportAll" auth="false" use-transaction="false">
+        <description>Exports all entities into xml files</description>
+        <attribute name="outpath" type="String" mode="IN" optional="true"/>
+        <attribute name="txTimeout" type="Integer" mode="IN" optional="true"/>
+        <attribute name="results" type="List" mode="OUT" optional="false"/>
+    </service>
 </services>

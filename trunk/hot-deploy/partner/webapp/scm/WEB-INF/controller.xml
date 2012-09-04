@@ -633,6 +633,18 @@
 		<response name="success" type="none" />
 	</request-map>
 	<!-- exporter -->
+	
+	<!-- 系统工具类 -->
+	<!-- 导出系统所有实体数据 -->
+	<request-map uri="entityExportAll">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.tools.EntityDataEvents" invoke="entityExportAll" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 导出系统所有实体数据 -->
+	<!-- 系统工具类  -->
+	
+	
 	<!-- end of request mappings -->
 	<!-- View Mappings -->
 	<!-- end of View Mappings -->
