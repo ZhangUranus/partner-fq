@@ -220,6 +220,17 @@
 	background-image: url( ../images/icons/product-map-maintaince.png ) !important;
 }
 
+.product-out-notification {
+	background-image: url( ../images/icons/product-out-notification.png ) !important;
+}
+.product-send-owe-report {
+	background-image: url( ../images/icons/product-send-owe-report.png ) !important;
+}
+.product-statics-report {
+	background-image: url( ../images/icons/product-statics-report.png ) !important;
+}
+
+
 .flag-green{
 	background-image: url( ../images/icons/flag-green.png ) !important;
 }
