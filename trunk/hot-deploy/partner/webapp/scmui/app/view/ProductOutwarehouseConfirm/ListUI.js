@@ -121,6 +121,20 @@ Ext.define('SCM.view.ProductOutwarehouseConfirm.ListUI', {
 													}
 												}, {
 													xtype : 'gridcolumn',
+													editor : {
+														xtype : 'textfield'
+													},
+													dataIndex : 'goodNumber',
+													text : '货号'
+												}, {
+													xtype : 'gridcolumn',
+													editor : {
+														xtype : 'textfield'
+													},
+													dataIndex : 'destinhouseNumber',
+													text : '订舱号'
+												}, {
+													xtype : 'gridcolumn',
 													dataIndex : 'prdWeek',
 													text : '生产周'
 												}, {
@@ -149,20 +163,6 @@ Ext.define('SCM.view.ProductOutwarehouseConfirm.ListUI', {
 													xtype : 'gridcolumn',
 													dataIndex : 'barcode2',
 													text : '序列号'
-												}, {
-													xtype : 'gridcolumn',
-													editor : {
-														xtype : 'textfield'
-													},
-													dataIndex : 'goodNumber',
-													text : '货号'
-												}, {
-													xtype : 'gridcolumn',
-													editor : {
-														xtype : 'textfield'
-													},
-													dataIndex : 'destinhouseNumber',
-													text : '订舱号'
 												}, {
 													xtype : 'gridcolumn',
 													dataIndex : 'submitterSystemUserName',
