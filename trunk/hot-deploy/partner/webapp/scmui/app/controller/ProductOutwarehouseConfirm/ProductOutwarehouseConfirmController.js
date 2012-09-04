@@ -39,12 +39,35 @@ Ext.define('SCM.controller.ProductOutwarehouseConfirm.ProductOutwarehouseConfirm
 				// this.searchMaterialId =
 				// this.listContainer.down('combogrid[name=searchMaterialId]');
 				this.searchKeyWord = this.listPanel.down('textfield[name=searchKeyWord]');
-
+				
+				this.deleteButton = view.down('button[action=delete]');// 删除按钮
+				this.submitButton = view.down('button[action=submit]');// 提交按钮
 				this.searchStatus = this.listContainer.down('combobox[name=status]');
 				this.searchStatus.setVisible(false);
 				this.syncDownSel = this.listContainer.down('toolbar button[action=syncDownSel]');
 				this.listPanel.addListener('edit', this.listPanelEditActin, this);
 				this.refreshRecord();
+				
+				this.initButtonByPermission();
+			},
+			
+			/**
+			 * 根据用户权限初始化按钮状态
+			 * 
+			 */
+			initButtonByPermission : function() {
+				if (this.listContainer.permission.remove) {
+					this.deleteButton.setVisible(true);
+				} else {
+					this.deleteButton.setVisible(false);
+				}
+				if (this.submitButton) {
+					if (this.listContainer.permission.submit) {
+						this.submitButton.setVisible(true);
+					} else {
+						this.submitButton.setVisible(false);
+					}
+				}
 			},
 
 			/**
