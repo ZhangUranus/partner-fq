@@ -12,7 +12,6 @@ import org.ofbiz.entity.transaction.TransactionUtil;
 import org.ofbiz.partner.scm.common.BillBaseEvent;
 import org.ofbiz.partner.scm.pricemgr.BillType;
 import org.ofbiz.partner.scm.pricemgr.BizStockImpFactory;
-import org.ofbiz.partner.scm.pricemgr.ConsignPriceMgr;
 /**
  * 验收单业务事件类
  * 
@@ -87,35 +86,6 @@ public class ConsignWarehousingEvents {
 
 				BillBaseEvent.rollbackBill(request, response);// 撤销单据
 			}
-			TransactionUtil.commit(beganTransaction);
-		} catch (Exception e) {
-			Debug.logError(e, module);
-			try {
-				TransactionUtil.rollback(beganTransaction, e.getMessage(), e);
-			} catch (GenericTransactionException e2) {
-				Debug.logError(e2, "Unable to rollback transaction", module);
-			}
-			throw e;
-		}
-		return "success";
-	}
-	
-	/**
-	 * 清理加工件耗料列表
-	 * @param request
-	 * @param response
-	 * @throws Exception
-	 */
-	public static String removeConsignPriceDetail(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		boolean beganTransaction = false;
-		try {
-			beganTransaction = TransactionUtil.begin();
-			String entryId = request.getParameter("entryId");// 单据id
-			if ( entryId != null ) {
-				Debug.log("清理加工件耗料列表:" + entryId, module);
-				ConsignPriceMgr.getInstance().removeMaterialList(entryId);
-			}
-			BillBaseEvent.writeSuccessMessageToExt(response, "清理成功");
 			TransactionUtil.commit(beganTransaction);
 		} catch (Exception e) {
 			Debug.logError(e, module);

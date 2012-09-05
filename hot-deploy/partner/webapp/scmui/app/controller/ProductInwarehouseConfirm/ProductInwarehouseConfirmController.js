@@ -166,7 +166,7 @@ Ext.define('SCM.controller.ProductInwarehouseConfirm.ProductInwarehouseConfirmCo
 						this.detailEntry.store.getProxy().extraParams.whereStr ="";
 						this.detailWin.show();
 					}else{//编辑耗料
-						this.currentRecord = record;
+						this.currentDetailRecord = record;
 						this.detailEditWin.uiStatus = 'Modify';
 						
 						this.detailEditEntry.store.removeAll(false);
@@ -250,7 +250,7 @@ Ext.define('SCM.controller.ProductInwarehouseConfirm.ProductInwarehouseConfirmCo
 				var detailRecord = Ext.create('ProductInwarehouseConfirmDetailModel');
 				detailRecord.phantom = true;
 				// 设置父id
-				detailRecord.set('parentId', this.currentRecord.get('id'));
+				detailRecord.set('parentId', this.currentDetailRecord.get('id'));
 				//默认单价，金额为零
 				detailRecord.set('price', 0);
 				detailRecord.set('amount', 0);

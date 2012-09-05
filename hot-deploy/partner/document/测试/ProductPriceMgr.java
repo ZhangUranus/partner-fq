@@ -7,6 +7,7 @@ import java.util.Calendar;
 import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericValue;
+import org.ofbiz.partner.scm.dao.TMaterial;
 
 /**
  * 成品单价管理类
@@ -85,21 +86,15 @@ public static final String module = ProductPriceMgr.class.getName();
 				}
 				BigDecimal curAmount = oldVolume.add(volume);
 				gv.set("volume", curAmount);
-				if(curAmount.compareTo(BigDecimal.ZERO)<0){
-					throw new Exception("库存成品数量小于出库数量，请检查并调整出库数量！");
-				}
 				BigDecimal curSum = oldSum.add(totalsum);
 				gv.set("totalsum", curSum);
-				if(curSum.compareTo(BigDecimal.ZERO)<0){
-					throw new Exception("库存成品金额小于出库金额，请检查并调整出库单价！");
+				if (curAmount.compareTo(BigDecimal.ZERO) < 0 || curSum.compareTo(BigDecimal.ZERO) < 0) {
+					throwExceptionOfMaterialNotEnough(materialId);
 				}
 				delegator.store(gv);
 			}else{//新增记录
-				if (volume.compareTo(BigDecimal.ZERO) < 0) {
-					throw new Exception("库存成品出库数量小于零，请检查并调整出库数量！");
-				}
-				if (totalsum.compareTo(BigDecimal.ZERO) < 0) {
-					throw new Exception("库存成品出库金额小于零，请检查并调整出库金额！");
+				if (volume.compareTo(BigDecimal.ZERO) < 0 || totalsum.compareTo(BigDecimal.ZERO) < 0) {
+					throwExceptionOfMaterialNotEnough(materialId);
 				}
 				BigDecimal beginVolume=BigDecimal.ZERO;//月初数量
 				BigDecimal beginSum=BigDecimal.ZERO;//月初金额
@@ -113,6 +108,15 @@ public static final String module = ProductPriceMgr.class.getName();
 				delegator.create(gv);
 			}
 		}
-		
+	}
+	
+	/**
+	 * 库存不足，抛出异常
+	 * @param materialId
+	 * @throws Exception
+	 */
+	private void throwExceptionOfMaterialNotEnough(String materialId) throws Exception {
+		TMaterial material = new TMaterial(materialId);
+		throw new Exception("仓库库存成品（名称："+material.getName()+"，编码："+material.getNumber()+"）数量小于出库数量/金额，请检查并调整出库数量/单价！");
 	}
 }

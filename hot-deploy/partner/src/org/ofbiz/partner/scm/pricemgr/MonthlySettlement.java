@@ -3,7 +3,6 @@ package org.ofbiz.partner.scm.pricemgr;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -126,7 +125,7 @@ public class MonthlySettlement {
 	            ConsignPriceMgr.getInstance().refreshPeriod();
 	            ConsignProcessedPriceMgr.getInstance().refreshPeriod();
 	            PurchasePriceMgr.getInstance().refreshPeriod();
-	            ProductPriceMgr.getInstance().refreshPeriod();
+//	            ProductPriceMgr.getInstance().refreshPeriod();
 	            WorkshopPriceMgr.getInstance().refreshPeriod();
 	            
 		} catch (Exception e) {
@@ -307,10 +306,10 @@ public class MonthlySettlement {
 			ps=conn.prepareStatement("update Cur_Workshop_Price set volume=beginvolume,totalsum=beginsum ");
 			ps.executeUpdate();
 			
-			//当前成品单价中间表CurProductPrice 【volume=beginvolume、totalSum=beginsum】
-			Debug.logInfo("执行update Cur_Product_Price set volume=beginvolume,totalsum=beginsum ", module);
-			ps=conn.prepareStatement("update Cur_Product_Price set volume=beginvolume,totalsum=beginsum ");
-			ps.executeUpdate();
+//			//当前成品单价中间表CurProductPrice 【volume=beginvolume、totalSum=beginsum】
+//			Debug.logInfo("执行update Cur_Product_Price set volume=beginvolume,totalsum=beginsum ", module);
+//			ps=conn.prepareStatement("update Cur_Product_Price set volume=beginvolume,totalsum=beginsum ");
+//			ps.executeUpdate();
 			
 		}finally{
 			if(conn!=null){
@@ -510,16 +509,16 @@ public class MonthlySettlement {
 			ps=conn.prepareStatement("update Cur_Workshop_Price set year="+yearOfnextMonth+" ,month="+monthOfnextMonth+" , beginvolume=volume,beginsum=totalsum");
 			ps.executeUpdate();
 			
-			//当前成品单价中间表CurProductPrice 数据转移到历史表，当前余额表更新【年、月、期初数量、期初金额】
-			Debug.logInfo("执行delete from  His_Product_Price where year="+year+" and month="+month, module);
-			ps=conn.prepareStatement("delete from  His_Product_Price where year="+year+" and month="+month);
-			ps.executeUpdate();
-			Debug.logInfo("执行insert His_Product_Price select * from Cur_Product_Price", module);
-			ps=conn.prepareStatement("insert His_Product_Price select * from Cur_Product_Price");
-			ps.executeUpdate();
-			Debug.logInfo("执行update Cur_Product_Price set year="+yearOfnextMonth+" ,month="+monthOfnextMonth+" , beginvolume=volume,beginsum=totalsum", module);
-			ps=conn.prepareStatement("update Cur_Product_Price set year="+yearOfnextMonth+" ,month="+monthOfnextMonth+" , beginvolume=volume,beginsum=totalsum");
-			ps.executeUpdate();
+//			//当前成品单价中间表CurProductPrice 数据转移到历史表，当前余额表更新【年、月、期初数量、期初金额】
+//			Debug.logInfo("执行delete from  His_Product_Price where year="+year+" and month="+month, module);
+//			ps=conn.prepareStatement("delete from  His_Product_Price where year="+year+" and month="+month);
+//			ps.executeUpdate();
+//			Debug.logInfo("执行insert His_Product_Price select * from Cur_Product_Price", module);
+//			ps=conn.prepareStatement("insert His_Product_Price select * from Cur_Product_Price");
+//			ps.executeUpdate();
+//			Debug.logInfo("执行update Cur_Product_Price set year="+yearOfnextMonth+" ,month="+monthOfnextMonth+" , beginvolume=volume,beginsum=totalsum", module);
+//			ps=conn.prepareStatement("update Cur_Product_Price set year="+yearOfnextMonth+" ,month="+monthOfnextMonth+" , beginvolume=volume,beginsum=totalsum");
+//			ps.executeUpdate();
 			
 		}finally{
 			if(conn!=null){
@@ -583,7 +582,7 @@ public class MonthlySettlement {
 		         ConsignPriceMgr.getInstance().refreshPeriod();
 		         ConsignProcessedPriceMgr.getInstance().refreshPeriod();
 		         PurchasePriceMgr.getInstance().refreshPeriod();
-		         ProductPriceMgr.getInstance().refreshPeriod();
+//		         ProductPriceMgr.getInstance().refreshPeriod();
 		         WorkshopPriceMgr.getInstance().refreshPeriod();
 		         
 		} catch (Exception e) {

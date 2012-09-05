@@ -296,7 +296,7 @@ Ext.define('SCM.controller.ProductOutNotification.ProductOutNotificationControll
 				var entryRecord = Ext.create('ProductOutNotificationEntryDetailModel');
 				entryRecord.phantom = true;
 				// 设置父id
-				entryRecord.set('parentId', this.currentRecord.get('id'));
+				entryRecord.set('parentId', this.currentDetailRecord.get('id'));
 				entryRecord.set('sort', this.detailEditEntry.store.getCount()+1);
 				this.detailEditEntry.store.add(entryRecord);
 			},
@@ -356,7 +356,7 @@ Ext.define('SCM.controller.ProductOutNotification.ProductOutNotificationControll
 			 */
 			modifyDetailRecord : function(grid, record) {
 				var me = this;
-				me.currentRecord = record;
+				me.currentDetailRecord = record;
 				me.detailEditWin.uiStatus = 'Modify';
 				
 				// 获取耗料列表

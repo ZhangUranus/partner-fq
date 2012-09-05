@@ -616,7 +616,12 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				this.isSubmitWhenSave = true;
 				this.saveRecord();
 			},
-
+			
+			/**
+			 * 保存前执行的方法
+			 */
+			beforeSave : Ext.emptyFn,
+			
 			/**
 			 * 保存事件
 			 * 
@@ -625,6 +630,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 			 */
 			saveRecord : function(button) {
 				var me = this;
+				me.beforeSave();
 				var values = me.editForm.getValues();
 				if (!me.win.modifyed) {// 用户未做任何修改，直接关闭编辑框
 					this.doSubmitBill();

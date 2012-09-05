@@ -44,10 +44,10 @@ public class ConsignReturnProductBizImp implements IBizStock {
 			}
 			BigDecimal sum = null;
 			if (isOut) {
-				GenericValue warehouseValue = PriceMgr.getInstance().getCurMaterialBalanceValue(warehouseId, materialId);
-				if (volume.compareTo(warehouseValue.getBigDecimal("volume")) > 0) {
-					throw new Exception("委外退货数量不能大于库存数量，请重新输入！");
-				}
+//				GenericValue warehouseValue = PriceMgr.getInstance().getCurMaterialBalanceValue(warehouseId, materialId);
+//				if (volume.compareTo(warehouseValue.getBigDecimal("volume")) > 0) {
+//					throw new Exception("委外退货数量不能大于库存数量，请重新输入！");
+//				}
 				BigDecimal price = PriceMgr.getInstance().getPrice(warehouseId, materialId); // 物料单价
 				sum = price.multiply(volume); // 物料金额
 
