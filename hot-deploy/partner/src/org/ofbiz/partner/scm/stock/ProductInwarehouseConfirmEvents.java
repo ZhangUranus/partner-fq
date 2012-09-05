@@ -73,6 +73,7 @@ public class ProductInwarehouseConfirmEvents {
 			/*2.2 构建成品进仓单据分录 更新相关联的成品进仓确认单 */
 			if(entrys==null||entrys.size()<1)throw new Exception("进仓确认记录出错");
 			
+			int sort = 1;
 			for (Object obj : entrys) {
 				JSONObject entry=(JSONObject) obj;
 				/*检查单据是否可以提交*/
@@ -121,8 +122,9 @@ public class ProductInwarehouseConfirmEvents {
 				ev.setString("barcode2", barcode2);
 				ev.setString("inwarehouseType", inwarehouseType);
 				ev.set("qantity", qantity);
+				ev.set("sort", sort);
 				delegator.create(ev);
-				
+				sort ++;
 				
 				/* 修改成品进仓单确认单状态以及关联字段*/
 				Map<String, Object> fs = new HashMap<String, Object>();

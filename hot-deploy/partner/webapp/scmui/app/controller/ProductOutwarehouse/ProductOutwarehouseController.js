@@ -186,7 +186,7 @@ Ext.define('SCM.controller.ProductOutwarehouse.ProductOutwarehouseController', {
 										var result = Ext.decode(response.responseText)
 										if (result.success) {
 											e.record.set('materialMaterialId', result.materialId);
-											var record = me.MaterialBOMStore.findRecord('id', result.materialId);
+											var record = me.MaterialBOMStore.findRecord('materialId', result.materialId);
 											if (record) {
 												e.record.set('materialModel', record.get('bomModel'));
 												e.record.set('unitUnitId', record.get('bomUnitId'));
@@ -198,7 +198,7 @@ Ext.define('SCM.controller.ProductOutwarehouse.ProductOutwarehouseController', {
 								});
 					}
 				} else if (e.field == 'materialMaterialId' ) {
-					var record = me.MaterialBOMStore.findRecord('id', e.value);
+					var record = me.MaterialBOMStore.findRecord('materialId', e.value);
 					if (record) {
 						e.record.set('materialModel', record.get('bomModel'));
 						e.record.set('unitUnitId', record.get('bomUnitId'));
