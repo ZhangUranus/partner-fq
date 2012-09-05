@@ -156,14 +156,26 @@ public class ProductOutwarehouseEvents {
 				List<GenericValue> detailList = delegator.findByAnd("ProductOutNotificationEntryDetail", UtilMisc.toMap("parentId", entry.getString("id")));
 				for (GenericValue detail : detailList) {
 					//更新未完成入柜的记录
-					if(materialId.equals(detail.getString("materialId")) && "N".equals(detail.getString("isFinished"))){
-						detail.set("sentQty", detail.getBigDecimal("sentQty").add(volume));
-						if(detail.getBigDecimal("sentQty").compareTo(detail.getBigDecimal("orderQty")) == 0){
-							detail.set("isFinished", "Y");
+					if(volume.compareTo(BigDecimal.ZERO)>0){
+						if(materialId.equals(detail.getString("materialId")) && "N".equals(detail.getString("isFinished"))){
+							detail.set("sentQty", detail.getBigDecimal("sentQty").add(volume));
+							if(detail.getBigDecimal("sentQty").compareTo(detail.getBigDecimal("orderQty")) == 0){
+								detail.set("isFinished", "Y");
+							}
+							detail.store();
+							isUpdate = true;
+							break;
 						}
-						detail.store();
-						isUpdate = true;
-						break;
+					} else {
+						if(materialId.equals(detail.getString("materialId"))){
+							detail.set("sentQty", detail.getBigDecimal("sentQty").add(volume));
+							if("Y".equals(detail.getString("isFinished"))){
+								detail.set("isFinished", "N");
+							}
+							detail.store();
+							isUpdate = true;
+							break;
+						}
 					}
 				}
 				if(isUpdate){

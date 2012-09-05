@@ -29,7 +29,6 @@ Ext.define('SCM.view.ProductInwarehouseConfirm.DetailListUI', {
 													xtype : 'combocolumn',
 													dataIndex : 'materialId',
 													text : '物料',
-													width : 300,
 													gridId : 'ProductInwarehouseConfirm-detail-list-grid',
 													editor : {
 														xtype : 'combogrid',

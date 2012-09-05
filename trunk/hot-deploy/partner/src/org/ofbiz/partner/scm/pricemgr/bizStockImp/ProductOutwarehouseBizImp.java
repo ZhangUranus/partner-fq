@@ -63,8 +63,8 @@ public class ProductOutwarehouseBizImp implements IBizStock {
 
 			/* 1. 获取实际耗料列表 */
 			List<ConsumeMaterial> materialList = getMaterialList(barcode1, barcode2);
-			if (materialList.size() < 0) {
-				throw new Exception("未找到对应入仓单据，请确认输入条码1、条码2是否正确？");
+			if (materialList.size() <= 0) {
+				throw new Exception("未找到对应入仓单据，请确认输入产品条码、序列号是否正确？");
 			}
 
 			BigDecimal cost = BigDecimal.ZERO;// 打板成品单一板的成本

@@ -36,7 +36,6 @@ Ext.define('SCM.view.ProductInwarehouseConfirm.DetailEditUI', {
 													dataIndex : 'materialId',
 													text : '物料',
 													gridId : 'ProductInwarehouseConfirm-detail-edit-grid',
-													width:300,
 													editor : {
 														xtype : 'combogrid',
 														valueField : 'id',
@@ -80,29 +79,14 @@ Ext.define('SCM.view.ProductInwarehouseConfirm.DetailEditUI', {
 													text : '单位',
 													gridId : 'ProductInwarehouseConfirm-detail-edit-grid',
 													width : 80,
-													readOnly:true
-													,editor : {
+													editor : {
 														xtype : 'combogrid',
 														valueField : 'id',
 														displayField : 'name',
 														initStore : Ext.data.StoreManager.lookup('UComboInitStore'),
 														store : Ext.data.StoreManager.lookup('UComboStore'),
 														matchFieldWidth : false,
-														listConfig : {
-															width : SCM.MaxSize.COMBOGRID_WIDTH,
-															height : SCM.MaxSize.COMBOGRID_HEIGHT,
-															columns : [{
-																		header : '编码',
-																		dataIndex : 'number',
-																		width : 100,
-																		hideable : false
-																	}, {
-																		header : '名称',
-																		dataIndex : 'name',
-																		width : 80,
-																		hideable : false
-																	}]
-														}
+														readOnly : true
 													}
 												}, {
 													xtype : 'numbercolumn',
@@ -118,33 +102,31 @@ Ext.define('SCM.view.ProductInwarehouseConfirm.DetailEditUI', {
 										viewConfig : {},
 										plugins : [cellEditing]
 									}, {
-								        xtype: 'label',
+										xtype : 'label',
 										region : 'south',
 										height : 20,
-								        text: '该列表为单个成品的耗料列表，其中单价、金额在单据提交后才能显示！',
-						                style: {
-								            color: 'red'
-								        }
-								    }],
-							dockedItems : [
-							               {
-							            	   xtype : 'toolbar',
-							            	   items :[{
-															text : '添加耗料',
-															iconCls : 'bill-addline',
-															action : 'addLine'
-														}, {
-															text : '删除耗料',
-															iconCls : 'bill-dline',
-															action : 'deleteLine'
-														}],
-							            	   dock:'top'
-							               },       
-									       {
-												xtype : 'savetoolbar',
-												type : 'simple',
-												dock : 'bottom'
-											}]
+										text : '该列表为单个成品的耗料列表，其中单价、金额在单据提交后才能显示！',
+										style : {
+											color : 'red'
+										}
+									}],
+							dockedItems : [{
+										xtype : 'toolbar',
+										items : [{
+													text : '添加耗料',
+													iconCls : 'bill-addline',
+													action : 'addLine'
+												}, {
+													text : '删除耗料',
+													iconCls : 'bill-dline',
+													action : 'deleteLine'
+												}],
+										dock : 'top'
+									}, {
+										xtype : 'savetoolbar',
+										type : 'simple',
+										dock : 'bottom'
+									}]
 						});
 				this.callParent(arguments);
 			},

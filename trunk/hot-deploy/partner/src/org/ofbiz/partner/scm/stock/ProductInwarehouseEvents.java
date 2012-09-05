@@ -13,6 +13,7 @@ import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericValue;
 import org.ofbiz.entity.transaction.GenericTransactionException;
 import org.ofbiz.entity.transaction.TransactionUtil;
+import org.ofbiz.partner.scm.common.BarCode;
 import org.ofbiz.partner.scm.common.BillBaseEvent;
 import org.ofbiz.partner.scm.pricemgr.BillType;
 import org.ofbiz.partner.scm.pricemgr.BizStockImpFactory;
@@ -59,13 +60,22 @@ public class ProductInwarehouseEvents {
 			List<GenericValue> entryList = delegator.findByAnd("ProductInwarehouseEntry", UtilMisc.toMap("parentId", billId));
 			 
 			for (GenericValue v : entryList) {
+				BarCode barcode = new BarCode(v.getString("barcode1"),v.getString("barcode2"));
+				String testMaterialId = Utils.getMaterialIdByIkea(barcode.getCodeForIkea(), barcode.getQuantity());
+				if(testMaterialId == null || "".equals(testMaterialId)){
+					throw new Exception("通过条码获取产品错误，请检查产品资料表是否已经存在该产品。");
+				}
 				String materialId = v.getString("materialMaterialId");// 打板物料id
+				if(!testMaterialId.equals(materialId)){
+					throw new Exception("选择的产品和产品条码核对错误，请重新检查！");
+				}
 				BigDecimal volume = v.getBigDecimal("volume");//入库数量（板）
-				Long qantity = v.getLong("qantity");//板数量（一板有多少产品）
+				Long qantity = Long.parseLong(barcode.getQuantity());//板数量（一板有多少产品）
 				//成品进仓 
 				WeeklyStockMgr.getInstance().updateStock(materialId, bizDate, ProductStockType.IN, volume, false);
 				ProductInOutStockMgr.getInstance().updateStock(materialId, ProductStockType.IN, qantity, volume, false);
 				v.set("productWeek", Utils.getYearWeekStr(bizDate));
+				v.set("qantity", qantity);
 				v.store();
 			}
 

@@ -29,7 +29,6 @@ Ext.define('SCM.view.ProductInwarehouse.DetailListUI', {
 													xtype : 'combocolumn',
 													dataIndex : 'materialId',
 													text : '物料',
-													width:300,
 													gridId : 'ProductInwarehouse-detail-list-grid',
 													editor : {
 														xtype : 'combogrid',
@@ -75,14 +74,14 @@ Ext.define('SCM.view.ProductInwarehouse.DetailListUI', {
 												}],
 										viewConfig : {}
 									}, {
-								        xtype: 'label',
+										xtype : 'label',
 										region : 'south',
 										height : 20,
-								        text: '该列表为单个成品的耗料列表！',
-						                style: {
-								            color: 'red'
-								        }
-								    }]
+										text : '该列表为单个成品的耗料列表！',
+										style : {
+											color : 'red'
+										}
+									}]
 						});
 				this.callParent(arguments);
 			},
