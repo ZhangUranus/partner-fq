@@ -15,6 +15,7 @@ import org.ofbiz.entity.GenericValue;
 import org.ofbiz.entity.condition.EntityCondition;
 import org.ofbiz.entity.condition.EntityConditionList;
 import org.ofbiz.entity.condition.EntityOperator;
+import org.ofbiz.partner.scm.dao.TMaterial;
 
 /**
  * 委外单价管理类
@@ -245,26 +246,32 @@ public class ConsignPriceMgr {
 				}
 				BigDecimal curVolume = oldVolume.add(volume);
 				gv.set("volume", curVolume);
-				
-				if(curVolume.compareTo(BigDecimal.ZERO)<0){
-					throw new Exception("供应商物料数量小于供应商出库数量，请检查并调整供应商出库数量！");
-				}
 				BigDecimal curSum = oldSum.add(totalsum);
 				gv.set("totalsum", curSum);
-				
-				if (curSum.compareTo(BigDecimal.ZERO) < 0) {
-					throw new Exception("供应商物料金额小于供应商出库金额，请检查并调整供应商出库单价！");
+				if(curVolume.compareTo(BigDecimal.ZERO)<0 || curSum.compareTo(BigDecimal.ZERO)<0){
+					throwExceptionOfMaterialNotEnough(materialId);	//供应商库存数量不足，抛出异常
 				}
+				
 				delegator.store(gv);
 			} else {// 新增记录
-				if(volume.compareTo(BigDecimal.ZERO)<0){
-					throw new Exception("供应商物料库存数量不足，请检查并调整供应商出库数量！");
+				//取上月库存数据
+				GenericValue preMonthValue = delegator.findOne("HisConsignPrice", UtilMisc.toMap("year", Utils.getYearOfPreMonth(year, month), "month", Utils.getMonthOfPreMonth(year, month), "supplierId", supplierId, "materialId", materialId), false);
+				BigDecimal beginVolume = BigDecimal.ZERO;//月初数量
+				BigDecimal beginSum = BigDecimal.ZERO;//月初金额
+				BigDecimal curVolume = BigDecimal.ZERO;//库存数量
+				BigDecimal curTotalSum = BigDecimal.ZERO;//库存金额
+				
+				if(preMonthValue != null){
+					beginVolume = preMonthValue.getBigDecimal("volume");
+					beginSum = preMonthValue.getBigDecimal("totalsum");
+					curVolume = preMonthValue.getBigDecimal("volume");
+					curTotalSum = preMonthValue.getBigDecimal("totalsum");
 				}
-				if(totalsum.compareTo(BigDecimal.ZERO) < 0) {
-					throw new Exception("供应商物料库存金额不足，请检查并调整供应商出库金额！");
+				
+				if(curVolume.compareTo(volume)<0 || curTotalSum.compareTo(totalsum)<0){
+					throwExceptionOfMaterialNotEnough(materialId);	//供应商库存数量不足，抛出异常
 				}
-				BigDecimal beginVolume=BigDecimal.ZERO;//月初数量
-				BigDecimal beginSum=BigDecimal.ZERO;//月初金额
+				
 				gv = delegator.makeValue("CurConsignPrice");
 				gv.set("year", year);
 				gv.set("month", month);
@@ -272,8 +279,8 @@ public class ConsignPriceMgr {
 				gv.set("materialId", materialId);
 				gv.set("beginvolume", beginVolume);
 				gv.set("beginsum", beginSum);
-				gv.set("volume", volume);
-				gv.set("totalsum", totalsum);
+				gv.set("volume", curVolume.add(volume));
+				gv.set("totalsum", curTotalSum.add(totalsum));
 				delegator.create(gv);
 			}
 		}
@@ -322,5 +329,15 @@ public class ConsignPriceMgr {
 		}else{
 			return true;
 		}
+	}
+	
+	/**
+	 * 库存不足，抛出异常
+	 * @param materialId
+	 * @throws Exception
+	 */
+	private void throwExceptionOfMaterialNotEnough(String materialId) throws Exception {
+		TMaterial material = new TMaterial(materialId);
+		throw new Exception("供应商库存物料（名称："+material.getName()+"，编码："+material.getNumber()+"）数量小于供应商出库数量/金额，请检查并调整出库数量/单价！");
 	}
 }

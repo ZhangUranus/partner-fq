@@ -43,18 +43,6 @@
 		<field name="sort" type="int"></field>
 		<prim-key field="id" />
 	</entity>
-	<!-- 额外耗料表 -->
-	<entity entity-name="ConsignWarehousingEntryExtra" package-name="org.ofbiz.scm.ConsignWarehousing" title="ConsignWarehousingEntryExtra Entity">
-		<field name="id" type="id-long"></field>
-		<field name="entryId" type="id-long"></field>
-		<field name="materialMaterialId" type="id-long"></field>
-		<field name="materialMaterialModel" type="value"></field>
-		<field name="volume" type="fixed-point"></field>
-		<field name="unitUnitId" type="id-long"></field>
-		<field name="price" type="fixed-point"></field>
-		<field name="entrysum" type="fixed-point"></field>
-		<prim-key field="id" />
-	</entity>
 	<!-- 表头视图 -->
 	<view-entity entity-name="ConsignWarehousingView" package-name="org.ofbiz.scm.ConsignWarehousing" title="ConsignWarehousingView  Entity">
 		<member-entity entity-alias="ConsignWarehousingV" entity-name="ConsignWarehousing"></member-entity>

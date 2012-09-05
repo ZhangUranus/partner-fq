@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilMisc;
@@ -17,6 +18,9 @@ import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.DelegatorFactory;
 import org.ofbiz.entity.GenericEntityException;
 import org.ofbiz.entity.GenericValue;
+import org.ofbiz.entity.transaction.GenericTransactionException;
+import org.ofbiz.entity.transaction.TransactionUtil;
+import org.ofbiz.partner.scm.common.BillBaseEvent;
 import org.ofbiz.partner.scm.common.CommonEvents;
 import org.ofbiz.partner.scm.common.DatePeriod;
 
@@ -26,6 +30,7 @@ import org.ofbiz.partner.scm.common.DatePeriod;
  * 
  */
 public class Utils {
+	private static final String module = org.ofbiz.partner.scm.pricemgr.Utils.class.getName();
 	/**
 	 * 获取当期操作年月
 	 * 
@@ -437,6 +442,37 @@ public class Utils {
 		} else {
 			throw new Exception("未找到产品条码对应的产品编码，请检查“产品资料表”！");
 		}
+	}
+	
+	/**
+	 * 清理加工件耗料列表
+	 * @param request
+	 * @param response
+	 * @throws Exception
+	 */
+	public static String removeDataByParentId(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		boolean beganTransaction = false;
+		try {
+			beganTransaction = TransactionUtil.begin();
+			Delegator delegator = (Delegator) request.getAttribute("delegator");
+			String parentId = request.getParameter("parentId");// 单据id
+			String entityName = request.getParameter("entityName");// 单据id
+			if ( parentId != null ) {
+				Debug.log("清理实体:" + entityName + "数据，parentId：" + parentId, module);
+				delegator.removeByAnd(entityName, UtilMisc.toMap("parentId", parentId));
+			}
+			BillBaseEvent.writeSuccessMessageToExt(response, "清理成功");
+			TransactionUtil.commit(beganTransaction);
+		} catch (Exception e) {
+			Debug.logError(e, module);
+			try {
+				TransactionUtil.rollback(beganTransaction, e.getMessage(), e);
+			} catch (GenericTransactionException e2) {
+				Debug.logError(e2, "Unable to rollback transaction", module);
+			}
+			throw e;
+		}
+		return "success";
 	}
 	
 }

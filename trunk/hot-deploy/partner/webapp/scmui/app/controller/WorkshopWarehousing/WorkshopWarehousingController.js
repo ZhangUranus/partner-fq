@@ -3,8 +3,8 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 			mixins : ['SCM.extend.exporter.Exporter', 'SCM.extend.controller.BillCommonController'],
 			views : ['WorkshopWarehousing.ListUI', 'WorkshopWarehousing.EditUI', 'WorkshopWarehousing.DetailListUI', 'WorkshopWarehousing.DetailEditUI'],
 			stores : ['WorkshopWarehousing.WorkshopWarehousingStore', 'WorkshopWarehousing.WorkshopWarehousingEditStore', 'WorkshopWarehousing.WorkshopWarehousingEditEntryStore',
-					'WorkshopWarehousing.WorkshopWarehousingDetailStore', 'WorkshopWarehousing.WorkshopWarehousingEntryDetailStore'],
-			requires : ['SCM.model.WorkshopWarehousing.WorkshopWarehousingActionModel', 'SCM.model.WorkshopWarehousing.WorkshopWarehousingEntryDetailModel'],
+					'WorkshopWarehousing.WorkshopWarehousingDetailStore'],
+			requires : ['SCM.model.WorkshopWarehousing.WorkshopWarehousingActionModel'],
 			gridTitle : '制造入库单',
 			editName : 'WorkshopWarehousingedit',
 			editStoreName : 'WorkshopWarehousingEditStore',
@@ -267,13 +267,14 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 					if (e.originalValue != e.value) {
 						Ext.Ajax.request({
 									params : {
-										entryId : e.record.get('id')
+										parentId : e.record.get('id'),
+										entityName : 'WorkshopPriceDetail'
 									},
-									url : '../../scm/control/removeWorkshopPriceDetail',
+									url : '../../scm/control/removeDataByParentId',
 									success : function(response, option) {
 										var result = Ext.decode(response.responseText)
 										if (result.success) {
-											Ext.Msg.alert("提示", "由于变更加工件，已经成功清理原来加工件耗料列表！");
+											//Ext.Msg.alert("提示", "由于变更加工件，已经成功清理原来加工件耗料列表！");
 										} else {
 											showError(result.message);
 										}
@@ -338,7 +339,7 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 						if(records.length <= 0){//如果不存在耗料列表，获取初始列表
 							me.MaterialBOMStore.getProxy().extraParams.whereStr = 'MaterialBomV.id = \'' + record.get('bomId') + '\'';
 							me.MaterialBOMStore.load(function(records, operation, success) {
-										me.detailEditEntry.store.remove(me.detailEditEntry.store.data.items);
+										me.detailEditEntry.store.removeAll();
 										for (var i = 0; i < records.length; i++) {
 											var tempRecord = records[i];
 											var entryRecord = Ext.create('WorkshopWarehousingDetailModel');

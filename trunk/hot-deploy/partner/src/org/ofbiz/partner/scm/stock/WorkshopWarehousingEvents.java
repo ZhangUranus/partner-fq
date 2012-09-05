@@ -99,33 +99,4 @@ public class WorkshopWarehousingEvents {
 		}
 		return "success";
 	}
-	
-	/**
-	 * 清理加工件耗料列表
-	 * @param request
-	 * @param response
-	 * @throws Exception
-	 */
-	public static String removeWorkshopPriceDetail(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		boolean beganTransaction = false;
-		try {
-			beganTransaction = TransactionUtil.begin();
-			String entryId = request.getParameter("entryId");// 单据id
-			if ( entryId != null ) {
-				Debug.log("清理加工件耗料列表:" + entryId, module);
-				WorkshopPriceMgr.getInstance().removeMaterialList(entryId);
-			}
-			BillBaseEvent.writeSuccessMessageToExt(response, "清理成功");
-			TransactionUtil.commit(beganTransaction);
-		} catch (Exception e) {
-			Debug.logError(e, module);
-			try {
-				TransactionUtil.rollback(beganTransaction, e.getMessage(), e);
-			} catch (GenericTransactionException e2) {
-				Debug.logError(e2, "Unable to rollback transaction", module);
-			}
-			throw e;
-		}
-		return "success";
-	}
 }

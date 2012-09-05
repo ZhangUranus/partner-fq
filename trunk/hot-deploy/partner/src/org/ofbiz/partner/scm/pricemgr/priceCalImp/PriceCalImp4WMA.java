@@ -9,6 +9,7 @@ import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericValue;
+import org.ofbiz.partner.scm.dao.TMaterial;
 import org.ofbiz.partner.scm.pricemgr.IPriceCal;
 import org.ofbiz.partner.scm.pricemgr.PriceCalItem;
 import org.ofbiz.partner.scm.pricemgr.Utils;
@@ -113,12 +114,10 @@ public class PriceCalImp4WMA implements IPriceCal {
 			BigDecimal sum = item.getSum();// 金额
 			
 			calAmount = curAmount.add(amount);// 计算后数量
-			if(calAmount.compareTo(BigDecimal.ZERO)<0){
-				throw new Exception("库存物料数量小于出库数量，请检查并调整出库数量！");
-			}
 			calSum = curSum.add(sum);// 计算后金额
-			if(calSum.compareTo(BigDecimal.ZERO)<0){
-				throw new Exception("库存物料金额小于出库金额，请检查并调整出库单价！");
+			
+			if(calAmount.compareTo(BigDecimal.ZERO)<0 || calSum.compareTo(BigDecimal.ZERO)<0){
+				throwExceptionOfMaterialNotEnough(mpk);		//库存数量不足，抛出异常
 			}
 			
 			if(item.isOut() == item.isCancel()){//取消操作并非正常出入库
@@ -151,11 +150,8 @@ public class PriceCalImp4WMA implements IPriceCal {
 			calAmount = beginVolume.add(item.getAmount());// 计算后数量
 			calSum = beginSum.add(item.getSum());// 计算后金额
 			
-			if(calAmount.compareTo(BigDecimal.ZERO)<0){
-				throw new Exception("库存物料数量小于出库数量，请检查并调整出库数量！");
-			}
-			if(calSum.compareTo(BigDecimal.ZERO)<0){
-				throw new Exception("库存物料金额小于出库金额，请检查并调整出库金额！");
+			if(calAmount.compareTo(BigDecimal.ZERO)<0 || calSum.compareTo(BigDecimal.ZERO)<0){
+				throwExceptionOfMaterialNotEnough(mpk);  //库存数量不足，抛出异常
 			}
 			
 			// 如果库存余额表没有改物料，则新增
@@ -189,6 +185,16 @@ public class PriceCalImp4WMA implements IPriceCal {
 		}else{
 			return calSum.divide(calAmount,6,RoundingMode.DOWN);
 		}
+	}
+	
+	/**
+	 * 库存不足，抛出异常
+	 * @param materialId
+	 * @throws Exception
+	 */
+	private void throwExceptionOfMaterialNotEnough(String materialId) throws Exception {
+		TMaterial material = new TMaterial(materialId);
+		throw new Exception("仓库库存物料（名称："+material.getName()+"，编码："+material.getNumber()+"）数量小于出库数量/金额，请检查并调整出库数量/单价！");
 	}
 	
 	/**

@@ -213,7 +213,7 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 			modifyDetailRecord : function(grid, record) {
 				var me = this;
 				
-				me.currentRecord = record;
+				me.currentDetailRecord = record;
 				me.detailEditWin.uiStatus = 'Modify';
 				
 				var materialVolume = 1;
@@ -227,7 +227,7 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 						if(records.length <= 0){//如果不存在耗料列表，获取初始列表
 							me.MaterialBOMStore.getProxy().extraParams.whereStr = 'TMaterialV.ID = \'' + record.get('materialMaterialId') + '\'';
 							me.MaterialBOMStore.load(function(records, operation, success) {
-										me.detailEditEntry.store.remove(me.detailEditEntry.store.data.items);
+										me.detailEditEntry.store.removeAll();
 										for (var i = 0; i < records.length; i++) {
 											var tempRecord = records[i];
 											var entryRecord = Ext.create('ProductInwarehouseEntryDetailModel');
@@ -344,7 +344,7 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 				var detailRecord = Ext.create('ProductInwarehouseEntryDetailModel');
 				detailRecord.phantom = true;
 				// 设置父id
-				detailRecord.set('parentId', this.currentRecord.get('id'));
+				detailRecord.set('parentId', this.currentDetailRecord.get('id'));
 				//默认单价，金额为零
 				detailRecord.set('price', 0);
 				detailRecord.set('amount', 0);

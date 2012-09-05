@@ -5,6 +5,7 @@ import java.util.Calendar;
 import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericValue;
+import org.ofbiz.partner.scm.dao.TMaterial;
 
 /**
  * 委外加工件对数表管理类
@@ -86,7 +87,7 @@ public class ConsignProcessedPriceMgr {
 				}
 				BigDecimal tempVolume = oldVolume.add(volume);
 				if(tempVolume.compareTo(BigDecimal.ZERO)<0){
-					throw new Exception("供应商物料数量小于供应商出库数量，请检查并调整供应商出库数量！");
+					throwExceptionOfMaterialNotEnough(materialId);
 				}
 				gv.set("volume", tempVolume);
 				delegator.store(gv);
@@ -98,7 +99,7 @@ public class ConsignProcessedPriceMgr {
 				BigDecimal inVolume = BigDecimal.ZERO;//本期收入数量
 				BigDecimal inSum = BigDecimal.ZERO;//本期收入金额
 				if(preMonthValue!=null){
-					beginVolume=preMonthValue.getBigDecimal("beginVolume").add(preMonthValue.getBigDecimal("volume"));
+					beginVolume=preMonthValue.getBigDecimal("volume");
 				}
 				
 				gv = delegator.makeValue("CurConsignProcessedPrice");
@@ -122,13 +123,22 @@ public class ConsignProcessedPriceMgr {
 				}
 				BigDecimal tempVolume = beginVolume.add(volume);
 				if(tempVolume.compareTo(BigDecimal.ZERO)<0){
-					throw new Exception("供应商物料数量小于供应商出库数量，请检查并调整供应商出库数量！");
+					throwExceptionOfMaterialNotEnough(materialId);
 				}
 				gv.set("volume", tempVolume);
 				
 				delegator.create(gv);
 			}
 		}
-
+	}
+	
+	/**
+	 * 库存不足，抛出异常
+	 * @param materialId
+	 * @throws Exception
+	 */
+	private void throwExceptionOfMaterialNotEnough(String materialId) throws Exception {
+		TMaterial material = new TMaterial(materialId);
+		throw new Exception("供应商库存物料（名称："+material.getName()+"，编码："+material.getNumber()+"）数量小于供应商出库数量/金额，请检查并调整出库数量/单价！");
 	}
 }
