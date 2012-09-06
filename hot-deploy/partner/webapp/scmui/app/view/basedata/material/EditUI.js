@@ -15,9 +15,9 @@ Ext.define('SCM.view.basedata.material.EditUI', {
 
 			initComponent : function() {
 				var me = this;
-				var materialTypeStore=Ext.create('SCM.store.basedata.MaterialTypeStore');
-				materialTypeStore.pageSize=100000;//取出所有记录
-				materialTypeStore.load();
+//				var materialTypeStore=Ext.create('SCM.store.basedata.MaterialTypeStore');
+//				materialTypeStore.pageSize=100000;//取出所有记录
+//				materialTypeStore.load();
 //				var spStore=Ext.data.StoreManager.lookup('SPComboInitStore');
 //				spStore.pageSize=100000;
 //				spStore.load();
@@ -38,8 +38,8 @@ Ext.define('SCM.view.basedata.material.EditUI', {
 													name : 'materialTypeId',
 													valueField : 'id',
 													displayField : 'name',
-													initStore:materialTypeStore,
-													store : materialTypeStore,
+													initStore:Ext.data.StoreManager.lookup('MTComboInitStore'),
+													store : Ext.data.StoreManager.lookup('MTComboStore'),
 													listConfig : {
 														height : SCM.MaxSize.COMBOGRID_HEIGHT,
 														columns : [{
