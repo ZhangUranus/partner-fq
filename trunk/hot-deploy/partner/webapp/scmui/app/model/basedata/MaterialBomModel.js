@@ -8,9 +8,6 @@ Ext.define('SCM.model.basedata.MaterialBomModel', {
 						name : 'id',
 						type : 'string'
 					}, {
-						name : 'emptyId',
-						type : 'string'
-					}, {
 						name : 'number',
 						type : 'string'
 					}, {
@@ -59,7 +56,6 @@ Ext.define('SCM.model.basedata.MaterialBomModel', {
 						name : 'unitName',
 						type : 'string'
 					}],
-			idProperty : 'emptyId',// 设置一个没用的id，这样才能支持显示多分录
 			proxy : {
 				type : 'jsonajax',
 				api : {

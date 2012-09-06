@@ -66,6 +66,17 @@ Ext.define('SCM.controller.Main', {
 			 * 初始化系统全局store
 			 */
 			initStore : function() {
+				
+				/* 初始化物料分类的STORE */
+				Ext.create('MaterialTypeStore', {
+							pageSize : SCM.comboPageSize,
+							storeId : 'MTComboStore' //下拉框－－选择时使用
+						}).load();
+				Ext.create('MaterialTypeStore', {
+							pageSize : SCM.unpageSize,
+							storeId : 'MTComboInitStore' //下拉框－－展现时使用
+						}).load();
+				
 				/* 初始化物料的STORE */
 				/* 普通物料 */
 				Ext.create('MaterialComboStore', {

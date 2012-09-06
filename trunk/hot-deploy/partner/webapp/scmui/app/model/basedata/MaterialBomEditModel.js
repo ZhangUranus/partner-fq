@@ -45,7 +45,8 @@ Ext.define('SCM.model.basedata.MaterialBomEditModel', {
 			proxy : {
 				type : 'jsonajax',
 				api : {
-					read : '../../scm/control/requestJsonData?entity=MaterialBomView'
+					read : '../../scm/control/requestJsonData?entity=MaterialBomView',
+					destroy : '../../scm/control/deleteWithEntry?headEntity=MaterialBom&entryEntity=MaterialBomEntry'
 				},
 				extraParams : {
 					queryField : 'number,materialNumber,materialName'

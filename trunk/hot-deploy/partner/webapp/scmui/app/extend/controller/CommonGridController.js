@@ -88,7 +88,7 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 						this.refreshRecord();
 					} else if (request.action == 'update') {
 						this.isUpdate = true;
-						this.refreshRecord();
+						this.refreshRecord(this.listPanel.store.currentPage);
 					} else if (request.action == 'destroy') {
 						this.isUpdate = true;
 						this.refreshRecord();
@@ -297,7 +297,15 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 				} else {
 					this.listPanel.store.getProxy().extraParams.query = '';
 				}
-				this.listPanel.store.loadPage(1);
+				
+				//mark 2012-9-5 判断加载第几页
+				if(typeof(button) == 'number'){
+					var curPage=button;
+					this.listPanel.store.loadPage(curPage);
+				}else{
+					this.listPanel.store.loadPage(1);
+				}
+				
 				this.changeComponentsState();
 				this.isUpdate = false;
 			},

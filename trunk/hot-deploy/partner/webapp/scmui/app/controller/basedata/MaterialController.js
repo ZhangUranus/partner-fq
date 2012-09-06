@@ -262,7 +262,11 @@ Ext.define('SCM.controller.basedata.MaterialController', {
 			saveType : function(button){
 				var form=this.typeWin.down('form');
 				var record=form.getRecord();
-				var values=form.getValues();;
+				var values=form.getValues();
+				if(values.parentId==undefined||values.parentId==null){
+					showError('类型不能为空');
+					return ;
+				}
 				if(record){
 					record.set(values);
 					record.save({scope:this,callback:function(record, operation){
