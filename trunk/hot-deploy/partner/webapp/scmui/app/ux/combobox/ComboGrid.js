@@ -12,11 +12,11 @@ Ext.define('SCM.ux.combobox.ComboGrid', {
 			typeAhead : true,
 			forceSelection : true,
 			queryCaching : false,
-			autoSelect : true,//暂时没有实现自动选中功能该值不允许为true;
+			autoSelect : true,// 暂时没有实现自动选中功能该值不允许为true;
 
 			/**
-			 * @private
-			 * If the autoSelect config is true, and the picker is open, highlights the first item.
+			 * @private If the autoSelect config is true, and the picker is
+			 *          open, highlights the first item.
 			 */
 			doAutoSelect : function() {
 				var me = this, picker = me.picker, lastSelected, itemNode;
@@ -26,12 +26,13 @@ Ext.define('SCM.ux.combobox.ComboGrid', {
 					itemNode = picker.getNode(lastSelected || 0);
 					if (itemNode) {
 						picker.highlightItem(itemNode);
-						//picker.listEl.scrollChildIntoView(itemNode, false);	//暂时没有实现自动选中功能
+						// picker.listEl.scrollChildIntoView(itemNode, false);
+						// //暂时没有实现自动选中功能
 					}
 				}
 			},
 
-			// copied from ComboBox 
+			// copied from ComboBox
 			createPicker : function() {
 				var me = this, picker, menuCls = Ext.baseCSSPrefix + 'menu', opts = Ext.apply({
 							selModel : {
@@ -90,16 +91,57 @@ Ext.define('SCM.ux.combobox.ComboGrid', {
 				Ext.defer(keyNav.enable, 1, keyNav);
 				me.inputEl.focus();
 			},
-			
-			//查询、展现分store实现
-			findRecord: function(field, value) {
-				var ds ;
-				if(this.initStore){
+
+			// 查询、展现分store实现
+			findRecord : function(field, value) {
+				var ds;
+				if (this.initStore) {
 					ds = this.initStore;
-				}else{
+				} else {
 					ds = this.store;
 				}
-		        var idx = ds.findExact(field, value);
-		        return idx !== -1 ? ds.getAt(idx) : false;
-		    }
+				var idx = ds.findExact(field, value);
+				return idx !== -1 ? ds.getAt(idx) : false;
+			},
+
+			onItemClick : function(picker, record) {
+				var me = this, selection = me.picker.getSelectionModel().getSelection(), valueField = me.valueField;
+
+				if (!me.multiSelect && selection.length) {
+					if (record.get(valueField) === selection[0].get(valueField)) {
+
+						me.displayTplData = [record.data];
+						me.selectRecordForValue = record;		//避免同名选择时，无法获取正确的value
+						me.setRawValue(me.getDisplayValue());
+						me.collapse();
+					}
+				}
+			},
+
+			// 覆盖方法，通过value获取选中值
+			assertValue : function() {
+				var me = this, value = me.getRawValue(), rec;
+
+				if (me.forceSelection) {
+					if (me.multiSelect) {
+
+						if (value !== me.getDisplayValue()) {
+							me.setValue(me.lastSelection);
+						}
+					} else {
+						// 选择记录如果存在值的话，使用value去获取记录
+						if(me.selectRecordForValue){
+							rec = me.findRecordByValue(me.selectRecordForValue.get(me.valueField));
+						} else {
+							rec = me.findRecordByDisplay(value);
+						}
+						if (rec) {
+							me.select(rec);
+						} else {
+							me.setValue(me.lastSelection);
+						}
+					}
+				}
+				me.collapse();
+			}
 		});
