@@ -74,14 +74,14 @@ Ext.define('SCM.view.ProductMap.EditUI', {
 													fieldLabel : '板数量',
 													allowBlank : false,
 													hideTrigger : true
-												}, {
-													xtype : 'combobox',
-													name : 'packageType',
-													fieldLabel : '打板类型',
-													allowBlank : false,
-													store : SCM.store.basiccode.packageTypeStore,
-													displayField : 'name',
-													valueField : 'id'
+//												}, {
+//													xtype : 'combobox',
+//													name : 'packageType',
+//													fieldLabel : '打板类型',
+//													allowBlank : false,
+//													store : SCM.store.basiccode.packageTypeStore,
+//													displayField : 'name',
+//													valueField : 'id'
 												}]
 									}],
 							dockedItems : [{
