@@ -2,6 +2,9 @@ package org.ofbiz.partner.scm.stock;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -63,12 +66,14 @@ public class ProductInwarehouseConfirmEvents {
 			String billId=UUID.randomUUID().toString();
 			billHead.setString("id", billId);
 			billHead.setString("number", new SerialNumberHelper().getSerialNumber(request, "ProductInwarehouse"));
-			billHead.set("bizDate", new Timestamp(new Date().getTime()));
+//			billHead.set("bizDate", new Timestamp(new Date().getTime()));
 			billHead.set("inspectorSystemUserId", CommonEvents.getAttributeFormSession(request, "uid"));
 			billHead.set("status", "0");//保存状态
 			
 			
 			JSONArray entrys=JSONArray.fromObject(request.getParameter("records"));
+			
+			Timestamp bzDate=null;//记录进仓单日期，取提交第一条记录的日期
 			
 			/*2.2 构建成品进仓单据分录 更新相关联的成品进仓确认单 */
 			if(entrys==null||entrys.size()<1)throw new Exception("进仓确认记录出错");
@@ -76,6 +81,21 @@ public class ProductInwarehouseConfirmEvents {
 			int sort = 1;
 			for (Object obj : entrys) {
 				JSONObject entry=(JSONObject) obj;
+				
+				
+				if(bzDate==null){
+					if(entry.getString("bizDate")==null){
+						throw new Exception("提交的第一条记录日期不能为空");
+					}else{
+						try {
+							bzDate=new Timestamp(Long.valueOf(entry.getString("bizDate")));
+							billHead.set("bizDate", bzDate);//设置 进仓单日期
+						} catch (NumberFormatException e) {
+							throw new Exception("提交的第一条记录日期格式错误");
+						}
+					}
+				}
+				
 				/*检查单据是否可以提交*/
 				GenericValue productConfirmV = delegator.findOne("ProductInwarehouseConfirm",false , "id",entry.getString("id"));
 				if(productConfirmV==null)throw new Exception("数据库没找到对应的确认单，请刷新记录！");
@@ -84,27 +104,27 @@ public class ProductInwarehouseConfirmEvents {
 				
 				String entryId=UUID.randomUUID().toString();
 				String materialId=entry.getString("materialMaterialId");
-				if(materialId==null)throw new Exception("物料为空！");
+				if(materialId==null||materialId.trim().length()<1)throw new Exception("物料为空！");
 				
 				String workshopId=entry.getString("workshopWorkshopId");
-				if(workshopId==null)throw new Exception("车间为空！");
+				if(workshopId==null||workshopId.trim().length()<1)throw new Exception("车间为空！");
 				
 				String warehouseId=entry.getString("warehouseWarehouseId");
-				if(warehouseId==null)throw new Exception("仓库为空！");
+				if(warehouseId==null||warehouseId.trim().length()<1)throw new Exception("仓库为空！");
 				
 				String unitId=entry.getString("unitUnitId");
-				if(unitId==null)throw new Exception("物料计量单位为空！");
+				if(unitId==null||unitId.trim().length()<1)throw new Exception("物料计量单位为空！");
 				
 				BigDecimal volume=new BigDecimal(entry.getString("volume"));
 				
 				String barcode1=entry.getString("barcode1");
-				if(barcode1==null)throw new Exception("条码1为空！");
+				if(barcode1==null||barcode1.trim().length()<1)throw new Exception("条码1为空！");
 				
 				String barcode2=entry.getString("barcode2");
-				if(barcode2==null)throw new Exception("条码2为空！");
+				if(barcode2==null||barcode2.trim().length()<1)throw new Exception("条码2为空！");
 				
 				String inwarehouseType=entry.getString("inwarehouseType");
-				if(inwarehouseType==null)throw new Exception("进仓类型为空！");
+				if(inwarehouseType==null||inwarehouseType.trim().length()<1)throw new Exception("进仓类型为空！");
 				
 				Long qantity=new Long(entry.getString("qantity"));
 				
