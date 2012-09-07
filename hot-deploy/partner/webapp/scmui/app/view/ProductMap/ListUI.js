@@ -30,12 +30,12 @@ Ext.define('SCM.view.ProductMap.ListUI', {
 										header : '板数量',
 										dataIndex : 'boardCount',
 										width : 200
-									}, {
-										xtype : 'gridcolumn',
-										renderer : SCM.store.basiccode.packageTypeRenderer,
-										dataIndex : 'packageType',
-										width : 100,
-										text : '打板类型'
+//									}, {
+//										xtype : 'gridcolumn',
+//										renderer : SCM.store.basiccode.packageTypeRenderer,
+//										dataIndex : 'packageType',
+//										width : 100,
+//										text : '打板类型'
 									}],
 							dockedItems : [{
 										xtype : 'basetoolbar'

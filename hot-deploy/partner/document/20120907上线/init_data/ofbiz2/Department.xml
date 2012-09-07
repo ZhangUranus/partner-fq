@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-engine-xml>
+    <Department id="0c92191f-3ccc-4c46-a466-bfe35663b391" number="DPM100002" name="&#32479;&#35745;&#37096;" lastUpdatedStamp="2012-08-19 14:37:58.0" lastUpdatedTxStamp="2012-08-19 14:37:58.0" createdStamp="2012-08-19 14:37:58.0" createdTxStamp="2012-08-19 14:37:58.0"/>
+    <Department id="2c2f37d4-33ac-4026-9ec0-3f8571e8a4a4" number="DPM100001" name="&#31995;&#32479;&#31649;&#29702;" lastUpdatedStamp="2012-08-19 14:37:58.0" lastUpdatedTxStamp="2012-08-19 14:37:58.0" createdStamp="2012-08-19 14:37:58.0" createdTxStamp="2012-08-19 14:37:58.0"/>
+    <Department id="7fdc10ae-c7fd-4360-96c2-fedaf739f14c" number="DPM100004" name="&#37319;&#36141;&#37096;" lastUpdatedStamp="2012-08-19 14:37:58.0" lastUpdatedTxStamp="2012-08-19 14:37:58.0" createdStamp="2012-08-19 14:37:58.0" createdTxStamp="2012-08-19 14:37:58.0"/>
+    <Department id="8a2ac1ae-6296-4c63-8a4b-e5f192f70ff9" number="DPM100003" name="&#29983;&#20135;&#37096;" lastUpdatedStamp="2012-08-19 14:37:58.0" lastUpdatedTxStamp="2012-08-19 14:37:58.0" createdStamp="2012-08-19 14:37:58.0" createdTxStamp="2012-08-19 14:37:58.0"/>
+</entity-engine-xml>
