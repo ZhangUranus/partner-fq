@@ -183,11 +183,6 @@ Ext.define('SCM.view.ProductOutwarehouseConfirm.ListUI', {
 													xtype : 'billsearchtoolbar',// 工具栏
 													keyWord : true,
 													border : '0 1 1 1'
-												}, {
-													dock : 'bottom',
-													xtype : 'pagingtoolbar',
-													store : 'ProductOutwarehouseConfirm.ProductOutwarehouseConfirmStore',
-													displayInfo : true
 												}]
 									}// end gridpanel
 							]
