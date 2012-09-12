@@ -63,12 +63,14 @@ public class ProductOutwarehouseConfirmEvents {
 			String billId=UUID.randomUUID().toString();
 			billHead.setString("id", billId);
 			billHead.setString("number", new SerialNumberHelper().getSerialNumber(request, "ProductOutwarehouse"));
-			billHead.set("bizDate", new Timestamp(new Date().getTime()));
+//			billHead.set("bizDate", new Timestamp(new Date().getTime()));
 			billHead.set("submitterSystemUserId", CommonEvents.getAttributeFormSession(request, "uid"));
 			billHead.set("status", 0);//保存状态
 			
 			
 			JSONArray entrys=JSONArray.fromObject(request.getParameter("records"));
+			
+			Timestamp bzDate=null;//记录进仓单日期，取提交第一条记录的日期
 			
 			/*2.2 构建成品出仓单据分录 更新相关联的成品出仓确认单 */
 			if(entrys==null||entrys.size()<1)throw new Exception("出仓确认记录出错");
@@ -76,6 +78,20 @@ public class ProductOutwarehouseConfirmEvents {
 			int sort = 1;
 			for (Object obj : entrys) {
 				JSONObject entry=(JSONObject) obj;
+				
+				if(bzDate==null){
+					if(entry.getString("bizDate")==null){
+						throw new Exception("提交的第一条记录日期不能为空");
+					}else{
+						try {
+							bzDate=new Timestamp(Long.valueOf(entry.getString("bizDate")));
+							billHead.set("bizDate", bzDate);//设置 进仓单日期
+						} catch (NumberFormatException e) {
+							throw new Exception("提交的第一条记录日期格式错误");
+						}
+					}
+				}
+				
 				/*检查单据是否可以提交*/
 				GenericValue productConfirmV = delegator.findOne("ProductOutwarehouseConfirm",false , "id",entry.getString("id"));
 				if(productConfirmV==null)throw new Exception("数据库没找到对应的确认单，请刷新记录！");
@@ -83,34 +99,33 @@ public class ProductOutwarehouseConfirmEvents {
 				if("4".equals(productConfirmV.getString("status"))) throw new Exception("单据已经提交！");
 				
 				String entryId=UUID.randomUUID().toString();
-				
 				String prdWeek=entry.getString("prdWeek");
-				if(prdWeek==null)throw new Exception("生产周为空！");
+				if(prdWeek==null||prdWeek.trim().length()<1)throw new Exception("生产周为空！");
 				
 				String materialId=entry.getString("materialMaterialId");
-				if(materialId==null)throw new Exception("物料为空！");
+				if(materialId==null||materialId.trim().length()<1)throw new Exception("物料为空！");
 				
 				String warehouseId=entry.getString("warehouseWarehouseId");
-				if(warehouseId==null)throw new Exception("仓库为空！");
+				if(warehouseId==null||warehouseId.trim().length()<1)throw new Exception("仓库为空！");
 				
 				String unitId=entry.getString("unitUnitId");
-				if(unitId==null) unitId = "";
+				if(unitId==null||unitId.trim().length()<1) unitId = "";
 //				if(unitId==null)throw new Exception("物料计量单位为空！");
 				
 				BigDecimal volume=new BigDecimal(entry.getString("volume"));
 				
 				String barcode1=entry.getString("barcode1");
-				if(barcode1==null)throw new Exception("产品条码为空！");
+				if(barcode1==null||barcode1.trim().length()<1)throw new Exception("产品条码为空！");
 				
 				String barcode2=entry.getString("barcode2");
-				if(barcode2==null)throw new Exception("序列号为空！");
+				if(barcode2==null||barcode2.trim().length()<1)throw new Exception("序列号为空！");
 				
 				String outwarehouseType=entry.getString("outwarehouseType");
-				if(outwarehouseType==null)throw new Exception("出仓类型为空！");
+				if(outwarehouseType==null||outwarehouseType.trim().length()<1)throw new Exception("出仓类型为空！");
 				
 				String workshopId=entry.getString("workshopWorkshopId");
 				if(!"1".equals(outwarehouseType)){//正常出仓时，可以不需要车间
-					if(workshopId==null)throw new Exception("车间为空！");
+					if(workshopId==null||workshopId.trim().length()<1)throw new Exception("车间为空！");
 				} else {
 					if(workshopId==null) workshopId = "";
 				}
@@ -118,10 +133,10 @@ public class ProductOutwarehouseConfirmEvents {
 				Long qantity=new Long(entry.getString("qantity"));
 				
 				String goodNumber=entry.getString("goodNumber");
-				if(goodNumber==null)throw new Exception("货号为空！");
+				if(goodNumber==null||goodNumber.trim().length()<1)throw new Exception("货号为空！");
 				
 				String destinhouseNumber=entry.getString("destinhouseNumber");
-				if(destinhouseNumber==null)throw new Exception("订舱号为空！");
+				if(destinhouseNumber==null||destinhouseNumber.trim().length()<1)throw new Exception("订舱号为空！");
 				
 				//新成品出仓单分录
 				GenericValue ev=delegator.makeValue("ProductOutwarehouseEntry");

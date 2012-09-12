@@ -2,9 +2,6 @@ package org.ofbiz.partner.scm.stock;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -82,7 +79,6 @@ public class ProductInwarehouseConfirmEvents {
 			for (Object obj : entrys) {
 				JSONObject entry=(JSONObject) obj;
 				
-				
 				if(bzDate==null){
 					if(entry.getString("bizDate")==null){
 						throw new Exception("提交的第一条记录日期不能为空");
@@ -118,10 +114,10 @@ public class ProductInwarehouseConfirmEvents {
 				BigDecimal volume=new BigDecimal(entry.getString("volume"));
 				
 				String barcode1=entry.getString("barcode1");
-				if(barcode1==null||barcode1.trim().length()<1)throw new Exception("条码1为空！");
+				if(barcode1==null||barcode1.trim().length()<1)throw new Exception("产品条码为空！");
 				
 				String barcode2=entry.getString("barcode2");
-				if(barcode2==null||barcode2.trim().length()<1)throw new Exception("条码2为空！");
+				if(barcode2==null||barcode2.trim().length()<1)throw new Exception("序列号为空！");
 				
 				String inwarehouseType=entry.getString("inwarehouseType");
 				if(inwarehouseType==null||inwarehouseType.trim().length()<1)throw new Exception("进仓类型为空！");
