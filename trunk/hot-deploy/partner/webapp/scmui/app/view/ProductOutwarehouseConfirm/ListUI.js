@@ -55,7 +55,11 @@ Ext.define('SCM.view.ProductOutwarehouseConfirm.ListUI', {
 													dataIndex : 'bizDate',
 													format : 'Y-m-d',
 													groupable : false,
-													text : '日期'
+													text : '日期',
+													editor : {
+														xtype : 'datefield',
+														format : 'Y-m-d'
+													}
 												}, {
 													xtype : 'combocolumn',
 													dataIndex : 'warehouseWarehouseId',
