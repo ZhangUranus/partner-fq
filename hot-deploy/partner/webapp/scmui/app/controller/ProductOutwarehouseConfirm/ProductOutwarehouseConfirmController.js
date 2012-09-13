@@ -184,32 +184,37 @@ Ext.define('SCM.controller.ProductOutwarehouseConfirm.ProductOutwarehouseConfirm
 				var me = this;
 				var records = me.getAllSelectRecords()
 				if (records) {
-					var recordsData = [];
-					for (var r in records) {
-						recordsData.push(records[r].data);
-						records[r].save(); // 保存提交的出仓单
+					Ext.Msg.confirm('提示', '是否确定提交出仓确认单，生成成品出仓单？', submitConfirmBill, me);
+					function submitConfirmBill(id) {
+						if (id == 'yes') {
+							var recordsData = [];
+							for (var r in records) {
+								recordsData.push(records[r].data);
+								records[r].save(); // 保存提交的出仓单
+							}
+							var json = Ext.encode(recordsData);
+		
+							Ext.Ajax.request({
+										scope : me,
+										url : "../../scm/control/submitProductOutwarehouseConfirm",
+										params : {
+											records : json
+										},
+										success : function(response, option) {
+											if (response.responseText.length < 1) {
+												showError('系统没有返回结果');
+											}
+											var result = Ext.decode(response.responseText)
+											if (result.success) {
+												Ext.Msg.alert("提示", "提交成功！");
+												me.refreshRecord();
+											} else {
+												showError(result.message);
+											}
+										}
+									});
+						}
 					}
-					var json = Ext.encode(recordsData);
-
-					Ext.Ajax.request({
-								scope : me,
-								url : "../../scm/control/submitProductOutwarehouseConfirm",
-								params : {
-									records : json
-								},
-								success : function(response, option) {
-									if (response.responseText.length < 1) {
-										showError('系统没有返回结果');
-									}
-									var result = Ext.decode(response.responseText)
-									if (result.success) {
-										Ext.Msg.alert("提示", "提交成功！");
-										me.refreshRecord();
-									} else {
-										showError(result.message);
-									}
-								}
-							});
 				} else {
 					showWarning('未选中物料！');
 				}
