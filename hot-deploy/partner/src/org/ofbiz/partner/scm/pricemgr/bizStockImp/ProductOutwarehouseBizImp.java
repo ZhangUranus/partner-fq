@@ -1,6 +1,7 @@
 package org.ofbiz.partner.scm.pricemgr.bizStockImp;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -102,7 +103,7 @@ public class ProductOutwarehouseBizImp implements IBizStock {
 			if (isOut) {
 				/* 3.1 计算板单价、金额 */
 				BigDecimal price = cost; // 板单价
-				sum = price.multiply(volume); // 板金额
+				sum = price.multiply(volume).setScale(6, RoundingMode.DOWN); // 板金额，取小数点后六位
 
 				/* 3.2 返填单价和金额 */
 				v.set("price", price);
