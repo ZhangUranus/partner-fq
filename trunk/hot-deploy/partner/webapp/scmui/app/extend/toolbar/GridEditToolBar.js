@@ -29,6 +29,16 @@ Ext.define('SCM.extend.toolbar.GridEditToolbar', {
 										hidden : true,
 										action : 'editDetail'
 									}, {
+										text : '查看出仓明细',
+										iconCls : 'detail',
+										hidden : true,
+										action : 'viewOutProduct'
+									}, {
+										text : '编辑出仓明细',
+										iconCls : 'detail-edit',
+										hidden : true,
+										action : 'editOutProduct'
+									}, {
 										text : '编辑额外耗料',
 										iconCls : 'detail-edit',
 										hidden : true,
