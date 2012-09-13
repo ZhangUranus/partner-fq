@@ -66,11 +66,11 @@ Ext.define('SCM.controller.ProductOutNotification.ProductOutNotificationControll
 								click : this.deleteLine
 							},
 							// 查看分录耗料明细
-							'ProductOutNotificationedit gridpanel button[action=viewDetail]' : {
+							'ProductOutNotificationedit gridpanel button[action=viewOutProduct]' : {
 								click : this.viewDetailList
 							},
 							// 编辑界面分录额外耗料明细
-							'ProductOutNotificationedit gridpanel button[action=editDetail]' : {
+							'ProductOutNotificationedit gridpanel button[action=editOutProduct]' : {
 								click : this.editDetailRecord
 							},
 							// 编辑界面分录明细新增
@@ -167,12 +167,12 @@ Ext.define('SCM.controller.ProductOutNotification.ProductOutNotificationControll
 				this.deleteLineButton = this.win.down('gridpanel button[action=deleteLine]');
 				
 				// 耗料明细页面
-				this.viewDetailButton = this.win.down('gridpanel button[action=viewDetail]');
+				this.viewDetailButton = this.win.down('gridpanel button[action=viewOutProduct]');
 				this.detailWin = Ext.widget('ProductOutNotificationdetaillist');
 				this.detailEntry = this.detailWin.down('gridpanel');
 
 				// 额外耗料明细界面
-				this.editDetailButton = this.win.down('gridpanel button[action=editDetail]');
+				this.editDetailButton = this.win.down('gridpanel button[action=editOutProduct]');
 				this.detailEditWin = Ext.widget('ProductOutNotificationdetailedit');
 				this.detailEditEntry = this.detailEditWin.down('gridpanel');
 			},
