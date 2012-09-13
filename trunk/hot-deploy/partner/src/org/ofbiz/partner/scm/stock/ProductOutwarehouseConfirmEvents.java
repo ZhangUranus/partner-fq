@@ -99,8 +99,8 @@ public class ProductOutwarehouseConfirmEvents {
 				if("4".equals(productConfirmV.getString("status"))) throw new Exception("单据已经提交！");
 				
 				String entryId=UUID.randomUUID().toString();
-				String prdWeek=entry.getString("prdWeek");
-				if(prdWeek==null||prdWeek.trim().length()<1)throw new Exception("生产周为空！");
+//				String prdWeek=entry.getString("prdWeek");
+//				if(prdWeek==null||prdWeek.trim().length()<1)throw new Exception("生产周为空！");
 				
 				String materialId=entry.getString("materialMaterialId");
 				if(materialId==null||materialId.trim().length()<1)throw new Exception("物料为空！");
