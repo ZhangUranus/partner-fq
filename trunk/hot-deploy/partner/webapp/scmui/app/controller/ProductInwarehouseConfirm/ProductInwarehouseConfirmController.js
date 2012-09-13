@@ -359,31 +359,35 @@ Ext.define('SCM.controller.ProductInwarehouseConfirm.ProductInwarehouseConfirmCo
 				var me = this;
 				var records=me.getAllSelectRecords()
 				if(records){
-					var recordsData=[];
-					for(var r in records){
-						recordsData.push(records[r].data);
-					}
-					var json=Ext.encode(recordsData);
-					
-					Ext.Ajax.request({ 
-						scope : me,
-						url : "../../scm/control/submitProductInwarehouseConfirm",
-						params:{records:json},
-						success : function(response, option) {
-							if(response.responseText.length<1){
-								showError('系统没有返回结果');
+					Ext.Msg.confirm('提示', '是否确定提交进仓确认单，生成成品进仓单？', submitConfirmBill, me);
+					function submitConfirmBill(id) {
+						if (id == 'yes') {
+							var recordsData=[];
+							for(var r in records){
+								recordsData.push(records[r].data);
 							}
-				 			var responseArray = Ext.JSON.decode(response.responseText);
-				 			if(responseArray.success){
-				 				Ext.Msg.alert("提示", "提交成功！");
-				 				me.refreshRecord();
-				 			}else{
-				 				showError(responseArray.message);
-				 			}
+							var json=Ext.encode(recordsData);
+							
+							Ext.Ajax.request({ 
+								scope : me,
+								url : "../../scm/control/submitProductInwarehouseConfirm",
+								params:{records:json},
+								success : function(response, option) {
+									if(response.responseText.length<1){
+										showError('系统没有返回结果');
+									}
+						 			var responseArray = Ext.JSON.decode(response.responseText);
+						 			if(responseArray.success){
+						 				Ext.Msg.alert("提示", "提交成功！");
+						 				me.refreshRecord();
+						 			}else{
+						 				showError(responseArray.message);
+						 			}
+								}
+							});
 						}
-					});
-					
-				}else {
+					}
+				} else {
 					showWarning('未选中物料！');
 				}
 				
