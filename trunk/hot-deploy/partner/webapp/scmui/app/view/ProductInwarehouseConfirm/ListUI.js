@@ -42,6 +42,9 @@ Ext.define('SCM.view.ProductInwarehouseConfirm.ListUI', {
 													enableToggle : true,
 													pressed : true,
 													action : 'syncDownSel'
+												}, {
+													text : '扫描入库',
+													action : 'scanIn'
 												}]
 									}, {
 										xtype : 'gridpanel',
