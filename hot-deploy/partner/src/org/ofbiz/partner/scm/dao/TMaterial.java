@@ -30,6 +30,9 @@ public class TMaterial {
 	public String getStock(){
 		return material.getString("safeStock");
 	}
+	public String getModel(){
+		return material.getString("model");
+	}
 	public String getUnitId(){
 		return material.getString("defaultUnitId");
 	}

@@ -68,7 +68,8 @@ Ext.define('SCM.view.ProductOutwarehouseConfirm.ListUI', {
 														xtype : 'combogrid',
 														valueField : 'id',
 														displayField : 'name',
-														store : Ext.data.StoreManager.lookup('WHComboInitStore'),
+														initStore : Ext.data.StoreManager.lookup('WHComboInitStore'),
+														store : Ext.data.StoreManager.lookup('WHComboStore'),
 														matchFieldWidth : false,
 														listConfig : {
 															width : SCM.MaxSize.COMBOGRID_WIDTH,
@@ -94,7 +95,8 @@ Ext.define('SCM.view.ProductOutwarehouseConfirm.ListUI', {
 														xtype : 'combogrid',
 														valueField : 'id',
 														displayField : 'name',
-														store : Ext.data.StoreManager.lookup('WSComboInitStore'),
+														initStore : Ext.data.StoreManager.lookup('WSComboInitStore'),
+														store : Ext.data.StoreManager.lookup('WSComboStore'),
 														matchFieldWidth : false,
 														listConfig : {
 															width : SCM.MaxSize.COMBOGRID_WIDTH,

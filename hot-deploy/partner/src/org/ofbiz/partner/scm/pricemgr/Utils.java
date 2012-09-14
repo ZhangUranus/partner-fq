@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilMisc;
+import org.ofbiz.base.util.UtilProperties;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.DelegatorFactory;
 import org.ofbiz.entity.GenericEntityException;
@@ -23,6 +24,7 @@ import org.ofbiz.entity.transaction.TransactionUtil;
 import org.ofbiz.partner.scm.common.BillBaseEvent;
 import org.ofbiz.partner.scm.common.CommonEvents;
 import org.ofbiz.partner.scm.common.DatePeriod;
+import org.ofbiz.partner.scm.dao.TMaterial;
 
 /**
  * 
@@ -456,12 +458,80 @@ public class Utils {
 			beganTransaction = TransactionUtil.begin();
 			Delegator delegator = (Delegator) request.getAttribute("delegator");
 			String parentId = request.getParameter("parentId");// 单据id
-			String entityName = request.getParameter("entityName");// 单据id
+			String entityName = request.getParameter("entityName");// 实体名称
 			if ( parentId != null ) {
 				Debug.log("清理实体:" + entityName + "数据，parentId：" + parentId, module);
 				delegator.removeByAnd(entityName, UtilMisc.toMap("parentId", parentId));
 			}
 			BillBaseEvent.writeSuccessMessageToExt(response, "清理成功");
+			TransactionUtil.commit(beganTransaction);
+		} catch (Exception e) {
+			Debug.logError(e, module);
+			try {
+				TransactionUtil.rollback(beganTransaction, e.getMessage(), e);
+			} catch (GenericTransactionException e2) {
+				Debug.logError(e2, "Unable to rollback transaction", module);
+			}
+			throw e;
+		}
+		return "success";
+	}
+	
+	/**
+	 * 前端调用事件
+	 * 根据物料id获取明细物料，获取该物料的第一个bom单，
+	 * 如果bom单明细物料是bom物料，则对该bom物料进行递归操作，递归的次数不能超过10层 ，对物料不进行合并
+	 * @param request
+	 * @param response
+	 * @throws Exception
+	 */
+	public static String getBomMaterialDetailList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		boolean beganTransaction = false;
+		try {
+			beganTransaction = TransactionUtil.begin();
+			String materialId = request.getParameter("materialId");// 物料
+			// 封装实体数据，构建json字符串
+			StringBuffer jsonStr = new StringBuffer();
+			if ( materialId != null ) {
+				List<ConsumeMaterial> consumeMaterialList = getBomMaterialDetail(materialId, 0);
+				if (consumeMaterialList == null || consumeMaterialList.size() < 1) {
+					return "{'success':true,total:0,'records':[]}";
+				}
+				int total = consumeMaterialList.size();
+				boolean isFirstValue = true;
+				jsonStr.append("{'success':true,'records':[");
+				TMaterial tmaterial = null;
+				for (ConsumeMaterial v : consumeMaterialList) {
+					if (isFirstValue) {
+						isFirstValue = false;
+					} else {
+						jsonStr.append(",");
+					}
+					try {
+						tmaterial = new TMaterial(v.getMaterialId());
+						String model = "";
+						if(tmaterial.getModel()!=null){
+							model = tmaterial.getModel();
+						}
+						String unitId = "";
+						if(tmaterial.getUnitId()!=null){
+							unitId = tmaterial.getUnitId();
+						}
+						jsonStr.append("{'materialId':'"+v.getMaterialId()+"',");
+						jsonStr.append("'volume':'"+v.getConsumeQty()+"',");
+						jsonStr.append("'model':'"+model+"',");
+						jsonStr.append("'unitId':'"+unitId+"'}");
+					} catch (Exception e) {
+						Debug.logError(e, module);
+						throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "EntityObjectToStringException"));
+					}
+				}
+				jsonStr.append("],total:"+total+"}");
+			} else {
+				throw new Exception("成品编码不能为空！");
+			}
+			
+			BillBaseEvent.writeSuccessMessageToExt(response, jsonStr.toString());
 			TransactionUtil.commit(beganTransaction);
 		} catch (Exception e) {
 			Debug.logError(e, module);

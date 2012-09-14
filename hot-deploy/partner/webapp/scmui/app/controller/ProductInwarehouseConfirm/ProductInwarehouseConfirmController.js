@@ -3,7 +3,7 @@ Ext.define('SCM.controller.ProductInwarehouseConfirm.ProductInwarehouseConfirmCo
 			mixins : ['SCM.extend.exporter.Exporter'],
 			views : ['ProductInwarehouseConfirm.ListUI', 'ProductInwarehouseConfirm.DetailEditUI','ProductInwarehouseConfirm.DetailListUI','ProductInwarehouseConfirm.ScanEditUI'],
 			stores : ['ProductInwarehouseConfirm.ProductInwarehouseConfirmStore','ProductInwarehouseConfirm.ProductInwarehouseConfirmDetailStore'],
-			
+
 			init : function() {
 				this.control({
 							'ProductInwarehouseConfirmlist' : {
@@ -33,13 +33,13 @@ Ext.define('SCM.controller.ProductInwarehouseConfirm.ProductInwarehouseConfirmCo
 							'ProductInwarehouseConfirmlist  button[action=showDetail]' : {
 								click : this.viewDetailList
 							},
-							//耗料明细添加行
-							'ProductInwarehouseConfirmDetailEdit button[action=addLine]':{
-								click:this.detailAddLine
+							// 耗料明细添加行
+							'ProductInwarehouseConfirmDetailEdit button[action=addLine]' : {
+								click : this.detailAddLine
 							},
-							//耗料明细删除行
-							'ProductInwarehouseConfirmDetailEdit button[action=deleteLine]':{
-								click:this.detailRemoveLine
+							// 耗料明细删除行
+							'ProductInwarehouseConfirmDetailEdit button[action=deleteLine]' : {
+								click : this.detailRemoveLine
 							},
 							// 耗料明细界面取消
 							'ProductInwarehouseConfirmDetailEdit button[action=cancel]' : {
@@ -126,7 +126,7 @@ Ext.define('SCM.controller.ProductInwarehouseConfirm.ProductInwarehouseConfirmCo
 					}
 				}
 			},
-			
+
 			/**
 			 * 根据状态设置编辑界面状态
 			 * 
@@ -168,33 +168,64 @@ Ext.define('SCM.controller.ProductInwarehouseConfirm.ProductInwarehouseConfirmCo
 							}
 						})
 			},
-			
+
 			/**
 			 * 查看加工件耗料情况
 			 */
 			viewDetailList : function() {
-				var sm = this.listPanel.getSelectionModel();
+				var me = this;
+				var sm = me.listPanel.getSelectionModel();
 				if (sm.hasSelection()) {// 判断是否选择行记录
 					record = sm.getLastSelected();
+
+					me.currentDetailRecord = record;
+					me.detailEditWin.uiStatus = 'Modify';
 					
-					/*如果单据为已提交，或者审核，则不能编辑*/
-					if(record.get('status')=='4'){
-						this.detailEntry.store.removeAll(false);
-						this.detailEntry.store.getProxy().extraParams.whereStr = "parent_id = '" + record.get('id') + "'";
-						this.detailEntry.store.load();
-						this.detailEntry.store.getProxy().extraParams.whereStr ="";
-						this.detailWin.show();
-					}else{//编辑耗料
-						this.currentDetailRecord = record;
-						this.detailEditWin.uiStatus = 'Modify';
-						
-						this.detailEditEntry.store.removeAll(false);
-						// 获取耗料列表
-						this.detailEditEntry.store.getProxy().extraParams.whereStr = 'parent_id = \'' + record.get('id') + '\'';
-						this.detailEditEntry.store.load();
-						this.detailEditEntry.store.getProxy().extraParams.whereStr = "";
-						this.detailEditWin.show();
+					var materialVolume = 1;
+					if( record.get('volume') != 0 ) {
+						materialVolume = record.get('volume');
 					}
+
+					// this.detailEditEntry.store.removeAll(false);
+					// 获取耗料列表
+					me.detailEditEntry.store.getProxy().extraParams.whereStr = 'parent_id = \'' + record.get('id') + '\'';
+					me.detailEditEntry.store.load(function(records, operation, success) {
+								if (records.length <= 0) {// 如果不存在耗料列表，获取初始列表
+									// 获取耗料列表
+									Ext.Ajax.request({
+												scope : me,
+												params : {
+													materialId : record.get('materialMaterialId')
+												},
+												url : '../../scm/control/getBomMaterialDetailList',
+												success : function(response, option) {
+													var result = Ext.decode(response.responseText)
+													if (result.success) {
+														me.detailEditEntry.store.removeAll();
+														var values = result.message.records;
+														for (var i = 0; i < values.length; i++) {
+															var entryRecord = Ext.create('ProductInwarehouseConfirmDetailModel');
+															entryRecord.phantom = true;
+															// 设置父id
+															entryRecord.set('parentId', record.get('id'));
+															entryRecord.set('materialId', values[i].materialId);
+															entryRecord.set('model', values[i].model);
+															entryRecord.set('quantity', values[i].volume * materialVolume );
+															entryRecord.set('unitUnitId', values[i].unitId);
+															entryRecord.set('price', 0);
+															entryRecord.set('amount', 0);
+															me.detailEditEntry.store.add(entryRecord);
+														}
+													} else {
+														showError('获取成品耗料列表失败！');
+													}
+												}
+											});
+								}
+							});
+					me.detailEditEntry.store.getProxy().extraParams.whereStr = "";
+					me.detailEditWin.show();
+
 				} else {
 					showWarning('未选中物料！');
 				}
@@ -202,7 +233,7 @@ Ext.define('SCM.controller.ProductInwarehouseConfirm.ProductInwarehouseConfirmCo
 			},
 			/*
 			 * 删除记录
-			 * */
+			 */
 			deleteRecord : function(button) {
 				record = this.getSelectRecord();
 				if (record.get('status') == '1' || record.get('status') == '2') {
@@ -235,42 +266,45 @@ Ext.define('SCM.controller.ProductInwarehouseConfirm.ProductInwarehouseConfirmCo
 					tempString += 'ProductInwarehouseConfirmV.biz_date >= \'' + this.searchStartDate.getRawValue() + ' 00:00:00\'';
 				}
 				if (!Ext.isEmpty(this.searchEndDate.getValue())) {
-					if(tempString != ''){
-						if(this.searchStartDate.getRawValue()>this.searchEndDate.getRawValue()){
+					if (tempString != '') {
+						if (this.searchStartDate.getRawValue() > this.searchEndDate.getRawValue()) {
 							showWarning('开始日期不允许大于结束日期，请重新选择！');
-							return ;
+							return;
 						}
 						tempString += ' and ';
 					}
 					tempString += 'ProductInwarehouseConfirmV.biz_date <= \'' + this.searchEndDate.getRawValue() + ' 23:59:59\'';
 				}
-//				if(this.searchMaterialId.getValue() && this.searchMaterialId.getValue() != ''){
-//					if(tempString != ''){
-//						tempString += ' and ';
-//					}
-//					tempString += 'ProductInwarehouseConfirmV.material_material_id = \'' + this.searchMaterialId.getValue() + '\'';
-//				}
-				if (!Ext.isEmpty(this.searchKeyWord.getValue())){
+				// if(this.searchMaterialId.getValue() &&
+				// this.searchMaterialId.getValue() != ''){
+				// if(tempString != ''){
+				// tempString += ' and ';
+				// }
+				// tempString +=
+				// 'ProductInwarehouseConfirmV.material_material_id = \'' +
+				// this.searchMaterialId.getValue() + '\'';
+				// }
+				if (!Ext.isEmpty(this.searchKeyWord.getValue())) {
 					if (tempString != '') {
 						tempString += ' and ';
 					}
 					tempString += '(materialMaterialV.name like \'%' + this.searchKeyWord.getValue() + '%\' or materialMaterialV.number like \'%' + this.searchKeyWord.getValue() + '%\')';
 				}
 				tempString += ' and ProductInwarehouseConfirmV.status != \'' + 4 + '\'';
-				
+
 				this.listPanel.store.getProxy().extraParams.whereStr = tempString;
 				this.listPanel.store.load();
-				
+
 			},
 			/**
 			 * 添加耗料记录
 			 */
-			detailAddLine:function(){
+			detailAddLine : function() {
 				var detailRecord = Ext.create('ProductInwarehouseConfirmDetailModel');
 				detailRecord.phantom = true;
 				// 设置父id
 				detailRecord.set('parentId', this.currentDetailRecord.get('id'));
-				//默认单价，金额为零
+				// 默认单价，金额为零
 				detailRecord.set('price', 0);
 				detailRecord.set('amount', 0);
 				this.detailEditEntry.store.add(detailRecord);
@@ -278,14 +312,14 @@ Ext.define('SCM.controller.ProductInwarehouseConfirm.ProductInwarehouseConfirmCo
 			/**
 			 * 删除耗料记录
 			 */
-			detailRemoveLine:function(){
+			detailRemoveLine : function() {
 				var selMod = this.detailEditEntry.getSelectionModel();
-				if (selMod != null&&selMod.getLastSelected()!=null) {
+				if (selMod != null && selMod.getLastSelected() != null) {
 					this.detailEditEntry.store.remove(selMod.getLastSelected());
-				}else{
+				} else {
 					showWarning('请选择分录');
 				}
-				
+
 			},
 			/**
 			 * 保存额外耗料列表
@@ -313,12 +347,12 @@ Ext.define('SCM.controller.ProductInwarehouseConfirm.ProductInwarehouseConfirmCo
 			cancelDetail : function() {
 				this.detailEditWin.close();
 			},
-			
+
 			/**
 			 * 耗料明细编辑事情
 			 */
-			detailEntryEditAction : function(editor, e){
-				//自动填写规格型号和计量单位
+			detailEntryEditAction : function(editor, e) {
+				// 自动填写规格型号和计量单位
 				if (e.field == 'materialId') {
 					var record = Ext.data.StoreManager.lookup('MWHComboInitStore').findRecord('id', e.value);
 					if (record) {
@@ -328,26 +362,26 @@ Ext.define('SCM.controller.ProductInwarehouseConfirm.ProductInwarehouseConfirmCo
 					}
 				}
 			},
-			
+
 			/**
 			 * 进仓确认单列表界面编辑事件
 			 */
-			listPanelEditActin : function(editor,e){
-				if(this.syncDownSel.pressed==true){
-					//从fromRow行复制值
-					this.syncRecordByField(e.field,e.value,this.listPanel.store,e.rowIdx+1);
+			listPanelEditActin : function(editor, e) {
+				if (this.syncDownSel.pressed == true) {
+					// 从fromRow行复制值
+					this.syncRecordByField(e.field, e.value, this.listPanel.store, e.rowIdx + 1);
 				}
 			},
-			//从fromRow行复制值
-			syncRecordByField : function (field,value,store,fromRow){
-				if(fromRow<store.getCount()){
-					var records=store.getRange(fromRow);
-					Ext.Array.each(records,function(record,index,records){
-							record.set(field,value);
-					});
+			// 从fromRow行复制值
+			syncRecordByField : function(field, value, store, fromRow) {
+				if (fromRow < store.getCount()) {
+					var records = store.getRange(fromRow);
+					Ext.Array.each(records, function(record, index, records) {
+								record.set(field, value);
+							});
 				}
 			},
-			
+
 			/**
 			 * 获取当前操作的Record
 			 * 
@@ -359,88 +393,89 @@ Ext.define('SCM.controller.ProductInwarehouseConfirm.ProductInwarehouseConfirmCo
 					return sm.getLastSelected();
 				}
 			},
-			
-			
+
 			/**
 			 * 返回选择所有记录
 			 */
-			getAllSelectRecords : function(){
+			getAllSelectRecords : function() {
 				var sm = this.listPanel.getSelectionModel();
 				if (sm.hasSelection()) {// 判断是否选择行记录
 					return sm.getSelection();
 				}
 			},
-			
+
 			/**
 			 * 提交单据
 			 */
-			submitBill : function(){
+			submitBill : function() {
 				var me = this;
-				var records=me.getAllSelectRecords()
-				if(records){
+				var records = me.getAllSelectRecords()
+				if (records) {
 					Ext.Msg.confirm('提示', '是否确定提交进仓确认单，生成成品进仓单？', submitConfirmBill, me);
 					function submitConfirmBill(id) {
 						if (id == 'yes') {
-							var recordsData=[];
-							for(var r in records){
+							var recordsData = [];
+							for (var r in records) {
 								recordsData.push(records[r].data);
 							}
-							var json=Ext.encode(recordsData);
-							
-							Ext.Ajax.request({ 
-								scope : me,
-								url : "../../scm/control/submitProductInwarehouseConfirm",
-								params:{records:json},
-								success : function(response, option) {
-									if(response.responseText.length<1){
-										showError('系统没有返回结果');
-									}
-						 			var responseArray = Ext.JSON.decode(response.responseText);
-						 			if(responseArray.success){
-						 				Ext.Msg.alert("提示", "提交成功！");
-						 				me.refreshRecord();
-						 			}else{
-						 				showError(responseArray.message);
-						 			}
-								}
-							});
+							var json = Ext.encode(recordsData);
+
+							Ext.Ajax.request({
+										scope : me,
+										url : "../../scm/control/submitProductInwarehouseConfirm",
+										params : {
+											records : json
+										},
+										success : function(response, option) {
+											if (response.responseText.length < 1) {
+												showError('系统没有返回结果');
+											}
+											var responseArray = Ext.JSON.decode(response.responseText);
+											if (responseArray.success) {
+												Ext.Msg.alert("提示", "提交成功！");
+												me.refreshRecord();
+											} else {
+												showError(responseArray.message);
+											}
+										}
+									});
 						}
 					}
 				} else {
 					showWarning('未选中物料！');
 				}
-				
+
 			},
-			
+
 			/**
 			 * 同步后台记录
 			 */
-			syncBill : function(){
+			syncBill : function() {
 				Ext.getBody().mask('系统正在进行同步操作，请稍等....');
-				
-				Ext.Ajax.request({ 
-					scope : this,
-					url : "../../scm/control/syncProductInwarehouseConfirm",
-					success : function(response, option) {
-						if(response.responseText.length<1){
-							taskMask.hide();
-							showError("服务器没有回应");
-						}
-			 			var responseArray = Ext.JSON.decode(response.responseText);
-			 			if(responseArray.success){
-			 				showInfo('同步完成');
-			 				Ext.getBody().unmask();
-			 			}else{
-			 				showError(responseArray.message);
-			 			}
-			 			Ext.getBody().unmask();
-						
-					},
-					failure: function(response, opts) {
-						showError("系统错误"+response.status);
-						Ext.getBody().unmask();
-				    }
-				});
+
+				Ext.Ajax.request({
+							scope : this,
+							url : "../../scm/control/syncProductInwarehouseConfirm",
+							success : function(response, option) {
+								if (response.responseText.length < 1) {
+									taskMask.hide();
+									showError("服务器没有回应");
+								}
+								var responseArray = Ext.JSON.decode(response.responseText);
+								if (responseArray.success) {
+									showInfo('同步完成');
+									Ext.getBody().unmask();
+								} else {
+									showError(responseArray.message);
+								}
+								Ext.getBody().unmask();
+
+							},
+							failure : function(response, opts) {
+								showError("系统错误" + response.status);
+								Ext.getBody().unmask();
+							}
+						});
 			},
 			//弹出扫描入库界面
 			scanEdit : function(){
