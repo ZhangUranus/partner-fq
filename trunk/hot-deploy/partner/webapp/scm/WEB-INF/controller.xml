@@ -606,6 +606,13 @@
 		<response name="success" type="none" />
 	</request-map>
 	
+	<!-- 获取成品耗料列表（materialId） -->
+	<request-map uri="getBomMaterialDetailList">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.pricemgr.Utils" invoke="getBomMaterialDetailList" />
+		<response name="success" type="none" />
+	</request-map>
+	
 	<!-- 清理实体列表列表参数（entityName，parentId） -->
 	<request-map uri="removeDataByParentId">
 		<security https="false" auth="false" />

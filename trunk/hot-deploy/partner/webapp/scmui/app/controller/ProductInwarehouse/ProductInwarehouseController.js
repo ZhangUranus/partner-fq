@@ -225,26 +225,35 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 				me.detailEditEntry.store.getProxy().extraParams.whereStr = 'parent_id = \'' + record.get('id') + '\'';
 				me.detailEditEntry.store.load(function(records, operation, success) {
 						if(records.length <= 0){//如果不存在耗料列表，获取初始列表
-							me.MaterialBOMStore.getProxy().extraParams.whereStr = 'TMaterialV.ID = \'' + record.get('materialMaterialId') + '\'';
-							me.MaterialBOMStore.load(function(records, operation, success) {
-										me.detailEditEntry.store.removeAll();
-										for (var i = 0; i < records.length; i++) {
-											var tempRecord = records[i];
-											var entryRecord = Ext.create('ProductInwarehouseEntryDetailModel');
-											entryRecord.phantom = true;
-		
-											// 设置父id
-											entryRecord.set('parentId', record.get('id'));
-											entryRecord.set('materialId', tempRecord.get('bomMaterialId'));
-											entryRecord.set('model', tempRecord.get('bomMaterialModel'));
-											entryRecord.set('quantity', tempRecord.get('volume') * materialVolume);
-											entryRecord.set('unitUnitId', tempRecord.get('bomUnitId'));
-											entryRecord.set('price', 0);
-											entryRecord.set('amount', 0);
-											me.detailEditEntry.store.add(entryRecord);
+							//获取耗料列表
+							Ext.Ajax.request({
+										scope : me,
+										params : {
+											materialId : record.get('materialMaterialId')
+										},
+										url : '../../scm/control/getBomMaterialDetailList',
+										success : function(response, option) {
+											var result = Ext.decode(response.responseText)
+											if (result.success) {
+												me.detailEditEntry.store.removeAll();
+												var values = result.message.records;
+												for(var i = 0; i < values.length; i++){
+													var entryRecord = Ext.create('ProductInwarehouseEntryDetailModel');
+													entryRecord.phantom = true;
+													// 设置父id
+													entryRecord.set('parentId', record.get('id'));
+													entryRecord.set('materialId', values[i].materialId);
+													entryRecord.set('model', values[i].model);
+													entryRecord.set('quantity', values[i].volume * materialVolume);
+													entryRecord.set('unitUnitId', values[i].unitId);
+													entryRecord.set('price', 0);
+													entryRecord.set('amount', 0);
+													me.detailEditEntry.store.add(entryRecord);
+												}
+											} else {
+												showError('获取成品耗料列表失败！');
+											}
 										}
-										me.MaterialBOMStore.getProxy().extraParams.whereStr = "";
-										me.MaterialBOMStore.load();
 									});
 						}
 					}
