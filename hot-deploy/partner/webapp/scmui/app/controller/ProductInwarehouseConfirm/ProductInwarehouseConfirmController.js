@@ -1,7 +1,7 @@
 Ext.define('SCM.controller.ProductInwarehouseConfirm.ProductInwarehouseConfirmController', {
 			extend : 'Ext.app.Controller',
 			mixins : ['SCM.extend.exporter.Exporter'],
-			views : ['ProductInwarehouseConfirm.ListUI', 'ProductInwarehouseConfirm.DetailEditUI','ProductInwarehouseConfirm.DetailListUI'],
+			views : ['ProductInwarehouseConfirm.ListUI', 'ProductInwarehouseConfirm.DetailEditUI','ProductInwarehouseConfirm.DetailListUI','ProductInwarehouseConfirm.ScanEditUI'],
 			stores : ['ProductInwarehouseConfirm.ProductInwarehouseConfirmStore','ProductInwarehouseConfirm.ProductInwarehouseConfirmDetailStore'],
 			
 			init : function() {
@@ -48,7 +48,16 @@ Ext.define('SCM.controller.ProductInwarehouseConfirm.ProductInwarehouseConfirmCo
 							// 耗料明细界面保存
 							'ProductInwarehouseConfirmDetailEdit button[action=save]' : {
 								click : this.saveDetailRecord
+							},
+							// 扫描入库
+							'ProductInwarehouseConfirmlist button[action=scanIn]' : {
+								click : this.scanEdit
+							},
+							// 入库
+							'ProductInwarehouseConfirmScanEdit button[action=inwarehouse]' : {
+								click : this.scanInwarehouse
 							}
+							
 						});
 			},
 			
@@ -71,6 +80,15 @@ Ext.define('SCM.controller.ProductInwarehouseConfirm.ProductInwarehouseConfirmCo
 				
 				this.listPanel.addListener('edit',this.listPanelEditActin,this);
 				
+				this.scanEditUI=Ext.create('widget.ProductInwarehouseConfirmScanEdit');
+				this.scanEditUI.addListener('show',this.scanUIShowAction,this);//注册界面显示事件监听
+				this.scanEditUI.down('textfield[name=barcode]')
+				    .addListener('specialkey',
+				    function(field, e){
+						if (e.getKey() == e.ENTER) {
+		                    this.scanInwarehouse();
+		                }
+				    },this);//注册界面显示事件监听
 				//重新更新仓库数据
 //				Ext.data.StoreManager.lookup('WHComboInitStore').load();
 				
@@ -87,8 +105,9 @@ Ext.define('SCM.controller.ProductInwarehouseConfirm.ProductInwarehouseConfirmCo
 				this.detailEditEntry.addListener('edit', this.detailEntryEditAction, this);
 				
 				this.initButtonByPermission();
+				
+				
 			},
-			
 			/**
 			 * 根据用户权限初始化按钮状态
 			 * 
@@ -422,5 +441,17 @@ Ext.define('SCM.controller.ProductInwarehouseConfirm.ProductInwarehouseConfirmCo
 						Ext.getBody().unmask();
 				    }
 				});
+			},
+			//弹出扫描入库界面
+			scanEdit : function(){
+				this.scanEditUI.show();
+			},
+			//扫描界面弹出事件
+			scanUIShowAction: function(){
+				//第一个字段获取焦点
+				this.scanEditUI.down('textfield[name=barcode]').focus(true,true);
+			},
+			scanInwarehouse : function(){
+				showInfo('入库成功');
 			}
 		});
