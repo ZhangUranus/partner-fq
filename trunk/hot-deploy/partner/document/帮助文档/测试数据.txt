@@ -1,0 +1,19 @@
+update cur_workshop_price a,
+(SELECT '2012' as year,'9' as month,'f981f9cc-0283-4bd2-8d9e-5eb1d49144cb' as workshop_id,entry_material_id as material_id,0 as beginvolume,0 as beginsum,100000*RAND() as volume,100000*RAND() as totalsum
+FROM material_bom_entry where parent_id = '2fed4dfe-f2b6-498b-b04a-b2cf8c3587d6') b set a.volume = a.volume + b.volume,a.totalsum = a.totalsum + b.totalsum
+where a.workshop_id = b.workshop_id and a.material_id = b.material_id;
+
+
+≤‚ ‘Ãı¬Î£∫
+24040222984167399112153064 00373116408702827252
+24040222985167399112153064 00333311408702827252
+
+240402229851673991121530128 00373116308702827539
+240402229841673991121530128 00373116404702827751
+
+
+
+
+Ω¯≤÷µ•£∫
+24040222984167399112153064 00373116408702827454
+24040222984167399112153064 00373116408702826877
