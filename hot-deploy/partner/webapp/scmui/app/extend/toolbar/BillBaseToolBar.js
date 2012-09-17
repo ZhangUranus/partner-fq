@@ -55,6 +55,29 @@ Ext.define('SCM.extend.toolbar.BillBaseToolbar', {
 							iconCls : 'system-print',
 							action : 'print'
 						}]);
+				
+				// 增加扫描按钮
+				if (me.scan) {
+					tools = tools.concat([{
+								text : '扫描入库',
+								iconCls : 'system-scan',
+								action : 'scan'
+							}, {
+								text : '撤销扫描',
+								iconCls : 'system-unscan',
+								action : 'unscan'
+							}]);
+				}
+				
+				// 增加提交按钮
+				if (me.isImport) {
+					tools = tools.concat([{
+								text : '导入',
+								iconCls : 'system-import',
+								action : 'import'
+							}]);
+				}
+				
 				Ext.applyIf(me, {
 							height : 28,
 							defaults : {
