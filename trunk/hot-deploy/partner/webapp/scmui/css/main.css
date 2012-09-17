@@ -49,6 +49,15 @@
 .system-copy{
 	background-image: url( ../images/icons/copy.png ) !important;
 }
+.system-scan{
+	background-image: url( ../images/icons/scan.png ) !important;
+}
+.system-unscan{
+	background-image: url( ../images/icons/unscan.png ) !important;
+}
+.system-import{
+	background-image: url( ../images/icons/import.png ) !important;
+}
 
 .detail{
 	background-image: url( ../images/icons/detail.png ) !important;
