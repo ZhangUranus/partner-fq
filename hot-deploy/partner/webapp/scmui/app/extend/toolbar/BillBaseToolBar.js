@@ -59,7 +59,7 @@ Ext.define('SCM.extend.toolbar.BillBaseToolbar', {
 				// 增加扫描按钮
 				if (me.scan) {
 					tools = tools.concat([{
-								text : '扫描入库',
+								text : '条码扫描',
 								iconCls : 'system-scan',
 								action : 'scan'
 							}, {
