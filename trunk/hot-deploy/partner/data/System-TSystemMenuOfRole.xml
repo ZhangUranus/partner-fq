@@ -165,17 +165,17 @@
 	<TSystemMenuOfRole id='adc5e73c-f4ef-44c3-b4fd-8e890ab92432' menuId='productInwarehouse' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='D' />
 	<TSystemMenuOfRole id='ce4314a0-587e-43bf-8a68-8dd88246d6d4' menuId='productInwarehouse' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='N' />
 	<TSystemMenuOfRole id='b0b16c87-670e-4c31-99dc-f65e3c068a82' menuId='productInwarehouse' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='S' />
-	<TSystemMenuOfRole id='caeacf69-80bb-402a-8bce-6a6e7eed98dc' menuId='productInwarehouseConfirm' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='V' />
+	<!-- TSystemMenuOfRole id='caeacf69-80bb-402a-8bce-6a6e7eed98dc' menuId='productInwarehouseConfirm' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='V' />
 	<TSystemMenuOfRole id='242f0662-5cf2-400b-8c68-5637996fe10b' menuId='productInwarehouseConfirm' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='D' />
-	<TSystemMenuOfRole id='65bbeb21-b63b-45c5-a4e1-a287cbb15805' menuId='productInwarehouseConfirm' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='S' />
+	<TSystemMenuOfRole id='65bbeb21-b63b-45c5-a4e1-a287cbb15805' menuId='productInwarehouseConfirm' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='S' /-->
 	<TSystemMenuOfRole id='629cafc5-5517-47c7-906d-8bf0bccd3239' menuId='productOutwarehouse' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='V' />
 	<TSystemMenuOfRole id='f693c16d-db8c-4a30-8767-1745c8ae34dc' menuId='productOutwarehouse' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='E' />
 	<TSystemMenuOfRole id='a87ecff4-34a4-42aa-b813-906a250b2a1a' menuId='productOutwarehouse' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='D' />
 	<TSystemMenuOfRole id='4dcc4654-d98f-4d7f-b653-22c46e5187b0' menuId='productOutwarehouse' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='N' />
 	<TSystemMenuOfRole id='d8786353-b9bf-4e82-95e3-2f29557fdbed' menuId='productOutwarehouse' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='S' />
-	<TSystemMenuOfRole id='6507349b-4380-4a0a-8f7d-844f7809c74d' menuId='productOutwarehouseConfirm' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='V' />
+	<!-- TSystemMenuOfRole id='6507349b-4380-4a0a-8f7d-844f7809c74d' menuId='productOutwarehouseConfirm' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='V' />
 	<TSystemMenuOfRole id='5f424a10-1eb2-4c44-8395-a16b9f3e9ac2' menuId='productOutwarehouseConfirm' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='D' />
-	<TSystemMenuOfRole id='6118e5d0-693a-41fb-b878-7e0c1ac38d27' menuId='productOutwarehouseConfirm' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='S' />
+	<TSystemMenuOfRole id='6118e5d0-693a-41fb-b878-7e0c1ac38d27' menuId='productOutwarehouseConfirm' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='S' /-->
 	<TSystemMenuOfRole id='a2832952-da4e-469c-b892-2e05926fdf16' menuId='productOutNotification' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='V' />
 	<TSystemMenuOfRole id='81a4256e-7025-40c2-9885-ca32f27956b9' menuId='productOutNotification' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='E' />
 	<TSystemMenuOfRole id='f6d69aab-18f5-4433-9824-ba505bcbc771' menuId='productOutNotification' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='D' />
@@ -315,17 +315,17 @@
 	<TSystemMenuOfRole id='f6ee0306-d72e-4748-be01-7031a94c4145' menuId='productInwarehouse' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='D' />
 	<TSystemMenuOfRole id='64614f81-daba-48ac-b78d-3b6f100bf7e5' menuId='productInwarehouse' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='N' />
 	<TSystemMenuOfRole id='a277c136-95b2-43e6-9298-261f4a01e6fc' menuId='productInwarehouse' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='S' />
-	<TSystemMenuOfRole id='97e3cb93-3bd6-42cc-a1c1-5950d5ed35a8' menuId='productInwarehouseConfirm' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='V' />
+	<!-- TSystemMenuOfRole id='97e3cb93-3bd6-42cc-a1c1-5950d5ed35a8' menuId='productInwarehouseConfirm' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='V' />
 	<TSystemMenuOfRole id='7858205c-bc98-46f1-b28b-5907d3c923fe' menuId='productInwarehouseConfirm' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='D' />
-	<TSystemMenuOfRole id='1603a531-56d4-44dd-a3f3-f8d6f6aa5e62' menuId='productInwarehouseConfirm' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='S' />
+	<TSystemMenuOfRole id='1603a531-56d4-44dd-a3f3-f8d6f6aa5e62' menuId='productInwarehouseConfirm' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='S' /-->
 	<TSystemMenuOfRole id='8cf27743-293a-4be6-8854-0036af7d0bbb' menuId='productOutwarehouse' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='V' />
 	<TSystemMenuOfRole id='abd0bd86-5e47-40a8-8892-5d01dcd0ed17' menuId='productOutwarehouse' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='E' />
 	<TSystemMenuOfRole id='6443aa50-388b-45f1-b1fb-ad7a53aceb24' menuId='productOutwarehouse' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='D' />
 	<TSystemMenuOfRole id='72c62e63-6588-42c5-9441-d304bae1bd08' menuId='productOutwarehouse' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='N' />
 	<TSystemMenuOfRole id='d8b741d8-7917-4e21-bc1d-e7eb5ec8fb29' menuId='productOutwarehouse' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='S' />
-	<TSystemMenuOfRole id='98a2502d-840b-4295-9031-a29444b40df7' menuId='productOutwarehouseConfirm' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='V' />
+	<!-- TSystemMenuOfRole id='98a2502d-840b-4295-9031-a29444b40df7' menuId='productOutwarehouseConfirm' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='V' />
 	<TSystemMenuOfRole id='965c848d-ab97-4064-90c5-a1ce7abcaa99' menuId='productOutwarehouseConfirm' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='D' />
-	<TSystemMenuOfRole id='a81794aa-1a29-498f-a0ce-59ebc8286faa' menuId='productOutwarehouseConfirm' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='S' />
+	<TSystemMenuOfRole id='a81794aa-1a29-498f-a0ce-59ebc8286faa' menuId='productOutwarehouseConfirm' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='S' /-->
 	<TSystemMenuOfRole id='8ebc65f5-6976-42cf-a0ba-08ec427609e2' menuId='productOutNotification' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='V' />
 	<TSystemMenuOfRole id='ec4e057e-9364-46e5-9ac1-f3e4c29c5f2e' menuId='productOutNotification' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='E' />
 	<TSystemMenuOfRole id='5fb96335-8339-4801-92c4-479d4e99a1da' menuId='productOutNotification' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='D' />
@@ -450,8 +450,8 @@
 	<TSystemMenuOfRole id='019ae5d2-9b98-49d7-9ea9-3ad80bc84a02' menuId='supplierStockAdjust' roleId='04a1e33b-6715-4651-be60-b57fcc479cae' operateType='V' />
 	<TSystemMenuOfRole id='aa5d8989-867a-44a4-b971-c2dcf1e3d9cf' menuId='productMgr' roleId='04a1e33b-6715-4651-be60-b57fcc479cae' operateType='V' />
 	<TSystemMenuOfRole id='db94a3f2-f73b-4ff4-9f81-35b71b4bcc6d' menuId='productInwarehouse' roleId='04a1e33b-6715-4651-be60-b57fcc479cae' operateType='V' />
-	<TSystemMenuOfRole id='38e3e796-4c72-4860-8169-0abe8d1baec6' menuId='productInwarehouseConfirm' roleId='04a1e33b-6715-4651-be60-b57fcc479cae' operateType='V' />
+	<!-- TSystemMenuOfRole id='38e3e796-4c72-4860-8169-0abe8d1baec6' menuId='productInwarehouseConfirm' roleId='04a1e33b-6715-4651-be60-b57fcc479cae' operateType='V' /-->
 	<TSystemMenuOfRole id='45ed3e70-ae0f-4e39-a74f-b063247b6945' menuId='productOutwarehouse' roleId='04a1e33b-6715-4651-be60-b57fcc479cae' operateType='V' />
-	<TSystemMenuOfRole id='9ae669e1-b046-45f9-88ca-d22697c77239' menuId='productOutwarehouseConfirm' roleId='04a1e33b-6715-4651-be60-b57fcc479cae' operateType='V' />
+	<!-- TSystemMenuOfRole id='9ae669e1-b046-45f9-88ca-d22697c77239' menuId='productOutwarehouseConfirm' roleId='04a1e33b-6715-4651-be60-b57fcc479cae' operateType='V' /-->
 	<TSystemMenuOfRole id='34e2250a-f501-42df-bae4-125b4c308043' menuId='productOutNotification' roleId='04a1e33b-6715-4651-be60-b57fcc479cae' operateType='V' />
 </entity-engine-xml>
