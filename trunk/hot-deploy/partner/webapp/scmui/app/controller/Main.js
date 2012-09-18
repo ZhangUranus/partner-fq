@@ -39,6 +39,11 @@ Ext.define('SCM.controller.Main', {
 								win = Ext.create('SCM.view.Login').show();
 							}
 							win.down('form').getForm().findField('USERNAME').focus(true, true);
+							var map = new Ext.util.KeyMap(win.getEl(), [{
+								scope : win,
+								key : Ext.EventObject.ENTER,
+								fn : win.login
+							}]);
 						}
 					}
 				});

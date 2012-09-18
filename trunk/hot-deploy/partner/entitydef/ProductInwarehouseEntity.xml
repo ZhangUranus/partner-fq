@@ -42,6 +42,7 @@
 		<field name="qantity" type="numeric"></field><!-- 板数量 -->
 		<field name="inwarehouseType" type="value"></field>
 		<field name="sort" type="int"></field>
+		<field name="lastUpdatedStamp" type="date-time"></field>
 		<prim-key field="id" />
 	</entity>
 	<!-- 进仓单分录额外耗料表 记录进仓单每一个成品的实际耗料数 -->

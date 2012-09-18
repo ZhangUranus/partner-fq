@@ -367,6 +367,19 @@
 		<event type="java" path="org.ofbiz.partner.scm.stock.ProductInwarehouseEvents" invoke="rollbackBill" />
 		<response name="success" type="none" />
 	</request-map>
+	<!-- 成品扫描进仓提交 -->
+	<request-map uri="scanSubmitProductInwarehouse">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductInwarehouseEvents" invoke="scanSubmit" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 成品扫描进仓撤销 -->
+	<request-map uri="scanRollbackProductInwarehouse">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductInwarehouseEvents" invoke="scanRollback" />
+		<response name="success" type="none" />
+	</request-map>
+	
 	<!-- 成品进仓确认单提交 -->
 	<request-map uri="submitProductInwarehouseConfirm">
 		<security https="false" auth="false" />
