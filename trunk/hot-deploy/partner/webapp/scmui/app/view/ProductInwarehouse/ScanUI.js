@@ -9,7 +9,6 @@ Ext.define('SCM.view.ProductInwarehouse.ScanUI', {
 			collapsible : true,
 			resizable : false,
 			closeAction : 'hide',
-			scanBoardCount : 0,
 			initComponent : function() {
 				var me = this;
 				Ext.applyIf(me, {
