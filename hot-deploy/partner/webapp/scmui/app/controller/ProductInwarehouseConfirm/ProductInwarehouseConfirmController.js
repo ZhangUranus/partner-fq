@@ -82,13 +82,13 @@ Ext.define('SCM.controller.ProductInwarehouseConfirm.ProductInwarehouseConfirmCo
 				
 				this.scanEditUI=Ext.create('widget.ProductInwarehouseConfirmScanEdit');
 				this.scanEditUI.addListener('show',this.scanUIShowAction,this);//注册界面显示事件监听
-				this.scanEditUI.down('textfield[name=barcode]')
-				    .addListener('specialkey',
-				    function(field, e){
-						if (e.getKey() == e.ENTER) {
-		                    this.scanInwarehouse();
-		                }
-				    },this);//注册界面显示事件监听
+//				this.scanEditUI.down('textfield[name=barcode]')
+//				    .addListener('specialkey',
+//				    function(field, e){
+//						if (e.getKey() == e.ENTER) {
+//		                    this.scanInwarehouse();
+//		                }
+//				    },this);//注册界面显示事件监听
 				//重新更新仓库数据
 //				Ext.data.StoreManager.lookup('WHComboInitStore').load();
 				

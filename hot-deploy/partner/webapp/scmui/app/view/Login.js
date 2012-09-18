@@ -52,10 +52,7 @@ Ext.define('SCM.view.Login',{
             resizable: false,
             items:form
         });
-        var nav = Ext.create('Ext.util.KeyNav', Ext.getDoc(), {
-            scope : this,
-            enter : this.login
-        });
+        
         this.callParent(arguments);
     },
     login : function(){

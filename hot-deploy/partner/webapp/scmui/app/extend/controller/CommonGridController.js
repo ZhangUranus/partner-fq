@@ -44,18 +44,18 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 			 * 初始化确定按钮事件
 			 */
 			initEnterEvent : function() {
-				var pageMap = new Ext.util.KeyMap(Ext.getDoc(), [// 当前页面注册确定按钮事件
-						{
-									scope : this,
-									key : Ext.EventObject.ENTER,
-									fn : this.clickEnter
-								}]);
-				var searchMap = new Ext.util.KeyMap(this.searchText.getEl(), [// 搜索框需要单独注册确定按钮事件
-						{
-									scope : this,
-									key : Ext.EventObject.ENTER,
-									fn : this.clickEnter
-								}]);
+//				var pageMap = new Ext.util.KeyMap(Ext.getDoc(), [// 当前页面注册确定按钮事件
+//						{
+//									scope : this,
+//									key : Ext.EventObject.ENTER,
+//									fn : this.clickEnter
+//								}]);
+//				var searchMap = new Ext.util.KeyMap(this.searchText.getEl(), [// 搜索框需要单独注册确定按钮事件
+//						{
+//									scope : this,
+//									key : Ext.EventObject.ENTER,
+//									fn : this.clickEnter
+//								}]);
 			},
 			/**
 			 * 初始化编辑框 只初始化一次，关闭时候隐藏

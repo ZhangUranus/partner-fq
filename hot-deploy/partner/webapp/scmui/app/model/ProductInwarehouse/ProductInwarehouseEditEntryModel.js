@@ -70,6 +70,15 @@ Ext.define('SCM.model.ProductInwarehouse.ProductInwarehouseEditEntryModel', {
 					}, {
 						name : 'sort',
 						type : 'int'
+					}, {
+						name : 'lastUpdatedStamp',
+						defaultValue : new Date(),
+						type : 'date',
+						format : 'time',
+						convert : function(value, record) {
+							return new Date(value);
+						},
+						persist : false
 					}],
 			idgen : 'uuid', // 使用uuid生成记录id 每个模型必须要有id字段
 			proxy : {
