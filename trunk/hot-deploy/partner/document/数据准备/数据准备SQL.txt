@@ -3,3 +3,8 @@ SELECT cmb.material_id,tm.number,tm.name,tm.model,wh.name,cmb.volume,cmb.total_s
 left join t_material tm on cmb.material_id = tm.id
 left join warehouse wh on cmb.warehouse_id = wh.id
 order by tm.number
+
+--物料列表
+SELECT tmt.number,tmt.name,tm.number,tm.name FROM t_material tm
+left join t_material_type tmt on tm.material_type_id = tmt.id
+order by tmt.number,tm.number
