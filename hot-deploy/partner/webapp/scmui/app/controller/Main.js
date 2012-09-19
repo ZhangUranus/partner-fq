@@ -212,6 +212,31 @@ Ext.define('SCM.controller.Main', {
 				Ext.create('MonthStore', {
 							storeId : 'MTHComboStore' //下拉框－－展现时使用
 						}).load();
+						
+				
+						
+				/* 出仓实时列表 store */
+				Ext.create('ProductOutwarehouseEditEntryStore', {
+							pageSize : SCM.pageSize,
+							storeId : 'POHEntryStore',
+							autoLoad : true,
+							sorters : [{
+										property : 'lastUpdatedStamp',
+										direction : 'DESC'
+									}]
+						});
+				
+				/* 出仓情况store */
+				Ext.create('ProductOutDetailStore', {
+							pageSize : SCM.pageSize,
+							storeId : 'PODetailStore'
+						});
+				
+				/* 出仓情况store */
+				Ext.create('ProductOutNotificationDetailStore', {
+							pageSize : SCM.pageSize,
+							storeId : 'PONDetailStore'
+						});
 			},
 
 			initTreePanel : function() {//初始化功能模块

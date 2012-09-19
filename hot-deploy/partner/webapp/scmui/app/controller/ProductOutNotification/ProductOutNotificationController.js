@@ -2,7 +2,7 @@ Ext.define('SCM.controller.ProductOutNotification.ProductOutNotificationControll
 			extend : 'Ext.app.Controller',
 			mixins : ['SCM.extend.exporter.Exporter', 'SCM.extend.controller.BillCommonController'],
 			views : ['ProductOutNotification.ListUI', 'ProductOutNotification.EditUI', 'ProductOutNotification.DetailListUI', 'ProductOutNotification.DetailEditUI'],
-			stores : ['ProductOutNotification.ProductOutNotificationStore', 'ProductOutNotification.ProductOutNotificationEditStore', 'ProductOutNotification.ProductOutNotificationEditEntryStore', 'ProductOutNotification.ProductOutNotificationEntryDetailStore'],
+			stores : ['ProductOutNotification.ProductOutNotificationStore', 'ProductOutNotification.ProductOutNotificationEditStore', 'ProductOutNotification.ProductOutNotificationEditEntryStore', 'ProductOutNotification.ProductOutNotificationEntryDetailStore', 'ProductOutNotification.ProductOutNotificationDetailStore'],
 			requires : ['SCM.model.ProductOutNotification.ProductOutNotificationActionModel'],
 			gridTitle : '出货通知单',
 			editName : 'ProductOutNotificationedit',
@@ -211,7 +211,7 @@ Ext.define('SCM.controller.ProductOutNotification.ProductOutNotificationControll
 			 */
 			setFieldsReadOnly : function(isReadOnly) {
 				Ext.each(this.fields, function(item, index, length) {
-							if(!(item.name == 'packagedNotSend' || item.name == 'isFinished')){
+							if(item.name != 'packagedNotSend'){
 								item.setReadOnly(isReadOnly);
 							}
 						})

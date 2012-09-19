@@ -21,6 +21,7 @@ Ext.define('SCM.view.ProductOutwarehouse.ListUI', {
 							items : [{
 										xtype : 'billbasetoolbar',//工具栏
 										submit : true,
+										scan : true,
 										region : 'north',
 										border : '0 1 1 1'
 									}, {

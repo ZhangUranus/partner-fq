@@ -60,6 +60,13 @@ Ext.define('SCM.view.ProductOutNotification.ListUI', {
 													text : '提交人'
 												}, {
 													xtype : 'gridcolumn',
+													renderer : SCM.store.basiccode.validRenderer,
+													dataIndex : 'isFinished',
+													width : 80,
+													groupable : false,
+													text : '是否完成'
+												}, {
+													xtype : 'gridcolumn',
 													dataIndex : 'customerName',
 													width : 100,
 													groupable : false,
@@ -119,13 +126,6 @@ Ext.define('SCM.view.ProductOutNotification.ListUI', {
 													width : 80,
 													groupable : false,
 													text : '送入仓库名称'
-												}, {
-													xtype : 'gridcolumn',
-													renderer : SCM.store.basiccode.validRenderer,
-													dataIndex : 'isFinished',
-													width : 80,
-													groupable : false,
-													text : '是否完成'
 												}, {
 													xtype : 'gridcolumn',
 													dataIndex : 'warehouseName',
