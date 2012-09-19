@@ -228,6 +228,8 @@ Ext.define('SCM.view.ProductOutNotification.EditUI', {
 																displayField : 'name',
 																margin : 5,
 																valueField : 'id',
+																readOnly : true,
+																value : 'N',
 																fieldLabel : '是否完成'
 															}, {
 																xtype : 'label'
