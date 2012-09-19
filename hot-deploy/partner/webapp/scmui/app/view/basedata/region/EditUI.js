@@ -32,8 +32,7 @@ Ext.define('SCM.view.basedata.region.EditUI', {
 												}, {
 													name : 'number',
 													fieldLabel : '编码',
-													emptyText : '保存时系统自动生成',
-													readOnly : true
+													allowBlank : false
 												}, {
 													name : 'name',
 													fieldLabel : '名称',

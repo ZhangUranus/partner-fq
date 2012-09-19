@@ -1,7 +1,7 @@
 Ext.define('SCM.controller.ProductOutNotification.ProductOutNotificationController', {
 			extend : 'Ext.app.Controller',
 			mixins : ['SCM.extend.exporter.Exporter', 'SCM.extend.controller.BillCommonController'],
-			views : ['ProductOutNotification.ListUI', 'ProductOutNotification.EditUI', 'ProductOutNotification.DetailListUI', 'ProductOutNotification.DetailEditUI'],
+			views : ['ProductOutNotification.ListUI', 'ProductOutNotification.EditUI', 'ProductOutNotification.DetailListUI', 'ProductOutNotification.DetailEditUI','ProductOutNotification.ImportUI'],
 			stores : ['ProductOutNotification.ProductOutNotificationStore', 'ProductOutNotification.ProductOutNotificationEditStore', 'ProductOutNotification.ProductOutNotificationEditEntryStore', 'ProductOutNotification.ProductOutNotificationEntryDetailStore', 'ProductOutNotification.ProductOutNotificationDetailStore'],
 			requires : ['SCM.model.ProductOutNotification.ProductOutNotificationActionModel'],
 			gridTitle : '出货通知单',
@@ -56,6 +56,10 @@ Ext.define('SCM.controller.ProductOutNotification.ProductOutNotificationControll
 							// 列表导出
 							'ProductOutNotificationlist button[action=export]' : {
 								click : this.exportExcel
+							},
+							// 列表导入
+							'ProductOutNotificationlist button[action=import]' : {
+								click : this.importExcel
 							},
 							// 编辑界面分录新增
 							'ProductOutNotificationedit gridpanel button[action=addLine]' : {
@@ -403,6 +407,13 @@ Ext.define('SCM.controller.ProductOutNotification.ProductOutNotificationControll
 				if (me.detailEditWin.isVisible()) {
 					me.detailEditWin.close();
 				}
+			},
+			
+			/**
+			 * 导入发货通知单
+			 */
+			importExcel : function(){
+			     Ext.widget('purchasebillimportui').show();
 			},
 			
 			/**
