@@ -23,6 +23,15 @@ Ext.define('SCM.model.ProductMap.ProductMapModel', {
 						name : 'materialNumber',
 						type : 'string'
 					}, {
+						name : 'entryMaterialId',
+						type : 'string'
+					}, {
+						name : 'entryMaterialName',
+						type : 'string'
+					}, {
+						name : 'entryMaterialNumber',
+						type : 'string'
+					}, {
 						name : 'boardCount',
 						type : 'int'
 					}, {

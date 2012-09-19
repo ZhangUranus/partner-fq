@@ -69,6 +69,35 @@ Ext.define('SCM.view.ProductMap.EditUI', {
 																}]
 													}
 												}, {
+													xtype : 'combogrid',
+													fieldLabel : '产品名称',
+													name : 'entryMaterialId',
+													valueField : 'materialId',
+													displayField : 'materialName',
+													allowBlank : false,
+													initStore : Ext.data.StoreManager.lookup('MBComboInitStore'),
+													store : Ext.data.StoreManager.lookup('MBComboStore'),
+													listConfig : {
+														width : 400,
+														height : SCM.MaxSize.COMBOGRID_HEIGHT,
+														columns : [{
+																	header : '编码',
+																	dataIndex : 'materialNumber',
+																	width : 100,
+																	hideable : false
+																}, {
+																	header : '名称',
+																	dataIndex : 'materialName',
+																	width : 280,
+																	hideable : false
+																}, {
+																	header : '备注',
+																	dataIndex : 'note',
+																	width : 100,
+																	hideable : false
+																}]
+													}
+												}, {
 													xtype : 'numberfield',
 													name : 'boardCount',
 													fieldLabel : '板数量',

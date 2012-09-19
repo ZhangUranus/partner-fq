@@ -18,6 +18,7 @@
 		<field name="ikeaId" type="name"></field>
 		<field name="materialId" type="id-long"></field>
 		<field name="boardCount" type="int"></field>
+		<field name="entryMaterialId" type="id-long"></field>
 		<field name="packageType" type="indicator"></field>
 		<prim-key field="id" />
 	</entity>
@@ -25,11 +26,17 @@
 	<view-entity entity-name="ProductMapView" package-name="org.ofbiz.scm.ProductMap" title="ProductMapView  Entity">
 		<member-entity entity-alias="ProductMapV" entity-name="ProductMap"></member-entity>
 		<member-entity entity-alias="TMaterialV" entity-name="TMaterial"></member-entity>
+		<member-entity entity-alias="TMaterialEntryV" entity-name="TMaterial"></member-entity>
 		<alias-all entity-alias="ProductMapV"></alias-all>
 		<alias name="materialName" entity-alias="TMaterialV" field="name"></alias>
 		<alias name="materialNumber" entity-alias="TMaterialV" field="number"></alias>
+		<alias name="entryMaterialName" entity-alias="TMaterialEntryV" field="name"></alias>
+		<alias name="entryMaterialNumber" entity-alias="TMaterialEntryV" field="number"></alias>
 		<view-link entity-alias="ProductMapV" rel-entity-alias="TMaterialV" rel-optional="true">
 			<key-map field-name="materialId" rel-field-name="id" />
+		</view-link>
+		<view-link entity-alias="ProductMapV" rel-entity-alias="TMaterialEntryV" rel-optional="true">
+			<key-map field-name="entryMaterialId" rel-field-name="id" />
 		</view-link>
 	</view-entity>
 </entitymodel>
