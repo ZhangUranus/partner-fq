@@ -412,6 +412,19 @@
 		<response name="success" type="none" />
 	</request-map>
 	
+	<!-- 成品扫描出仓提交 -->
+	<request-map uri="scanSubmitProductOutwarehouse">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductOutwarehouseEvents" invoke="scanSubmit" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 成品扫描出仓撤销 -->
+	<request-map uri="scanRollbackProductOutwarehouse">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductOutwarehouseEvents" invoke="scanRollback" />
+		<response name="success" type="none" />
+	</request-map>
+	
 	<!-- 成品确认出仓单提交 -->
 	<request-map uri="submitProductOutwarehouseConfirm">
 		<security https="false" auth="false" />

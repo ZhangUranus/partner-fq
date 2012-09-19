@@ -203,7 +203,11 @@ public class ProductOutwarehouseConfirmEvents {
 				
 				WeeklyStockMgr.getInstance().updateStock(materialId, bizDate, ProductStockType.OUT, volume, false);
 				ProductInOutStockMgr.getInstance().updateStock(materialId, ProductStockType.OUT, qantity, volume, false);
-				ProductOutwarehouseEvents.updateNotification(v,delegator,materialId,volume,v.getString("goodNumber"),v.getString("destinhouseNumber"));
+				// 出货通知单
+				boolean isUpdate = ProductOutwarehouseEvents.updateNotification(v,delegator,materialId,volume,v.getString("goodNumber"));
+				if(!isUpdate){
+					throw new Exception("未找到产品对应的出货通知单，请检查货号是否填写正确。如果无相应出货通知单，请先提交通知单！");
+				}
 			}
 			BillBaseEvent.writeSuccessMessageToExt(response, "提交成功");
 			TransactionUtil.commit(beganTransaction);
