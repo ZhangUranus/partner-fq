@@ -522,8 +522,8 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 			this.scanFields = this.scanForm.query("textfield{hidden==false}{readOnly==false}"); // 取所有显示的field
 			this.barcode1Field = this.winScan.down('textfield[name=barcode1]');
 			this.barcode2Field = this.winScan.down('textfield[name=barcode2]');
-			this.qantityLabel = this.winScan.down('label[id=qantity]');
-			this.boardCountLabel = this.winScan.down('label[id=boardCount]');
+			this.qantityLabel = this.winScan.down('label[name=qantity]');
+			this.boardCountLabel = this.winScan.down('label[name=boardCount]');
 			this.isInitScanEvent = false;
 			this.scanBoardCount = 0;
 		}
@@ -585,13 +585,13 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 								me.barcode2Field.setValue('');
 								me.scanBoardCount++;
 								me.boardCountLabel.setText(me.scanBoardCount);
-								me.barcode1Field.focus(true);
 								me.scanGrid.store.load();
+								me.barcode1Field.focus(true);
 							} else {
 								me.barcode1Field.setValue('');
 								me.barcode2Field.setValue('');
-								me.barcode1Field.focus(true);
 								showError(result.message);
+								me.barcode1Field.focus(true);
 							}
 						}
 					});
@@ -667,13 +667,13 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 									if (result.success) {
 										me.unScanBarcode1Field.setValue('');
 										me.unScanBarcode2Field.setValue('');
-										me.unScanBarcode1Field.focus(true);
 										me.unScanGrid.store.load();
+										me.unScanBarcode1Field.focus(true);
 									} else {
 										me.unScanBarcode1Field.setValue('');
 										me.unScanBarcode2Field.setValue('');
-										me.unScanBarcode1Field.focus(true);
 										showError(result.message);
+										me.unScanBarcode1Field.focus(true);
 									}
 								}
 							});

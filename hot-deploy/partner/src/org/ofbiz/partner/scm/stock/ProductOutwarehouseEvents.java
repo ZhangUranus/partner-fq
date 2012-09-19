@@ -377,6 +377,9 @@ public class ProductOutwarehouseEvents {
 	}
 
 	public static boolean updateNotification(GenericValue headValue, Delegator delegator, String materialId, BigDecimal volume, String goodNumber) throws Exception {
+		if(!Utils.isNeedNotification()){
+			return true;			//不使用出货通知单
+		}
 		List<GenericValue> mainList = delegator.findByAnd("ProductOutNotification", UtilMisc.toMap("goodNumber", goodNumber, "status", "4"));
 		boolean isUpdate = false;
 		boolean isFinished = true;

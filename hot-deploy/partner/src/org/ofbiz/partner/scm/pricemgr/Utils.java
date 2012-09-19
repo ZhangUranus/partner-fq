@@ -98,6 +98,25 @@ public class Utils {
 	}
 	
 	/**
+	 * 获取是否使用出货通知单
+	 * @return
+	 */
+	public static boolean isNeedNotification(){
+		Delegator delegator = DelegatorFactory.getDelegator("default");
+		try {
+			GenericValue value = delegator.findByPrimaryKey("PriceMgrParamters", UtilMisc.toMap("id", "004"));
+			if(value!=null && "Y".equals(value.getString("value"))){
+				return true;
+			} else {
+				return false;
+			}
+		} catch (GenericEntityException e) {
+			Debug.logError("-----------获取是否使用出货通知单出错", "common");
+			return false;
+		}
+	}
+	
+	/**
 	 * 获取进仓单最后同步日期记录
 	 * @return
 	 */

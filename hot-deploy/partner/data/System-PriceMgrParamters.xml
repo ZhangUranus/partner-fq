@@ -6,4 +6,5 @@
 	<PriceMgrParamters id='001' value='2012-09-01 00:00:00.000' />
 	<PriceMgrParamters id='002' value='2012-09-01 00:00:00.000' />
 	<PriceMgrParamters id='003' value='20120801' /><!-- 成品进仓确认最后同步日期 -->
+	<PriceMgrParamters id='004' number='isNeedNotification' name='是否需要出货通知单' value='Y' /><!-- 成品进仓确认最后同步日期 -->
 </entity-engine-xml>
