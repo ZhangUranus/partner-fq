@@ -103,7 +103,7 @@ Ext.define('SCM.controller.ProductOutwarehouse.ProductOutwarehouseController', {
 								click : this.searchDetailList
 							},
 							// 出仓情况页面查询事件
-							'ProductOutwarehouseDetailList gridpanel button[action=search]' : {
+							'ProductOutwarehouseNotificationDetailList gridpanel button[action=search]' : {
 								click : this.searchNotiDetailList
 							}
 						});
@@ -246,8 +246,8 @@ Ext.define('SCM.controller.ProductOutwarehouse.ProductOutwarehouseController', {
 					this.scanFields = this.scanForm.query("textfield{hidden==false}{readOnly==false}"); // 取所有显示的field
 					this.barcode1Field = this.winScan.down('textfield[name=barcode1]');
 					this.barcode2Field = this.winScan.down('textfield[name=barcode2]');
-					this.qantityLabel = this.winScan.down('label[id=qantity]');
-					this.boardCountLabel = this.winScan.down('label[id=boardCount]');
+					this.qantityLabel = this.winScan.down('label[name=qantity]');
+					this.boardCountLabel = this.winScan.down('label[name=boardCount]');
 					this.searchDetailButton = this.winScan.down('button[action=search]');
 					this.searchDetailButton.addListener('click', this.openDetailListUI, this); // 监听按钮点击事件
 					this.searchNotiDetailButton = this.winScan.down('button[action=searchNoti]');
@@ -313,13 +313,13 @@ Ext.define('SCM.controller.ProductOutwarehouse.ProductOutwarehouseController', {
 										me.barcode2Field.setValue('');
 										me.scanBoardCount++;
 										me.boardCountLabel.setText(me.scanBoardCount);
-										me.barcode1Field.focus(true);
 										me.scanGrid.store.load();
+										me.barcode1Field.focus(true);
 									} else {
 										me.barcode1Field.setValue('');
 										me.barcode2Field.setValue('');
-										me.barcode1Field.focus(true);
 										showError(result.message);
+										me.barcode1Field.focus(true);
 									}
 								}
 							});
@@ -395,13 +395,13 @@ Ext.define('SCM.controller.ProductOutwarehouse.ProductOutwarehouseController', {
 											if (result.success) {
 												me.unScanBarcode1Field.setValue('');
 												me.unScanBarcode2Field.setValue('');
-												me.unScanBarcode1Field.focus(true);
 												me.unScanGrid.store.load();
+												me.unScanBarcode1Field.focus(true);
 											} else {
 												me.unScanBarcode1Field.setValue('');
 												me.unScanBarcode2Field.setValue('');
-												me.unScanBarcode1Field.focus(true);
 												showError(result.message);
+												me.unScanBarcode1Field.focus(true);
 											}
 										}
 									});

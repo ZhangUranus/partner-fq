@@ -44,7 +44,7 @@ Ext.define('SCM.view.ProductInwarehouse.ScanUI', {
 																allowBlank : false
 															}, {
 																xtype : 'label',
-																id : 'qantityName',
+																name : 'qantityName',
 																text : '扫描板产品数',
 																margin : 10,
 																style : {
@@ -55,12 +55,12 @@ Ext.define('SCM.view.ProductInwarehouse.ScanUI', {
 																}
 															}, {
 																xtype : 'label',
-																id : 'blank-splice1',
+																name : 'blank-splice1',
 																text : ' ',
 																margin : 30
 															}, {
 																xtype : 'label',
-																id : 'boardName',
+																name : 'boardName',
 																text : '扫描总板数',
 																margin : 10,
 																style : {
@@ -98,7 +98,7 @@ Ext.define('SCM.view.ProductInwarehouse.ScanUI', {
 																}
 															}, {
 																xtype : 'label',
-																id : 'qantity',
+																name : 'qantity',
 																text : '000',
 																rowspan : 4,
 																margin : 10,
@@ -110,14 +110,14 @@ Ext.define('SCM.view.ProductInwarehouse.ScanUI', {
 																}
 															}, {
 																xtype : 'label',
-																id : 'blank-splice2',
+																name : 'blank-splice2',
 																text : ' ',
 																rowspan : 4,
 																margin : 30
 															}, {
 																xtype : 'label',
-																id : 'boardCount',
-																text : '000',
+																name : 'boardCount',
+																text : '0',
 																rowspan : 4,
 																margin : 10,
 																style : {
