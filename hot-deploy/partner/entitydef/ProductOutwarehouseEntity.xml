@@ -22,6 +22,7 @@
 		<field name="status" type="int"></field>
 		<field name="createdStamp" type="date-time"></field>
 		<field name="lastUpdatedStamp" type="date-time"></field>
+		<field name="submitStamp" type="date-time"></field>
 		<prim-key field="id" />
 	</entity>
 	<!-- 分录 -->
@@ -45,6 +46,7 @@
 		<field name="containerNumber" type="id-long"></field><!-- 货柜号 -->
 		<field name="sealNumber" type="id-long"></field><!-- 封条号 -->
 		<field name="sort" type="int"></field>
+		<field name="lastUpdatedStamp" type="date-time"></field>
 		<prim-key field="id" />
 	</entity>
 	<!-- 表头视图 -->
@@ -93,6 +95,23 @@
 			<key-map field-name="materialMaterialId" rel-field-name="id" />
 		</view-link>
 		<view-link entity-alias="ProductOutwarehouseEntryV" rel-entity-alias="unitUnitV" rel-optional="true">
+			<key-map field-name="unitUnitId" rel-field-name="id" />
+		</view-link>
+	</view-entity>
+	<view-entity entity-name="ProductOutDetailView" package-name="org.ofbiz.scm.pricemgr" title="ProductOutDetailView Entity">
+		<member-entity entity-alias="ProductOutwarehouseEntryV" entity-name="ProductOutwarehouseEntry"></member-entity>
+		<member-entity entity-alias="TMaterialV" entity-name="TMaterial"></member-entity>
+		<member-entity entity-alias="UnitV" entity-name="Unit"></member-entity>
+		<alias name="goodNumber" entity-alias="ProductOutwarehouseEntryV" field="goodNumber" group-by="true"></alias>
+		<alias name="materialName" entity-alias="TMaterialV" field="name" group-by="true"></alias>
+		<alias name="materialModel" entity-alias="TMaterialV" field="model" group-by="true"></alias>
+		<alias name="unitName" entity-alias="UnitV" field="name" group-by="true"></alias>
+		<alias name="qantity" entity-alias="ProductOutwarehouseEntryV" field="qantity" group-by="true"></alias>
+		<alias name="totalVolume" entity-alias="ProductOutwarehouseEntryV" field="volume" function="sum"/>
+		<view-link entity-alias="ProductOutwarehouseEntryV" rel-entity-alias="TMaterialV" rel-optional="true">
+			<key-map field-name="materialMaterialId" rel-field-name="id" />
+		</view-link>
+		<view-link entity-alias="ProductOutwarehouseEntryV" rel-entity-alias="UnitV" rel-optional="true">
 			<key-map field-name="unitUnitId" rel-field-name="id" />
 		</view-link>
 	</view-entity>
