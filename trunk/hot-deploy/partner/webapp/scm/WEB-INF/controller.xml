@@ -458,6 +458,13 @@
 		<event type="java" path="org.ofbiz.partner.scm.stock.ProductOutNotificationEvents" invoke="getMaterialIdByIkea" />
 		<response name="success" type="none" />
 	</request-map>
+	<!-- 出货通知单导入 -->
+	<request-map uri="impOutNotificationBill">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductOutNotificationEvents" invoke="impOutNotificationBill" />
+		<response name="success" type="none" />
+	</request-map>
+	
 	
 	<!-- 系统结算 -->
 	<request-map uri="monthlySettle">

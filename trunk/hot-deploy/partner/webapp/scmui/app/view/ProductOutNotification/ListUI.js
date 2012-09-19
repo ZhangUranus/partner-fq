@@ -21,6 +21,7 @@ Ext.define('SCM.view.ProductOutNotification.ListUI', {
 							items : [{
 										xtype : 'billbasetoolbar',// 工具栏
 										submit : true,
+										isImport : true,
 										region : 'north',
 										border : '0 1 1 1'
 									}, {
