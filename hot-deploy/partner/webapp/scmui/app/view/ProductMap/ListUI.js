@@ -23,8 +23,12 @@ Ext.define('SCM.view.ProductMap.ListUI', {
 										dataIndex : 'ikeaId',
 										width : 200
 									}, {
-										header : '富桥产品名称',
+										header : '安装包装名称',
 										dataIndex : 'materialName',
+										width : 200
+									}, {
+										header : '产品名称',
+										dataIndex : 'entryMaterialName',
 										width : 200
 									}, {
 										header : '板数量',
