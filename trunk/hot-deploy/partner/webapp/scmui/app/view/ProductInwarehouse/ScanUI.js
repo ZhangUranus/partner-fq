@@ -41,7 +41,35 @@ Ext.define('SCM.view.ProductInwarehouse.ScanUI', {
 																margin : 10,
 																width : 320,
 																value : '1',	//默认值
+																hidden : true,
 																allowBlank : false
+															}, {
+																xtype : 'combogrid',
+																fieldLabel : '装货仓库',
+																name : 'warehouseId',
+																valueField : 'id',
+																displayField : 'name',
+																initStore : Ext.data.StoreManager.lookup('WHComboInitStore'),
+																store : Ext.data.StoreManager.lookup('WHComboStore'),
+																margin : 10,
+																width : 320,
+																matchFieldWidth : false,
+																allowBlank : false,
+																listConfig : {
+																	width : 185,
+																	height : SCM.MaxSize.COMBOGRID_HEIGHT,
+																	columns : [{
+																				header : '编码',
+																				dataIndex : 'number',
+																				width : 100,
+																				hideable : false
+																			}, {
+																				header : '名称',
+																				dataIndex : 'name',
+																				width : 80,
+																				hideable : false
+																			}]
+																}
 															}, {
 																xtype : 'label',
 																name : 'qantityName',
@@ -71,18 +99,18 @@ Ext.define('SCM.view.ProductInwarehouse.ScanUI', {
 																}
 															}, {
 																xtype : 'combogrid',
-																fieldLabel : '装货仓库',
-																name : 'warehouseId',
+																fieldLabel : '包装车间',
+																name : 'workshopId',
 																valueField : 'id',
 																displayField : 'name',
-																initStore : Ext.data.StoreManager.lookup('WHComboInitStore'),
-																store : Ext.data.StoreManager.lookup('WHComboStore'),
+																initStore : Ext.data.StoreManager.lookup('WSComboInitStore'),
+																store : Ext.data.StoreManager.lookup('WSComboStore'),
 																margin : 10,
 																width : 320,
 																matchFieldWidth : false,
 																allowBlank : false,
 																listConfig : {
-																	width : 185,
+																	width : 320,
 																	height : SCM.MaxSize.COMBOGRID_HEIGHT,
 																	columns : [{
 																				header : '编码',
@@ -92,7 +120,7 @@ Ext.define('SCM.view.ProductInwarehouse.ScanUI', {
 																			}, {
 																				header : '名称',
 																				dataIndex : 'name',
-																				width : 80,
+																				width : 180,
 																				hideable : false
 																			}]
 																}
@@ -125,33 +153,6 @@ Ext.define('SCM.view.ProductInwarehouse.ScanUI', {
 																	'color' : 'red',
 																	'text-align' : 'center',
 																	'font-size' : 140
-																}
-															}, {
-																xtype : 'combogrid',
-																fieldLabel : '包装车间',
-																name : 'workshopId',
-																valueField : 'id',
-																displayField : 'name',
-																initStore : Ext.data.StoreManager.lookup('WSComboInitStore'),
-																store : Ext.data.StoreManager.lookup('WSComboStore'),
-																margin : 10,
-																width : 320,
-																matchFieldWidth : false,
-																allowBlank : false,
-																listConfig : {
-																	width : 320,
-																	height : SCM.MaxSize.COMBOGRID_HEIGHT,
-																	columns : [{
-																				header : '编码',
-																				dataIndex : 'number',
-																				width : 100,
-																				hideable : false
-																			}, {
-																				header : '名称',
-																				dataIndex : 'name',
-																				width : 180,
-																				hideable : false
-																			}]
 																}
 															}, {
 																xtype : 'textfield',
