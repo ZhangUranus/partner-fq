@@ -22,9 +22,9 @@
 	<TSystemLogType id='a9dd0ad8-97fa-426c-a9c0-bc97a0f15d01' number='LOG100017' name='部门资料维护' operateType='新增' keyWord='addnewJsonData?entity=Department' valid='1' />
 	<TSystemLogType id='3b5c9c20-4875-4040-a3ac-c7b6a737534f' number='LOG100018' name='部门资料维护' operateType='删除' keyWord='deleteJsonData?entity=Department' valid='1' />
 	<TSystemLogType id='9694ab6a-ec74-4111-88d4-d4c64b0d7cd9' number='LOG100019' name='BOM单资料维护' operateType='查看' keyWord='getUserPermissions?menuId=BOMBillInfoMaintaince' valid='0' />
-	<TSystemLogType id='2020727b-272f-4bc3-9a65-6150cbb0b146' number='LOG100020' name='BOM单资料维护' operateType='修改' keyWord='updateWithEntry?headEntity=MaterialBom&entryEntity=MaterialBomEntry' valid='1' />
-	<TSystemLogType id='123e3858-b9f8-408b-8553-3cb7486c8711' number='LOG100021' name='BOM单资料维护' operateType='新增' keyWord='createWithEntry?headEntity=MaterialBom&entryEntity=MaterialBomEntry' valid='1' />
-	<TSystemLogType id='f8b310c6-975c-49f4-8350-ef64eb627896' number='LOG100022' name='BOM单资料维护' operateType='删除' keyWord='deleteWithEntry?headEntity=MaterialBom&entryEntity=MaterialBomEntry' valid='1' />
+	<TSystemLogType id='2020727b-272f-4bc3-9a65-6150cbb0b146' number='LOG100020' name='BOM单资料维护' operateType='修改' keyWord='updateWithEntry?headEntity=MaterialBom&amp;entryEntity=MaterialBomEntry' valid='1' />
+	<TSystemLogType id='123e3858-b9f8-408b-8553-3cb7486c8711' number='LOG100021' name='BOM单资料维护' operateType='新增' keyWord='createWithEntry?headEntity=MaterialBom&amp;entryEntity=MaterialBomEntry' valid='1' />
+	<TSystemLogType id='f8b310c6-975c-49f4-8350-ef64eb627896' number='LOG100022' name='BOM单资料维护' operateType='删除' keyWord='deleteWithEntry?headEntity=MaterialBom&amp;entryEntity=MaterialBomEntry' valid='1' />
 	<TSystemLogType id='687cbd62-6582-49c1-a237-1132c14e3e7f' number='LOG100023' name='计量单位维护' operateType='查看' keyWord='getUserPermissions?menuId=UnitMaintaince' valid='0' />
 	<TSystemLogType id='c53e5a61-cd61-43d1-adf2-9e496d162997' number='LOG100024' name='计量单位维护' operateType='修改' keyWord='updateJsonData?entity=Unit' valid='1' />
 	<TSystemLogType id='f42285dc-8785-45d6-bfba-26d6982daead' number='LOG100025' name='计量单位维护' operateType='新增' keyWord='addnewJsonData?entity=Unit' valid='1' />
@@ -54,111 +54,111 @@
 	<TSystemLogType id='22c3b10a-b545-4489-9012-1babb9c418cf' number='LOG100049' name='用户管理' operateType='修改' keyWord='updateUserLogin' valid='1' />
 	<TSystemLogType id='d5f9d6ec-fda7-488d-aeab-8a2c74a7e9e3' number='LOG100050' name='用户管理' operateType='删除' keyWord='deleteUserLogin' valid='1' />
 	<TSystemLogType id='1228e353-a1df-4420-935e-2f3a531c311c' number='LOG100051' name='采购单管理' operateType='查看' keyWord='getUserPermissions?menuId=purchaseBillManagement' valid='0' />
-	<TSystemLogType id='32ee793e-6b1c-4222-84fc-2212fad37ea1' number='LOG100052' name='采购单管理' operateType='新增' keyWord='createWithEntry?headEntity=PurchaseBill&entryEntity=PurchaseBillEntry' valid='1' />
-	<TSystemLogType id='f64d4618-528e-493a-82ec-7b4811b039bf' number='LOG100053' name='采购单管理' operateType='修改' keyWord='updateWithEntry?headEntity=PurchaseBill&entryEntity=PurchaseBillEntry' valid='1' />
-	<TSystemLogType id='6699cb97-2ff7-4686-9fd7-aa8d0840c683' number='LOG100054' name='采购单管理' operateType='删除' keyWord='deleteWithEntry?headEntity=PurchaseBill&entryEntity=PurchaseBillEntry' valid='1' />
+	<TSystemLogType id='32ee793e-6b1c-4222-84fc-2212fad37ea1' number='LOG100052' name='采购单管理' operateType='新增' keyWord='createWithEntry?headEntity=PurchaseBill&amp;entryEntity=PurchaseBillEntry' valid='1' />
+	<TSystemLogType id='f64d4618-528e-493a-82ec-7b4811b039bf' number='LOG100053' name='采购单管理' operateType='修改' keyWord='updateWithEntry?headEntity=PurchaseBill&amp;entryEntity=PurchaseBillEntry' valid='1' />
+	<TSystemLogType id='6699cb97-2ff7-4686-9fd7-aa8d0840c683' number='LOG100054' name='采购单管理' operateType='删除' keyWord='deleteWithEntry?headEntity=PurchaseBill&amp;entryEntity=PurchaseBillEntry' valid='1' />
 	<TSystemLogType id='939b0f65-3a92-472f-aedb-dd72ca90562c' number='LOG100055' name='采购单管理' operateType='审核' keyWord='/auditPurchaseBill' valid='1' />
 	<TSystemLogType id='7c1a7035-0593-42d3-8186-9acff3776971' number='LOG100056' name='采购单管理' operateType='反审核' keyWord='/unauditPurchaseBill' valid='1' />
 	<TSystemLogType id='d71bc12e-0692-4517-a472-04da9a9e991e' number='LOG100057' name='采购入库' operateType='查看' keyWord='getUserPermissions?menuId=purchaseWarehousing' valid='0' />
-	<TSystemLogType id='7c899214-cd63-4f48-b6f0-d42e4bb38007' number='LOG100058' name='采购入库' operateType='新增' keyWord='createWithEntry?headEntity=PurchaseWarehousing&entryEntity=PurchaseWarehousingEntry' valid='1' />
-	<TSystemLogType id='33cf0f33-23a2-4348-8268-80b8a30b72b4' number='LOG100059' name='采购入库' operateType='修改' keyWord='updateWithEntry?headEntity=PurchaseWarehousing&entryEntity=PurchaseWarehousingEntry' valid='1' />
-	<TSystemLogType id='1d3989cc-fa0d-4423-8ae4-447a80362758' number='LOG100060' name='采购入库' operateType='删除' keyWord='deleteWithEntry?headEntity=PurchaseWarehousing&entryEntity=PurchaseWarehousingEntry' valid='1' />
+	<TSystemLogType id='7c899214-cd63-4f48-b6f0-d42e4bb38007' number='LOG100058' name='采购入库' operateType='新增' keyWord='createWithEntry?headEntity=PurchaseWarehousing&amp;entryEntity=PurchaseWarehousingEntry' valid='1' />
+	<TSystemLogType id='33cf0f33-23a2-4348-8268-80b8a30b72b4' number='LOG100059' name='采购入库' operateType='修改' keyWord='updateWithEntry?headEntity=PurchaseWarehousing&amp;entryEntity=PurchaseWarehousingEntry' valid='1' />
+	<TSystemLogType id='1d3989cc-fa0d-4423-8ae4-447a80362758' number='LOG100060' name='采购入库' operateType='删除' keyWord='deleteWithEntry?headEntity=PurchaseWarehousing&amp;entryEntity=PurchaseWarehousingEntry' valid='1' />
 	<TSystemLogType id='f90e90b6-6fcf-42f3-8073-1d2efb8e9f68' number='LOG100061' name='采购入库' operateType='提交' keyWord='submitInspective' valid='1' />
 	<TSystemLogType id='2ae78edf-f811-485f-8444-b89b8928d28e' number='LOG100062' name='采购入库' operateType='撤销' keyWord='rollbackInspective' valid='1' />
 	<TSystemLogType id='0ef20293-ec7f-4c9e-8b91-b1dbf432d9b4' number='LOG100063' name='采购退货' operateType='查看' keyWord='getUserPermissions?menuId=purchaseReturn' valid='0' />
-	<TSystemLogType id='3207f3a3-a108-45db-931c-d8853a74ca9a' number='LOG100064' name='采购退货' operateType='新增' keyWord='createWithEntry?headEntity=PurchaseReturn&entryEntity=PurchaseReturnEntry' valid='1' />
-	<TSystemLogType id='6043e7c5-a797-44d1-b9db-704dfe0fd0a3' number='LOG100065' name='采购退货' operateType='修改' keyWord='updateWithEntry?headEntity=PurchaseReturn&entryEntity=PurchaseReturnEntry' valid='1' />
-	<TSystemLogType id='2a0dbbdd-16cc-48a0-ae3c-8044bb864e40' number='LOG100066' name='采购退货' operateType='删除' keyWord='deleteWithEntry?headEntity=PurchaseReturn&entryEntity=PurchaseReturnEntry' valid='1' />
+	<TSystemLogType id='3207f3a3-a108-45db-931c-d8853a74ca9a' number='LOG100064' name='采购退货' operateType='新增' keyWord='createWithEntry?headEntity=PurchaseReturn&amp;entryEntity=PurchaseReturnEntry' valid='1' />
+	<TSystemLogType id='6043e7c5-a797-44d1-b9db-704dfe0fd0a3' number='LOG100065' name='采购退货' operateType='修改' keyWord='updateWithEntry?headEntity=PurchaseReturn&amp;entryEntity=PurchaseReturnEntry' valid='1' />
+	<TSystemLogType id='2a0dbbdd-16cc-48a0-ae3c-8044bb864e40' number='LOG100066' name='采购退货' operateType='删除' keyWord='deleteWithEntry?headEntity=PurchaseReturn&amp;entryEntity=PurchaseReturnEntry' valid='1' />
 	<TSystemLogType id='700d7f7c-757c-4d13-b56f-4499b096f491' number='LOG100067' name='采购退货' operateType='提交' keyWord='submitPurchaseReturn' valid='1' />
 	<TSystemLogType id='0f3691b4-30c0-4ae3-95d5-c93ae0414020' number='LOG100068' name='采购退货' operateType='撤销' keyWord='rollbackPurchaseReturn' valid='1' />
 	<TSystemLogType id='b6930417-363a-48ac-b0a5-80286c30442f' number='LOG100069' name='委外领料' operateType='查看' keyWord='getUserPermissions?menuId=consignDrawMaterial' valid='0' />
-	<TSystemLogType id='a8bdb743-acac-40fb-80a4-685a211ba533' number='LOG100070' name='委外领料' operateType='新增' keyWord='createWithEntry?headEntity=ConsignDrawMaterial&entryEntity=ConsignDrawMaterialEntry' valid='1' />
-	<TSystemLogType id='294bccec-5f49-41b1-9cc9-86c484b6da1d' number='LOG100071' name='委外领料' operateType='修改' keyWord='updateWithEntry?headEntity=ConsignDrawMaterial&entryEntity=ConsignDrawMaterialEntry' valid='1' />
-	<TSystemLogType id='46c2e71a-ecbc-4ee2-b210-70b28e96aaf9' number='LOG100072' name='委外领料' operateType='删除' keyWord='deleteWithEntry?headEntity=ConsignDrawMaterial&entryEntity=ConsignDrawMaterialEntry' valid='1' />
+	<TSystemLogType id='a8bdb743-acac-40fb-80a4-685a211ba533' number='LOG100070' name='委外领料' operateType='新增' keyWord='createWithEntry?headEntity=ConsignDrawMaterial&amp;entryEntity=ConsignDrawMaterialEntry' valid='1' />
+	<TSystemLogType id='294bccec-5f49-41b1-9cc9-86c484b6da1d' number='LOG100071' name='委外领料' operateType='修改' keyWord='updateWithEntry?headEntity=ConsignDrawMaterial&amp;entryEntity=ConsignDrawMaterialEntry' valid='1' />
+	<TSystemLogType id='46c2e71a-ecbc-4ee2-b210-70b28e96aaf9' number='LOG100072' name='委外领料' operateType='删除' keyWord='deleteWithEntry?headEntity=ConsignDrawMaterial&amp;entryEntity=ConsignDrawMaterialEntry' valid='1' />
 	<TSystemLogType id='68a481a8-9499-40bc-a438-7f31cd76e482' number='LOG100073' name='委外领料' operateType='提交' keyWord='submitConsignDramMaterial' valid='1' />
 	<TSystemLogType id='e8cba53a-840b-4bca-acaf-6d1a1925a43e' number='LOG100074' name='委外领料' operateType='撤销' keyWord='rollbackConsignDramMaterial' valid='1' />
 	<TSystemLogType id='ba0cb7d2-6719-48c1-bb25-3836485e6010' number='LOG100075' name='委外退料' operateType='查看' keyWord='getUserPermissions?menuId=consignReturnMaterial' valid='0' />
-	<TSystemLogType id='60183f38-ecaf-4ff4-94dd-8f9746f4be0b' number='LOG100076' name='委外退料' operateType='新增' keyWord='createWithEntry?headEntity=ConsignReturnMaterial&entryEntity=ConsignReturnMaterialEntry' valid='1' />
-	<TSystemLogType id='42e57f73-d3bc-4670-9c7e-82e681400262' number='LOG100077' name='委外退料' operateType='修改' keyWord='updateWithEntry?headEntity=ConsignReturnMaterial&entryEntity=ConsignReturnMaterialEntry' valid='1' />
-	<TSystemLogType id='1cd0328e-fb71-484e-ad53-318768b3dbc9' number='LOG100078' name='委外退料' operateType='删除' keyWord='deleteWithEntry?headEntity=ConsignReturnMaterial&entryEntity=ConsignReturnMaterialEntry' valid='1' />
+	<TSystemLogType id='60183f38-ecaf-4ff4-94dd-8f9746f4be0b' number='LOG100076' name='委外退料' operateType='新增' keyWord='createWithEntry?headEntity=ConsignReturnMaterial&amp;entryEntity=ConsignReturnMaterialEntry' valid='1' />
+	<TSystemLogType id='42e57f73-d3bc-4670-9c7e-82e681400262' number='LOG100077' name='委外退料' operateType='修改' keyWord='updateWithEntry?headEntity=ConsignReturnMaterial&amp;entryEntity=ConsignReturnMaterialEntry' valid='1' />
+	<TSystemLogType id='1cd0328e-fb71-484e-ad53-318768b3dbc9' number='LOG100078' name='委外退料' operateType='删除' keyWord='deleteWithEntry?headEntity=ConsignReturnMaterial&amp;entryEntity=ConsignReturnMaterialEntry' valid='1' />
 	<TSystemLogType id='425f30cb-2833-48c8-82fa-ffda94eaf1f6' number='LOG100079' name='委外退料' operateType='提交' keyWord='submitConsignReturnMaterial' valid='1' />
 	<TSystemLogType id='8e921380-5ca5-49bc-aa0f-cc9e5779c5b1' number='LOG100080' name='委外退料' operateType='撤销' keyWord='rollbackConsignReturnMaterial' valid='1' />
 	<TSystemLogType id='1abd8cfa-1a69-4dae-8b2d-028b07a4d562' number='LOG100081' name='委外入库' operateType='查看' keyWord='getUserPermissions?menuId=consignWarehousing' valid='0' />
-	<TSystemLogType id='7e133352-4872-4fa5-8ca8-96717e1b05d7' number='LOG100082' name='委外入库' operateType='新增' keyWord='createWithEntry?headEntity=ConsignWarehousing&entryEntity=ConsignWarehousingEntry' valid='1' />
-	<TSystemLogType id='b1c3b63b-582d-4954-acb6-7af7f4bc9bfb' number='LOG100083' name='委外入库' operateType='修改' keyWord='updateWithEntry?headEntity=ConsignWarehousing&entryEntity=ConsignWarehousingEntry' valid='1' />
-	<TSystemLogType id='6de80196-9c13-4106-9a78-95576edff56e' number='LOG100084' name='委外入库' operateType='删除' keyWord='deleteWithEntry?headEntity=ConsignWarehousing&entryEntity=ConsignWarehousingEntry' valid='1' />
+	<TSystemLogType id='7e133352-4872-4fa5-8ca8-96717e1b05d7' number='LOG100082' name='委外入库' operateType='新增' keyWord='createWithEntry?headEntity=ConsignWarehousing&amp;entryEntity=ConsignWarehousingEntry' valid='1' />
+	<TSystemLogType id='b1c3b63b-582d-4954-acb6-7af7f4bc9bfb' number='LOG100083' name='委外入库' operateType='修改' keyWord='updateWithEntry?headEntity=ConsignWarehousing&amp;entryEntity=ConsignWarehousingEntry' valid='1' />
+	<TSystemLogType id='6de80196-9c13-4106-9a78-95576edff56e' number='LOG100084' name='委外入库' operateType='删除' keyWord='deleteWithEntry?headEntity=ConsignWarehousing&amp;entryEntity=ConsignWarehousingEntry' valid='1' />
 	<TSystemLogType id='beeffacf-14f7-4f00-8297-4e456397accc' number='LOG100085' name='委外入库' operateType='提交' keyWord='submitConsignWarehousing' valid='1' />
 	<TSystemLogType id='26c48d93-3377-4562-8bed-32c4e8e8f023' number='LOG100086' name='委外入库' operateType='撤销' keyWord='rollbackConsignWarehousing' valid='1' />
 	<TSystemLogType id='ce7118f2-19fd-485c-97b2-b661bce48b46' number='LOG100087' name='委外退货' operateType='查看' keyWord='getUserPermissions?menuId=consignReturnProduct' valid='0' />
-	<TSystemLogType id='a78bb6d5-f592-4e14-a55e-27c024b190b2' number='LOG100088' name='委外退货' operateType='新增' keyWord='createWithEntry?headEntity=ConsignReturnProduct&entryEntity=ConsignReturnProductEntry' valid='1' />
-	<TSystemLogType id='62818ad2-2dc2-40f1-810d-e89bb3c6cd04' number='LOG100089' name='委外退货' operateType='修改' keyWord='updateWithEntry?headEntity=ConsignReturnProduct&entryEntity=ConsignReturnProductEntry' valid='1' />
-	<TSystemLogType id='fea5e600-15a1-4162-be49-86010011747d' number='LOG100090' name='委外退货' operateType='删除' keyWord='deleteWithEntry?headEntity=ConsignReturnProduct&entryEntity=ConsignReturnProductEntry' valid='1' />
+	<TSystemLogType id='a78bb6d5-f592-4e14-a55e-27c024b190b2' number='LOG100088' name='委外退货' operateType='新增' keyWord='createWithEntry?headEntity=ConsignReturnProduct&amp;entryEntity=ConsignReturnProductEntry' valid='1' />
+	<TSystemLogType id='62818ad2-2dc2-40f1-810d-e89bb3c6cd04' number='LOG100089' name='委外退货' operateType='修改' keyWord='updateWithEntry?headEntity=ConsignReturnProduct&amp;entryEntity=ConsignReturnProductEntry' valid='1' />
+	<TSystemLogType id='fea5e600-15a1-4162-be49-86010011747d' number='LOG100090' name='委外退货' operateType='删除' keyWord='deleteWithEntry?headEntity=ConsignReturnProduct&amp;entryEntity=ConsignReturnProductEntry' valid='1' />
 	<TSystemLogType id='1687c3d6-dc00-406a-8783-acec5d54e20d' number='LOG100091' name='委外退货' operateType='提交' keyWord='submitConsignReturnProduct' valid='1' />
 	<TSystemLogType id='2cf6073b-97b1-4cf8-a236-a11b6d94967d' number='LOG100092' name='委外退货' operateType='撤销' keyWord='rollbackConsignReturnProduct' valid='1' />
 	<TSystemLogType id='5593b75f-4f16-4d73-8a8a-e0fcce1d85fc' number='LOG100093' name='制造领料' operateType='查看' keyWord='getUserPermissions?menuId=workshopDrawMaterial' valid='0' />
-	<TSystemLogType id='6962cbdd-c5a9-46e8-9c90-f6f3f46bd2d6' number='LOG100094' name='制造领料' operateType='新增' keyWord='createWithEntry?headEntity=WorkshopDrawMaterial&entryEntity=WorkshopDrawMaterialEntry' valid='1' />
-	<TSystemLogType id='cd81b0d7-242e-447f-85e1-8d1e80265489' number='LOG100095' name='制造领料' operateType='修改' keyWord='updateWithEntry?headEntity=WorkshopDrawMaterial&entryEntity=WorkshopDrawMaterialEntry' valid='1' />
-	<TSystemLogType id='50ae9e48-726b-457a-8aa9-67cb05c14b3f' number='LOG100096' name='制造领料' operateType='删除' keyWord='deleteWithEntry?headEntity=WorkshopDrawMaterial&entryEntity=WorkshopDrawMaterialEntry' valid='1' />
+	<TSystemLogType id='6962cbdd-c5a9-46e8-9c90-f6f3f46bd2d6' number='LOG100094' name='制造领料' operateType='新增' keyWord='createWithEntry?headEntity=WorkshopDrawMaterial&amp;entryEntity=WorkshopDrawMaterialEntry' valid='1' />
+	<TSystemLogType id='cd81b0d7-242e-447f-85e1-8d1e80265489' number='LOG100095' name='制造领料' operateType='修改' keyWord='updateWithEntry?headEntity=WorkshopDrawMaterial&amp;entryEntity=WorkshopDrawMaterialEntry' valid='1' />
+	<TSystemLogType id='50ae9e48-726b-457a-8aa9-67cb05c14b3f' number='LOG100096' name='制造领料' operateType='删除' keyWord='deleteWithEntry?headEntity=WorkshopDrawMaterial&amp;entryEntity=WorkshopDrawMaterialEntry' valid='1' />
 	<TSystemLogType id='f213d7ff-22e7-4606-b3c1-ba96af6dca1a' number='LOG100097' name='制造领料' operateType='提交' keyWord='submitWorkshopDramMaterial' valid='1' />
 	<TSystemLogType id='cbb423ce-99fd-4e3f-bc95-54610777ebc5' number='LOG100098' name='制造领料' operateType='撤销' keyWord='rollbackWorkshopDramMaterial' valid='1' />
 	<TSystemLogType id='78cfe16f-05ed-400a-9b0f-3d9f178c65a1' number='LOG100099' name='制造退料' operateType='查看' keyWord='getUserPermissions?menuId=workshopReturnMaterial' valid='0' />
-	<TSystemLogType id='a95790dc-60f6-4798-ba0b-9be67eb1cbdc' number='LOG100100' name='制造退料' operateType='新增' keyWord='createWithEntry?headEntity=WorkshopReturnMaterial&entryEntity=WorkshopReturnMaterialEntry' valid='1' />
-	<TSystemLogType id='707f5908-1cc3-4cca-a119-22970adeb46c' number='LOG100101' name='制造退料' operateType='修改' keyWord='updateWithEntry?headEntity=WorkshopReturnMaterial&entryEntity=WorkshopReturnMaterialEntry' valid='1' />
-	<TSystemLogType id='5c7084c1-a5a7-47c2-91ff-7c36356378da' number='LOG100102' name='制造退料' operateType='删除' keyWord='deleteWithEntry?headEntity=WorkshopReturnMaterial&entryEntity=WorkshopReturnMaterialEntry' valid='1' />
+	<TSystemLogType id='a95790dc-60f6-4798-ba0b-9be67eb1cbdc' number='LOG100100' name='制造退料' operateType='新增' keyWord='createWithEntry?headEntity=WorkshopReturnMaterial&amp;entryEntity=WorkshopReturnMaterialEntry' valid='1' />
+	<TSystemLogType id='707f5908-1cc3-4cca-a119-22970adeb46c' number='LOG100101' name='制造退料' operateType='修改' keyWord='updateWithEntry?headEntity=WorkshopReturnMaterial&amp;entryEntity=WorkshopReturnMaterialEntry' valid='1' />
+	<TSystemLogType id='5c7084c1-a5a7-47c2-91ff-7c36356378da' number='LOG100102' name='制造退料' operateType='删除' keyWord='deleteWithEntry?headEntity=WorkshopReturnMaterial&amp;entryEntity=WorkshopReturnMaterialEntry' valid='1' />
 	<TSystemLogType id='dfdf4ad3-a65c-4461-b64f-6b358be45bad' number='LOG100103' name='制造退料' operateType='提交' keyWord='submitWorkshopReturnMaterial' valid='1' />
 	<TSystemLogType id='6314f1ea-d3b0-4e72-8474-bb7e23f82f97' number='LOG100104' name='制造退料' operateType='撤销' keyWord='rollbackWorkshopReturnMaterial' valid='1' />
 	<TSystemLogType id='3ca40803-c31c-4e28-a622-ee9f9d36a720' number='LOG100105' name='制造入库' operateType='查看' keyWord='getUserPermissions?menuId=workshopWarehousing' valid='0' />
-	<TSystemLogType id='f0ce6da2-a478-4023-84fe-c9eb864a7706' number='LOG100106' name='制造入库' operateType='新增' keyWord='createWithEntry?headEntity=WorkshopWarehousing&entryEntity=WorkshopWarehousingEntry' valid='1' />
-	<TSystemLogType id='0f97cb3b-e0af-455d-9248-a2460830c11e' number='LOG100107' name='制造入库' operateType='修改' keyWord='updateWithEntry?headEntity=WorkshopWarehousing&entryEntity=WorkshopWarehousingEntry' valid='1' />
-	<TSystemLogType id='9ec0ef30-9a38-4a67-86cb-5976621462e8' number='LOG100108' name='制造入库' operateType='删除' keyWord='deleteWithEntry?headEntity=WorkshopWarehousing&entryEntity=WorkshopWarehousingEntry' valid='1' />
+	<TSystemLogType id='f0ce6da2-a478-4023-84fe-c9eb864a7706' number='LOG100106' name='制造入库' operateType='新增' keyWord='createWithEntry?headEntity=WorkshopWarehousing&amp;entryEntity=WorkshopWarehousingEntry' valid='1' />
+	<TSystemLogType id='0f97cb3b-e0af-455d-9248-a2460830c11e' number='LOG100107' name='制造入库' operateType='修改' keyWord='updateWithEntry?headEntity=WorkshopWarehousing&amp;entryEntity=WorkshopWarehousingEntry' valid='1' />
+	<TSystemLogType id='9ec0ef30-9a38-4a67-86cb-5976621462e8' number='LOG100108' name='制造入库' operateType='删除' keyWord='deleteWithEntry?headEntity=WorkshopWarehousing&amp;entryEntity=WorkshopWarehousingEntry' valid='1' />
 	<TSystemLogType id='7caa7d76-f736-4ed9-81ee-829fd5973a5a' number='LOG100109' name='制造入库' operateType='提交' keyWord='submitWorkshopWarehousing' valid='1' />
 	<TSystemLogType id='4f694686-ffc7-4fd0-9e55-c3f46ac5f48e' number='LOG100110' name='制造入库' operateType='撤销' keyWord='rollbackWorkshopWarehousing' valid='1' />
 	<TSystemLogType id='151b1e6f-c703-4427-8f88-f0dbe63857eb' number='LOG100111' name='制造退货' operateType='查看' keyWord='getUserPermissions?menuId=workshopReturnProduct' valid='0' />
-	<TSystemLogType id='3b5d149e-9acf-44c6-a12f-cb60ba67bd1c' number='LOG100112' name='制造退货' operateType='新增' keyWord='createWithEntry?headEntity=WorkshopReturnProduct&entryEntity=WorkshopReturnProductEntry' valid='1' />
-	<TSystemLogType id='4144e7d6-82a5-45d8-a6fe-d838a025d8aa' number='LOG100113' name='制造退货' operateType='修改' keyWord='updateWithEntry?headEntity=WorkshopReturnProduct&entryEntity=WorkshopReturnProductEntry' valid='1' />
-	<TSystemLogType id='d748ccf8-a790-493d-b74e-fcbf376445cc' number='LOG100114' name='制造退货' operateType='删除' keyWord='deleteWithEntry?headEntity=WorkshopReturnProduct&entryEntity=WorkshopReturnProductEntry' valid='1' />
+	<TSystemLogType id='3b5d149e-9acf-44c6-a12f-cb60ba67bd1c' number='LOG100112' name='制造退货' operateType='新增' keyWord='createWithEntry?headEntity=WorkshopReturnProduct&amp;entryEntity=WorkshopReturnProductEntry' valid='1' />
+	<TSystemLogType id='4144e7d6-82a5-45d8-a6fe-d838a025d8aa' number='LOG100113' name='制造退货' operateType='修改' keyWord='updateWithEntry?headEntity=WorkshopReturnProduct&amp;entryEntity=WorkshopReturnProductEntry' valid='1' />
+	<TSystemLogType id='d748ccf8-a790-493d-b74e-fcbf376445cc' number='LOG100114' name='制造退货' operateType='删除' keyWord='deleteWithEntry?headEntity=WorkshopReturnProduct&amp;entryEntity=WorkshopReturnProductEntry' valid='1' />
 	<TSystemLogType id='da1cc917-287e-4600-8687-3b9dbfff9d77' number='LOG100115' name='制造退货' operateType='提交' keyWord='submitWorkshopReturnProduct' valid='1' />
 	<TSystemLogType id='a01fbd94-1bde-4104-a496-b8a699d08c32' number='LOG100116' name='制造退货' operateType='撤销' keyWord='rollbackWorkshopReturnProduct' valid='1' />
 	<TSystemLogType id='2d840e51-dbfe-4a10-a5fe-7014a5cc9a11' number='LOG100117' name='成品进仓单' operateType='查看' keyWord='getUserPermissions?menuId=productInwarehouse' valid='0' />
-	<TSystemLogType id='be9684f5-4545-4fc2-95df-5035e8237897' number='LOG100118' name='成品进仓单' operateType='新增' keyWord='createWithEntry?headEntity=productInwarehouse&entryEntity=ProductInwarehouseEntry' valid='1' />
-	<TSystemLogType id='8dd936d1-f020-414c-84b3-ff4fc4125942' number='LOG100119' name='成品进仓单' operateType='修改' keyWord='updateWithEntry?headEntity=productInwarehouse&entryEntity=ProductInwarehouseEntry' valid='1' />
-	<TSystemLogType id='86152121-b01a-45b5-81fa-7b4eeb77c213' number='LOG100120' name='成品进仓单' operateType='删除' keyWord='deleteWithEntry?headEntity=productInwarehouse&entryEntity=ProductInwarehouseEntry' valid='1' />
+	<TSystemLogType id='be9684f5-4545-4fc2-95df-5035e8237897' number='LOG100118' name='成品进仓单' operateType='新增' keyWord='createWithEntry?headEntity=productInwarehouse&amp;entryEntity=ProductInwarehouseEntry' valid='1' />
+	<TSystemLogType id='8dd936d1-f020-414c-84b3-ff4fc4125942' number='LOG100119' name='成品进仓单' operateType='修改' keyWord='updateWithEntry?headEntity=productInwarehouse&amp;entryEntity=ProductInwarehouseEntry' valid='1' />
+	<TSystemLogType id='86152121-b01a-45b5-81fa-7b4eeb77c213' number='LOG100120' name='成品进仓单' operateType='删除' keyWord='deleteWithEntry?headEntity=productInwarehouse&amp;entryEntity=ProductInwarehouseEntry' valid='1' />
 	<TSystemLogType id='81e57375-cbab-4858-9e1f-b604c0c6f3c2' number='LOG100121' name='成品进仓单' operateType='提交' keyWord='submitProductInwarehouse' valid='1' />
 	<TSystemLogType id='b172c74d-db93-4789-937e-ed11265c8a8f' number='LOG100122' name='成品进仓单' operateType='撤销' keyWord='rollbackProductInwarehouse' valid='1' />
 	<TSystemLogType id='d9fe0d7b-2d9c-4d45-9aeb-d57a4ff67a01' number='LOG100123' name='成品进仓确认单' operateType='查看' keyWord='getUserPermissions?menuId=productInwarehouseConfirm' valid='0' />
 	<TSystemLogType id='7a357294-ff34-482f-8c3b-61510ec3b76d' number='LOG100124' name='成品进仓确认单' operateType='同步' keyWord='syncProductInwarehouseConfirm' valid='1' />
 	<TSystemLogType id='67145957-cfcd-486e-9bbc-c8e447ef7eb4' number='LOG100125' name='成品进仓确认单' operateType='提交' keyWord='submitProductInwarehouseConfirm' valid='1' />
 	<TSystemLogType id='02ed3871-6c2e-4cd9-ba32-08cddbe0a229' number='LOG100126' name='成品出仓单' operateType='查看' keyWord='getUserPermissions?menuId=productOutwarehouse' valid='0' />
-	<TSystemLogType id='ad4f3f64-dc1d-46a5-a2c7-dfd044c6eab3' number='LOG100127' name='成品出仓单' operateType='新增' keyWord='createWithEntry?headEntity=ProductOutwarehouse&entryEntity=ProductOutwarehouseEntry' valid='1' />
-	<TSystemLogType id='1248788a-1745-4b71-9587-9a3f42452674' number='LOG100128' name='成品出仓单' operateType='修改' keyWord='updateWithEntry?headEntity=ProductOutwarehouse&entryEntity=ProductOutwarehouseEntry' valid='1' />
-	<TSystemLogType id='b67b6c78-0c5d-4d2a-9900-7d0ee8e351c7' number='LOG100129' name='成品出仓单' operateType='删除' keyWord='deleteWithEntry?headEntity=ProductOutwarehouse&entryEntity=ProductOutwarehouseEntry' valid='1' />
+	<TSystemLogType id='ad4f3f64-dc1d-46a5-a2c7-dfd044c6eab3' number='LOG100127' name='成品出仓单' operateType='新增' keyWord='createWithEntry?headEntity=ProductOutwarehouse&amp;entryEntity=ProductOutwarehouseEntry' valid='1' />
+	<TSystemLogType id='1248788a-1745-4b71-9587-9a3f42452674' number='LOG100128' name='成品出仓单' operateType='修改' keyWord='updateWithEntry?headEntity=ProductOutwarehouse&amp;entryEntity=ProductOutwarehouseEntry' valid='1' />
+	<TSystemLogType id='b67b6c78-0c5d-4d2a-9900-7d0ee8e351c7' number='LOG100129' name='成品出仓单' operateType='删除' keyWord='deleteWithEntry?headEntity=ProductOutwarehouse&amp;entryEntity=ProductOutwarehouseEntry' valid='1' />
 	<TSystemLogType id='3c925fae-8a12-48f9-a860-2c8e8febeb6e' number='LOG100130' name='成品出仓单' operateType='提交' keyWord='submitProductInwarehouse' valid='1' />
 	<TSystemLogType id='ecc2d717-501b-4b14-974c-3e95991190ca' number='LOG100131' name='成品出仓单' operateType='撤销' keyWord='rollbackProductInwarehouse' valid='1' />
 	<TSystemLogType id='8b3c57c8-0501-4d35-a946-3dee6a9bc4e5' number='LOG100132' name='成品出仓确认单' operateType='查看' keyWord='getUserPermissions?menuId=productOutwarehouseConfirm' valid='0' />
 	<TSystemLogType id='aa42a873-6812-497f-8f44-e849cdfb43a7' number='LOG100133' name='成品出仓确认单' operateType='同步' keyWord='syncProductOutwarehouseConfirm' valid='1' />
 	<TSystemLogType id='aff6aa9b-5002-43fe-9c80-76899948956a' number='LOG100134' name='成品出仓确认单' operateType='提交' keyWord='submitProductOutwarehouseConfirm' valid='1' />
 	<TSystemLogType id='e6514ca0-188f-40d3-b78a-689ccc82a0a7' number='LOG100135' name='出货通知单' operateType='查看' keyWord='getUserPermissions?menuId=productOutNotification' valid='0' />
-	<TSystemLogType id='e4bd2e90-6548-4196-8915-a4776cbdd6ae' number='LOG100136' name='出货通知单' operateType='新增' keyWord='createWithEntry?headEntity=ProductOutNotification&entryEntity=ProductOutNotificationEntry' valid='1' />
-	<TSystemLogType id='a73c837d-f04c-4bd6-b883-bff82fcb060d' number='LOG100137' name='出货通知单' operateType='修改' keyWord='updateWithEntry?headEntity=ProductOutNotification&entryEntity=ProductOutNotificationEntry' valid='1' />
-	<TSystemLogType id='cf8be175-0961-4634-bdd3-8fe4a7b1cc81' number='LOG100138' name='出货通知单' operateType='删除' keyWord='deleteWithEntry?headEntity=ProductOutNotification&entryEntity=ProductOutNotificationEntry' valid='1' />
+	<TSystemLogType id='e4bd2e90-6548-4196-8915-a4776cbdd6ae' number='LOG100136' name='出货通知单' operateType='新增' keyWord='createWithEntry?headEntity=ProductOutNotification&amp;entryEntity=ProductOutNotificationEntry' valid='1' />
+	<TSystemLogType id='a73c837d-f04c-4bd6-b883-bff82fcb060d' number='LOG100137' name='出货通知单' operateType='修改' keyWord='updateWithEntry?headEntity=ProductOutNotification&amp;entryEntity=ProductOutNotificationEntry' valid='1' />
+	<TSystemLogType id='cf8be175-0961-4634-bdd3-8fe4a7b1cc81' number='LOG100138' name='出货通知单' operateType='删除' keyWord='deleteWithEntry?headEntity=ProductOutNotification&amp;entryEntity=ProductOutNotificationEntry' valid='1' />
 	<TSystemLogType id='08c6281b-c246-4d1b-90d2-ff2d9f83e011' number='LOG100139' name='出货通知单' operateType='提交' keyWord='submitProductOutNotification' valid='1' />
 	<TSystemLogType id='60cf8523-1d00-4110-8698-f84f7975b75e' number='LOG100140' name='出货通知单' operateType='撤销' keyWord='rollbackProductOutNotification' valid='1' />
 	<TSystemLogType id='2ca695f8-f3b1-4879-9127-f80d19b4914e' number='LOG100141' name='仓库调整单' operateType='查看' keyWord='getUserPermissions?menuId=stockAdjust' valid='0' />
-	<TSystemLogType id='7c23fb29-a614-4553-911a-6cca2c4e6fc7' number='LOG100142' name='仓库调整单' operateType='新增' keyWord='createWithEntry?headEntity=StockAdjust&entryEntity=StockAdjustEntry' valid='1' />
-	<TSystemLogType id='f4041106-67de-4206-8dfb-84bf511ce04b' number='LOG100143' name='仓库调整单' operateType='修改' keyWord='updateWithEntry?headEntity=StockAdjust&entryEntity=StockAdjustEntry' valid='1' />
-	<TSystemLogType id='b1d4254d-e8d7-449e-b6b7-9b7804dedcae' number='LOG100144' name='仓库调整单' operateType='删除' keyWord='deleteWithEntry?headEntity=StockAdjust&entryEntity=StockAdjustEntry' valid='1' />
+	<TSystemLogType id='7c23fb29-a614-4553-911a-6cca2c4e6fc7' number='LOG100142' name='仓库调整单' operateType='新增' keyWord='createWithEntry?headEntity=StockAdjust&amp;entryEntity=StockAdjustEntry' valid='1' />
+	<TSystemLogType id='f4041106-67de-4206-8dfb-84bf511ce04b' number='LOG100143' name='仓库调整单' operateType='修改' keyWord='updateWithEntry?headEntity=StockAdjust&amp;entryEntity=StockAdjustEntry' valid='1' />
+	<TSystemLogType id='b1d4254d-e8d7-449e-b6b7-9b7804dedcae' number='LOG100144' name='仓库调整单' operateType='删除' keyWord='deleteWithEntry?headEntity=StockAdjust&amp;entryEntity=StockAdjustEntry' valid='1' />
 	<TSystemLogType id='f5ae6a2b-ec84-40ac-bf3c-c24b742d4e06' number='LOG100145' name='仓库调整单' operateType='提交' keyWord='submitStockAdjust' valid='1' />
 	<TSystemLogType id='d87eb80d-b164-49a7-9fa4-c4cd06fcf14f' number='LOG100146' name='仓库调整单' operateType='撤销' keyWord='rollbackStockAdjust' valid='1' />
 	<TSystemLogType id='43172ac8-95c4-4703-b058-99c856a0646b' number='LOG100147' name='车间调整单' operateType='查看' keyWord='getUserPermissions?menuId=workshopStockAdjust' valid='0' />
-	<TSystemLogType id='6abd836b-56e3-485e-9d37-ae84d16cc7f0' number='LOG100148' name='车间调整单' operateType='新增' keyWord='createWithEntry?headEntity=WorkshopStockAdjust&entryEntity=WorkshopStockAdjustEntry' valid='1' />
-	<TSystemLogType id='546eccc6-403f-4c68-9c5e-4d6e8b34f633' number='LOG100149' name='车间调整单' operateType='修改' keyWord='updateWithEntry?headEntity=WorkshopStockAdjust&entryEntity=WorkshopStockAdjustEntry' valid='1' />
-	<TSystemLogType id='27ec51b6-f681-4172-aba9-7ed83bd04441' number='LOG100150' name='车间调整单' operateType='删除' keyWord='deleteWithEntry?headEntity=WorkshopStockAdjust&entryEntity=WorkshopStockAdjustEntry' valid='1' />
+	<TSystemLogType id='6abd836b-56e3-485e-9d37-ae84d16cc7f0' number='LOG100148' name='车间调整单' operateType='新增' keyWord='createWithEntry?headEntity=WorkshopStockAdjust&amp;entryEntity=WorkshopStockAdjustEntry' valid='1' />
+	<TSystemLogType id='546eccc6-403f-4c68-9c5e-4d6e8b34f633' number='LOG100149' name='车间调整单' operateType='修改' keyWord='updateWithEntry?headEntity=WorkshopStockAdjust&amp;entryEntity=WorkshopStockAdjustEntry' valid='1' />
+	<TSystemLogType id='27ec51b6-f681-4172-aba9-7ed83bd04441' number='LOG100150' name='车间调整单' operateType='删除' keyWord='deleteWithEntry?headEntity=WorkshopStockAdjust&amp;entryEntity=WorkshopStockAdjustEntry' valid='1' />
 	<TSystemLogType id='28d85d8c-92fe-4817-b73c-9b408d67fb9b' number='LOG100151' name='车间调整单' operateType='提交' keyWord='submitWorkshopStockAdjust' valid='1' />
 	<TSystemLogType id='4aa859e6-0e99-4485-9050-ff8c4b83167a' number='LOG100152' name='车间调整单' operateType='撤销' keyWord='rollbackWorkshopStockAdjust' valid='1' />
 	<TSystemLogType id='4ed830d1-1583-43f1-ae2b-fafcbe425e26' number='LOG100153' name='供应商调整单' operateType='查看' keyWord='getUserPermissions?menuId=supplierStockAdjust' valid='0' />
-	<TSystemLogType id='d48f5060-6012-4ed9-a825-60d075a9e5e3' number='LOG100154' name='供应商调整单' operateType='新增' keyWord='createWithEntry?headEntity=SupplierStockAdjust&entryEntity=SupplierStockAdjustEntry' valid='1' />
-	<TSystemLogType id='37cc263d-08cf-4b95-bf66-039fd8db8f3b' number='LOG100155' name='供应商调整单' operateType='修改' keyWord='updateWithEntry?headEntity=SupplierStockAdjust&entryEntity=SupplierStockAdjustEntry' valid='1' />
-	<TSystemLogType id='1272976e-54a7-4e41-9a07-af412a478437' number='LOG100156' name='供应商调整单' operateType='删除' keyWord='deleteWithEntry?headEntity=SupplierStockAdjust&entryEntity=SupplierStockAdjustEntry' valid='1' />
+	<TSystemLogType id='d48f5060-6012-4ed9-a825-60d075a9e5e3' number='LOG100154' name='供应商调整单' operateType='新增' keyWord='createWithEntry?headEntity=SupplierStockAdjust&amp;entryEntity=SupplierStockAdjustEntry' valid='1' />
+	<TSystemLogType id='37cc263d-08cf-4b95-bf66-039fd8db8f3b' number='LOG100155' name='供应商调整单' operateType='修改' keyWord='updateWithEntry?headEntity=SupplierStockAdjust&amp;entryEntity=SupplierStockAdjustEntry' valid='1' />
+	<TSystemLogType id='1272976e-54a7-4e41-9a07-af412a478437' number='LOG100156' name='供应商调整单' operateType='删除' keyWord='deleteWithEntry?headEntity=SupplierStockAdjust&amp;entryEntity=SupplierStockAdjustEntry' valid='1' />
 	<TSystemLogType id='c937b76e-64d6-46af-81cb-1320cbe08593' number='LOG100157' name='供应商调整单' operateType='提交' keyWord='submitSupplierStockAdjust' valid='1' />
 	<TSystemLogType id='c70e0f72-63e9-48ea-a27d-eb136b9547ba' number='LOG100158' name='供应商调整单' operateType='撤销' keyWord='rollbackSupplierStockAdjust' valid='1' />
 	<TSystemLogType id='d3a0162f-36a2-4033-945f-a2cbe462813f' number='LOG100159' name='存货核算' operateType='查看' keyWord='getUserPermissions?menuId=stockSettle' valid='0' />
