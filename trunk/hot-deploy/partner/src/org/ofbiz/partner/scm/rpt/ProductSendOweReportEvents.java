@@ -267,7 +267,7 @@ public class ProductSendOweReportEvents {
 				BigDecimal dayOutQty=rs.getBigDecimal(dayStr+"_NOR_OUT_QTY");
 				BigDecimal dayInQty=rs.getBigDecimal(dayStr+"_NOR_IN_QTY");
 				BigDecimal dayChgQty=rs.getBigDecimal(dayStr+"_CHG_BRD_QTY");
-				BigDecimal dayBalQty=preDayBal.add(dayInQty).add(dayChgQty).subtract(dayOutQty);
+				BigDecimal dayBalQty=preDayBal.add(dayInQty).subtract(dayChgQty).subtract(dayOutQty);
 				JSONObject dayJson=buildRecord(cal.getTime(),rs.getString("MATERIAL_NAME"),dayOutQty,dayInQty,dayChgQty,dayBalQty);
 				records.add(dayJson);
 				
