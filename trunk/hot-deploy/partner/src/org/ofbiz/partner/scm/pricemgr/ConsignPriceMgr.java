@@ -268,9 +268,9 @@ public class ConsignPriceMgr {
 					curTotalSum = preMonthValue.getBigDecimal("totalsum");
 				}
 				
-				if(curVolume.compareTo(volume)<0 || curTotalSum.compareTo(totalsum)<0){
-					throwExceptionOfMaterialNotEnough(materialId);	//供应商库存数量不足，抛出异常
-				}
+//				if(curVolume.compareTo(volume)<0 || curTotalSum.compareTo(totalsum)<0){
+//					throwExceptionOfMaterialNotEnough(materialId);	//供应商库存数量不足，抛出异常
+//				}
 				
 				gv = delegator.makeValue("CurConsignPrice");
 				gv.set("year", year);
