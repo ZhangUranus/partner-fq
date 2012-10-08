@@ -307,9 +307,9 @@ public class WorkshopPriceMgr {
 					curTotalSum = preMonthValue.getBigDecimal("totalsum");
 				}
 				
-				if(curVolume.compareTo(volume)<0 || curTotalSum.compareTo(totalsum)<0){
-					throwExceptionOfMaterialNotEnough(materialId);	//车间库存数量不足，抛出异常
-				}
+//				if(curVolume.compareTo(volume)<0 || curTotalSum.compareTo(totalsum)<0){
+//					throwExceptionOfMaterialNotEnough(materialId);	//车间库存数量不足，抛出异常
+//				}
 				
 				gv = delegator.makeValue("CurWorkshopPrice");
 				gv.set("year", year);
