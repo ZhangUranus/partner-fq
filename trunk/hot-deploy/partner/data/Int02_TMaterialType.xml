@@ -8,7 +8,6 @@
 <TMaterialType id='a2aa616b-7e2e-4643-85e6-63b25415003e' PARENT_ID='' number='MTT100001' name='原材料' />
 <TMaterialType id='adc8001c-47be-407b-8366-aec93cb27876' PARENT_ID='' number='MTT100005' name='安装包装' />
 <TMaterialType id='c85acba2-8f4b-4e03-aa92-9ade076345fd' PARENT_ID='' number='MTT100002' name='黑胚件' />
-<TMaterialType id='07680386-538c-4a88-91fb-31643e7822e6' PARENT_ID='68f09725-81c7-4ffc-b0a9-7b4616b12fff' number='MTT100006' name='产成品' />
 <TMaterialType id='28c9238d-e6f3-4414-8cf3-32b4579e2173' PARENT_ID='a2aa616b-7e2e-4643-85e6-63b25415003e' number='MTT100007' name='铁' />
 <TMaterialType id='36316d97-f038-445b-a74b-32cb0c8301fe' PARENT_ID='28c9238d-e6f3-4414-8cf3-32b4579e2173' number='MTT100008' name='扁铁' />
 <TMaterialType id='90c647fa-cb0f-4d00-88e9-1c6b6ffd2655' PARENT_ID='28c9238d-e6f3-4414-8cf3-32b4579e2173' number='MTT100009' name='带钢' />
