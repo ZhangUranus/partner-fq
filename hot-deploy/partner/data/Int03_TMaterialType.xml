@@ -3,11 +3,11 @@
 	may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
 	OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. -->
 <entity-engine-xml>
-<TMaterialType id='68f09725-81c7-4ffc-b0a9-7b4616b12fff' PARENT_ID='' number='MTT100004' name='成品' />
-<TMaterialType id='84b03a16-4e84-4142-87bc-2bcebcff485b' PARENT_ID='' number='MTT100003' name='半成品' />
-<TMaterialType id='a2aa616b-7e2e-4643-85e6-63b25415003e' PARENT_ID='' number='MTT100001' name='原材料' />
-<TMaterialType id='adc8001c-47be-407b-8366-aec93cb27876' PARENT_ID='' number='MTT100005' name='安装包装' />
-<TMaterialType id='c85acba2-8f4b-4e03-aa92-9ade076345fd' PARENT_ID='' number='MTT100002' name='黑胚件' />
+<TMaterialType id='68f09725-81c7-4ffc-b0a9-7b4616b12fff' parentId='' number='MTT100004' name='成品' />
+<TMaterialType id='84b03a16-4e84-4142-87bc-2bcebcff485b' parentId='' number='MTT100003' name='半成品' />
+<TMaterialType id='a2aa616b-7e2e-4643-85e6-63b25415003e' parentId='' number='MTT100001' name='原材料' />
+<TMaterialType id='adc8001c-47be-407b-8366-aec93cb27876' parentId='' number='MTT100005' name='安装包装' />
+<TMaterialType id='c85acba2-8f4b-4e03-aa92-9ade076345fd' parentId='' number='MTT100002' name='黑胚件' />
 <TMaterialType id='59528f80-9380-4aa6-8c8e-d84f51620681' parentId='84b03a16-4e84-4142-87bc-2bcebcff485b' number='MTT100006' name='安装半成品' />
 <TMaterialType id='f1d10096-9e69-4d07-9e4d-d1ba37378eff' parentId='68f09725-81c7-4ffc-b0a9-7b4616b12fff' number='MTT100007' name='安装成品' />
 <TMaterialType id='da2943bc-fd55-4ee3-8126-fc291fb977d2' parentId='c85acba2-8f4b-4e03-aa92-9ade076345fd' number='MTT100008' name='黑胚半成品' />
