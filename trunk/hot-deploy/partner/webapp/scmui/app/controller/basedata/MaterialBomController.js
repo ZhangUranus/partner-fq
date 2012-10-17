@@ -413,7 +413,7 @@ Ext.define('SCM.controller.basedata.MaterialBomController', {
 											} else {
 												showError(result.message);
 											}
-											me.refreshRecord();
+											me.refreshRecord(me.listPanel.store.currentPage);
 										}
 									});
 						}
