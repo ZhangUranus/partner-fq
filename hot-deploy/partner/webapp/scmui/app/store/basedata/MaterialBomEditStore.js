@@ -7,6 +7,6 @@ Ext.define('SCM.store.basedata.MaterialBomEditStore', {
 			autoSync : false,
 			sorters : [{// 根据number字段排序
 				property : 'number',
-				direction : 'ASC'
+				direction : 'DESC'
 			}]
 		});
