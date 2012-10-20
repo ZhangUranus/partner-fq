@@ -1,6 +1,7 @@
 package org.ofbiz.partner.scm.pricemgr.bizStockImp;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 import java.util.List;
 
@@ -53,7 +54,7 @@ public class ReturnProductWarehousingBizImp implements IBizStock {
 			totalSum = totalSum.add(sum);
 			
 			//返填单价，金额
-			v.set("price", sum.divide(volume));
+			v.set("price", sum.divide(volume, 6, RoundingMode.DOWN));
 			v.set("entrysum", sum);
 			v.store();
 			

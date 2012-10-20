@@ -1,6 +1,7 @@
 package org.ofbiz.partner.scm.pricemgr.bizStockImp;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 import java.util.List;
 
@@ -45,7 +46,7 @@ public class WorkshopWarehousingBizImp implements IBizStock {
 			if (!isOut) {
 				//log 20120814 jeff 将单件耗料改为总耗料
 				sum = WorkshopPriceMgr.getInstance().CreateWorkshopPriceDetailList(workshopId, v.getString("bomId"), v.getString("id"), volume);
-				BigDecimal price = sum.divide(volume);
+				BigDecimal price = sum.divide(volume, 6, RoundingMode.DOWN);
 				
 				//增加额外耗料金额
 //				BigDecimal extraSum = WorkshopPriceMgr.getInstance().updateWarehousingExtraCommit(v);
