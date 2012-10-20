@@ -164,8 +164,8 @@ Ext.define('SCM.view.SupplierStockAdjust.EditUI', {
 																	xtype : 'combogrid',
 																	valueField : 'id',
 																	displayField : 'name',
-																	initStore : Ext.data.StoreManager.lookup('MWHComboInitStore'),
-																	store : Ext.data.StoreManager.lookup('MWHComboStore'),
+																	initStore : Ext.data.StoreManager.lookup('MComboInitStore'),
+																	store : Ext.data.StoreManager.lookup('MComboStore'),
 																	matchFieldWidth : false,
 																	listConfig : {
 																		width : SCM.MaxSize.COMBOGRID_WIDTH,
