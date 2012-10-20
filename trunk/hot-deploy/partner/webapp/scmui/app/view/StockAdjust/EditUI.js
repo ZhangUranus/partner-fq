@@ -164,17 +164,11 @@ Ext.define('SCM.view.StockAdjust.EditUI', {
 																	xtype : 'combogrid',
 																	valueField : 'id',
 																	displayField : 'name',
-																	initStore : Ext.data.StoreManager.lookup('MWHComboInitStore'),
-																	store : Ext.data.StoreManager.lookup('MWHComboStore'),
+																	initStore : Ext.data.StoreManager.lookup('MComboInitStore'),
+																	store : Ext.data.StoreManager.lookup('MComboStore'),
 																	matchFieldWidth : false,
-																	listeners : {
-																		scope : this,
-																		beforequery : function(qe){
-																			return this.setEntryMaterialFilter(qe);
-																		}
-																	},
 																	listConfig : {
-																		width : 400,
+																		width : SCM.MaxSize.COMBOGRID_WIDTH,
 																		height : SCM.MaxSize.COMBOGRID_HEIGHT,
 																		columns : [{
 																					header : '编码',
@@ -272,17 +266,5 @@ Ext.define('SCM.view.StockAdjust.EditUI', {
 				this.hide();
 				this.inited = false;
 				this.modifyed = false;
-			},
-			
-			setEntryMaterialFilter : function(qe){
-				var entryGrid = this.down('gridpanel');
-				var selRec = entryGrid.getSelectionModel().getLastSelected();
-				
-				//根据所选仓库过滤物料
-				var materialEntryStore = qe.combo.store;
-				if(materialEntryStore){
-					materialEntryStore.getProxy().extraParams.whereStr = "warehouse_Id ='" + selRec.get('warehouseWarehouseId') +"'";
-				}
-				return true;
 			}
 		});
