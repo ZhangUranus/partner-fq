@@ -77,7 +77,7 @@ Ext.define('SCM.view.StockAdjust.EditUI', {
 																xtype : 'textarea',
 																name : 'note',
 																margin : 5,
-																fieldLabel : '退货原因',
+																fieldLabel : '备注',
 																maxLength : 50,
 																colspan : 3,
 																width : 785
