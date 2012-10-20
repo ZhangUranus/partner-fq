@@ -1,6 +1,7 @@
 package org.ofbiz.partner.scm.pricemgr.bizStockImp;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 import java.util.List;
 
@@ -51,7 +52,7 @@ public class ConsignWarehousingBizImp implements IBizStock {
 				// log 20120814 jeff 将单件耗料改为总耗料
 				BigDecimal materialSum = ConsignPriceMgr.getInstance().CreateConsignPriceDetailList(processorId, v.getString("bomId"), v.getString("id"), volume);
 				sum = materialSum.add(v.getBigDecimal("processPrice").multiply(volume));
-				BigDecimal price = materialSum.divide(volume);
+				BigDecimal price = materialSum.divide(volume, 6, RoundingMode.DOWN);
 				
 				//耗料金额
 //				BigDecimal costSum = price.multiply(volume);
