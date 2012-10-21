@@ -182,6 +182,14 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 			this.submitEditButton.setDisabled(false);
 			this.viewDetailButton.setVisible(false);
 			this.editDetailButton.setVisible(true);
+		} else if (record.get('status') == '5') {
+			this.setFieldsReadOnly(false);
+			this.setGridEditAble(false);
+			this.saveButton.setDisabled(false);
+			this.clearButton.setDisabled(true);
+			this.submitEditButton.setDisabled(false);
+			this.viewDetailButton.setVisible(false);
+			this.editDetailButton.setVisible(true);
 		} else {
 			this.setFieldsReadOnly(true);
 			this.setGridEditAble(false);
@@ -235,7 +243,6 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 	 */
 	modifyDetailRecord : function(grid, record) {
 		var me = this;
-
 		me.currentDetailRecord = record;
 		me.detailEditWin.uiStatus = 'Modify';
 
