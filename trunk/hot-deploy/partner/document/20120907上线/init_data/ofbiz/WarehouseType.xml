@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<entity-engine-xml>
-    <WarehouseType id="31cff0ff-0ca5-47d5-a3cd-3da56f0fe439" number="WHT100001" name="&#23433;&#35013;&#26448;&#26009;&#20179;" lastUpdatedStamp="2012-07-01 22:07:38.0" lastUpdatedTxStamp="2012-07-01 22:07:38.0" createdStamp="2012-07-01 22:07:38.0" createdTxStamp="2012-07-01 22:07:38.0"/>
-    <WarehouseType id="45111ad0-0484-4271-89ab-c577733ad041" number="WHT100003" name="&#21407;&#26448;&#26009;&#20179;" lastUpdatedStamp="2012-07-01 22:07:38.0" lastUpdatedTxStamp="2012-07-01 22:07:38.0" createdStamp="2012-07-01 22:07:38.0" createdTxStamp="2012-07-01 22:07:38.0"/>
-    <WarehouseType id="8eb12e25-eaf5-4163-8388-74fdc8232f5e" number="WHT100002" name="&#40657;&#32986;&#20179;" lastUpdatedStamp="2012-07-01 22:07:38.0" lastUpdatedTxStamp="2012-07-01 22:07:38.0" createdStamp="2012-07-01 22:07:38.0" createdTxStamp="2012-07-01 22:07:38.0"/>
-    <WarehouseType id="9d6dbeb8-4697-4a36-8c89-56dbb0adfbc8" number="WHT100005" name="&#25104;&#21697;&#20179;" lastUpdatedStamp="2012-07-01 22:07:38.0" lastUpdatedTxStamp="2012-07-01 22:07:38.0" createdStamp="2012-07-01 22:07:38.0" createdTxStamp="2012-07-01 22:07:38.0"/>
-    <WarehouseType id="b622c619-7ee2-4c94-a302-31f466dbcd38" number="WHT100004" name="&#20013;&#38388;&#20179;" lastUpdatedStamp="2012-07-01 22:07:38.0" lastUpdatedTxStamp="2012-07-01 22:07:38.0" createdStamp="2012-07-01 22:07:38.0" createdTxStamp="2012-07-01 22:07:38.0"/>
-    <WarehouseType id="fafff13b-52aa-4966-81d1-3ee31d1b8303" number="WHT100006" name="&#23433;&#35013;&#36710;&#38388;" lastUpdatedStamp="2012-08-08 08:41:46.0" lastUpdatedTxStamp="2012-08-08 08:41:46.0" createdStamp="2012-08-08 08:41:46.0" createdTxStamp="2012-08-08 08:41:46.0"/>
-</entity-engine-xml>

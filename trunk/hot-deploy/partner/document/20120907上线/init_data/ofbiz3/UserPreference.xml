@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<entity-engine-xml>
-    <UserPreference userLoginId="chenzhiwei" userPrefTypeId="javaScriptEnabled" userPrefGroupTypeId="GLOBAL_PREFERENCES" userPrefValue="N" lastUpdatedStamp="2012-08-31 13:51:27.0" lastUpdatedTxStamp="2012-08-31 13:51:27.0" createdStamp="2012-08-20 08:53:20.0" createdTxStamp="2012-08-20 08:53:20.0"/>
-    <UserPreference userLoginId="hhyang" userPrefTypeId="javaScriptEnabled" userPrefGroupTypeId="GLOBAL_PREFERENCES" userPrefValue="N" lastUpdatedStamp="2012-08-27 11:31:55.0" lastUpdatedTxStamp="2012-08-27 11:31:55.0" createdStamp="2012-08-27 11:31:55.0" createdTxStamp="2012-08-27 11:31:55.0"/>
-    <UserPreference userLoginId="liweiliang" userPrefTypeId="javaScriptEnabled" userPrefGroupTypeId="GLOBAL_PREFERENCES" userPrefValue="N" lastUpdatedStamp="2012-08-30 08:46:36.0" lastUpdatedTxStamp="2012-08-30 08:46:36.0" createdStamp="2012-08-27 08:43:15.0" createdTxStamp="2012-08-27 08:43:15.0"/>
-    <UserPreference userLoginId="lucaiqun" userPrefTypeId="javaScriptEnabled" userPrefGroupTypeId="GLOBAL_PREFERENCES" userPrefValue="N" lastUpdatedStamp="2012-08-29 14:38:58.0" lastUpdatedTxStamp="2012-08-29 14:38:58.0" createdStamp="2012-08-23 16:11:05.0" createdTxStamp="2012-08-23 16:11:05.0"/>
-    <UserPreference userLoginId="lupeie" userPrefTypeId="javaScriptEnabled" userPrefGroupTypeId="GLOBAL_PREFERENCES" userPrefValue="N" lastUpdatedStamp="2012-08-29 13:26:13.0" lastUpdatedTxStamp="2012-08-29 13:26:13.0" createdStamp="2012-08-20 08:57:22.0" createdTxStamp="2012-08-20 08:57:22.0"/>
-    <UserPreference userLoginId="_NA_" userPrefTypeId="VISUAL_THEME" userPrefGroupTypeId="GLOBAL_PREFERENCES" userPrefValue="DEFAULT" lastUpdatedStamp="2012-08-19 15:00:32.0" lastUpdatedTxStamp="2012-08-19 15:00:32.0" createdStamp="2012-08-19 15:00:32.0" createdTxStamp="2012-08-19 15:00:32.0"/>
-</entity-engine-xml>
