@@ -288,6 +288,12 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 					this.saveButton.setDisabled(false);
 					this.clearButton.setDisabled(false);
 					this.submitEditButton.setDisabled(false);
+				} else if (record.get('status') == '5') {
+					this.setFieldsReadOnly(false);
+					this.editEntry.setDisabled(true);
+					this.saveButton.setDisabled(false);
+					this.clearButton.setDisabled(true);
+					this.submitEditButton.setDisabled(false);
 				} else {
 					this.setFieldsReadOnly(true);
 					this.editEntry.setDisabled(true);
@@ -389,6 +395,9 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				} else if (record.get('status') == '4') {
 					showWarning('单据为已提交状态，不允许删除！');
 					return;
+				} else if (record.get('status') == '5') {
+					showWarning('该单据为扫描单据，不允许删除！');
+					return;
 				}
 
 				Ext.Msg.confirm('提示', '确定删除该' + this.gridTitle + '？', confirmChange, this);
@@ -418,11 +427,11 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 			 * @return {Boolean}
 			 */
 			isSubmitAble : function(record) {
-				if (record.get('status') != '0') {
+				if (record.get('status') == '0' || record.get('status') == '5') {
+					return true;
+				} else {
 					showWarning('单据已提交！');
 					return false;
-				} else {
-					return true;
 				}
 			},
 
