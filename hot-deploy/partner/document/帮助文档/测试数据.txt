@@ -1,7 +1,36 @@
 update cur_workshop_price a,
-(SELECT '2012' as year,'9' as month,'f981f9cc-0283-4bd2-8d9e-5eb1d49144cb' as workshop_id,entry_material_id as material_id,0 as beginvolume,0 as beginsum,100000*RAND() as volume,100000*RAND() as totalsum
-FROM material_bom_entry where parent_id = '2fed4dfe-f2b6-498b-b04a-b2cf8c3587d6') b set a.volume = a.volume + b.volume,a.totalsum = a.totalsum + b.totalsum
+(
+	SELECT '2012' as year,'9' as month,
+		'f981f9cc-0283-4bd2-8d9e-5eb1d49144cb' as workshop_id,
+		entry_material_id as material_id,
+		0 as beginvolume,
+		0 as beginsum,
+		100000*RAND() as volume,
+		100000*RAND() as totalsum
+	FROM material_bom_entry 
+	where parent_id = '8c695545-e5a5-442e-8245-bc148404559f'
+) b set a.volume = a.volume + b.volume,a.totalsum = a.totalsum + b.totalsum
 where a.workshop_id = b.workshop_id and a.material_id = b.material_id;
+
+物料ID：6f49ba55-6eb9-4897-96ee-016e8b7bbee1
+实际物料ID：a77985d1-f5ba-4e16-97a0-79815101c150
+BOM单ID：523df158-6052-41ab-ad34-e706097c28eb
+实际BOM单ID：8c695545-e5a5-442e-8245-bc148404559f
+车间ID：f981f9cc-0283-4bd2-8d9e-5eb1d49144cb
+
+
+20121020:
+进仓：
+24040099792167399112153027 00243116408702827252
+24040099792167399112153054 00142116408702827252
+24040099792167399112153027 00243226408702827252
+
+24040099792167399112153054 00142116408666827252
+24040099792167399112153054 00142116488802827252
+
+出仓：
+24040099792167399112153027 00243116408702827252
+
 
 
 测试条码：
