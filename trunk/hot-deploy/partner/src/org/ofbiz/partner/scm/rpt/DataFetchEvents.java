@@ -783,6 +783,22 @@ public class DataFetchEvents {
 		String startDate = null;
 		String endDate = null;
 		String warehouseId = null;
+		
+		//获取所有子类型
+		ArrayList<String> numberList = new ArrayList<String>();
+		ArrayList<String> paramList = new ArrayList<String>();
+		StringBuffer numberStr = new StringBuffer();
+		paramList.add("MTT100005");
+		numberList = getMaterialTypeByParentId(paramList);
+		int count = 0;
+		for(String number : numberList){
+			if(count != 0){
+				numberStr.append("','");
+			}
+			numberStr.append(number);
+			count ++;
+		}
+		
 		if(request.getParameter("startDate") != null && request.getParameter("endDate") != null){
 			startDate = request.getParameter("startDate");
 			endDate = request.getParameter("endDate");
@@ -811,7 +827,7 @@ public class DataFetchEvents {
 					" LEFT JOIN T_MATERIAL_TYPE TMT ON TM.MATERIAL_TYPE_ID = TMT.ID " +
 					" LEFT JOIN WAREHOUSE WH ON PIE.WAREHOUSE_WAREHOUSE_ID = WH.ID " +
 					" LEFT JOIN UNIT UIT ON PIE.UNIT_UNIT_ID = UIT.ID " +
-					" WHERE TMT.NUMBER = 'MTT100005' " +
+					" WHERE TMT.NUMBER IN ('"+numberStr.toString()+"') " +
 					" AND PI.BIZ_DATE >= '" + startDate + "'" +
 					" AND PI.BIZ_DATE <= '" + endDate + "'" ;
 		if(warehouseId != null && !"".equals(warehouseId)){
@@ -937,6 +953,22 @@ public class DataFetchEvents {
 		String warehouseId = null;
 		String keyWord = null;
 		String tableName = null;
+		
+		//获取所有子类型
+		ArrayList<String> numberList = new ArrayList<String>();
+		ArrayList<String> paramList = new ArrayList<String>();
+		StringBuffer numberStr = new StringBuffer();
+		paramList.add("MTT100005");
+		numberList = getMaterialTypeByParentId(paramList);
+		int count = 0;
+		for(String number : numberList){
+			if(count != 0){
+				numberStr.append("','");
+			}
+			numberStr.append(number);
+			count ++;
+		}
+		
 		if(request.getParameter("year") != null && request.getParameter("month") != null){
 			year = request.getParameter("year");
 			month = request.getParameter("month");
@@ -986,7 +1018,7 @@ public class DataFetchEvents {
 					" LEFT JOIN T_MATERIAL TMB ON CMB.MATERIAL_ID = TMB.ID "+
 					" LEFT JOIN T_MATERIAL_TYPE TMT ON TMB.MATERIAL_TYPE_ID = TMT.ID " +
 					" LEFT JOIN UNIT UN ON TM.DEFAULT_UNIT_ID = UN.ID "+
-					" WHERE TMT.NUMBER = 'MTT100005' " +
+					" WHERE TMT.NUMBER IN ('"+numberStr.toString()+"') " +
 					" AND YEAR = " + year +
 					" AND MONTH = " + month ;
 		if(keyWord != null && !"".equals(keyWord)){
@@ -1009,6 +1041,20 @@ public class DataFetchEvents {
 	public static String queryProductChart(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String warehouseId = null;
 		String keyWord = null;
+		//获取所有子类型
+		ArrayList<String> numberList = new ArrayList<String>();
+		ArrayList<String> paramList = new ArrayList<String>();
+		StringBuffer numberStr = new StringBuffer();
+		paramList.add("MTT100005");
+		numberList = getMaterialTypeByParentId(paramList);
+		int count = 0;
+		for(String number : numberList){
+			if(count != 0){
+				numberStr.append("','");
+			}
+			numberStr.append(number);
+			count ++;
+		}
 		
 		if(request.getParameter("warehouseId") != null){
 			warehouseId = request.getParameter("warehouseId");
@@ -1026,7 +1072,7 @@ public class DataFetchEvents {
 					" LEFT JOIN T_MATERIAL TM ON CMB.MATERIAL_ID = TM.ID " +
 					" LEFT JOIN T_MATERIAL_TYPE TMT ON TM.MATERIAL_TYPE_ID = TMT.ID " +
 					" LEFT JOIN UNIT UN ON TM.DEFAULT_UNIT_ID = UN.ID " +
-					" WHERE TMT.NUMBER = 'MTT100005' ";
+					" WHERE TMT.NUMBER IN ('"+numberStr.toString()+"') ";
 		if(keyWord != null && !"".equals(keyWord)){
 			sql += " AND (TM.NUMBER LIKE '%" + keyWord + "%' OR TM.NAME LIKE '%" + keyWord + "%')";
 		}
@@ -1045,7 +1091,7 @@ public class DataFetchEvents {
 		sql += " LEFT JOIN T_MATERIAL TM ON CMB.MATERIAL_ID = TM.ID " ;
 		sql += " LEFT JOIN T_MATERIAL_TYPE TMT ON TM.MATERIAL_TYPE_ID = TMT.ID ";
 		sql += " LEFT JOIN UNIT UN ON TM.DEFAULT_UNIT_ID = UN.ID " ;
-		sql += " WHERE TMT.NUMBER = 'MTT100005' " ;
+		sql += " WHERE TMT.NUMBER IN ('"+numberStr.toString()+"') " ;
 		if(keyWord != null && !"".equals(keyWord)){
 			sql += " AND (TM.NUMBER LIKE '%" + keyWord + "%' OR TM.NAME LIKE '%" + keyWord + "%')";
 		}
@@ -1162,6 +1208,21 @@ public class DataFetchEvents {
 		String endDate = null;
 		String warehouseId = null;
 		String keyWord = null;
+		//获取所有子类型
+		ArrayList<String> numberList = new ArrayList<String>();
+		ArrayList<String> paramList = new ArrayList<String>();
+		StringBuffer numberStr = new StringBuffer();
+		paramList.add("MTT100002");
+		numberList = getMaterialTypeByParentId(paramList);
+		int count = 0;
+		for(String number : numberList){
+			if(count != 0){
+				numberStr.append("','");
+			}
+			numberStr.append(number);
+			count ++;
+		}
+		
 		if(request.getParameter("startDate") != null && request.getParameter("endDate") != null){
 			startDate = request.getParameter("startDate");
 			endDate = request.getParameter("endDate");
@@ -1195,7 +1256,7 @@ public class DataFetchEvents {
 					" LEFT JOIN T_MATERIAL_TYPE TMT ON TM.MATERIAL_TYPE_ID = TMT.ID " +
 					" LEFT JOIN WAREHOUSE WH ON WWE.WAREHOUSE_WAREHOUSE_ID = WH.ID " +
 					" LEFT JOIN UNIT UIT ON WWE.UNIT_UNIT_ID = UIT.ID " +
-					" WHERE TMT.NUMBER = 'MTT100002' " +
+					" WHERE TMT.NUMBER IN ('"+numberStr.toString()+"') " +
 					" AND WW.BIZ_DATE >= '" + startDate + "'" +
 					" AND WW.BIZ_DATE <= '" + endDate + "'" ;
 		if(warehouseId != null && !"".equals(warehouseId)){
@@ -1225,7 +1286,7 @@ public class DataFetchEvents {
 		sql += " LEFT JOIN T_MATERIAL_TYPE TMT ON TM.MATERIAL_TYPE_ID = TMT.ID ";
 		sql += " LEFT JOIN WAREHOUSE WH ON CWE.WAREHOUSE_WAREHOUSE_ID = WH.ID ";
 		sql += " LEFT JOIN UNIT UIT ON CWE.UNIT_UNIT_ID = UIT.ID ";
-		sql += " WHERE TMT.NUMBER = 'MTT100002' ";
+		sql += " WHERE TMT.NUMBER IN ('"+numberStr.toString()+"') ";
 		sql += " AND CW.BIZ_DATE >= '" + startDate + "'";
 		sql += " AND CW.BIZ_DATE <= '" + endDate + "'" ;
 		if(warehouseId != null && !"".equals(warehouseId)){
@@ -1633,6 +1694,47 @@ public class DataFetchEvents {
 				conn.close();
 			}
 		}
+	}
+	
+	/**
+	 * 遍历物料类型，返回所有子类型
+	 * @param numbers	物料类型number
+	 * @return
+	 * @throws Exception
+	 */
+	public static ArrayList<String> getMaterialTypeByParentId(ArrayList<String> numberArr) throws Exception {
+		Connection conn = ConnectionFactory.getConnection(Utils.getConnectionHelperName());
+		ArrayList<String> numberList = numberArr;
+		ArrayList<String> newList = new ArrayList<String>();
+		StringBuffer numbsers = new StringBuffer();
+		int count = 0;
+		for(String number : numberList){
+			if(count != 0){
+				numbsers.append("','");
+			}
+			numbsers.append(number);
+			count ++;
+		}
+		
+		try {
+			String sql = "SELECT MT2.NUMBER,MT2.NAME FROM T_MATERIAL_TYPE MT1 RIGHT JOIN T_MATERIAL_TYPE MT2 ON MT1.ID = MT2.PARENT_ID WHERE MT1.NUMBER in ('"+ numbsers.toString() +"')";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			count = 0;
+			while(rs.next()){
+				newList.add(rs.getString("NUMBER"));
+				count ++;
+			}
+			
+		} finally {
+			if (conn != null) {
+				conn.close();
+			}
+		}
+		if(count>0){
+			numberList.addAll(getMaterialTypeByParentId(newList));
+		}
+		return numberList;
 	}
 	
 	/**

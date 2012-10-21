@@ -96,7 +96,7 @@ public class ProductOutwarehouseConfirmEvents {
 				GenericValue productConfirmV = delegator.findOne("ProductOutwarehouseConfirm",false , "id",entry.getString("id"));
 				if(productConfirmV==null)throw new Exception("数据库没找到对应的确认单，请刷新记录！");
 				
-				if("4".equals(productConfirmV.getString("status"))) throw new Exception("单据已经提交！");
+				if(4 == productConfirmV.getInteger("status")) throw new Exception("单据已经提交！");
 				
 				String entryId=UUID.randomUUID().toString();
 //				String prdWeek=entry.getString("prdWeek");
@@ -265,7 +265,7 @@ public class ProductOutwarehouseConfirmEvents {
 	 */
 	public static synchronized void generateConfirmBill(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
-		List<GenericValue> entryList = delegator.findByAnd("ProductScan", UtilMisc.toMap("status", "0", "warehouseType", "2"));
+		List<GenericValue> entryList = delegator.findByAnd("ProductScan", UtilMisc.toMap("status", 0, "warehouseType", 2));
 		for (GenericValue v : entryList) {
 			/* 1.生成出库确认记录 */
 			Date bizDate = (Date) v.get("bizDate");
