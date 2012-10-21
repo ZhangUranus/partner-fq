@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<entity-engine-xml>
-    <WarehouseType id="2899f47d-3d45-4854-ad11-307dd64a4ab3" number="WHT100003" name="&#25104;&#21697;&#20179;" lastUpdatedStamp="2012-08-19 15:01:20.0" lastUpdatedTxStamp="2012-08-19 15:01:20.0" createdStamp="2012-08-19 15:01:20.0" createdTxStamp="2012-08-19 15:01:20.0"/>
-    <WarehouseType id="4f3bfaf4-db1a-4644-8f9f-2c81106d73c6" number="WHT100001" name="&#26448;&#26009;&#20179;" lastUpdatedStamp="2012-08-19 15:01:20.0" lastUpdatedTxStamp="2012-08-19 15:01:20.0" createdStamp="2012-08-19 15:01:20.0" createdTxStamp="2012-08-19 15:01:20.0"/>
-    <WarehouseType id="940f93be-63ac-4dfa-b643-e7dfa624c84e" number="WHT100002" name="&#40657;&#32986;&#20179;" lastUpdatedStamp="2012-08-19 15:01:20.0" lastUpdatedTxStamp="2012-08-19 15:01:20.0" createdStamp="2012-08-19 15:01:20.0" createdTxStamp="2012-08-19 15:01:20.0"/>
-</entity-engine-xml>
