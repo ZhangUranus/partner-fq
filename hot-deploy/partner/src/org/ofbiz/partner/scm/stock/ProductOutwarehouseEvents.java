@@ -61,34 +61,48 @@ public class ProductOutwarehouseEvents {
 				}
 				// 注意不能使用billHead.getDate方法，出产生castException异常
 				bizDate = (Date) billHead.get("bizDate");
-
-				BizStockImpFactory.getBizStockImp(BillType.ProductOutwarehouse).updateStock(billHead, true, false);
-			}
-
-			// 更新周汇总表
-			// 获取单据分录条目
-			List<GenericValue> entryList = delegator.findByAnd("ProductOutwarehouseEntry", UtilMisc.toMap("parentId", billId));
-
-			for (GenericValue v : entryList) {
-				String materialId = v.getString("materialMaterialId");// 打板物料id
-				BigDecimal volume = v.getBigDecimal("volume");// 出库数量（板）
-				Long qantity = v.getLong("qantity");// 板数量（一板有多少产品）
-
-				WeeklyStockMgr.getInstance().updateStock(materialId, bizDate, ProductStockType.OUT, volume, false);
-				ProductInOutStockMgr.getInstance().updateStock(materialId, ProductStockType.OUT, qantity, volume, false);
 				
-				// 出货通知单
-				boolean isUpdate = updateNotification(v, delegator, materialId, volume, v.getString("goodNumber"));
-				if(!isUpdate){
-					throw new Exception("未找到产品对应的出货通知单，请检查货号是否填写正确。如果无相应出货通知单，请先提交通知单！");
+				//确定该单据为扫描单据还是手工单据。
+				boolean isScanBill = false;
+				int status= billHead.getInteger("status");
+				if(status == 5){
+					isScanBill = true;
 				}
 				
-				v.set("prdWeek", Utils.getYearWeekStr(bizDate));
-				v.store();
+				// 获取单据分录条目
+				List<GenericValue> entryList = delegator.findByAnd("ProductOutwarehouseEntry", UtilMisc.toMap("parentId", billId));
+
+				for (GenericValue v : entryList) {
+					String barcode1 = v.getString("barcode1");
+					String barcode2 = v.getString("barcode2");
+					// 确定条码、序列号可以出仓
+					ProductBarcodeBoxMgr.getInstance().update(barcode1, barcode2, true);
+					
+					String materialId = v.getString("materialMaterialId");// 打板物料id
+					BigDecimal volume = v.getBigDecimal("volume");// 出库数量（板）
+					Long qantity = v.getLong("qantity");// 板数量（一板有多少产品）
+					
+					// 更新周汇总表
+					WeeklyStockMgr.getInstance().updateStock(materialId, bizDate, ProductStockType.OUT, volume, false);
+					ProductInOutStockMgr.getInstance().updateStock(materialId, ProductStockType.OUT, qantity, volume, false);
+					
+					// 扫描单据在扫描的时候已经处理了出货通知单，不需要重新处理
+					if(!isScanBill){
+						// 出货通知单
+						boolean isUpdate = updateNotification(v, delegator, materialId, volume, v.getString("goodNumber"));
+						if(!isUpdate){
+							throw new Exception("未找到产品对应的出货通知单，请检查货号是否填写正确。如果无相应出货通知单，请先提交通知单！");
+						}
+					}
+					
+					v.set("prdWeek", Utils.getYearWeekStr(bizDate));
+					v.store();
+				}
+				// 出仓单业务处理
+				BizStockImpFactory.getBizStockImp(BillType.ProductOutwarehouse).updateStock(billHead, true, false);
+
+				BillBaseEvent.submitBill(request, response);// 更新单据状态
 			}
-
-			BillBaseEvent.submitBill(request, response);// 更新单据状态
-
 			TransactionUtil.commit(beganTransaction);
 		} catch (Exception e) {
 			Debug.logError(e, module);
@@ -126,30 +140,35 @@ public class ProductOutwarehouseEvents {
 				}
 				// 注意不能使用billHead.getDate方法，出产生castException异常
 				bizDate = (Date) billHead.get("bizDate");
-
-				BizStockImpFactory.getBizStockImp(BillType.ProductOutwarehouse).updateStock(billHead, false, true);
-			}
-
-			// 更新周汇总表
-			// 获取单据分录条目
-			List<GenericValue> entryList = delegator.findByAnd("ProductOutwarehouseEntry", UtilMisc.toMap("parentId", billId));
-
-			for (GenericValue v : entryList) {
-				String materialId = v.getString("materialMaterialId");// 打板物料id
-				BigDecimal volume = v.getBigDecimal("volume");// 出库数量（板）
-				Long qantity = v.getLong("qantity");// 板数量（一板有多少产品）
-
-				WeeklyStockMgr.getInstance().updateStock(materialId, bizDate, ProductStockType.OUT, volume, true);
-				ProductInOutStockMgr.getInstance().updateStock(materialId, ProductStockType.OUT, qantity, volume, true);
 				
-				// 出货通知单
-				boolean isUpdate = updateNotification(v, delegator, materialId, volume.negate(), v.getString("goodNumber"));
-				if(!isUpdate){
-					throw new Exception("未找到产品对应的出货通知单，请检查货号是否填写正确。如果无相应出货通知单，请先提交通知单！");
-				}
-			}
+				// 获取单据分录条目
+				List<GenericValue> entryList = delegator.findByAnd("ProductOutwarehouseEntry", UtilMisc.toMap("parentId", billId));
 
-			BillBaseEvent.rollbackBill(request, response);// 撤销单据
+				for (GenericValue v : entryList) {
+					String barcode1 = v.getString("barcode1");
+					String barcode2 = v.getString("barcode2");
+					// 确定条码、序列号可以进仓 
+					ProductBarcodeBoxMgr.getInstance().update(barcode1, barcode2, false);
+					
+					String materialId = v.getString("materialMaterialId");// 打板物料id
+					BigDecimal volume = v.getBigDecimal("volume");// 出库数量（板）
+					Long qantity = v.getLong("qantity");// 板数量（一板有多少产品）
+					
+					// 更新周汇总表
+					WeeklyStockMgr.getInstance().updateStock(materialId, bizDate, ProductStockType.OUT, volume, true);
+					ProductInOutStockMgr.getInstance().updateStock(materialId, ProductStockType.OUT, qantity, volume, true);
+					
+					// 出货通知单
+					boolean isUpdate = updateNotification(v, delegator, materialId, volume.negate(), v.getString("goodNumber"));
+					if(!isUpdate){
+						throw new Exception("未找到产品对应的出货通知单，请检查货号是否填写正确。如果无相应出货通知单，请先提交通知单！");
+					}
+				}
+				// 出仓单撤销业务处理
+				BizStockImpFactory.getBizStockImp(BillType.ProductOutwarehouse).updateStock(billHead, false, true);
+				
+				BillBaseEvent.rollbackBill(request, response);// 撤销单据
+			}
 
 			TransactionUtil.commit(beganTransaction);
 		} catch (Exception e) {
@@ -183,15 +202,25 @@ public class ProductOutwarehouseEvents {
 			/* 2. 生成成品出仓单 */
 
 			/* 2.1 新建成品出仓单据头 */
-			GenericValue billHead = delegator.makeValue("ProductOutwarehouse");
-			String billId = UUID.randomUUID().toString();
+			List<GenericValue> headList = delegator.findByAnd("ProductOutwarehouse", UtilMisc.toMap("status", 5));
+			GenericValue billHead = null;
 			Date currentDate = new Date();
-			billHead.setString("id", billId);
-			billHead.setString("number", new SerialNumberHelper().getSerialNumber(request, "ProductOutwarehouse"));
-			billHead.set("bizDate", new Timestamp(new Date().getTime()));
-			billHead.set("submitterSystemUserId", CommonEvents.getAttributeFormSession(request, "uid"));
-			billHead.set("status", 4);// 保存状态
-			billHead.set("submitStamp", new Timestamp(currentDate.getTime()));
+			String billId = "";
+			if(headList.size()>0){
+				billHead = headList.get(0);
+				billId = billHead.getString("id");
+			} else {
+				billHead = delegator.makeValue("ProductOutwarehouse");
+				billId = UUID.randomUUID().toString();
+				billHead.setString("id", billId);
+				billHead.setString("number", new SerialNumberHelper().getSerialNumber(request, "ProductOutwarehouse"));
+				billHead.set("bizDate", new Timestamp(currentDate.getTime()));
+				billHead.set("submitterSystemUserId", CommonEvents.getAttributeFormSession(request, "uid"));
+				billHead.set("status", 5); // 已扫描状态，只能进行提交操作
+				billHead.set("submitStamp", new Timestamp(currentDate.getTime()));
+				// 创建主单
+				delegator.create(billHead);
+			}
 
 			JSONArray entrys = JSONArray.fromObject(request.getParameter("records"));
 			JSONObject entry = (JSONObject) entrys.get(0);
@@ -228,7 +257,12 @@ public class ProductOutwarehouseEvents {
 			String barcode1 = entry.getString("barcode1");
 
 			String barcode2 = entry.getString("barcode2");
-
+			
+			List<GenericValue> entryList = delegator.findByAnd("ProductOutwarehouseEntry", UtilMisc.toMap("parentId", billId, "barcode1", barcode1, "barcode2", barcode2));
+			if(entryList.size()>0){
+				throw new Exception("该产品条码、序列号已经扫描过，不允许重复扫描！");
+			}
+			
 			BarCode barcode = new BarCode(barcode1, barcode2);
 			String materialId = Utils.getMaterialIdByIkea(barcode.getCodeForIkea(), barcode.getQuantity());
 			TMaterial material = new TMaterial(materialId);
@@ -248,20 +282,30 @@ public class ProductOutwarehouseEvents {
 			entryValue.setString("outwarehouseType", outWarehouseType);
 			entryValue.set("qantity", Long.parseLong(barcode.getQuantity()));
 			entryValue.set("sort", 1);
-
-			// 确定条码、序列号可以进仓
+			
+			/*
+			 * 扫描时不进行提交操作，后面再人工提交出仓单
+			 * 
+			// 确定条码、序列号可以出仓
 			ProductBarcodeBoxMgr.getInstance().update(barcode1, barcode2, true);
+			 *
+			 */
 
 			// 创建分录
 			delegator.create(entryValue);
-			// 创建主单
-			delegator.create(billHead);
 			
+			/*
+			 * 扫描时不进行提交操作，后面再人工提交出仓单
+			 * 
+			 * 
 			// 成品进仓周表
 			WeeklyStockMgr.getInstance().updateStock(materialId, currentDate, ProductStockType.OUT, new BigDecimal(1), false);
 			
 			// 成品出仓综合成品账
 			ProductInOutStockMgr.getInstance().updateStock(materialId, ProductStockType.OUT, Long.parseLong(barcode.getQuantity()), new BigDecimal(1), false);
+			
+			 *
+			 */
 			
 			// 出货通知单
 			boolean isUpdate = false;
@@ -277,8 +321,14 @@ public class ProductOutwarehouseEvents {
 				throw new Exception("未找到产品对应的出货通知单，请检查货号是否填写正确。如果无相应出货通知单，请先提交通知单！");
 			}
 			
+			/*
+			 * 扫描时不进行提交操作，后面再人工提交出仓单
+			 * 
+			 * 
 			// 处理成品出仓业务类
 			BizStockImpFactory.getBizStockImp(BillType.ProductOutwarehouse).updateStock(billHead, true, false);
+			 *
+			 */
 			
 			StringBuffer jsonStr = new StringBuffer();
 			jsonStr.append("{'success':true,'qantity':" + barcode.getQuantity() + "}");
@@ -322,17 +372,41 @@ public class ProductOutwarehouseEvents {
 
 			barcode1 = entry.getString("barcode1");
 			barcode2 = entry.getString("barcode2");
-
-			/* 1.2确定条码、序列号可以进仓 */
+			
+			/*
+			 * 扫描时不进行提交操作，后面再人工提交进仓单
+			 * 
+			// 1.2确定条码、序列号可以进仓 
 			ProductBarcodeBoxMgr.getInstance().update(barcode1, barcode2, false);
+			 *
+			 */
 
 			/* 2 获取单据分录条目 */
 			List<GenericValue> entryList = delegator.findByAnd("ProductOutwarehouseEntry", UtilMisc.toMap("barcode1", barcode1, "barcode2", barcode2));
+			GenericValue entryValue = null;
+			boolean isHasBill = false;
+			if(entryList.size()>0){
+				for(GenericValue record : entryList){
+					String billId = record.getString("parentId");
+					List<GenericValue> headList = delegator.findByAnd("ProductOutwarehouse", "id", billId, "status", 5);
+					if(headList.size()>0){
+						entryValue = record ;
+						isHasBill = true;
+						break;
+					}
+				}
+				if(!isHasBill){
+					throw new Exception("该产品条码、序列号的单据已经提交，无法进行撤销操作！");
+				}
+			} else {
+				throw new Exception("无法找到该产品条码、序列号，请确认是否已经扫描！");
+			}
 			
-			GenericValue entryValue = entryList.get(0);
-			String billId = entryValue.getString("parentId");
-
-			/* 3 获取单据分录条目 */
+			/*
+			 * 扫描时不进行提交操作，后面再人工提交进仓单
+			 * 
+			 * 
+			// 3 获取单据分录条目 
 			Debug.log("出仓单撤销:" + billId, module);
 			GenericValue billHead = delegator.findOne("ProductOutwarehouse", UtilMisc.toMap("id", billId), false);
 
@@ -348,9 +422,15 @@ public class ProductOutwarehouseEvents {
 			BigDecimal volume = entryValue.getBigDecimal("volume");// 入库数量（板）
 			Long qantity = entryValue.getLong("qantity");// 板数量（一板有多少产品）
 			
-			/* 3.1 成品进仓撤销，负数 */
+			// 3.1 成品进仓撤销，负数 
 			WeeklyStockMgr.getInstance().updateStock(materialId, bizDate, ProductStockType.OUT, volume, true);
 			ProductInOutStockMgr.getInstance().updateStock(materialId, ProductStockType.OUT, qantity, volume, true);
+			
+			 *
+			 */
+			
+			String materialId = entryValue.getString("materialMaterialId");// 打板物料id
+			BigDecimal volume = entryValue.getBigDecimal("volume");// 入库数量（板）
 			
 			// 出货通知单
 			boolean isUpdate = updateNotification(entryValue, delegator, materialId, volume.negate(), entryValue.getString("goodNumber"));
@@ -360,8 +440,6 @@ public class ProductOutwarehouseEvents {
 
 			entryValue.remove(); // 删除分录
 
-			billHead.remove(); // 删除主单
-			
 			BillBaseEvent.writeSuccessMessageToExt(response, "进仓成功！");
 			TransactionUtil.commit(beganTransaction);
 		} catch (Exception e) {
@@ -380,7 +458,7 @@ public class ProductOutwarehouseEvents {
 		if(!Utils.isNeedNotification()){
 			return true;			//不使用出货通知单
 		}
-		List<GenericValue> mainList = delegator.findByAnd("ProductOutNotification", UtilMisc.toMap("goodNumber", goodNumber, "status", "4"));
+		List<GenericValue> mainList = delegator.findByAnd("ProductOutNotification", "goodNumber", goodNumber, "status", 4);
 		boolean isUpdate = false;
 		boolean isFinished = true;
 		if (mainList.size() > 0) {

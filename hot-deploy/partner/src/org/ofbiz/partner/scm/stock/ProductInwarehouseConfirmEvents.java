@@ -65,7 +65,7 @@ public class ProductInwarehouseConfirmEvents {
 			billHead.setString("number", new SerialNumberHelper().getSerialNumber(request, "ProductInwarehouse"));
 //			billHead.set("bizDate", new Timestamp(new Date().getTime()));
 			billHead.set("inspectorSystemUserId", CommonEvents.getAttributeFormSession(request, "uid"));
-			billHead.set("status", "0");//保存状态
+			billHead.set("status", 0);//保存状态
 			
 			
 			JSONArray entrys=JSONArray.fromObject(request.getParameter("records"));
@@ -96,7 +96,7 @@ public class ProductInwarehouseConfirmEvents {
 				GenericValue productConfirmV = delegator.findOne("ProductInwarehouseConfirm",false , "id",entry.getString("id"));
 				if(productConfirmV==null)throw new Exception("数据库没找到对应的确认单，请刷新记录！");
 				
-				if("4".equals(productConfirmV.getString("status"))) throw new Exception("单据已经提交！");
+				if(4 == productConfirmV.getInteger("status")) throw new Exception("单据已经提交！");
 				
 				String entryId=UUID.randomUUID().toString();
 				String materialId=entry.getString("materialMaterialId");
@@ -261,7 +261,7 @@ public class ProductInwarehouseConfirmEvents {
 	 */
 	public static synchronized void generateConfirmBill(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
-		List<GenericValue> entryList = delegator.findByAnd("ProductScan", UtilMisc.toMap("status", "0","warehouseType","1"));
+		List<GenericValue> entryList = delegator.findByAnd("ProductScan", UtilMisc.toMap("status", 0,"warehouseType",1));
 		for (GenericValue v : entryList) {
 			/* 1.生成入仓确认记录 */
 			Date bizDate = (Date) v.get("bizDate");
