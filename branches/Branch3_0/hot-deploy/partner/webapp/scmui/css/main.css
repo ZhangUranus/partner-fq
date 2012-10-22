@@ -1,0 +1,294 @@
+.system-help{
+	background-image: url( ../images/icons/help.png ) !important;
+}
+.system-logout{
+	background-image: url( ../images/icons/logout.png ) !important;
+}
+.system-add {
+	background-image: url( ../images/icons/add.png ) !important;
+}
+.system-edit {
+	background-image: url( ../images/icons/edit.png ) !important;
+}
+.system-clear {
+	background-image: url( ../images/icons/clear.png ) !important;
+}
+.system-delete {
+	background-image: url( ../images/icons/delete.png ) !important;
+}
+.system-refresh {
+	background-image: url( ../images/icons/refresh.png ) !important;
+}
+.system-search {
+	background-image: url( ../images/icons/search.png ) !important;
+}
+.system-save {
+	background-image: url( ../images/icons/save.png ) !important;
+}
+.system-export {
+	background-image: url( ../images/icons/export.gif ) !important;
+}
+.system-exportDetail {
+	background-image: url( ../images/icons/export-detail.png ) !important;
+}
+.system-print{
+	background-image: url( ../images/icons/printer.gif ) !important;
+}
+.system-audit{
+	background-image: url( ../images/icons/audit.gif ) !important;
+}
+.system-unaudit{
+	background-image: url( ../images/icons/unaudit.gif ) !important;
+}
+.system-submit{
+	background-image: url( ../images/icons/submit.png ) !important;
+}
+.system-rollback{
+	background-image: url( ../images/icons/rollback.png ) !important;
+}
+.system-copy{
+	background-image: url( ../images/icons/copy.png ) !important;
+}
+.system-scan{
+	background-image: url( ../images/icons/scan.png ) !important;
+}
+.system-unscan{
+	background-image: url( ../images/icons/unscan.png ) !important;
+}
+.system-import{
+	background-image: url( ../images/icons/import.png ) !important;
+}
+
+.detail{
+	background-image: url( ../images/icons/detail.png ) !important;
+}
+.detail-edit{
+	background-image: url( ../images/icons/detail-edit.png ) !important;
+}
+
+.main-index {
+	background-image: url( ../images/icons/main-index.png ) !important;
+}
+.warehouse-management {
+	background-image: url( ../images/icons/warehouse-management.png ) !important;
+}
+.purchase-management {
+	background-image: url( ../images/icons/purchase-management.png ) !important;
+}
+.purchase-bill-management {
+	background-image: url( ../images/icons/purchase-bill-management.png ) !important;
+}
+.purchase-warehousing {
+	background-image: url( ../images/icons/purchase-warehousing.png ) !important;
+}
+.purchase-return {
+	background-image: url( ../images/icons/purchase-return.png ) !important;
+}
+.consign-process {
+	background-image: url( ../images/icons/consign-process.png ) !important;
+}
+.consign-draw-material {
+	background-image: url( ../images/icons/consign-draw-material.png ) !important;
+}
+.consign-return-material {
+	background-image: url( ../images/icons/consign-return-material.png ) !important;
+}
+.consign-warehousing {
+	background-image: url( ../images/icons/consign-warehousing.png ) !important;
+}
+.consign-return-product {
+	background-image: url( ../images/icons/consign-return-product.png ) !important;
+}
+.workshop-manufacture {
+	background-image: url( ../images/icons/workshop-manufacture.png ) !important;
+}
+.workshop-draw-material {
+	background-image: url( ../images/icons/workshop-draw-material.png ) !important;
+}
+.workshop-return-material {
+	background-image: url( ../images/icons/workshop-return-material.png ) !important;
+}
+.workshop-warehousing {
+	background-image: url( ../images/icons/workshop-warehousing.png ) !important;
+}
+.workshop-return-product {
+	background-image: url( ../images/icons/workshop-return-product.png ) !important;
+}
+.workshop-other-draw-material {
+	background-image: url( ../images/icons/workshop-other-draw-material.png ) !important;
+}
+.production-plan {
+	background-image: url( ../images/icons/production-plan.png ) !important;
+}
+.analytic-statistics {
+	background-image: url( ../images/icons/analytic-statistics.png ) !important;
+}
+.stock-detail {
+	background-image: url( ../images/icons/stock-detail.png ) !important;
+}
+.workshop-stock-detail {
+	background-image: url( ../images/icons/workshop-stock-detail.png ) !important;
+}
+.semi-product-cost-report {
+	background-image: url( ../images/icons/semi-product-cost-report.png ) !important;
+}
+.consign-process-matching-report {
+	background-image: url( ../images/icons/consign-process-matching-report.png ) !important;
+}
+.purchase-matching-report {
+	background-image: url( ../images/icons/purchase-matching-report.png ) !important;
+}
+.packing-material-report {
+	background-image: url( ../images/icons/packing-material-report.png ) !important;
+}
+.product-report {
+	background-image: url( ../images/icons/product-report.png ) !important;
+}
+.system-management {
+	background-image: url( ../images/icons/system-management.png ) !important;
+}
+.user-management {
+	background-image: url( ../images/icons/user-management.png ) !important;
+}
+.log-management {
+	background-image: url( ../images/icons/log-management.png ) !important;
+}
+.stock-settle {
+	background-image: url( ../images/icons/stock-settle.png ) !important;
+}
+.user-info {
+	background-image: url( ../images/icons/user-info.png ) !important;
+}
+.basic-setting {
+	background-image: url( ../images/icons/basic-setting.png ) !important;
+}
+.basic-coding-maintaince {
+	background-image: url( ../images/icons/basic-coding-maintaince.png ) !important;
+}
+.cust-info-maintaince {
+	background-image: url( ../images/icons/cust-info-maintaince.png ) !important;
+}
+.warehouse-info-maintaince {
+	background-image: url( ../images/icons/warehouse-info-maintaince.png ) !important;
+}
+.material-info-maintaince {
+	background-image: url( ../images/icons/material-info-maintaince.png ) !important;
+}
+.department-info-maintaince {
+	background-image: url( ../images/icons/department-info-maintaince.png ) !important;
+}
+.staff-info-maintaince {
+	background-image: url( ../images/icons/staff-info-maintaince.png ) !important;
+}
+.BOM-bill-info-maintaince {
+	background-image: url( ../images/icons/BOM-bill-info-maintaince.png ) !important;
+}
+.unit-info-maintaince {
+	background-image: url( ../images/icons/unit-info-maintaince.png ) !important;
+}
+.warehouse-type-maintaince {
+	background-image: url( ../images/icons/warehouse-type-maintaince.png ) !important;
+}
+.supplier-maintaince {
+	background-image: url( ../images/icons/supplier-maintaince.png ) !important;
+}
+.workshop-maintaince {
+	background-image: url( ../images/icons/workshop-maintaince.png ) !important;
+}
+.region-maintaince {
+	background-image: url( ../images/icons/region-maintaince.png ) !important;
+}
+.stock-adjust-management {
+	background-image: url( ../images/icons/stock-adjust-management.png ) !important;
+}
+.stock-adjust {
+	background-image: url( ../images/icons/stock-adjust.png ) !important;
+}
+.workshop-stock-adjust {
+	background-image: url( ../images/icons/workshop-stock-adjust.png ) !important;
+}
+.supplier-stock-adjust {
+	background-image: url( ../images/icons/supplier-stock-adjust.png ) !important;
+}
+.product-mgr {
+	background-image: url( ../images/icons/product-mgr.png ) !important;
+}
+.product-inwarehouse {
+	background-image: url( ../images/icons/product-inwarehouse.png ) !important;
+}
+.product-inwarehouse-confirm {
+	background-image: url( ../images/icons/product-inwarehouse-confirm.png ) !important;
+}
+.product-outwarehouse{
+	background-image: url( ../images/icons/product-outwarehouse.png ) !important;
+}
+.product-outwarehouse-confirm {
+	background-image: url( ../images/icons/product-outwarehouse-confirm.png ) !important;
+}
+.product-map-maintaince {
+	background-image: url( ../images/icons/product-map-maintaince.png ) !important;
+}
+
+.product-out-notification {
+	background-image: url( ../images/icons/product-out-notification.png ) !important;
+}
+.product-send-owe-report {
+	background-image: url( ../images/icons/product-send-owe-report.png ) !important;
+}
+.product-statics-report {
+	background-image: url( ../images/icons/product-statics-report.png ) !important;
+}
+
+
+.flag-green{
+	background-image: url( ../images/icons/flag-green.png ) !important;
+}
+.flag-red{
+	background-image: url( ../images/icons/flag-red.png ) !important;
+}
+
+.tree-user{
+	background-image: url( ../images/icons/tree-user.png ) !important;
+}
+.tree-user-invalid{
+	background-image: url( ../images/icons/tree-user-invalid.png ) !important;
+}
+.tree-department{
+	background-image: url( ../images/icons/tree-department.png ) !important;
+}
+
+.tree-add{
+		background-image: url( ../images/icons/tree_add.png ) !important;
+}
+
+.tree-del{
+		background-image: url( ../images/icons/tree_del.png ) !important;
+}
+
+.tree-edit{
+		background-image: url( ../images/icons/tree_edit.png ) !important;
+}
+#main-top {
+    background-image: url( ../images/header.png);
+    background-position-x:left;
+    background-position-y:center;
+}
+
+.bill-addline{
+	background-image: url( ../images/icons/addline.gif ) !important;
+}
+.bill-dline{
+	background-image: url( ../images/icons/dline.gif ) !important;
+}
+
+.x-form-readonly {
+	filter: alpha(opacity=60);
+	opacity: .6
+}
+.x-ie6 .x-form-readonly {
+	filter: none
+}
+.syncDownSel{
+		background-image: url( ../images/icons/sync_down_sel.png ) !important;
+}
+

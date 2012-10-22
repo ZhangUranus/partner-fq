@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+ <Worksheet ss:Name="Table1">
+  <Table>
+   <Column ss:Index="1" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="2" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="3" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="4" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="5" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="6" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="7" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="8" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="9" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="10" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="11" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="12" ss:AutoFitWidth="0" ss:Width="110"/>   <Row>
+    <Cell><Data ss:Type="String">ID</Data></Cell>
+    <Cell><Data ss:Type="String">NUMBER</Data></Cell>
+    <Cell><Data ss:Type="String">NAME</Data></Cell>
+    <Cell><Data ss:Type="String">CONTRACTOR</Data></Cell>
+    <Cell><Data ss:Type="String">FAX</Data></Cell>
+    <Cell><Data ss:Type="String">POST_CODE</Data></Cell>
+    <Cell><Data ss:Type="String">PHONE</Data></Cell>
+    <Cell><Data ss:Type="String">ADDRESS</Data></Cell>
+    <Cell><Data ss:Type="String">LAST_UPDATED_STAMP</Data></Cell>
+    <Cell><Data ss:Type="String">LAST_UPDATED_TX_STAMP</Data></Cell>
+    <Cell><Data ss:Type="String">CREATED_STAMP</Data></Cell>
+    <Cell><Data ss:Type="String">CREATED_TX_STAMP</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">3edd4826-3132-4241-8ee2-441f4f472ad9</Data></Cell>
+    <Cell><Data ss:Type="String">CUST100001</Data></Cell>
+    <Cell><Data ss:Type="String">宝利家私有限公司</Data></Cell>
+    <Cell><Data ss:Type="String">张三</Data></Cell>
+    <Cell><Data ss:Type="String">02039485544</Data></Cell>
+    <Cell><Data ss:Type="String">544099</Data></Cell>
+    <Cell><Data ss:Type="String">02034995455</Data></Cell>
+    <Cell><Data ss:Type="String">广东省广州</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:05:37</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:05:37</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:05:37</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:05:37</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">4a268c4e-ebf0-4f2b-b0b7-af8456c94e9e</Data></Cell>
+    <Cell><Data ss:Type="String">CUST100003</Data></Cell>
+    <Cell><Data ss:Type="String">五邑五金有限公司</Data></Cell>
+    <Cell><Data ss:Type="String">王五</Data></Cell>
+    <Cell><Data ss:Type="String">07588377287</Data></Cell>
+    <Cell><Data ss:Type="String">664773</Data></Cell>
+    <Cell><Data ss:Type="String">07589983883</Data></Cell>
+    <Cell><Data ss:Type="String">广东省江门</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:07:54</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:07:54</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:07:54</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:07:54</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">dd78f90e-0426-4753-b9dc-89bb8afa2090</Data></Cell>
+    <Cell><Data ss:Type="String">CUST100002</Data></Cell>
+    <Cell><Data ss:Type="String">红树湾家具有限公司</Data></Cell>
+    <Cell><Data ss:Type="String">李四</Data></Cell>
+    <Cell><Data ss:Type="String">02038874747</Data></Cell>
+    <Cell><Data ss:Type="String">544099</Data></Cell>
+    <Cell><Data ss:Type="String">02030499553</Data></Cell>
+    <Cell><Data ss:Type="String">广东省广州</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:06:35</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:06:35</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:06:35</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:06:35</Data></Cell>
+   </Row>
+  </Table>
+ </Worksheet>
+</Workbook>

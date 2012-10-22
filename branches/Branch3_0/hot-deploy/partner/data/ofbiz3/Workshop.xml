@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-engine-xml>
+    <Workshop id="4a1411eb-72df-45cc-9aab-26f6fd7e4db0" number="WS100001" name="&#23433;&#35013;&#36710;&#38388;" description="" lastUpdatedStamp="2012-08-25 11:43:11.0" lastUpdatedTxStamp="2012-08-25 11:43:11.0" createdStamp="2012-08-25 11:43:11.0" createdTxStamp="2012-08-25 11:43:11.0"/>
+    <Workshop id="876a1f69-2a03-4660-9740-590bf618e9f2" number="WS100004" name="&#24037;&#31243;&#37096;" description="" lastUpdatedStamp="2012-08-25 11:44:13.0" lastUpdatedTxStamp="2012-08-25 11:44:13.0" createdStamp="2012-08-25 11:44:13.0" createdTxStamp="2012-08-25 11:44:13.0"/>
+    <Workshop id="da47dbd7-6332-4e66-8d3f-912b2d1ae6fd" number="WS100002" name="&#40657;&#32986;&#36710;&#38388;" description="" lastUpdatedStamp="2012-08-25 11:43:34.0" lastUpdatedTxStamp="2012-08-25 11:43:34.0" createdStamp="2012-08-25 11:43:34.0" createdTxStamp="2012-08-25 11:43:34.0"/>
+    <Workshop id="e0ea00dc-0fe6-4182-a3f1-03073f421012" number="WS100003" name="&#21943;&#28034;&#36710;&#38388;" description="" lastUpdatedStamp="2012-08-25 11:43:51.0" lastUpdatedTxStamp="2012-08-25 11:43:51.0" createdStamp="2012-08-25 11:43:51.0" createdTxStamp="2012-08-25 11:43:51.0"/>
+</entity-engine-xml>
