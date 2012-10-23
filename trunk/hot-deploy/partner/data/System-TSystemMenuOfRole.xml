@@ -469,4 +469,14 @@
 	<TSystemMenuOfRole id='fcc1703c-d079-40e6-9793-bd2e16099704' menuId='analyticStatistics' roleId='6f4150c3-c743-458b-9434-66670d272b9c' operateType='V' />
 	<TSystemMenuOfRole id='8d5edddb-5bcf-4ab8-ac59-94d0ac761327' menuId='productSendOweReport' roleId='6f4150c3-c743-458b-9434-66670d272b9c' operateType='V' />
 	<TSystemMenuOfRole id='dc7183b1-0dd7-4fd4-9f09-8b319c3d5779' menuId='productStaticsReport' roleId='6f4150c3-c743-458b-9434-66670d272b9c' operateType='V' />
+	<TSystemMenuOfRole id='3d0a68e2-67b4-4fd1-af22-0ffc3544325c' menuId='productManualOutwarehouse' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='V' />
+	<TSystemMenuOfRole id='5a4cd0e0-0fcd-4c51-988d-c5dc2b5d1c5f' menuId='productManualOutwarehouse' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='E' />
+	<TSystemMenuOfRole id='44701809-352b-4469-a786-52189f45df35' menuId='productManualOutwarehouse' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='D' />
+	<TSystemMenuOfRole id='f38cbab2-ffdb-462d-b638-d87cee1cbede' menuId='productManualOutwarehouse' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='N' />
+	<TSystemMenuOfRole id='9cc2ff5f-90f9-4125-8301-7df9420223d8' menuId='productManualOutwarehouse' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='S' />
+	<TSystemMenuOfRole id='f6b0d4b1-cfb8-45c5-86ff-61083c3b1c2b' menuId='productManualOutwarehouse' roleId='b29ff561-c3f3-479e-9496-35b6c87026e1' operateType='V' />
+	<TSystemMenuOfRole id='8c396963-eb9e-4d65-9486-16d972fc3e62' menuId='productManualOutwarehouse' roleId='b29ff561-c3f3-479e-9496-35b6c87026e1' operateType='E' />
+	<TSystemMenuOfRole id='f2435fc5-fec6-4b6f-965f-3aee599b0886' menuId='productManualOutwarehouse' roleId='b29ff561-c3f3-479e-9496-35b6c87026e1' operateType='D' />
+	<TSystemMenuOfRole id='1beafbb4-4e96-4ed8-882e-095f6b359e39' menuId='productManualOutwarehouse' roleId='b29ff561-c3f3-479e-9496-35b6c87026e1' operateType='N' />
+	<TSystemMenuOfRole id='615c0a8e-5bb2-412f-b8b3-b509be253585' menuId='productManualOutwarehouse' roleId='b29ff561-c3f3-479e-9496-35b6c87026e1' operateType='S' />
 </entity-engine-xml>

@@ -25,6 +25,7 @@
 	<!-- TSystemMenu menuId='productInwarehouseConfirm' menuName='成品进仓确认单' menuType='1' parentId='productMgr' sort='142' hyperlink='ProductInwarehouseConfirmlist' styleName='product-inwarehouse-confirm' display='1' description='成品进仓确认单' /-->
 	<TSystemMenu menuId='productOutwarehouse' menuName='成品出仓单' menuType='1' parentId='productMgr' sort='143' hyperlink='ProductOutwarehouselist' styleName='product-outwarehouse' display='1' description='成品出仓单' />
 	<!-- SystemMenu menuId='productOutwarehouseConfirm' menuName='成品出仓确认单' menuType='1' parentId='productMgr' sort='144' hyperlink='ProductOutwarehouseConfirmlist' styleName='product-outwarehouse-confirm' display='1' description='成品出仓确认单' /-->
+	<TSystemMenu menuId='productManualOutwarehouse' menuName='成品手工出仓单' menuType='1' parentId='productMgr' sort='144' hyperlink='ProductManualOutwarehouselist' styleName='product-manual-outwarehouse' display='1' description='成品手工出仓单' />
 	<TSystemMenu menuId='productOutNotification' menuName='出货通知单' menuType='1' parentId='productMgr' sort='145' hyperlink='ProductOutNotificationlist' styleName='product-out-notification' display='1' description='出货通知单' />
 	<TSystemMenu menuId='analyticStatistics' menuName='分析统计' menuType='0' parentId='warehouseManagement' sort='15' hyperlink='' styleName='analytic-statistics' display='1' description='分析统计' />
 	<TSystemMenu menuId='stockDetail' menuName='库存情况' menuType='1' parentId='analyticStatistics' sort='151' hyperlink='stockdetail' styleName='stock-detail' display='1' description='库存情况' />
