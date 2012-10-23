@@ -50,6 +50,10 @@ Ext.define('SCM.model.ProductOutwarehouse.ProductOutwarehouseEditModel', {
 					}, {
 						name : 'status',
 						type : 'int'
+					}, {
+						name : 'billType',
+						type : 'int',
+						defaultValue : 1
 					}
 
 			],
@@ -57,7 +61,7 @@ Ext.define('SCM.model.ProductOutwarehouse.ProductOutwarehouseEditModel', {
 			proxy : {
 				type : 'jsonajax',
 				api : {
-					read : '../../scm/control/requestJsonData?entity=ProductOutwarehouseView&distinct=true&fields=id,number,bizDate,submitterSystemUserId,submitterSystemUserName,totalsum,createdStamp,lastUpdatedStamp,note,status',
+					read : '../../scm/control/requestJsonData?entity=ProductOutwarehouseView&distinct=true&fields=id,number,bizDate,submitterSystemUserId,submitterSystemUserName,totalsum,createdStamp,lastUpdatedStamp,note,status,billType',
 					destroy : '../../scm/control/deleteWithEntry?headEntity=ProductOutwarehouse&entryEntity=ProductOutwarehouseEntry'
 				},
 				remoteFilter : true

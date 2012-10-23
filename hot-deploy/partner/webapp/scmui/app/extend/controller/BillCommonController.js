@@ -288,12 +288,6 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 					this.saveButton.setDisabled(false);
 					this.clearButton.setDisabled(false);
 					this.submitEditButton.setDisabled(false);
-				} else if (record.get('status') == '5') {
-					this.setFieldsReadOnly(false);
-					this.editEntry.setDisabled(true);
-					this.saveButton.setDisabled(false);
-					this.clearButton.setDisabled(true);
-					this.submitEditButton.setDisabled(false);
 				} else {
 					this.setFieldsReadOnly(true);
 					this.editEntry.setDisabled(true);
@@ -395,7 +389,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				} else if (record.get('status') == '4') {
 					showWarning('单据为已提交状态，不允许删除！');
 					return;
-				} else if (record.get('status') == '5') {
+				} else if (record.get('billType') && record.get('billType')==2) {
 					showWarning('该单据为扫描单据，不允许删除！');
 					return;
 				}
@@ -463,6 +457,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 											entity : me.entityName
 										},
 										url : me.getSubmitBillUrl(),
+										timeout : SCM.shortTimes,
 										success : function(response, option) {
 											var result = Ext.decode(response.responseText)
 											if (result.success) {
@@ -539,6 +534,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 											entity : this.entityName
 										},
 										url : this.getRollbackBillUrl(),
+										timeout : SCM.shortTimes,
 										success : function(response, option) {
 											var result = Ext.decode(response.responseText)
 											if (result.success) {
@@ -865,6 +861,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 								entryView : entryView
 							},
 							url : '../../scm/control/getPrintData',
+							timeout : SCM.shortTimes,
 							success : function(response) {
 								var responseObj = Ext.decode(response.responseText);
 								if (responseObj.success) {
