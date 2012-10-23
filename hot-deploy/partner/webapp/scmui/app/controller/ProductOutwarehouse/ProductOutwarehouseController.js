@@ -127,6 +127,36 @@ Ext.define('SCM.controller.ProductOutwarehouse.ProductOutwarehouseController', {
 				this.getDetailListUI();
 				this.getNotiDetailListUI();
 			},
+			
+			/**
+			 * 根据状态设置编辑界面状态
+			 * 
+			 * @param {}
+			 *            isReadOnly
+			 */
+			changeEditStatus : function(record) {
+				if (record.get('status') == '0') {
+					if (record.get('billType') == 2) {
+						this.setFieldsReadOnly(false);
+						this.editEntry.setDisabled(true);
+						this.saveButton.setDisabled(false);
+						this.clearButton.setDisabled(true);
+						this.submitEditButton.setDisabled(false);
+					} else {
+						this.setFieldsReadOnly(false);
+						this.editEntry.setDisabled(false);
+						this.saveButton.setDisabled(false);
+						this.clearButton.setDisabled(false);
+						this.submitEditButton.setDisabled(false);
+					}
+				} else {
+					this.setFieldsReadOnly(true);
+					this.editEntry.setDisabled(true);
+					this.saveButton.setDisabled(true);
+					this.clearButton.setDisabled(true);
+					this.submitEditButton.setDisabled(true);
+				}
+			},
 
 			/**
 			 * 重写刷新方法
@@ -197,6 +227,7 @@ Ext.define('SCM.controller.ProductOutwarehouse.ProductOutwarehouseController', {
 										qantity : barcode.getQuantity()
 									},
 									url : '../../scm/control/getMaterialIdByIkea',
+									timeout : SCM.shortTimes,
 									success : function(response, option) {
 										var result = Ext.decode(response.responseText)
 										if (result.success) {
@@ -299,6 +330,7 @@ Ext.define('SCM.controller.ProductOutwarehouse.ProductOutwarehouseController', {
 					Ext.Ajax.request({
 								scope : me,
 								url : "../../scm/control/scanSubmitProductOutwarehouse",
+								timeout : SCM.shortTimes,
 								params : {
 									records : json
 								},
@@ -384,6 +416,7 @@ Ext.define('SCM.controller.ProductOutwarehouse.ProductOutwarehouseController', {
 							Ext.Ajax.request({
 										scope : me,
 										url : "../../scm/control/scanRollbackProductOutwarehouse",
+										timeout : SCM.shortTimes,
 										params : {
 											records : json
 										},

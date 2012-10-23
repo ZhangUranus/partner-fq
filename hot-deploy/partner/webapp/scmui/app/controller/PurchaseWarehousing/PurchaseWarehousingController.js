@@ -247,6 +247,7 @@ Ext.define('SCM.controller.PurchaseWarehousing.PurchaseWarehousingController', {
 									materialId : materialId
 								},
 								url : '../../scm/control/getPlanBalance',
+								timeout : SCM.shortTimes,
 								success : function(response, option) {
 									var result = Ext.decode(response.responseText)
 									if (result.success) {

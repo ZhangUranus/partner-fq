@@ -175,21 +175,23 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 	 */
 	changeEditStatus : function(record) {
 		if (record.get('status') == '0') {
-			this.setFieldsReadOnly(false);
-			this.setGridEditAble(true);
-			this.saveButton.setDisabled(false);
-			this.clearButton.setDisabled(false);
-			this.submitEditButton.setDisabled(false);
-			this.viewDetailButton.setVisible(false);
-			this.editDetailButton.setVisible(true);
-		} else if (record.get('status') == '5') {
-			this.setFieldsReadOnly(false);
-			this.setGridEditAble(false);
-			this.saveButton.setDisabled(false);
-			this.clearButton.setDisabled(true);
-			this.submitEditButton.setDisabled(false);
-			this.viewDetailButton.setVisible(false);
-			this.editDetailButton.setVisible(true);
+			if (record.get('billType') == 2) {
+				this.setFieldsReadOnly(false);
+				this.setGridEditAble(false);
+				this.saveButton.setDisabled(false);
+				this.clearButton.setDisabled(true);
+				this.submitEditButton.setDisabled(false);
+				this.viewDetailButton.setVisible(false);
+				this.editDetailButton.setVisible(true);
+			} else {
+				this.setFieldsReadOnly(false);
+				this.setGridEditAble(true);
+				this.saveButton.setDisabled(false);
+				this.clearButton.setDisabled(false);
+				this.submitEditButton.setDisabled(false);
+				this.viewDetailButton.setVisible(false);
+				this.editDetailButton.setVisible(true);
+			}
 		} else {
 			this.setFieldsReadOnly(true);
 			this.setGridEditAble(false);
@@ -262,6 +264,7 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 										materialId : record.get('materialMaterialId')
 									},
 									url : '../../scm/control/getBomMaterialDetailList',
+									timeout : SCM.shortTimes,
 									success : function(response, option) {
 										var result = Ext.decode(response.responseText)
 										if (result.success) {
@@ -304,6 +307,7 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 			Ext.Ajax.request({
 						scope : this,
 						url : "../../scm/control/checkExist",
+						timeout : SCM.shortTimes,
 						params : {
 							entity : 'ProductInwarehouseEntry',
 							id : record.get('id')
@@ -457,6 +461,7 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 								qantity : barcode.getQuantity()
 							},
 							url : '../../scm/control/getMaterialIdByIkea',
+							timeout : SCM.shortTimes,
 							success : function(response, option) {
 								var result = Ext.decode(response.responseText)
 								if (result.success) {
@@ -578,6 +583,7 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 			Ext.Ajax.request({
 						scope : me,
 						url : "../../scm/control/scanSubmitProductInwarehouse",
+						timeout : SCM.shortTimes,
 						params : {
 							records : json
 						},
@@ -663,6 +669,7 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 					Ext.Ajax.request({
 								scope : me,
 								url : "../../scm/control/scanRollbackProductInwarehouse",
+								timeout : SCM.shortTimes,
 								params : {
 									records : json
 								},

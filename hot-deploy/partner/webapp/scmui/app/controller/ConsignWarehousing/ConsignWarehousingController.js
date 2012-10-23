@@ -271,6 +271,7 @@ Ext.define('SCM.controller.ConsignWarehousing.ConsignWarehousingController', {
 										entityName : 'ConsignPriceDetail'
 									},
 									url : '../../scm/control/removeDataByParentId',
+									timeout : SCM.shortTimes,
 									success : function(response, option) {
 										var result = Ext.decode(response.responseText)
 										if (result.success) {
@@ -380,6 +381,7 @@ Ext.define('SCM.controller.ConsignWarehousing.ConsignWarehousingController', {
 					Ext.Ajax.request({ 
 						scope : me,
 						url : "../../scm/control/checkExist",
+						timeout : SCM.shortTimes,
 						params:{entity:'ConsignWarehousingEntry',id:record.get('id')},
 						success : function(response, option) {
 							if(response.responseText.length<1){

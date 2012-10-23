@@ -285,6 +285,7 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 												isValid : record.get('status') == '1' ? true : false
 											},
 											url : '../../scm/control/unauditPurchaseBill',
+											timeout : SCM.shortTimes,
 											success : function(response) {
 												var result = Ext.decode(response.responseText)
 												if (result.success) {
@@ -325,6 +326,7 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 									isValid : this.approverStatus.getValue() == '1' ? true : false
 								},
 								url : '../../scm/control/auditPurchaseBill',
+								timeout : SCM.shortTimes,
 								success : function(response) {
 									var result = Ext.decode(response.responseText)
 									if (result.success) {

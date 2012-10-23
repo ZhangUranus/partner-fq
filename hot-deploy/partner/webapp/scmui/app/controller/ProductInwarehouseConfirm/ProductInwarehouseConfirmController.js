@@ -198,6 +198,7 @@ Ext.define('SCM.controller.ProductInwarehouseConfirm.ProductInwarehouseConfirmCo
 													materialId : record.get('materialMaterialId')
 												},
 												url : '../../scm/control/getBomMaterialDetailList',
+												timeout : SCM.shortTimes,
 												success : function(response, option) {
 													var result = Ext.decode(response.responseText)
 													if (result.success) {
@@ -423,6 +424,7 @@ Ext.define('SCM.controller.ProductInwarehouseConfirm.ProductInwarehouseConfirmCo
 							Ext.Ajax.request({
 										scope : me,
 										url : "../../scm/control/submitProductInwarehouseConfirm",
+										timeout : SCM.shortTimes,
 										params : {
 											records : json
 										},
@@ -456,6 +458,7 @@ Ext.define('SCM.controller.ProductInwarehouseConfirm.ProductInwarehouseConfirmCo
 				Ext.Ajax.request({
 							scope : this,
 							url : "../../scm/control/syncProductInwarehouseConfirm",
+							timeout : SCM.longTimes,
 							success : function(response, option) {
 								if (response.responseText.length < 1) {
 									taskMask.hide();

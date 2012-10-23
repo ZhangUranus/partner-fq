@@ -271,6 +271,7 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 										entityName : 'WorkshopPriceDetail'
 									},
 									url : '../../scm/control/removeDataByParentId',
+									timeout : SCM.shortTimes,
 									success : function(response, option) {
 										var result = Ext.decode(response.responseText)
 										if (result.success) {
@@ -380,6 +381,7 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 					Ext.Ajax.request({ 
 						scope : me,
 						url : "../../scm/control/checkExist",
+						timeout : SCM.shortTimes,
 						params:{entity:'WorkshopWarehousingEntry',id:record.get('id')},
 						success : function(response, option) {
 							if(response.responseText.length<1){
