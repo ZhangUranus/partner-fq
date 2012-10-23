@@ -221,6 +221,7 @@ Ext.define('SCM.controller.ConsignDrawMaterial.ConsignDrawMaterialController', {
 									materialId : materialId
 								},
 								url : '../../scm/control/getCurMaterialBalanceValue',
+								timeout : SCM.shortTimes,
 								success : function(response, option) {
 									var result = Ext.decode(response.responseText)
 									if (result.success) {
@@ -256,6 +257,7 @@ Ext.define('SCM.controller.ConsignDrawMaterial.ConsignDrawMaterialController', {
 											entityName : 'ConsignDrawMaterialEntry'
 										},
 										url : '../../scm/control/removeDataByParentId',
+										timeout : SCM.shortTimes,
 										success : function(response, option) {
 											var result = Ext.decode(response.responseText)
 											if (result.success) {
