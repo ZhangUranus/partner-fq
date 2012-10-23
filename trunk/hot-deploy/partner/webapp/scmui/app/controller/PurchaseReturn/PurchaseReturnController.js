@@ -229,6 +229,7 @@ Ext.define('SCM.controller.PurchaseReturn.PurchaseReturnController', {
 									materialId : materialId
 								},
 								url : '../../scm/control/getCurMaterialBalanceValue',
+								timeout : SCM.shortTimes,
 								success : function(response, option) {
 									var result = Ext.decode(response.responseText)
 									if (result.success) {

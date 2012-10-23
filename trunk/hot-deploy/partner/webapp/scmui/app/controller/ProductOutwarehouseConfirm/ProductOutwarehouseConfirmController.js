@@ -197,6 +197,7 @@ Ext.define('SCM.controller.ProductOutwarehouseConfirm.ProductOutwarehouseConfirm
 							Ext.Ajax.request({
 										scope : me,
 										url : "../../scm/control/submitProductOutwarehouseConfirm",
+										timeout : SCM.shortTimes,
 										params : {
 											records : json
 										},
@@ -229,8 +230,8 @@ Ext.define('SCM.controller.ProductOutwarehouseConfirm.ProductOutwarehouseConfirm
 
 				Ext.Ajax.request({
 							scope : this,
-							timeout : 1800000,
 							url : "../../scm/control/syncProductOutwarehouseConfirm",
+							timeout : SCM.longTimes,
 							success : function(response, option) {
 								if (response.responseText.length < 1) {
 									taskMask.hide();

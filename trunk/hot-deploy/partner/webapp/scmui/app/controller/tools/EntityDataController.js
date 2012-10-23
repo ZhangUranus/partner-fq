@@ -24,6 +24,7 @@ Ext.define('SCM.controller.tools.EntityDataController', {
 				Ext.Ajax.request({
 							scope : this,
 							url : "../../scm/control/entityExportAll",
+							timeout : SCM.shortTimes,
 							params : {
 								outpath : this.outPath.getValue()
 							},
