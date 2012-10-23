@@ -24,6 +24,7 @@
 		<field name="status" type="int"></field>
 		<field name="createdStamp" type="date-time"></field>
 		<field name="lastUpdatedStamp" type="date-time"></field>
+		<field name="submitStamp" type="date-time"></field>
 		<prim-key field="id" />
 		<index name="NUMBER_UNIQUE_IDX" unique="true">
 			<index-field name="number" />
