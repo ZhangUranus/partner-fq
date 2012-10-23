@@ -225,6 +225,9 @@
 .product-outwarehouse-confirm {
 	background-image: url( ../images/icons/product-outwarehouse-confirm.png ) !important;
 }
+.product-manual-outwarehouse {
+	background-image: url( ../images/icons/product-manual-outwarehouse.png ) !important;
+}
 .product-map-maintaince {
 	background-image: url( ../images/icons/product-map-maintaince.png ) !important;
 }
