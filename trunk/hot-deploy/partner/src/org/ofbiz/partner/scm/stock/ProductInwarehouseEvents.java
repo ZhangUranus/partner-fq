@@ -198,7 +198,7 @@ public class ProductInwarehouseEvents {
 			/* 2. 生成成品进仓单 */
 
 			/* 2.1 新建成品进仓单据头 */
-			List<GenericValue> headList = delegator.findByAnd("ProductInwarehouse", UtilMisc.toMap("status", 5));
+			List<GenericValue> headList = delegator.findByAnd("ProductInwarehouse", "billType", 2 , "submitterSystemUserId" , CommonEvents.getAttributeFormSession(request, "uid"));
 			GenericValue billHead = null;
 			Date currentDate = new Date();
 			String billId = "";
@@ -213,7 +213,8 @@ public class ProductInwarehouseEvents {
 				billHead.set("bizDate", new Timestamp(currentDate.getTime()));
 				billHead.set("inspectorSystemUserId", CommonEvents.getAttributeFormSession(request, "uid"));
 				billHead.set("submitterSystemUserId", CommonEvents.getAttributeFormSession(request, "uid"));
-				billHead.set("status", 5); // 已扫描状态，只能进行提交操作
+				billHead.set("status", 0); // 保存状态
+				billHead.set("billType", 2); // 扫描类型，只能进行提交操作，不能删除
 				billHead.set("submitStamp", new Timestamp(currentDate.getTime()));
 				// 创建主单
 				delegator.create(billHead);
@@ -357,7 +358,7 @@ public class ProductInwarehouseEvents {
 			if(entryList.size()>0){
 				for(GenericValue record : entryList){
 					String billId = record.getString("parentId");
-					List<GenericValue> headList = delegator.findByAnd("ProductInwarehouse", "id", billId, "status", 5);
+					List<GenericValue> headList = delegator.findByAnd("ProductInwarehouse", "id", billId, "billType", 2, "submitterSystemUserId" , CommonEvents.getAttributeFormSession(request, "uid"));
 					if(headList.size()>0){
 						entryValue = record ;
 						isHasBill = true;
@@ -365,7 +366,7 @@ public class ProductInwarehouseEvents {
 					}
 				}
 				if(!isHasBill){
-					throw new Exception("该产品条码、序列号的单据已经提交，无法进行撤销操作！");
+					throw new Exception("无法进行撤销操作,可能由于下面两张情况导致：<br>1.该产品条码、序列号的单据已经提交；<br>2.该产品条码、序列号的单据不是本人提交。");
 				}
 			} else {
 				throw new Exception("无法找到该产品条码、序列号，请确认是否已经扫描！");

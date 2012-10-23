@@ -109,15 +109,10 @@
 	<view-entity entity-name="ProductOutNotificationEntryView" package-name="org.ofbiz.scm.ProductOutNotificationEntry" title="ProductOutNotificationEntryView  Entity">
 		<member-entity entity-alias="productOutNotificationEntryV" entity-name="ProductOutNotificationEntry"></member-entity>
 		<member-entity entity-alias="materialV" entity-name="TMaterial"></member-entity>
-		<member-entity entity-alias="regionV" entity-name="Region"></member-entity>
 		<alias-all entity-alias="productOutNotificationEntryV"></alias-all>
 		<alias name="materialName" entity-alias="materialV" field="name"></alias>
-		<alias name="regionName" entity-alias="regionV" field="name"></alias>
 		<view-link entity-alias="productOutNotificationEntryV" rel-entity-alias="materialV" rel-optional="true">
 			<key-map field-name="materialId" rel-field-name="id" />
-		</view-link>
-		<view-link entity-alias="productOutNotificationEntryV" rel-entity-alias="regionV" rel-optional="true">
-			<key-map field-name="regionId" rel-field-name="id" />
 		</view-link>
 	</view-entity>
 	<!-- 订单分录明细视图 -->

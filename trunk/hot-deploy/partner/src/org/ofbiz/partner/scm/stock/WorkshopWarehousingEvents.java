@@ -12,7 +12,6 @@ import org.ofbiz.entity.transaction.TransactionUtil;
 import org.ofbiz.partner.scm.common.BillBaseEvent;
 import org.ofbiz.partner.scm.pricemgr.BillType;
 import org.ofbiz.partner.scm.pricemgr.BizStockImpFactory;
-import org.ofbiz.partner.scm.pricemgr.WorkshopPriceMgr;
 /**
  * 验收单业务事件类
  * 

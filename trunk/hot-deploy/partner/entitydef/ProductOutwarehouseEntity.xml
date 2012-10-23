@@ -20,6 +20,7 @@
 		<field name="totalsum" type="fixed-point"></field>
 		<field name="note" type="description"></field>
 		<field name="status" type="int"></field>
+		<field name="billType" type="int"></field>		<!--1.普通单据，2.扫描单据-->
 		<field name="createdStamp" type="date-time"></field>
 		<field name="lastUpdatedStamp" type="date-time"></field>
 		<field name="submitStamp" type="date-time"></field>
