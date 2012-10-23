@@ -335,18 +335,12 @@ Ext.define('SCM.view.ProductOutNotification.EditUI', {
 																	}
 																}
 															}, {
-																xtype : 'combocolumn',
-																dataIndex : 'regionId',
-																text : '目的地',
-																gridId : 'ProductOutNotification-edit-grid',
+																xtype : 'gridcolumn',
 																editor : {
-																	xtype : 'combobox',
-																	valueField : 'id',
-																	displayField : 'name',
-																	initStore : Ext.data.StoreManager.lookup('RGComboInitStore'),
-																	store : Ext.data.StoreManager.lookup('RGComboStore')
+																	xtype : 'textfield'
 																},
-																width : 80
+																dataIndex : 'regionId',
+																text : '目的地'
 															}, {
 																xtype : 'numbercolumn',
 																editor : {

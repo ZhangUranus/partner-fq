@@ -59,10 +59,6 @@ Ext.define('SCM.model.ProductOutNotification.ProductOutNotificationEditEntryMode
 						name : 'regionId',
 						type : 'string'
 					}, {
-						name : 'regionName',
-						type : 'string',
-						persist : false
-					}, {
 						name : 'sort',
 						type : 'int'
 					}],

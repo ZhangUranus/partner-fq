@@ -290,7 +290,7 @@ Ext.define('SCM.view.ProductOutNotification.ListUI', {
 													text : '纸箱数量'
 												}, {
 													xtype : 'gridcolumn',
-													dataIndex : 'regionName',
+													dataIndex : 'regionId',
 													text : '目的地'
 												}]
 									}, {

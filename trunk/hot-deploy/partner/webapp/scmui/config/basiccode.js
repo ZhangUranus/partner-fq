@@ -48,9 +48,6 @@ SCM.store.basiccode.billStatusStore = new Ext.data.Store({
 					}, {
 						'id' : 4,
 						'name' : '已提交'
-					}, {
-						'id' : 5,
-						'name' : '已扫描'
 					}]
 		});
 SCM.store.basiccode.billStatusRenderer = function(value) {
@@ -62,10 +59,7 @@ SCM.store.basiccode.billStatusRenderer = function(value) {
 		return '审核不通过';
 	} else if (value == 4) {
 		return '已提交';
-	} else if (value == 5) {
-		return '已扫描';
 	}
-
 };
 
 SCM.store.basiccode.approverStore = new Ext.data.Store({
@@ -100,6 +94,23 @@ SCM.store.basiccode.purchaseTypeRenderer = function(value) {
 		return "采购单";
 	} else
 		return "调整单"
+};
+
+SCM.store.basiccode.warehousingBillTypeStore = new Ext.data.Store({
+			fields : ['id', 'name'],
+			data : [{
+						'id' : 1,
+						'name' : '普通单据'
+					}, {
+						'id' : 2,
+						'name' : '扫描单据'
+					}]
+		});
+SCM.store.basiccode.warehousingBillTypeRenderer = function(value) {
+	if (value == 1) {
+		return "普通单据";
+	} else
+		return "扫描单据"
 };
 
 SCM.store.basiccode.billTypeStore = new Ext.data.Store({

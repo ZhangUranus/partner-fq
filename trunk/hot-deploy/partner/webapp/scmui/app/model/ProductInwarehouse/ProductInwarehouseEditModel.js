@@ -58,14 +58,17 @@ Ext.define('SCM.model.ProductInwarehouse.ProductInwarehouseEditModel', {
 					}, {
 						name : 'status',
 						type : 'int'
+					}, {
+						name : 'billType',
+						type : 'int',
+						defaultValue : 1
 					}
-
 			],
 			idgen : 'uuid', // 使用uuid生成记录id 每个模型必须要有id字段
 			proxy : {
 				type : 'jsonajax',
 				api : {
-					read : '../../scm/control/requestJsonData?entity=ProductInwarehouseView&distinct=true&fields=id,number,bizDate,inspectorSystemUserId,inspectorSystemUserName,submitterSystemUserId,submitterSystemUserName,totalsum,createdStamp,lastUpdatedStamp,note,status',
+					read : '../../scm/control/requestJsonData?entity=ProductInwarehouseView&distinct=true&fields=id,number,bizDate,inspectorSystemUserId,inspectorSystemUserName,submitterSystemUserId,submitterSystemUserName,totalsum,createdStamp,lastUpdatedStamp,note,status,billType',
 					destroy : '../../scm/control/deleteWithEntry?headEntity=ProductInwarehouse&entryEntity=ProductInwarehouseEntry&cascadeDelete=ProductInwarehouseEntryDetail'
 				},
 				remoteFilter : true

@@ -48,6 +48,13 @@ Ext.define('SCM.view.ProductOutwarehouse.ListUI', {
 													text : '业务日期'
 												}, {
 													xtype : 'gridcolumn',
+													renderer : SCM.store.basiccode.warehousingBillTypeRenderer,
+													dataIndex : 'billType',
+													width : 80,
+													groupable : false,
+													text : '单据类型'
+												}, {
+													xtype : 'gridcolumn',
 													renderer : SCM.store.basiccode.billStatusRenderer,
 													dataIndex : 'status',
 													width : 80,

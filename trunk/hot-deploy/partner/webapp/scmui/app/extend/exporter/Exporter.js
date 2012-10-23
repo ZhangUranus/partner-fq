@@ -20,6 +20,7 @@ Ext.define('SCM.extend.exporter.Exporter', {
 			exportExcel : function() {
 				Ext.Ajax.request({
 							url : '../scm/control/export',
+							timeout : SCM.normalTimes,
 							params : this.getParams(),
 
 							success : function(response, option) {
@@ -37,6 +38,7 @@ Ext.define('SCM.extend.exporter.Exporter', {
 			exportDetailExcel : function() {
 				Ext.Ajax.request({
 							url : '../scm/control/export',
+							timeout : SCM.normalTimes,
 							params : this.getDetailParams(),
 
 							success : function(response, option) {
