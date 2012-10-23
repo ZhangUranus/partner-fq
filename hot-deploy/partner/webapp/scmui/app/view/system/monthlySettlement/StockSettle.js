@@ -55,6 +55,7 @@ Ext.define('SCM.view.system.monthlySettlement.StockSettle', {
 				Ext.Ajax.request({
 							scope : this,
 							url : "../../scm/control/monthlySettle",
+							timeout : SCM.limitTimes,
 							success : function(response, option) {
 								if(response.responseText.length<1){
 									taskMask.hide();
@@ -94,6 +95,7 @@ Ext.define('SCM.view.system.monthlySettlement.StockSettle', {
 				Ext.Ajax.request({ 
 							scope : this,
 							url : "../../scm/control/rollbackSettle",
+							timeout : SCM.limitTimes,
 							success : function(response, option) {
 								if(response.responseText.length<1){
 									taskMask.hide();
