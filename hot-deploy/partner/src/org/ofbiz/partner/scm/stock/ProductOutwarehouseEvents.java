@@ -64,8 +64,8 @@ public class ProductOutwarehouseEvents {
 				
 				//确定该单据为扫描单据还是手工单据。
 				boolean isScanBill = false;
-				int status= billHead.getInteger("status");
-				if(status == 5){
+				int billType= billHead.getInteger("billType");
+				if(billType == 2){
 					isScanBill = true;
 				}
 				
@@ -141,9 +141,16 @@ public class ProductOutwarehouseEvents {
 				// 注意不能使用billHead.getDate方法，出产生castException异常
 				bizDate = (Date) billHead.get("bizDate");
 				
+				//确定该单据为扫描单据还是手工单据。
+				boolean isScanBill = false;
+				int billType= billHead.getInteger("billType");
+				if(billType == 2){
+					isScanBill = true;
+				}
+				
 				// 获取单据分录条目
 				List<GenericValue> entryList = delegator.findByAnd("ProductOutwarehouseEntry", UtilMisc.toMap("parentId", billId));
-
+				
 				for (GenericValue v : entryList) {
 					String barcode1 = v.getString("barcode1");
 					String barcode2 = v.getString("barcode2");
@@ -158,10 +165,13 @@ public class ProductOutwarehouseEvents {
 					WeeklyStockMgr.getInstance().updateStock(materialId, bizDate, ProductStockType.OUT, volume, true);
 					ProductInOutStockMgr.getInstance().updateStock(materialId, ProductStockType.OUT, qantity, volume, true);
 					
-					// 出货通知单
-					boolean isUpdate = updateNotification(v, delegator, materialId, volume.negate(), v.getString("goodNumber"));
-					if(!isUpdate){
-						throw new Exception("未找到产品对应的出货通知单，请检查货号是否填写正确。如果无相应出货通知单，请先提交通知单！");
+					// 扫描单据在扫描的时候已经处理了出货通知单，不做撤销处理
+					if(!isScanBill){
+						// 出货通知单
+						boolean isUpdate = updateNotification(v, delegator, materialId, volume.negate(), v.getString("goodNumber"));
+						if(!isUpdate){
+							throw new Exception("未找到产品对应的出货通知单，请检查货号是否填写正确。如果无相应出货通知单，请先提交通知单！");
+						}
 					}
 				}
 				// 出仓单撤销业务处理
@@ -202,7 +212,7 @@ public class ProductOutwarehouseEvents {
 			/* 2. 生成成品出仓单 */
 
 			/* 2.1 新建成品出仓单据头 */
-			List<GenericValue> headList = delegator.findByAnd("ProductOutwarehouse", UtilMisc.toMap("status", 5));
+			List<GenericValue> headList = delegator.findByAnd("ProductOutwarehouse", "billType", 2 , "submitterSystemUserId" , CommonEvents.getAttributeFormSession(request, "uid"));
 			GenericValue billHead = null;
 			Date currentDate = new Date();
 			String billId = "";
@@ -216,7 +226,8 @@ public class ProductOutwarehouseEvents {
 				billHead.setString("number", new SerialNumberHelper().getSerialNumber(request, "ProductOutwarehouse"));
 				billHead.set("bizDate", new Timestamp(currentDate.getTime()));
 				billHead.set("submitterSystemUserId", CommonEvents.getAttributeFormSession(request, "uid"));
-				billHead.set("status", 5); // 已扫描状态，只能进行提交操作
+				billHead.set("status", 0); // 保存状态
+				billHead.set("billType", 2); // 扫描类型，只能进行提交操作，不能删除
 				billHead.set("submitStamp", new Timestamp(currentDate.getTime()));
 				// 创建主单
 				delegator.create(billHead);
@@ -388,7 +399,7 @@ public class ProductOutwarehouseEvents {
 			if(entryList.size()>0){
 				for(GenericValue record : entryList){
 					String billId = record.getString("parentId");
-					List<GenericValue> headList = delegator.findByAnd("ProductOutwarehouse", "id", billId, "status", 5);
+					List<GenericValue> headList = delegator.findByAnd("ProductOutwarehouse", "id", billId, "billType", 2, "submitterSystemUserId" , CommonEvents.getAttributeFormSession(request, "uid"));
 					if(headList.size()>0){
 						entryValue = record ;
 						isHasBill = true;
@@ -396,7 +407,7 @@ public class ProductOutwarehouseEvents {
 					}
 				}
 				if(!isHasBill){
-					throw new Exception("该产品条码、序列号的单据已经提交，无法进行撤销操作！");
+					throw new Exception("无法进行撤销操作,可能由于下面两张情况导致：<br>1.该产品条码、序列号的单据已经提交；<br>2.该产品条码、序列号的单据不是本人提交。");
 				}
 			} else {
 				throw new Exception("无法找到该产品条码、序列号，请确认是否已经扫描！");

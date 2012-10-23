@@ -6,12 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import org.ofbiz.base.util.Debug;
 import org.ofbiz.entity.Delegator;
@@ -284,7 +282,7 @@ public class ProductInwarehouseServices {
 			if(materialV==null){
 				refreshMtrMap();
 				materialV=material2ObjMap.get(materialId);
-				if(materialId==null){
+				if(materialV==null){
 					Debug.logError("找不到物料值对象", module);
 					return null;
 				}
