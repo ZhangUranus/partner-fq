@@ -195,7 +195,7 @@ public class MonthlySettlement {
 		
 		if(checkExist("SupplierStockAdjust", cond))throw new Exception("本期间存在保存状态的供应商调整单，不能进行结算！！");
 
-		if(checkExist("ProductWarehouse", cond))throw new Exception("本期间存在保存状态的成品进仓单，不能进行结算！！");
+		if(checkExist("ProductInwarehouse", cond))throw new Exception("本期间存在保存状态的成品进仓单，不能进行结算！！");
 
 		if(checkExist("ProductOutwarehouse", cond))throw new Exception("本期间存在保存状态的成品出仓单，不能进行结算！！");
 
@@ -253,6 +253,9 @@ public class MonthlySettlement {
 		//车间退货
 		mergeCompareValue("WorkshopReturnProduct",composeCond,allBillList);
 		
+		//车间退货
+		mergeCompareValue("WorkshopOtherDrawBill",composeCond,allBillList);
+		
 		//进货单
 		mergeCompareValue("ReturnProductWarehousing",composeCond,allBillList);
 		
@@ -266,7 +269,7 @@ public class MonthlySettlement {
 		mergeCompareValue("SupplierStockAdjust",composeCond,allBillList);
 
 		//成品进仓单
-		mergeCompareValue("ProductWarehouse",composeCond,allBillList);
+		mergeCompareValue("ProductInwarehouse",composeCond,allBillList);
 
 		//成品出仓单
 		mergeCompareValue("ProductOutwarehouse",composeCond,allBillList);
@@ -388,6 +391,9 @@ public class MonthlySettlement {
 		}else if(en.equalsIgnoreCase("WorkshopWarehousing")){//车间入库
 			return false;
 			
+		}else if(en.equalsIgnoreCase("WorkshopOtherDrawBill")){//车间其它领料
+			return true;
+			
 		}else if(en.equalsIgnoreCase("ReturnProductWarehousing")){//进货单
 			return false;
 			
@@ -400,7 +406,7 @@ public class MonthlySettlement {
 		}else if(en.equalsIgnoreCase("SupplierStockAdjust")){//供应商调整单
 			return false;
 			
-		}else if(en.equalsIgnoreCase("ProductWarehouse")){//成品进仓单
+		}else if(en.equalsIgnoreCase("ProductInwarehouse")){//成品进仓单
 			return false;
 			
 		}else if(en.equalsIgnoreCase("ProductOutwarehouse")){//成品出仓单
@@ -451,6 +457,9 @@ public class MonthlySettlement {
 		}else if(en.equalsIgnoreCase("WorkshopWarehousing")){//车间入库
 			return BizStockImpFactory.getBizStockImp(BillType.WorkshopWarehousing);
 			
+		}else if(en.equalsIgnoreCase("WorkshopOtherDrawBill")){//车间其它领料
+			return BizStockImpFactory.getBizStockImp(BillType.WorkshopOtherDrawBill);
+			
 		}else if(en.equalsIgnoreCase("ReturnProductWarehousing")){//进货单
 			return BizStockImpFactory.getBizStockImp(BillType.ReturnProductWarehousing);
 			
@@ -463,7 +472,7 @@ public class MonthlySettlement {
 		}else if(en.equalsIgnoreCase("SupplierStockAdjust")){//供应商调整单
 			return BizStockImpFactory.getBizStockImp(BillType.SupplierStockAdjust);
 			
-		}else if(en.equalsIgnoreCase("ProductWarehouse")){//成品进仓单
+		}else if(en.equalsIgnoreCase("ProductInwarehouse")){//成品进仓单
 			return BizStockImpFactory.getBizStockImp(BillType.ProductWarehouse);
 			
 		}else if(en.equalsIgnoreCase("ProductOutwarehouse")){//成品出仓单
@@ -691,7 +700,7 @@ public class MonthlySettlement {
 		
 		if(checkExist("SupplierStockAdjust", cond))throw new Exception("本期间存在提交状态的供应商调整单，不能进行反结算！！");
 
-		if(checkExist("ProductWarehouse", cond))throw new Exception("本期间存在提交状态的成品进仓单，不能进行反结算！！");
+		if(checkExist("ProductInwarehouse", cond))throw new Exception("本期间存在提交状态的成品进仓单，不能进行反结算！！");
 
 		if(checkExist("ProductOutwarehouse", cond))throw new Exception("本期间存在提交状态的成品出仓单，不能进行反结算！！");
 
