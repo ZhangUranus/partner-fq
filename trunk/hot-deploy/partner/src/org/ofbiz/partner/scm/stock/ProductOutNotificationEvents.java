@@ -240,12 +240,13 @@ public class ProductOutNotificationEvents {
 				entryEntity.set("paperBoxVolume", new BigDecimal(curRow.getCell(11).getNumericCellValue()));//纸箱数量
 				
 				//目的地
-				String regionNum=curRow.getCell(12).getStringCellValue();
-				String regionId=isExist(delegator,"Region","id","number", regionNum);
-				if(regionId==null){
-					throw new Exception("第"+rowNum+"行没找到对应的目的地");
-				}
-				entryEntity.set("regionId", regionId);//目的地
+//				String regionNum=curRow.getCell(12).getStringCellValue();
+//				String regionId=isExist(delegator,"Region","id","number", regionNum);
+//				if(regionId==null){
+//					throw new Exception("第"+rowNum+"行没找到对应的目的地");
+//				}
+//				entryEntity.set("regionId", regionId);//目的地
+				entryEntity.set("regionId", curRow.getCell(12).getStringCellValue());
 				entryEntityList.add(entryEntity);
 			}
 			
