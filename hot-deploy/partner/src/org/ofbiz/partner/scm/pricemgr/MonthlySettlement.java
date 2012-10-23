@@ -194,6 +194,12 @@ public class MonthlySettlement {
 		if(checkExist("WorkshopStockAdjust", cond))throw new Exception("本期间存在保存状态的车间调整单，不能进行结算！！");
 		
 		if(checkExist("SupplierStockAdjust", cond))throw new Exception("本期间存在保存状态的供应商调整单，不能进行结算！！");
+
+		if(checkExist("ProductWarehouse", cond))throw new Exception("本期间存在保存状态的成品进仓单，不能进行结算！！");
+
+		if(checkExist("ProductOutwarehouse", cond))throw new Exception("本期间存在保存状态的成品出仓单，不能进行结算！！");
+
+		if(checkExist("ProductManualOutwarehouse", cond))throw new Exception("本期间存在保存状态的成品手工出仓单，不能进行结算！！");
 		
 		Debug.logInfo("检查是否当前期间的保存单据，操作结束~~~~~~", module);
 		
@@ -258,6 +264,15 @@ public class MonthlySettlement {
 				
 		//供应商调整单
 		mergeCompareValue("SupplierStockAdjust",composeCond,allBillList);
+
+		//成品进仓单
+		mergeCompareValue("ProductWarehouse",composeCond,allBillList);
+
+		//成品出仓单
+		mergeCompareValue("ProductOutwarehouse",composeCond,allBillList);
+
+		//成品手工出仓单
+		mergeCompareValue("ProductManualOutwarehouse",composeCond,allBillList);
 		
 		//排序单据
 		Object[] billsArr=allBillList.toArray();
@@ -385,6 +400,15 @@ public class MonthlySettlement {
 		}else if(en.equalsIgnoreCase("SupplierStockAdjust")){//供应商调整单
 			return false;
 			
+		}else if(en.equalsIgnoreCase("ProductWarehouse")){//成品进仓单
+			return false;
+			
+		}else if(en.equalsIgnoreCase("ProductOutwarehouse")){//成品出仓单
+			return true;
+			
+		}else if(en.equalsIgnoreCase("ProductManualOutwarehouse")){//成品手工出仓单
+			return true;
+			
 		}else{
 			throw new Exception("没有对应的业务实现类");
 		}
@@ -438,6 +462,15 @@ public class MonthlySettlement {
 			
 		}else if(en.equalsIgnoreCase("SupplierStockAdjust")){//供应商调整单
 			return BizStockImpFactory.getBizStockImp(BillType.SupplierStockAdjust);
+			
+		}else if(en.equalsIgnoreCase("ProductWarehouse")){//成品进仓单
+			return BizStockImpFactory.getBizStockImp(BillType.ProductWarehouse);
+			
+		}else if(en.equalsIgnoreCase("ProductOutwarehouse")){//成品出仓单
+			return BizStockImpFactory.getBizStockImp(BillType.ProductOutwarehouse);
+			
+		}else if(en.equalsIgnoreCase("ProductManualOutwarehouse")){//成品手工出仓单
+			return BizStockImpFactory.getBizStockImp(BillType.ProductManualOutwarehouse);
 			
 		}else{
 			throw new Exception("没有对应的业务实现类");
@@ -657,6 +690,12 @@ public class MonthlySettlement {
 		if(checkExist("WorkshopStockAdjust", cond))throw new Exception("本期间存在提交状态的车间调整单，不能进行反结算！！");
 		
 		if(checkExist("SupplierStockAdjust", cond))throw new Exception("本期间存在提交状态的供应商调整单，不能进行反结算！！");
+
+		if(checkExist("ProductWarehouse", cond))throw new Exception("本期间存在提交状态的成品进仓单，不能进行反结算！！");
+
+		if(checkExist("ProductOutwarehouse", cond))throw new Exception("本期间存在提交状态的成品出仓单，不能进行反结算！！");
+
+		if(checkExist("ProductManualOutwarehouse", cond))throw new Exception("本期间存在提交状态的成品手工出仓单，不能进行反结算！！");
 		
 		Debug.logInfo("检查是否当前期间的提交单据，操作结束~~~~~~", module);
 		
