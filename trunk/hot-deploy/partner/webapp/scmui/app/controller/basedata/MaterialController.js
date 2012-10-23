@@ -244,6 +244,7 @@ Ext.define('SCM.controller.basedata.MaterialController', {
 				Ext.Ajax.request({
 					scope : this,
 					url : "../../scm/control/delMaterialType",
+					timeout : SCM.shortTimes,
 					params : {
                        id : selectedType.get('id')
                     },

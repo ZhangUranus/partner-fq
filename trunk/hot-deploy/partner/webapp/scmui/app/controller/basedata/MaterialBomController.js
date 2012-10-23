@@ -406,6 +406,7 @@ Ext.define('SCM.controller.basedata.MaterialBomController', {
 											bomId : record.get('id')
 										},
 										url : '../../scm/control/auditBOMBill',
+										timeout : SCM.shortTimes,
 										success : function(response, option) {
 											var result = Ext.decode(response.responseText)
 											if (result.success) {

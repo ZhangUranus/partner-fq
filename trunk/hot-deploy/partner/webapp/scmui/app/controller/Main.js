@@ -23,6 +23,7 @@ Ext.define('SCM.controller.Main', {
 				var me = this;
 				Ext.Ajax.request({//判断用户是否已经登录
 					url : '../scm/control/isLogin',
+					timeout : SCM.shortTimes,
 					success : function(response, option) {
 						var result = Ext.decode(response.responseText)
 						if (result.success) {
@@ -242,6 +243,7 @@ Ext.define('SCM.controller.Main', {
 			initTreePanel : function() {//初始化功能模块
 				Ext.Ajax.request({
 							url : '../scm/control/getTreeDataByParentId',
+							timeout : SCM.shortTimes,
 							params : {
 								parentId : '-1',
 								flag : 'false'
@@ -283,6 +285,7 @@ Ext.define('SCM.controller.Main', {
 									if (!self.getTabpanel().hasTab(record.data)) {//判断页面是否已经打开
 										Ext.Ajax.request({
 													url : '../scm/control/getUserPermissions?menuId=' + record.get("id"),
+													timeout : SCM.shortTimes,
 													success : function(response, option) {
 														var permission = Ext.decode(response.responseText);
 														//var permission = Ext.decode("{edit: true,add: true,remove: true,view:false}");
@@ -303,6 +306,7 @@ Ext.define('SCM.controller.Main', {
 			logout : function() {//注销
 				Ext.Ajax.request({//判断用户是否已经登录
 					url : '../scm/control/logout',
+					timeout : SCM.shortTimes,
 					success : function(response, option) {
 						Ext.Msg.alert("提示", "你已经注销！", new Function("window.location = window.location;"));
 					}
