@@ -177,4 +177,10 @@
 	<TSystemLogType id='62dab477-87db-4322-a1b0-cffe92fb773f' number='LOG100172' name='日志管理' operateType='查看' keyWord='getUserPermissions?menuId=logManagement' valid='0' />
 	<TSystemLogType id='24b65202-63e3-4c9f-9c1b-db417e984125' number='LOG100173' name='个人资料维护' operateType='查看' keyWord='getUserPermissions?menuId=userInfo' valid='0' />
 	<TSystemLogType id='5fa4e4c8-4af6-4a96-ac4f-6d0a54b12910' number='LOG100174' name='个人资料维护' operateType='修改' keyWord='updateUserLogin' valid='1' />
+	<TSystemLogType id='c967cdcf-710a-4f08-b92a-1205774f9c3b' number='LOG100175' name='成品手工出仓单' operateType='查看' keyWord='getUserPermissions?menuId=productManualOutwarehouse' valid='1' />
+	<TSystemLogType id='b61b8e06-2ad8-4c05-8029-25896e742fde' number='LOG100176' name='成品手工出仓单' operateType='新增' keyWord='createWithEntry?headEntity=ProductManualOutwarehouse&amp;entryEntity=ProductManualOutwarehouse' valid='1' />
+	<TSystemLogType id='2820a017-fec8-42f0-a045-209c9544fcad' number='LOG100177' name='成品手工出仓单' operateType='修改' keyWord='updateWithEntry?headEntity=ProductManualOutwarehouse&amp;entryEntity=ProductManualOutwarehouse' valid='1' />
+	<TSystemLogType id='69e19b11-2df3-4e9c-86ae-b7d9ff4f4ae4' number='LOG100178' name='成品手工出仓单' operateType='删除' keyWord='deleteWithEntry?headEntity=ProductManualOutwarehouse&amp;entryEntity=ProductManualOutwarehouse' valid='1' />
+	<TSystemLogType id='cb9d1d32-95f9-44c8-a695-b06503ebad1c' number='LOG100179' name='成品手工出仓单' operateType='提交' keyWord='submitProductManualOutwarehouse' valid='1' />
+	<TSystemLogType id='0f95bb15-fbee-4313-a327-deef324b3599' number='LOG100180' name='成品手工出仓单' operateType='撤销' keyWord='rollbackProductManualOutwarehouse' valid='1' />
 </entity-engine-xml>
