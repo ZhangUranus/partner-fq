@@ -50,3 +50,10 @@ SCM.halfPageSize=10;	//一半页面页大小
 SCM.billPageSize=15;	//单据页大小
 SCM.comboPageSize=50;		//下拉框最大条数
 SCM.unpageSize=10000;	//不分页大小
+/**
+ * 服务器请求timeout时间
+ */
+SCM.shortTimes = 60000;	//60秒
+SCM.normalTimes = 600000;	//10分钟
+SCM.longTimes = 1800000;	//30分钟
+SCM.limitTimes = 7200000;	//2小时
