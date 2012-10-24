@@ -248,25 +248,32 @@ Ext.define('SCM.controller.ConsignDrawMaterial.ConsignDrawMaterialController', {
 				var me = this;
 				me.MaterialBOMStore.getProxy().extraParams.whereStr = 'MaterialBomV.id = \'' + newValue + '\'';
 				me.MaterialBOMStore.load(function(records, operation, success) {
-							me.editEntry.store.removeAll(false);
 							
-							// 修改加工件后，先清理原加工件耗料列表
-							Ext.Ajax.request({
-										params : {
-											parentId : me.currentRecord.get('id'),
-											entityName : 'ConsignDrawMaterialEntry'
-										},
-										url : '../../scm/control/removeDataByParentId',
-										timeout : SCM.shortTimes,
-										success : function(response, option) {
-											var result = Ext.decode(response.responseText)
-											if (result.success) {
-												//Ext.Msg.alert("提示", "清理完成");
-											} else {
-												showError(result.message);
-											}
-										}
-									});
+							// 使用新方法删除原来数据
+							var tempRecords = [];
+							me.editEntry.store.each(function(record){
+									tempRecords.push(record);
+								}
+							);
+							me.editEntry.store.remove(tempRecords);
+							
+//							// 修改加工件后，先清理原加工件耗料列表
+//							Ext.Ajax.request({
+//										params : {
+//											parentId : me.currentRecord.get('id'),
+//											entityName : 'ConsignDrawMaterialEntry'
+//										},
+//										url : '../../scm/control/removeDataByParentId',
+//										timeout : SCM.shortTimes,
+//										success : function(response, option) {
+//											var result = Ext.decode(response.responseText)
+//											if (result.success) {
+//												//Ext.Msg.alert("提示", "清理完成");
+//											} else {
+//												showError(result.message);
+//											}
+//										}
+//									});
 							for (var i = 0; i < records.length; i++) {
 								var materialVolume = me.materialVolumeFields.getValue() ? me.materialVolumeFields.getValue() : 0;
 								var tempRecord = records[i];
