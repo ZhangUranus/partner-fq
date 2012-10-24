@@ -268,9 +268,11 @@ public class ConsignPriceMgr {
 					curTotalSum = preMonthValue.getBigDecimal("totalsum");
 				}
 				
-//				if(curVolume.compareTo(volume)<0 || curTotalSum.compareTo(totalsum)<0){
-//					throwExceptionOfMaterialNotEnough(materialId);	//供应商库存数量不足，抛出异常
-//				}
+				BigDecimal tempVolume = curVolume.add(volume);
+				BigDecimal tempSum = curTotalSum.add(totalsum);
+				if(tempVolume.compareTo(BigDecimal.ZERO)<0 || tempSum.compareTo(BigDecimal.ZERO)<0){
+					throwExceptionOfMaterialNotEnough(materialId);	//供应商库存数量不足，抛出异常
+				}
 				
 				gv = delegator.makeValue("CurConsignPrice");
 				gv.set("year", year);
@@ -279,8 +281,8 @@ public class ConsignPriceMgr {
 				gv.set("materialId", materialId);
 				gv.set("beginvolume", beginVolume);
 				gv.set("beginsum", beginSum);
-				gv.set("volume", curVolume.add(volume));
-				gv.set("totalsum", curTotalSum.add(totalsum));
+				gv.set("volume", tempVolume);
+				gv.set("totalsum", tempVolume);
 				delegator.create(gv);
 			}
 		}
