@@ -223,9 +223,13 @@ public class PriceCalImp4WMA implements IPriceCal {
 		if(value==null){
 			return BigDecimal.ZERO;
 		}else{
-			if(value.getBigDecimal("volume").compareTo(BigDecimal.ZERO) == 0){
+			
+			if(value.getBigDecimal("volume") == null){
+				Debug.logInfo("volume 为null！", module);
 				return BigDecimal.ZERO;
-			}else{
+			} else if(value.getBigDecimal("volume").compareTo(BigDecimal.ZERO) == 0){
+				return BigDecimal.ZERO;
+			} else {
 				return value.getBigDecimal("totalSum").divide(value.getBigDecimal("volume"),6,RoundingMode.DOWN);
 			}
 		}
