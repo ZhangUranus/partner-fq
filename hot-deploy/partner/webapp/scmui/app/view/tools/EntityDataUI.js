@@ -39,6 +39,16 @@ Ext.define('SCM.view.tools.EntityDataUI', {
 																iconCls : 'system-export',
 																action : 'export'
 															}]
+												}, {
+													xtype : 'fieldset',
+													title : '系统结算检查',
+													collapsible : true,
+													items : [{
+																xtype : 'button',
+																text : '结算',
+																iconCls : 'system-search',
+																action : 'settle'
+															}]
 												}]
 									}]
 						});
