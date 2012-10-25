@@ -694,6 +694,14 @@
 		<response name="success" type="none" />
 	</request-map>
 	<!-- 导出系统所有实体数据 -->
+	<!-- 检查结算过程 -->
+	<request-map uri="monthlySettleCheck">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.tools.MonthlyProcessCheckEvents" invoke="monthlySettleCheck" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 检查结算过程 -->
+	
 	<!-- 系统工具类  -->
 	
 	
