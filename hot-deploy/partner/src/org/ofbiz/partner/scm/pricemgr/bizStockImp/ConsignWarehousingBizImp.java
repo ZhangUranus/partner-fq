@@ -16,7 +16,6 @@ import org.ofbiz.partner.scm.pricemgr.IBizStock;
 import org.ofbiz.partner.scm.pricemgr.MaterialBomMgr;
 import org.ofbiz.partner.scm.pricemgr.PriceCalItem;
 import org.ofbiz.partner.scm.pricemgr.PriceMgr;
-import org.ofbiz.partner.scm.pricemgr.Utils;
 
 public class ConsignWarehousingBizImp implements IBizStock {
 	private Delegator delegator = org.ofbiz.partner.scm.common.Utils.getDefaultDelegator();
@@ -24,14 +23,8 @@ public class ConsignWarehousingBizImp implements IBizStock {
 	public synchronized  void updateStock(GenericValue billValue, boolean isOut, boolean isCancel) throws Exception {
 		// 注意不能使用billHead.getDate方法，出产生castException异常
 		Date bizDate = (Date) billValue.get("bizDate");
-		if (bizDate == null || !Utils.isCurPeriod(bizDate)) {
-			throw new Exception("单据业务日期不在当前系统期间");
-		}
 		// 供应商id
 		String processorId = billValue.getString("processorSupplierId");
-		if (processorId == null || processorId.length() < 1) {
-			throw new Exception("委外入库单加工商为空！！！");
-		}
 
 		// 获取单据id分录条目
 		List<GenericValue> entryList = delegator.findByAnd("ConsignWarehousingEntry", UtilMisc.toMap("parentId", billValue.getString("id")));
@@ -46,9 +39,11 @@ public class ConsignWarehousingBizImp implements IBizStock {
 			}
 			BigDecimal sum = null;
 			if (!isOut) {
-				if(!ConsignPriceMgr.getInstance().checkReturnProductWarehousingStatus(processorId, materialId)){
-					throw new Exception("供应商存在未验收加工件，不允许进行入库操作，请访问“委外退货”页面进行验收！");
-				}
+				
+				//将判断迁移到业务类外部，结算时候不需要判断
+//				if(!ConsignPriceMgr.getInstance().checkReturnProductWarehousingStatus(processorId, materialId)){
+//					throw new Exception("供应商存在未验收加工件，不允许进行入库操作，请访问“委外退货”页面进行验收！");
+//				}
 				// log 20120814 jeff 将单件耗料改为总耗料
 				BigDecimal materialSum = ConsignPriceMgr.getInstance().CreateConsignPriceDetailList(processorId, v.getString("bomId"), v.getString("id"), volume);
 				sum = materialSum.add(v.getBigDecimal("processPrice").multiply(volume));

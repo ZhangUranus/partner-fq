@@ -1,5 +1,8 @@
 package org.ofbiz.partner.scm.stock;
 
+import java.util.Date;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -12,6 +15,9 @@ import org.ofbiz.entity.transaction.TransactionUtil;
 import org.ofbiz.partner.scm.common.BillBaseEvent;
 import org.ofbiz.partner.scm.pricemgr.BillType;
 import org.ofbiz.partner.scm.pricemgr.BizStockImpFactory;
+import org.ofbiz.partner.scm.pricemgr.ConsignPriceMgr;
+import org.ofbiz.partner.scm.pricemgr.MaterialBomMgr;
+import org.ofbiz.partner.scm.pricemgr.Utils;
 /**
  * 验收单业务事件类
  * 
@@ -42,7 +48,26 @@ public class ConsignWarehousingEvents {
 				if (billHead == null || billHead.get("bizDate") == null) {
 					throw new Exception("can`t find ConsignWarehousing bill or bizdate is null");
 				}
-
+				// 注意不能使用billHead.getDate方法，出产生castException异常
+				Date bizDate = (Date) billHead.get("bizDate");
+				if (bizDate == null || !Utils.isCurPeriod(bizDate)) {
+					throw new Exception("单据业务日期不在当前系统期间");
+				}
+				// 供应商id
+				String processorId = billHead.getString("processorSupplierId");
+				if (processorId == null || processorId.length() < 1) {
+					throw new Exception("委外入库单加工商为空！！！");
+				}
+				// 获取单据id分录条目
+				List<GenericValue> entryList = delegator.findByAnd("ConsignWarehousingEntry", UtilMisc.toMap("parentId", billHead.getString("id")));
+				for (GenericValue v : entryList) {
+					String materialId = MaterialBomMgr.getInstance().getMaterialIdByBomId(v.getString("bomId"));// 物料id
+					
+					if(!ConsignPriceMgr.getInstance().checkReturnProductWarehousingStatus(processorId, materialId)){
+						throw new Exception("供应商存在未验收加工件，不允许进行入库操作，请访问“委外退货”页面进行验收！");
+					}
+				}
+				
 				BizStockImpFactory.getBizStockImp(BillType.ConsignWarehousing).updateStock(billHead, false, false);
 
 				BillBaseEvent.submitBill(request, response);// 更新单据状态
