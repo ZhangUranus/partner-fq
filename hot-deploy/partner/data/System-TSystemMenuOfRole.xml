@@ -479,4 +479,20 @@
 	<TSystemMenuOfRole id='f2435fc5-fec6-4b6f-965f-3aee599b0886' menuId='productManualOutwarehouse' roleId='b29ff561-c3f3-479e-9496-35b6c87026e1' operateType='D' />
 	<TSystemMenuOfRole id='1beafbb4-4e96-4ed8-882e-095f6b359e39' menuId='productManualOutwarehouse' roleId='b29ff561-c3f3-479e-9496-35b6c87026e1' operateType='N' />
 	<TSystemMenuOfRole id='615c0a8e-5bb2-412f-b8b3-b509be253585' menuId='productManualOutwarehouse' roleId='b29ff561-c3f3-479e-9496-35b6c87026e1' operateType='S' />
+	<TSystemMenuOfRole id='c87ff9b3-ff82-4545-905c-98dd7fb0773a' menuId='productMgr' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='V' />
+	<TSystemMenuOfRole id='ebd91bc4-6d6e-4cb9-a59d-e7978ff40ee6' menuId='productManualOutwarehouse' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='V' />
+	<TSystemMenuOfRole id='6ad40d02-7d96-4924-8284-dfc7ea11dcd6' menuId='productManualOutwarehouse' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='E' />
+	<TSystemMenuOfRole id='0ccd948d-963d-4133-a189-3ce72adfe1ac' menuId='productManualOutwarehouse' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='D' />
+	<TSystemMenuOfRole id='4914919e-9db3-4e7a-8856-b4fda4a2c241' menuId='productManualOutwarehouse' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='N' />
+	<TSystemMenuOfRole id='e7a48619-b554-4db9-8787-ae4d8538e6fd' menuId='productManualOutwarehouse' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='S' />
+	<TSystemMenuOfRole id='fb954d78-c3b0-42ba-9210-a216a091f368' menuId='systemManagement' roleId='8016aad8-02b1-4ac2-8e6f-58060b6ebf61' operateType='V' />
+	<TSystemMenuOfRole id='e00fa4b0-5806-4e7e-825a-8f542d3573ca' menuId='userInfo' roleId='8016aad8-02b1-4ac2-8e6f-58060b6ebf61' operateType='V' />
+	<TSystemMenuOfRole id='898239bb-8607-4f7d-8b33-4749510abdd5' menuId='systemManagement' roleId='751d7677-31d6-4c74-8fbb-1a576993932b' operateType='V' />
+	<TSystemMenuOfRole id='01813028-46d3-4b0c-b308-a50a9fb701b5' menuId='userInfo' roleId='751d7677-31d6-4c74-8fbb-1a576993932b' operateType='V' />
+	<TSystemMenuOfRole id='fb638548-10bd-4c97-890f-21f16c57e63a' menuId='systemManagement' roleId='b29ff561-c3f3-479e-9496-35b6c87026e1' operateType='V' />
+	<TSystemMenuOfRole id='0942e189-7e46-4fbb-ad00-1cc35d6b2228' menuId='userInfo' roleId='b29ff561-c3f3-479e-9496-35b6c87026e1' operateType='V' />
+	<TSystemMenuOfRole id='33d57702-1f3f-4c42-900e-99fd95da87aa' menuId='systemManagement' roleId='3ee6c8bf-0478-472c-a799-e0c6f0a70e48' operateType='V' />
+	<TSystemMenuOfRole id='add64737-61bc-4c7a-96b9-f7d0f0a3c1f4' menuId='userInfo' roleId='3ee6c8bf-0478-472c-a799-e0c6f0a70e48' operateType='V' />
+	<TSystemMenuOfRole id='ada9f007-e3be-4276-b63f-6f6fb6da0adc' menuId='systemManagement' roleId='6f4150c3-c743-458b-9434-66670d272b9c' operateType='V' />
+	<TSystemMenuOfRole id='313ce035-1ff9-4d70-9cf0-dd502274a0aa' menuId='userInfo' roleId='6f4150c3-c743-458b-9434-66670d272b9c' operateType='V' />
 </entity-engine-xml>
