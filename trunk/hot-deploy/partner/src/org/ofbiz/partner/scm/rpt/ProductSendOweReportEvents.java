@@ -209,12 +209,15 @@ public class ProductSendOweReportEvents {
 	public static String queryDetailData(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String weekStr;//查询周
 		String materialId;//物料id
+		String materialName;//物料名称
 		String preWeekBalStr;//上周库存余额
 		if(request.getParameter("week")==null||request.getParameter("week").trim().length()<1)throw new Exception("周不能为空！");
 		if(request.getParameter("materialId")==null||request.getParameter("materialId").trim().length()<1)throw new Exception("物料不能为空！");
+		if(request.getParameter("materialName")==null||request.getParameter("materialName").trim().length()<1)throw new Exception("物料名称不能为空！");
 		if(request.getParameter("preWeekBal")==null||request.getParameter("preWeekBal").trim().length()<1)throw new Exception("上周库存余额不能为空！");
 		weekStr=request.getParameter("week");
 		materialId=request.getParameter("materialId");
+		materialName=request.getParameter("materialName");
 		preWeekBalStr=request.getParameter("preWeekBal");
 		DatePeriod  dp=Utils.getDatePeriodFromWeekStr(weekStr);
 		
@@ -254,13 +257,14 @@ public class ProductSendOweReportEvents {
 		//封装json结果 
 		JSONObject jsResult=new JSONObject();
 		jsResult.put("sucess", true);
+		
+		JSONArray records=new JSONArray();
+		Date firstDate=dp.fromDate;//周的第一天星期日
+		Calendar cal=Calendar.getInstance();
+		cal.setTime(firstDate);
+		
+		BigDecimal preDayBal=new BigDecimal(preWeekBalStr);//上一天余额
 		if(rs!=null&&rs.next()){
-			JSONArray records=new JSONArray();
-			Date firstDate=dp.fromDate;//周的第一天星期日
-			Calendar cal=Calendar.getInstance();
-			cal.setTime(firstDate);
-			
-			BigDecimal preDayBal=new BigDecimal(preWeekBalStr);//上一天余额
 			for(int i=1;i<=7;i++){
 				String dayStr=getStrForDay(i);
 				BigDecimal dayOutQty=rs.getBigDecimal(dayStr+"_NOR_OUT_QTY");
@@ -273,13 +277,24 @@ public class ProductSendOweReportEvents {
 				cal.add(Calendar.DATE, 1);
 				preDayBal=dayBalQty;
 			}
-			jsResult.put("records", records);
 			
-			CommonEvents.writeJsonDataToExt(response, jsResult.toString());
 		}else{
-			throw new Exception("周汇总表没有对应记录,week :"+weekStr+" ; material:"+materialId);
+//			throw new Exception("周汇总表没有对应记录,week :"+weekStr+" ; material:"+materialId);
+			for(int i=1;i<=7;i++){
+				BigDecimal dayOutQty=BigDecimal.ZERO;
+				BigDecimal dayInQty=BigDecimal.ZERO;
+				BigDecimal dayChgQty=BigDecimal.ZERO;
+				BigDecimal dayBalQty=preDayBal.add(dayInQty).subtract(dayChgQty).subtract(dayOutQty);
+				JSONObject dayJson=buildRecord(cal.getTime(),materialName,dayOutQty,dayInQty,dayChgQty,dayBalQty);
+				records.add(dayJson);
+				
+				cal.add(Calendar.DATE, 1);
+				preDayBal=dayBalQty;
+			}
 		}
 		
+		jsResult.put("records", records);
+		CommonEvents.writeJsonDataToExt(response, jsResult.toString());
 		return "sucess";
 	}
 	
