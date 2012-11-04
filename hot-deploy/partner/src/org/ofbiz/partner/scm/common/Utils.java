@@ -17,6 +17,7 @@ import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
 
 import org.codehaus.jackson.map.ObjectMapper;
+import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilProperties;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.DelegatorFactory;

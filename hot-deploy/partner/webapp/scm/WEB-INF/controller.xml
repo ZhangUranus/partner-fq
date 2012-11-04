@@ -477,6 +477,41 @@
 		<response name="success" type="none" />
 	</request-map>
 	
+	<!-- 出货对数单单号获取 -->
+	<request-map uri="getDeliverNumber">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductOutVerifyEvents" invoke="getDeliverNumber" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 出货对数单头获取 -->
+	<request-map uri="getProductOutVerifyHead">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductOutVerifyEvents" invoke="getProductOutVerifyHead" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 出货对数单保存 -->
+	<request-map uri="saveVerifyBill">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductOutVerifyEvents" invoke="saveProductOutVerify" />
+		<response name="success" type="none" />
+	</request-map>
+	
+	<!-- 出货对数单提交 -->
+	<request-map uri="submitVerifyBill">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductOutVerifyEvents" invoke="submitBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 出货对数单撤销 -->
+	<request-map uri="rollbackVerifyBill">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductOutVerifyEvents" invoke="rollbackBill" />
+		<response name="success" type="none" />
+	</request-map>
+	
+	
+	
+	
 	
 	<!-- 系统结算 -->
 	<request-map uri="monthlySettle">

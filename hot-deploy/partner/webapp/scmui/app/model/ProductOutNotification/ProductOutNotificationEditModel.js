@@ -47,7 +47,10 @@ Ext.define('SCM.model.ProductOutNotification.ProductOutNotificationEditModel', {
 						name : 'customerAddress',
 						type : 'string',
 						persist : false
-					}, {
+					},{
+						name : 'deliverNumber',
+						type : 'string'
+					},{
 						name : 'goodNumber',
 						type : 'string'
 					}, {

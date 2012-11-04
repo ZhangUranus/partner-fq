@@ -18,6 +18,7 @@
 		<field name="bizDate" type="date-time"></field>
 		<field name="submitterSystemUserId" type="id-long"></field>
 		<field name="customerId" type="id-long"></field><!-- 客户编码 -->
+		<field name="deliverNumber" type="value"></field><!-- 单号 -->
 		<field name="goodNumber" type="id-long"></field><!-- 货号 -->
 		<field name="planDeliveryDate" type="date-time"></field><!-- 计划出货时间 -->
 		<field name="planHouseNumber" type="id-long"></field><!-- 计划订舱号 -->

@@ -101,6 +101,11 @@ Ext.define('SCM.view.ProductOutNotification.EditUI', {
 																}
 															}, {
 																xtype : 'textfield',
+																name : 'deliverNumber',
+																margin : 5,
+																fieldLabel : '单号'
+															}, {
+																xtype : 'textfield',
 																name : 'goodNumber',
 																margin : 5,
 																fieldLabel : '货号'
@@ -231,8 +236,6 @@ Ext.define('SCM.view.ProductOutNotification.EditUI', {
 																readOnly : true,
 																value : 'N',
 																fieldLabel : '是否完成'
-															}, {
-																xtype : 'label'
 															}, {
 																xtype : 'textarea',
 																name : 'note',

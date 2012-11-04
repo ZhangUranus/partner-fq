@@ -80,7 +80,7 @@ public class MultiEntryCRUDEvent {
 	 * @param headRecord
 	 * @param v
 	 */
-	private static void setGenValFromJsonObj(JSONObject headRecord,
+	public static void setGenValFromJsonObj(JSONObject headRecord,
 			GenericValue v) {
 		ModelEntity vModel = v.getModelEntity();// 获取值对象字段模型
 		// 根据json对象设置对象值

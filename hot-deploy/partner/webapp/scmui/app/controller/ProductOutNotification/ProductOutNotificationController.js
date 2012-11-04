@@ -1,3 +1,7 @@
+/**
+ * 修改备注
+ * 2012-11-3 mark 去除第三个分录功能
+ */
 Ext.define('SCM.controller.ProductOutNotification.ProductOutNotificationController', {
 			extend : 'Ext.app.Controller',
 			mixins : ['SCM.extend.exporter.Exporter', 'SCM.extend.controller.BillCommonController'],
@@ -25,10 +29,7 @@ Ext.define('SCM.controller.ProductOutNotification.ProductOutNotificationControll
 								select : this.showDetail,
 								itemdblclick : this.modifyRecord
 							},
-							// 分录列表事件
-							'ProductOutNotificationlist gridpanel[gridId=entry]' : {
-								select : this.showEntryDetail
-							},
+							
 							// 列表修改按钮
 							'ProductOutNotificationlist button[action=modify]' : {
 								click : this.editRecord
@@ -136,7 +137,6 @@ Ext.define('SCM.controller.ProductOutNotification.ProductOutNotificationControll
 				this.checkSession();
 				this.listPanel = view.down('gridpanel[region=center]');// 表头列表
 				this.detailPanel = view.down('gridpanel[gridId=entry]');// 明细列表
-				this.detailEntryPanel = view.down('gridpanel[gridId=detail]');// 明细列表分录
 				this.newButton = view.down('button[action=addNew]');// 新增按钮
 				this.deleteButton = view.down('button[action=delete]');// 删除按钮
 				this.editButton = view.down('button[action=modify]');// 编辑按钮
@@ -277,7 +277,6 @@ Ext.define('SCM.controller.ProductOutNotification.ProductOutNotificationControll
 				this.listPanel.store.getProxy().extraParams.whereStr = tempString;
 				this.listPanel.store.load();
 				this.detailPanel.store.removeAll();
-				this.detailEntryPanel.store.removeAll();
 				this.changeComponentsState();
 			},
 
@@ -316,20 +315,6 @@ Ext.define('SCM.controller.ProductOutNotification.ProductOutNotificationControll
 				}
 			},
 			
-			// 显示分录明细信息
-			showEntryDetail : function(me, record, index, eOpts) {
-				if (record != null && record.get("id") != null) {
-					var entryStore = this.detailEntryPanel.store;
-					if (entryStore != null) {
-						entryStore.clearFilter(true);
-						entryStore.filter([{
-									property : "parentId",
-									value : record.get("id")
-								}]);
-						entryStore.load();
-					}
-				}
-			},
 			
 			/**
 			 * 查看加工件耗料情况

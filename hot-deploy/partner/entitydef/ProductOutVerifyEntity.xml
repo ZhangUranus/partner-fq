@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements. See the NOTICE file distributed with this work for additional information regarding copyright ownership. The ASF licenses this file to you under the Apache License, Version 2.0 (the "License"); you 
+	may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
+	OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. -->
+<entitymodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/entitymodel.xsd">
+	<!-- ========================================================= -->
+	<!-- ======================== Defaults ======================= -->
+	<!-- ========================================================= -->
+	<title>Entity of an Open For Business Project Component</title>
+	<description>None</description>
+	<copyright>Copyright 2001-2009 The Apache Software Foundation</copyright>
+	<author>None</author>
+	<version>1.0</version>
+	<!-- 对数表头 -->
+	<entity entity-name="ProductOutVerifyHead" package-name="org.ofbiz.scm.ProductOutVerify" title="ProductOutVerifyHead Entity">
+		<field name="deliverNumber" type="value"></field><!-- 出货单号 -->
+		<field name="materialId" type="id-long"></field><!-- 产品编号 -->
+		<field name="sumBoardVolume" type="fixed-point"></field><!-- 总托盘数量 -->
+		<field name="paperBoxVolume" type="fixed-point"></field><!-- 纸箱数量 -->
+		<field name="status" type="int"></field>
+		<field name="createdStamp" type="date-time"></field>
+		<field name="lastUpdatedStamp" type="date-time"></field>
+		<field name="submitStamp" type="date-time"></field>
+		<field name="submitterSystemUserId" type="id-long"></field>
+		<prim-key field="deliverNumber" />
+		<prim-key field="materialId" />
+	</entity>
+	<!-- 对数单分录 -->
+	<entity entity-name="ProductOutVerifyEntry" package-name="org.ofbiz.scm.ProductOutVerify" title="ProductOutVerifyEntry Entity">
+		<field name="id" type="id-long"></field>
+		<field name="deliverNumber" type="value"></field><!-- 出货单号 -->
+		<field name="parentMaterialId" type="id-long"></field><!-- 产品编号 -->
+		<field name="materialId" type="id-long"></field><!-- 打板方式 -->
+		<field name="orderQty" type="fixed-point"></field><!-- 打板数量 -->
+		<field name="sentQty" type="fixed-point"></field><!-- 已出仓数量 -->
+		<field name="warehouseId" type="id-long"></field><!-- 出仓仓库 -->
+		<field name="isFinished" type="indicator" /><!-- 完成标志 -->
+		<prim-key field="id" />
+	</entity>
+	
+	<!-- 表头视图 -->
+	<view-entity entity-name="ProductOutVerifyHeadView" package-name="org.ofbiz.scm.ProductOutVerify" title="ProductOutVerifyHeadView  Entity">
+		<member-entity entity-alias="ProductOutVerifyHeadV" entity-name="ProductOutVerifyHead"></member-entity>
+		<member-entity entity-alias="submitterSystemUserV" entity-name="SystemUser"></member-entity>
+		<alias-all entity-alias="ProductOutVerifyHeadV"></alias-all>
+		
+		<alias name="submitterSystemUserName" entity-alias="submitterSystemUserV" field="name"></alias>
+		
+		<view-link entity-alias="ProductOutVerifyHeadV" rel-entity-alias="submitterSystemUserV" rel-optional="true">
+			<key-map field-name="submitterSystemUserId" rel-field-name="id" />
+		</view-link>
+	</view-entity>
+	
+	
+	<!-- 分录视图 -->
+	<view-entity entity-name="ProductOutVerifyEntryView" package-name="org.ofbiz.scm.ProductOutVerify" title="ProductOutVerifyEntryView  Entity">
+		<member-entity entity-alias="ProductOutVerifyEntryV" entity-name="ProductOutVerifyEntry"></member-entity>
+		<member-entity entity-alias="materialV" entity-name="TMaterial"></member-entity>
+		<member-entity entity-alias="warehouseV" entity-name="Warehouse"></member-entity>
+		<alias-all entity-alias="ProductOutVerifyEntryV"></alias-all>
+		<alias name="materialName" entity-alias="materialV" field="name"></alias>
+		<alias name="warehouseName" entity-alias="warehouseV" field="name"></alias>
+		<view-link entity-alias="ProductOutVerifyEntryV" rel-entity-alias="materialV" rel-optional="true">
+			<key-map field-name="materialId" rel-field-name="id" />
+		</view-link>
+		<view-link entity-alias="ProductOutVerifyEntryV" rel-entity-alias="warehouseV" rel-optional="true">
+			<key-map field-name="warehouseId" rel-field-name="id" />
+		</view-link>
+	</view-entity>
+</entitymodel>
