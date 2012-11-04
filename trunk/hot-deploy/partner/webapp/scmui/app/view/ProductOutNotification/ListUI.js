@@ -1,5 +1,5 @@
 /*
- * 定义物料Bom列表界面 Mark
+ * 定义列表界面 Mark
  */
 Ext.define('SCM.view.ProductOutNotification.ListUI', {
 			extend : 'Ext.container.Container',
@@ -96,7 +96,13 @@ Ext.define('SCM.view.ProductOutNotification.ListUI', {
 													width : 120,
 													groupable : false,
 													text : '地址'
-												}, {
+												},{
+													xtype : 'gridcolumn',
+													dataIndex : 'deliverNumber',
+													width : 80,
+													groupable : false,
+													text : '单号'
+												},{
 													xtype : 'gridcolumn',
 													dataIndex : 'goodNumber',
 													width : 80,
@@ -231,7 +237,7 @@ Ext.define('SCM.view.ProductOutNotification.ListUI', {
 										title : '',
 										gridId : 'entry',
 										region : 'south',
-										height : 120,
+										height : 180,
 										split : true,
 										store : entryStore,
 										columns : [{
@@ -292,46 +298,6 @@ Ext.define('SCM.view.ProductOutNotification.ListUI', {
 													xtype : 'gridcolumn',
 													dataIndex : 'regionId',
 													text : '目的地'
-												}]
-									}, {
-										xtype : 'gridpanel',
-										title : '',
-										gridId : 'detail',
-										region : 'south',
-										height : 120,
-										split : true,
-										store : entryStoreDetail,
-										columns : [{
-													header : '序号',
-													xtype : 'rownumberer',
-													width : 40
-												}, {
-													xtype : 'gridcolumn',
-													dataIndex : 'materialName',
-													text : '板名称'
-												}, {
-													xtype : 'numbercolumn',
-													dataIndex : 'orderQty',
-													text : '计划打板数量'
-												}, {
-													xtype : 'numbercolumn',
-													dataIndex : 'sentQty',
-													text : '已出仓数量'
-												}, {
-													xtype : 'gridcolumn',
-													dataIndex : 'verifyContainerType',
-													text : '核对柜型'
-												}, {
-													xtype : 'gridcolumn',
-													dataIndex : 'warehouseName',
-													text : '出仓仓库'
-												}, {
-													xtype : 'gridcolumn',
-													renderer : SCM.store.basiccode.validRenderer,
-													dataIndex : 'isFinished',
-													width : 80,
-													groupable : false,
-													text : '是否完成'
 												}]
 									}]
 						});

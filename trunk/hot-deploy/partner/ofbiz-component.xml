@@ -34,6 +34,7 @@
 	<entity-resource type="model" reader-name="main" loader="main" location="entitydef/ProductManualOutwarehouseEntity.xml"/>
 	<entity-resource type="model" reader-name="main" loader="main" location="entitydef/ProductMapEntity.xml"/>
 	<entity-resource type="model" reader-name="main" loader="main" location="entitydef/ProductOutNotificationEntity.xml"/>
+	<entity-resource type="model" reader-name="main" loader="main" location="entitydef/ProductOutVerifyEntity.xml"/>
 	<entity-resource type="model" reader-name="main" loader="main" location="entitydef/ProductScanEntity.xml"/>
 	
 	<!-- 系统基础数据 -->
