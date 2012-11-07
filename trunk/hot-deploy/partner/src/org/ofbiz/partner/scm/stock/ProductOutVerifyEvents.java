@@ -1,5 +1,10 @@
 package org.ofbiz.partner.scm.stock;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
@@ -16,6 +21,9 @@ import javolution.util.FastList;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.entity.Delegator;
@@ -27,6 +35,8 @@ import org.ofbiz.entity.transaction.TransactionUtil;
 import org.ofbiz.partner.scm.common.BillBaseEvent;
 import org.ofbiz.partner.scm.common.CommonEvents;
 import org.ofbiz.partner.scm.common.MultiEntryCRUDEvent;
+import org.ofbiz.partner.scm.export.util.ExportType;
+import org.ofbiz.partner.scm.export.util.ExportUtil;
 import org.ofbiz.partner.scm.pricemgr.Utils;
 
 /**
@@ -287,6 +297,103 @@ public class ProductOutVerifyEvents {
 		return "success";
 	}
 	
-	
+	/**
+	 * 导出相同单号对数单
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public static String export(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		String filterDeliverNum=request.getParameter("deliverNumber");
+		//过滤单号
+		if(filterDeliverNum==null||filterDeliverNum.trim().length()<1){
+			throw new Exception("单号为空");
+		}
+
+		Connection conn = ConnectionFactory.getConnection(org.ofbiz.partner.scm.common.Utils.getConnectionHelperName());
+		
+		
+		//构建汇总单号查询语句
+		StringBuffer sql=new StringBuffer();
+		sql.append("select ");
+		sql.append("notification.deliverNumber deliverNumber, ");
+		sql.append("notification.bizdate bizDate, ");
+		sql.append("notification.materialId materialId, ");
+		sql.append("material.name materialName, ");
+		sql.append("notification.sumVolume sumVolume, ");
+		sql.append("notification.sumGrossWeight sumGrossWeight, ");
+		sql.append("notification.sumGrossSize sumGrossSize, ");
+		sql.append("verify.sum_board_volume sumBoardVolume, ");
+		sql.append("verify.paper_box_volume paperBoxVolume, ");
+		sql.append("verify.status status ");
+		sql.append("from ");
+		sql.append("(SELECT ");
+		sql.append("t1.deliver_number deliverNumber, ");
+		sql.append("t2.material_id materialId, ");
+		sql.append("min(t1.biz_date) bizdate, ");
+		sql.append("sum(t2.volume) sumVolume, ");
+		sql.append("sum(t2.gross_weight) sumGrossWeight, ");
+		sql.append("sum(t2.gross_size) sumGrossSize ");
+		sql.append("FROM product_out_notification t1 ");
+		sql.append("inner join product_out_notification_entry t2 on t1.id=t2.parent_id ");
+		sql.append("group by t1.deliver_number,t2.material_id having deliverNumber is not null   ");
+		sql.append(" and deliverNumber='").append(filterDeliverNum).append("'");
+		sql.append(" ) notification left outer join product_out_verify_head  verify on (notification.deliverNumber=verify.deliver_number and notification.materialId=verify.material_id) ");
+		sql.append("left outer join t_material  material on notification.materialId=material.id");
+		
+//		结果json字符串
+		JSONObject json=null;
+		try {
+			ResultSet rs=conn.createStatement().executeQuery(sql.toString());
+			json=org.ofbiz.partner.scm.common.Utils.getJsonArr4ResultSet(rs, request);
+		} catch (Exception e) {
+			throw e;
+		}finally{
+			if(conn!=null){
+				conn.close();
+			}
+		}
+		
+		
+		// 声明一个工作薄
+		HSSFWorkbook workbook = new HSSFWorkbook();
+		// 生成一个表格
+		HSSFSheet sheet = workbook.createSheet("sheet1");
+		HSSFRow headRow=sheet.createRow(0);
+		headRow.createCell(0).setCellValue("filterDeliverNum");
+		
+		
+//		response.reset();
+//		response.setContentType("application/vnd.ms-excel");
+//		response.setHeader("Content-Disposition", "attachment; filename=dddd.xls" );
+//		
+		// 
+		File file=new File("c:/t.xls");
+		
+//		BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));
+//		OutputStream bos = response.getOutputStream();
+//		byte[] buff = new byte[1024];
+//		int readCount = 0;
+//		// 每次从文件流中读1024个字节到缓冲里。
+//		readCount = bis.read(buff);
+//		while (readCount != -1) {
+//			// 把缓冲里的数据写入浏览器
+//			bos.write(buff, 0, readCount);
+//			readCount = bis.read(buff);
+//		}
+//		
+//		if(bis!=null){
+//			bis.close(); 
+//		}
+//		if(bos!=null){
+//			bos.close();
+//		}
+//		response.setStatus(HttpServletResponse.SC_OK);
+//		response.flushBuffer();
+//		CommonEvents.writeJsonDataToExt(response, json.toString()); // 将结果返回前端Ext
+		return "success";
+	}
 	
 }

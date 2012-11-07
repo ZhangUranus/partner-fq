@@ -36,6 +36,10 @@ Ext.define('SCM.controller.ProductOutVerify.ProductOutVerifyController', {
 							// 列表撤销按钮
 							'ProductOutVerifyList button[action=rollback]' : {
 								click : this.rollbackBill
+							},
+							// 列表导出按钮
+							'ProductOutVerifyList button[action=export]' : {
+								click : this.exportBill
 							}
 						});
 			},
@@ -233,5 +237,37 @@ Ext.define('SCM.controller.ProductOutVerify.ProductOutVerifyController', {
 			 			}
 					}
 				});
+			},
+			//导出单据
+			exportBill : function(button){
+				var headRecord=this.getSelectedHead();
+				if(!(headRecord&&headRecord.get("deliverNumber")&&headRecord.get("materialId"))){
+					showError('请选择表头或者表头没有单号！');
+					return;
+				}
+				Ext.Msg.confirm('提示', '确定导出' + headRecord.get("deliverNumber") + '所有记录 ？', confirmChange, this);
+				function confirmChange(id) {
+					if (id == 'yes') {
+//						Ext.Ajax.request({
+//							scope : this,
+//							url : "../../scm/control/exportVerifyBill",
+//							timeout : SCM.limitTimes,
+//							method : "GET",
+//							params : {deliverNumber:headRecord.get("deliverNumber")},
+//							success : function(response, option) {
+//								if(response.responseText.length<1){
+//									showError("系统错误");
+//								}
+//					 			var responseArray = Ext.JSON.decode(response.responseText);
+//					 			if(responseArray.success){
+//					 			}else{
+//					 				showError(responseArray.message);
+//					 			}
+//							}
+//						});
+						window.location.href = '../scm/control/exportVerifyBill?deliverNumber='+headRecord.get("deliverNumber");
+						
+					}
+				}
 			}
 		});
