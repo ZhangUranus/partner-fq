@@ -508,7 +508,12 @@
 		<event type="java" path="org.ofbiz.partner.scm.stock.ProductOutVerifyEvents" invoke="rollbackBill" />
 		<response name="success" type="none" />
 	</request-map>
-	
+	<!-- 导出整张出货单-->
+	<request-map uri="exportVerifyBill">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductOutVerifyEvents" invoke="export" />
+		<response name="success" type="none" />
+	</request-map>
 	
 	
 	
