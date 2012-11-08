@@ -20,6 +20,8 @@ Ext.define('SCM.controller.tools.EntityDataController', {
 				this.exportButton.addListener('click', this.exportData, this); // 监听所有请求回调
 				this.settleButton = this.listContainer.down('button[action=settle]');
 				this.settleButton.addListener('click', this.checkSettle, this); // 监听所有请求回调
+				this.warehouseButton = this.listContainer.down('button[action=warehouse]');
+				this.warehouseButton.addListener('click', this.warehouse, this); // 监听所有请求回调
 			},
 			
 			/**
@@ -62,6 +64,28 @@ Ext.define('SCM.controller.tools.EntityDataController', {
 								var result = Ext.decode(response.responseText)
 								if (result.success) {
 									Ext.Msg.alert("提示", "结算检查成功！");
+								} else {
+									showError(result.message);
+								}
+							}
+						});
+			},
+			
+			/**
+			 * 手工进仓出仓操作
+			 */
+			warehouse : function() {
+				Ext.Ajax.request({
+							scope : this,
+							url : "../../scm/control/manualInOutRun",
+							timeout : SCM.shortTimes,
+							success : function(response, option) {
+								if (response.responseText.length < 1) {
+									showError('系统没有返回结果');
+								}
+								var result = Ext.decode(response.responseText)
+								if (result.success) {
+									Ext.Msg.alert("提示", "手工进仓成功！");
 								} else {
 									showError(result.message);
 								}
