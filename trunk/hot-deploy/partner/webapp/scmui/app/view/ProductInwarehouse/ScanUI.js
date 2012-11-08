@@ -20,7 +20,7 @@ Ext.define('SCM.view.ProductInwarehouse.ScanUI', {
 										layout : 'border',
 										items : [{
 													xtype : 'container',
-													height : 230,
+													height : 300,
 													width : 960,
 													layout : {
 														columns : 4,
@@ -38,38 +38,10 @@ Ext.define('SCM.view.ProductInwarehouse.ScanUI', {
 																valueField : 'id',
 																displayField : 'name',
 																store : SCM.store.basiccode.productInStatusStore,
-																margin : 10,
+																margin : 5,
 																width : 320,
 																value : '1',	//默认值
-																hidden : true,
 																allowBlank : false
-															}, {
-																xtype : 'combogrid',
-																fieldLabel : '装货仓库',
-																name : 'warehouseId',
-																valueField : 'id',
-																displayField : 'name',
-																initStore : Ext.data.StoreManager.lookup('WHComboInitStore'),
-																store : Ext.data.StoreManager.lookup('WHComboStore'),
-																margin : 10,
-																width : 320,
-																matchFieldWidth : false,
-																allowBlank : false,
-																listConfig : {
-																	width : 185,
-																	height : SCM.MaxSize.COMBOGRID_HEIGHT,
-																	columns : [{
-																				header : '编码',
-																				dataIndex : 'number',
-																				width : 100,
-																				hideable : false
-																			}, {
-																				header : '名称',
-																				dataIndex : 'name',
-																				width : 80,
-																				hideable : false
-																			}]
-																}
 															}, {
 																xtype : 'label',
 																name : 'qantityName',
@@ -99,13 +71,70 @@ Ext.define('SCM.view.ProductInwarehouse.ScanUI', {
 																}
 															}, {
 																xtype : 'combogrid',
+																fieldLabel : '装货仓库',
+																name : 'warehouseId',
+																valueField : 'id',
+																displayField : 'name',
+																initStore : Ext.data.StoreManager.lookup('WHComboInitStore'),
+																store : Ext.data.StoreManager.lookup('WHComboStore'),
+																margin : 5,
+																width : 320,
+																matchFieldWidth : false,
+																allowBlank : false,
+																listConfig : {
+																	width : 185,
+																	height : SCM.MaxSize.COMBOGRID_HEIGHT,
+																	columns : [{
+																				header : '编码',
+																				dataIndex : 'number',
+																				width : 100,
+																				hideable : false
+																			}, {
+																				header : '名称',
+																				dataIndex : 'name',
+																				width : 80,
+																				hideable : false
+																			}]
+																}
+															}, {
+																xtype : 'label',
+																name : 'qantity',
+																text : '000',
+																rowspan : 7,
+																margin : 10,
+																style : {
+																	'font-weight' : 'bold',
+																	'color' : '#A03070',
+																	'text-align' : 'center',
+																	'font-size' : 140
+																}
+															}, {
+																xtype : 'label',
+																name : 'blank-splice2',
+																text : ' ',
+																rowspan : 7,
+																margin : 30
+															}, {
+																xtype : 'label',
+																name : 'boardCount',
+																text : '0',
+																rowspan : 7,
+																margin : 10,
+																style : {
+																	'font-weight' : 'bold',
+																	'color' : 'red',
+																	'text-align' : 'center',
+																	'font-size' : 140
+																}
+															}, {
+																xtype : 'combogrid',
 																fieldLabel : '包装车间',
 																name : 'workshopId',
 																valueField : 'id',
 																displayField : 'name',
 																initStore : Ext.data.StoreManager.lookup('WSComboInitStore'),
 																store : Ext.data.StoreManager.lookup('WSComboStore'),
-																margin : 10,
+																margin : 5,
 																width : 320,
 																matchFieldWidth : false,
 																allowBlank : false,
@@ -125,46 +154,34 @@ Ext.define('SCM.view.ProductInwarehouse.ScanUI', {
 																			}]
 																}
 															}, {
-																xtype : 'label',
-																name : 'qantity',
-																text : '000',
-																rowspan : 4,
-																margin : 10,
-																style : {
-																	'font-weight' : 'bold',
-																	'color' : '#A03070',
-																	'text-align' : 'center',
-																	'font-size' : 140
-																}
-															}, {
-																xtype : 'label',
-																name : 'blank-splice2',
-																text : ' ',
-																rowspan : 4,
-																margin : 30
-															}, {
-																xtype : 'label',
-																name : 'boardCount',
-																text : '0',
-																rowspan : 4,
-																margin : 10,
-																style : {
-																	'font-weight' : 'bold',
-																	'color' : 'red',
-																	'text-align' : 'center',
-																	'font-size' : 140
-																}
-															}, {
 																xtype : 'textfield',
 																name : 'barcode1',
 																fieldLabel : '产品条码',
-																margin : 10,
+																margin : 5,
 																width : 320
 															}, {
 																xtype : 'textfield',
 																name : 'barcode2',
 																fieldLabel : '序列号',
-																margin : 10,
+																margin : 5,
+																width : 320
+															}, {
+																xtype : 'textfield',
+																name : 'confirmBarcode1',
+																fieldLabel : '确认产品条码',
+																margin : 5,
+																width : 320
+															}, {
+																xtype : 'textfield',
+																name : 'confirmBarcode2',
+																fieldLabel : '确认序列号',
+																margin : 5,
+																width : 320
+															}, {
+																xtype : 'textfield',
+																name : 'ikeaCode',
+																fieldLabel : '宜家编码',
+																margin : 5,
 																width : 320
 															}]
 												}, {
