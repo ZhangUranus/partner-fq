@@ -457,7 +457,7 @@ public class Utils {
 	 */
 	public static String getMaterialIdByIkea(String ikeaId, String qantity) throws Exception{
 		Delegator delegator = DelegatorFactory.getDelegator("default");
-		List<GenericValue> entryList = delegator.findByAnd("ProductMap", UtilMisc.toMap("ikeaId", ikeaId, "boardCount", qantity));
+		List<GenericValue> entryList = delegator.findByAnd("ProductMap", "ikeaId", ikeaId, "boardCount", Integer.parseInt(qantity));
 		if(entryList.size() > 0 && !"".equals(entryList.get(0).getString("materialId")) && entryList.get(0).getString("materialId") != null){
 			return entryList.get(0).getString("materialId");
 		} else {

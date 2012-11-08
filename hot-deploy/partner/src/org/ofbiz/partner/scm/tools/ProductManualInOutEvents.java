@@ -126,7 +126,9 @@ public class ProductManualInOutEvents {
 					
 					// 添加该分录耗料到耗料列表
 					consumeMaterialList.addAll(Utils.getBomMaterialDetail(materialId, 0));
-					
+					if(sort >100){
+						break;
+					}
 					sort ++;
 				} else if( type == 1 ) {
 					// 出仓操作，暂时不考虑出仓功能，为空
