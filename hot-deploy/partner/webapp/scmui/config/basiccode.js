@@ -37,6 +37,9 @@ SCM.store.basiccode.validRenderer = function(value) {
 SCM.store.basiccode.billStatusStore = new Ext.data.Store({
 			fields : ['id', 'name'],
 			data : [{
+						'id' : -1,
+						'name' : '未保存'
+					}, {
 						'id' : 0,
 						'name' : '保存'
 					}, {
@@ -51,7 +54,9 @@ SCM.store.basiccode.billStatusStore = new Ext.data.Store({
 					}]
 		});
 SCM.store.basiccode.billStatusRenderer = function(value) {
-	if (value == 0) {
+	if (value == -1) {
+		return '未保存';
+	} else if (value == 0) {
 		return '保存';
 	} else if (value == 1) {
 		return '已审核';

@@ -368,23 +368,25 @@ Ext.define('SCM.view.ProductOutNotification.EditUI', {
 																},
 																dataIndex : 'grossSize',
 																text : '订单毛体积'
-															}, {
-																xtype : 'numbercolumn',
-																editor : {
-																	xtype : 'numberfield',
-																	hideTrigger : true
-																},
-																dataIndex : 'sumBoardVolume',
-																text : '总托盘数量'
-															}, {
-																xtype : 'numbercolumn',
-																editor : {
-																	xtype : 'numberfield',
-																	hideTrigger : true
-																},
-																dataIndex : 'paperBoxVolume',
-																text : '纸箱数量'
-															}],
+															}
+//															, {
+//																xtype : 'numbercolumn',
+//																editor : {
+//																	xtype : 'numberfield',
+//																	hideTrigger : true
+//																},
+//																dataIndex : 'sumBoardVolume',
+//																text : '总托盘数量'
+//															}, {
+//																xtype : 'numbercolumn',
+//																editor : {
+//																	xtype : 'numberfield',
+//																	hideTrigger : true
+//																},
+//																dataIndex : 'paperBoxVolume',
+//																text : '纸箱数量'
+//															}
+															],
 													viewConfig : {},
 													plugins : [cellEditing],
 													dockedItems : [{

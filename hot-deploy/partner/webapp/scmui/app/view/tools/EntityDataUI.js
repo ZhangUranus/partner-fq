@@ -49,6 +49,16 @@ Ext.define('SCM.view.tools.EntityDataUI', {
 																iconCls : 'system-search',
 																action : 'settle'
 															}]
+												}, {
+													xtype : 'fieldset',
+													title : '手工进仓出仓操作',
+													collapsible : true,
+													items : [{
+																xtype : 'button',
+																text : '启动手工进仓',
+																iconCls : 'system-save',
+																action : 'warehouse'
+															}]
 												}]
 									}]
 						});
