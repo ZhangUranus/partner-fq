@@ -93,6 +93,12 @@ Ext.define('SCM.view.ProductOutVerify.ListUI', {
 													text : '单据状态'
 												}, {
 													xtype : 'gridcolumn',
+													renderer : SCM.store.basiccode.validRenderer,
+													dataIndex : 'isFinished',
+													width : 80,
+													text : '是否完成'
+												}, {
+													xtype : 'gridcolumn',
 													dataIndex : 'materialName',
 													width : 170,
 													text : '产品名称'

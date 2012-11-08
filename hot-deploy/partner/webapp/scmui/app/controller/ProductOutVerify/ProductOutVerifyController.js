@@ -2,7 +2,7 @@ Ext.define('SCM.controller.ProductOutVerify.ProductOutVerifyController', {
 			extend : 'Ext.app.Controller',
 			mixins : ['SCM.extend.exporter.Exporter', 'SCM.extend.controller.BillCommonController'],
 			views : ['ProductOutVerify.ListUI', 'ProductOutVerify.EditUI'],
-			stores : ['ProductOutVerify.ProductOutVerifyStore', 'ProductOutVerify.ProductOutVerifyEditStore', 'ProductOutVerify.ProductOutVerifyEditEntryStore', 'ProductOutVerify.DeliverNumberStore'],
+			stores : ['ProductOutVerify.ProductOutVerifyEditStore', 'ProductOutVerify.ProductOutVerifyEditEntryStore', 'ProductOutVerify.DeliverNumberStore'],
 			requires : ['SCM.model.ProductOutVerify.ProductOutVerifyActionModel'],
 			gridTitle : '仓库调整单',
 			editName : 'ProductOutVerifyedit',

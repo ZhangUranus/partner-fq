@@ -68,6 +68,9 @@ Ext.define('SCM.model.ProductOutVerify.ProductOutVerifyEditModel', {
 					}, {
 						name : 'status',
 						type : 'int'
+					}, {
+						name : 'isFinished',
+						type : 'string'
 					}],
 			proxy : {
 				type : 'jsonajax',
