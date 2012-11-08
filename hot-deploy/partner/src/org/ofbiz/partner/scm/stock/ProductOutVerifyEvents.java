@@ -127,7 +127,8 @@ public class ProductOutVerifyEvents {
 		sql.append("notification.sumGrossSize sumGrossSize, ");
 		sql.append("verify.sum_board_volume sumBoardVolume, ");
 		sql.append("verify.paper_box_volume paperBoxVolume, ");
-		sql.append("IFNULL(verify.status,-1) status ");
+		sql.append("IFNULL(verify.status,-1) status, ");
+		sql.append("IFNULL(verify.is_finished,'N') isFinished ");
 		sql.append("from ");
 		sql.append("(SELECT ");
 		sql.append("t1.deliver_number deliverNumber, ");
