@@ -2,7 +2,7 @@ package org.ofbiz.partner.scm.stock;
 
 
 //业务标记，进仓,出仓,改板
-enum ProductStockType{
+public enum ProductStockType{
 	IN(1),OUT(2),CHG(3);
 	
 	ProductStockType(int v){

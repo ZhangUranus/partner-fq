@@ -13,7 +13,7 @@
 	<version>1.0</version>
 	<!-- 产品扫描中间表 -->
 	<entity entity-name="ProductScan" package-name="org.ofbiz.scm.scan" title="ProductScan Entity">
-		<field name="id" type="id-long"></field><!-- 产品编码 -->
+		<field name="id" type="id-long"></field><!-- UUID -->
 		<field name="productId" type="id-long"></field><!-- 产品编码 -->
 		<field name="bizDate" type="date-time"></field><!-- 日期 -->
 		<field name="qantityC" type="very-short"></field><!-- 板数量(字符) -->
@@ -28,12 +28,25 @@
 		<field name="status" type="int"></field><!-- 状态(0：待处理，1：处理中，2：已处理) -->
 		<prim-key field="id" />
 	</entity>
-	<!-- 产品扫描中间表 -->
+	<!-- 仓库条码箱（存放现有仓库所有条码记录，入仓增加，出仓删除） -->
 	<entity entity-name="ProductBarcodeBox" package-name="org.ofbiz.scm.scan" title="ProductBarcodeBox Entity">
-		<field name="id" type="id-long"></field><!-- 产品编码 -->
+		<field name="id" type="id-long"></field><!-- UUID -->
 		<field name="bizDate" type="date-time"></field><!-- 日期 -->
 		<field name="barcode1" type="value"></field><!-- 条码 -->
 		<field name="barcode2" type="value"></field><!-- 流水码 -->
+		<prim-key field="id" />
+	</entity>
+	<!-- 产品批量出仓入仓临时表（完成后删除） -->
+	<entity entity-name="ProductInOutBarcodeTemp" package-name="org.ofbiz.scm.scan" title="ProductInOutBarcodeTemp Entity">
+		<field name="id" type="id-long"></field><!-- UUID -->
+		<field name="bizDate" type="date-time"></field><!-- 日期 -->
+		<field name="barcode1" type="value"></field><!-- 条码 -->
+		<field name="barcode2" type="value"></field><!-- 流水码 -->
+		<field name="warehouseWarehouseId" type="id-long"></field><!-- 仓库 -->
+		<field name="workshopWorkshopId" type="id-long"></field><!-- 车间 -->
+		<field name="goodNumber" type="id-long"></field><!-- 货号，出仓时需要填写 -->
+		<field name="type" type="int"></field><!-- 出入仓类型，0：进仓；1：出仓 -->
+		<field name="valid" type="indicator" /><!-- 是否完成，Y：已完成；N：未处理 -->
 		<prim-key field="id" />
 	</entity>
 </entitymodel>
