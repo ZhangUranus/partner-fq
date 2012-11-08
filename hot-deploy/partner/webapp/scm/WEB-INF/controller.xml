@@ -470,6 +470,12 @@
 		<event type="java" path="org.ofbiz.partner.scm.stock.ProductOutNotificationEvents" invoke="getMaterialIdByIkea" />
 		<response name="success" type="none" />
 	</request-map>
+	<!-- 判断是否存在出货对数单 -->
+	<request-map uri="hasVerifyBill">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductOutNotificationEvents" invoke="hasVerifyBill" />
+		<response name="success" type="none" />
+	</request-map>
 	<!-- 出货通知单导入 -->
 	<request-map uri="impOutNotificationBill">
 		<security https="false" auth="false" />
@@ -493,6 +499,12 @@
 	<request-map uri="saveVerifyBill">
 		<security https="false" auth="false" />
 		<event type="java" path="org.ofbiz.partner.scm.stock.ProductOutVerifyEvents" invoke="saveProductOutVerify" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 出货对数单删除 -->
+	<request-map uri="removeVerifyHead">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductOutVerifyEvents" invoke="removeVerifyHead" />
 		<response name="success" type="none" />
 	</request-map>
 	
@@ -741,6 +753,13 @@
 		<response name="success" type="none" />
 	</request-map>
 	<!-- 检查结算过程 -->
+	<!-- 手工进仓出仓操作 -->
+	<request-map uri="manualInOutRun">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.tools.ProductManualInOutEvents" invoke="manualInOutRun" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 手工进仓出仓操作 -->
 	
 	<!-- 系统工具类  -->
 	
