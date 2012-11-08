@@ -191,18 +191,22 @@ Ext.define('SCM.controller.ProductOutNotification.ProductOutNotificationControll
 				if (record.get('status') == '0') {
 					this.setFieldsReadOnly(false);
 					this.setGridEditAble(true);
-					//this.saveButton.setDisabled(false);
+					this.saveButton.setDisabled(false);
 					this.clearButton.setDisabled(false);
 					this.submitEditButton.setDisabled(false);
+					
+					//隐藏编辑按钮
 					this.viewDetailButton.setVisible(false);
-					this.editDetailButton.setVisible(true);
+					this.editDetailButton.setVisible(false);
 				} else {
 					this.setFieldsReadOnly(true);
 					this.setGridEditAble(false);
-					//this.saveButton.setDisabled(true);
+					this.saveButton.setDisabled(true);
 					this.clearButton.setDisabled(true);
 					this.submitEditButton.setDisabled(true);
-					this.viewDetailButton.setVisible(true);
+					
+					//隐藏编辑按钮
+					this.viewDetailButton.setVisible(false);
 					this.editDetailButton.setVisible(false);
 				}
 			},
@@ -391,6 +395,75 @@ Ext.define('SCM.controller.ProductOutNotification.ProductOutNotificationControll
 						});
 				if (me.detailEditWin.isVisible()) {
 					me.detailEditWin.close();
+				}
+			},
+			
+			/**
+			 * 重写撤销单据方法
+			 * 
+			 * @param {}
+			 *            button
+			 */
+			rollbackBill : function(button) {
+				var me = this;
+				record = me.getSelectRecord();
+				if (!me.isRollbackBillAble(record)) {
+					return;
+				}
+				if(!me.isSubmitUser(record)){
+					showWarning('非该单据提交人，无法进行撤销操作！');
+					return;
+				}
+				Ext.Msg.confirm('提示', '确定撤销该' + me.gridTitle + '？', confirmChange, me);
+				function confirmChange(id) {
+					if (id == 'yes') {
+						/* 判断是否可提交 */
+						if (me.hasSubmitLock()) {
+							me.getSubmitLock();//获取提交锁
+							Ext.Ajax.request({
+								scope : me,
+								url : "../../scm/control/hasVerifyBill",
+								timeout : SCM.shortTimes,
+								params : {
+									deliver_number : record.get("deliverNumber")
+								},
+								success : function(response, option) {
+									if (response.responseText.length < 1) {
+										showError('检查出货通知单状态出错！');
+									}
+									var result = Ext.decode(response.responseText)
+									if (result.success) {
+										showWarning('存在相关的出货对数单，无法进行撤销操作，请先删除相关出货对数单！');
+										me.releaseSubmitLock();
+									} else {
+										Ext.Ajax.request({
+											scope : me,
+											params : {
+												billId : record.get('id'),
+												entity : me.entityName
+											},
+											url : me.getRollbackBillUrl(),
+											timeout : SCM.shortTimes,
+											success : function(response, option) {
+												var result = Ext.decode(response.responseText)
+												if (result.success) {
+													me.rollbackBillSuccess(response, option);
+													Ext.Msg.alert("提示", "撤销成功！");
+												} else {
+													showError(result.message);
+												}
+												me.refreshRecord();
+												me.releaseSubmitLock();
+											}
+										});
+									}
+								}
+							});
+							
+						} else {
+							showWarning('上一次操作还未完成，请稍等！');
+						}
+					}
 				}
 			},
 			

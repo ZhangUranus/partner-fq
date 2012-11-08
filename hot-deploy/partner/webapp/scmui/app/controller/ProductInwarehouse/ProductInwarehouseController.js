@@ -534,6 +534,9 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 			this.scanFields = this.scanForm.query("textfield{hidden==false}{readOnly==false}"); // 取所有显示的field
 			this.barcode1Field = this.winScan.down('textfield[name=barcode1]');
 			this.barcode2Field = this.winScan.down('textfield[name=barcode2]');
+			this.confirmBarcode1Field = this.winScan.down('textfield[name=confirmBarcode1]');
+			this.confirmBarcode2Field = this.winScan.down('textfield[name=confirmBarcode2]');
+			this.ikeaCodeField = this.winScan.down('textfield[name=ikeaCode]');
 			this.qantityLabel = this.winScan.down('label[name=qantity]');
 			this.boardCountLabel = this.winScan.down('label[name=boardCount]');
 			this.isInitScanEvent = false;
@@ -548,11 +551,26 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 	initScanEvent : function() {
 		if (!this.isInitScanEvent) {
 			var barcode1Map = new Ext.util.KeyMap(this.barcode1Field.getEl(), [{
-								scope : this,
+								scope : this.barcode2Field,
 								key : Ext.EventObject.ENTER,
 								fn : this.changeFocus
 							}]);
 			var barcode2Map = new Ext.util.KeyMap(this.barcode2Field.getEl(), [{
+								scope : this.confirmBarcode1Field,
+								key : Ext.EventObject.ENTER,
+								fn : this.changeFocus
+							}]);
+			var confirmBarcode1Map = new Ext.util.KeyMap(this.confirmBarcode1Field.getEl(), [{
+								scope : this,
+								key : Ext.EventObject.ENTER,
+								fn : this.checkBarcode1
+							}]);
+			var confirmBarcode2Map = new Ext.util.KeyMap(this.confirmBarcode2Field.getEl(), [{
+								scope : this,
+								key : Ext.EventObject.ENTER,
+								fn : this.checkBarcode2
+							}]);
+			var ikeaCodeMap = new Ext.util.KeyMap(this.ikeaCodeField.getEl(), [{
 								scope : this,
 								key : Ext.EventObject.ENTER,
 								fn : this.submitScan
@@ -565,7 +583,33 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 	 * 当在产品条码输入框点击回车时，切换焦点到序列号输入框
 	 */
 	changeFocus : function() {
-		this.barcode2Field.focus();
+		this.focus();
+	},
+	
+	/**
+	 * 确认产品条码
+	 */
+	checkBarcode1 : function() {
+		if(this.barcode1Field.getValue() != this.confirmBarcode1Field.getValue()){
+			this.clearField();
+			showError('产品条码和确认产品条码不一致，请检查并重新扫描！');
+			this.barcode1Field.focus(true);
+		} else {
+			this.confirmBarcode2Field.focus();
+		}
+	},
+	
+	/**
+	 * 确认序列号
+	 */
+	checkBarcode2 : function() {
+		if(this.barcode2Field.getValue() != this.confirmBarcode2Field.getValue()){
+			this.clearField();
+			showError('序列号和确认序列号不一致，请检查并重新扫描！');
+			this.barcode1Field.focus(true);
+		} else {
+			this.ikeaCodeField.focus();
+		}
 	},
 
 	/**
@@ -574,7 +618,15 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 	submitScan : function() {
 		var me = this;
 		if (me.barcode1Field.getValue() && me.barcode2Field.getValue()) {
-
+			var barcode = Ext.create('SCM.extend.utils.Barcode', me.barcode1Field.getValue(), me.barcode2Field.getValue());
+			var ikeaCode = barcode.getCodeForIkea();
+			if(ikeaCode != this.ikeaCodeField.getValue()){
+				this.clearField();
+				showError('宜家编码和产品条码不一致，请检查并重新扫描！');
+				this.barcode1Field.focus(true);
+				return false;
+			}
+			
 			// 将form数据转换
 			var recordsData = [];
 			recordsData.push(me.scanForm.getValues());
@@ -594,21 +646,31 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 							var result = Ext.JSON.decode(response.responseText);
 							if (result.success) {
 								me.qantityLabel.setText(result.message.qantity);
-								me.barcode1Field.setValue('');
-								me.barcode2Field.setValue('');
+								me.clearField();
 								me.scanBoardCount++;
 								me.boardCountLabel.setText(me.scanBoardCount);
 								me.scanGrid.store.load();
 								me.barcode1Field.focus(true);
 							} else {
-								me.barcode1Field.setValue('');
-								me.barcode2Field.setValue('');
+								me.clearField();
 								showError(result.message);
 								me.barcode1Field.focus(true);
 							}
 						}
 					});
 		}
+	},
+	
+	/**
+	 * 清理文本框
+	 * @return {}
+	 */
+	clearField : function() {
+		this.barcode1Field.setValue('');
+		this.barcode2Field.setValue('');
+		this.confirmBarcode1Field.setValue('');
+		this.confirmBarcode2Field.setValue('');
+		this.ikeaCodeField.setValue('');
 	},
 
 	/**
