@@ -568,6 +568,8 @@ public class ProductOutwarehouseEvents {
 					}
 					
 					GenericValue verifyHead = verifyHeadlList.get(0); // 只取第一条，默认一对单号、产品编码只能唯一对应一条对数单
+					verifyHead.setString("isFinished", isFinished ? "Y" : "N");
+					
 					// 判断该对数单是否为提交状态，如果未提交，将状态更新为提交
 					if (needSubmit) {
 						verifyHead.set("status", 4);
@@ -581,9 +583,9 @@ public class ProductOutwarehouseEvents {
 			if (isUpdate) {
 				headValue.store();
 
-				// 返填出货通知单状态
-				v.setString("isFinished", isFinished ? "Y" : "N");
-				v.store();
+//				// 返填出货通知单状态
+//				v.setString("isFinished", isFinished ? "Y" : "N");
+//				v.store();
 			}
 		}
 		return isUpdate;
