@@ -18,6 +18,7 @@
 		<field name="sumBoardVolume" type="fixed-point"></field><!-- 总托盘数量 -->
 		<field name="paperBoxVolume" type="fixed-point"></field><!-- 纸箱数量 -->
 		<field name="status" type="int"></field>
+		<field name="isFinished" type="indicator" /><!-- 是否完成 -->
 		<field name="createdStamp" type="date-time"></field>
 		<field name="lastUpdatedStamp" type="date-time"></field>
 		<field name="submitStamp" type="date-time"></field>
