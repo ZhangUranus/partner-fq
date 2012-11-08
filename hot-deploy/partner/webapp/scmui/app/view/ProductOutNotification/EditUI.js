@@ -226,19 +226,9 @@ Ext.define('SCM.view.ProductOutNotification.EditUI', {
 																fieldLabel : '净重/KG',
 																name : 'neatWeight',
 																margin : 5
-															}
-//															, {
-//																xtype : 'combobox',
-//																store : SCM.store.basiccode.validStore,
-//																name : 'isFinished',
-//																displayField : 'name',
-//																margin : 5,
-//																valueField : 'id',
-//																readOnly : true,
-//																value : 'N',
-//																fieldLabel : '是否完成'
-//															}
-															, {
+															}, {
+																xtype : 'label'
+															}, {
 																xtype : 'textarea',
 																name : 'note',
 																margin : 5,
