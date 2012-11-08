@@ -287,7 +287,7 @@ public class ProductOutVerifyEvents {
 		if(filterDeliverNum==null||filterDeliverNum.trim().length()<1){
 			throw new Exception("单号为空");
 		}
-
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
 		Connection conn = ConnectionFactory.getConnection(org.ofbiz.partner.scm.common.Utils.getConnectionHelperName());
 		
 		
@@ -319,56 +319,81 @@ public class ProductOutVerifyEvents {
 		sql.append(" ) notification left outer join product_out_verify_head  verify on (notification.deliverNumber=verify.deliver_number and notification.materialId=verify.material_id) ");
 		sql.append("left outer join t_material  material on notification.materialId=material.id");
 		
-//		结果json字符串
-		JSONObject json=null;
 		try {
 			ResultSet rs=conn.createStatement().executeQuery(sql.toString());
-			json=org.ofbiz.partner.scm.common.Utils.getJsonArr4ResultSet(rs, request);
-		} catch (Exception e) {
-			throw e;
-		}finally{
-			if(conn!=null){
-				conn.close();
+			
+		
+			// 声明一个工作薄
+			HSSFWorkbook workbook = new HSSFWorkbook();
+			// 生成一个表格
+			HSSFSheet sheet = workbook.createSheet("sheet1");
+			//对数单号行
+			HSSFRow deliverNumRow=sheet.createRow(0);
+			deliverNumRow.createCell(0).setCellValue(filterDeliverNum);
+			//表头行
+			HSSFRow headRow=sheet.createRow(2);
+			headRow.createCell(0).setCellValue("产品");
+			headRow.createCell(1).setCellValue("订单总数量");
+			headRow.createCell(2).setCellValue("订单总重量");
+			headRow.createCell(3).setCellValue("订单总体积");
+			headRow.createCell(4).setCellValue("打板方式");
+			headRow.createCell(5).setCellValue("打板数量");
+			headRow.createCell(6).setCellValue("已出仓数量");
+			headRow.createCell(7).setCellValue("出仓仓库");
+			headRow.createCell(8).setCellValue("是否完成");
+			int curRow=3;
+			while(rs.next()){
+				HSSFRow tmpRow=sheet.createRow(curRow);
+				String materialId=rs.getString("materialId");
+				tmpRow.createCell(0).setCellValue(rs.getString("materialName"));
+				tmpRow.createCell(1).setCellValue(rs.getBigDecimal("sumVolume").doubleValue());
+				tmpRow.createCell(2).setCellValue(rs.getBigDecimal("sumGrossWeight").doubleValue());
+				tmpRow.createCell(3).setCellValue(rs.getBigDecimal("sumGrossSize").doubleValue());
+				
+				//查询分录
+				List<GenericValue> entrys=delegator.findByAnd("ProductOutVerifyEntryView", UtilMisc.toMap("deliverNumber", filterDeliverNum, "parentMaterialId", materialId));
+				if(entrys!=null&&entrys.size()>0){
+					for (int i=0;i<entrys.size();i++) {
+						GenericValue ev=entrys.get(i);
+						HSSFRow entryRow=null;
+						if(0==i){
+							entryRow=tmpRow;
+						}else{
+							entryRow=sheet.createRow(++curRow);
+						}
+						entryRow.createCell(4).setCellValue(ev.getString("materialName"));
+						entryRow.createCell(5).setCellValue(ev.getBigDecimal("orderQty").doubleValue());
+						entryRow.createCell(6).setCellValue(ev.getBigDecimal("sentQty").doubleValue());
+						entryRow.createCell(7).setCellValue(ev.getString("warehouseName"));
+						if(ev.getBoolean("isFinished")){
+							entryRow.createCell(8).setCellValue("是");
+						}else{
+							entryRow.createCell(8).setCellValue("否");
+						}
+						
+					}
+					
+				}
+				
+				
+				++curRow;
 			}
-		}
-		
-		
-		// 声明一个工作薄
-		HSSFWorkbook workbook = new HSSFWorkbook();
-		// 生成一个表格
-		HSSFSheet sheet = workbook.createSheet("sheet1");
-		HSSFRow headRow=sheet.createRow(0);
-		headRow.createCell(0).setCellValue("filterDeliverNum");
-		
-		
-//		response.reset();
-//		response.setContentType("application/vnd.ms-excel");
-//		response.setHeader("Content-Disposition", "attachment; filename=dddd.xls" );
-//		
-		// 
-		File file=new File("c:/t.xls");
-		
-//		BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));
-//		OutputStream bos = response.getOutputStream();
-//		byte[] buff = new byte[1024];
-//		int readCount = 0;
-//		// 每次从文件流中读1024个字节到缓冲里。
-//		readCount = bis.read(buff);
-//		while (readCount != -1) {
-//			// 把缓冲里的数据写入浏览器
-//			bos.write(buff, 0, readCount);
-//			readCount = bis.read(buff);
-//		}
-//		
-//		if(bis!=null){
-//			bis.close(); 
-//		}
-//		if(bos!=null){
-//			bos.close();
-//		}
-//		response.setStatus(HttpServletResponse.SC_OK);
-//		response.flushBuffer();
-//		CommonEvents.writeJsonDataToExt(response, json.toString()); // 将结果返回前端Ext
+			
+			
+			response.reset();
+			response.setContentType("application/vnd.ms-excel");
+			response.setHeader("Content-Disposition", "attachment; filename=dddd.xls" );
+			OutputStream bos = response.getOutputStream();
+			workbook.write(bos);
+			response.setStatus(HttpServletResponse.SC_OK);
+			response.flushBuffer();
+			} catch (Exception e) {
+				throw e;
+			}finally{
+				if(conn!=null){
+					conn.close();
+				}
+			}
 		return "success";
 	}
 }
