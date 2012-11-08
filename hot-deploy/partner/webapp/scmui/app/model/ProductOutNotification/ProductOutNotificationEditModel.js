@@ -152,7 +152,7 @@ Ext.define('SCM.model.ProductOutNotification.ProductOutNotificationEditModel', {
 			proxy : {
 				type : 'jsonajax',
 				api : {
-					read : '../../scm/control/requestJsonData?entity=ProductOutNotificationView&distinct=true&fields=id,number,bizDate,submitterSystemUserId,submitterSystemUserName,customerId,customerNumber,customerName,customerContractor,customerPhone,customerAddress,goodNumber,planDeliveryDate,planHouseNumber,planContainerType,inWarehouseName,warehouseId,warehouseName,carNumber,transferType,finalHouseNumber,finalContainerType,finalContainerNumber,sealNumber,arrivedTime,packagedNotSend,leaveTime,grossWeight,tareWeight,neatWeight,isFinished,createdStamp,lastUpdatedStamp,note,status',
+					read : '../../scm/control/requestJsonData?entity=ProductOutNotificationView&distinct=true&fields=id,number,bizDate,submitterSystemUserId,submitterSystemUserName,customerId,customerNumber,customerName,customerContractor,customerPhone,customerAddress,goodNumber,planDeliveryDate,planHouseNumber,planContainerType,inWarehouseName,warehouseId,warehouseName,carNumber,transferType,finalHouseNumber,finalContainerType,finalContainerNumber,sealNumber,arrivedTime,packagedNotSend,leaveTime,grossWeight,tareWeight,neatWeight,isFinished,createdStamp,lastUpdatedStamp,note,status,deliverNumber',
 					destroy : '../../scm/control/deleteWithEntry?headEntity=ProductOutNotification&entryEntity=ProductOutNotificationEntry&cascadeDelete=ProductOutNotificationEntryDetail'
 				},
 				remoteFilter : true

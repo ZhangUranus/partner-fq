@@ -1,18 +1,19 @@
 // 定义数据模型
-Ext.define('SCM.model.ProductOutVerify.ProductOutVerifyEntryModel', {
+Ext.define('SCM.model.ProductOutVerify.ProductOutVerifyEditEntryModel', {
 			extend : 'Ext.data.Model',
 			requires : ['Ext.data.UuidGenerator', 'SCM.extend.proxy.JsonAjax'],
-			alias : 'ProductOutVerifyEntryModel',
+			alias : 'ProductOutVerifyEditEntryModel',
+			// 字段
 			fields : [{
 						name : 'id',
 						type : 'string'
-					},{
+					}, {
 						name : 'deliverNumber',
 						type : 'string'
-					},{
+					}, {
 						name : 'parentMaterialId',
 						type : 'string'
-					},{
+					}, {
 						name : 'materialId',
 						type : 'string'
 					}, {
@@ -44,10 +45,8 @@ Ext.define('SCM.model.ProductOutVerify.ProductOutVerifyEntryModel', {
 			proxy : {
 				type : 'jsonajax',
 				api : {
-					read : '../../scm/control/requestJsonData?entity=ProductOutVerifyEntryView',
-					create : '../../scm/control/addnewJsonData?entity=ProductOutVerifyEntry',
-					update : '../../scm/control/updateJsonData?entity=ProductOutVerifyEntry',
-					destroy : '../../scm/control/deleteJsonData?entity=ProductOutVerifyEntry'
-				}
+					read : '../../scm/control/requestJsonData?entity=ProductOutVerifyEntryView'
+				},
+				remoteFilter : true
 			}
 		});

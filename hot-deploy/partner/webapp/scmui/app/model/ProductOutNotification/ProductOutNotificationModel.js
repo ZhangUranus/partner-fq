@@ -29,6 +29,9 @@ Ext.define('SCM.model.ProductOutNotification.ProductOutNotificationModel', {
 						name : 'customerId',
 						type : 'string'
 					}, {
+						name : 'deliverNumber',
+						type : 'string'
+					}, {
 						name : 'customerNumber',
 						type : 'string',
 						persist : false
