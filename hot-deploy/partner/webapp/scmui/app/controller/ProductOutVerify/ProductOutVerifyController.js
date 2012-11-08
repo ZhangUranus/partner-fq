@@ -1,6 +1,6 @@
 Ext.define('SCM.controller.ProductOutVerify.ProductOutVerifyController', {
 			extend : 'Ext.app.Controller',
-			mixins : ['SCM.extend.exporter.Exporter', 'SCM.extend.controller.BillCommonController'],
+			mixins : [ 'SCM.extend.controller.BillCommonController'],
 			views : ['ProductOutVerify.ListUI', 'ProductOutVerify.EditUI'],
 			stores : ['ProductOutVerify.ProductOutVerifyEditStore', 'ProductOutVerify.ProductOutVerifyEditEntryStore', 'ProductOutVerify.DeliverNumberStore'],
 			requires : ['SCM.model.ProductOutVerify.ProductOutVerifyActionModel'],
@@ -35,7 +35,7 @@ Ext.define('SCM.controller.ProductOutVerify.ProductOutVerifyController', {
 							},
 							// 列表导出
 							'ProductOutVerifyList button[action=export]' : {
-								click : this.exportExcel
+								click : this.exportBill
 							},
 							// 编辑界面分录新增
 							'ProductOutVerifyedit  gridpanel button[action=addLine]' : {
@@ -291,6 +291,29 @@ Ext.define('SCM.controller.ProductOutVerify.ProductOutVerifyController', {
 			// 删除分录
 			deleteLine : function(button) {
 				this.editEntry.store.remove(this.getSelectedEntry());
+			},
+			
+			//导出单据
+			exportBill : function(button){
+				var headRecord=this.getSelectedHead();
+				if(!(headRecord&&headRecord.get("deliverNumber")&&headRecord.get("materialId"))){
+					showError('请选择表头或者表头没有单号！');
+					return;
+				}
+				Ext.Msg.confirm('提示', '确定导出' + headRecord.get("deliverNumber") + '所有记录 ？', confirmChange, this);
+				function confirmChange(id) {
+					if (id == 'yes') {
+						window.location.href = '../scm/control/exportVerifyBill?deliverNumber='+headRecord.get("deliverNumber");
+						
+					}
+				}
+			},
+			getSelectedHead : function() {
+				var selMod = this.listPanel.getSelectionModel();
+				if (selMod != null) {
+					return selMod.getLastSelected();
+				}
 			}
+			
 			
 		});

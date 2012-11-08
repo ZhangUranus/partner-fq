@@ -1,6 +1,7 @@
 package org.ofbiz.partner.scm.stock;
 
 import java.io.File;
+import java.io.OutputStream;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.List;
@@ -382,7 +383,7 @@ public class ProductOutVerifyEvents {
 			
 			response.reset();
 			response.setContentType("application/vnd.ms-excel");
-			response.setHeader("Content-Disposition", "attachment; filename=dddd.xls" );
+			response.setHeader("Content-Disposition", "attachment; filename=VerifyBill.xls" );
 			OutputStream bos = response.getOutputStream();
 			workbook.write(bos);
 			response.setStatus(HttpServletResponse.SC_OK);
