@@ -1,35 +1,35 @@
 // 定义数据模型
-Ext.define('SCM.model.ProductOutVerify.ProductOutVerifyHeadModel', {
+Ext.define('SCM.model.ProductOutVerify.ProductOutVerifyModel', {
 			extend : 'Ext.data.Model',
-			requires : ['Ext.data.UuidGenerator','SCM.extend.proxy.JsonAjax'],
-			alias : 'ProductOutVerifyHeadModel',
+			requires : ['SCM.extend.proxy.JsonAjax'],
+			alias : 'ProductOutVerifyModel',
 			// 字段
 			fields : [{
 						name : 'deliverNumber',
 						type : 'string'
-					},{
+					}, {
 						name : 'bizDate',
 						type : 'date',
 						defaultValue : new Date(),
 						convert : function(value, record) {
 							return new Date(value);
 						}
-					},{
+					}, {
 						name : 'materialId',
 						type : 'string'
 					}, {
 						name : 'materialName',
 						type : 'string',
 						persist : false
-					},{
+					}, {
 						name : 'destinationId',
 						type : 'string',
 						persist : false
-					},{
+					}, {
 						name : 'regionId',
 						type : 'string',
 						persist : false
-					},{
+					}, {
 						name : 'sumVolume',
 						type : 'float',
 						persist : false
@@ -47,16 +47,16 @@ Ext.define('SCM.model.ProductOutVerify.ProductOutVerifyHeadModel', {
 					}, {
 						name : 'paperBoxVolume',
 						type : 'float'
-					},{
+					}, {
 						name : 'status',
 						type : 'int'
-					}
-					],
-			idgen : 'uuid', // 使用uuid生成记录id 每个模型必须要有id字段
+					}],
+			// ,idProperty:'emptyId'//设置一个没用的id，这样才能支持显示多分录
 			proxy : {
 				type : 'jsonajax',
 				api : {
-					read : '../../scm/control/getProductOutVerifyHead'
+					read : '../../scm/control/getProductOutVerifyHead',
+					destroy : '../../scm/control/deleteWithEntry?headEntity=ProductOutVerifyHead&entryEntity=ProductOutVerifyEntry'
 				},
 				remoteFilter : true
 			}
