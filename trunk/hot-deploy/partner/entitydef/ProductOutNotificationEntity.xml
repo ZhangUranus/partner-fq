@@ -147,7 +147,7 @@
 	<view-entity entity-name="ProductOutNotificationDetailView" package-name="org.ofbiz.scm.pricemgr" title="ProductOutNotificationDetailView Entity">
 		<member-entity entity-alias="ProductOutNotificationV" entity-name="ProductOutNotification"></member-entity>
 		<member-entity entity-alias="ProductOutNotificationEntryV" entity-name="ProductOutNotificationEntry"></member-entity>
-		<member-entity entity-alias="ProductOutNotificationEntryDetailV" entity-name="ProductOutNotificationEntryDetail"></member-entity>
+		<member-entity entity-alias="ProductOutVerifyEntryV" entity-name="ProductOutVerifyEntry"></member-entity>
 		<member-entity entity-alias="TMaterialV" entity-name="TMaterial"></member-entity>
 		<member-entity entity-alias="UnitV" entity-name="Unit"></member-entity>
 		<alias name="number" entity-alias="ProductOutNotificationV" field="number"></alias>
@@ -155,16 +155,19 @@
 		<alias name="materialName" entity-alias="TMaterialV" field="name"></alias>
 		<alias name="materialModel" entity-alias="TMaterialV" field="model"></alias>
 		<alias name="unitName" entity-alias="UnitV" field="name"></alias>
-		<alias name="orderQty" entity-alias="ProductOutNotificationEntryDetailV" field="orderQty"></alias>
-		<alias name="sentQty" entity-alias="ProductOutNotificationEntryDetailV" field="sentQty"></alias>
-		<alias name="isFinished" entity-alias="ProductOutNotificationEntryDetailV" field="isFinished"></alias>
+		<alias name="orderQty" entity-alias="ProductOutVerifyEntryV" field="orderQty"></alias>
+		<alias name="sentQty" entity-alias="ProductOutVerifyEntryV" field="sentQty"></alias>
+		<alias name="isFinished" entity-alias="ProductOutVerifyEntryV" field="isFinished"></alias>
 		<view-link entity-alias="ProductOutNotificationV" rel-entity-alias="ProductOutNotificationEntryV" rel-optional="true">
 			<key-map field-name="id" rel-field-name="parentId" />
 		</view-link>
-		<view-link entity-alias="ProductOutNotificationEntryV" rel-entity-alias="ProductOutNotificationEntryDetailV" rel-optional="true">
-			<key-map field-name="id" rel-field-name="parentId" />
+		<view-link entity-alias="ProductOutNotificationV" rel-entity-alias="ProductOutVerifyEntryV" rel-optional="true">
+			<key-map field-name="deliverNumber" rel-field-name="deliverNumber" />
 		</view-link>
-		<view-link entity-alias="ProductOutNotificationEntryDetailV" rel-entity-alias="TMaterialV" rel-optional="true">
+		<view-link entity-alias="ProductOutNotificationEntryV" rel-entity-alias="ProductOutVerifyEntryV" rel-optional="true">
+			<key-map field-name="materialId" rel-field-name="parentMaterialId" />
+		</view-link>
+		<view-link entity-alias="ProductOutVerifyEntryV" rel-entity-alias="TMaterialV" rel-optional="true">
 			<key-map field-name="materialId" rel-field-name="id" />
 		</view-link>
 		<view-link entity-alias="TMaterialV" rel-entity-alias="UnitV" rel-optional="true">
