@@ -2,6 +2,7 @@ package org.ofbiz.partner.scm.stock;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -62,7 +63,13 @@ public class ProductInwarehouseEvents {
 				// 注意不能使用billHead.getDate方法，出产生castException异常
 				bizDate = (Date) billHead.get("bizDate");
 				
-				// 更新周汇总表
+				//确定该单据为扫描单据还是手工单据。
+				boolean isScanBill = false;
+				int billType= billHead.getInteger("billType");
+				if(billType == 2){
+					isScanBill = true;
+				}
+				
 				// 获取单据分录条目
 				List<GenericValue> entryList = delegator.findByAnd("ProductInwarehouseEntry", UtilMisc.toMap("parentId", billId));
 
@@ -84,11 +91,20 @@ public class ProductInwarehouseEvents {
 					BigDecimal volume = v.getBigDecimal("volume");// 入库数量（板）
 					Long qantity = Long.parseLong(barcode.getQuantity());// 板数量（一板有多少产品）
 					
-					// 成品汇总表
-					WeeklyStockMgr.getInstance().updateStock(materialId, bizDate, ProductStockType.IN, volume, false);
+					ProductStockType type = ProductStockType.IN;
+					if("2".equals(v.getString("inwarehouseType"))){
+						type = ProductStockType.CHG;
+					}
 					
-					//综合成品账
-					ProductInOutStockMgr.getInstance().updateStock(materialId, ProductStockType.IN, qantity, volume, false);
+					// 如果是扫描单据，在扫描时已经更新了周汇总和综合成品账报表数据，提交时不需要重复处理
+					if(!isScanBill){
+						// 成品汇总表
+						WeeklyStockMgr.getInstance().updateStock(materialId, bizDate, type, volume, false);
+						
+						//综合成品账
+						ProductInOutStockMgr.getInstance().updateStock(materialId, ProductStockType.IN, qantity, volume, false);
+					}
+					
 					v.set("productWeek", Utils.getYearWeekStr(bizDate));
 					v.set("qantity", qantity);
 					v.store();
@@ -139,7 +155,13 @@ public class ProductInwarehouseEvents {
 				// 注意不能使用billHead.getDate方法，出产生castException异常
 				bizDate = (Date) billHead.get("bizDate");
 				
-				// 更新周汇总表
+				//确定该单据为扫描单据还是手工单据。
+				boolean isScanBill = false;
+				int billType= billHead.getInteger("billType");
+				if(billType == 2){
+					isScanBill = true;
+				}
+				
 				// 获取单据分录条目
 				List<GenericValue> entryList = delegator.findByAnd("ProductInwarehouseEntry", UtilMisc.toMap("parentId", billId));
 
@@ -152,12 +174,20 @@ public class ProductInwarehouseEvents {
 					String materialId = v.getString("materialMaterialId");// 打板物料id
 					BigDecimal volume = v.getBigDecimal("volume");// 入库数量（板）
 					Long qantity = v.getLong("qantity");// 板数量（一板有多少产品）
-
-					// 成品周汇总表
-					WeeklyStockMgr.getInstance().updateStock(materialId, bizDate, ProductStockType.IN, volume, true);
 					
-					// 综合成品账
-					ProductInOutStockMgr.getInstance().updateStock(materialId, ProductStockType.IN, qantity, volume, true);
+					ProductStockType type = ProductStockType.IN;
+					if("2".equals(v.getString("inwarehouseType"))){
+						type = ProductStockType.CHG;
+					}
+					
+					// 如果是扫描单据，在扫描时已经更新了周汇总和综合成品账报表数据，撤销不需要重复处理
+					if(!isScanBill){
+						// 成品周汇总表
+						WeeklyStockMgr.getInstance().updateStock(materialId, bizDate, type, volume, true);
+						
+						// 综合成品账
+						ProductInOutStockMgr.getInstance().updateStock(materialId, ProductStockType.IN, qantity, volume, true);
+					}
 				}
 				// 成品进仓撤销业务操作
 				BizStockImpFactory.getBizStockImp(BillType.ProductWarehouse).updateStock(billHead, true, true);
@@ -189,7 +219,8 @@ public class ProductInwarehouseEvents {
 	 */
 	public static String scanSubmit(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
-
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		
 		boolean beganTransaction = false;
 		try {
 			beganTransaction = TransactionUtil.begin();
@@ -198,14 +229,23 @@ public class ProductInwarehouseEvents {
 			/* 2. 生成成品进仓单 */
 
 			/* 2.1 新建成品进仓单据头 */
-			List<GenericValue> headList = delegator.findByAnd("ProductInwarehouse", "billType", 2 , "submitterSystemUserId" , CommonEvents.getAttributeFormSession(request, "uid"));
+			List<GenericValue> headList = delegator.findByAnd("ProductInwarehouse", "status", 0, "billType", 2 , "submitterSystemUserId" , CommonEvents.getAttributeFormSession(request, "uid"));
 			GenericValue billHead = null;
 			Date currentDate = new Date();
 			String billId = "";
+			boolean isHasHead = false;
 			if(headList.size()>0){
-				billHead = headList.get(0);
-				billId = billHead.getString("id");
-			} else {
+				for(GenericValue headValue : headList){
+					Date bizDate = (Date) headValue.get("bizDate");
+					if(sdf.format(bizDate).equals(sdf.format(currentDate))){
+						billHead = headValue;
+						billId = billHead.getString("id");
+						isHasHead = true;
+						break ;
+					}
+				}
+			}
+			if(!isHasHead){
 				billHead = delegator.makeValue("ProductInwarehouse");
 				billId = UUID.randomUUID().toString();
 				billHead.setString("id", billId);
@@ -284,16 +324,20 @@ public class ProductInwarehouseEvents {
 			// 创建分录
 			delegator.create(entryValue);
 			
-			/*
-			 * 扫描时不进行提交操作，后面再人工提交进仓单
-			 * 
+			ProductStockType type = ProductStockType.IN;
+			if("2".equals(inWarehouseType)){
+				type = ProductStockType.CHG;
+			}
 			
 			// 成品进仓周表
-			WeeklyStockMgr.getInstance().updateStock(materialId, currentDate, ProductStockType.IN, new BigDecimal(1), false);
+			WeeklyStockMgr.getInstance().updateStock(materialId, currentDate, type, new BigDecimal(1), false);
 			
 			// 成品进仓综合成品账
 			ProductInOutStockMgr.getInstance().updateStock(materialId, ProductStockType.IN, Long.parseLong(barcode.getQuantity()), new BigDecimal(1), false);
 			
+			/*
+			 * 扫描时不进行提交操作，后面再人工提交进仓单
+			 * 
 			// 处理成品进仓业务类
 			BizStockImpFactory.getBizStockImp(BillType.ProductWarehouse).updateStock(billHead, false, false);
 			
@@ -354,12 +398,14 @@ public class ProductInwarehouseEvents {
 			/* 2 获取单据分录条目 */
 			List<GenericValue> entryList = delegator.findByAnd("ProductInwarehouseEntry", UtilMisc.toMap("barcode1", barcode1, "barcode2", barcode2));
 			GenericValue entryValue = null;
+			GenericValue billHead = null;
 			boolean isHasBill = false;
 			if(entryList.size()>0){
 				for(GenericValue record : entryList){
 					String billId = record.getString("parentId");
-					List<GenericValue> headList = delegator.findByAnd("ProductInwarehouse", "id", billId, "billType", 2, "submitterSystemUserId" , CommonEvents.getAttributeFormSession(request, "uid"));
+					List<GenericValue> headList = delegator.findByAnd("ProductInwarehouse", "id", billId, "status", 0, "billType", 2, "submitterSystemUserId" , CommonEvents.getAttributeFormSession(request, "uid"));
 					if(headList.size()>0){
+						billHead = headList.get(0);
 						entryValue = record ;
 						isHasBill = true;
 						break;
@@ -388,17 +434,24 @@ public class ProductInwarehouseEvents {
 			Date bizDate = (Date) billHead.get("bizDate");
 
 			BizStockImpFactory.getBizStockImp(BillType.ProductWarehouse).updateStock(billHead, true, true);
-
+			 *
+			 */
+			
+			// 注意不能使用billHead.getDate方法，出产生castException异常
+			Date bizDate = (Date) billHead.get("bizDate");
+			
 			String materialId = entryValue.getString("materialMaterialId");// 打板物料id
 			BigDecimal volume = entryValue.getBigDecimal("volume");// 入库数量（板）
 			Long qantity = entryValue.getLong("qantity");// 板数量（一板有多少产品）
 			
-			// 3.1 成品进仓撤销，负数 
-			WeeklyStockMgr.getInstance().updateStock(materialId, bizDate, ProductStockType.IN, volume, true);
-			ProductInOutStockMgr.getInstance().updateStock(materialId, ProductStockType.IN, qantity, volume, true);
+			ProductStockType type = ProductStockType.IN;
+			if("2".equals(entryValue.getString("inwarehouseType"))){
+				type = ProductStockType.CHG;
+			}
 			
-			 *
-			 */
+			// 3.1 成品进仓撤销，负数 
+			WeeklyStockMgr.getInstance().updateStock(materialId, bizDate, type, volume, true);
+			ProductInOutStockMgr.getInstance().updateStock(materialId, ProductStockType.IN, qantity, volume, true);
 			 
 			entryValue.remove(); // 删除分录
 

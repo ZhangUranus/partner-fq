@@ -34,7 +34,8 @@
 		<field name="orderQty" type="fixed-point"></field><!-- 打板数量 -->
 		<field name="sentQty" type="fixed-point"></field><!-- 已出仓数量 -->
 		<field name="warehouseId" type="id-long"></field><!-- 出仓仓库 -->
-		<field name="isFinished" type="indicator" /><!-- 完成标志 -->
+		<field name="isFinished" type="indicator"></field><!-- 完成标志 -->
+		<field name="sort" type="int"></field>
 		<prim-key field="id" />
 	</entity>
 	

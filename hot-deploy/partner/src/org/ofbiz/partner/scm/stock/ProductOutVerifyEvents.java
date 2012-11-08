@@ -1,17 +1,9 @@
 package org.ofbiz.partner.scm.stock;
 
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.Timestamp;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,20 +16,17 @@ import net.sf.json.JSONObject;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericValue;
 import org.ofbiz.entity.condition.EntityCondition;
+import org.ofbiz.entity.condition.EntityConditionList;
+import org.ofbiz.entity.condition.EntityOperator;
 import org.ofbiz.entity.jdbc.ConnectionFactory;
-import org.ofbiz.entity.transaction.GenericTransactionException;
 import org.ofbiz.entity.transaction.TransactionUtil;
 import org.ofbiz.partner.scm.common.BillBaseEvent;
 import org.ofbiz.partner.scm.common.CommonEvents;
 import org.ofbiz.partner.scm.common.MultiEntryCRUDEvent;
-import org.ofbiz.partner.scm.export.util.ExportType;
-import org.ofbiz.partner.scm.export.util.ExportUtil;
-import org.ofbiz.partner.scm.pricemgr.Utils;
 
 /**
  * 出货对数单业务事件类
@@ -59,7 +48,7 @@ public class ProductOutVerifyEvents {
 		String filterDeliverNum=request.getParameter("query");
 		//构建汇总单号查询语句
 		StringBuffer sql=new StringBuffer();
-		sql.append("SELECT deliver_number FROM product_out_notification group by deliver_number having deliver_number is not null ");
+		sql.append("SELECT deliver_number FROM product_out_notification where status=4 group by deliver_number having deliver_number is not null ");
 		if(filterDeliverNum!=null&&filterDeliverNum.trim().length()>0){
 			sql.append(" and deliver_number like '%").append(filterDeliverNum).append("%' ");
 		}
@@ -138,7 +127,7 @@ public class ProductOutVerifyEvents {
 		sql.append("notification.sumGrossSize sumGrossSize, ");
 		sql.append("verify.sum_board_volume sumBoardVolume, ");
 		sql.append("verify.paper_box_volume paperBoxVolume, ");
-		sql.append("verify.status status ");
+		sql.append("IFNULL(verify.status,-1) status ");
 		sql.append("from ");
 		sql.append("(SELECT ");
 		sql.append("t1.deliver_number deliverNumber, ");
@@ -150,8 +139,10 @@ public class ProductOutVerifyEvents {
 		sql.append("FROM product_out_notification t1 ");
 		sql.append("inner join product_out_notification_entry t2 on t1.id=t2.parent_id ");
 		//过滤日期
+		sql.append("where status=4 ");
+		
 		if(bizDate!=null&&bizDate.trim().length()>0){
-			sql.append("where date_format(t1.biz_date,'%Y-%m-%d')='").append(bizDate).append("' ");
+			sql.append("and date_format(t1.biz_date,'%Y-%m-%d')='").append(bizDate).append("' ");
 		}
 		sql.append("group by t1.deliver_number,t2.material_id having deliverNumber is not null   ");
 		//过滤单号
@@ -246,54 +237,38 @@ public class ProductOutVerifyEvents {
 	}
 	
 	/**
-	 * 出货通知单提交
+	 * 删除出货对数单
 	 * 
 	 * @param request
 	 * @param response
 	 * @return
 	 * @throws Exception
 	 */
-	public static String submitBill(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public static String removeVerifyHead(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String deliverNum=request.getParameter("deliverNumber");
 		String materialId=request.getParameter("materialId");
 		if(deliverNum==null||materialId==null){
 			throw new Exception("单号或者产品id为空");
 		}
+		EntityConditionList<EntityCondition> condition = null;
+		List<EntityCondition> conds = FastList.newInstance();
+		conds.add(EntityCondition.makeCondition("deliverNumber",deliverNum));
+		conds.add(EntityCondition.makeCondition("parentMaterialId",materialId));
+		conds.add(EntityCondition.makeCondition("sentQty", EntityOperator.GREATER_THAN, 0));
+		condition = EntityCondition.makeCondition(conds);
 		
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
-		// 更新状态字段
-		Map<String, Object> fieldSet = new HashMap<String, Object>();
-		fieldSet.put("status", 4);// 设置为已提交状态
-		fieldSet.put("submitterSystemUserId", CommonEvents.getAttributeFormSession(request, "uid"));
-		fieldSet.put("submitStamp", new Timestamp(System.currentTimeMillis()));
-		delegator.storeByCondition("ProductOutVerifyHead", fieldSet, EntityCondition.makeConditionWhere("deliver_Number='" + deliverNum + "'"+" and material_Id='" + materialId + "'"));
-		BillBaseEvent.writeSuccessMessageToExt(response, "提交成功");
-		return "success";
-	}
+		
+		List<GenericValue> valueList  = delegator.findList("ProductOutVerifyEntry", condition, null, null, null, false);
+		if(valueList.size()>0){
+			throw new Exception("该对数单已存在扫描出库的板，不允许删除，请撤销相应扫描后再进行删除！");
+		}
+		
+		delegator.removeByAnd("ProductOutVerifyHead", "deliverNumber" ,deliverNum ,"materialId",materialId);
+		
+		delegator.removeByAnd("ProductOutVerifyEntry", "deliverNumber" ,deliverNum ,"materialId",materialId);
 
-	/**
-	 * 出货通知单撤销
-	 * 
-	 * @param request
-	 * @param response
-	 * @return
-	 * @throws Exception
-	 */
-	public static String rollbackBill(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String deliverNum=request.getParameter("deliverNumber");
-		String materialId=request.getParameter("materialId");
-		if(deliverNum==null||materialId==null){
-			throw new Exception("单号或者产品id为空");
-		}
-		
-		Delegator delegator = (Delegator) request.getAttribute("delegator");
-		// 更新状态字段
-		Map<String, Object> fieldSet = new HashMap<String, Object>();
-		fieldSet.put("status", 0);// 设置为已保存状态
-		fieldSet.put("submitterSystemUserId", null);
-		fieldSet.put("submitStamp", null);
-		delegator.storeByCondition("ProductOutVerifyHead", fieldSet, EntityCondition.makeConditionWhere("deliver_Number='" + deliverNum + "'"+" and material_Id='" + materialId + "'"));
-		BillBaseEvent.writeSuccessMessageToExt(response, "撤销成功");
+		BillBaseEvent.writeSuccessMessageToExt(response, "提交成功");
 		return "success";
 	}
 	
@@ -327,7 +302,7 @@ public class ProductOutVerifyEvents {
 		sql.append("notification.sumGrossSize sumGrossSize, ");
 		sql.append("verify.sum_board_volume sumBoardVolume, ");
 		sql.append("verify.paper_box_volume paperBoxVolume, ");
-		sql.append("verify.status status ");
+		sql.append("IFNULL(verify.status,-1) status ");
 		sql.append("from ");
 		sql.append("(SELECT ");
 		sql.append("t1.deliver_number deliverNumber, ");
@@ -395,5 +370,4 @@ public class ProductOutVerifyEvents {
 //		CommonEvents.writeJsonDataToExt(response, json.toString()); // 将结果返回前端Ext
 		return "success";
 	}
-	
 }
