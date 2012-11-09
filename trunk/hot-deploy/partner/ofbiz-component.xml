@@ -39,7 +39,7 @@
 	
 	<!-- 系统基础数据 -->
     <entity-resource type="data" reader-name="seed" loader="main" location="data/ContentTypeData.xml"/>
-    <entity-resource type="data" reader-name="seed" loader="main" location="data/System-Department.xml"/>
+    <!--entity-resource type="data" reader-name="seed" loader="main" location="data/System-Department.xml"/-->
 	<!-- entity-resource type="data" reader-name="seed" loader="main" location="data/System-PriceMgrParamters.xml"/-->
 	<entity-resource type="data" reader-name="seed" loader="main" location="data/System-TSystemLogType.xml"/>
 	<entity-resource type="data" reader-name="seed" loader="main" location="data/System-TSystemMenu.xml"/>
