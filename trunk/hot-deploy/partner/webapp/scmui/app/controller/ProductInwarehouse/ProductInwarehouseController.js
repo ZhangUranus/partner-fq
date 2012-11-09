@@ -275,6 +275,8 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 												entryRecord.phantom = true;
 												// 设置父id
 												entryRecord.set('parentId', record.get('id'));
+												entryRecord.set('barcode1', record.get('barcode1'));
+												entryRecord.set('barcode2', record.get('barcode2'));
 												entryRecord.set('materialId', values[i].materialId);
 												entryRecord.set('model', values[i].model);
 												entryRecord.set('quantity', values[i].volume * materialVolume);
@@ -392,6 +394,8 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 		detailRecord.phantom = true;
 		// 设置父id
 		detailRecord.set('parentId', this.currentDetailRecord.get('id'));
+		detailRecord.set('barcode1', this.currentDetailRecord.get('barcode1'));
+		detailRecord.set('barcode2', this.currentDetailRecord.get('barcode2'));
 		// 默认单价，金额为零
 		detailRecord.set('price', 0);
 		detailRecord.set('amount', 0);

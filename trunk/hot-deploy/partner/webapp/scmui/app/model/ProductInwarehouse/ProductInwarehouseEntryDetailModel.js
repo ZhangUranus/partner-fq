@@ -10,6 +10,12 @@ Ext.define('SCM.model.ProductInwarehouse.ProductInwarehouseEntryDetailModel', {
 						name : 'parentId',
 						type : 'string'
 					}, {
+						name : 'barcode1',
+						type : 'string'
+					}, {
+						name : 'barcode2',
+						type : 'string'
+					}, {
 						name : 'materialId',
 						type : 'string'
 					}, {

@@ -58,6 +58,11 @@ Ext.define('SCM.view.tools.EntityDataUI', {
 																text : '启动手工进仓',
 																iconCls : 'system-save',
 																action : 'warehouse'
+															},{
+																xtype : 'button',
+																text : '启动手工进仓（不影响结算、耗料）',
+																iconCls : 'system-save',
+																action : 'warehouseWithout'
 															}]
 												}]
 									}]
