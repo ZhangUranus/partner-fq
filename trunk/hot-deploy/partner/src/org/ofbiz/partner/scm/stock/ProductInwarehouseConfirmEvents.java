@@ -163,6 +163,8 @@ public class ProductInwarehouseConfirmEvents {
 						GenericValue cm=delegator.makeValue("ProductInwarehouseEntryDetail");
 						cm.setString("id", UUID.randomUUID().toString());
 						cm.setString("parentId",entryId);
+						cm.set("barcode1", barcode1);
+						cm.set("barcode2", barcode2);
 						cm.setString("materialId", v.getString("materialId"));
 						cm.setString("model", v.getString("model"));
 						cm.set("quantity", v.get("quantity"));
