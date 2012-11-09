@@ -51,6 +51,8 @@
 	<entity entity-name="ProductInwarehouseEntryDetail" package-name="org.ofbiz.scm.ProductInwarehouse" title="ProductInwarehouseEntryDetail Entity">
 		<field name="id" type="id-long"></field>
 		<field name="parentId" type="id-long"></field>
+		<field name="barcode1" type="value"></field><!-- 为提供处理销量增加 -->
+		<field name="barcode2" type="value"></field><!-- 为提供处理销量增加 -->
 		<field name="materialId" type="id-long"></field>
 		<field name="model" type="value"></field>
 		<field name="quantity" type="fixed-point"></field>
@@ -58,6 +60,13 @@
 		<field name="price" type="fixed-point"></field>
 		<field name="amount" type="fixed-point"></field>
 		<prim-key field="id" />
+		<index name="PRT_INS_ENR_DTL_PTI" unique="false">
+            <index-field name="parentId"/>
+		</index>
+		<index name="PRT_INS_ENR_DTL_BARC" unique="false">
+            <index-field name="barcode1"/>
+            <index-field name="barcode2"/>
+		</index>
 	</entity>
 	<!-- 表头视图 -->
 	<view-entity entity-name="ProductInwarehouseView" package-name="org.ofbiz.scm.ProductInwarehouse" title="ProductInwarehouseView  Entity">
