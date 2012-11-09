@@ -91,6 +91,8 @@ public class ProductWarehouseBizImp implements IBizStock {
 					     GenericValue entryDetailValue=delegator.makeValue("ProductInwarehouseEntryDetail");
 					     entryDetailValue.set("id", UUID.randomUUID().toString());
 					     entryDetailValue.set("parentId", entryId);
+					     entryDetailValue.set("barcode1", v.getString("barcode1"));
+					     entryDetailValue.set("barcode2", v.getString("barcode2"));
 					     /* 设置物料信息, 规格型号、计量单位*/
 					     entryDetailValue.set("materialId", bomMaterialId);
 					     

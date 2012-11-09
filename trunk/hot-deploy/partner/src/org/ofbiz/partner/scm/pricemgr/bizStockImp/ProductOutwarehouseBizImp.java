@@ -148,15 +148,15 @@ public class ProductOutwarehouseBizImp implements IBizStock {
 	 */
 	private List<ConsumeMaterial> getMaterialList(String barcode1, String barcode2) throws Exception {
 		List<ConsumeMaterial> consumeMaterialList = new ArrayList<ConsumeMaterial>();
-		/* 1.根据条码，获取入仓单据分录编码 */
-		List<GenericValue> entryList = delegator.findByAnd("ProductInwarehouseEntry", UtilMisc.toMap("barcode1", barcode1, "barcode2", barcode2));
-		String entryId = "";
-		if (entryList != null && entryList.size() > 0) {
-			entryId = entryList.get(0).getString("id");
-		}
+//		/* 1.根据条码，获取入仓单据分录编码 */
+//		List<GenericValue> entryList = delegator.findByAnd("ProductInwarehouseEntry", UtilMisc.toMap("barcode1", barcode1, "barcode2", barcode2));
+//		String entryId = "";
+//		if (entryList != null && entryList.size() > 0) {
+//			entryId = entryList.get(0).getString("id");
+//		}
 
 		/* 2. 从实际耗料表取 */
-		List<GenericValue> actualMaterialList = delegator.findByAnd("ProductInwarehouseEntryDetail", UtilMisc.toMap("parentId", entryId));
+		List<GenericValue> actualMaterialList = delegator.findByAnd("ProductInwarehouseEntryDetail", UtilMisc.toMap("barcode1", barcode1, "barcode2", barcode2));
 		/* 3. 实际耗料表存在耗料信息 */
 		if (actualMaterialList != null && actualMaterialList.size() > 0) {
 			for (GenericValue v : actualMaterialList) {
