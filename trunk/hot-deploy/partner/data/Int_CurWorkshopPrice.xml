@@ -321,7 +321,7 @@
 <CurWorkshopPrice year="2012" month="11" workshopId="3d026e7b-ff54-47d3-b8e8-1934ded5448b" materialId="a30121a2-5eb5-4ad7-90a2-27a12345b191" beginvolume="80000" beginsum="64000" volume="80000" totalsum="64000" />
 <CurWorkshopPrice year="2012" month="11" workshopId="3d026e7b-ff54-47d3-b8e8-1934ded5448b" materialId="1acedaab-9663-4779-bc72-e3526d2342d0" beginvolume="80000" beginsum="64000" volume="80000" totalsum="64000" />
 <CurWorkshopPrice year="2012" month="11" workshopId="f981f9cc-0283-4bd2-8d9e-5eb1d49144cb" materialId="45e1dd1e-7e9e-47e1-8718-41dba56972b1" beginvolume="50000" beginsum="3000" volume="50000" totalsum="3000" />
-<CurWorkshopPrice year="2012" month="11" workshopId="f981f9cc-0283-4bd2-8d9e-5eb1d49144cb" materialId="c1a0dc36-7766-4aeb-9230-24f8a20fa0e5" beginvolume="" beginsum="0" volume="" totalsum="0" />
+<CurWorkshopPrice year="2012" month="11" workshopId="f981f9cc-0283-4bd2-8d9e-5eb1d49144cb" materialId="c1a0dc36-7766-4aeb-9230-24f8a20fa0e5" beginvolume="0" beginsum="0" volume="0" totalsum="0" />
 <CurWorkshopPrice year="2012" month="11" workshopId="3d026e7b-ff54-47d3-b8e8-1934ded5448b" materialId="746efbcd-ffd7-49a5-826e-d2780b1fca32" beginvolume="16784" beginsum="10070.4" volume="16784" totalsum="10070.4" />
 <CurWorkshopPrice year="2012" month="11" workshopId="3d026e7b-ff54-47d3-b8e8-1934ded5448b" materialId="e98fa31e-7985-4e02-a3de-5816de44dcb8" beginvolume="7360" beginsum="5520" volume="7360" totalsum="5520" />
 <CurWorkshopPrice year="2012" month="11" workshopId="3d026e7b-ff54-47d3-b8e8-1934ded5448b" materialId="8a2e224f-9683-4563-88d8-40987b68b963" beginvolume="6294" beginsum="5035.2" volume="6294" totalsum="5035.2" />
@@ -538,7 +538,7 @@
 <CurWorkshopPrice year="2012" month="11" workshopId="f981f9cc-0283-4bd2-8d9e-5eb1d49144cb" materialId="bbf38910-0ebe-452b-92fc-edba1cae2b8f" beginvolume="885" beginsum="61.95" volume="885" totalsum="61.95" />
 <CurWorkshopPrice year="2012" month="11" workshopId="f981f9cc-0283-4bd2-8d9e-5eb1d49144cb" materialId="89bf7b43-9158-4201-b46e-9016235632fb" beginvolume="7620" beginsum="1676.4" volume="7620" totalsum="1676.4" />
 <CurWorkshopPrice year="2012" month="11" workshopId="f981f9cc-0283-4bd2-8d9e-5eb1d49144cb" materialId="c035e64e-8537-4287-a933-07199f3c4ead" beginvolume="0" beginsum="0" volume="0" totalsum="0" />
-<CurWorkshopPrice year="2012" month="11" workshopId="f981f9cc-0283-4bd2-8d9e-5eb1d49144cb" materialId="bf159e0a-6fc0-4b87-8c68-faa4a73ef325" beginvolume="" beginsum="0" volume="" totalsum="0" />
+<CurWorkshopPrice year="2012" month="11" workshopId="f981f9cc-0283-4bd2-8d9e-5eb1d49144cb" materialId="bf159e0a-6fc0-4b87-8c68-faa4a73ef325" beginvolume="0" beginsum="0" volume="0" totalsum="0" />
 <CurWorkshopPrice year="2012" month="11" workshopId="f981f9cc-0283-4bd2-8d9e-5eb1d49144cb" materialId="c6662b21-a148-4c29-b338-14b8ddfb70f9" beginvolume="0" beginsum="0" volume="0" totalsum="0" />
 <CurWorkshopPrice year="2012" month="11" workshopId="f981f9cc-0283-4bd2-8d9e-5eb1d49144cb" materialId="414b947a-6cdc-4795-b125-6844ff6fa4ec" beginvolume="0" beginsum="0" volume="0" totalsum="0" />
 <CurWorkshopPrice year="2012" month="11" workshopId="f981f9cc-0283-4bd2-8d9e-5eb1d49144cb" materialId="76ef2528-44e0-43b1-856b-e214c4d23400" beginvolume="0" beginsum="0" volume="0" totalsum="0" />
@@ -565,7 +565,7 @@
 <CurWorkshopPrice year="2012" month="11" workshopId="f981f9cc-0283-4bd2-8d9e-5eb1d49144cb" materialId="2ca179b2-146a-470a-bcea-cf7370fc2842" beginvolume="150" beginsum="30" volume="150" totalsum="30" />
 <CurWorkshopPrice year="2012" month="11" workshopId="f981f9cc-0283-4bd2-8d9e-5eb1d49144cb" materialId="bca350f3-0a50-410e-9b80-54cb69b6d4c5" beginvolume="150" beginsum="30" volume="150" totalsum="30" />
 <CurWorkshopPrice year="2012" month="11" workshopId="f981f9cc-0283-4bd2-8d9e-5eb1d49144cb" materialId="f0d748ed-7199-40b8-81c2-6daf57fcc3e3" beginvolume="1335" beginsum="267" volume="1335" totalsum="267" />
-<CurWorkshopPrice year="2012" month="11" workshopId="f981f9cc-0283-4bd2-8d9e-5eb1d49144cb" materialId="0f53ef75-63e5-4a8c-b446-26ed7e890151" beginvolume="" beginsum="0" volume="" totalsum="0" />
+<CurWorkshopPrice year="2012" month="11" workshopId="f981f9cc-0283-4bd2-8d9e-5eb1d49144cb" materialId="0f53ef75-63e5-4a8c-b446-26ed7e890151" beginvolume="0" beginsum="0" volume="0" totalsum="0" />
 <CurWorkshopPrice year="2012" month="11" workshopId="f981f9cc-0283-4bd2-8d9e-5eb1d49144cb" materialId="5c062d38-2b8f-40dc-b918-ee1df0a7cd50" beginvolume="44" beginsum="3.08" volume="44" totalsum="3.08" />
 <CurWorkshopPrice year="2012" month="11" workshopId="f981f9cc-0283-4bd2-8d9e-5eb1d49144cb" materialId="47fe38c2-7142-438c-a3da-98cbc4179618" beginvolume="400" beginsum="80" volume="400" totalsum="80" />
 <CurWorkshopPrice year="2012" month="11" workshopId="f981f9cc-0283-4bd2-8d9e-5eb1d49144cb" materialId="52d5adab-e376-45ad-a046-2f1d33c4f0a1" beginvolume="0" beginsum="0" volume="0" totalsum="0" />
