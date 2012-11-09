@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+ <Worksheet ss:Name="Table1">
+  <Table>
+   <Column ss:Index="3" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="4" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="9" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="10" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="11" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="12" ss:AutoFitWidth="0" ss:Width="110"/>   <Row>
+    <Cell><Data ss:Type="String">YEAR</Data></Cell>
+    <Cell><Data ss:Type="String">MONTH</Data></Cell>
+    <Cell><Data ss:Type="String">SUPPLIER_ID</Data></Cell>
+    <Cell><Data ss:Type="String">MATERIAL_ID</Data></Cell>
+    <Cell><Data ss:Type="String">BEGINVOLUME</Data></Cell>
+    <Cell><Data ss:Type="String">BEGINSUM</Data></Cell>
+    <Cell><Data ss:Type="String">VOLUME</Data></Cell>
+    <Cell><Data ss:Type="String">TOTALSUM</Data></Cell>
+    <Cell><Data ss:Type="String">LAST_UPDATED_STAMP</Data></Cell>
+    <Cell><Data ss:Type="String">LAST_UPDATED_TX_STAMP</Data></Cell>
+    <Cell><Data ss:Type="String">CREATED_STAMP</Data></Cell>
+    <Cell><Data ss:Type="String">CREATED_TX_STAMP</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">2011</Data></Cell>
+    <Cell><Data ss:Type="Number">11</Data></Cell>
+    <Cell><Data ss:Type="String">5ec0c46e-0039-4576-92f1-3dccc3c31a23</Data></Cell>
+    <Cell><Data ss:Type="String">a718a7a5-e465-4b82-866e-0faaf44d3043</Data></Cell>
+    <Cell><Data ss:Type="Number">0.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">0.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">5200.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">4959.840000</Data></Cell>
+    <Cell><Data ss:Type="String">2011-12-02 19:18:58</Data></Cell>
+    <Cell><Data ss:Type="String">2011-12-02 19:18:58</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 17:07:16</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 17:07:16</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">2011</Data></Cell>
+    <Cell><Data ss:Type="Number">12</Data></Cell>
+    <Cell><Data ss:Type="String">5ec0c46e-0039-4576-92f1-3dccc3c31a23</Data></Cell>
+    <Cell><Data ss:Type="String">a718a7a5-e465-4b82-866e-0faaf44d3043</Data></Cell>
+    <Cell><Data ss:Type="Number">5200.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">4959.840000</Data></Cell>
+    <Cell><Data ss:Type="Number">34200.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">34061.540000</Data></Cell>
+    <Cell><Data ss:Type="String">2012-01-02 22:36:53</Data></Cell>
+    <Cell><Data ss:Type="String">2012-01-02 22:36:52</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 17:07:16</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 17:07:16</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">2012</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="String">5ec0c46e-0039-4576-92f1-3dccc3c31a23</Data></Cell>
+    <Cell><Data ss:Type="String">a718a7a5-e465-4b82-866e-0faaf44d3043</Data></Cell>
+    <Cell><Data ss:Type="Number">34200.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">34061.540000</Data></Cell>
+    <Cell><Data ss:Type="Number">27200.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">27141.720000</Data></Cell>
+    <Cell><Data ss:Type="String">2012-01-03 09:54:36</Data></Cell>
+    <Cell><Data ss:Type="String">2012-01-03 09:54:36</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 17:07:16</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 17:07:16</Data></Cell>
+   </Row>
+  </Table>
+ </Worksheet>
+</Workbook>

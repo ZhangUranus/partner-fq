@@ -1,0 +1,778 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<site-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.ofbiz.org/dtds/site-conf.xsd">
+	<include location="component://common/webcommon/WEB-INF/common-controller.xml" />
+	<description>SCM Controller</description>
+	<handler name="java" type="request" class="org.ofbiz.webapp.event.JavaEventHandler" />
+	<!-- Request Mappings -->
+	<request-map uri="createUserLogin">
+		<security auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.security.SecurityEvents" invoke="createUserLogin" />
+		<response name="success" type="none" />
+	</request-map>
+	<request-map uri="updateUserLogin">
+		<security auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.security.SecurityEvents" invoke="updateUserLogin" />
+		<response name="success" type="none" />
+	</request-map>
+	<request-map uri="deleteUserLogin">
+		<security auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.security.SecurityEvents" invoke="deleteUserLogin" />
+		<response name="success" type="none" />
+	</request-map>
+	<request-map uri="checkLogin">
+		<security auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.security.SecurityEvents" invoke="checkLogin" />
+		<response name="success" type="none" />
+	</request-map>
+	<request-map uri="isLogin">
+		<security auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.security.SecurityEvents" invoke="isLogin" />
+		<response name="success" type="none" />
+	</request-map>
+	<request-map uri="logout">
+		<security auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.security.SecurityEvents" invoke="logout" />
+		<response name="success" type="none" />
+	</request-map>
+	<request-map uri="getTreeRootData">
+		<security auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.security.SecurityEvents" invoke="getTreeRootData" />
+		<response name="success" type="none" />
+	</request-map>
+	<request-map uri="getTreeDataByParentId">
+		<security auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.security.SecurityEvents" invoke="getTreeDataByParentId" />
+		<response name="success" type="none" />
+	</request-map>
+	<request-map uri="getUserTreeToJson">
+		<security auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.security.SecurityEvents" invoke="getUserTreeToJson" />
+		<response name="success" type="none" />
+	</request-map>
+	<request-map uri="getUserPermissions">
+		<security auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.security.SecurityEvents" invoke="getUserPermissions" />
+		<response name="success" type="none" />
+	</request-map>
+	<request-map uri="getCurDate">
+		<security auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.pricemgr.Utils" invoke="getCurDate" />
+		<response name="success" type="none" />
+	</request-map>
+	<request-map uri="auditBill">
+		<security auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.common.BillBaseEvent" invoke="auditBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<request-map uri="unauditBill">
+		<security auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.common.BillBaseEvent" invoke="unauditBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<request-map uri="submitBill">
+		<security auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.common.BillBaseEvent" invoke="submitBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<request-map uri="rollbackBill">
+		<security auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.common.BillBaseEvent" invoke="rollbackBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<request-map uri="auditBOMBill">
+		<security auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.common.BillBaseEvent" invoke="auditBOMBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<request-map uri="requestJsonData">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.common.EntityCRUDEvent" invoke="getColl2Json" />
+		<response name="success" type="none" />
+	</request-map>
+	<request-map uri="requestRecordJson">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.common.EntityCRUDEvent" invoke="getRecordJson" />
+		<response name="success" type="none" />
+	</request-map>
+	<request-map uri="requestTreeJsonData">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.common.EntityCRUDEvent" invoke="getTree2Json" />
+		<response name="success" type="none" />
+	</request-map>
+	<request-map uri="updateJsonData">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.common.EntityCRUDEvent" invoke="updateFromJson" />
+		<response name="success" type="none" />
+	</request-map>
+	<request-map uri="addnewJsonData">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.common.EntityCRUDEvent" invoke="addnewFromJson" />
+		<response name="success" type="none" />
+	</request-map>
+	<request-map uri="deleteJsonData">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.common.EntityCRUDEvent" invoke="deleteFromJson" />
+		<response name="success" type="none" />
+	</request-map>
+	<request-map uri="createWithEntry">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.common.MultiEntryCRUDEvent" invoke="createEnityWithEntry" />
+		<response name="success" type="none" />
+	</request-map>
+	<request-map uri="updateWithEntry">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.common.MultiEntryCRUDEvent" invoke="updateEnityWithEntry" />
+		<response name="success" type="none" />
+	</request-map>
+	<request-map uri="deleteWithEntry">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.common.MultiEntryCRUDEvent" invoke="deleteEnityWithEntry" />
+		<response name="success" type="none" />
+	</request-map>
+	
+	
+	<!-- 检查是否存在实体记录 -->
+	<request-map uri="checkExist">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.common.Utils" invoke="isExist" />
+		<response name="success" type="none" />
+	</request-map>
+	
+	
+	<!-- business request -->
+	<!-- 采购申请单提交 -->
+	<request-map uri="submitPurchaseBill">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.PurchaseBillBizEvents" invoke="submitBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 采购申请单撤销 -->
+	<request-map uri="rollbackPurchaseBill">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.PurchaseBillBizEvents" invoke="rollbackBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 采购申请单审核 -->
+	<request-map uri="auditPurchaseBill">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.PurchaseBillBizEvents" invoke="auditBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 采购申请单反审核 -->
+	<request-map uri="unauditPurchaseBill">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.PurchaseBillBizEvents" invoke="unauditBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 获取供应商某物料的计划采购数量 -->
+	<request-map uri="getPlanBalance">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.PurchaseBillBizEvents" invoke="getPlanBalance" />
+		<response name="success" type="none" />
+	</request-map>
+	
+	<!-- 采购验收单提交 -->
+	<request-map uri="submitInspective">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.InspectiveBizEvents" invoke="submitBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 采购验收单撤销 -->
+	<request-map uri="rollbackInspective">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.InspectiveBizEvents" invoke="rollbackBill" />
+		<response name="success" type="none" />
+	</request-map>
+	
+	<!-- 采购退货单提交 -->
+	<request-map uri="submitPurchaseReturn">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.PurchaseReturnEvents" invoke="submitBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 采购退货单撤销 -->
+	<request-map uri="rollbackPurchaseReturn">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.PurchaseReturnEvents" invoke="rollbackBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 获取仓库某物料的库存量、加权平均单价 -->
+	<request-map uri="getCurMaterialBalanceValue">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.PurchaseReturnEvents" invoke="getCurMaterialBalanceValue" />
+		<response name="success" type="none" />
+	</request-map>
+	
+	<!-- 委外领料单提交 -->
+	<request-map uri="submitConsignDramMaterial">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ConsignDrawMaterialEvents" invoke="submitBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 委外领料单撤销 -->
+	<request-map uri="rollbackConsignDramMaterial">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ConsignDrawMaterialEvents" invoke="rollbackBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 委外退料单提交 -->
+	<request-map uri="submitConsignReturnMaterial">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ConsignReturnMaterialEvents" invoke="submitBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 委外退料单撤销 -->
+	<request-map uri="rollbackConsignReturnMaterial">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ConsignReturnMaterialEvents" invoke="rollbackBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 委外入库单提交 -->
+	<request-map uri="submitConsignWarehousing">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ConsignWarehousingEvents" invoke="submitBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 委外入库单撤销 -->
+	<request-map uri="rollbackConsignWarehousing">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ConsignWarehousingEvents" invoke="rollbackBill" />
+		<response name="success" type="none" />
+	</request-map>
+	
+	<!-- 委外退货单提交 -->
+	<request-map uri="submitConsignReturnProduct">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ConsignReturnProductEvents" invoke="submitBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 委外退货单撤销 -->
+	<request-map uri="rollbackConsignReturnProduct">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ConsignReturnProductEvents" invoke="rollbackBill" />
+		<response name="success" type="none" />
+	</request-map>
+	
+	<!-- 制造领料单提交 -->
+	<request-map uri="submitWorkshopDramMaterial">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.WorkshopDrawMaterialEvents" invoke="submitBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 制造领料单撤销 -->
+	<request-map uri="rollbackWorkshopDramMaterial">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.WorkshopDrawMaterialEvents" invoke="rollbackBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 制造退料单提交 -->
+	<request-map uri="submitWorkshopReturnMaterial">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.WorkshopReturnMaterialEvents" invoke="submitBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 制造退料单撤销 -->
+	<request-map uri="rollbackWorkshopReturnMaterial">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.WorkshopReturnMaterialEvents" invoke="rollbackBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 制造入库单提交 -->
+	<request-map uri="submitWorkshopWarehousing">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.WorkshopWarehousingEvents" invoke="submitBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 制造入库单撤销 -->
+	<request-map uri="rollbackWorkshopWarehousing">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.WorkshopWarehousingEvents" invoke="rollbackBill" />
+		<response name="success" type="none" />
+	</request-map>
+	
+	<!-- 制造退货单提交 -->
+	<request-map uri="submitWorkshopReturnProduct">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.WorkshopReturnProductEvents" invoke="submitBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 制造退货单撤销 -->
+	<request-map uri="rollbackWorkshopReturnProduct">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.WorkshopReturnProductEvents" invoke="rollbackBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 制造其它领料单提交 -->
+	<request-map uri="submitWorkshopOtherDraw">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.WorkshopOtherDrawBillEvents" invoke="submitBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 制造其它领料单撤销 -->
+	<request-map uri="rollbackWorkshopOtherDraw">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.WorkshopOtherDrawBillEvents" invoke="rollbackBill" />
+		<response name="success" type="none" />
+	</request-map>
+	
+	<!-- 库存调整单提交 -->
+	<request-map uri="submitStockAdjust">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.StockAdjustEvents" invoke="submitBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 库存调整单撤销 -->
+	<request-map uri="rollbackStockAdjust">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.StockAdjustEvents" invoke="rollbackBill" />
+		<response name="success" type="none" />
+	</request-map>
+	
+	<!-- 车间调整单提交 -->
+	<request-map uri="submitWorkshopStockAdjust">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.WorkshopStockAdjustEvents" invoke="submitBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 车间调整单撤销 -->
+	<request-map uri="rollbackWorkshopStockAdjust">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.WorkshopStockAdjustEvents" invoke="rollbackBill" />
+		<response name="success" type="none" />
+	</request-map>
+	
+	<!-- 供应商调整单提交 -->
+	<request-map uri="submitSupplierStockAdjust">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.SupplierStockAdjustEvents" invoke="submitBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 供应商调整单撤销 -->
+	<request-map uri="rollbackSupplierStockAdjust">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.SupplierStockAdjustEvents" invoke="rollbackBill" />
+		<response name="success" type="none" />
+	</request-map>
+	
+	
+	<!-- 成品进仓单提交 -->
+	<request-map uri="submitProductInwarehouse">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductInwarehouseEvents" invoke="submitBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 成品进仓单撤销 -->
+	<request-map uri="rollbackProductInwarehouse">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductInwarehouseEvents" invoke="rollbackBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 成品扫描进仓提交 -->
+	<request-map uri="scanSubmitProductInwarehouse">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductInwarehouseEvents" invoke="scanSubmit" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 成品扫描进仓撤销 -->
+	<request-map uri="scanRollbackProductInwarehouse">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductInwarehouseEvents" invoke="scanRollback" />
+		<response name="success" type="none" />
+	</request-map>
+	
+	<!-- 成品进仓确认单提交 -->
+	<request-map uri="submitProductInwarehouseConfirm">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductInwarehouseConfirmEvents" invoke="submitBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 成品进仓单确认撤销 -->
+	<request-map uri="rollbackProductInwarehouseConfirm">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductInwarehouseConfirmEvents" invoke="rollbackBill" />
+		<response name="success" type="none" />
+	</request-map>	
+	<!-- 成品进仓单确认同步 -->
+	<request-map uri="syncProductInwarehouseConfirm">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductInwarehouseConfirmEvents" invoke="synchronizeRecords" />
+		<response name="success" type="none" />
+	</request-map>		
+	
+	<!-- 成品出仓单提交 -->
+	<request-map uri="submitProductOutwarehouse">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductOutwarehouseEvents" invoke="submitBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 成品出仓单撤销 -->
+	<request-map uri="rollbackProductOutwarehouse">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductOutwarehouseEvents" invoke="rollbackBill" />
+		<response name="success" type="none" />
+	</request-map>
+	
+	<!-- 成品扫描出仓提交 -->
+	<request-map uri="scanSubmitProductOutwarehouse">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductOutwarehouseEvents" invoke="scanSubmit" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 成品扫描出仓撤销 -->
+	<request-map uri="scanRollbackProductOutwarehouse">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductOutwarehouseEvents" invoke="scanRollback" />
+		<response name="success" type="none" />
+	</request-map>
+	
+	<!-- 成品确认出仓单提交 -->
+	<request-map uri="submitProductOutwarehouseConfirm">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductOutwarehouseConfirmEvents" invoke="submitBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 成品确认出仓单同步-->
+	<request-map uri="syncProductOutwarehouseConfirm">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductOutwarehouseConfirmEvents" invoke="synchronizeRecords" />
+		<response name="success" type="none" />
+	</request-map>
+	
+	<!-- 成品手工出仓单提交 -->
+	<request-map uri="submitProductManualOutwarehouse">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductManualOutwarehouseEvents" invoke="submitBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 成品手工出仓单撤销 -->
+	<request-map uri="rollbackProductManualOutwarehouse">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductManualOutwarehouseEvents" invoke="rollbackBill" />
+		<response name="success" type="none" />
+	</request-map>
+	
+	
+	<!-- 出货通知单提交 -->
+	<request-map uri="submitProductOutNotification">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductOutNotificationEvents" invoke="submitBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 出货通知单撤销 -->
+	<request-map uri="rollbackProductOutNotification">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductOutNotificationEvents" invoke="rollbackBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 出货通知单撤销 -->
+	<request-map uri="getMaterialIdByIkea">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductOutNotificationEvents" invoke="getMaterialIdByIkea" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 判断是否存在出货对数单 -->
+	<request-map uri="hasVerifyBill">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductOutNotificationEvents" invoke="hasVerifyBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 出货通知单导入 -->
+	<request-map uri="impOutNotificationBill">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductOutNotificationEvents" invoke="impOutNotificationBill" />
+		<response name="success" type="none" />
+	</request-map>
+	
+	<!-- 出货对数单单号获取 -->
+	<request-map uri="getDeliverNumber">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductOutVerifyEvents" invoke="getDeliverNumber" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 出货对数单头获取 -->
+	<request-map uri="getProductOutVerifyHead">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductOutVerifyEvents" invoke="getProductOutVerifyHead" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 出货对数单保存 -->
+	<request-map uri="saveVerifyBill">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductOutVerifyEvents" invoke="saveProductOutVerify" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 出货对数单删除 -->
+	<request-map uri="removeVerifyHead">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductOutVerifyEvents" invoke="removeVerifyHead" />
+		<response name="success" type="none" />
+	</request-map>
+	
+	<!-- 出货对数单提交 -->
+	<request-map uri="submitVerifyBill">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductOutVerifyEvents" invoke="submitBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 出货对数单撤销 -->
+	<request-map uri="rollbackVerifyBill">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductOutVerifyEvents" invoke="rollbackBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 导出整张出货单-->
+	<request-map uri="exportVerifyBill">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductOutVerifyEvents" invoke="export" />
+		<response name="success" type="none" />
+	</request-map>
+	
+	
+	
+	
+	<!-- 系统结算 -->
+	<request-map uri="monthlySettle">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.MonthlySettleEvents" invoke="monthlySettle" />
+		<response name="success" type="none" />
+	</request-map>
+	<request-map uri="rollbackSettle">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.MonthlySettleEvents" invoke="rollbackSettle" />
+		<response name="success" type="none" />
+	</request-map>
+	
+	
+	<!-- 物料分类操作事件 -->
+	<request-map uri="addMaterialType">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.basedata.MaterialTypeEvents" invoke="addNewType" />
+		<response name="success" type="none" />
+	</request-map>
+	<request-map uri="delMaterialType">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.basedata.MaterialTypeEvents" invoke="delType" />
+		<response name="success" type="none" />
+	</request-map>
+	
+	
+	
+	
+	<!-- 报表 -->
+	<request-map uri="testRpt">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="fetchData" />
+		<response name="success" type="none" />
+	</request-map>
+	
+	<!-- 获取月份列表 -->
+	<request-map uri="getMonthList">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="getMonthList" />
+		<response name="success" type="none" />
+	</request-map>
+	
+	<!-- 委外加工对数表 -->
+	<request-map uri="queryConsignMatchReport">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="queryConsignMatchReport" />
+		<response name="success" type="none" />
+	</request-map>
+	<request-map uri="queryConsignMatchChart">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="queryConsignMatchChart" />
+		<response name="success" type="none" />
+	</request-map>
+	
+	<!-- 采购供应对数表 -->
+	<request-map uri="queryPurchaseMatchReport">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="queryPurchaseMatchReport" />
+		<response name="success" type="none" />
+	</request-map>
+	<request-map uri="queryPurchaseMatchChart">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="queryPurchaseMatchChart" />
+		<response name="success" type="none" />
+	</request-map>
+	
+	<!-- 库存情况报表 -->
+	<request-map uri="queryStockDetailReport">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="queryStockDetailReport" />
+		<response name="success" type="none" />
+	</request-map>
+	<request-map uri="queryStockDetailChart">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="queryStockDetailChart" />
+		<response name="success" type="none" />
+	</request-map>
+	
+	<!-- 车间储备情况报表 -->
+	<request-map uri="queryWorkshopStockDetailReport">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="queryWorkshopStockDetailReport" />
+		<response name="success" type="none" />
+	</request-map>
+	
+	<!-- 安装包装材料表 -->
+	<request-map uri="queryPackingMaterialReport">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="queryPackingMaterialReport" />
+		<response name="success" type="none" />
+	</request-map>
+	<request-map uri="queryPackingMaterialDetail">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="queryPackingMaterialDetail" />
+		<response name="success" type="none" />
+	</request-map>
+	
+	<!-- 成品报表 -->
+	<request-map uri="queryProductReport">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="queryProductReport" />
+		<response name="success" type="none" />
+	</request-map>
+	<request-map uri="queryProductChart">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="queryProductChart" />
+		<response name="success" type="none" />
+	</request-map>
+	
+	<!-- 综合成品帐报表 -->
+	<request-map uri="queryProductStaticsReport">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="queryProductStaticsReport" />
+		<response name="success" type="none" />
+	</request-map>
+	
+	<!-- 综合发货欠数报表 -->
+	<request-map uri="queryProductSendOweReport">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.rpt.ProductSendOweReportEvents" invoke="queryMainData" />
+		<response name="success" type="none" />
+	</request-map>
+	<request-map uri="queryProductSendOweDetailReport">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.rpt.ProductSendOweReportEvents" invoke="queryDetailData" />
+		<response name="success" type="none" />
+	</request-map>
+	
+	<!-- 黑坯件材料耗用表 -->
+	<request-map uri="querySemiProductCostReport">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="querySemiProductCostReport" />
+		<response name="success" type="none" />
+	</request-map>
+	<request-map uri="querySemiProductCostDetail">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="querySemiProductCostDetail" />
+		<response name="success" type="none" />
+	</request-map>
+	
+	<!-- 生产计划列表 -->
+	<request-map uri="queryProductionPlan">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="queryProductionPlan" />
+		<response name="success" type="none" />
+	</request-map>
+	
+	<!-- 获取日志列表 -->
+	<request-map uri="querySystemLogReport">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="querySystemLogReport" />
+		<response name="success" type="none" />
+	</request-map>
+	
+	<!-- 获取单据状态列表 -->
+	<request-map uri="queryBillStatusList">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="queryBillStatusList" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 获取物料库存情况 -->
+	<request-map uri="queryMaterialVolumeDetail">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="queryMaterialVolumeDetail" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 查询物料库存分布情况雷达图 -->
+	<request-map uri="queryMaterialVolumeChart">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="queryMaterialVolumeChart" />
+		<response name="success" type="none" />
+	</request-map>
+	
+	<!-- 获取成品耗料列表（materialId） -->
+	<request-map uri="getBomMaterialDetailList">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.pricemgr.Utils" invoke="getBomMaterialDetailList" />
+		<response name="success" type="none" />
+	</request-map>
+	
+	<!-- 清理实体列表列表参数（entityName，parentId） -->
+	<request-map uri="removeDataByParentId">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.pricemgr.Utils" invoke="removeDataByParentId" />
+		<response name="success" type="none" />
+	</request-map>
+	
+	<!-- 打印 -->
+	<request-map uri="getPrintData">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.common.PrintEvents" invoke="getPrintData" />
+		<response name="success" type="none" />
+	</request-map>
+	
+	
+	<!-- exporter -->
+	<request-map uri="export">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.export.ExportEvent" invoke="export" />
+		<response name="success" type="none" />
+	</request-map>
+	<request-map uri="download">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.export.ExportEvent" invoke="download" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- exporter -->
+	
+	<!-- 系统工具类 -->
+	<!-- 导出系统所有实体数据 -->
+	<request-map uri="entityExportAll">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.tools.EntityDataEvents" invoke="entityExportAll" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 导出系统所有实体数据 -->
+	<!-- 检查结算过程 -->
+	<request-map uri="monthlySettleCheck">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.tools.MonthlyProcessCheckEvents" invoke="monthlySettleCheck" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 检查结算过程 -->
+	<!-- 手工进仓出仓操作 -->
+	<request-map uri="manualInOutRun">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.tools.ProductManualInOutEvents" invoke="manualInOutRun" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 手工进仓出仓操作 -->
+	<!-- 手工进仓出仓操作(不影响库存) -->
+	<request-map uri="manualInOutWithoutStockRun">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.tools.ProductManualInOutEvents" invoke="manualInOutWithoutStockRun" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 手工进仓出仓操作(不影响库存) -->
+	
+	
+	<!-- 系统工具类  -->
+	
+	
+	<!-- end of request mappings -->
+	<!-- View Mappings -->
+	<!-- end of View Mappings -->
+</site-conf>

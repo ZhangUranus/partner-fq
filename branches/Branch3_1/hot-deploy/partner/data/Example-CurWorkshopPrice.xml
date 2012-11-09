@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements. See the NOTICE file distributed with this work for additional information regarding copyright ownership. The ASF licenses this file to you under the Apache License, Version 2.0 (the "License"); you 
+	may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
+	OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. -->
+<entity-engine-xml>
+	<CurWorkshopPrice year="2012" month="2" workshopId="26330cf0-a745-4f5c-9f9d-638cb83cd42c" materialId="a718a7a5-e465-4b82-866e-0faaf44d3043" beginvolume="2400" beginsum="2302.8" volume="48400" totalsum="46214" />
+	<CurWorkshopPrice year="2012" month="2" workshopId="26330cf0-a745-4f5c-9f9d-638cb83cd42c" materialId="fa745ff5-f75b-4ceb-8b68-a96b19031dfa" beginvolume="2500" beginsum="262.5" volume="2590" totalsum="271.95" />
+	<CurWorkshopPrice year="2012" month="2" workshopId="317b8c16-4e73-429b-8428-7e5700f393fb" materialId="301e67c1-a1fb-4b44-957d-75720fa0cc6a" beginvolume="1200" beginsum="189" volume="300" totalsum="47.25" />
+	<CurWorkshopPrice year="2012" month="2" workshopId="317b8c16-4e73-429b-8428-7e5700f393fb" materialId="944bd0c0-d426-44ad-8718-4aa6b9ed8f1c" beginvolume="500" beginsum="9746.13" volume="600" totalsum="11789.45" />
+	<CurWorkshopPrice year="2012" month="2" workshopId="317b8c16-4e73-429b-8428-7e5700f393fb" materialId="96b4cd81-8cd3-4c09-adbf-1167b33949f6" beginvolume="2000" beginsum="9956.48" volume="2400" totalsum="11306.44" />
+	<CurWorkshopPrice year="2012" month="2" workshopId="3487eb04-0fb6-484e-9a1d-4a3d204c8a86" materialId="6ab8ad39-3d27-4f7e-b39b-5b08976d426a" beginvolume="700" beginsum="3510.53" volume="700" totalsum="3174.13" />
+	<CurWorkshopPrice year="2012" month="2" workshopId="3487eb04-0fb6-484e-9a1d-4a3d204c8a86" materialId="98e6948d-8fcf-4c8e-a969-ed700e0103b4" beginvolume="1000" beginsum="19809.54" volume="1000" totalsum="19729.84" />
+</entity-engine-xml>

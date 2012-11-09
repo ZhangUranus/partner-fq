@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements. See the NOTICE file distributed with this work for additional information regarding copyright ownership. The ASF licenses this file to you under the Apache License, Version 2.0 (the "License"); you 
+	may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
+	OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. -->
+<entitymodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/entitymodel.xsd">
+	<!-- ========================================================= -->
+	<!-- ======================== Defaults ======================= -->
+	<!-- ========================================================= -->
+	<title>Entity of an Open For Business Project Component</title>
+	<description>None</description>
+	<copyright>Copyright 2001-2009 The Apache Software Foundation</copyright>
+	<author>None</author>
+	<version>1.0</version>
+	<!-- 表头 -->
+	<entity entity-name="ProductOutNotification" package-name="org.ofbiz.scm.ProductOutNotification" title="ProductOutNotification Entity">
+		<field name="id" type="id-long"></field>
+		<field name="number" type="name"></field>
+		<field name="bizDate" type="date-time"></field>
+		<field name="submitterSystemUserId" type="id-long"></field>
+		<field name="customerId" type="id-long"></field><!-- 客户编码 -->
+		<field name="deliverNumber" type="value"></field><!-- 单号 -->
+		<field name="goodNumber" type="id-long"></field><!-- 货号 -->
+		<field name="planDeliveryDate" type="date-time"></field><!-- 计划出货时间 -->
+		<field name="planHouseNumber" type="id-long"></field><!-- 计划订舱号 -->
+		<field name="planContainerType" type="name"></field><!-- 计划柜型 -->
+		<field name="inWarehouseName" type="name"></field><!-- 送入仓库名称 -->
+		<field name="warehouseId" type="id-long"></field><!-- 装货仓库 -->
+		<field name="carNumber" type="id-long"></field><!-- 车牌号 -->
+		<field name="transferType" type="id-long"></field><!-- 运输方式 -->
+		<field name="finalHouseNumber" type="id-long"></field><!-- 实际订舱号 -->
+		<field name="finalContainerType" type="name"></field><!-- 实际柜型 -->
+		<field name="finalContainerNumber" type="id-long"></field><!-- 实际柜号 -->
+		<field name="sealNumber" type="id-long"></field><!-- 封条号 -->
+		<field name="arrivedTime" type="date-time"></field><!-- 到厂时间 -->
+		<field name="packagedNotSend" type="indicator" /><!-- 装好未拉柜 -->
+		<field name="leaveTime" type="date-time"></field><!-- 离厂时间 -->
+		<field name="grossWeight" type="fixed-point"></field><!-- 毛重/KG -->
+		<field name="tareWeight" type="fixed-point"></field><!-- 皮重KG -->
+		<field name="neatWeight" type="fixed-point"></field><!-- 净重/KG -->
+		<field name="isFinished" type="indicator" /><!-- 是否完成 -->
+		<field name="note" type="description"></field>
+		<field name="status" type="int"></field>
+		<field name="createdStamp" type="date-time"></field>
+		<field name="lastUpdatedStamp" type="date-time"></field>
+		<field name="submitStamp" type="date-time"></field>
+		<prim-key field="id" />
+	</entity>
+	<!-- 订单分录 -->
+	<entity entity-name="ProductOutNotificationEntry" package-name="org.ofbiz.scm.ProductOutNotification" title="ProductOutNotificationEntry Entity">
+		<field name="id" type="id-long"></field>
+		<field name="parentId" type="id-long"></field>
+		<field name="orderNumber" type="name"></field><!-- 订单号 -->
+		<field name="orderType" type="id-long"></field><!-- 订单类型 -->
+		<field name="destinationId" type="id-long"></field><!-- 目的地代码 -->
+		<field name="requireReceiveDate" type="date-time"></field><!-- 客户要求收货日期 -->
+		<field name="orderGetDate" type="date-time"></field><!-- 订单收单日 -->
+		<field name="materialId" type="id-long"></field><!-- 产品编号 -->
+		<field name="volume" type="fixed-point"></field><!-- 订单数量（计划出货数量）（需要验证是否与实际数相等） -->
+		<field name="grossWeight" type="fixed-point"></field><!-- 订单毛重 -->
+		<field name="grossSize" type="fixed-point"></field><!-- 订单毛体积 -->
+		<field name="sumBoardVolume" type="fixed-point"></field><!-- 总托盘数量 -->
+		<field name="paperBoxVolume" type="fixed-point"></field><!-- 纸箱数量 -->
+		<field name="regionId" type="id-long"></field><!-- 目的地 -->
+		<field name="sort" type="int"></field>
+		<prim-key field="id" />
+	</entity>
+	<!-- 订单分录明细 -->
+	<entity entity-name="ProductOutNotificationEntryDetail" package-name="org.ofbiz.scm.ProductOutNotification" title="ProductOutNotificationEntryDetail Entity">
+		<field name="id" type="id-long"></field>
+		<field name="parentId" type="id-long"></field>
+		<field name="materialId" type="id-long"></field><!-- 产品编号(板名称) -->
+		<field name="orderQty" type="fixed-point"></field><!-- 计划打板数量 -->
+		<field name="sentQty" type="fixed-point"></field><!-- 已出仓数量 -->
+		<field name="verifyContainerType" type="id-long"></field><!-- 核对柜型 -->
+		<field name="warehouseId" type="id-long"></field><!-- 出仓仓库 -->
+		<field name="isFinished" type="indicator" /><!-- 完成标志 -->
+		<field name="sort" type="int"></field>
+		<prim-key field="id" />
+	</entity>
+	<!-- 表头视图 -->
+	<view-entity entity-name="ProductOutNotificationView" package-name="org.ofbiz.scm.ProductOutNotification" title="ProductOutNotificationView  Entity">
+		<member-entity entity-alias="productOutNotificationV" entity-name="ProductOutNotification"></member-entity>
+		<member-entity entity-alias="productOutNotificationEntryV" entity-name="ProductOutNotificationEntry"></member-entity>
+		<member-entity entity-alias="submitterSystemUserV" entity-name="SystemUser"></member-entity>
+		<member-entity entity-alias="customerV" entity-name="Customer"></member-entity>
+		<member-entity entity-alias="warehouseV" entity-name="Warehouse"></member-entity>
+		<alias-all entity-alias="productOutNotificationV"></alias-all>
+		<alias name="materialId" entity-alias="productOutNotificationEntryV" field="materialId"></alias>
+		<alias name="submitterSystemUserName" entity-alias="submitterSystemUserV" field="name"></alias>
+		<alias name="customerNumber" entity-alias="customerV" field="number"></alias>
+		<alias name="customerName" entity-alias="customerV" field="name"></alias>
+		<alias name="customerContractor" entity-alias="customerV" field="contractor"></alias>
+		<alias name="customerPhone" entity-alias="customerV" field="phone"></alias>
+		<alias name="customerAddress" entity-alias="customerV" field="address"></alias>
+		<alias name="warehouseName" entity-alias="warehouseV" field="name"></alias>
+		<view-link entity-alias="productOutNotificationV" rel-entity-alias="productOutNotificationEntryV" rel-optional="true">
+			<key-map field-name="id" rel-field-name="parentId" />
+		</view-link>
+		<view-link entity-alias="productOutNotificationV" rel-entity-alias="submitterSystemUserV" rel-optional="true">
+			<key-map field-name="submitterSystemUserId" rel-field-name="id" />
+		</view-link>
+		<view-link entity-alias="productOutNotificationV" rel-entity-alias="customerV" rel-optional="true">
+			<key-map field-name="customerId" rel-field-name="id" />
+		</view-link>
+		<view-link entity-alias="productOutNotificationV" rel-entity-alias="warehouseV" rel-optional="true">
+			<key-map field-name="warehouseId" rel-field-name="id" />
+		</view-link>
+	</view-entity>
+	<!-- 订单分录视图 -->
+	<view-entity entity-name="ProductOutNotificationEntryView" package-name="org.ofbiz.scm.ProductOutNotificationEntry" title="ProductOutNotificationEntryView  Entity">
+		<member-entity entity-alias="productOutNotificationEntryV" entity-name="ProductOutNotificationEntry"></member-entity>
+		<member-entity entity-alias="materialV" entity-name="TMaterial"></member-entity>
+		<alias-all entity-alias="productOutNotificationEntryV"></alias-all>
+		<alias name="materialName" entity-alias="materialV" field="name"></alias>
+		<view-link entity-alias="productOutNotificationEntryV" rel-entity-alias="materialV" rel-optional="true">
+			<key-map field-name="materialId" rel-field-name="id" />
+		</view-link>
+	</view-entity>
+	<!-- 订单分录明细视图 -->
+	<view-entity entity-name="ProductOutNotificationEntryDetailView" package-name="org.ofbiz.scm.ProductOutNotificationEntryDetail" title="ProductOutNotificationEntryDetailView  Entity">
+		<member-entity entity-alias="productOutNotificationEntryDetailV" entity-name="ProductOutNotificationEntryDetail"></member-entity>
+		<member-entity entity-alias="materialV" entity-name="TMaterial"></member-entity>
+		<member-entity entity-alias="warehouseV" entity-name="Warehouse"></member-entity>
+		<alias-all entity-alias="productOutNotificationEntryDetailV"></alias-all>
+		<alias name="materialName" entity-alias="materialV" field="name"></alias>
+		<alias name="warehouseName" entity-alias="warehouseV" field="name"></alias>
+		<view-link entity-alias="productOutNotificationEntryDetailV" rel-entity-alias="materialV" rel-optional="true">
+			<key-map field-name="materialId" rel-field-name="id" />
+		</view-link>
+		<view-link entity-alias="productOutNotificationEntryDetailV" rel-entity-alias="warehouseV" rel-optional="true">
+			<key-map field-name="warehouseId" rel-field-name="id" />
+		</view-link>
+	</view-entity>
+	<!-- 通知单打印分录数据源，汇总 -->
+	<view-entity entity-name="ProductOutNotificationPrintEntryView" package-name="org.ofbiz.scm.ProductOutNotification" title="ProductOutNotificationPrintView  Entity">
+		<member-entity entity-alias="productOutNotificationEntryV" entity-name="ProductOutNotificationEntry"></member-entity>
+		<member-entity entity-alias="materialMaterialV" entity-name="Material"></member-entity>
+		<alias name="parentId" entity-alias="productOutNotificationEntryV" field="parentId" group-by="true" ></alias>
+		<alias name="materialId" entity-alias="productOutNotificationEntryV" field="materialId"  group-by="true"></alias>
+		<alias name="materialName" entity-alias="materialMaterialV" field="name"  group-by="true"></alias>
+		<alias name="sumVolume" entity-alias="productOutNotificationEntryV" field="volume"  function="sum"></alias>
+		<view-link entity-alias="productOutNotificationEntryV" rel-entity-alias="materialMaterialV" rel-optional="true">
+			<key-map field-name="materialId" rel-field-name="id" />
+		</view-link>
+	</view-entity>
+	
+	<view-entity entity-name="ProductOutNotificationDetailView" package-name="org.ofbiz.scm.pricemgr" title="ProductOutNotificationDetailView Entity">
+		<member-entity entity-alias="ProductOutNotificationViewV" entity-name="ProductOutNotificationView"></member-entity>
+		<member-entity entity-alias="ProductOutVerifyEntryV" entity-name="ProductOutVerifyEntry"></member-entity>
+		<member-entity entity-alias="TMaterialV" entity-name="TMaterial"></member-entity>
+		<member-entity entity-alias="UnitV" entity-name="Unit"></member-entity>
+		<alias name="number" entity-alias="ProductOutNotificationViewV" field="number"></alias>
+		<alias name="goodNumber" entity-alias="ProductOutNotificationViewV" field="goodNumber"></alias>
+		<alias name="materialName" entity-alias="TMaterialV" field="name"></alias>
+		<alias name="materialModel" entity-alias="TMaterialV" field="model"></alias>
+		<alias name="unitName" entity-alias="UnitV" field="name"></alias>
+		<alias name="orderQty" entity-alias="ProductOutVerifyEntryV" field="orderQty"></alias>
+		<alias name="sentQty" entity-alias="ProductOutVerifyEntryV" field="sentQty"></alias>
+		<alias name="isFinished" entity-alias="ProductOutVerifyEntryV" field="isFinished"></alias>
+		<view-link entity-alias="ProductOutNotificationViewV" rel-entity-alias="ProductOutVerifyEntryV" rel-optional="true">
+			<key-map field-name="deliverNumber" rel-field-name="deliverNumber" />
+			<key-map field-name="materialId" rel-field-name="parentMaterialId" />
+		</view-link>
+		<view-link entity-alias="ProductOutVerifyEntryV" rel-entity-alias="TMaterialV" rel-optional="true">
+			<key-map field-name="materialId" rel-field-name="id" />
+		</view-link>
+		<view-link entity-alias="TMaterialV" rel-entity-alias="UnitV" rel-optional="true">
+			<key-map field-name="defaultUnitId" rel-field-name="id" />
+		</view-link>
+	</view-entity>
+</entitymodel>

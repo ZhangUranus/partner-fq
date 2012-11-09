@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+ <Worksheet ss:Name="Table1">
+  <Table>
+   <Column ss:Index="1" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="2" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="4" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="5" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="6" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="7" ss:AutoFitWidth="0" ss:Width="110"/>   <Row>
+    <Cell><Data ss:Type="String">SUPPLIER_ID</Data></Cell>
+    <Cell><Data ss:Type="String">MATERIAL_ID</Data></Cell>
+    <Cell><Data ss:Type="String">BALANCE</Data></Cell>
+    <Cell><Data ss:Type="String">LAST_UPDATED_STAMP</Data></Cell>
+    <Cell><Data ss:Type="String">LAST_UPDATED_TX_STAMP</Data></Cell>
+    <Cell><Data ss:Type="String">CREATED_STAMP</Data></Cell>
+    <Cell><Data ss:Type="String">CREATED_TX_STAMP</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">80e07116-26a9-4ace-b09c-b2b1fd5bdd32</Data></Cell>
+    <Cell><Data ss:Type="String">fa745ff5-f75b-4ceb-8b68-a96b19031dfa</Data></Cell>
+    <Cell><Data ss:Type="Number">60000.000000</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 17:04:36</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 17:04:36</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:59:45</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:59:45</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">95cf10dd-d19e-4881-a55b-7db7c464e87b</Data></Cell>
+    <Cell><Data ss:Type="String">a718a7a5-e465-4b82-866e-0faaf44d3043</Data></Cell>
+    <Cell><Data ss:Type="Number">14200.000000</Data></Cell>
+    <Cell><Data ss:Type="String">2012-02-09 09:59:55</Data></Cell>
+    <Cell><Data ss:Type="String">2012-02-09 09:59:55</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:58:33</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:58:33</Data></Cell>
+   </Row>
+  </Table>
+ </Worksheet>
+</Workbook>
