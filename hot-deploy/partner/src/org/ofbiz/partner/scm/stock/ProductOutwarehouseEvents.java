@@ -314,7 +314,7 @@ public class ProductOutwarehouseEvents {
 			entryValue.setString("warehouseWarehouseId", warehouseId);
 			entryValue.setString("materialMaterialId", materialId);
 			entryValue.setString("unitUnitId", material.getUnitId());
-			entryValue.set("volume", 1);
+			entryValue.set("volume", new BigDecimal(1));
 			entryValue.setString("barcode1", barcode1);
 			entryValue.setString("barcode2", barcode2);
 			entryValue.setString("outwarehouseType", outWarehouseType);
