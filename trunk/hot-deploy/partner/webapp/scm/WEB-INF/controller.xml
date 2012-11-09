@@ -760,6 +760,14 @@
 		<response name="success" type="none" />
 	</request-map>
 	<!-- 手工进仓出仓操作 -->
+	<!-- 手工进仓出仓操作(不影响库存) -->
+	<request-map uri="manualInOutWithoutStockRun">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.tools.ProductManualInOutEvents" invoke="manualInOutWithoutStockRun" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 手工进仓出仓操作(不影响库存) -->
+	
 	
 	<!-- 系统工具类  -->
 	
