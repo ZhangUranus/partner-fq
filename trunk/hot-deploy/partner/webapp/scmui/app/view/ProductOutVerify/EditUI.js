@@ -27,7 +27,7 @@ Ext.define('SCM.view.ProductOutVerify.EditUI', {
 										layout : 'border',
 										items : [{
 													xtype : 'container',
-													height : 200,
+													height : 120,
 													layout : {
 														columns : 3,
 														type : 'table'
@@ -59,6 +59,12 @@ Ext.define('SCM.view.ProductOutVerify.EditUI', {
 																name : 'materialName',
 																margin : 5,
 																fieldLabel : '产品名称',
+																readOnly : true
+															}, {
+																xtype : 'textfield',
+																name : 'sumVolume',
+																margin : 5,
+																fieldLabel : '订单总数量',
 																readOnly : true
 															}, {
 																xtype : 'numberfield',
