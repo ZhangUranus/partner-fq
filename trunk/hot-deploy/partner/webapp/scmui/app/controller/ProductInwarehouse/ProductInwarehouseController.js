@@ -623,7 +623,7 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 		var me = this;
 		if (me.barcode1Field.getValue() && me.barcode2Field.getValue()) {
 			var barcode = Ext.create('SCM.extend.utils.Barcode', me.barcode1Field.getValue(), me.barcode2Field.getValue());
-			var ikeaCode = barcode.getCodeForIkea();
+			var ikeaCode = barcode.getCodeForIkea() + "167399";
 			if(ikeaCode != this.ikeaCodeField.getValue()){
 				this.clearField();
 				showError('宜家编码和产品条码不一致，请检查并重新扫描！');
