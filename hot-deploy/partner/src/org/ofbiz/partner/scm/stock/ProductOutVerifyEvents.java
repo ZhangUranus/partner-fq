@@ -63,7 +63,14 @@ public class ProductOutVerifyEvents {
 			
 			//构建json结果
 			jsonRs.append("{'success':true,'records':[");
+			boolean isFirst=true;
 			while(rs.next()){
+				
+				if(!isFirst){
+					jsonRs.append(",");
+				}else{
+					isFirst=false;
+				}
 				jsonRs.append("{number:'").append(rs.getString(1)).append("'}");
 			}
 			jsonRs.append("]}");
