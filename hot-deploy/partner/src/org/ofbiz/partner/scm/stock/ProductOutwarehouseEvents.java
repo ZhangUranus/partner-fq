@@ -76,8 +76,6 @@ public class ProductOutwarehouseEvents {
 				for (GenericValue v : entryList) {
 					String barcode1 = v.getString("barcode1");
 					String barcode2 = v.getString("barcode2");
-					// 确定条码、序列号可以出仓
-					ProductBarcodeBoxMgr.getInstance().update(barcode1, barcode2, true);
 
 					String materialId = v.getString("materialMaterialId");// 打板物料id
 					BigDecimal volume = v.getBigDecimal("volume");// 出库数量（板）
@@ -93,6 +91,9 @@ public class ProductOutwarehouseEvents {
 
 					// 扫描单据在扫描的时候已经处理了出货通知单，不需要重新处理
 					if (!isScanBill) {
+						// 确定条码、序列号可以出仓
+						ProductBarcodeBoxMgr.getInstance().update(barcode1, barcode2, true);
+						
 						// 更新周汇总表
 						WeeklyStockMgr.getInstance().updateStock(materialId, bizDate, type, wsVolume, false);
 						ProductInOutStockMgr.getInstance().updateStock(materialId, ProductStockType.OUT, qantity, volume, false);
@@ -163,8 +164,6 @@ public class ProductOutwarehouseEvents {
 				for (GenericValue v : entryList) {
 					String barcode1 = v.getString("barcode1");
 					String barcode2 = v.getString("barcode2");
-					// 确定条码、序列号可以进仓
-					ProductBarcodeBoxMgr.getInstance().update(barcode1, barcode2, false);
 
 					String materialId = v.getString("materialMaterialId");// 打板物料id
 					BigDecimal volume = v.getBigDecimal("volume");// 出库数量（板）
@@ -180,6 +179,9 @@ public class ProductOutwarehouseEvents {
 
 					// 扫描单据在扫描的时候已经处理了出货通知单，不做撤销处理
 					if (!isScanBill) {
+						// 确定条码、序列号可以进仓
+						ProductBarcodeBoxMgr.getInstance().update(barcode1, barcode2, false);
+						
 						// 更新周汇总表
 						WeeklyStockMgr.getInstance().updateStock(materialId, bizDate, type, wsVolume, true);
 						ProductInOutStockMgr.getInstance().updateStock(materialId, ProductStockType.OUT, qantity, volume, true);
@@ -321,13 +323,9 @@ public class ProductOutwarehouseEvents {
 			entryValue.set("qantity", Long.parseLong(barcode.getQuantity()));
 			entryValue.set("sort", 1);
 
-			/*
-			 * 扫描时不进行提交操作，后面再人工提交出仓单
-			 * 
-			 * // 确定条码、序列号可以出仓
-			 * ProductBarcodeBoxMgr.getInstance().update(barcode1, barcode2,
-			 * true);
-			 */
+
+			// 确定条码、序列号可以出仓
+			ProductBarcodeBoxMgr.getInstance().update(barcode1, barcode2,true);
 
 			// 创建分录
 			delegator.create(entryValue);
@@ -413,13 +411,8 @@ public class ProductOutwarehouseEvents {
 			barcode1 = entry.getString("barcode1");
 			barcode2 = entry.getString("barcode2");
 
-			/*
-			 * 扫描时不进行提交操作，后面再人工提交进仓单
-			 * 
-			 * // 1.2确定条码、序列号可以进仓
-			 * ProductBarcodeBoxMgr.getInstance().update(barcode1, barcode2,
-			 * false);
-			 */
+			// 1.2确定条码、序列号可以进仓
+			ProductBarcodeBoxMgr.getInstance().update(barcode1, barcode2,false);
 
 			/* 2 获取单据分录条目 */
 			List<GenericValue> entryList = delegator.findByAnd("ProductOutwarehouseEntry", UtilMisc.toMap("barcode1", barcode1, "barcode2", barcode2));
