@@ -457,7 +457,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 											entity : me.entityName
 										},
 										url : me.getSubmitBillUrl(),
-										timeout : SCM.shortTimes,
+										timeout : SCM.limitTimes,
 										success : function(response, option) {
 											var result = Ext.decode(response.responseText)
 											if (result.success) {
@@ -534,7 +534,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 											entity : this.entityName
 										},
 										url : this.getRollbackBillUrl(),
-										timeout : SCM.shortTimes,
+										timeout : SCM.limitTimes,
 										success : function(response, option) {
 											var result = Ext.decode(response.responseText)
 											if (result.success) {
