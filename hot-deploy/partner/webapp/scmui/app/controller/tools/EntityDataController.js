@@ -34,7 +34,7 @@ Ext.define('SCM.controller.tools.EntityDataController', {
 				Ext.Ajax.request({
 							scope : this,
 							url : "../../scm/control/entityExportAll",
-							timeout : SCM.shortTimes,
+							timeout : SCM.limitTimes,
 							params : {
 								outpath : this.outPath.getValue()
 							},
@@ -59,7 +59,7 @@ Ext.define('SCM.controller.tools.EntityDataController', {
 				Ext.Ajax.request({
 							scope : this,
 							url : "../../scm/control/monthlySettleCheck",
-							timeout : SCM.shortTimes,
+							timeout : SCM.limitTimes,
 							success : function(response, option) {
 								if (response.responseText.length < 1) {
 									showError('系统没有返回结果');
@@ -80,8 +80,8 @@ Ext.define('SCM.controller.tools.EntityDataController', {
 			warehouse : function() {
 				Ext.Ajax.request({
 							scope : this,
-							url : "../../scm/control/manualInOutRun",
-							timeout : SCM.shortTimes,
+							url : "../../scm/control/manualOutRun",
+							timeout : SCM.limitTimes,
 							success : function(response, option) {
 								if (response.responseText.length < 1) {
 									showError('系统没有返回结果');
