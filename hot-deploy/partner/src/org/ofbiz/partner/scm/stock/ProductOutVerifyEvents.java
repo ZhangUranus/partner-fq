@@ -113,8 +113,10 @@ public class ProductOutVerifyEvents {
 */
 	
 	public static String getProductOutVerifyHead(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String bizDate=request.getParameter("bizDate");
+		String bizBeginDate=request.getParameter("bizBeginDate");
+		String bizEndDate=request.getParameter("bizEndDate");
 		String filterDeliverNum=request.getParameter("deliverNum");
+		String searchMaterialId=request.getParameter("searchMaterialId");
 		
 		//构建汇总单号查询语句
 		StringBuffer sql=new StringBuffer();
@@ -143,9 +145,18 @@ public class ProductOutVerifyEvents {
 		//过滤日期
 		sql.append("where status=4 ");
 		
-		if(bizDate!=null&&bizDate.trim().length()>0){
-			sql.append("and date_format(t1.biz_date,'%Y-%m-%d')='").append(bizDate).append("' ");
+		if(bizBeginDate!=null&&bizBeginDate.trim().length()>0){
+			sql.append("and date_format(t1.biz_date,'%Y-%m-%d')>='").append(bizBeginDate).append("' ");
 		}
+		if(bizEndDate!=null&&bizEndDate.trim().length()>0){
+			sql.append("and date_format(t1.biz_date,'%Y-%m-%d')<='").append(bizEndDate).append("' ");
+		}
+
+		//过滤物料
+		if(searchMaterialId!=null&&searchMaterialId.trim().length()>0){
+			sql.append(" and t2.material_id='").append(searchMaterialId).append("'");
+		}
+		
 		sql.append("group by t1.deliver_number,t2.material_id having deliverNumber is not null   ");
 		//过滤单号
 		if(filterDeliverNum!=null&&filterDeliverNum.trim().length()>0){
