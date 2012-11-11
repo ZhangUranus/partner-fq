@@ -21,16 +21,24 @@ Ext.define('SCM.view.ProductOutVerify.ListUI', {
 										border : '0 1 1 1',
 										items : [{
 													xtype : 'datefield',
-													name : 'searchDate',
+													name : 'searchBeginDate',
 													format : 'Y-m-d',
-													width : 135,
-													labelWidth : 35,
-													fieldLabel : '日期',
+													width : 155,
+													labelWidth : 60,
+													fieldLabel : '开始日期',
 													margin : '0 0 0 0'
-												}, {
+												},{
+													xtype : 'datefield',
+													name : 'searchEndDate',
+													format : 'Y-m-d',
+													width : 155,
+													labelWidth : 60,
+													fieldLabel : '结束日期',
+													margin : '0 0 0 0'
+												},  {
 													xtype : 'combogrid',
 													name : 'deliverNumber',
-													width : 200,
+													width : 150,
 													labelWidth : 40,
 													fieldLabel : '单号',
 													valueField : 'number',
@@ -44,6 +52,32 @@ Ext.define('SCM.view.ProductOutVerify.ListUI', {
 																	header : '单号',
 																	dataIndex : 'number',
 																	width : 250,
+																	hideable : false
+																}]
+													}
+												},{
+													xtype : 'combogrid',
+													name : 'searchMaterialId',
+													width : 170,
+													labelWidth : 35,
+													fieldLabel : '物料',
+													valueField : 'id',
+													displayField : 'name',
+													store : Ext.data.StoreManager.lookup('MComboStore'),
+													matchFieldWidth : false,
+													emptyText : '所有物料',
+													listConfig : {
+														width : 400,
+														height : SCM.MaxSize.COMBOGRID_HEIGHT,
+														columns : [{
+																	header : '编码',
+																	dataIndex : 'number',
+																	width : 100,
+																	hideable : false
+																}, {
+																	header : '名称',
+																	dataIndex : 'name',
+																	width : 280,
 																	hideable : false
 																}]
 													}

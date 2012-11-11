@@ -73,8 +73,10 @@ Ext.define('SCM.controller.ProductOutVerify.ProductOutVerifyController', {
 			 * 重新方法，增加查询条件控件的引用
 			 */
 			afterInitComponent : function() {
-				this.searchDate = this.listContainer.down('datefield[name=searchDate]');
+				this.searchBeginDate = this.listContainer.down('datefield[name=searchBeginDate]');
+				this.searchEndDate = this.listContainer.down('datefield[name=searchEndDate]');
 				this.searchDeliverNum = this.listContainer.down('combogrid[name=deliverNumber]');
+				this.searchMaterialId = this.listContainer.down('combogrid[name=searchMaterialId]');
 				
 				this.MaterialStore = Ext.data.StoreManager.lookup('MAllStore');
 			},
@@ -87,12 +89,20 @@ Ext.define('SCM.controller.ProductOutVerify.ProductOutVerifyController', {
 				this.listPanel.store.getProxy().extraParams.bizDate=null;
 				this.listPanel.store.getProxy().extraParams.deliverNum=null;
 				
-				if(this.searchDate.getRawValue()){
-					this.listPanel.store.getProxy().extraParams.bizDate = this.searchDate.getRawValue();
+				
+				if(this.searchBeginDate.getRawValue()){
+					this.listPanel.store.getProxy().extraParams.bizBeginDate = this.searchBeginDate.getRawValue();
+				}
+				if(this.searchEndDate.getRawValue()){
+					this.listPanel.store.getProxy().extraParams.bizEndDate = this.searchEndDate.getRawValue();
 				}
 				if(this.searchDeliverNum.getValue()){
 					this.listPanel.store.getProxy().extraParams.deliverNum = this.searchDeliverNum.getValue();
 				}
+				if(this.searchMaterialId.getValue()){
+					this.listPanel.store.getProxy().extraParams.searchMaterialId = this.searchMaterialId.getValue();
+				}
+				
 				this.listPanel.store.load();
 				
 				this.detailPanel.store.removeAll();
