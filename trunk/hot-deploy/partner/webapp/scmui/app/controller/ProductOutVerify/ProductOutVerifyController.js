@@ -225,7 +225,7 @@ Ext.define('SCM.controller.ProductOutVerify.ProductOutVerifyController', {
 								entryStore.clearFilter();
 								entryStore.filter([{
 											property : "deliverNumber",
-											value : records[0].get("deliverNumber")
+											value : record.get("deliverNumber")
 										}, {
 											property : "parentMaterialId",
 											value : record.get("materialId")
