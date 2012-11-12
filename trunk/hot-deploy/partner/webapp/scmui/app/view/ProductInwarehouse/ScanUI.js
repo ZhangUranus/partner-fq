@@ -183,6 +183,15 @@ Ext.define('SCM.view.ProductInwarehouse.ScanUI', {
 																fieldLabel : '宜家编码',
 																margin : 5,
 																width : 320
+															}, {
+																xtype : 'button',
+																text : ' 清零',
+																margin : 10,
+																iconCls : 'system-clear',
+																action : 'clearQantity',
+																tdAttrs : {
+																	align : 'left'
+																}
 															}]
 												}, {
 													xtype : 'gridpanel',

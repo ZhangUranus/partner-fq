@@ -194,6 +194,15 @@ Ext.define('SCM.view.ProductOutwarehouse.ScanUI', {
 																tdAttrs : {
 																	align : 'left'
 																}
+															}, {
+																xtype : 'button',
+																text : ' 清零',
+																margin : 10,
+																iconCls : 'system-clear',
+																action : 'clearQantity',
+																tdAttrs : {
+																	align : 'left'
+																}
 															}]
 												}, {
 													xtype : 'gridpanel',
