@@ -447,6 +447,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 					confirmChange('yes');
 				}
 				function confirmChange(id) {
+					Ext.getBody().mask('正在进行提交操作....');
 					if (id == 'yes') {
 						/* 判断是否可提交 */
 						if (me.hasSubmitLock()) {
@@ -466,6 +467,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 											} else {
 												showError(result.message);
 											}
+											Ext.getBody().unmask();
 											me.refreshRecord();
 											me.releaseSubmitLock();
 										}
@@ -523,6 +525,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				}
 				Ext.Msg.confirm('提示', '确定撤销该' + this.gridTitle + '？', confirmChange, this);
 				function confirmChange(id) {
+					Ext.getBody().mask('正在进行撤销操作....');
 					if (id == 'yes') {
 						/* 判断是否可提交 */
 						if (this.hasSubmitLock()) {
@@ -543,6 +546,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 											} else {
 												showError(result.message);
 											}
+					 						Ext.getBody().unmask();
 											this.refreshRecord();
 											this.releaseSubmitLock();
 										}
