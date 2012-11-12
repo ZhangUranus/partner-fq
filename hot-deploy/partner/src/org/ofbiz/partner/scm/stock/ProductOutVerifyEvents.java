@@ -301,10 +301,11 @@ public class ProductOutVerifyEvents {
 	 */
 	public static String export(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
-		String filterDeliverNum=request.getParameter("deliverNumber");
+		String fromDate=request.getParameter("fromDate");
+		String endDate=request.getParameter("endDate");
 		//过滤单号
-		if(filterDeliverNum==null||filterDeliverNum.trim().length()<1){
-			throw new Exception("单号为空");
+		if(fromDate==null||fromDate.trim().length()<1||endDate==null||endDate.trim().length()<1){
+			throw new Exception("过滤日期范围为空");
 		}
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
 		Connection conn = ConnectionFactory.getConnection(org.ofbiz.partner.scm.common.Utils.getConnectionHelperName());
@@ -314,7 +315,7 @@ public class ProductOutVerifyEvents {
 		StringBuffer sql=new StringBuffer();
 		sql.append("select ");
 		sql.append("notification.deliverNumber deliverNumber, ");
-		sql.append("notification.bizdate bizDate, ");
+		sql.append("Date_Format(notification.bizdate,'%Y-%m-%d') bizDate, ");
 		sql.append("notification.materialId materialId, ");
 		sql.append("material.name materialName, ");
 		sql.append("notification.sumVolume sumVolume, ");
@@ -333,10 +334,10 @@ public class ProductOutVerifyEvents {
 		sql.append("sum(t2.gross_size) sumGrossSize ");
 		sql.append("FROM product_out_notification t1 ");
 		sql.append("inner join product_out_notification_entry t2 on t1.id=t2.parent_id ");
-		sql.append("group by t1.deliver_number,t2.material_id having deliverNumber is not null   ");
-		sql.append(" and deliverNumber='").append(filterDeliverNum).append("'");
+		sql.append("where (t1.deliver_number is not null and t1.deliver_number<>'') and UNIX_TIMESTAMP(t1.biz_date)>=UNIX_TIMESTAMP('").append(fromDate).append(" 00:00:00') and UNIX_TIMESTAMP(t1.biz_date)<=UNIX_TIMESTAMP('").append(endDate).append(" 23:59:59') ");
+		sql.append("group by t1.deliver_number,t2.material_id  ");
 		sql.append(" ) notification left outer join product_out_verify_head  verify on (notification.deliverNumber=verify.deliver_number and notification.materialId=verify.material_id) ");
-		sql.append("left outer join t_material  material on notification.materialId=material.id");
+		sql.append("left outer join t_material  material on notification.materialId=material.id order by notification.deliverNumber desc");
 		
 		try {
 			ResultSet rs=conn.createStatement().executeQuery(sql.toString());
@@ -346,31 +347,32 @@ public class ProductOutVerifyEvents {
 			HSSFWorkbook workbook = new HSSFWorkbook();
 			// 生成一个表格
 			HSSFSheet sheet = workbook.createSheet("sheet1");
-			//对数单号行
-			HSSFRow deliverNumRow=sheet.createRow(0);
-			deliverNumRow.createCell(0).setCellValue(filterDeliverNum);
 			//表头行
-			HSSFRow headRow=sheet.createRow(2);
-			headRow.createCell(0).setCellValue("产品");
-			headRow.createCell(1).setCellValue("订单总数量");
-			headRow.createCell(2).setCellValue("订单总重量");
-			headRow.createCell(3).setCellValue("订单总体积");
-			headRow.createCell(4).setCellValue("打板方式");
-			headRow.createCell(5).setCellValue("打板数量");
-			headRow.createCell(6).setCellValue("已出仓数量");
-			headRow.createCell(7).setCellValue("出仓仓库");
-			headRow.createCell(8).setCellValue("是否完成");
-			int curRow=3;
+			HSSFRow headRow=sheet.createRow(0);
+			headRow.createCell(0).setCellValue("日期");
+			headRow.createCell(1).setCellValue("单号");
+			headRow.createCell(2).setCellValue("产品");
+			headRow.createCell(3).setCellValue("订单总数量");
+			headRow.createCell(4).setCellValue("订单总重量");
+			headRow.createCell(5).setCellValue("订单总体积");
+			headRow.createCell(6).setCellValue("打板方式");
+			headRow.createCell(7).setCellValue("打板数量");
+			headRow.createCell(8).setCellValue("已出仓数量");
+			headRow.createCell(9).setCellValue("出仓仓库");
+			headRow.createCell(10).setCellValue("是否完成");
+			int curRow=1;
 			while(rs.next()){
 				HSSFRow tmpRow=sheet.createRow(curRow);
 				String materialId=rs.getString("materialId");
-				tmpRow.createCell(0).setCellValue(rs.getString("materialName"));
-				tmpRow.createCell(1).setCellValue(rs.getBigDecimal("sumVolume").doubleValue());
-				tmpRow.createCell(2).setCellValue(rs.getBigDecimal("sumGrossWeight").doubleValue());
-				tmpRow.createCell(3).setCellValue(rs.getBigDecimal("sumGrossSize").doubleValue());
+				tmpRow.createCell(0).setCellValue(rs.getString("bizDate"));
+				tmpRow.createCell(1).setCellValue(rs.getString("deliverNumber"));
+				tmpRow.createCell(2).setCellValue(rs.getString("materialName"));
+				tmpRow.createCell(3).setCellValue(rs.getBigDecimal("sumVolume").doubleValue());
+				tmpRow.createCell(4).setCellValue(rs.getBigDecimal("sumGrossWeight").doubleValue());
+				tmpRow.createCell(5).setCellValue(rs.getBigDecimal("sumGrossSize").doubleValue());
 				
 				//查询分录
-				List<GenericValue> entrys=delegator.findByAnd("ProductOutVerifyEntryView", UtilMisc.toMap("deliverNumber", filterDeliverNum, "parentMaterialId", materialId));
+				List<GenericValue> entrys=delegator.findByAnd("ProductOutVerifyEntryView", UtilMisc.toMap("deliverNumber", rs.getString("deliverNumber"), "parentMaterialId", materialId));
 				if(entrys!=null&&entrys.size()>0){
 					for (int i=0;i<entrys.size();i++) {
 						GenericValue ev=entrys.get(i);
@@ -380,14 +382,14 @@ public class ProductOutVerifyEvents {
 						}else{
 							entryRow=sheet.createRow(++curRow);
 						}
-						entryRow.createCell(4).setCellValue(ev.getString("materialName"));
-						entryRow.createCell(5).setCellValue(ev.getBigDecimal("orderQty").doubleValue());
-						entryRow.createCell(6).setCellValue(ev.getBigDecimal("sentQty").doubleValue());
-						entryRow.createCell(7).setCellValue(ev.getString("warehouseName"));
+						entryRow.createCell(6).setCellValue(ev.getString("materialName"));
+						entryRow.createCell(7).setCellValue(ev.getBigDecimal("orderQty").doubleValue());
+						entryRow.createCell(8).setCellValue(ev.getBigDecimal("sentQty").doubleValue());
+						entryRow.createCell(9).setCellValue(ev.getString("warehouseName"));
 						if(ev.getBoolean("isFinished")){
-							entryRow.createCell(8).setCellValue("是");
+							entryRow.createCell(10).setCellValue("是");
 						}else{
-							entryRow.createCell(8).setCellValue("否");
+							entryRow.createCell(10).setCellValue("否");
 						}
 						
 					}

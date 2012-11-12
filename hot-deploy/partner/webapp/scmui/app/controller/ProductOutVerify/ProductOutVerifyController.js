@@ -305,15 +305,15 @@ Ext.define('SCM.controller.ProductOutVerify.ProductOutVerifyController', {
 			
 			//导出单据
 			exportBill : function(button){
-				var headRecord=this.getSelectedHead();
-				if(!(headRecord&&headRecord.get("deliverNumber")&&headRecord.get("materialId"))){
-					showError('请选择表头或者表头没有单号！');
-					return;
+				if(!(this.searchBeginDate.getRawValue()&&this.searchEndDate.getRawValue())){
+					showError('请输入导出日期范围');
+					return ;
 				}
-				Ext.Msg.confirm('提示', '确定导出' + headRecord.get("deliverNumber") + '所有记录 ？', confirmChange, this);
+				
+				Ext.Msg.confirm('提示', '确定导出' + this.searchBeginDate.getRawValue() +'至'+this.searchEndDate.getRawValue()+ '所有记录 ？', confirmChange, this);
 				function confirmChange(id) {
 					if (id == 'yes') {
-						window.location.href = '../scm/control/exportVerifyBill?deliverNumber='+headRecord.get("deliverNumber");
+						window.location.href = '../scm/control/exportVerifyBill?fromDate='+this.searchBeginDate.getRawValue()+'&endDate='+this.searchEndDate.getRawValue();
 						
 					}
 				}
