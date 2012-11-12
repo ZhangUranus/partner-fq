@@ -89,13 +89,13 @@ public class ProductInwarehouseEvents {
 					BigDecimal volume = v.getBigDecimal("volume");// 入库数量（板）
 					Long qantity = Long.parseLong(barcode.getQuantity());// 板数量（一板有多少产品）
 					
-					ProductStockType type = ProductStockType.IN;
-					if("2".equals(v.getString("inwarehouseType"))){
-						type = ProductStockType.CHG;
-					}
-					
 					// 如果是扫描单据，在扫描时已经更新了周汇总和综合成品账报表数据，提交时不需要重复处理
 					if(!isScanBill){
+						ProductStockType type = ProductStockType.IN;
+						if("2".equals(v.getString("inwarehouseType"))){
+							type = ProductStockType.CHG;
+						}
+						
 						// 确定条码、序列号可以进仓
 						ProductBarcodeBoxMgr.getInstance().update(barcode1, barcode2, false);
 						
@@ -174,13 +174,14 @@ public class ProductInwarehouseEvents {
 					BigDecimal volume = v.getBigDecimal("volume");// 入库数量（板）
 					Long qantity = v.getLong("qantity");// 板数量（一板有多少产品）
 					
-					ProductStockType type = ProductStockType.IN;
-					if("2".equals(v.getString("inwarehouseType"))){
-						type = ProductStockType.CHG;
-					}
-					
 					// 如果是扫描单据，在扫描时已经更新了周汇总和综合成品账报表数据，撤销不需要重复处理
 					if(!isScanBill){
+						// 进仓类型
+						ProductStockType type = ProductStockType.IN;
+						if("2".equals(v.getString("inwarehouseType"))){
+							type = ProductStockType.CHG;
+						}
+						
 						// 确定条码、序列号可以出仓 
 						ProductBarcodeBoxMgr.getInstance().update(barcode1, barcode2, true);
 						

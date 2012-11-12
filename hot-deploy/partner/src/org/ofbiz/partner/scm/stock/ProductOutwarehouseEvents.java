@@ -81,27 +81,29 @@ public class ProductOutwarehouseEvents {
 					BigDecimal volume = v.getBigDecimal("volume");// 出库数量（板）
 					Long qantity = v.getLong("qantity");// 板数量（一板有多少产品）
 
-					BigDecimal wsVolume = volume;
-					ProductStockType type = ProductStockType.OUT;
-					// 改版出仓时，使用改版类型，然后将改版数取负
-					if ("2".equals(v.getString("outwarehouseType"))) {
-						type = ProductStockType.CHG;
-						wsVolume = wsVolume.negate();
-					}
-
 					// 扫描单据在扫描的时候已经处理了出货通知单，不需要重新处理
 					if (!isScanBill) {
+						BigDecimal wsVolume = volume;
+						ProductStockType type = ProductStockType.OUT;
+						// 改版出仓时，使用改版类型，然后将改版数取负
+						if ("2".equals(v.getString("outwarehouseType"))) {
+							type = ProductStockType.CHG;
+							wsVolume = wsVolume.negate();
+						}
+						
 						// 确定条码、序列号可以出仓
 						ProductBarcodeBoxMgr.getInstance().update(barcode1, barcode2, true);
 						
 						// 更新周汇总表
 						WeeklyStockMgr.getInstance().updateStock(materialId, bizDate, type, wsVolume, false);
 						ProductInOutStockMgr.getInstance().updateStock(materialId, ProductStockType.OUT, qantity, volume, false);
-
-						// 出货通知单
-						boolean isUpdate = updateNotification(v, delegator, materialId, volume, v.getString("goodNumber"));
-						if (!isUpdate) {
-							throw new Exception("未找到产品对应的出货通知单，请检查货号是否填写正确。如果无相应出货通知单，请先提交通知单！");
+						
+						if ("1".equals(v.getString("outwarehouseType"))) {
+							// 出货通知单
+							boolean isUpdate = updateNotification(v, delegator, materialId, volume, v.getString("goodNumber"));
+							if (!isUpdate) {
+								throw new Exception("未找到产品对应的出货通知单，请检查货号是否填写正确。如果无相应出货通知单，请先提交通知单！");
+							}
 						}
 					}
 
@@ -169,27 +171,29 @@ public class ProductOutwarehouseEvents {
 					BigDecimal volume = v.getBigDecimal("volume");// 出库数量（板）
 					Long qantity = v.getLong("qantity");// 板数量（一板有多少产品）
 
-					BigDecimal wsVolume = volume;
-					ProductStockType type = ProductStockType.OUT;
-					// 改版出仓时，使用改版类型，然后将改版数取负
-					if ("2".equals(v.getString("outwarehouseType"))) {
-						type = ProductStockType.CHG;
-						wsVolume = wsVolume.negate();
-					}
-
 					// 扫描单据在扫描的时候已经处理了出货通知单，不做撤销处理
 					if (!isScanBill) {
+						BigDecimal wsVolume = volume;
+						ProductStockType type = ProductStockType.OUT;
+						// 改版出仓时，使用改版类型，然后将改版数取负
+						if ("2".equals(v.getString("outwarehouseType"))) {
+							type = ProductStockType.CHG;
+							wsVolume = wsVolume.negate();
+						}
+						
 						// 确定条码、序列号可以进仓
 						ProductBarcodeBoxMgr.getInstance().update(barcode1, barcode2, false);
 						
 						// 更新周汇总表
 						WeeklyStockMgr.getInstance().updateStock(materialId, bizDate, type, wsVolume, true);
 						ProductInOutStockMgr.getInstance().updateStock(materialId, ProductStockType.OUT, qantity, volume, true);
-
-						// 出货通知单
-						boolean isUpdate = updateNotification(v, delegator, materialId, volume.negate(), v.getString("goodNumber"));
-						if (!isUpdate) {
-							throw new Exception("未找到产品对应的出货通知单，请检查货号是否填写正确。如果无相应出货通知单，请先提交通知单！");
+						
+						if ("1".equals(v.getString("outwarehouseType"))) {
+							// 出货通知单
+							boolean isUpdate = updateNotification(v, delegator, materialId, volume.negate(), v.getString("goodNumber"));
+							if (!isUpdate) {
+								throw new Exception("未找到产品对应的出货通知单，请检查货号是否填写正确。如果无相应出货通知单，请先提交通知单！");
+							}
 						}
 					}
 				}
@@ -288,9 +292,10 @@ public class ProductOutwarehouseEvents {
 				}
 				workshopId = entry.getString("workshopId");
 			}
-
-			if (!entry.containsKey("goodNumber") || entry.getString("goodNumber").trim().length() < 1) {
-				throw new Exception("货号不能为空，请输入货号！");
+			if ("1".equals(outWarehouseType)) {
+				if (!entry.containsKey("goodNumber") || entry.getString("goodNumber").trim().length() < 1) {
+					throw new Exception("货号不能为空，请输入货号！");
+				}
 			}
 			String[] goodNumbers = entry.getString("goodNumber").split(",");
 
@@ -344,19 +349,21 @@ public class ProductOutwarehouseEvents {
 
 			// 成品出仓综合成品账
 			ProductInOutStockMgr.getInstance().updateStock(materialId, ProductStockType.OUT, Long.parseLong(barcode.getQuantity()), new BigDecimal(1), false);
-
-			// 出货通知单
-			boolean isUpdate = false;
-			for (String goodNumber : goodNumbers) {// 遍历所有货号，直到找到对应的出货通知单
-				isUpdate = updateNotification(entryValue, delegator, materialId, new BigDecimal(1), goodNumber);
-				if (isUpdate) {
-					entryValue.setString("goodNumber", goodNumber);
-					entryValue.store(); // 补填货号
-					break;
+			
+			if ("1".equals(outWarehouseType)) {
+				// 出货通知单
+				boolean isUpdate = false;
+				for (String goodNumber : goodNumbers) {// 遍历所有货号，直到找到对应的出货通知单
+					isUpdate = updateNotification(entryValue, delegator, materialId, new BigDecimal(1), goodNumber);
+					if (isUpdate) {
+						entryValue.setString("goodNumber", goodNumber);
+						entryValue.store(); // 补填货号
+						break;
+					}
 				}
-			}
-			if (!isUpdate) {
-				throw new Exception("未找到产品对应的出货通知单，请检查货号是否填写正确。如果无相应出货通知单，请先提交通知单！");
+				if (!isUpdate) {
+					throw new Exception("未找到产品对应的出货通知单，请检查货号是否填写正确。如果无相应出货通知单，请先提交通知单！");
+				}
 			}
 
 			/*
@@ -474,11 +481,13 @@ public class ProductOutwarehouseEvents {
 			// 3.1 成品进仓撤销，负数
 			WeeklyStockMgr.getInstance().updateStock(materialId, bizDate, type, wsVolume, true);
 			ProductInOutStockMgr.getInstance().updateStock(materialId, ProductStockType.OUT, qantity, volume, true);
-
-			// 出货通知单
-			boolean isUpdate = updateNotification(entryValue, delegator, materialId, volume.negate(), entryValue.getString("goodNumber"));
-			if (!isUpdate) {
-				throw new Exception("未找到产品对应的出货通知单，请检查货号是否填写正确。如果无相应出货通知单，请先提交通知单！");
+			
+			if ("1".equals(entryValue.getString("outwarehouseType"))) {
+				// 出货通知单
+				boolean isUpdate = updateNotification(entryValue, delegator, materialId, volume.negate(), entryValue.getString("goodNumber"));
+				if (!isUpdate) {
+					throw new Exception("未找到产品对应的出货通知单，请检查货号是否填写正确。如果无相应出货通知单，请先提交通知单！");
+				}
 			}
 
 			entryValue.remove(); // 删除分录
