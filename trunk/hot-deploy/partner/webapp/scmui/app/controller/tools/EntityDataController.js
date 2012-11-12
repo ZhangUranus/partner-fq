@@ -80,7 +80,7 @@ Ext.define('SCM.controller.tools.EntityDataController', {
 			warehouse : function() {
 				Ext.Ajax.request({
 							scope : this,
-							url : "../../scm/control/manualOutRun",
+							url : "../../scm/control/manualInOutRun",
 							timeout : SCM.limitTimes,
 							success : function(response, option) {
 								if (response.responseText.length < 1) {
