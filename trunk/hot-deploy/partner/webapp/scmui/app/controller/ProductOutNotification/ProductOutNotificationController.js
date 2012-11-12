@@ -199,9 +199,9 @@ Ext.define('SCM.controller.ProductOutNotification.ProductOutNotificationControll
 					this.viewDetailButton.setVisible(false);
 					this.editDetailButton.setVisible(false);
 				} else {
-					this.setFieldsReadOnly(true);
+					this.setFieldsReadOnly(false,true);
 					this.setGridEditAble(false);
-					this.saveButton.setDisabled(true);
+					this.saveButton.setDisabled(false);
 					this.clearButton.setDisabled(true);
 					this.submitEditButton.setDisabled(true);
 					
@@ -217,10 +217,13 @@ Ext.define('SCM.controller.ProductOutNotification.ProductOutNotificationControll
 			 * @param {}
 			 *            isReadOnly
 			 */
-			setFieldsReadOnly : function(isReadOnly) {
+			setFieldsReadOnly : function(isReadOnly,isSubmit) {
 				Ext.each(this.fields, function(item, index, length) {
-							if(item.name != 'packagedNotSend'){
-								item.setReadOnly(isReadOnly);
+							item.setReadOnly(isReadOnly);
+							if(isSubmit){
+								if(item.name == 'bizDate'){
+									item.setReadOnly(true);
+								}
 							}
 						})
 			},

@@ -543,12 +543,21 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 			this.ikeaCodeField = this.winScan.down('textfield[name=ikeaCode]');
 			this.qantityLabel = this.winScan.down('label[name=qantity]');
 			this.boardCountLabel = this.winScan.down('label[name=boardCount]');
+			this.clearQantityButton = this.winScan.down('button[action=clearQantity]');
+			this.clearQantityButton.addListener('click', this.clearQantity, this); // 监听按钮点击事件
 			this.isInitScanEvent = false;
 			this.scanBoardCount = 0;
 		}
 		return this.winScan;
 	},
-
+	
+	/**
+	* 清理扫描板产品数
+	*/
+	clearQantity : function() {
+		this.qantityLabel.setText('000');
+	},
+	
 	/**
 	 * 初始化扫描事件
 	 */

@@ -283,6 +283,9 @@ Ext.define('SCM.controller.ProductOutwarehouse.ProductOutwarehouseController', {
 					this.searchDetailButton.addListener('click', this.openDetailListUI, this); // 监听按钮点击事件
 					this.searchNotiDetailButton = this.winScan.down('button[action=searchNoti]');
 					this.searchNotiDetailButton.addListener('click', this.openNotiDetailListUI, this); // 监听按钮点击事件
+					this.clearQantityButton = this.winScan.down('button[action=clearQantity]');
+					this.clearQantityButton.addListener('click', this.clearQantity, this); // 监听按钮点击事件
+					
 					this.isInitScanEvent = false;
 					this.scanBoardCount = 0;
 				}
@@ -536,6 +539,13 @@ Ext.define('SCM.controller.ProductOutwarehouse.ProductOutwarehouseController', {
 			openNotiDetailListUI : function() {
 				this.winNotiDetailList.show();
 				this.notiDetailListGrid.store.load();
+			},
+			
+			/**
+			 * 清理扫描板产品数
+			 */
+			clearQantity : function() {
+				this.qantityLabel.setText('000');
 			},
 			
 			/**
