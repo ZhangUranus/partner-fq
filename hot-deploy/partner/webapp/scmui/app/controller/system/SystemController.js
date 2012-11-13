@@ -70,7 +70,7 @@ Ext.define('SCM.controller.system.SystemController', {
 				this.deleteButton = view.down('button[action=delete]');
 				this.saveButton = view.down('button[action=save]');
 				this.userTree.store.proxy.addListener('afterRequest', this.afterRequest, this); // 监听所有请求回调
-				this.userStore = Ext.create('SCM.store.system.UserStore');
+				this.userStore = Ext.data.StoreManager.lookup('USERComboInitStore');
 				this.userStore.load();
 				this.userStore.proxy.addListener('afterRequest', this.afterRequest, this); // 监听所有请求回调
 				var departmentCombobox = Ext.getCmp('user-department-combobox');
@@ -194,6 +194,7 @@ Ext.define('SCM.controller.system.SystemController', {
 			 *            record 节点数据
 			 */
 			selectUserNode : function(node, record) {
+				debugger;
 				var me = this;
 				if (this.userForm.modifyed) {
 					Ext.Msg.confirm('提示', '确定退出当前用户编辑窗口？', confirmChange);
