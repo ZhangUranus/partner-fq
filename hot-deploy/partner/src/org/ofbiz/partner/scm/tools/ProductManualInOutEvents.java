@@ -150,7 +150,7 @@ public class ProductManualInOutEvents {
 					entryValue.setString("workshopWorkshopId", workshopId);
 					entryValue.setString("warehouseWarehouseId", warehouseId);
 					entryValue.setString("materialMaterialId", materialId);
-					entryValue.setString("productWeek", Utils.getYearWeekStr(currentDate));
+					entryValue.setString("productWeek", barcode.getProductWeek());
 					entryValue.setString("unitUnitId", material.getUnitId());
 					entryValue.set("volume", volume);
 					entryValue.setString("barcode1", barcode1);
@@ -182,7 +182,7 @@ public class ProductManualInOutEvents {
 					entryValue.setString("workshopWorkshopId", workshopId);
 					entryValue.setString("warehouseWarehouseId", warehouseId);
 					entryValue.setString("materialMaterialId", materialId);
-					entryValue.setString("prdWeek", Utils.getYearWeekStr(currentDate));
+					entryValue.setString("prdWeek", barcode.getProductWeek());
 					entryValue.setString("unitUnitId", material.getUnitId());
 					entryValue.set("volume", volume);
 					entryValue.setString("barcode1", barcode1);
@@ -317,7 +317,7 @@ public class ProductManualInOutEvents {
 				entryValue.setString("workshopWorkshopId", workshopId);
 				entryValue.setString("warehouseWarehouseId", warehouseId);
 				entryValue.setString("materialMaterialId", materialId);
-				entryValue.setString("productWeek", Utils.getYearWeekStr(currentDate));
+				entryValue.setString("productWeek", barcode.getProductWeek());
 				entryValue.setString("unitUnitId", material.getUnitId());
 				entryValue.set("volume", volume);
 				entryValue.setString("barcode1", barcode1);
@@ -447,7 +447,7 @@ public class ProductManualInOutEvents {
 				entryValue.setString("workshopWorkshopId", workshopId);
 				entryValue.setString("warehouseWarehouseId", warehouseId);
 				entryValue.setString("materialMaterialId", materialId);
-				entryValue.setString("prdWeek", Utils.getYearWeekStr(currentDate));
+				entryValue.setString("prdWeek", barcode.getProductWeek());
 				entryValue.setString("unitUnitId", material.getUnitId());
 				entryValue.set("volume", volume);
 				entryValue.setString("barcode1", barcode1);
@@ -590,7 +590,7 @@ public class ProductManualInOutEvents {
 					entryValue.setString("workshopWorkshopId", workshopId);
 					entryValue.setString("warehouseWarehouseId", warehouseId);
 					entryValue.setString("materialMaterialId", materialId);
-					entryValue.setString("productWeek", Utils.getYearWeekStr(billDate));
+					entryValue.setString("productWeek", barcode.getProductWeek());
 					entryValue.setString("unitUnitId", material.getUnitId());
 					entryValue.set("volume", volume);
 					entryValue.setString("barcode1", barcode1);
