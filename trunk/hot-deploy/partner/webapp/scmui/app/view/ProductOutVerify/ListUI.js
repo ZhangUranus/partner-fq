@@ -123,7 +123,7 @@ Ext.define('SCM.view.ProductOutVerify.ListUI', {
 													dataIndex : 'bizDate',
 													width : 100,
 													format : 'Y-m-d',
-													text : '业务日期'
+													text : '计划出货日期'
 												}, {
 													xtype : 'gridcolumn',
 													renderer : SCM.store.basiccode.billStatusRenderer,
