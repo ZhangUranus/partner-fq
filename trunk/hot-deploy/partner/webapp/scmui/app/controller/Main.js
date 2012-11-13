@@ -198,6 +198,11 @@ Ext.define('SCM.controller.Main', {
 							pageSize : SCM.unpageSize,
 							storeId : 'SUComboInitStore' //下拉框－－展现时使用
 						}).load();
+				
+				Ext.create('UserStore', {
+							pageSize : SCM.unpageSize,
+							storeId : 'USERComboInitStore' //下拉框－－展现时使用
+						}).load();
 
 				/* 初始化地区的STORE */
 				Ext.create('RegionStore', {
