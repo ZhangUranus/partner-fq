@@ -106,8 +106,9 @@ public class ProductOutwarehouseEvents {
 							}
 						}
 					}
-
-					v.set("prdWeek", Utils.getYearWeekStr(bizDate));
+					
+					BarCode barcode = new BarCode(barcode1, barcode2);
+					v.set("prdWeek", barcode.getProductWeek());
 					v.store();
 				}
 				// 出仓单业务处理
@@ -316,7 +317,7 @@ public class ProductOutwarehouseEvents {
 			GenericValue entryValue = delegator.makeValue("ProductOutwarehouseEntry");
 			entryValue.setString("id", entryId);
 			entryValue.setString("parentId", billId);
-			entryValue.setString("prdWeek", Utils.getYearWeekStr(new Date()));
+			entryValue.setString("prdWeek", barcode.getProductWeek());
 			entryValue.setString("workshopWorkshopId", workshopId);
 			entryValue.setString("warehouseWarehouseId", warehouseId);
 			entryValue.setString("materialMaterialId", materialId);

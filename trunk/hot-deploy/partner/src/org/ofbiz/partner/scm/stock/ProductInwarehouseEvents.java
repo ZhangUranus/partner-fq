@@ -106,7 +106,8 @@ public class ProductInwarehouseEvents {
 						ProductInOutStockMgr.getInstance().updateStock(materialId, ProductStockType.IN, qantity, volume, false);
 					}
 					
-					v.set("productWeek", Utils.getYearWeekStr(bizDate));
+					
+					v.set("productWeek", barcode.getProductWeek());
 					v.set("qantity", qantity);
 					v.store();
 					
@@ -307,7 +308,7 @@ public class ProductInwarehouseEvents {
 			entryValue.setString("workshopWorkshopId", workshopId);
 			entryValue.setString("warehouseWarehouseId", warehouseId);
 			entryValue.setString("materialMaterialId", materialId);
-			entryValue.setString("productWeek", Utils.getYearWeekStr(currentDate));
+			entryValue.setString("productWeek", barcode.getProductWeek());
 			entryValue.setString("unitUnitId", material.getUnitId());
 			entryValue.set("volume", new BigDecimal(1));
 			entryValue.setString("barcode1", barcode1);
