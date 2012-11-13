@@ -161,6 +161,12 @@ Ext.define('SCM.view.ProductOutNotification.ListUI', {
 													text : '实际柜型'
 												}, {
 													xtype : 'gridcolumn',
+													dataIndex : 'containerLength',
+													width : 80,
+													groupable : false,
+													text : '货柜米数'
+												}, {
+													xtype : 'gridcolumn',
 													dataIndex : 'finalHouseNumber',
 													width : 80,
 													groupable : false,
@@ -186,8 +192,8 @@ Ext.define('SCM.view.ProductOutNotification.ListUI', {
 												}, {
 													xtype : 'datecolumn',
 													dataIndex : 'arrivedTime',
-													width : 120,
-													format : 'Y-m-d',
+													width : 140,
+													format : 'Y-m-d H:i',
 													groupable : false,
 													text : '到厂时间'
 												}, {
@@ -200,8 +206,8 @@ Ext.define('SCM.view.ProductOutNotification.ListUI', {
 												}, {
 													xtype : 'datecolumn',
 													dataIndex : 'leaveTime',
-													width : 120,
-													format : 'Y-m-d',
+													width : 140,
+													format : 'Y-m-d H:i',
 													groupable : false,
 													text : '离厂时间'
 												}, {
