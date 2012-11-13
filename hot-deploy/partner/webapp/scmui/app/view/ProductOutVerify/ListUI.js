@@ -20,6 +20,23 @@ Ext.define('SCM.view.ProductOutVerify.ListUI', {
 										region : 'north',
 										border : '0 1 1 1',
 										items : [{
+													text : '修改',
+													iconCls : 'system-edit',
+													action : 'modify'
+												}, {
+													text : '删除',
+													iconCls : 'system-delete',
+													action : 'delete'
+												}, {
+													text : '导出对数单',
+													iconCls : 'system-export',
+													action : 'export'
+												}]
+									},{
+										xtype : 'toolbar',// 工具栏
+										region : 'north',
+										border : '0 1 1 1',
+										items : [{
 													xtype : 'datefield',
 													name : 'searchBeginDate',
 													format : 'Y-m-d',
@@ -85,18 +102,6 @@ Ext.define('SCM.view.ProductOutVerify.ListUI', {
 													text : '查询',
 													iconCls : 'system-search',
 													action : 'search'
-												}, {
-													text : '修改',
-													iconCls : 'system-edit',
-													action : 'modify'
-												}, {
-													text : '删除',
-													iconCls : 'system-delete',
-													action : 'delete'
-												}, {
-													text : '导出整张出货单',
-													iconCls : 'system-export',
-													action : 'export'
 												}]
 									}, {
 										xtype : 'gridpanel',

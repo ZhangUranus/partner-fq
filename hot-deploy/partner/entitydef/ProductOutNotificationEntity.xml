@@ -30,6 +30,7 @@
 		<field name="finalHouseNumber" type="id-long"></field><!-- 实际订舱号 -->
 		<field name="finalContainerType" type="name"></field><!-- 实际柜型 -->
 		<field name="finalContainerNumber" type="id-long"></field><!-- 实际柜号 -->
+		<field name="containerLength" type="fixed-point"></field><!-- 货柜米数-->
 		<field name="sealNumber" type="id-long"></field><!-- 封条号 -->
 		<field name="arrivedTime" type="date-time"></field><!-- 到厂时间 -->
 		<field name="packagedNotSend" type="indicator" /><!-- 装好未拉柜 -->

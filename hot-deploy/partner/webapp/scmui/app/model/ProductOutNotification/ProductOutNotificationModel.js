@@ -89,6 +89,9 @@ Ext.define('SCM.model.ProductOutNotification.ProductOutNotificationModel', {
 					}, {
 						name : 'finalContainerNumber',
 						type : 'string'
+					},{
+						name : 'containerLength',
+						type : 'float'
 					}, {
 						name : 'sealNumber',
 						type : 'string'

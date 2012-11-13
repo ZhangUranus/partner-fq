@@ -182,6 +182,12 @@ Ext.define('SCM.view.ProductOutNotification.EditUI', {
 																margin : 5,
 																fieldLabel : '实际柜号'
 															}, {
+																xtype : 'numberfield',
+																hideTrigger : true,
+																fieldLabel : '货柜米数',
+																name : 'containerLength',
+																margin : 5
+															}, {
 																xtype : 'textfield',
 																name : 'sealNumber',
 																margin : 5,
@@ -190,9 +196,8 @@ Ext.define('SCM.view.ProductOutNotification.EditUI', {
 																xtype : 'datefield',
 																name : 'arrivedTime',
 																margin : 5,
-																format : 'Y-m-d',
-																fieldLabel : '到厂时间',
-																allowBlank : false
+																format: 'Y-m-d h:i', 
+																fieldLabel : '到厂时间'
 															}, {
 																xtype : 'combobox',
 																store : SCM.store.basiccode.validStore,
@@ -205,9 +210,8 @@ Ext.define('SCM.view.ProductOutNotification.EditUI', {
 																xtype : 'datefield',
 																name : 'leaveTime',
 																margin : 5,
-																format : 'Y-m-d',
-																fieldLabel : '离厂时间',
-																allowBlank : false
+																format: 'Y-m-d h:i', 
+																fieldLabel : '离厂时间'
 															}, {
 																xtype : 'numberfield',
 																hideTrigger : true,
@@ -226,9 +230,7 @@ Ext.define('SCM.view.ProductOutNotification.EditUI', {
 																fieldLabel : '净重/KG',
 																name : 'neatWeight',
 																margin : 5
-															}, {
-																xtype : 'label'
-															}, {
+															},  {
 																xtype : 'textarea',
 																name : 'note',
 																margin : 5,
