@@ -143,7 +143,7 @@ public class ProductOutVerifyEvents {
 		sql.append("(SELECT ");
 		sql.append("t1.deliver_number deliverNumber, ");
 		sql.append("t2.material_id materialId, ");
-		sql.append("min(t1.biz_date) bizdate, ");
+		sql.append("min(t1.plan_delivery_date) bizdate, ");
 		sql.append("sum(t2.volume) sumVolume, ");
 		sql.append("sum(t2.gross_weight) sumGrossWeight, ");
 		sql.append("sum(t2.gross_size) sumGrossSize ");
@@ -153,10 +153,10 @@ public class ProductOutVerifyEvents {
 		sql.append("where status=4 ");
 		
 		if(bizBeginDate!=null&&bizBeginDate.trim().length()>0){
-			sql.append("and date_format(t1.biz_date,'%Y-%m-%d')>='").append(bizBeginDate).append("' ");
+			sql.append("and date_format(t1.plan_delivery_date,'%Y-%m-%d')>='").append(bizBeginDate).append("' ");
 		}
 		if(bizEndDate!=null&&bizEndDate.trim().length()>0){
-			sql.append("and date_format(t1.biz_date,'%Y-%m-%d')<='").append(bizEndDate).append("' ");
+			sql.append("and date_format(t1.plan_delivery_date,'%Y-%m-%d')<='").append(bizEndDate).append("' ");
 		}
 
 		//过滤物料
@@ -328,13 +328,13 @@ public class ProductOutVerifyEvents {
 		sql.append("(SELECT ");
 		sql.append("t1.deliver_number deliverNumber, ");
 		sql.append("t2.material_id materialId, ");
-		sql.append("min(t1.biz_date) bizdate, ");
+		sql.append("min(t1.plan_delivery_date) bizdate, ");
 		sql.append("sum(t2.volume) sumVolume, ");
 		sql.append("sum(t2.gross_weight) sumGrossWeight, ");
 		sql.append("sum(t2.gross_size) sumGrossSize ");
 		sql.append("FROM product_out_notification t1 ");
 		sql.append("inner join product_out_notification_entry t2 on t1.id=t2.parent_id ");
-		sql.append("where (t1.deliver_number is not null and t1.deliver_number<>'') and UNIX_TIMESTAMP(t1.biz_date)>=UNIX_TIMESTAMP('").append(fromDate).append(" 00:00:00') and UNIX_TIMESTAMP(t1.biz_date)<=UNIX_TIMESTAMP('").append(endDate).append(" 23:59:59') ");
+		sql.append("where (t1.deliver_number is not null and t1.deliver_number<>'') and UNIX_TIMESTAMP(t1.plan_delivery_date)>=UNIX_TIMESTAMP('").append(fromDate).append(" 00:00:00') and UNIX_TIMESTAMP(t1.plan_delivery_date)<=UNIX_TIMESTAMP('").append(endDate).append(" 23:59:59') ");
 		sql.append("group by t1.deliver_number,t2.material_id  ");
 		sql.append(" ) notification left outer join product_out_verify_head  verify on (notification.deliverNumber=verify.deliver_number and notification.materialId=verify.material_id) ");
 		sql.append("left outer join t_material  material on notification.materialId=material.id order by notification.deliverNumber desc");
@@ -349,7 +349,7 @@ public class ProductOutVerifyEvents {
 			HSSFSheet sheet = workbook.createSheet("sheet1");
 			//表头行
 			HSSFRow headRow=sheet.createRow(0);
-			headRow.createCell(0).setCellValue("日期");
+			headRow.createCell(0).setCellValue("计划出货日期");
 			headRow.createCell(1).setCellValue("单号");
 			headRow.createCell(2).setCellValue("产品");
 			headRow.createCell(3).setCellValue("订单总数量");

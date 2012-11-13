@@ -196,7 +196,7 @@ Ext.define('SCM.view.ProductOutNotification.EditUI', {
 																xtype : 'datefield',
 																name : 'arrivedTime',
 																margin : 5,
-																format: 'Y-m-d h:i', 
+																format: 'Y-m-d H:i', 
 																fieldLabel : '到厂时间'
 															}, {
 																xtype : 'combobox',
@@ -210,7 +210,7 @@ Ext.define('SCM.view.ProductOutNotification.EditUI', {
 																xtype : 'datefield',
 																name : 'leaveTime',
 																margin : 5,
-																format: 'Y-m-d h:i', 
+																format: 'Y-m-d H:i', 
 																fieldLabel : '离厂时间'
 															}, {
 																xtype : 'numberfield',
