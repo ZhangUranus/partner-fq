@@ -545,7 +545,7 @@ Ext.define('SCM.controller.ProductOutwarehouse.ProductOutwarehouseController', {
 			 * 清理扫描板产品数
 			 */
 			clearQantity : function() {
-				this.qantityLabel.setText('000');
+				this.boardCountLabel.setText('000');
 			},
 			
 			/**
