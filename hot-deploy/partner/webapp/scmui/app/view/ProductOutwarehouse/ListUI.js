@@ -104,7 +104,7 @@ Ext.define('SCM.view.ProductOutwarehouse.ListUI', {
 													text : '仓库'
 												}, {
 													xtype : 'gridcolumn',
-													renderer : SCM.store.basiccode.productInStatusRenderer,
+													renderer : SCM.store.basiccode.productOutStatusRenderer,
 													dataIndex : 'outwarehouseType',
 													text : '出仓类型',
 													width : 60
