@@ -39,4 +39,22 @@
 			<key-map field-name="entryMaterialId" rel-field-name="id" />
 		</view-link>
 	</view-entity>
+	<!-- 出货时，通过产品编码过滤成品板列表 -->
+	<view-entity entity-name="ProductWithProductIdView" package-name="org.ofbiz.scm.ProductMap" title="ProductWithProductIdView Entity">
+		<member-entity entity-alias="ProductMapV" entity-name="ProductMap"></member-entity>
+		<member-entity entity-alias="TMaterialV" entity-name="TMaterial"></member-entity>
+		<alias name="productId" entity-alias="ProductMapV" field="entryMaterialId"></alias>
+		<alias name="id" entity-alias="TMaterialV" field="id"></alias>
+		<alias name="number" entity-alias="TMaterialV" field="number"></alias>
+		<alias name="name" entity-alias="TMaterialV" field="name"></alias>
+		<alias name="model" entity-alias="TMaterialV" field="model"></alias>
+		<alias name="defaultPrice" entity-alias="TMaterialV" field="defaultPrice"></alias>
+		<alias name="defaultSupplierId" entity-alias="TMaterialV" field="defaultSupplierId"></alias>
+		<alias name="safeStock" entity-alias="TMaterialV" field="safeStock"></alias>
+		<alias name="defaultUnitId" entity-alias="TMaterialV" field="defaultUnitId"></alias>
+		<alias name="materialTypeId" entity-alias="TMaterialV" field="materialTypeId"></alias>
+		<view-link entity-alias="ProductMapV" rel-entity-alias="TMaterialV" rel-optional="true">
+			<key-map field-name="materialId" rel-field-name="id" />
+		</view-link>
+	</view-entity>
 </entitymodel>
