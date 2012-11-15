@@ -7,7 +7,7 @@ Ext.define('SCM.controller.ProductMap.ProductMapController', {
 			gridName : 'productmaplist',
 			editName : 'productmapedit',
 			modelName : 'ProductMapModel',
-			entityName : 'ProductMap',
+			entityName : 'ProductMapView',
 
 			/**
 			 * 初始化controller 增加事件监控
