@@ -194,7 +194,6 @@ Ext.define('SCM.controller.system.SystemController', {
 			 *            record 节点数据
 			 */
 			selectUserNode : function(node, record) {
-				debugger;
 				var me = this;
 				if (this.userForm.modifyed) {
 					Ext.Msg.confirm('提示', '确定退出当前用户编辑窗口？', confirmChange);
