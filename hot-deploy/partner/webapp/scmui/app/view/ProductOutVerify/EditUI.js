@@ -132,9 +132,15 @@ Ext.define('SCM.view.ProductOutVerify.EditUI', {
 																	xtype : 'combogrid',
 																	valueField : 'id',
 																	displayField : 'name',
-																	initStore : Ext.data.StoreManager.lookup('MComboInitStore'),
-																	store : Ext.data.StoreManager.lookup('MComboStore'),
+																	initStore : Ext.data.StoreManager.lookup('PComboInitStore'),
+																	store : Ext.data.StoreManager.lookup('PComboStore'),
 																	matchFieldWidth : false,
+																	listeners : {
+																		scope : this,
+																		beforequery : function(qe){
+																			return this.setEntryMaterialFilter(qe);
+																		}
+																	},
 																	listConfig : {
 																		width : SCM.MaxSize.COMBOGRID_WIDTH,
 																		height : SCM.MaxSize.COMBOGRID_HEIGHT,
@@ -255,5 +261,17 @@ Ext.define('SCM.view.ProductOutVerify.EditUI', {
 				this.hide();
 				this.inited = false;
 				this.modifyed = false;
+			},
+			setEntryMaterialFilter : function(qe){
+				var entryGrid = this.down('gridpanel');
+				
+				//根据所选仓库过滤物料
+				var materialEntryStore = qe.combo.store;
+				if(materialEntryStore){
+					if(this.down('form').getValues().materialId) {
+						materialEntryStore.getProxy().extraParams.whereStr = "entry_material_id ='" + this.down('form').getValues().materialId +"'";
+					}
+				}
+				return true;
 			}
 		});
