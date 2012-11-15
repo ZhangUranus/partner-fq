@@ -135,6 +135,16 @@ Ext.define('SCM.controller.Main', {
 							storeId : 'MBAllStore' //物料BOM的Store
 						}).load();
 
+				/* 包括单个产品编码字段的板产品 store */
+				Ext.create('ProductComboStore', {
+							pageSize : SCM.comboPageSize,
+							storeId : 'PComboStore' //下拉框－－选择时使用
+						}).load();
+				Ext.create('ProductComboStore', {
+							pageSize : SCM.unpageSize,
+							storeId : 'PComboInitStore' //下拉框－－展现时使用
+						}).load();
+
 				/* 初始化供应商的STORE */
 				Ext.create('SupplierStore', {
 							pageSize : SCM.comboPageSize,
