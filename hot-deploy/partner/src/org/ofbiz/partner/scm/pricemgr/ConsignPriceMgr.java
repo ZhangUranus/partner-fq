@@ -282,7 +282,7 @@ public class ConsignPriceMgr {
 				gv.set("beginvolume", beginVolume);
 				gv.set("beginsum", beginSum);
 				gv.set("volume", tempVolume);
-				gv.set("totalsum", tempVolume);
+				gv.set("totalsum", tempSum);
 				delegator.create(gv);
 			}
 		}
