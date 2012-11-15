@@ -275,6 +275,7 @@ Ext.define('SCM.controller.ProductOutwarehouse.ProductOutwarehouseController', {
 					this.scanForm = this.winScan.down('form');
 					this.scanGrid = this.winScan.down('gridpanel');
 					this.scanFields = this.scanForm.query("textfield{hidden==false}{readOnly==false}"); // 取所有显示的field
+					this.goodNumberField = this.winScan.down('textfield[name=goodNumber]');
 					this.barcode1Field = this.winScan.down('textfield[name=barcode1]');
 					this.barcode2Field = this.winScan.down('textfield[name=barcode2]');
 					this.qantityLabel = this.winScan.down('label[name=qantity]');
@@ -481,8 +482,9 @@ Ext.define('SCM.controller.ProductOutwarehouse.ProductOutwarehouseController', {
 			 * 打开撤销扫描进仓界面
 			 */
 			openDetailListUI : function() {
+				this.goodNumbersField.setValue(this.goodNumberField.getValue());
 				this.winDetailList.show();
-				this.detailListGrid.store.load();
+				this.searchDetailList();
 			},
 			
 			/**
@@ -537,8 +539,9 @@ Ext.define('SCM.controller.ProductOutwarehouse.ProductOutwarehouseController', {
 			 * 打开撤销扫描进仓界面
 			 */
 			openNotiDetailListUI : function() {
+				this.goodNumbersNotiField.setValue(this.goodNumberField.getValue());
 				this.winNotiDetailList.show();
-				this.notiDetailListGrid.store.load();
+				this.searchNotiDetailList();
 			},
 			
 			/**
@@ -554,7 +557,7 @@ Ext.define('SCM.controller.ProductOutwarehouse.ProductOutwarehouseController', {
 			searchNotiDetailList : function() {
 				var tempString = "";
 				if (!Ext.isEmpty(this.searchStartDateNotiDetail.getValue())) {
-					tempString += 'ProductOutNotificationV.LAST_UPDATED_STAMP >= \'' + this.searchStartDateNotiDetail.getRawValue() + ' 00:00:00\'';
+					tempString += 'ProductOutNotificationViewV.productOutNotificationV_LAST_UPDATED_STAMP >= \'' + this.searchStartDateNotiDetail.getRawValue() + ' 00:00:00\'';
 				}
 				if (!Ext.isEmpty(this.searchEndDateNotiDetail.getValue())) {
 					if (tempString != '') {
@@ -564,7 +567,7 @@ Ext.define('SCM.controller.ProductOutwarehouse.ProductOutwarehouseController', {
 						}
 						tempString += ' and ';
 					}
-					tempString += 'ProductOutNotificationV.LAST_UPDATED_STAMP <= \'' + this.searchEndDateNotiDetail.getRawValue() + ' 23:59:59\'';
+					tempString += 'ProductOutNotificationViewV.productOutNotificationV_LAST_UPDATED_STAMP <= \'' + this.searchEndDateNotiDetail.getRawValue() + ' 23:59:59\'';
 				}
 				if (!Ext.isEmpty(this.goodNumbersNotiField.getValue())) {
 					tempString += ' and (';
@@ -573,7 +576,7 @@ Ext.define('SCM.controller.ProductOutwarehouse.ProductOutwarehouseController', {
 						if(i!=0){
 							tempString += ' OR ';
 						}
-						tempString += 'ProductOutNotificationV.GOOD_NUMBER = \'' + goodNumberArr[i] + '\'';
+						tempString += 'ProductOutNotificationViewV.productOutNotificationV_GOOD_NUMBER = \'' + goodNumberArr[i] + '\'';
 					}
 					tempString += ')';
 				}
