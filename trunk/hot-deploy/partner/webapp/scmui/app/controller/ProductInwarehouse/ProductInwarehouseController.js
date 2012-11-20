@@ -757,6 +757,7 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 										me.unScanBarcode1Field.setValue('');
 										me.unScanBarcode2Field.setValue('');
 										me.unScanGrid.store.load();
+										Ext.Msg.alert("提示", "撤销成功！");
 										me.unScanBarcode1Field.focus(true);
 									} else {
 										me.unScanBarcode1Field.setValue('');
