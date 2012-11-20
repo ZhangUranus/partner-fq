@@ -64,7 +64,7 @@ public class ProductBarcodeBoxMgr {
 			}
 		} else {
 			if(isOut){
-				throw new Exception("库存中找不到该产品条码、序列号的板，可能由于下面两种情况导致：<br/>1.重复出仓；<br/>2.该板未进行进仓操作。");
+				throw new Exception("库存中找不到该产品条码、序列号的板！");
 			} else {
 				GenericValue record = delegator.makeValue("ProductBarcodeBox");
 				record.set("id", UUID.randomUUID().toString());
