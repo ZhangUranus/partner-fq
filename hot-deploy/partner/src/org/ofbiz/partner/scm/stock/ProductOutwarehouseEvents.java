@@ -430,8 +430,7 @@ public class ProductOutwarehouseEvents {
 			if (entryList.size() > 0) {
 				for (GenericValue record : entryList) {
 					String billId = record.getString("parentId");
-					List<GenericValue> headList = delegator.findByAnd("ProductOutwarehouse", "id", billId, "status", 0, "billType", 2, "submitterSystemUserId",
-							CommonEvents.getAttributeFormSession(request, "uid"));
+					List<GenericValue> headList = delegator.findByAnd("ProductOutwarehouse", "id", billId, "status", 0, "billType", 2);
 					if (headList.size() > 0) {
 						billHead = headList.get(0);
 						entryValue = record;
@@ -513,8 +512,6 @@ public class ProductOutwarehouseEvents {
 		}
 		List<GenericValue> mainList = delegator.findByAnd("ProductOutNotification", "goodNumber", goodNumber, "status", 4);
 		boolean isUpdate = false;
-		boolean isFinished = true;
-		boolean needSubmit = false;
 		if (mainList.size() > 0) {
 			GenericValue v = mainList.get(0); // 只取第一条，默认一个货号只能唯一对应一条通知单
 			List<GenericValue> entryList = delegator.findByAnd("ProductOutNotificationEntry", UtilMisc.toMap("parentId", v.getString("id")));
@@ -522,6 +519,8 @@ public class ProductOutwarehouseEvents {
 				// 判断是否该分录是否存在出货对数单，如果不存在，不作任何操作（正常情况不存在，避免有脏数据时出错）
 				List<GenericValue> verifyHeadlList = delegator.findByAnd("ProductOutVerifyHead", "deliverNumber", v.getString("deliverNumber"), "materialId", entry.getString("materialId"));
 				if (verifyHeadlList.size() > 0) {
+					boolean needSubmit = false;
+					boolean isFinished = true;
 					// 通过出货通知单的“单号”和出货通知单分录的“产品编码”，查找符合出货对数单中是否存在计划出货产品
 					List<GenericValue> verifyEntrylList = delegator.findByAnd("ProductOutVerifyEntry", "deliverNumber", v.getString("deliverNumber"), "parentMaterialId", entry.getString("materialId"));
 					for (GenericValue verifyEntry : verifyEntrylList) {
