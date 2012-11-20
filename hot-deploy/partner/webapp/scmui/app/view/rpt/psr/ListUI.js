@@ -77,11 +77,13 @@ Ext.define('SCM.view.rpt.psr.ListUI', {
 																xtype : 'numbercolumn',
 																dataIndex : 'PRE_MONTH_VOLUME',
 																width : 80,
+																sortable : true,
 																text : '板数'
 															}, {
 																xtype : 'numbercolumn',
 																dataIndex : 'PRE_MONTH_PRODUCT_VOLUME',
 																width : 80,
+																sortable : true,
 																text : '产品数'
 															}]
 												}, {
@@ -90,11 +92,13 @@ Ext.define('SCM.view.rpt.psr.ListUI', {
 																xtype : 'numbercolumn',
 																dataIndex : 'TODAY_IN_VOLUME',
 																width : 80,
+																sortable : true,
 																text : '入库'
 															}, {
 																xtype : 'numbercolumn',
 																dataIndex : 'TODAY_OUT_VOLUME',
 																width : 80,
+																sortable : true,
 																text : '出库'
 															}]
 												}, {
@@ -103,11 +107,13 @@ Ext.define('SCM.view.rpt.psr.ListUI', {
 																xtype : 'numbercolumn',
 																dataIndex : 'TODAY_VOLUME',
 																width : 80,
+																sortable : true,
 																text : '板数'
 															}, {
 																xtype : 'numbercolumn',
 																dataIndex : 'TODAY_PRODUCT_VOLUME',
 																width : 80,
+																sortable : true,
 																text : '产品数'
 															}]
 												}, {
@@ -116,21 +122,25 @@ Ext.define('SCM.view.rpt.psr.ListUI', {
 																xtype : 'numbercolumn',
 																dataIndex : 'THIS_MONTH_IN_VOLUME',
 																width : 80,
+																sortable : true,
 																text : '入库板数'
 															}, {
 																xtype : 'numbercolumn',
 																dataIndex : 'THIS_MONTH_OUT_VOLUME',
 																width : 80,
+																sortable : true,
 																text : '出库板数'
 															}, {
 																xtype : 'numbercolumn',
 																dataIndex : 'THIS_MONTH_IN_PRODUCT_VOLUME',
 																width : 80,
+																sortable : true,
 																text : '入库产品数'
 															}, {
 																xtype : 'numbercolumn',
 																dataIndex : 'THIS_MONTH_OUT_PRODUCT_VOLUME',
 																width : 80,
+																sortable : true,
 																text : '出库产品数'
 															}]
 												}],
