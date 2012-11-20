@@ -48,7 +48,7 @@ Ext.define('SCM.model.ProductMap.ProductMapModel', {
 					destroy : '../../scm/control/deleteJsonData?entity=ProductMap'
 				},
 				extraParams : {
-					queryField : 'number,name'
+					queryField : 'number,materialName,materialNumber,entryMaterialName'
 				}
 			}
 		});
