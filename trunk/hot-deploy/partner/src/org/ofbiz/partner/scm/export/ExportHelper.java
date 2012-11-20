@@ -75,6 +75,14 @@ public class ExportHelper {
 							} else {
 								tempText = "未知";
 							}
+						} else if ("billType".equals(dataIndex[i].toLowerCase())) {
+							if ("1".equals(v.get(dataIndex[i]).toString())) {
+								tempText = "普通单据";
+							} else if ("2".equals(v.get(dataIndex[i]).toString())) {
+								tempText = "扫描单据";
+							} else {
+								tempText = "未知";
+							}
 						} else {
 							tempText = v.get(dataIndex[i]).toString();
 						}
