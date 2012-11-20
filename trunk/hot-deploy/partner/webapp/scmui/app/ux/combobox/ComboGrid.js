@@ -132,6 +132,7 @@ Ext.define('SCM.ux.combobox.ComboGrid', {
 						// 选择记录如果存在值的话，使用value去获取记录
 						if(me.selectRecordForValue){
 							rec = me.findRecordByValue(me.selectRecordForValue.get(me.valueField));
+							me.selectRecordForValue = null;
 						} else {
 							rec = me.findRecordByDisplay(value);
 						}
