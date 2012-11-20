@@ -169,4 +169,32 @@
 			<key-map field-name="defaultUnitId" rel-field-name="id" />
 		</view-link>
 	</view-entity>
+	
+	
+	<!-- 导出视图 -->
+	<view-entity entity-name="ProductOutNotificationExportView" package-name="org.ofbiz.scm.ProductOutNotification" title="ProductOutNotificationView  Entity">
+		<member-entity entity-alias="productOutNotificationV" entity-name="ProductOutNotification"></member-entity>
+		<member-entity entity-alias="submitterSystemUserV" entity-name="SystemUser"></member-entity>
+		<member-entity entity-alias="customerV" entity-name="Customer"></member-entity>
+		<member-entity entity-alias="warehouseV" entity-name="Warehouse"></member-entity>
+		<alias-all entity-alias="productOutNotificationV"></alias-all>
+		<alias name="submitterSystemUserName" entity-alias="submitterSystemUserV" field="name"></alias>
+		<alias name="customerNumber" entity-alias="customerV" field="number"></alias>
+		<alias name="customerName" entity-alias="customerV" field="name"></alias>
+		<alias name="customerContractor" entity-alias="customerV" field="contractor"></alias>
+		<alias name="customerPhone" entity-alias="customerV" field="phone"></alias>
+		<alias name="customerAddress" entity-alias="customerV" field="address"></alias>
+		<alias name="warehouseName" entity-alias="warehouseV" field="name"></alias>
+		<view-link entity-alias="productOutNotificationV" rel-entity-alias="submitterSystemUserV" rel-optional="true">
+			<key-map field-name="submitterSystemUserId" rel-field-name="id" />
+		</view-link>
+		<view-link entity-alias="productOutNotificationV" rel-entity-alias="customerV" rel-optional="true">
+			<key-map field-name="customerId" rel-field-name="id" />
+		</view-link>
+		<view-link entity-alias="productOutNotificationV" rel-entity-alias="warehouseV" rel-optional="true">
+			<key-map field-name="warehouseId" rel-field-name="id" />
+		</view-link>
+	</view-entity>
+	
+	
 </entitymodel>
