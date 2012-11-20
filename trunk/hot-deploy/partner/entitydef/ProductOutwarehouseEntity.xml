@@ -73,6 +73,28 @@
 			<key-map field-name="submitterSystemUserId" rel-field-name="id" />
 		</view-link>
 	</view-entity>
+	<!-- 导出视图 -->
+	<view-entity entity-name="ProductOutwarehouseExportView" package-name="org.ofbiz.scm.ProductOutwarehouse" title="ProductOutwarehouseExportView  Entity">
+		<member-entity entity-alias="ProductOutwarehouseV" entity-name="ProductOutwarehouse"></member-entity>
+		<member-entity entity-alias="ProductOutwarehouseEntryV" entity-name="ProductOutwarehouseEntry"></member-entity>
+		<member-entity entity-alias="materialMaterialV" entity-name="TMaterial"></member-entity>
+		<member-entity entity-alias="submitterSystemUserV" entity-name="SystemUser"></member-entity>
+		<alias-all entity-alias="ProductOutwarehouseV"></alias-all>
+		<alias name="submitterSystemUserName" entity-alias="submitterSystemUserV" field="name"></alias>
+		
+		<!-- 查询条件需要取物料编码、物料名称，在查询数据中需要distinct -->
+		<view-link entity-alias="ProductOutwarehouseV" rel-entity-alias="ProductOutwarehouseEntryV" rel-optional="true">
+			<key-map field-name="id" rel-field-name="parentId" />
+		</view-link>
+		<view-link entity-alias="ProductOutwarehouseEntryV" rel-entity-alias="materialMaterialV" rel-optional="true">
+			<key-map field-name="materialMaterialId" rel-field-name="id" />
+		</view-link>
+		<!-- 查询条件需要取物料编码、物料名称，在查询数据中需要distinct -->
+		
+		<view-link entity-alias="ProductOutwarehouseV" rel-entity-alias="submitterSystemUserV" rel-optional="true">
+			<key-map field-name="submitterSystemUserId" rel-field-name="id" />
+		</view-link>
+	</view-entity>
 	<!--表体视图 -->
 	<view-entity entity-name="ProductOutwarehouseEntryView" package-name="org.ofbiz.scm.ProductOutwarehouse" title="ProductOutwarehouseEntryView  Entity">
 		<member-entity entity-alias="ProductOutwarehouseEntryV" entity-name="ProductOutwarehouseEntry"></member-entity>
