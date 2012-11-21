@@ -71,6 +71,7 @@ Ext.define('SCM.view.rpt.pso.ListUI', {
 													xtype : 'numbercolumn',
 													dataIndex : 'THIS_WEEK_OUT_QTY',
 													width : 100,
+													hidden:true,
 													text : '本周出货总板数'
 												}, {
 													xtype : 'numbercolumn',
@@ -87,6 +88,11 @@ Ext.define('SCM.view.rpt.pso.ListUI', {
 													dataIndex : 'THIS_WEEK_BAL_QTY',
 													width : 100,
 													text : '本周库存板数'
+												}, {
+													xtype : 'numbercolumn',
+													dataIndex : 'THIS_WEEK_PLN_QTY',
+													width : 110,
+													text : '本周计划出仓板数'
 												}, {
 													xtype : 'numbercolumn',
 													dataIndex : 'THIS_WEEK_OWE_QTY',
@@ -137,6 +143,7 @@ Ext.define('SCM.view.rpt.pso.ListUI', {
 													xtype : 'numbercolumn',
 													dataIndex : 'THIS_DAY_OUT_QTY',
 													width : 100,
+													hidden:true,
 													text : '出货总板数'
 												}, {
 													xtype : 'numbercolumn',
@@ -153,6 +160,16 @@ Ext.define('SCM.view.rpt.pso.ListUI', {
 													dataIndex : 'THIS_DAY_BAL_QTY',
 													width : 100,
 													text : '库存板数'
+												}, {
+													xtype : 'numbercolumn',
+													dataIndex : 'THIS_DAY_PLN_QTY',
+													width : 100,
+													text : '计划出仓板数'
+												}, {
+													xtype : 'numbercolumn',
+													dataIndex : 'THIS_DAY_OWE_QTY',
+													width : 100,
+													text : '欠货情况'
 												}]
 									}]
 						});

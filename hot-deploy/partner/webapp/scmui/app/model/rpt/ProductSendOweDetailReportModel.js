@@ -13,14 +13,20 @@ Ext.define('SCM.model.rpt.ProductSendOweDetailReportModel', {
 					},{
 						name : 'THIS_DAY_OUT_QTY',
 						type : 'float'
-					}, {
+					},{
 						name : 'THIS_DAY_IN_QTY',
 						type : 'float'
-					}, {
+					},{
 						name : 'THIS_DAY_CHG_QTY',
 						type : 'float'
-					}, {
+					},{
 						name : 'THIS_DAY_BAL_QTY',
+						type : 'float'
+					},{
+						name : 'THIS_DAY_PLN_QTY',
+						type : 'float'
+					},{
+						name : 'THIS_DAY_OWE_QTY',
 						type : 'float'
 					}],
 			proxy : {
