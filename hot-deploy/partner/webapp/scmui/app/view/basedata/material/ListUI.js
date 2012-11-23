@@ -84,6 +84,12 @@ Ext.define('SCM.view.basedata.material.ListUI', {
 												}, {
 													dataIndex : 'defaultUnitName',
 													text : '默认计量单位'
+												}, {
+													dataIndex : 'quality',
+													text : '质量要求'
+												}, {
+													dataIndex : 'description',
+													text : '描述'
 												}
 
 										],

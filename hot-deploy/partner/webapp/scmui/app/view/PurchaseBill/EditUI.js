@@ -128,6 +128,12 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 																				hideable : false
 																			}]
 																}
+															},{
+																xtype : 'textfield',
+																fieldLabel : '采购部门',
+																name : 'buyerDepartmentName',
+																margin : 5,
+																readOnly : true
 															}, {
 																xtype : 'combogrid',
 																fieldLabel : '审核员',
@@ -186,11 +192,6 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 																width : 520,
 																fieldLabel : '送货地址'
 															}, {
-																xtype : 'textfield',
-																name : 'revision',
-																margin : 5,
-																fieldLabel : 'Revision'
-															}, {
 																xtype : 'textarea',
 																name : 'note',
 																margin : 5,
@@ -221,6 +222,10 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 																format : '0',
 																text : '序号',
 																width : 40
+															}, {
+																xtype : 'gridcolumn',
+																dataIndex : 'materialMaterialNumber',
+																text : '编号'
 															}, {
 																xtype : 'combocolumn',
 																dataIndex : 'materialMaterialId',
@@ -254,6 +259,10 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 																dataIndex : 'materialMaterialModel',
 																text : '规格型号'
 															}, {
+																xtype : 'gridcolumn',
+																dataIndex : 'quality',
+																text : '质量要求'
+															}, {
 																xtype : 'numbercolumn',
 																editor : {
 																	xtype : 'numberfield',
@@ -284,13 +293,6 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 																},
 																dataIndex : 'price',
 																text : '单价'
-															}, {
-																xtype : 'gridcolumn',
-																dataIndex : 'qualityReq',
-																text : '质量要求',
-																editor : {
-																	xtype : 'textfield'
-																},
 															}, {
 																xtype : 'numbercolumn',
 																dataIndex : 'refPrice',

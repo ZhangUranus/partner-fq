@@ -50,6 +50,9 @@ Ext.define('SCM.view.Supplier.EditUI', {
 												}, {
 													fieldLabel : '联系人',
 													name : 'linkman'
+												}, {
+													fieldLabel : 'email',
+													name : 'email'
 												}]
 									}],
 							dockedItems : [{

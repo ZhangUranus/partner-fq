@@ -47,6 +47,11 @@ Ext.define('SCM.view.Supplier.ListUI', {
 										dataIndex : 'linkman',
 										width : 150,
 										groupable : false
+									},{
+										header : 'email',
+										dataIndex : 'email',
+										width : 150,
+										groupable : false
 									}],
 							dockedItems : [{
 										xtype : 'basetoolbar'

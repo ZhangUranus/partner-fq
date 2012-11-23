@@ -124,6 +124,15 @@ Ext.define('SCM.view.basedata.material.EditUI', {
 																	hideable : false
 																}]
 													}
+												}, {
+													name : 'quality',
+													fieldLabel : '质量要求',
+													maxLength : 50
+												}, {
+													xtype : 'textarea',
+													name : 'description',
+													fieldLabel : '描述',
+													maxLength : 250
 												}],
 										dockedItems : [{
 													xtype : 'savetoolbar',

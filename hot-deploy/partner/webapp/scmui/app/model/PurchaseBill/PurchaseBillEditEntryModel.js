@@ -18,9 +18,16 @@ Ext.define('SCM.model.PurchaseBill.PurchaseBillEditEntryModel', {
 						type : 'string',
 						persist : false
 					}, {
+						name : 'materialMaterialNumber',
+						type : 'string',
+						persist : false
+					}, {
 						name : 'materialMaterialModel',
 						type : 'string'
 					}, {
+						name : 'quality',
+						type : 'string'
+					},{
 						name : 'volume',
 						type : 'float'
 					}, {
@@ -42,9 +49,6 @@ Ext.define('SCM.model.PurchaseBill.PurchaseBillEditEntryModel', {
 					}, {
 						name : 'sort',
 						type : 'int'
-					}, {
-						name : 'qualityReq',
-						type : 'string'
 					}, {
 						name : 'deliveryDate',
 						type : 'date',
