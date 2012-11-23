@@ -93,6 +93,8 @@
 		<field name="safeStock" type="floating-point"></field>
 		<field name="defaultUnitId" type="id-long"></field>
 		<field name="materialTypeId" type="id-long"></field>
+		<field name="quality" type="value"></field><!--质量要求  -->
+		<field name="description" type="description"></field>
 		<prim-key field="id" />
 	</entity>
 	<view-entity entity-name="Material" package-name="org.ofbiz.scm.basedata" title="MaterialView  Entity">

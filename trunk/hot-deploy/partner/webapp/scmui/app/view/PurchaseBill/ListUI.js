@@ -68,6 +68,12 @@ Ext.define('SCM.view.PurchaseBill.ListUI', {
 													width : 80,
 													groupable : false,
 													text : '采购员'
+												},{
+													xtype : 'gridcolumn',
+													dataIndex : 'buyerDepartmentName',
+													width : 80,
+													groupable : false,
+													text : '采购部门'
 												}, {
 													xtype : 'gridcolumn',
 													dataIndex : 'approverSystemUserName',
@@ -121,6 +127,10 @@ Ext.define('SCM.view.PurchaseBill.ListUI', {
 													width : 40
 												}, {
 													xtype : 'gridcolumn',
+													dataIndex : 'materialMaterialNumber',
+													text : '编码'
+												},{
+													xtype : 'gridcolumn',
 													dataIndex : 'materialMaterialName',
 													text : '物料'
 												}, {
@@ -128,6 +138,10 @@ Ext.define('SCM.view.PurchaseBill.ListUI', {
 													dataIndex : 'materialMaterialModel',
 													text : '规格型号'
 												}, {
+													xtype : 'gridcolumn',
+													dataIndex : 'quality',
+													text : '质量要求'
+												},{
 													xtype : 'numbercolumn',
 													dataIndex : 'volume',
 													text : '数量'
@@ -135,10 +149,6 @@ Ext.define('SCM.view.PurchaseBill.ListUI', {
 													xtype : 'gridcolumn',
 													dataIndex : 'unitUnitName',
 													text : '单位'
-												}, {
-													xtype : 'gridcolumn',
-													dataIndex : 'qualityReq',
-													text : '质量要求'
 												}, {
 													xtype : 'numbercolumn',
 													dataIndex : 'price',

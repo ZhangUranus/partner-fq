@@ -40,6 +40,7 @@ under the License.
 	  <field name="faxNum" type="value"></field>
 	  <field name="address" type="value"></field>
 	  <field name="linkman" type="value"></field>
+	  <field name="email" type="value"></field>
       <field name="createdStamp" type="date-time"></field>
       <field name="lastUpdatedStamp" type="date-time"></field>
       <prim-key field="id"/>

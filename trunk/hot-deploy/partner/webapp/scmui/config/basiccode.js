@@ -503,7 +503,7 @@ PrintHelper.prototype.fillPage = function(/* 填充数据的Element对象 */page
 					text = text.toFixed(4);//显示四位小数
 				}
 				if (text != undefined) {
-					field.innerHTML = text;
+					field.innerText = text;
 				}
 			} catch (err) {
 				/* 没有查找到对象值，忽略 */

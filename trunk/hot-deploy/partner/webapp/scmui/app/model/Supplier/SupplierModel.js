@@ -26,6 +26,9 @@ Ext.define('SCM.model.Supplier.SupplierModel', {
 						name : 'linkman',
 						type : 'string'
 					}, {
+						name : 'email',
+						type : 'string'
+					}, {
 						name : 'entryId',
 						type : 'string'
 					}],

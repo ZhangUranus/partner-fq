@@ -208,6 +208,8 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 						e.record.set('refPrice', record.get('defaultPrice'));
 						e.record.set('unitUnitId', record.get('defaultUnitId'));
 						e.record.set('unitUnitName', record.get('defaultUnitName'));
+						e.record.set('materialMaterialNumber', record.get('number'));
+						e.record.set('quality', record.get('quality'));
 					}
 				}
 				e.record.set('entrysum', e.record.get('price') * e.record.get('volume'));
@@ -468,25 +470,26 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 				"</tr>"+
 				"</table>"+			 				
 				"<br>"+
-				"1.材质为ISO.R.301.ZuAI4Cu1，并且符合IKEA标准ISO-MAT-0010,含铅量不超过90mg/Kg。<br>"+								
-				"2.表面要求符合IKEA要求:ISO-MAT-0066表面要求.								<br>"+
-				"3.产品规格按双方确认的图纸和样板.		<br>"+
-				"<p>								"+	
-				"交易条款：		<br>				"+			
-				"一、	交期				<br>				"+
-				"	供方依本单之交期或本公司供应部以电话或书面调整之交期交货，若有延误，<br>"+								
-				"	按一日扣除该批款              %  。								<br>"+
-				"二、	质量								<br>"+
-				"	1.依图纸要求。   2.进料检验：依本公司《原材料进仓检验规范》。<br>"+								
-				"三、	不合格品处理								<br>"+
-				"	1.经检验后之不合格品，应如三日后取回，逾时本公司不负责；<br>"+								
-				"	2.如急用需选别，所产生之费用，依本公司之索赔标准计费。		<br>"+						
-				"四、	附件						供方代表签名：                               		<br>"+
-				"1.请确认后签名回传0750-3722789，TEL：07503720617。				<br>"+					
-				"2.未尽之事宜，双方协商解决。							确认日期：2011 年&nbsp;&nbsp;&nbsp;&nbsp;月 &nbsp;&nbsp;&nbsp; 日<br>"+		
-				"部门经理签名：			<br>		"+			
-				"	Please sign &amp; confirm      Authorized Signature <br>"+	
-				 "</div>";
+				"<div class='dataField' fieldindex='data.note' ></div>";
+//				"1.材质为ISO.R.301.ZuAI4Cu1，并且符合IKEA标准ISO-MAT-0010,含铅量不超过90mg/Kg。<br>"+								
+//				"2.表面要求符合IKEA要求:ISO-MAT-0066表面要求.								<br>"+
+//				"3.产品规格按双方确认的图纸和样板.		<br>"+
+//				"<p>								"+	
+//				"交易条款：		<br>				"+			
+//				"一、	交期				<br>				"+
+//				"	供方依本单之交期或本公司供应部以电话或书面调整之交期交货，若有延误，<br>"+								
+//				"	按一日扣除该批款              %  。								<br>"+
+//				"二、	质量								<br>"+
+//				"	1.依图纸要求。   2.进料检验：依本公司《原材料进仓检验规范》。<br>"+								
+//				"三、	不合格品处理								<br>"+
+//				"	1.经检验后之不合格品，应如三日后取回，逾时本公司不负责；<br>"+								
+//				"	2.如急用需选别，所产生之费用，依本公司之索赔标准计费。		<br>"+						
+//				"四、	附件						供方代表签名：                               		<br>"+
+//				"1.请确认后签名回传0750-3722789，TEL：07503720617。				<br>"+					
+//				"2.未尽之事宜，双方协商解决。							确认日期：2011 年&nbsp;&nbsp;&nbsp;&nbsp;月 &nbsp;&nbsp;&nbsp; 日<br>"+		
+//				"部门经理签名：			<br>		"+			
+//				"	Please sign &amp; confirm      Authorized Signature <br>"+	
+//				 "</div>";
 			},
 			
 			getPrintCfg : function() {

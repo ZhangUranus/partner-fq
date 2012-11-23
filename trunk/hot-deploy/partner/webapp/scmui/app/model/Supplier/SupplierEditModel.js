@@ -26,6 +26,9 @@ Ext.define('SCM.model.Supplier.SupplierEditModel', {
 						name : 'linkman',
 						type : 'string'
 					}, {
+						name : 'email',
+						type : 'string'
+					},{
 						name : 'createdStamp',
 						defaultValue : new Date(),
 						type : 'date',

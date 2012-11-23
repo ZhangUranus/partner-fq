@@ -143,6 +143,8 @@
 		<member-entity entity-alias="unitUnitV" entity-name="Unit"></member-entity>
 		<alias-all entity-alias="PurchaseBillEntryV"></alias-all>
 		<alias name="materialMaterialName" entity-alias="materialMaterialV" field="name"></alias>
+		<alias name="materialMaterialNumber" entity-alias="materialMaterialV" field="number"></alias>
+		<alias name="quality" entity-alias="materialMaterialV" field="quality"></alias>
 		<alias name="unitUnitName" entity-alias="unitUnitV" field="name"></alias>
 		<view-link entity-alias="PurchaseBillEntryV" rel-entity-alias="materialMaterialV" rel-optional="true">
 			<key-map field-name="materialMaterialId" rel-field-name="id" />
