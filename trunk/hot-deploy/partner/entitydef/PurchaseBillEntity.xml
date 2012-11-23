@@ -71,6 +71,7 @@
 		<alias name="supplierSupplierLinkman" entity-alias="supplierSupplierV" field="linkman"></alias>
 		<alias name="submitUserName" entity-alias="submitSystemUserV" field="name"></alias>
 		<alias name="buyerSystemUserName" entity-alias="buyerSystemUserV" field="name"></alias>
+		<alias name="buyerDepartmentId" entity-alias="buyerDepartmentV" field="id"></alias>
 		<alias name="buyerDepartmentName" entity-alias="buyerDepartmentV" field="name"></alias>
 		<alias name="approverSystemUserName" entity-alias="approverSystemUserV" field="name"></alias>
 		

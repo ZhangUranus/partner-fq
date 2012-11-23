@@ -129,11 +129,28 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 																			}]
 																}
 															},{
-																xtype : 'textfield',
+																xtype : 'combogrid',
 																fieldLabel : '采购部门',
-																name : 'buyerDepartmentName',
+																readOnly : true,
 																margin : 5,
-																readOnly : true
+																name : 'buyerDepartmentId',
+																valueField : 'id',
+																displayField : 'name',
+																store : Ext.data.StoreManager.lookup('DepComboStore'),
+																listConfig : {
+																	height : SCM.DefaultSize.COMBOGRID_HEIGHT,
+																	columns : [{
+																				header : '编码',
+																				dataIndex : 'number',
+																				width : 100,
+																				hideable : false
+																			}, {
+																				header : '名称',
+																				dataIndex : 'name',
+																				width : 80,
+																				hideable : false
+																			}]
+																}
 															}, {
 																xtype : 'combogrid',
 																fieldLabel : '审核员',

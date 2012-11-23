@@ -38,6 +38,10 @@ Ext.define('SCM.model.PurchaseBill.PurchaseBillEditModel', {
 				type : 'string',
 				persist : false
 			}, {
+				name : 'buyerDepartmentId',
+				type : 'string',
+				persist : false
+			}, {
 				name : 'buyerDepartmentName',
 				type : 'string',
 				persist : false
@@ -102,7 +106,7 @@ Ext.define('SCM.model.PurchaseBill.PurchaseBillEditModel', {
 	proxy : {
 		type : 'jsonajax',
 		api : {
-			read : '../../scm/control/requestJsonData?entity=PurchaseBillView&distinct=true&fields=id,number,bizDate,supplierSupplierId,supplierSupplierName,submitUserId,submitUserName,buyerSystemUserId,buyerSystemUserName,approverSystemUserId,approverSystemUserName,totalsum,receiveStamp,createdStamp,lastUpdatedStamp,note,approverNote,status,payType,tax,deliveryAddr,revision,buyerDepartmentName',
+			read : '../../scm/control/requestJsonData?entity=PurchaseBillView&distinct=true&fields=id,number,bizDate,supplierSupplierId,supplierSupplierName,submitUserId,submitUserName,buyerSystemUserId,buyerSystemUserName,approverSystemUserId,approverSystemUserName,totalsum,receiveStamp,createdStamp,lastUpdatedStamp,note,approverNote,status,payType,tax,deliveryAddr,revision,buyerDepartmentName,buyerDepartmentId',
 			destroy : '../../scm/control/deleteWithEntry?headEntity=PurchaseBill&entryEntity=PurchaseBillEntry'
 		},
 		remoteFilter : true
