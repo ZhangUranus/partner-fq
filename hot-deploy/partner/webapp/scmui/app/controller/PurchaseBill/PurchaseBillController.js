@@ -140,6 +140,7 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 			initCurrentUserSelect : function(record) {
 				record.set('buyerSystemUserId', SCM.CurrentUser.id);
 				record.set('submitUserId', SCM.CurrentUser.id);
+				record.set('buyerDepartmentId', SCM.CurrentUser.departmentId);
 			},
 
 			/**

@@ -228,7 +228,11 @@ Ext.define('SCM.controller.Main', {
 				Ext.create('MonthStore', {
 							storeId : 'MTHComboStore' //下拉框－－展现时使用
 						}).load();
-						
+				/* 部门store */
+				Ext.create('DepartmentStore', {
+							pageSize : SCM.unpageSize,
+							storeId : 'DepComboStore'
+						}).load();
 				
 						
 				/* 出仓实时列表 store */
@@ -253,6 +257,8 @@ Ext.define('SCM.controller.Main', {
 							pageSize : SCM.pageSize,
 							storeId : 'PONDetailStore'
 						});
+				
+				
 			},
 
 			initTreePanel : function() {//初始化功能模块
