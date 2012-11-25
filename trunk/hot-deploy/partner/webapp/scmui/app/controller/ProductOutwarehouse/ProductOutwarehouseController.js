@@ -98,10 +98,10 @@ Ext.define('SCM.controller.ProductOutwarehouse.ProductOutwarehouseController', {
 							'ProductOutwarehouseedit grid' : {
 								selectionchange : this.fieldChange
 							},
-							// 出仓情况页面查询事件
-							'ProductOutwarehouseDetailList gridpanel button[action=search]' : {
-								click : this.searchDetailList
-							},
+//							// 出仓情况页面查询事件
+//							'ProductOutwarehouseDetailList gridpanel button[action=search]' : {
+//								click : this.searchDetailList
+//							},
 							// 出仓情况页面查询事件
 							'ProductOutwarehouseNotificationDetailList gridpanel button[action=search]' : {
 								click : this.searchNotiDetailList
@@ -124,7 +124,7 @@ Ext.define('SCM.controller.ProductOutwarehouse.ProductOutwarehouseController', {
 				// 初始化扫描、反扫描界面
 				this.getScanUI();
 				this.getUnScanUI();
-				this.getDetailListUI();
+//				this.getDetailListUI();
 				this.getNotiDetailListUI();
 			},
 			
@@ -137,7 +137,7 @@ Ext.define('SCM.controller.ProductOutwarehouse.ProductOutwarehouseController', {
 			changeEditStatus : function(record) {
 				if (record.get('status') == '0') {
 					if (record.get('billType') == 2) {
-						this.setFieldsReadOnly(false);
+						this.setFieldsReadOnly(true);
 						this.editEntry.setDisabled(true);
 						this.saveButton.setDisabled(false);
 						this.clearButton.setDisabled(true);
@@ -275,13 +275,13 @@ Ext.define('SCM.controller.ProductOutwarehouse.ProductOutwarehouseController', {
 					this.scanForm = this.winScan.down('form');
 					this.scanGrid = this.winScan.down('gridpanel');
 					this.scanFields = this.scanForm.query("textfield{hidden==false}{readOnly==false}"); // 取所有显示的field
-					this.goodNumberField = this.winScan.down('textfield[name=goodNumber]');
+					this.goodNumberField = this.winScan.down('textarea[name=goodNumber]');
 					this.barcode1Field = this.winScan.down('textfield[name=barcode1]');
 					this.barcode2Field = this.winScan.down('textfield[name=barcode2]');
 					this.qantityLabel = this.winScan.down('label[name=qantity]');
 					this.boardCountLabel = this.winScan.down('label[name=boardCount]');
-					this.searchDetailButton = this.winScan.down('button[action=search]');
-					this.searchDetailButton.addListener('click', this.openDetailListUI, this); // 监听按钮点击事件
+					//this.searchDetailButton = this.winScan.down('button[action=search]');
+					//this.searchDetailButton.addListener('click', this.openDetailListUI, this); // 监听按钮点击事件
 					this.searchNotiDetailButton = this.winScan.down('button[action=searchNoti]');
 					this.searchNotiDetailButton.addListener('click', this.openNotiDetailListUI, this); // 监听按钮点击事件
 					this.clearQantityButton = this.winScan.down('button[action=clearQantity]');
@@ -465,61 +465,61 @@ Ext.define('SCM.controller.ProductOutwarehouse.ProductOutwarehouseController', {
 				this.initUnScanEvent();
 			},
 			
-			/**
-			 * 初始化出仓情况页面
-			 */
-			getDetailListUI : function() {
-				if (!this.winDetailList || this.winDetailList.isDestroyed) {
-					this.winDetailList = Ext.widget('ProductOutwarehouseDetailList');
-					this.detailListGrid = this.winDetailList.down('gridpanel');
-					this.goodNumbersField = this.winDetailList.down('textfield[name=goodNumbers]');
-					this.searchStartDateDetail = this.winDetailList.down('datefield[name=searchStartDate]');
-					this.searchEndDateDetail = this.winDetailList.down('datefield[name=searchEndDate]');
-				}
-				return this.winDetailList;
-			},
+//			/**
+//			 * 初始化出仓情况页面
+//			 */
+//			getDetailListUI : function() {
+//				if (!this.winDetailList || this.winDetailList.isDestroyed) {
+//					this.winDetailList = Ext.widget('ProductOutwarehouseDetailList');
+//					this.detailListGrid = this.winDetailList.down('gridpanel');
+//					this.goodNumbersField = this.winDetailList.down('textfield[name=goodNumbers]');
+//					this.searchStartDateDetail = this.winDetailList.down('datefield[name=searchStartDate]');
+//					this.searchEndDateDetail = this.winDetailList.down('datefield[name=searchEndDate]');
+//				}
+//				return this.winDetailList;
+//			},
 			
-			/**
-			 * 打开撤销扫描进仓界面
-			 */
-			openDetailListUI : function() {
-				this.goodNumbersField.setValue(this.goodNumberField.getValue());
-				this.winDetailList.show();
-				this.searchDetailList();
-			},
+//			/**
+//			 * 打开撤销扫描进仓界面
+//			 */
+//			openDetailListUI : function() {
+//				this.goodNumbersField.setValue(this.goodNumberField.getValue());
+//				this.winDetailList.show();
+//				this.searchDetailList();
+//			},
 			
-			/**
-			 * 查询出仓情况页面
-			 */
-			searchDetailList : function() {
-				var tempString = "";
-				if (!Ext.isEmpty(this.searchStartDateDetail.getValue())) {
-					tempString += 'ProductOutwarehouseEntryV.LAST_UPDATED_STAMP >= \'' + this.searchStartDateDetail.getRawValue() + ' 00:00:00\'';
-				}
-				if (!Ext.isEmpty(this.searchEndDateDetail.getValue())) {
-					if (tempString != '') {
-						if (this.searchStartDateDetail.getRawValue() > this.searchEndDateDetail.getRawValue()) {
-							showWarning('开始日期不允许大于结束日期，请重新选择！');
-							return;
-						}
-						tempString += ' and ';
-					}
-					tempString += 'ProductOutwarehouseEntryV.LAST_UPDATED_STAMP <= \'' + this.searchEndDateDetail.getRawValue() + ' 23:59:59\'';
-				}
-				if (!Ext.isEmpty(this.goodNumbersField.getValue())) {
-					tempString += ' and (';
-					var goodNumberArr = this.goodNumbersField.getValue().split(',');
-					for(var i=0;i<goodNumberArr.length;i++){
-						if(i!=0){
-							tempString += ' OR ';
-						}
-						tempString += 'ProductOutwarehouseEntryV.GOOD_NUMBER = \'' + goodNumberArr[i] + '\'';
-					}
-					tempString += ')';
-				}
-				this.detailListGrid.store.getProxy().extraParams.whereStr = tempString;
-				this.detailListGrid.store.load();
-			},
+//			/**
+//			 * 查询出仓情况页面
+//			 */
+//			searchDetailList : function() {
+//				var tempString = "";
+//				if (!Ext.isEmpty(this.searchStartDateDetail.getValue())) {
+//					tempString += 'ProductOutwarehouseEntryV.LAST_UPDATED_STAMP >= \'' + this.searchStartDateDetail.getRawValue() + ' 00:00:00\'';
+//				}
+//				if (!Ext.isEmpty(this.searchEndDateDetail.getValue())) {
+//					if (tempString != '') {
+//						if (this.searchStartDateDetail.getRawValue() > this.searchEndDateDetail.getRawValue()) {
+//							showWarning('开始日期不允许大于结束日期，请重新选择！');
+//							return;
+//						}
+//						tempString += ' and ';
+//					}
+//					tempString += 'ProductOutwarehouseEntryV.LAST_UPDATED_STAMP <= \'' + this.searchEndDateDetail.getRawValue() + ' 23:59:59\'';
+//				}
+//				if (!Ext.isEmpty(this.goodNumbersField.getValue())) {
+//					tempString += ' and (';
+//					var goodNumberArr = this.goodNumbersField.getValue().split(',');
+//					for(var i=0;i<goodNumberArr.length;i++){
+//						if(i!=0){
+//							tempString += ' OR ';
+//						}
+//						tempString += 'ProductOutwarehouseEntryV.GOOD_NUMBER = \'' + goodNumberArr[i] + '\'';
+//					}
+//					tempString += ')';
+//				}
+//				this.detailListGrid.store.getProxy().extraParams.whereStr = tempString;
+//				this.detailListGrid.store.load();
+//			},
 			
 			
 			/**
@@ -529,7 +529,7 @@ Ext.define('SCM.controller.ProductOutwarehouse.ProductOutwarehouseController', {
 				if (!this.winNotiDetailList || this.winNotiDetailList.isDestroyed) {
 					this.winNotiDetailList = Ext.widget('ProductOutwarehouseNotificationDetailList');
 					this.notiDetailListGrid = this.winNotiDetailList.down('gridpanel');
-					this.goodNumbersNotiField = this.winNotiDetailList.down('textfield[name=goodNumbers]');
+					this.deliverNumberNotiField = this.winNotiDetailList.down('textfield[name=deliverNumber]');
 					this.searchStartDateNotiDetail = this.winNotiDetailList.down('datefield[name=searchStartDate]');
 					this.searchEndDateNotiDetail = this.winNotiDetailList.down('datefield[name=searchEndDate]');
 				}
@@ -537,10 +537,10 @@ Ext.define('SCM.controller.ProductOutwarehouse.ProductOutwarehouseController', {
 			},
 			
 			/**
-			 * 打开撤销扫描进仓界面
+			 * 打开查询出仓情况页面
 			 */
 			openNotiDetailListUI : function() {
-				this.goodNumbersNotiField.setValue(this.goodNumberField.getValue());
+				this.deliverNumberNotiField.setValue(this.goodNumberField.getValue());
 				this.winNotiDetailList.show();
 				this.searchNotiDetailList();
 			},
@@ -549,7 +549,7 @@ Ext.define('SCM.controller.ProductOutwarehouse.ProductOutwarehouseController', {
 			 * 清理扫描板产品数
 			 */
 			clearQantity : function() {
-				this.boardCountLabel.setText('000');
+				this.boardCountLabel.setText('0');
 			},
 			
 			/**
@@ -558,7 +558,7 @@ Ext.define('SCM.controller.ProductOutwarehouse.ProductOutwarehouseController', {
 			searchNotiDetailList : function() {
 				var tempString = "";
 				if (!Ext.isEmpty(this.searchStartDateNotiDetail.getValue())) {
-					tempString += 'ProductOutNotificationViewV.productOutNotificationV_LAST_UPDATED_STAMP >= \'' + this.searchStartDateNotiDetail.getRawValue() + ' 00:00:00\'';
+					tempString += 'ProductOutVerifyEntryV.LAST_UPDATED_STAMP >= \'' + this.searchStartDateNotiDetail.getRawValue() + ' 00:00:00\'';
 				}
 				if (!Ext.isEmpty(this.searchEndDateNotiDetail.getValue())) {
 					if (tempString != '') {
@@ -568,18 +568,13 @@ Ext.define('SCM.controller.ProductOutwarehouse.ProductOutwarehouseController', {
 						}
 						tempString += ' and ';
 					}
-					tempString += 'ProductOutNotificationViewV.productOutNotificationV_LAST_UPDATED_STAMP <= \'' + this.searchEndDateNotiDetail.getRawValue() + ' 23:59:59\'';
+					tempString += 'ProductOutVerifyEntryV.LAST_UPDATED_STAMP <= \'' + this.searchEndDateNotiDetail.getRawValue() + ' 23:59:59\'';
 				}
-				if (!Ext.isEmpty(this.goodNumbersNotiField.getValue())) {
-					tempString += ' and (';
-					var goodNumberArr = this.goodNumbersNotiField.getValue().split(',');
-					for(var i=0;i<goodNumberArr.length;i++){
-						if(i!=0){
-							tempString += ' OR ';
-						}
-						tempString += 'ProductOutNotificationViewV.productOutNotificationV_GOOD_NUMBER = \'' + goodNumberArr[i] + '\'';
+				if (!Ext.isEmpty(this.deliverNumberNotiField.getValue())) {
+					if (tempString != '') {
+						tempString += ' and ';
 					}
-					tempString += ')';
+					tempString += 'ProductOutVerifyEntryV.Deliver_Number = \'' + this.deliverNumberNotiField.getValue() + '\'';
 				}
 				this.notiDetailListGrid.store.getProxy().extraParams.whereStr = tempString;
 				this.notiDetailListGrid.store.load();
