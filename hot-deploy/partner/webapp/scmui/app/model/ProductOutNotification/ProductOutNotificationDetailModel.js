@@ -5,19 +5,16 @@ Ext.define('SCM.model.ProductOutNotification.ProductOutNotificationDetailModel',
 			alias : 'ProductOutNotificationDetailModel',
 			// 字段
 			fields : [{
-						name : 'number',
+						name : 'deliverNumber',
 						type : 'string'
 					}, {
-						name : 'goodNumber',
+						name : 'pMaterialName',
 						type : 'string'
 					}, {
 						name : 'materialName',
 						type : 'string'
 					}, {
-						name : 'materialModel',
-						type : 'string'
-					}, {
-						name : 'unitName',
+						name : 'boardCount',
 						type : 'string'
 					}, {
 						name : 'orderQty',

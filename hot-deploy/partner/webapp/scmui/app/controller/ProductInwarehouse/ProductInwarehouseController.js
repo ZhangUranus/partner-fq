@@ -176,7 +176,7 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 	changeEditStatus : function(record) {
 		if (record.get('status') == '0') {
 			if (record.get('billType') == 2) {
-				this.setFieldsReadOnly(false);
+				this.setFieldsReadOnly(true);
 				this.setGridEditAble(false);
 				this.saveButton.setDisabled(false);
 				this.clearButton.setDisabled(true);
@@ -536,6 +536,8 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 			this.scanForm = this.winScan.down('form');
 			this.scanGrid = this.winScan.down('gridpanel');
 			this.scanFields = this.scanForm.query("textfield{hidden==false}{readOnly==false}"); // 取所有显示的field
+			this.warehouseIdField = this.winScan.down('combogrid[name=warehouseId]');
+			this.workshopIdField = this.winScan.down('combogrid[name=workshopId]');
 			this.barcode1Field = this.winScan.down('textfield[name=barcode1]');
 			this.barcode2Field = this.winScan.down('textfield[name=barcode2]');
 			this.confirmBarcode1Field = this.winScan.down('textfield[name=confirmBarcode1]');
@@ -543,11 +545,35 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 			this.ikeaCodeField = this.winScan.down('textfield[name=ikeaCode]');
 			this.qantityLabel = this.winScan.down('label[name=qantity]');
 			this.boardCountLabel = this.winScan.down('label[name=boardCount]');
-			this.clearQantityButton = this.winScan.down('button[action=clearQantity]');
-			this.clearQantityButton.addListener('click', this.clearQantity, this); // 监听按钮点击事件
+			this.currentIkeaCodeAndQantity = "";
+			//this.clearQantityButton = this.winScan.down('button[action=clearQantity]');
+			//this.clearQantityButton.addListener('click', this.clearQantity, this); // 监听按钮点击事件
 			this.isInitScanEvent = false;
 			this.scanBoardCount = 0;
 		}
+		var me = this;
+		// 初始化默认车间、仓库
+		Ext.Ajax.request({
+					scope : me,
+					params : {
+						numbers : "ProductInOutWorkshop,ProductInOutWarehouse"
+					},
+					url : '../../scm/control/getParamtmers',
+					timeout : SCM.shortTimes,
+					success : function(response, option) {
+						var result = Ext.decode(response.responseText)
+						if (result.success) {
+							if (result.isExist) {
+								if(result.ProductInOutWarehouse){
+									me.warehouseIdField.setValue(result.ProductInOutWarehouse);
+								}
+								if(result.ProductInOutWorkshop){
+									me.workshopIdField.setValue(result.ProductInOutWorkshop);
+								}
+							}
+						}
+					}
+				});
 		return this.winScan;
 	},
 	
@@ -555,7 +581,7 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 	* 清理扫描板产品数
 	*/
 	clearQantity : function() {
-		this.boardCountLabel.setText('000');
+		this.boardCountLabel.setText('0');
 	},
 	
 	/**
@@ -633,10 +659,10 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 		if (me.barcode1Field.getValue() && me.barcode2Field.getValue()) {
 			var barcode = Ext.create('SCM.extend.utils.Barcode', me.barcode1Field.getValue(), me.barcode2Field.getValue());
 			var ikeaCode = barcode.getCodeForIkea() + "167399";
-			if(ikeaCode != this.ikeaCodeField.getValue()){
-				this.clearField();
+			if(ikeaCode != me.ikeaCodeField.getValue()){
+				me.clearField();
 				showError('宜家编码和产品条码不一致，请检查并重新扫描！');
-				this.barcode1Field.focus(true);
+				me.barcode1Field.focus(true);
 				return false;
 			}
 			
@@ -644,7 +670,6 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 			var recordsData = [];
 			recordsData.push(me.scanForm.getValues());
 			var json = Ext.encode(recordsData);
-
 			Ext.Ajax.request({
 						scope : me,
 						url : "../../scm/control/scanSubmitProductInwarehouse",
@@ -658,6 +683,11 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 							}
 							var result = Ext.JSON.decode(response.responseText);
 							if (result.success) {
+								var tempCode = barcode.getCodeForIkea()+result.message.qantity;
+								if(me.currentIkeaCodeAndQantity != tempCode ){
+									me.currentIkeaCodeAndQantity = tempCode ;
+									me.scanBoardCount = 0;
+								}
 								me.qantityLabel.setText(result.message.qantity);
 								me.clearField();
 								me.scanBoardCount++;
