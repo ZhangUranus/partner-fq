@@ -11,6 +11,8 @@ Ext.define('SCM.view.ProductOutVerify.ListUI', {
 			},
 			initComponent : function() {
 				var me = this;
+				var today = new Date();
+				var startDay = new Date(today.getFullYear(), today.getMonth(), 1);
 				var entryStore = Ext.create('ProductOutVerifyEditEntryStore', {
 							id : 'ProductOutVerifyListEntry'
 						});
@@ -40,18 +42,22 @@ Ext.define('SCM.view.ProductOutVerify.ListUI', {
 													xtype : 'datefield',
 													name : 'searchBeginDate',
 													format : 'Y-m-d',
-													width : 155,
-													labelWidth : 60,
-													fieldLabel : '开始日期',
-													margin : '0 0 0 0'
+													width : 135,
+													labelWidth : 35,
+													fieldLabel : '日期',
+													margin : '0 0 0 0',
+													value : startDay,
+													editable : false
 												},{
 													xtype : 'datefield',
 													name : 'searchEndDate',
 													format : 'Y-m-d',
-													width : 155,
-													labelWidth : 60,
-													fieldLabel : '结束日期',
-													margin : '0 0 0 0'
+													width : 115,
+													labelWidth : 15,
+													fieldLabel : '至',
+													labelSeparator : '',
+													value : today,
+													editable : false
 												},  {
 													xtype : 'combogrid',
 													name : 'deliverNumber',
@@ -62,6 +68,7 @@ Ext.define('SCM.view.ProductOutVerify.ListUI', {
 													displayField : 'number',
 													store : Ext.create('DeliverNumberStore'),
 													matchFieldWidth : false,
+													emptyText : '所有单号',
 													listConfig : {
 														width : 300,
 														height : SCM.MaxSize.COMBOGRID_HEIGHT,

@@ -1,8 +1,8 @@
 Ext.define('SCM.view.ProductOutwarehouse.NotificationDetailListUI', {
 			extend : 'Ext.window.Window',
 			alias : 'widget.ProductOutwarehouseNotificationDetailList',
-			height : 400,
-			width : 800,
+			height : 560,
+			width : 900,
 			title : '出货通知单状态查询',
 			layout : 'fit',
 			modal : true,// 背景变灰，不能编辑
@@ -25,32 +25,26 @@ Ext.define('SCM.view.ProductOutwarehouse.NotificationDetailListUI', {
 													width : 40
 												}, {
 													xtype : 'gridcolumn',
-													dataIndex : 'number',
-													width : 140,
-													text : '出货通知单编码'
+													dataIndex : 'deliverNumber',
+													width : 240,
+													text : '单号'
 												}, {
 													xtype : 'gridcolumn',
-													dataIndex : 'goodNumber',
-													width : 80,
-													text : '货号'
-
-												}, {
-													xtype : 'gridcolumn',
-													dataIndex : 'materialName',
-													width : 140,
+													dataIndex : 'pMaterialName',
+													width : 100,
 													text : '产品名称'
 
 												}, {
 													xtype : 'gridcolumn',
-													dataIndex : 'materialModel',
-													width : 80,
-													text : '规格型号'
+													dataIndex : 'materialName',
+													width : 200,
+													text : '打板名称'
 
 												}, {
 													xtype : 'gridcolumn',
-													dataIndex : 'unitName',
-													width : 40,
-													text : '单位'
+													dataIndex : 'boardCount',
+													width : 80,
+													text : '板数量'
 
 												}, {
 													xtype : 'gridcolumn',
@@ -101,9 +95,9 @@ Ext.define('SCM.view.ProductOutwarehouse.NotificationDetailListUI', {
 																editable : false
 															}, {
 																xtype : 'textfield',
-																name : 'goodNumbers',
+																name : 'deliverNumber',
 																minWidth : 200,
-																emptyText : '请输入货号，多个时用,号分割'
+																emptyText : '请输入单号'
 															}, {
 																text : '查询',
 																iconCls : 'system-search',

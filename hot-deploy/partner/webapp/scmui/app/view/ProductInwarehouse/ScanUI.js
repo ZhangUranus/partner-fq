@@ -99,7 +99,7 @@ Ext.define('SCM.view.ProductInwarehouse.ScanUI', {
 															}, {
 																xtype : 'label',
 																name : 'qantity',
-																text : '000',
+																text : '0000',
 																rowspan : 7,
 																margin : 10,
 																style : {
@@ -183,15 +183,6 @@ Ext.define('SCM.view.ProductInwarehouse.ScanUI', {
 																fieldLabel : '宜家编码',
 																margin : 5,
 																width : 320
-															}, {
-																xtype : 'button',
-																text : ' 清零',
-																margin : 10,
-																iconCls : 'system-clear',
-																action : 'clearQantity',
-																tdAttrs : {
-																	align : 'left'
-																}
 															}]
 												}, {
 													xtype : 'gridpanel',
