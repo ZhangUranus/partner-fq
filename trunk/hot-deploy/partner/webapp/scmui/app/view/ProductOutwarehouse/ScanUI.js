@@ -20,7 +20,7 @@ Ext.define('SCM.view.ProductOutwarehouse.ScanUI', {
 										layout : 'border',
 										items : [{
 													xtype : 'container',
-													height : 250,
+													height : 310,
 													width : 960,
 													layout : {
 														columns : 5,
@@ -40,7 +40,7 @@ Ext.define('SCM.view.ProductOutwarehouse.ScanUI', {
 																store : SCM.store.basiccode.productOutStatusStore,
 																margin : 5,
 																colspan : 2,
-																width : 320,
+																width : 350,
 																value : '1',	//默认值
 																allowBlank : false
 															}, {
@@ -48,6 +48,7 @@ Ext.define('SCM.view.ProductOutwarehouse.ScanUI', {
 																name : 'qantityName',
 																text : '扫描板产品数',
 																margin : 5,
+																width : 350,
 																style : {
 																	'font-weight' : 'bold',
 																	'color' : '#A03070',
@@ -64,6 +65,7 @@ Ext.define('SCM.view.ProductOutwarehouse.ScanUI', {
 																name : 'boardName',
 																text : '扫描总板数',
 																margin : 5,
+																width : 350,
 																style : {
 																	'font-weight' : 'bold',
 																	'color' : 'red',
@@ -71,16 +73,17 @@ Ext.define('SCM.view.ProductOutwarehouse.ScanUI', {
 																	'font-size' : 20
 																}
 															}, {
-																xtype : 'textfield',
+																xtype : 'textarea',
 																name : 'goodNumber',
 																fieldLabel : '货号<font color="red">(用,分割)</font>',
 																margin : 5,
 																colspan : 2,
-																width : 320
+																height : 100,
+																width : 350
 															}, {
 																xtype : 'label',
 																name : 'qantity',
-																text : '000',
+																text : '0000',
 																rowspan : 5,
 																margin : 5,
 																style : {
@@ -98,7 +101,7 @@ Ext.define('SCM.view.ProductOutwarehouse.ScanUI', {
 															}, {
 																xtype : 'label',
 																name : 'boardCount',
-																text : '000',
+																text : '0',
 																rowspan : 5,
 																margin : 5,
 																style : {
@@ -117,7 +120,7 @@ Ext.define('SCM.view.ProductOutwarehouse.ScanUI', {
 																store : Ext.data.StoreManager.lookup('WHComboStore'),
 																margin : 5,
 																colspan : 2,
-																width : 320,
+																width : 350,
 																matchFieldWidth : false,
 																allowBlank : false,
 																listConfig : {
@@ -145,7 +148,7 @@ Ext.define('SCM.view.ProductOutwarehouse.ScanUI', {
 																store : Ext.data.StoreManager.lookup('WSComboStore'),
 																margin : 5,
 																colspan : 2,
-																width : 320,
+																width : 350,
 																matchFieldWidth : false,
 																listConfig : {
 																	width : 320,
@@ -168,26 +171,17 @@ Ext.define('SCM.view.ProductOutwarehouse.ScanUI', {
 																fieldLabel : '产品条码',
 																margin : 5,
 																colspan : 2,
-																width : 320
+																width : 350
 															}, {
 																xtype : 'textfield',
 																name : 'barcode2',
 																fieldLabel : '序列号',
 																margin : 5,
 																colspan : 2,
-																width : 320
+																width : 350
 															}, {
 																xtype : 'button',
 																text : '出仓情况查询',
-																margin : 10,
-																iconCls : 'system-search',
-																action : 'search',
-																tdAttrs : {
-																	align : 'left'
-																}
-															}, {
-																xtype : 'button',
-																text : '出货通知状态查询',
 																margin : 10,
 																iconCls : 'system-search',
 																action : 'searchNoti',
