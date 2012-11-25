@@ -82,7 +82,7 @@ public class ProductInOutStockMgr {
 					curPreMonthVolume = curPreMonthVolume.add(bv.getBigDecimal("volume"));
 				}
 			}
-			curPreMonthVolume = curPreMonthVolume.subtract(volume);//获取时已经加了本次更新数量
+			// curPreMonthVolume = curPreMonthVolume.subtract(volume);//获取时已经加了本次更新数量
 			if(curPreMonthVolume.compareTo(BigDecimal.ZERO) < 0){
 				curPreMonthVolume = BigDecimal.ZERO;
 			}
