@@ -213,7 +213,7 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 																name : 'note',
 																margin : 5,
 																fieldLabel : '备注',
-																maxLength : 50,
+																maxLength : 250,
 																colspan : 3,
 																width : 785
 															}, {
@@ -336,6 +336,34 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 																},
 																dataIndex : 'deliveryQty',
 																text : '交货数量'
+															}, {
+																xtype : 'combocolumn',
+																dataIndex : 'warehouseId',
+																text : '仓库',
+																gridId : 'PurchaseBill-edit-grid',
+																editor : {
+																	xtype : 'combogrid',
+																	valueField : 'id',
+																	displayField : 'name',
+																	initStore : Ext.data.StoreManager.lookup('WHComboInitStore'),
+																	store : Ext.data.StoreManager.lookup('WHComboStore'),
+																	matchFieldWidth : false,
+																	listConfig : {
+																		width : SCM.MaxSize.COMBOGRID_WIDTH,
+																		height : SCM.MaxSize.COMBOGRID_HEIGHT,
+																		columns : [{
+																					header : '编码',
+																					dataIndex : 'number',
+																					width : 100,
+																					hideable : false
+																				}, {
+																					header : '名称',
+																					dataIndex : 'name',
+																					width : 80,
+																					hideable : false
+																				}]
+																	}
+																}
 															}],
 													viewConfig : {
 

@@ -49,6 +49,7 @@
 		<field name="qualityReq" type="value"></field><!--质量要求  -->
 		<field name="deliveryDate" type="date-time"></field><!--交货日期  -->
 		<field name="deliveryQty" type="fixed-point"></field><!-- 交货数量 -->
+		<field name="warehouseId" type="id-long"></field><!-- 仓库 地点-->
 		<prim-key field="id" />
 	</entity>
 	<!-- 表头视图 -->
@@ -61,6 +62,7 @@
 		<member-entity entity-alias="buyerSystemUserV" entity-name="SystemUser"></member-entity>
 		<member-entity entity-alias="buyerDepartmentV" entity-name="Department"></member-entity>
 		<member-entity entity-alias="approverSystemUserV" entity-name="SystemUser"></member-entity>
+		
 		<alias-all entity-alias="PurchaseBillV"></alias-all>
 		<alias name="materialMaterialId" entity-alias="PurchaseBillEntryV" field="materialMaterialId"></alias>
 		<alias name="entrySeq" entity-alias="PurchaseBillEntryV" field="sort" ></alias>
@@ -69,6 +71,7 @@
 		<alias name="supplierSupplierFaxNum" entity-alias="supplierSupplierV" field="faxNum"></alias>
 		<alias name="supplierSupplierAddress" entity-alias="supplierSupplierV" field="address"></alias>
 		<alias name="supplierSupplierLinkman" entity-alias="supplierSupplierV" field="linkman"></alias>
+		<alias name="supplierSupplierEmail" entity-alias="supplierSupplierV" field="email"></alias>
 		<alias name="submitUserName" entity-alias="submitSystemUserV" field="name"></alias>
 		<alias name="buyerSystemUserName" entity-alias="buyerSystemUserV" field="name"></alias>
 		<alias name="buyerDepartmentId" entity-alias="buyerDepartmentV" field="id"></alias>
@@ -99,6 +102,7 @@
 		<view-link entity-alias="PurchaseBillV" rel-entity-alias="approverSystemUserV" rel-optional="true">
 			<key-map field-name="approverSystemUserId" rel-field-name="id" />
 		</view-link>
+		
 	</view-entity>
 	<!-- 导出视图 -->
 	<view-entity entity-name="PurchaseBillExportView" package-name="org.ofbiz.scm.PurchaseBill" title="PurchaseBillExportView  Entity">
@@ -142,16 +146,22 @@
 		<member-entity entity-alias="PurchaseBillEntryV" entity-name="PurchaseBillEntry"></member-entity>
 		<member-entity entity-alias="materialMaterialV" entity-name="Material"></member-entity>
 		<member-entity entity-alias="unitUnitV" entity-name="Unit"></member-entity>
+		<member-entity entity-alias="warehouseV" entity-name="Warehouse"></member-entity>
 		<alias-all entity-alias="PurchaseBillEntryV"></alias-all>
-		<alias name="materialMaterialName" entity-alias="materialMaterialV" field="name"></alias>
+		<alias name="materialMaterialName" entity-alias="materialMaterialV" field="name" ></alias>
 		<alias name="materialMaterialNumber" entity-alias="materialMaterialV" field="number"></alias>
-		<alias name="quality" entity-alias="materialMaterialV" field="quality"></alias>
+		<alias name="materialMaterialQuality" entity-alias="materialMaterialV" field="quality"></alias>
+		<alias name="materialMtarialDescription" entity-alias="materialMaterialV" field="quality"></alias>
 		<alias name="unitUnitName" entity-alias="unitUnitV" field="name"></alias>
+		<alias name="warehouseName" entity-alias="warehouseV" field="name"></alias>
 		<view-link entity-alias="PurchaseBillEntryV" rel-entity-alias="materialMaterialV" rel-optional="true">
 			<key-map field-name="materialMaterialId" rel-field-name="id" />
 		</view-link>
 		<view-link entity-alias="PurchaseBillEntryV" rel-entity-alias="unitUnitV" rel-optional="true">
 			<key-map field-name="unitUnitId" rel-field-name="id" />
+		</view-link>
+		<view-link entity-alias="PurchaseBillEntryV" rel-entity-alias="warehouseV" rel-optional="true">
+			<key-map field-name="warehouseId" rel-field-name="id" />
 		</view-link>
 		<entity-condition> <order-by field-name="sort ASC" /> </entity-condition>
 	</view-entity>
