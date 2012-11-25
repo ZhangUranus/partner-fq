@@ -53,7 +53,6 @@
 		</view-link>
 	</view-entity>
 	
-	
 	<!-- 分录视图 -->
 	<view-entity entity-name="ProductOutVerifyEntryView" package-name="org.ofbiz.scm.ProductOutVerify" title="ProductOutVerifyEntryView  Entity">
 		<member-entity entity-alias="ProductOutVerifyEntryV" entity-name="ProductOutVerifyEntry"></member-entity>
@@ -67,6 +66,30 @@
 		</view-link>
 		<view-link entity-alias="ProductOutVerifyEntryV" rel-entity-alias="warehouseV" rel-optional="true">
 			<key-map field-name="warehouseId" rel-field-name="id" />
+		</view-link>
+	</view-entity>
+	
+	<!-- 出仓情况查询 -->
+	<view-entity entity-name="ProductOutNotificationDetailView" package-name="org.ofbiz.scm.pricemgr" title="ProductOutNotificationDetailView Entity">
+		<member-entity entity-alias="ProductOutVerifyEntryV" entity-name="ProductOutVerifyEntry"></member-entity>
+		<member-entity entity-alias="TPMaterialV" entity-name="TMaterial"></member-entity>
+		<member-entity entity-alias="TMaterialV" entity-name="TMaterial"></member-entity>
+		<member-entity entity-alias="ProductMapV" entity-name="ProductMap"></member-entity>
+		<alias name="deliverNumber" entity-alias="ProductOutVerifyEntryV" field="deliverNumber"></alias>
+		<alias name="orderQty" entity-alias="ProductOutVerifyEntryV" field="orderQty"></alias>
+		<alias name="sentQty" entity-alias="ProductOutVerifyEntryV" field="sentQty"></alias>
+		<alias name="isFinished" entity-alias="ProductOutVerifyEntryV" field="isFinished"></alias>
+		<alias name="pMaterialName" entity-alias="TPMaterialV" field="name"></alias>
+		<alias name="materialName" entity-alias="TMaterialV" field="name"></alias>
+		<alias name="boardCount" entity-alias="ProductMapV" field="boardCount"></alias>
+		<view-link entity-alias="ProductOutVerifyEntryV" rel-entity-alias="TPMaterialV" rel-optional="true">
+			<key-map field-name="parentMaterialId" rel-field-name="id" />
+		</view-link>
+		<view-link entity-alias="ProductOutVerifyEntryV" rel-entity-alias="TMaterialV" rel-optional="true">
+			<key-map field-name="materialId" rel-field-name="id" />
+		</view-link>
+		<view-link entity-alias="TMaterialV" rel-entity-alias="ProductMapV" rel-optional="true">
+			<key-map field-name="id" rel-field-name="materialId" />
 		</view-link>
 	</view-entity>
 </entitymodel>
