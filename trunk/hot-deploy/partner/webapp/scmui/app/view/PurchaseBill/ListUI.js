@@ -167,6 +167,10 @@ Ext.define('SCM.view.PurchaseBill.ListUI', {
 													xtype : 'numbercolumn',
 													dataIndex : 'deliveryQty',
 													text : '交货数量'
+												},{
+													xtype : 'gridcolumn',
+													dataIndex : 'warehouseName',
+													text : '仓库'
 												}]
 									}]
 						});

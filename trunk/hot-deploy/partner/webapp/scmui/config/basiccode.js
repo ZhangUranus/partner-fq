@@ -494,16 +494,21 @@ PrintHelper.prototype.fillPage = function(/* 填充数据的Element对象 */page
 	var fields = page.getElementsByClassName('dataField');
 	for (var i = 0; i < fields.length; i++) {
 		var field = fields.item(i);
-
 		var fi = this.getIndex(field.attributes, 'fieldindex');// 返回数据索引字符串
+		var cbScript=this.getIndex(field.attributes, 'script');//返回后置处理脚本
 		if (fi) {
 			try {
-				var text = eval(fi);/* 查找data对象的打印值 */
-				if ((typeof text) == 'number') {
-					text = text.toFixed(4);//显示四位小数
+				var value = eval(fi);/* 查找data对象的打印值 */
+				if ((typeof value) == 'number') {
+					value = value.toFixed(4);//显示四位小数
 				}
-				if (text != undefined) {
-					field.innerText = text;
+				//added by mark 2012-11-25 处理获取值之后调用后置处理脚本，解决问题，例如一些数值字段序号，不显示小数位，其他数值字段显示小数位
+				if(cbScript){
+					value=eval(cbScript.replace('$',value));
+				}
+				
+				if (value != undefined) {
+					field.innerText = value;
 				}
 			} catch (err) {
 				/* 没有查找到对象值，忽略 */
@@ -527,9 +532,12 @@ PrintHelper.prototype.fillPage = function(/* 填充数据的Element对象 */page
 
 			// 按顺序记录绑定的字段
 			var fieldMapArr = new Array(columns.length);
+			//按顺序记录后置脚本,获取值之后再执行一次
+			var entryCallbackScript=new  Array(columns.length);
 			for (var j = 0; j < columns.length; j++) {
 				var tc = columns.item(j);
 				fieldMapArr[j] = this.getIndex(tc.attributes, 'bindfield');
+				entryCallbackScript[j] = this.getIndex(tc.attributes, 'script');
 			}
 
 			var bindEntryData;
@@ -562,6 +570,12 @@ PrintHelper.prototype.fillPage = function(/* 填充数据的Element对象 */page
 							var value = eval(bindEntryIndex + "[" + k + "]." + fieldMapArr[cn]);/* 查找data对象的打印值 */
 							if ((typeof value) == 'number') {
 								value = value.toFixed(4);//显示四位小数
+							}
+							
+							//added by mark 2012-11-25 处理获取值之后调用后置处理脚本，解决问题，例如一些数值字段序号，不显示小数位，其他数值字段显示小数位
+							if(entryCallbackScript[cn]){
+								var rawScript=entryCallbackScript[cn];
+								value=eval(rawScript.replace('$',value));
 							}
 							if (value != undefined) {
 								cell.innerText = value;

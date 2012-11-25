@@ -372,92 +372,28 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 
 			getMainPrintHTML : function() {
 				return "<div>" +
-				"<div class='caption' >江门市富桥旅游用品厂有限公司</div>"+							
-				"<div class='caption'>Purchasing Order 采购回笼单	</div>"+						
-				"<div class='caption'>江门市潮连卢边工业区				</div>"+				
-				"<div class='caption'>Tel: 0750-3720617     Fax: 0750-3722789</div>"+								
-				"<div style='width:50%;float:left;'>供应商名称:<span class='dataField' fieldindex='data.supplierSupplierName' ></span></div>	<div style='width:50%;float:left;'>采购单号：<span class='dataField' fieldindex='data.number' ></span></div>"+		
-				"<div style='width:50%;float:left;'>地址:<span class='dataField' fieldindex='data.supplierSupplierAddress'></span></div> <div style='width:50%;float:left;'>Revision:</span>	<span class='dataField' fieldindex='data.revision'></span>	</div>"+
-				"<div style='width:50%;float:left;'>Tel：<span class='dataField' fieldindex='data.supplierSupplierPhoneNum'></span></div> <div style='width:30%;float:left;'>Fax:<span class='dataField' fieldindex='data.supplierSupplierFaxNum'></span></div><div style='width:20%;float:left;'>联络人:<span class='dataField' fieldindex='data.supplierSupplierLinkman'> </div>"+		
-				"<div style='width:100%;float:left;'>送货地点：<span class='dataField' fieldindex='data.deliveryAddr'></span></div>"+								
-				"<div style='width:25%;float:left;'>订购日期：<span class='dataField' fieldindex='data.bizDate' ></span></div><div style='width:25%;float:left;'>部门: <span class='dataField' fieldindex='data.buyerDepartmentName' ></span></div> <div style='width:20%;float:left;'>采购员:<span class='dataField' fieldindex='data.buyerSystemUserName'></span></div><div style='width:25%;float:left;'>页数：<span class='dataField' fieldindex='data.curPage'></span> of <span  class='dataField' fieldindex='data.totalPages'></span></div>"+		
-				"<div style='width:50%;float:left;'>付款方式：<span class='dataField' fieldindex='data.payType' ></span></div><div style='width:50%;float:left;'>税金：<span class='dataField' fieldindex='data.tax' ></span>					</div>"+
-				"<table  cellspacing='0' class='dataEntry' fieldindex='data.entry'>"+
-				"<tr>"+
-				"	<th bindfield='sort' type ='string' width='40px'>项次<br>Item</th>"+
-				"	<th bindfield='materialMaterialName' width='200px'>描述<br>Description</th>"+
-				"	<th bindfield='qualityReq' width='100px'>质量要求<br>Quality Request</th>"+
-				"	<th bindfield='unitUnitName' width='30px'>单位<br>Unit</th>"+
-				"	<th bindfield='volume' width='30%'>数量<br>Qty.</th>"+
-				"	<th bindfield='price' width='30%'>单价<br>Unit Price</th>"+
-				"	<th bindfield='entrysum' width='30%'>金额<br>Amount</th>"+
-				"	<th bindfield='deliveryDate' width='30%'>交货日期<br>Delivery Date</th>"+
-				"	<th bindfield='deliveryQty' width='30%'>交货数量<br>Delivery Qty.</th>"+
-				"</tr>"+
-				"</table>"+			 				
-				"<br>"+
-				"1.材质为ISO.R.301.ZuAI4Cu1，并且符合IKEA标准ISO-MAT-0010,含铅量不超过90mg/Kg。<br>"+								
-				"2.表面要求符合IKEA要求:ISO-MAT-0066表面要求.								<br>"+
-				"3.产品规格按双方确认的图纸和样板.		<br>"+
-				"<p>								"+
-				 "</div>";
-			},
-			getLoopPrintHTML: function() {
-				return "<div>" +
-				"<div class='caption' >江门市富桥旅游用品厂有限公司</div>"+							
-				"<div class='caption'>Purchasing Order 采购回笼单	</div>"+						
-				"<div class='caption'>江门市潮连卢边工业区				</div>"+				
-				"<div class='caption'>Tel: 0750-3720617     Fax: 0750-3722789</div>"+								
-				"<div style='width:50%;float:left;'>供应商名称:<span class='dataField' fieldindex='data.supplierSupplierName' ></span></div>	<div style='width:50%;float:left;'>采购单号：<span class='dataField' fieldindex='data.number' ></span></div>"+		
-				"<div style='width:50%;float:left;'>地址:<span class='dataField' fieldindex='data.supplierSupplierAddress'></span></div> <div style='width:50%;float:left;'>Revision:</span>	<span class='dataField' fieldindex='data.revision'></span>	</div>"+
-				"<div style='width:50%;float:left;'>Tel：<span class='dataField' fieldindex='data.supplierSupplierPhoneNum'></span></div> <div style='width:30%;float:left;'>Fax:<span class='dataField' fieldindex='data.supplierSupplierFaxNum'></span></div><div style='width:20%;float:left;'>联络人:<span class='dataField' fieldindex='data.supplierSupplierLinkman'> </div>"+		
-				"<div style='width:100%;float:left;'>送货地点：<span class='dataField' fieldindex='data.deliveryAddr'></span></div>"+								
-				"<div style='width:25%;float:left;'>订购日期：<span class='dataField' fieldindex='data.bizDate' ></span></div><div style='width:25%;float:left;'>部门: <span class='dataField' fieldindex='data.buyerDepartmentName' ></span></div> <div style='width:20%;float:left;'>采购员:<span class='dataField' fieldindex='data.buyerSystemUserName'></span></div><div style='width:25%;float:left;'>页数：<span class='dataField' fieldindex='data.curPage'></span> of <span  class='dataField' fieldindex='data.totalPages'></span></div>"+		
-				"<div style='width:50%;float:left;'>付款方式：<span class='dataField' fieldindex='data.payType' ></span></div><div style='width:50%;float:left;'>税金：<span class='dataField' fieldindex='data.tax' ></span>					</div>"+
-				"<table  cellspacing='0' class='dataEntry' fieldindex='data.entry'>"+
-				"<tr>"+
-				"	<th bindfield='sort' type ='string' width='40px'>项次<br>Item</th>"+
-				"	<th bindfield='materialMaterialName' width='200px'>描述<br>Description</th>"+
-				"	<th bindfield='qualityReq' width='100px'>质量要求<br>Quality Request</th>"+
-				"	<th bindfield='unitUnitName' width='30px'>单位<br>Unit</th>"+
-				"	<th bindfield='volume' width='30%'>数量<br>Qty.</th>"+
-				"	<th bindfield='price' width='30%'>单价<br>Unit Price</th>"+
-				"	<th bindfield='entrysum' width='30%'>金额<br>Amount</th>"+
-				"	<th bindfield='deliveryDate' width='30%'>交货日期<br>Delivery Date</th>"+
-				"	<th bindfield='deliveryQty' width='30%'>交货数量<br>Delivery Qty.</th>"+
-				"</tr>"+
-				"</table>"+			 				
-				"<br>"+
-				"1.材质为ISO.R.301.ZuAI4Cu1，并且符合IKEA标准ISO-MAT-0010,含铅量不超过90mg/Kg。<br>"+								
-				"2.表面要求符合IKEA要求:ISO-MAT-0066表面要求.								<br>"+
-				"3.产品规格按双方确认的图纸和样板.		<br>"+
-				"<p>								"+
-				 "</div>";
-			},
-			getTailPrintHTML: function() {
-				return "<div>" +
-				"<div class='caption' >江门市富桥旅游用品厂有限公司</div>"+							
-				"<div class='caption'>Purchasing Order 采购回笼单	</div>"+						
-				"<div class='caption'>江门市潮连卢边工业区				</div>"+				
-				"<div class='caption'>Tel: 0750-3720617     Fax: 0750-3722789</div>"+								
-				"<div style='width:50%;float:left;'>供应商名称:<span class='dataField' fieldindex='data.supplierSupplierName' ></span></div>	<div style='width:50%;float:left;'>采购单号：<span class='dataField' fieldindex='data.number' ></span></div>"+		
-				"<div style='width:50%;float:left;'>地址:<span class='dataField' fieldindex='data.supplierSupplierAddress'></span></div> <div style='width:50%;float:left;'>Revision:</span>	<span class='dataField' fieldindex='data.revision'></span>	</div>"+
-				"<div style='width:50%;float:left;'>Tel：<span class='dataField' fieldindex='data.supplierSupplierPhoneNum'></span></div> <div style='width:30%;float:left;'>Fax:<span class='dataField' fieldindex='data.supplierSupplierFaxNum'></span></div><div style='width:20%;float:left;'>联络人:<span class='dataField' fieldindex='data.supplierSupplierLinkman'> </div>"+		
-				"<div style='width:100%;float:left;'>送货地点：<span class='dataField' fieldindex='data.deliveryAddr'></span></div>"+								
-				"<div style='width:25%;float:left;'>订购日期：<span class='dataField' fieldindex='data.bizDate' ></span></div><div style='width:25%;float:left;'>部门: <span class='dataField' fieldindex='data.buyerDepartmentName' ></span></div> <div style='width:20%;float:left;'>采购员:<span class='dataField' fieldindex='data.buyerSystemUserName'></span></div><div style='width:25%;float:left;'>页数：<span class='dataField' fieldindex='data.curPage'></span> of <span  class='dataField' fieldindex='data.totalPages'></span></div>"+		
-				"<div style='width:50%;float:left;'>付款方式：<span class='dataField' fieldindex='data.payType' ></span></div><div style='width:50%;float:left;'>税金：<span class='dataField' fieldindex='data.tax' ></span>					</div>"+
-				"<table  cellspacing='0' class='dataEntry' fieldindex='data.entry'>"+
-				"<tr>"+
-				"	<th bindfield='sort' type ='string' width='40px'>项次<br>Item</th>"+
-				"	<th bindfield='materialMaterialName' width='200px'>描述<br>Description</th>"+
-				"	<th bindfield='qualityReq' width='100px'>质量要求<br>Quality Request</th>"+
-				"	<th bindfield='unitUnitName' width='30px'>单位<br>Unit</th>"+
-				"	<th bindfield='volume' width='30%'>数量<br>Qty.</th>"+
-				"	<th bindfield='price' width='30%'>单价<br>Unit Price</th>"+
-				"	<th bindfield='entrysum' width='30%'>金额<br>Amount</th>"+
-				"	<th bindfield='deliveryDate' width='30%'>交货日期<br>Delivery Date</th>"+
-				"	<th bindfield='deliveryQty' width='30%'>交货数量<br>Delivery Qty.</th>"+
-				"</tr>"+
+				"<div class='caption' style='font-size:20px;width:60%;float:left;text-align:left;' >江门市富桥旅游用品厂有限公司</div><div style='width:39%;float:left;text-align:left;'>页数：<span class='dataField' fieldindex='data.curPage'></span> of <span  class='dataField' fieldindex='data.totalPages'></span></div>" +						
+				"<div class='caption' style='font-size:15px;width:60%;float:left;text-align:left;'>PO 采购回笼单	</div>	<div style='width:39%;float:left;'>采购回笼单号：<span class='dataField' fieldindex='data.number' ></span></div>" +
+				"<div style='width:100%;float:left;'>&nbsp;</div>" +
+				"<div style='width:50%;float:left;'>订购日期：<span class='dataField' fieldindex='data.bizDate' ></span></div><div style='width:49%;float:left;'>供应商名称:<span class='dataField' fieldindex='data.supplierSupplierName' ></span></div>" +	
+				"<div style='width:25%;float:left;'>部门: <span class='dataField' fieldindex='data.buyerDepartmentName' ></span></div> <div style='width:25%;float:left;'>采购员:<span class='dataField' fieldindex='data.buyerSystemUserName'></span></div><div style='width:50%;float:left;'>地址:<span class='dataField' fieldindex='data.supplierSupplierAddress'></span></div>" + 
+				"<div style='width:25%;float:left;'>付款方式：<span class='dataField' fieldindex='data.payType' ></span></div><div style='width:25%;float:left;'>税金：<span class='dataField' fieldindex='data.tax' ></span></div><div style='width:25%;float:left;'>联络人:<span class='dataField' fieldindex='data.supplierSupplierLinkman'> </div><div style='width:25%;float:left;'>E-Mail:<span class='dataField' fieldindex='data.supplierSupplierEmail'> </div>" +	
+				"<div style='width:50%;float:left;'>送货地点：<span class='dataField' fieldindex='data.deliveryAddr' ></span></div><div style='width:25%;float:left;'>Tel：<span class='dataField' fieldindex='data.supplierSupplierPhoneNum'></span></div> <div style='width:25%;float:left;'>Fax:<span class='dataField' fieldindex='data.supplierSupplierFaxNum'></span></div>" +
+				"<div style='width:100%;float:left;'>&nbsp;</div>" +
+				"<table  cellspacing='0' class='dataEntry' fieldindex='data.entry'>" +
+				"	<tr>" +
+				"		<th bindfield='sort' type ='string' width='30px' script='\"\"+$'>项次</th>" +
+				"		<th bindfield='materialMaterialName' width=150px>货品</th>" +
+				"		<th bindfield='materialMtarialDescription' width=100px>描述</th>" +
+				"		<th bindfield='materialMaterialQuality' width=80px>质量要求</th>" +
+				"		<th bindfield='unitUnitName' width=30px>单位</th>" +
+				"		<th bindfield='volume' width=70px>数量</th>" +
+				"		<th bindfield='price' width=70px>单价</th>" +
+				"		<th bindfield='entrysum' width=70px>金额</th>" +
+				"		<th bindfield='deliveryDate' width=70px>交货日期</th>" +
+				"		<th bindfield='deliveryQty' width=70px>交货数量</th>" +
+				"		<th bindfield='warehouseName' width=80px>仓库地点</th>" +
+				"	</tr>" +
 				"<tr>"+
 				"   <td></td>"+
 				"   <td></td>"+
@@ -468,34 +404,121 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 				"   <td><span class='dataField' fieldindex='data.totalsum' ></span></td>"+
 				"   <td></td>"+
 				"   <td></td>"+
+				"   <td></td>"+
 				"</tr>"+
-				"</table>"+			 				
-				"<br>"+
-				"<div class='dataField' fieldindex='data.note' ></div>";
+				"</table>	" +		 				
+				"备注：<br>"+
+				"<div class='dataField' style='height:60px;\padding:5px 5px 5px 30px;' fieldindex='data.note' ></div>"+
+				"交易条款：		<br>				"+			
+			"一、	交期				<br>				"+
+			"	供方依本单之交期或本公司供应部以电话或书面调整之交期交货，若有延误，<br>"+								
+			"	按一日扣除该批款 &nbsp;&nbsp;&nbsp;&nbsp; %  。								<br>"+
+			"二、	质量								<br>"+
+			"	1.依图纸要求。   2.进料检验：依本公司《原材料进仓检验规范》。<br>"+								
+			"三、	不合格品处理								<br>"+
+			"	1.经检验后之不合格品，应如三日后取回，逾时本公司不负责；<br>"+								
+			"	2.如急用需选别，所产生之费用，依本公司之索赔标准计费。		<br>"+						
+			"四、	附件	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;供方代表签名：                               		<br>"+
+			"1.请确认后签名回传0750-3722789，TEL：07503720617。				<br>"+					
+			"2.未尽之事宜，双方协商解决。	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;确认日期：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;年&nbsp;&nbsp;&nbsp;&nbsp;月 &nbsp;&nbsp;&nbsp; 日<br><br><br>"+		
+			"部门经理签名：			<br><br>		"+			
+			"	Please sign &amp; confirm      Authorized Signature <br>"+
+				 "</div>";
+			},
+//			getLoopPrintHTML: function() {
+//				return "<div>" +
+//				"<div class='caption' >江门市富桥旅游用品厂有限公司</div>"+							
+//				"<div class='caption'>Purchasing Order 采购回笼单	</div>"+						
+//				"<div class='caption'>江门市潮连卢边工业区				</div>"+				
+//				"<div class='caption'>Tel: 0750-3720617     Fax: 0750-3722789</div>"+								
+//				"<div style='width:50%;float:left;'>供应商名称:<span class='dataField' fieldindex='data.supplierSupplierName' ></span></div>	<div style='width:50%;float:left;'>采购单号：<span class='dataField' fieldindex='data.number' ></span></div>"+		
+//				"<div style='width:50%;float:left;'>地址:<span class='dataField' fieldindex='data.supplierSupplierAddress'></span></div> <div style='width:50%;float:left;'>Revision:</span>	<span class='dataField' fieldindex='data.revision'></span>	</div>"+
+//				"<div style='width:50%;float:left;'>Tel：<span class='dataField' fieldindex='data.supplierSupplierPhoneNum'></span></div> <div style='width:30%;float:left;'>Fax:<span class='dataField' fieldindex='data.supplierSupplierFaxNum'></span></div><div style='width:20%;float:left;'>联络人:<span class='dataField' fieldindex='data.supplierSupplierLinkman'> </div>"+		
+//				"<div style='width:100%;float:left;'>送货地点：<span class='dataField' fieldindex='data.deliveryAddr'></span></div>"+								
+//				"<div style='width:25%;float:left;'>订购日期：<span class='dataField' fieldindex='data.bizDate' ></span></div><div style='width:25%;float:left;'>部门: <span class='dataField' fieldindex='data.buyerDepartmentName' ></span></div> <div style='width:20%;float:left;'>采购员:<span class='dataField' fieldindex='data.buyerSystemUserName'></span></div><div style='width:25%;float:left;'>页数：<span class='dataField' fieldindex='data.curPage'></span> of <span  class='dataField' fieldindex='data.totalPages'></span></div>"+		
+//				"<div style='width:50%;float:left;'>付款方式：<span class='dataField' fieldindex='data.payType' ></span></div><div style='width:50%;float:left;'>税金：<span class='dataField' fieldindex='data.tax' ></span>					</div>"+
+//				"<table  cellspacing='0' class='dataEntry' fieldindex='data.entry'>"+
+//				"<tr>"+
+//				"	<th bindfield='sort' type ='string' width='40px'>项次<br>Item</th>"+
+//				"	<th bindfield='materialMaterialName' width='200px'>描述<br>Description</th>"+
+//				"	<th bindfield='qualityReq' width='100px'>质量要求<br>Quality Request</th>"+
+//				"	<th bindfield='unitUnitName' width='30px'>单位<br>Unit</th>"+
+//				"	<th bindfield='volume' width='30%'>数量<br>Qty.</th>"+
+//				"	<th bindfield='price' width='30%'>单价<br>Unit Price</th>"+
+//				"	<th bindfield='entrysum' width='30%'>金额<br>Amount</th>"+
+//				"	<th bindfield='deliveryDate' width='30%'>交货日期<br>Delivery Date</th>"+
+//				"	<th bindfield='deliveryQty' width='30%'>交货数量<br>Delivery Qty.</th>"+
+//				"</tr>"+
+//				"</table>"+			 				
+//				"<br>"+
 //				"1.材质为ISO.R.301.ZuAI4Cu1，并且符合IKEA标准ISO-MAT-0010,含铅量不超过90mg/Kg。<br>"+								
 //				"2.表面要求符合IKEA要求:ISO-MAT-0066表面要求.								<br>"+
 //				"3.产品规格按双方确认的图纸和样板.		<br>"+
-//				"<p>								"+	
-//				"交易条款：		<br>				"+			
-//				"一、	交期				<br>				"+
-//				"	供方依本单之交期或本公司供应部以电话或书面调整之交期交货，若有延误，<br>"+								
-//				"	按一日扣除该批款              %  。								<br>"+
-//				"二、	质量								<br>"+
-//				"	1.依图纸要求。   2.进料检验：依本公司《原材料进仓检验规范》。<br>"+								
-//				"三、	不合格品处理								<br>"+
-//				"	1.经检验后之不合格品，应如三日后取回，逾时本公司不负责；<br>"+								
-//				"	2.如急用需选别，所产生之费用，依本公司之索赔标准计费。		<br>"+						
-//				"四、	附件						供方代表签名：                               		<br>"+
-//				"1.请确认后签名回传0750-3722789，TEL：07503720617。				<br>"+					
-//				"2.未尽之事宜，双方协商解决。							确认日期：2011 年&nbsp;&nbsp;&nbsp;&nbsp;月 &nbsp;&nbsp;&nbsp; 日<br>"+		
-//				"部门经理签名：			<br>		"+			
-//				"	Please sign &amp; confirm      Authorized Signature <br>"+	
+//				"<p>								"+
 //				 "</div>";
-			},
+//			},
+//			getTailPrintHTML: function() {
+//				return "<div>" +
+//				"<div class='caption' >江门市富桥旅游用品厂有限公司</div>"+							
+//				"<div class='caption'>Purchasing Order 采购回笼单	</div>"+						
+//				"<div class='caption'>江门市潮连卢边工业区				</div>"+				
+//				"<div class='caption'>Tel: 0750-3720617     Fax: 0750-3722789</div>"+								
+//				"<div style='width:50%;float:left;'>供应商名称:<span class='dataField' fieldindex='data.supplierSupplierName' ></span></div>	<div style='width:50%;float:left;'>采购单号：<span class='dataField' fieldindex='data.number' ></span></div>"+		
+//				"<div style='width:50%;float:left;'>地址:<span class='dataField' fieldindex='data.supplierSupplierAddress'></span></div> <div style='width:50%;float:left;'>Revision:</span>	<span class='dataField' fieldindex='data.revision'></span>	</div>"+
+//				"<div style='width:50%;float:left;'>Tel：<span class='dataField' fieldindex='data.supplierSupplierPhoneNum'></span></div> <div style='width:30%;float:left;'>Fax:<span class='dataField' fieldindex='data.supplierSupplierFaxNum'></span></div><div style='width:20%;float:left;'>联络人:<span class='dataField' fieldindex='data.supplierSupplierLinkman'> </div>"+		
+//				"<div style='width:100%;float:left;'>送货地点：<span class='dataField' fieldindex='data.deliveryAddr'></span></div>"+								
+//				"<div style='width:25%;float:left;'>订购日期：<span class='dataField' fieldindex='data.bizDate' ></span></div><div style='width:25%;float:left;'>部门: <span class='dataField' fieldindex='data.buyerDepartmentName' ></span></div> <div style='width:20%;float:left;'>采购员:<span class='dataField' fieldindex='data.buyerSystemUserName'></span></div><div style='width:25%;float:left;'>页数：<span class='dataField' fieldindex='data.curPage'></span> of <span  class='dataField' fieldindex='data.totalPages'></span></div>"+		
+//				"<div style='width:50%;float:left;'>付款方式：<span class='dataField' fieldindex='data.payType' ></span></div><div style='width:50%;float:left;'>税金：<span class='dataField' fieldindex='data.tax' ></span>					</div>"+
+//				"<table  cellspacing='0' class='dataEntry' fieldindex='data.entry'>"+
+//				"<tr>"+
+//				"	<th bindfield='sort' type ='string' width='40px'>项次<br>Item</th>"+
+//				"	<th bindfield='materialMaterialName' width='200px'>描述<br>Description</th>"+
+//				"	<th bindfield='qualityReq' width='100px'>质量要求<br>Quality Request</th>"+
+//				"	<th bindfield='unitUnitName' width='30px'>单位<br>Unit</th>"+
+//				"	<th bindfield='volume' width='30%'>数量<br>Qty.</th>"+
+//				"	<th bindfield='price' width='30%'>单价<br>Unit Price</th>"+
+//				"	<th bindfield='entrysum' width='30%'>金额<br>Amount</th>"+
+//				"	<th bindfield='deliveryDate' width='30%'>交货日期<br>Delivery Date</th>"+
+//				"	<th bindfield='deliveryQty' width='30%'>交货数量<br>Delivery Qty.</th>"+
+//				"</tr>"+
+//				"<tr>"+
+//				"   <td></td>"+
+//				"   <td></td>"+
+//				"   <td></td>"+
+//				"   <td></td>"+
+//				"   <td></td>"+
+//				"   <td>RMB</td>"+
+//				"   <td><span class='dataField' fieldindex='data.totalsum' ></span></td>"+
+//				"   <td></td>"+
+//				"   <td></td>"+
+//				"</tr>"+
+//				"</table>"+			 				
+//				"<br>"+
+//				"<div class='dataField' fieldindex='data.note' ></div>";
+////				"1.材质为ISO.R.301.ZuAI4Cu1，并且符合IKEA标准ISO-MAT-0010,含铅量不超过90mg/Kg。<br>"+								
+////				"2.表面要求符合IKEA要求:ISO-MAT-0066表面要求.								<br>"+
+////				"3.产品规格按双方确认的图纸和样板.		<br>"+
+////				"<p>								"+	
+////				"交易条款：		<br>				"+			
+////				"一、	交期				<br>				"+
+////				"	供方依本单之交期或本公司供应部以电话或书面调整之交期交货，若有延误，<br>"+								
+////				"	按一日扣除该批款              %  。								<br>"+
+////				"二、	质量								<br>"+
+////				"	1.依图纸要求。   2.进料检验：依本公司《原材料进仓检验规范》。<br>"+								
+////				"三、	不合格品处理								<br>"+
+////				"	1.经检验后之不合格品，应如三日后取回，逾时本公司不负责；<br>"+								
+////				"	2.如急用需选别，所产生之费用，依本公司之索赔标准计费。		<br>"+						
+////				"四、	附件						供方代表签名：                               		<br>"+
+////				"1.请确认后签名回传0750-3722789，TEL：07503720617。				<br>"+					
+////				"2.未尽之事宜，双方协商解决。							确认日期：2011 年&nbsp;&nbsp;&nbsp;&nbsp;月 &nbsp;&nbsp;&nbsp; 日<br>"+		
+////				"部门经理签名：			<br>		"+			
+////				"	Please sign &amp; confirm      Authorized Signature <br>"+	
+////				 "</div>";
+//			},
 			
 			getPrintCfg : function() {
 				var cfg = new PrintConfig();
-				cfg.loopCount = 14;
+				cfg.loopCount = 20;
 				cfg.mainBodyDiv = this.getMainPrintHTML();
 				cfg.loopBodyDiv = this.getLoopPrintHTML();
 				cfg.tailDiv = this.getTailPrintHTML();

@@ -34,15 +34,17 @@ public class PrintEvents {
 		config.registerJsonValueProcessor(java.sql.Timestamp.class,new DateJsonProcessor("yyyy-MM-dd"));
 
 		//表头信息
-		GenericValue headValue=delegator.findByPrimaryKey(headView, UtilMisc.toMap("id", headId));
+		List<GenericValue> headValueList=delegator.findByAnd(headView, UtilMisc.toMap("id", headId));
 		JSONObject result=JSONObject.fromObject("{success:false}");
 		JSONObject headJson=new JSONObject();
-		if(headValue!=null){
+		if(headValueList!=null&&headValueList.size()>0){
+			GenericValue headValue=headValueList.get(0);
 			result.element("success", true);
 			headJson=JSONObject.fromObject(headValue.getAllFields(),config);
 		}else{
 			throw new Exception("查找结果为空");
 		}
+		
 		//添加分录数据
 		List<GenericValue> entryList=delegator.findByAnd(entryView, UtilMisc.toMap("parentId", headId));
 		if(entryList!=null&&entryList.size()>0){
