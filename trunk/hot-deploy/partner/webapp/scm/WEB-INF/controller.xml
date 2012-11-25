@@ -716,6 +716,13 @@
 		<event type="java" path="org.ofbiz.partner.scm.pricemgr.Utils" invoke="removeDataByParentId" />
 		<response name="success" type="none" />
 	</request-map>
+	<!-- 获取系统参数值-->
+	<request-map uri="getParamtmers">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ParamtmersGetterEvents" invoke="getParamtmers" />
+		<response name="success" type="none" />
+	</request-map>
+	
 	
 	<!-- 打印 -->
 	<request-map uri="getPrintData">
