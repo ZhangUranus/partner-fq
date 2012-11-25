@@ -145,32 +145,6 @@
 		</view-link>
 	</view-entity>
 	
-	<view-entity entity-name="ProductOutNotificationDetailView" package-name="org.ofbiz.scm.pricemgr" title="ProductOutNotificationDetailView Entity">
-		<member-entity entity-alias="ProductOutNotificationViewV" entity-name="ProductOutNotificationView"></member-entity>
-		<member-entity entity-alias="ProductOutVerifyEntryV" entity-name="ProductOutVerifyEntry"></member-entity>
-		<member-entity entity-alias="TMaterialV" entity-name="TMaterial"></member-entity>
-		<member-entity entity-alias="UnitV" entity-name="Unit"></member-entity>
-		<alias name="number" entity-alias="ProductOutNotificationViewV" field="number"></alias>
-		<alias name="goodNumber" entity-alias="ProductOutNotificationViewV" field="goodNumber"></alias>
-		<alias name="materialName" entity-alias="TMaterialV" field="name"></alias>
-		<alias name="materialModel" entity-alias="TMaterialV" field="model"></alias>
-		<alias name="unitName" entity-alias="UnitV" field="name"></alias>
-		<alias name="orderQty" entity-alias="ProductOutVerifyEntryV" field="orderQty"></alias>
-		<alias name="sentQty" entity-alias="ProductOutVerifyEntryV" field="sentQty"></alias>
-		<alias name="isFinished" entity-alias="ProductOutVerifyEntryV" field="isFinished"></alias>
-		<view-link entity-alias="ProductOutNotificationViewV" rel-entity-alias="ProductOutVerifyEntryV" rel-optional="true">
-			<key-map field-name="deliverNumber" rel-field-name="deliverNumber" />
-			<key-map field-name="materialId" rel-field-name="parentMaterialId" />
-		</view-link>
-		<view-link entity-alias="ProductOutVerifyEntryV" rel-entity-alias="TMaterialV" rel-optional="true">
-			<key-map field-name="materialId" rel-field-name="id" />
-		</view-link>
-		<view-link entity-alias="TMaterialV" rel-entity-alias="UnitV" rel-optional="true">
-			<key-map field-name="defaultUnitId" rel-field-name="id" />
-		</view-link>
-	</view-entity>
-	
-	
 	<!-- 导出视图 -->
 	<view-entity entity-name="ProductOutNotificationExportView" package-name="org.ofbiz.scm.ProductOutNotification" title="ProductOutNotificationView  Entity">
 		<member-entity entity-alias="productOutNotificationV" entity-name="ProductOutNotification"></member-entity>
