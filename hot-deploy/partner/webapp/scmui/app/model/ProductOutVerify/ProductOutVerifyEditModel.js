@@ -45,6 +45,9 @@ Ext.define('SCM.model.ProductOutVerify.ProductOutVerifyEditModel', {
 						name : 'sumBoardVolume',
 						type : 'float'
 					}, {
+						name : 'packagedVolume',
+						type : 'float'
+					}, {
 						name : 'paperBoxVolume',
 						type : 'float'
 					}, {
