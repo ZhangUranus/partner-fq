@@ -16,6 +16,7 @@
 		<field name="deliverNumber" type="value"></field><!-- 出货单号 -->
 		<field name="materialId" type="id-long"></field><!-- 产品编号 -->
 		<field name="sumBoardVolume" type="fixed-point"></field><!-- 总托盘数量 -->
+		<field name="packagedVolume" type="fixed-point"></field><!-- 已打版总数量 -->
 		<field name="paperBoxVolume" type="fixed-point"></field><!-- 纸箱数量 -->
 		<field name="status" type="int"></field>
 		<field name="isFinished" type="indicator" /><!-- 是否完成 -->
