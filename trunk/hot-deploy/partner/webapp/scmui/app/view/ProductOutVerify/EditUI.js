@@ -71,6 +71,14 @@ Ext.define('SCM.view.ProductOutVerify.EditUI', {
 																hideTrigger : true,
 																fieldLabel : '总托盘数量',
 																name : 'sumBoardVolume',
+																readOnly : true,
+																margin : 5
+															}, {
+																xtype : 'numberfield',
+																hideTrigger : true,
+																fieldLabel : '已打版总数量',
+																name : 'packagedVolume',
+																readOnly : true,
 																margin : 5
 															}, {
 																xtype : 'numberfield',
