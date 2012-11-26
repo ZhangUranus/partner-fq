@@ -2,8 +2,10 @@ package org.ofbiz.partner.scm.stock;
 
 import java.io.File;
 import java.io.OutputStream;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +19,7 @@ import net.sf.json.JSONObject;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericValue;
@@ -28,6 +31,8 @@ import org.ofbiz.entity.transaction.TransactionUtil;
 import org.ofbiz.partner.scm.common.BillBaseEvent;
 import org.ofbiz.partner.scm.common.CommonEvents;
 import org.ofbiz.partner.scm.common.MultiEntryCRUDEvent;
+import org.ofbiz.partner.scm.pojo.OrderPojo;
+import org.ofbiz.partner.scm.pricemgr.Utils;
 
 /**
  * 出货对数单业务事件类
@@ -124,6 +129,22 @@ public class ProductOutVerifyEvents {
 		String bizEndDate=request.getParameter("bizEndDate");
 		String filterDeliverNum=request.getParameter("deliverNum");
 		String searchMaterialId=request.getParameter("searchMaterialId");
+		String status=request.getParameter("status");
+		StringBuffer orderStr = new StringBuffer();
+		if(request.getParameter("sort")!=null){
+			ObjectMapper objMapper = new ObjectMapper();//新建局部变量
+			JSONArray array = JSONArray.fromObject(request.getParameter("sort").toString());
+			for(int i = 0; i < array.size(); i++) {
+				if(i != 0){
+					orderStr.append(",");
+				} else {
+					orderStr.append(" ORDER BY ");
+				}
+				OrderPojo order = objMapper.readValue(array.getString(i), OrderPojo.class); 
+				String field = order.getProperty() + " " + order.getDirection();
+				orderStr.append(field);		//增加排序字段
+			}
+		}
 		
 		//构建汇总单号查询语句
 		StringBuffer sql=new StringBuffer();
@@ -136,6 +157,7 @@ public class ProductOutVerifyEvents {
 		sql.append("notification.sumGrossWeight sumGrossWeight, ");
 		sql.append("notification.sumGrossSize sumGrossSize, ");
 		sql.append("verify.sum_board_volume sumBoardVolume, ");
+		sql.append("verify.packaged_volume packagedVolume, ");
 		sql.append("verify.paper_box_volume paperBoxVolume, ");
 		sql.append("IFNULL(verify.status,-1) status, ");
 		sql.append("IFNULL(verify.is_finished,'N') isFinished ");
@@ -171,6 +193,13 @@ public class ProductOutVerifyEvents {
 		}
 		sql.append(" ) notification left outer join product_out_verify_head  verify on (notification.deliverNumber=verify.deliver_number and notification.materialId=verify.material_id) ");
 		sql.append("left outer join t_material  material on notification.materialId=material.id");
+		
+		//过滤物料
+		if(status!=null&&status.trim().length()>0){
+			sql.append(" where verify.status='").append(status).append("'");
+		}
+		
+		sql.append(orderStr.toString());
 		
 		Connection conn = ConnectionFactory.getConnection(org.ofbiz.partner.scm.common.Utils.getConnectionHelperName());
 		
@@ -222,7 +251,6 @@ public class ProductOutVerifyEvents {
 				throw new Exception("单据已经提交，不能修改！");
 			}
 			v.set("status", Integer.valueOf(0));
-			delegator.createOrStore(v);
 			
 			//新增分录
 		    for(Object o:newEntryRecords){
@@ -247,7 +275,20 @@ public class ProductOutVerifyEvents {
 		    	MultiEntryCRUDEvent.setGenValFromJsonObj(jo, ev);
 				delegator.removeValue(ev);
 		    }
-			
+		    
+		    // 返填主单据的总托盘数、已打板总数量
+		    List<GenericValue> entryList = delegator.findByAnd(entryEntityName, "deliverNumber", v.getString("deliverNumber"), "parentMaterialId",v.getString("materialId") );
+		    BigDecimal sumBoardVolume = BigDecimal.ZERO;
+		    BigDecimal packagedVolume = BigDecimal.ZERO;
+		    for(GenericValue entryValue : entryList){
+		    	BigDecimal orderQty = entryValue.getBigDecimal("orderQty");
+		    	sumBoardVolume = sumBoardVolume.add(orderQty);   //总托盘数
+		    	packagedVolume = packagedVolume.add(orderQty.multiply(new BigDecimal(Utils.getValueByMaterialId(entryValue.getString("materialId")).getInteger("boardCount")))); //已打板总数量
+		    }
+		    v.set("sumBoardVolume", sumBoardVolume);
+		    v.set("packagedVolume", packagedVolume);
+
+			delegator.createOrStore(v);
 			TransactionUtil.commit();
 		} catch (Exception e) {
 			TransactionUtil.rollback();
