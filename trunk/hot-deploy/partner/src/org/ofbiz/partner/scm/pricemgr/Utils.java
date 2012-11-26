@@ -466,6 +466,22 @@ public class Utils {
 	}
 	
 	/**
+	 * 根据打板方式获取ProductMap的记录
+	 * @param materialId
+	 * @return
+	 * @throws Exception
+	 */
+	public static GenericValue getValueByMaterialId(String materialId) throws Exception{
+		Delegator delegator = DelegatorFactory.getDelegator("default");
+		List<GenericValue> entryList = delegator.findByAnd("ProductMap", "materialId", materialId);
+		if(entryList.size() > 0 ){
+			return entryList.get(0);
+		} else {
+			throw new Exception("未找到打板方式对应的产品编码，请检查“产品资料表”！");
+		}
+	}
+	
+	/**
 	 * 清理加工件耗料列表
 	 * @param request
 	 * @param response
