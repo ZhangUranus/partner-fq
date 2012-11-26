@@ -25,7 +25,7 @@ Ext.define('SCM.model.PurchaseBill.PurchaseBillEditEntryModel', {
 						name : 'materialMaterialModel',
 						type : 'string'
 					}, {
-						name : 'quality',
+						name : 'materialMaterialQuality',
 						type : 'string'
 					},{
 						name : 'volume',
@@ -63,9 +63,6 @@ Ext.define('SCM.model.PurchaseBill.PurchaseBillEditEntryModel', {
 						convert : function(value, record) {
 							return new Date(value);
 						}
-					}, {
-						name : 'deliveryQty',
-						type : 'float'
 					}],
 			idgen : 'uuid', // 使用uuid生成记录id 每个模型必须要有id字段
 			proxy : {

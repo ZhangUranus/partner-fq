@@ -277,17 +277,8 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 																text : '规格型号'
 															}, {
 																xtype : 'gridcolumn',
-																dataIndex : 'quality',
+																dataIndex : 'materialMaterialQuality',
 																text : '质量要求'
-															}, {
-																xtype : 'numbercolumn',
-																editor : {
-																	xtype : 'numberfield',
-																	allowBlank : false,
-																	hideTrigger : true
-																},
-																dataIndex : 'volume',
-																text : '数量'
 															}, {
 																xtype : 'combocolumn',
 																dataIndex : 'unitUnitId',
@@ -334,36 +325,15 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 																	allowBlank : false,
 																	hideTrigger : true
 																},
-																dataIndex : 'deliveryQty',
+																dataIndex : 'volume',
 																text : '交货数量'
 															}, {
-																xtype : 'combocolumn',
+																xtype : 'gridcolumn',
 																dataIndex : 'warehouseId',
-																text : '仓库',
-																gridId : 'PurchaseBill-edit-grid',
 																editor : {
-																	xtype : 'combogrid',
-																	valueField : 'id',
-																	displayField : 'name',
-																	initStore : Ext.data.StoreManager.lookup('WHComboInitStore'),
-																	store : Ext.data.StoreManager.lookup('WHComboStore'),
-																	matchFieldWidth : false,
-																	listConfig : {
-																		width : SCM.MaxSize.COMBOGRID_WIDTH,
-																		height : SCM.MaxSize.COMBOGRID_HEIGHT,
-																		columns : [{
-																					header : '编码',
-																					dataIndex : 'number',
-																					width : 100,
-																					hideable : false
-																				}, {
-																					header : '名称',
-																					dataIndex : 'name',
-																					width : 80,
-																					hideable : false
-																				}]
-																	}
-																}
+																	xtype : 'textfield'
+																},
+																text : '仓库'
 															}],
 													viewConfig : {
 

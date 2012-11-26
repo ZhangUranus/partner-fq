@@ -139,12 +139,8 @@ Ext.define('SCM.view.PurchaseBill.ListUI', {
 													text : '规格型号'
 												}, {
 													xtype : 'gridcolumn',
-													dataIndex : 'quality',
+													dataIndex : 'materialMaterialQuality',
 													text : '质量要求'
-												},{
-													xtype : 'numbercolumn',
-													dataIndex : 'volume',
-													text : '数量'
 												}, {
 													xtype : 'gridcolumn',
 													dataIndex : 'unitUnitName',
@@ -165,11 +161,11 @@ Ext.define('SCM.view.PurchaseBill.ListUI', {
 													text : '交货日期'
 												}, {
 													xtype : 'numbercolumn',
-													dataIndex : 'deliveryQty',
+													dataIndex : 'volume',
 													text : '交货数量'
 												},{
 													xtype : 'gridcolumn',
-													dataIndex : 'warehouseName',
+													dataIndex : 'warehouseId',
 													text : '仓库'
 												}]
 									}]
