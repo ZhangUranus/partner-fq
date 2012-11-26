@@ -146,23 +146,22 @@
 		<member-entity entity-alias="PurchaseBillEntryV" entity-name="PurchaseBillEntry"></member-entity>
 		<member-entity entity-alias="materialMaterialV" entity-name="Material"></member-entity>
 		<member-entity entity-alias="unitUnitV" entity-name="Unit"></member-entity>
-		<member-entity entity-alias="warehouseV" entity-name="Warehouse"></member-entity>
+		
 		<alias-all entity-alias="PurchaseBillEntryV"></alias-all>
 		<alias name="materialMaterialName" entity-alias="materialMaterialV" field="name" ></alias>
 		<alias name="materialMaterialNumber" entity-alias="materialMaterialV" field="number"></alias>
+		<alias name="materialMaterialModel" entity-alias="materialMaterialV" field="model"></alias>
 		<alias name="materialMaterialQuality" entity-alias="materialMaterialV" field="quality"></alias>
-		<alias name="materialMtarialDescription" entity-alias="materialMaterialV" field="quality"></alias>
+		<alias name="materialMtarialDescription" entity-alias="materialMaterialV" field="description"></alias>
 		<alias name="unitUnitName" entity-alias="unitUnitV" field="name"></alias>
-		<alias name="warehouseName" entity-alias="warehouseV" field="name"></alias>
+		
 		<view-link entity-alias="PurchaseBillEntryV" rel-entity-alias="materialMaterialV" rel-optional="true">
 			<key-map field-name="materialMaterialId" rel-field-name="id" />
 		</view-link>
 		<view-link entity-alias="PurchaseBillEntryV" rel-entity-alias="unitUnitV" rel-optional="true">
 			<key-map field-name="unitUnitId" rel-field-name="id" />
 		</view-link>
-		<view-link entity-alias="PurchaseBillEntryV" rel-entity-alias="warehouseV" rel-optional="true">
-			<key-map field-name="warehouseId" rel-field-name="id" />
-		</view-link>
+		
 		<entity-condition> <order-by field-name="sort ASC" /> </entity-condition>
 	</view-entity>
 </entitymodel>
