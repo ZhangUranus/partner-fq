@@ -258,7 +258,15 @@ Ext.define('SCM.controller.Main', {
 							storeId : 'PONDetailStore'
 						});
 				
-				
+				/* 初始化单号的STORE */
+				Ext.create('DeliverNumberStore', {
+							pageSize : SCM.comboPageSize,
+							storeId : 'DNSComboStore' //下拉框－－选择时使用
+						}).load();
+				Ext.create('DeliverNumberStore', {
+							pageSize : SCM.unpageSize,
+							storeId : 'DNSComboInitStore' //下拉框－－展现时使用
+						}).load();
 			},
 
 			initTreePanel : function() {//初始化功能模块
