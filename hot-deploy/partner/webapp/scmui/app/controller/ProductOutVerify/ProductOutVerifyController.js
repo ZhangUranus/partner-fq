@@ -77,6 +77,7 @@ Ext.define('SCM.controller.ProductOutVerify.ProductOutVerifyController', {
 				this.searchEndDate = this.listContainer.down('datefield[name=searchEndDate]');
 				this.searchDeliverNum = this.listContainer.down('combogrid[name=deliverNumber]');
 				this.searchMaterialId = this.listContainer.down('combogrid[name=searchMaterialId]');
+				this.searchStatus = this.listContainer.down('combobox[name=status]');
 				
 				this.MaterialStore = Ext.data.StoreManager.lookup('MAllStore');
 			},
@@ -89,18 +90,20 @@ Ext.define('SCM.controller.ProductOutVerify.ProductOutVerifyController', {
 				this.listPanel.store.getProxy().extraParams.bizDate=null;
 				this.listPanel.store.getProxy().extraParams.deliverNum=null;
 				
-				
 				if(this.searchBeginDate.getRawValue()){
 					this.listPanel.store.getProxy().extraParams.bizBeginDate = this.searchBeginDate.getRawValue();
 				}
 				if(this.searchEndDate.getRawValue()){
 					this.listPanel.store.getProxy().extraParams.bizEndDate = this.searchEndDate.getRawValue();
 				}
-				if(this.searchDeliverNum.getValue()){
+				if(!Ext.isEmpty(this.searchDeliverNum.getValue())){
 					this.listPanel.store.getProxy().extraParams.deliverNum = this.searchDeliverNum.getValue();
 				}
-				if(this.searchMaterialId.getValue()){
+				if(!Ext.isEmpty(this.searchMaterialId.getValue())){
 					this.listPanel.store.getProxy().extraParams.searchMaterialId = this.searchMaterialId.getValue();
+				}
+				if ((!Ext.isEmpty(this.searchStatus.getValue())) || this.searchStatus.getValue() == 0) {
+					this.listPanel.store.getProxy().extraParams.status = this.searchStatus.getValue();
 				}
 				
 				this.listPanel.store.load();
