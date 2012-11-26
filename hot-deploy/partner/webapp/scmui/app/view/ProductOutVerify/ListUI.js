@@ -34,7 +34,7 @@ Ext.define('SCM.view.ProductOutVerify.ListUI', {
 													iconCls : 'system-export',
 													action : 'export'
 												}]
-									},{
+									}, {
 										xtype : 'toolbar',// 工具栏
 										region : 'north',
 										border : '0 1 1 1',
@@ -48,7 +48,7 @@ Ext.define('SCM.view.ProductOutVerify.ListUI', {
 													margin : '0 0 0 0',
 													value : startDay,
 													editable : false
-												},{
+												}, {
 													xtype : 'datefield',
 													name : 'searchEndDate',
 													format : 'Y-m-d',
@@ -58,7 +58,17 @@ Ext.define('SCM.view.ProductOutVerify.ListUI', {
 													labelSeparator : '',
 													value : today,
 													editable : false
-												},  {
+												}, {
+													xtype : 'combobox',
+													name : 'status',
+													width : 145,
+													labelWidth : 60,
+													fieldLabel : '单据状态',
+													valueField : 'id',
+													displayField : 'name',
+													store : SCM.store.basiccode.billStatusStore,
+													emptyText : '所有状态'
+												}, {
 													xtype : 'combogrid',
 													name : 'deliverNumber',
 													width : 150,
@@ -66,7 +76,7 @@ Ext.define('SCM.view.ProductOutVerify.ListUI', {
 													fieldLabel : '单号',
 													valueField : 'number',
 													displayField : 'number',
-													store : Ext.create('DeliverNumberStore'),
+													store : Ext.data.StoreManager.lookup('DNSComboStore'),
 													matchFieldWidth : false,
 													emptyText : '所有单号',
 													listConfig : {
@@ -79,7 +89,7 @@ Ext.define('SCM.view.ProductOutVerify.ListUI', {
 																	hideable : false
 																}]
 													}
-												},{
+												}, {
 													xtype : 'combogrid',
 													name : 'searchMaterialId',
 													width : 170,
@@ -168,6 +178,11 @@ Ext.define('SCM.view.ProductOutVerify.ListUI', {
 													dataIndex : 'sumBoardVolume',
 													width : 90,
 													text : '总托盘数量'
+												}, {
+													xtype : 'gridcolumn',
+													dataIndex : 'packagedVolume',
+													width : 90,
+													text : '已打版总数量'
 												}, {
 													xtype : 'gridcolumn',
 													dataIndex : 'paperBoxVolume',
