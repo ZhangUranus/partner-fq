@@ -292,7 +292,16 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 																	store : Ext.data.StoreManager.lookup('UComboStore'),
 																	readOnly : true
 																}
-															}, {
+															},{
+																xtype : 'numbercolumn',
+																editor : {
+																	xtype : 'numberfield',
+																	allowBlank : false,
+																	hideTrigger : true
+																},
+																dataIndex : 'volume',
+																text : '交货数量'
+															},  {
 																xtype : 'numbercolumn',
 																editor : {
 																	xtype : 'numberfield',
@@ -319,21 +328,40 @@ Ext.define('SCM.view.PurchaseBill.EditUI', {
 																dataIndex : 'deliveryDate',
 																text : '交货日期'
 															}, {
-																xtype : 'numbercolumn',
+																xtype : 'combocolumn',
+																dataIndex : 'warehouseId',
+																text : '仓库',
+																gridId : 'PurchaseBill-edit-grid',
 																editor : {
-																	xtype : 'numberfield',
-																	allowBlank : false,
-																	hideTrigger : true
-																},
-																dataIndex : 'volume',
-																text : '交货数量'
+																	xtype : 'combogrid',
+																	valueField : 'id',
+																	displayField : 'name',
+																	initStore : Ext.data.StoreManager.lookup('WHComboInitStore'),
+																	store : Ext.data.StoreManager.lookup('WHComboStore'),
+																	matchFieldWidth : false,
+																	listConfig : {
+																		width : SCM.MaxSize.COMBOGRID_WIDTH,
+																		height : SCM.MaxSize.COMBOGRID_HEIGHT,
+																		columns : [{
+																					header : '编码',
+																					dataIndex : 'number',
+																					width : 100,
+																					hideable : false
+																				}, {
+																					header : '名称',
+																					dataIndex : 'name',
+																					width : 80,
+																					hideable : false
+																				}]
+																	}
+																}
 															}, {
 																xtype : 'gridcolumn',
-																dataIndex : 'warehouseId',
+																dataIndex : 'address',
 																editor : {
 																	xtype : 'textfield'
 																},
-																text : '仓库'
+																text : '地点'
 															}],
 													viewConfig : {
 

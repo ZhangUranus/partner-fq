@@ -34,6 +34,12 @@
 		<field name="bizDate" type="date-time"></field><!-- 日期 -->
 		<field name="barcode1" type="value"></field><!-- 条码 -->
 		<field name="barcode2" type="value"></field><!-- 流水码 -->
+		
+		<field name="ikeaNumber" type="value"></field><!-- 宜家编码 -->
+		<field name="week" type="value"></field><!-- 生产周 -->
+		<field name="materialId" type="id-long"></field><!-- 物料id -->
+		<field name="warehouseId" type="id-long"></field><!-- 仓库id -->
+		<field name="perBoardQty" type="numeric"></field><!-- 板数量 -->
 		<prim-key field="id" />
 	</entity>
 	<!-- 产品批量出仓入仓临时表（完成后删除） -->
