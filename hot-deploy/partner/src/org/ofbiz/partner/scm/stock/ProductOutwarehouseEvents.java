@@ -92,7 +92,7 @@ public class ProductOutwarehouseEvents {
 						}
 						
 						// 确定条码、序列号可以出仓
-						ProductBarcodeBoxMgr.getInstance().update(barcode1, barcode2, true);
+						ProductBarcodeBoxMgr.getInstance().update(null,null,null,null,barcode1, barcode2,null, true);
 						
 						// 更新周汇总表
 						WeeklyStockMgr.getInstance().updateStock(materialId, bizDate, type, wsVolume, false);
@@ -183,7 +183,8 @@ public class ProductOutwarehouseEvents {
 						}
 						
 						// 确定条码、序列号可以进仓
-						ProductBarcodeBoxMgr.getInstance().update(barcode1, barcode2, false);
+						BarCode barcode=new BarCode(barcode1,barcode2);
+						ProductBarcodeBoxMgr.getInstance().update(barcode.getCodeForIkea(),barcode.getProductWeek(),materialId,v.getString("warehouseWarehouseId"),barcode1, barcode2,new BigDecimal(qantity), false);
 						
 						// 更新周汇总表
 						WeeklyStockMgr.getInstance().updateStock(materialId, bizDate, type, wsVolume, true);
@@ -331,7 +332,7 @@ public class ProductOutwarehouseEvents {
 
 
 			// 确定条码、序列号可以出仓
-			ProductBarcodeBoxMgr.getInstance().update(barcode1, barcode2,true);
+			ProductBarcodeBoxMgr.getInstance().update(null,null,null,null,barcode1, barcode2,null,true);
 
 			// 创建分录
 			delegator.create(entryValue);
@@ -420,7 +421,8 @@ public class ProductOutwarehouseEvents {
 			barcode2 = entry.getString("barcode2");
 
 			// 1.2确定条码、序列号可以进仓
-			ProductBarcodeBoxMgr.getInstance().update(barcode1, barcode2,false);
+			BarCode barcode=new BarCode(barcode1,barcode2);
+			ProductBarcodeBoxMgr.getInstance().update(barcode.getCodeForIkea(),barcode.getProductWeek(),entry.getString("materialMaterialId"),entry.getString("warehouseWarehouseId"),barcode1, barcode2,new BigDecimal(barcode.getQuantity()), false);
 
 			/* 2 获取单据分录条目 */
 			List<GenericValue> entryList = delegator.findByAnd("ProductOutwarehouseEntry", UtilMisc.toMap("barcode1", barcode1, "barcode2", barcode2));

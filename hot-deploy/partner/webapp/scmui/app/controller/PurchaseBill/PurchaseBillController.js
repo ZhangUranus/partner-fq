@@ -391,11 +391,11 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 				"		<th bindfield='materialMaterialQuality' width=80px>质量要求</th>" +
 				"		<th bindfield='materialMaterialNumber' width=90px>代码</th>" +
 				"		<th bindfield='unitUnitName' width=30px>单位</th>" +
+				"		<th bindfield='volume' width=70px>交货数量</th>" +
 				"		<th bindfield='price' width=70px>单价</th>" +
 				"		<th bindfield='entrysum' width=70px>金额</th>" +
 				"		<th bindfield='deliveryDate' width=70px>交货日期</th>" +
-				"		<th bindfield='volume' width=70px>交货数量</th>" +
-				"		<th bindfield='warehouseId' width=70px>仓库地点</th>" +
+				"		<th bindfield='address' width=70px>地点</th>" +
 				"	</tr>" +
 				"<tr>"+
 				"   <td></td>"+
@@ -422,9 +422,9 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 			"三、	不合格品处理								<br>"+
 			"	1.经检验后之不合格品，应如三日后取回，逾时本公司不负责；<br>"+								
 			"	2.如急用需选别，所产生之费用，依本公司之索赔标准计费。		<br>"+						
-			"四、	附件	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;供方代表签名：                               		<br>"+
+			"四、	附件	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;供方代表签名：                               		<br>"+
 			"1.请确认后签名回传0750-3722789，TEL：07503720617。				<br>"+					
-			"2.未尽之事宜，双方协商解决。	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;确认日期：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;年&nbsp;&nbsp;&nbsp;&nbsp;月 &nbsp;&nbsp;&nbsp; 日<br><br><br>"+		
+			"2.未尽之事宜，双方协商解决。	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;确认日期：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;年&nbsp;&nbsp;&nbsp;&nbsp;月 &nbsp;&nbsp;&nbsp; 日<br><br><br>"+		
 			"部门经理签名：			<br><br>		"+			
 			"	Please sign &amp; confirm      Authorized Signature <br>"+
 				 "</div>";

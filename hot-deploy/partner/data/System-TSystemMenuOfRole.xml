@@ -143,6 +143,8 @@
 	<TSystemMenuOfRole id='83c3234b-e981-4aed-8eff-cb30c802d318' menuId='productReport' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='V' />
 	<TSystemMenuOfRole id='74d9553d-9a9a-4487-864e-450483e9ee57' menuId='productSendOweReport' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='V' />
 	<TSystemMenuOfRole id='23e492f6-b089-4b39-8849-c6cc33c80c65' menuId='productStaticsReport' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='V' />
+	<TSystemMenuOfRole id='74d9553d-9a3a-4487-844e-450423e9ed57' menuId='barcodeInReport' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='V' />
+	<TSystemMenuOfRole id='74d9553d-9b9a-4487-854e-450433e9ec57' menuId='barcodeOutReport' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='V' />
 	<TSystemMenuOfRole id='885f38b6-f564-42c1-9dc3-c1415bc0d455' menuId='stockAdjustManagement' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='V' />
 	<TSystemMenuOfRole id='e324eaa2-9638-4618-993b-4af08f936e66' menuId='stockAdjust' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='V' />
 	<TSystemMenuOfRole id='fab6cac5-62b4-4fd3-9d95-b4bdfd05f940' menuId='stockAdjust' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='E' />

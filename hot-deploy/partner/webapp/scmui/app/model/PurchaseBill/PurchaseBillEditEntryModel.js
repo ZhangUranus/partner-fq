@@ -50,7 +50,10 @@ Ext.define('SCM.model.PurchaseBill.PurchaseBillEditEntryModel', {
 						name : 'warehouseName',
 						type : 'string',
 						persist : false
-					}, {
+					},{
+						name : 'address',
+						type : 'string'
+					},  {
 						name : 'entrysum',
 						type : 'float'
 					}, {

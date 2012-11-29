@@ -671,6 +671,20 @@
 		<response name="success" type="none" />
 	</request-map>
 	
+	<!-- 在库条码查询报表 -->
+	<request-map uri="queryBarcodeInwarehouseReport">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.rpt.BarcodeQryReportEvents" invoke="queryInBarcode" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 已出仓条码查询报表 -->
+	<request-map uri="queryBarcodeOutwarehouseReport">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.rpt.BarcodeQryReportEvents" invoke="queryOutBarcode" />
+		<response name="success" type="none" />
+	</request-map>
+	
+	
 	<!-- 黑坯件材料耗用表 -->
 	<request-map uri="querySemiProductCostReport">
 		<security https="false" auth="false" />
