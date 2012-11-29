@@ -7,7 +7,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,6 +27,8 @@ import org.ofbiz.partner.scm.common.BillBaseEvent;
 import org.ofbiz.partner.scm.common.CommonEvents;
 import org.ofbiz.partner.scm.common.DatePeriod;
 import org.ofbiz.partner.scm.dao.TMaterial;
+import org.ofbiz.partner.scm.pojo.VolumeOfProduct;
+import org.ofbiz.partner.scm.pojo.WorkshopStock;
 
 /**
  * 
@@ -580,4 +584,49 @@ public class Utils {
 		return "success";
 	}
 	
+	/**
+	 * 根据耗料列表，检查车间库存是否足够
+	 * @author Jeff 2012-11-28
+	 * @param String 耗料编码
+	 * @param BigDecimal 入库数量
+	 */
+	public static List<WorkshopStock> checkWorkshopStock(List<VolumeOfProduct> productList) throws Exception{
+		List<VolumeOfProduct> newProductList = reBuildProductList(productList);
+		List<WorkshopStock> workshopStockList = new ArrayList<WorkshopStock>();
+		for(VolumeOfProduct vp : newProductList){
+			TMaterial tmaterial = new TMaterial(vp.getMaterialId());
+			ArrayList<BigDecimal> volumeArr = WorkshopPriceMgr.getInstance().getVolumeOfMaterial(vp.getWorkshopId(), vp.getMaterialId());
+			boolean isEnough = false;
+			
+			// 只返回不足够的物料
+			if(vp.getVolume().compareTo(volumeArr.get(0)) != 1){
+				isEnough = true;
+			} else {
+				WorkshopStock workshop = new WorkshopStock(vp.getWorkshopId(),tmaterial.getNumber(),vp.getMaterialId(),volumeArr.get(0),vp.getVolume(),isEnough);
+				workshopStockList.add(workshop);
+			}
+		}
+		return workshopStockList;
+	}
+	
+	/**
+	 * 合并重复项
+	 * @param productList
+	 * @return
+	 */
+	private static List<VolumeOfProduct> reBuildProductList(List<VolumeOfProduct> productList) {
+		List<VolumeOfProduct> rsList = new ArrayList<VolumeOfProduct>();
+		Map<String, VolumeOfProduct> productMap = new HashMap<String, VolumeOfProduct>();
+		for(VolumeOfProduct vp : productList){
+			VolumeOfProduct vpTemp = productMap.get(vp.getMaterialId()+vp.getWorkshopId());
+			if( vpTemp == null ) {
+				productMap.put(vp.getMaterialId()+vp.getWorkshopId(), vp);
+			} else {
+				vpTemp.setVolume(vpTemp.getVolume().add(vp.getVolume()));
+				productMap.put(vp.getMaterialId()+vp.getWorkshopId(), vpTemp);
+			}
+		}
+		rsList.addAll(productMap.values());
+		return rsList;
+	}
 }

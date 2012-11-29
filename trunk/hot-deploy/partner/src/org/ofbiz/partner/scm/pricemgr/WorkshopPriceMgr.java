@@ -328,24 +328,28 @@ public class WorkshopPriceMgr {
 	}
 
 	/**
-	 * 获取物料库存数量
+	 * 获取物料库存数量、金额
 	 * 
 	 * @param supplierId
 	 * @param materialId
 	 * @return
 	 * @throws Exception
 	 */
-	public BigDecimal getVolumeOfMaterial(String workshopId, String materialId) throws Exception {
+	public ArrayList<BigDecimal> getVolumeOfMaterial(String workshopId, String materialId) throws Exception {
+		ArrayList<BigDecimal> number = new ArrayList<BigDecimal>();
 		if (workshopId == null || materialId == null) {
 			throw new Exception("workshopId or materialId is null");
 		}
 		// 查找供应商可入库余额表
 		GenericValue gv = delegator.findOne("CurWorkshopPrice", UtilMisc.toMap("year", new Integer(year), "month", new Integer(month), "workshopId", workshopId, "materialId", materialId), false);
 		if (gv != null) {
-			return gv.getBigDecimal("volume");
+			number.add(gv.getBigDecimal("volume"));
+			number.add(gv.getBigDecimal("totalsum"));
 		} else {
-			return BigDecimal.ZERO;
+			number.add(BigDecimal.ZERO);
+			number.add(BigDecimal.ZERO);
 		}
+		return number;
 	}
 	
 	/**

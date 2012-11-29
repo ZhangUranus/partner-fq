@@ -3,6 +3,7 @@ package org.ofbiz.partner.scm.stock;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -24,8 +25,11 @@ import org.ofbiz.partner.scm.common.BillBaseEvent;
 import org.ofbiz.partner.scm.common.CommonEvents;
 import org.ofbiz.partner.scm.common.SerialNumberHelper;
 import org.ofbiz.partner.scm.dao.TMaterial;
+import org.ofbiz.partner.scm.pojo.VolumeOfProduct;
+import org.ofbiz.partner.scm.pojo.WorkshopStock;
 import org.ofbiz.partner.scm.pricemgr.BillType;
 import org.ofbiz.partner.scm.pricemgr.BizStockImpFactory;
+import org.ofbiz.partner.scm.pricemgr.ConsumeMaterial;
 import org.ofbiz.partner.scm.pricemgr.Utils;
 
 /**
@@ -458,6 +462,88 @@ public class ProductInwarehouseEvents {
 			} catch (GenericTransactionException e2) {
 				Debug.logError(e2, "Unable to rollback transaction", module);
 			}
+			throw e;
+		}
+		return "success";
+	}
+	
+	/**
+	 * 成品进仓单提交检查
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public static String checkSubmitBill(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		try {
+			Delegator delegator = (Delegator) request.getAttribute("delegator");
+			String billId = request.getParameter("billId");// 单据id
+			if (delegator != null && billId != null) {
+				Debug.log("成品入库单提交:" + billId, module);
+				GenericValue billHead = delegator.findOne("ProductInwarehouse", UtilMisc.toMap("id", billId), false);
+
+				if (billHead == null || billHead.get("bizDate") == null) {
+					throw new Exception("can`t find ProductInwarehouse bill or bizdate is null");
+				}
+				
+				// 获取单据分录条目
+				List<GenericValue> entryList = delegator.findByAnd("ProductInwarehouseEntry", UtilMisc.toMap("parentId", billId));
+				
+				List<VolumeOfProduct> productList = new ArrayList<VolumeOfProduct>();
+				for (GenericValue value : entryList) {
+					String entryId=value.getString("id");//分录id
+					String workshopId=value.getString("workshopWorkshopId");//车间id
+					String materialId = value.getString("materialMaterialId");// 打板物料id
+					BigDecimal volume=value.getBigDecimal("volume");//入库数量（板）
+					
+					/*1. 获取实际耗料列表  ， 支持10层的bom物料查找*/
+					List<ConsumeMaterial> consumeMaterialList=new ArrayList<ConsumeMaterial>();
+					/*1. 从实际耗料表取*/
+					List<GenericValue> actualMaterialList=delegator.findByAnd("ProductInwarehouseEntryDetail", UtilMisc.toMap("parentId", entryId));
+					/*2. 实际耗料表存在耗料信息*/
+					if(actualMaterialList!=null&&actualMaterialList.size()>0){
+						for(GenericValue v:actualMaterialList){
+							consumeMaterialList.add(new ConsumeMaterial(v.getString("materialId"),v.getBigDecimal("quantity"),v.getBigDecimal("price"),v.getString("id")));
+						}
+					}else{
+					/*3. 实际耗料表不存在耗料信息，需要从bom单计算理论耗料*/
+						consumeMaterialList.addAll(Utils.getBomMaterialDetail(materialId, 0));
+					}
+					
+					/*2. 更新耗料明细表,如果没有明细则新增明细信息*/
+					for (ConsumeMaterial element : consumeMaterialList) {
+						/*2.1  取每个耗料物料id和耗料金额*/
+						String bomMaterialId = element.getMaterialId();
+						//手工定义是总耗料
+						BigDecimal bomAmount =element.getDetailId()==null? volume.multiply(element.getConsumeQty()):element.getConsumeQty();
+						
+						VolumeOfProduct vp = new VolumeOfProduct(workshopId,bomMaterialId,bomAmount);
+						productList.add(vp);
+					}
+				}
+				List<WorkshopStock> workshopStockList = Utils.checkWorkshopStock(productList);
+				// 封装实体数据，构建json字符串
+				StringBuffer jsonStr = new StringBuffer();
+				jsonStr.append("{'success':true,'records':[");
+				boolean isFirstValue = true;
+				int total = workshopStockList.size();
+				for(WorkshopStock ws : workshopStockList){
+					if (isFirstValue) {
+						isFirstValue = false;
+					} else {
+						jsonStr.append(",");
+					}
+					jsonStr.append(ws.toJsonString());
+				}
+				jsonStr.append("],total:"+total+"}");
+				
+				BillBaseEvent.writeSuccessMessageToExt(response, jsonStr.toString());
+			} else {
+				throw new Exception("操作异常！");
+			}
+		} catch (Exception e) {
+			Debug.logError(e, module);
 			throw e;
 		}
 		return "success";
