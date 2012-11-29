@@ -121,25 +121,28 @@ Ext.define('SCM.ux.combobox.ComboGrid', {
 			// 覆盖方法，通过value获取选中值
 			assertValue : function() {
 				var me = this, value = me.getRawValue(), rec;
-
-				if (me.forceSelection) {
-					if (me.multiSelect) {
-
-						if (value !== me.getDisplayValue()) {
-							me.setValue(me.lastSelection);
-						}
-					} else {
-						// 选择记录如果存在值的话，使用value去获取记录
-						if(me.selectRecordForValue){
-							rec = me.findRecordByValue(me.selectRecordForValue.get(me.valueField));
-							me.selectRecordForValue = null;
+				
+				if(value == ""){
+					me.setValue("");
+				} else {
+					if (me.forceSelection) {
+						if (me.multiSelect) {
+							if (value !== me.getDisplayValue()) {
+								me.setValue(me.lastSelection);
+							}
 						} else {
-							rec = me.findRecordByDisplay(value);
-						}
-						if (rec) {
-							me.select(rec);
-						} else {
-							me.setValue(me.lastSelection);
+							// 选择记录如果存在值的话，使用value去获取记录
+							if(me.selectRecordForValue){
+								rec = me.findRecordByValue(me.selectRecordForValue.get(me.valueField));
+								me.selectRecordForValue = null;
+							} else {
+								rec = me.findRecordByDisplay(value);
+							}
+							if (rec) {
+								me.select(rec);
+							} else {
+								me.setValue(me.lastSelection);
+							}
 						}
 					}
 				}

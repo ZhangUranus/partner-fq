@@ -289,6 +289,13 @@
 		<event type="java" path="org.ofbiz.partner.scm.stock.WorkshopWarehousingEvents" invoke="rollbackBill" />
 		<response name="success" type="none" />
 	</request-map>
+	<!-- 制造入库单提交检查 -->
+	<request-map uri="checkSubmitWorkshopWarehousing">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.WorkshopWarehousingEvents" invoke="checkSubmitBill" />
+		<response name="success" type="none" />
+	</request-map>
+	
 	
 	<!-- 制造退货单提交 -->
 	<request-map uri="submitWorkshopReturnProduct">
@@ -377,6 +384,12 @@
 	<request-map uri="scanRollbackProductInwarehouse">
 		<security https="false" auth="false" />
 		<event type="java" path="org.ofbiz.partner.scm.stock.ProductInwarehouseEvents" invoke="scanRollback" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 成品进仓单提交检查 -->
+	<request-map uri="checkSubmitProductInwarehouse">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductInwarehouseEvents" invoke="checkSubmitBill" />
 		<response name="success" type="none" />
 	</request-map>
 	

@@ -18,6 +18,7 @@ Ext.define('SCM.view.WorkshopWarehousing.ListUI', {
 							items : [{
 										xtype : 'billbasetoolbar',// 工具栏
 										submit : true,
+										checkSubmit : true,
 										region : 'north',
 										border : '0 1 1 1'
 									}, {

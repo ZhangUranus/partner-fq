@@ -6,7 +6,7 @@ Ext.define('SCM.store.ProductInwarehouse.ProductInwarehouseEditEntryStore', {
 			autoLoad : false,
 			autoSync : false,
 			sorters : [{// 根据sort字段排序
-				property : 'sort',
+				property : 'warehouseWarehouseId',
 				direction : 'ASC'
 			}]
 		});

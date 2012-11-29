@@ -44,6 +44,14 @@ Ext.define('SCM.extend.toolbar.BillBaseToolbar', {
 								action : 'rollback'
 							}]);
 				}
+				// 增加提交按钮
+				if (me.checkSubmit) {
+					tools = tools.concat([{
+								text : '提交检查',
+								iconCls : 'system-submit',
+								action : 'checkSubmit'
+							}]);
+				}
 
 				// 增加打印按钮
 				tools = tools.concat([{
