@@ -1,9 +1,9 @@
 Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 			extend : 'Ext.app.Controller',
 			mixins : ['SCM.extend.exporter.Exporter', 'SCM.extend.controller.BillCommonController'],
-			views : ['WorkshopWarehousing.ListUI', 'WorkshopWarehousing.EditUI', 'WorkshopWarehousing.DetailListUI', 'WorkshopWarehousing.DetailEditUI'],
+			views : ['WorkshopWarehousing.ListUI', 'WorkshopWarehousing.EditUI', 'WorkshopWarehousing.DetailListUI', 'WorkshopWarehousing.DetailEditUI', 'WorkshopWarehousing.CheckListUI'],
 			stores : ['WorkshopWarehousing.WorkshopWarehousingStore', 'WorkshopWarehousing.WorkshopWarehousingEditStore', 'WorkshopWarehousing.WorkshopWarehousingEditEntryStore',
-					'WorkshopWarehousing.WorkshopWarehousingDetailStore'],
+					'WorkshopWarehousing.WorkshopWarehousingDetailStore', 'WorkshopWarehousing.WorkshopWarehousingCheckStore'],
 			requires : ['SCM.model.WorkshopWarehousing.WorkshopWarehousingActionModel'],
 			gridTitle : '制造入库单',
 			editName : 'WorkshopWarehousingedit',
@@ -41,6 +41,10 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 							// 列表提交按钮
 							'WorkshopWarehousinglist button[action=submit]' : {
 								click : this.submitBill
+							},
+							// 列表提交撤销按钮
+							'WorkshopWarehousinglist button[action=checkSubmit]' : {
+								click : this.checkSubmit
 							},
 							// 列表撤销按钮
 							'WorkshopWarehousinglist button[action=rollback]' : {
@@ -126,9 +130,10 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 			afterInitComponent : function() {
 				this.searchStartDate = this.listPanel.down('datefield[name=searchStartDate]');
 				this.searchEndDate = this.listPanel.down('datefield[name=searchEndDate]');
-//				this.searchMaterialId = this.listPanel.down('combogrid[name=searchMaterialId]');
+				// this.searchMaterialId =
+				// this.listPanel.down('combogrid[name=searchMaterialId]');
 				this.searchKeyWord = this.listPanel.down('textfield[name=searchKeyWord]');
-				
+
 				this.searchCustId = this.listPanel.down('combogrid[name=searchCustId]');
 				this.searchStatus = this.listPanel.down('combobox[name=status]');
 				this.allColumn = this.editEntry.query('gridcolumn');
@@ -145,6 +150,10 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 				this.editDetailButton = this.win.down('gridpanel button[action=editDetail]');
 				this.detailEditWin = Ext.widget('WorkshopWarehousingdetailedit');
 				this.detailEditEntry = this.detailEditWin.down('gridpanel');
+
+				// 提交检查页面
+				this.checkWin = Ext.widget('WorkshopWarehousingchecklist');
+				this.checkEntry = this.checkWin.down('gridpanel');
 			},
 
 			/**
@@ -218,13 +227,15 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 					}
 					tempString += 'WorkshopWarehousingV.biz_date <= \'' + this.searchEndDate.getRawValue() + ' 23:59:59\'';
 				}
-//				if (this.searchMaterialId.getValue() && this.searchMaterialId.getValue() != '') {
-//					if (tempString != '') {
-//						tempString += ' and ';
-//					}
-//					tempString += 'materialMaterialV.material_material_id = \'' + this.searchMaterialId.getValue() + '\'';
-//				}
-				if (!Ext.isEmpty(this.searchKeyWord.getValue())){
+				// if (this.searchMaterialId.getValue() &&
+				// this.searchMaterialId.getValue() != '') {
+				// if (tempString != '') {
+				// tempString += ' and ';
+				// }
+				// tempString += 'materialMaterialV.material_material_id = \'' +
+				// this.searchMaterialId.getValue() + '\'';
+				// }
+				if (!Ext.isEmpty(this.searchKeyWord.getValue())) {
 					if (tempString != '') {
 						tempString += ' and ';
 					}
@@ -275,7 +286,8 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 									success : function(response, option) {
 										var result = Ext.decode(response.responseText)
 										if (result.success) {
-											//Ext.Msg.alert("提示", "由于变更加工件，已经成功清理原来加工件耗料列表！");
+											// Ext.Msg.alert("提示",
+											// "由于变更加工件，已经成功清理原来加工件耗料列表！");
 										} else {
 											showError(result.message);
 										}
@@ -297,6 +309,46 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 			 */
 			getRollbackBillUrl : function() {
 				return '../../scm/control/rollbackWorkshopWarehousing';
+			},
+
+			/**
+			 * 提交检查，列出耗料库存情况
+			 */
+			checkSubmit : function() {
+				var me = this;
+				record = me.getSelectRecord();
+				if (!me.isSubmitAble(record)) {
+					return;
+				}
+				Ext.getBody().mask('正在进行检查提交过程....');
+				Ext.Ajax.request({
+							params : {
+								billId : record.get('id')
+							},
+							url : '../../scm/control/checkSubmitWorkshopWarehousing',
+							timeout : SCM.limitTimes,
+							success : function(response, option) {
+								var result = Ext.decode(response.responseText)
+								if (result.success) {
+									me.checkEntry.store.removeAll();
+									var values = result.message.records;
+									for (var i = 0; i < values.length; i++) {
+										var entryRecord = Ext.create('WorkshopWarehousingCheckModel');
+										entryRecord.set('workshopId', values[i].workshopId);
+										entryRecord.set('number', values[i].number);
+										entryRecord.set('materialId', values[i].materialId);
+										entryRecord.set('volume', values[i].volume);
+										entryRecord.set('needVolume', values[i].needVolume);
+										entryRecord.set('isEnough', !values[i].isEnough);
+										me.checkEntry.store.add(entryRecord);
+									}
+									me.checkWin.show();
+								} else {
+									showError(result.message);
+								}
+								Ext.getBody().unmask();
+							}
+						});
 			},
 
 			/**
@@ -326,43 +378,42 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 			 */
 			modifyDetailRecord : function(grid, record) {
 				var me = this;
-//				me.currentRecord = record;
+				// me.currentRecord = record;
 				me.detailEditWin.uiStatus = 'Modify';
-				
+
 				var materialVolume = 1;
-				if( record.get('volume') != 0 ) {
+				if (record.get('volume') != 0) {
 					materialVolume = record.get('volume');
 				}
-				
+
 				// 获取耗料列表
 				me.detailEditEntry.store.getProxy().extraParams.whereStr = 'parent_id = \'' + record.get('id') + '\'';
 				me.detailEditEntry.store.load(function(records, operation, success) {
-						if(records.length <= 0){//如果不存在耗料列表，获取初始列表
-							me.MaterialBOMStore.getProxy().extraParams.whereStr = 'MaterialBomV.id = \'' + record.get('bomId') + '\'';
-							me.MaterialBOMStore.load(function(records, operation, success) {
-										me.detailEditEntry.store.removeAll();
-										for (var i = 0; i < records.length; i++) {
-											var tempRecord = records[i];
-											var entryRecord = Ext.create('WorkshopWarehousingDetailModel');
-											entryRecord.phantom = true;
-		
-											// 设置父id
-											entryRecord.set('parentId', record.get('id'));
-											entryRecord.set('bomId', record.get('bomId'));
-											entryRecord.set('materialId', tempRecord.get('bomMaterialId'));
-											entryRecord.set('materialModel', tempRecord.get('bomMaterialModel'));
-											entryRecord.set('volume', tempRecord.get('volume') * materialVolume);
-											entryRecord.set('price', 0);
-											entryRecord.set('entrysum', 0);
-											entryRecord.set('materialUnitId', tempRecord.get('unitId'));
-											me.detailEditEntry.store.add(entryRecord);
-										}
-										me.MaterialBOMStore.getProxy().extraParams.whereStr = "";
-										me.MaterialBOMStore.load();	//重新加载，避免获取不到单位。
-									});
-						}
-					}
-				);
+							if (records.length <= 0) {// 如果不存在耗料列表，获取初始列表
+								me.MaterialBOMStore.getProxy().extraParams.whereStr = 'MaterialBomV.id = \'' + record.get('bomId') + '\'';
+								me.MaterialBOMStore.load(function(records, operation, success) {
+											me.detailEditEntry.store.removeAll();
+											for (var i = 0; i < records.length; i++) {
+												var tempRecord = records[i];
+												var entryRecord = Ext.create('WorkshopWarehousingDetailModel');
+												entryRecord.phantom = true;
+
+												// 设置父id
+												entryRecord.set('parentId', record.get('id'));
+												entryRecord.set('bomId', record.get('bomId'));
+												entryRecord.set('materialId', tempRecord.get('bomMaterialId'));
+												entryRecord.set('materialModel', tempRecord.get('bomMaterialModel'));
+												entryRecord.set('volume', tempRecord.get('volume') * materialVolume);
+												entryRecord.set('price', 0);
+												entryRecord.set('entrysum', 0);
+												entryRecord.set('materialUnitId', tempRecord.get('unitId'));
+												me.detailEditEntry.store.add(entryRecord);
+											}
+											me.MaterialBOMStore.getProxy().extraParams.whereStr = "";
+											me.MaterialBOMStore.load(); // 重新加载，避免获取不到单位。
+										});
+							}
+						});
 				me.detailEditEntry.store.getProxy().extraParams.whereStr = "";
 				this.detailEditWin.show();
 			},
@@ -378,29 +429,32 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 				var sm = me.editEntry.getSelectionModel();
 				if (sm.hasSelection()) {// 判断是否选择行记录
 					record = sm.getLastSelected();
-					Ext.Ajax.request({ 
-						scope : me,
-						url : "../../scm/control/checkExist",
-						timeout : SCM.shortTimes,
-						params:{entity:'WorkshopWarehousingEntry',id:record.get('id')},
-						success : function(response, option) {
-							if(response.responseText.length<1){
-								showError('系统没有返回结果');
-							}
-				 			var responseArray = Ext.JSON.decode(response.responseText);
-				 			if(responseArray.success){
-				 				if(responseArray.isExist){
-									// 如果单据状态是已提交、已审核或者已经结算则不能修改
-									me.modifyDetailRecord(me.editEntry, record);
-				 				}else{
-				 					showError('请先保存!');
-				 				}
-				 			}else{
-				 				showError(responseArray.message);
-				 			}
-						}
-					});
-					
+					Ext.Ajax.request({
+								scope : me,
+								url : "../../scm/control/checkExist",
+								timeout : SCM.shortTimes,
+								params : {
+									entity : 'WorkshopWarehousingEntry',
+									id : record.get('id')
+								},
+								success : function(response, option) {
+									if (response.responseText.length < 1) {
+										showError('系统没有返回结果');
+									}
+									var responseArray = Ext.JSON.decode(response.responseText);
+									if (responseArray.success) {
+										if (responseArray.isExist) {
+											// 如果单据状态是已提交、已审核或者已经结算则不能修改
+											me.modifyDetailRecord(me.editEntry, record);
+										} else {
+											showError('请先保存!');
+										}
+									} else {
+										showError(responseArray.message);
+									}
+								}
+							});
+
 				} else {
 					showWarning('未选中物料！');
 				}

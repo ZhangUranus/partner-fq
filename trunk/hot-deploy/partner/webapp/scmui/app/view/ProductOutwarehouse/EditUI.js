@@ -101,16 +101,8 @@ Ext.define('SCM.view.ProductOutwarehouse.EditUI', {
 													region : 'center',
 													store : Ext.create('ProductOutwarehouseEditEntryStore'),
 													columns : [{
-																xtype : 'numbercolumn',
-																dataIndex : 'sort',
-																editor : {
-																	xtype : 'numberfield',
-																	format : '0',
-																	allowBlank : false,
-																	hideTrigger : true
-																},
-																format : '0',
-																text : '序号',
+																header : '序号',
+																xtype : 'rownumberer',
 																width : 40
 															}, {
 																xtype : 'combocolumn',
