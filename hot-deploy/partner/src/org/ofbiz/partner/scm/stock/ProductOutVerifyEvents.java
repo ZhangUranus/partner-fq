@@ -327,7 +327,7 @@ public class ProductOutVerifyEvents {
 		
 		delegator.removeByAnd("ProductOutVerifyHead", "deliverNumber" ,deliverNum ,"materialId",materialId);
 		
-		delegator.removeByAnd("ProductOutVerifyEntry", "deliverNumber" ,deliverNum ,"materialId",materialId);
+		delegator.removeByAnd("ProductOutVerifyEntry", "deliverNumber" ,deliverNum ,"parentMaterialId",materialId);
 
 		BillBaseEvent.writeSuccessMessageToExt(response, "提交成功");
 		return "success";
