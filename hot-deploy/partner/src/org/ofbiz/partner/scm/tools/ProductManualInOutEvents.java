@@ -162,7 +162,7 @@ public class ProductManualInOutEvents {
 					inSort ++;
 					
 					// 2.3.3.1.3 确定条码、序列号可以进仓
-					ProductBarcodeBoxMgr.getInstance().update(barcode1, barcode2, false);
+					ProductBarcodeBoxMgr.getInstance().update(barcode.getCodeForIkea(), barcode.getProductWeek(), materialId, warehouseId, barcode1, barcode2, new BigDecimal(barcode.getQuantity()), false);
 					
 					// 2.3.3.1.4成品进仓周表
 					WeeklyStockMgr.getInstance().updateStock(materialId, currentDate, ProductStockType.IN, new BigDecimal(1), false);
@@ -194,7 +194,7 @@ public class ProductManualInOutEvents {
 					outSort++;
 
 					// 2.3.3.2.3 确定条码、序列号可以进仓
-					ProductBarcodeBoxMgr.getInstance().update(barcode1, barcode2, true);
+					ProductBarcodeBoxMgr.getInstance().update(barcode.getCodeForIkea(), barcode.getProductWeek(), materialId, warehouseId, barcode1, barcode2, new BigDecimal(barcode.getQuantity()), true);
 					
 					// 2.3.3.2.4成品进仓周表
 					WeeklyStockMgr.getInstance().updateStock(materialId, currentDate, ProductStockType.OUT, volume, false);
@@ -327,7 +327,7 @@ public class ProductManualInOutEvents {
 				entryValue.set("sort", sort);
 
 				// 2.3.2.3 确定条码、序列号可以进仓
-				ProductBarcodeBoxMgr.getInstance().update(barcode1, barcode2, false);
+				ProductBarcodeBoxMgr.getInstance().update(barcode.getCodeForIkea(), barcode.getProductWeek(), materialId, warehouseId, barcode1, barcode2, new BigDecimal(barcode.getQuantity()), false);
 
 				// 2.3.2.4 创建分录
 				delegator.create(entryValue);
@@ -457,7 +457,7 @@ public class ProductManualInOutEvents {
 				entryValue.set("sort", sort);
 
 				// 2.3.2.3 确定条码、序列号可以进仓
-				ProductBarcodeBoxMgr.getInstance().update(barcode1, barcode2, true);
+				ProductBarcodeBoxMgr.getInstance().update(barcode.getCodeForIkea(), barcode.getProductWeek(), materialId, warehouseId, barcode1, barcode2, new BigDecimal(barcode.getQuantity()), true);
 
 				// 2.3.2.4 创建分录
 				delegator.create(entryValue);
@@ -600,7 +600,7 @@ public class ProductManualInOutEvents {
 					entryValue.set("sort", sort);
 
 					// 2.3.2.3 确定条码、序列号可以进仓
-					ProductBarcodeBoxMgr.getInstance().update(barcode1, barcode2, false);
+					ProductBarcodeBoxMgr.getInstance().update(barcode.getCodeForIkea(), barcode.getProductWeek(), materialId, warehouseId, barcode1, barcode2, new BigDecimal(barcode.getQuantity()), false);
 
 					// 2.3.2.4 创建分录
 					delegator.create(entryValue);
