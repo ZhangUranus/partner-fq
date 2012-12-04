@@ -63,13 +63,13 @@ public class BarcodeQryReportEvents {
 		sql.append("inner join t_material material on material.id=p.material_id \r\n");
 		sql.append("where p.week='").append(weekStr).append("' \r\n");
 		if(request.getParameter("ikeaNumber")!=null&&request.getParameter("ikeaNumber").trim().length()>0){
-			sql.append("and p.ikea_number='").append(request.getParameter("ikeaNumber")).append("' \r\n");
+			sql.append("and p.ikea_number like '%").append(request.getParameter("ikeaNumber")).append("%' \r\n");
 		}
 		if(request.getParameter("materialName")!=null&&request.getParameter("materialName").trim().length()>0){
 			sql.append("and material.name like '%").append(request.getParameter("materialName")).append("%' \r\n");
 		}
 		if(request.getParameter("barcode")!=null&&request.getParameter("barcode").trim().length()>0){
-			sql.append("and p.barcode1='").append(request.getParameter("barcode")).append("' \r\n");
+			sql.append("and p.barcode1 like '%").append(request.getParameter("barcode")).append("%' \r\n");
 		}
 		return sql.toString();
 	}

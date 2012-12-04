@@ -83,7 +83,7 @@ public class ProductBarcodeBoxMgr {
 				record.set("week", week);
 				record.set("materialId", materialId);
 				record.set("warehouseId", warehosueId);
-				record.set("perBoardQty", perBoardQty);
+				record.set("perBoardQty", perBoardQty.toBigInteger().longValue());
 				delegator.create(record);
 				return true;
 			}
