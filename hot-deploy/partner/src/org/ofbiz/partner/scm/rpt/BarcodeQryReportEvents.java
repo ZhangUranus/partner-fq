@@ -28,6 +28,13 @@ public class BarcodeQryReportEvents {
 	 * 在库条码查询
 	 * */
 	public static String queryInBarcode(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		CommonEvents.writeJsonDataToExt(response, DataFetchEvents.executeSelectSQL(request,getQueryInBarcodeSQl(request)));
+		
+		return "sucess";
+	}
+	
+	public static String getQueryInBarcodeSQl(HttpServletRequest request) throws Exception {
 		String weekStr;//查询周
 //		StringBuffer filterMaterial=new StringBuffer();//物料过滤?
 		
@@ -64,10 +71,7 @@ public class BarcodeQryReportEvents {
 		if(request.getParameter("barcode")!=null&&request.getParameter("barcode").trim().length()>0){
 			sql.append("and p.barcode1='").append(request.getParameter("barcode")).append("' \r\n");
 		}
-		
-		CommonEvents.writeJsonDataToExt(response, DataFetchEvents.executeSelectSQL(request,sql.toString()));
-		
-		return "sucess";
+		return sql.toString();
 	}
 	
 	/**
@@ -78,6 +82,13 @@ public class BarcodeQryReportEvents {
 	 * @throws Exception
 	 */
 	public static String queryOutBarcode(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+
+		CommonEvents.writeJsonDataToExt(response, DataFetchEvents.executeSelectSQL(request,getQueryOutBarcodeSql(request)));
+		
+		return "sucess";
+	}
+	public static String getQueryOutBarcodeSql(HttpServletRequest request) throws Exception {
 		String startDate,endDate;
 		if(request.getParameter("startDate") != null && request.getParameter("endDate") != null){
 			startDate = request.getParameter("startDate");
@@ -102,17 +113,13 @@ public class BarcodeQryReportEvents {
 		sql.append("inner join product_out_notification noti on noti.good_number=entry.good_number \r\n");
 		sql.append("inner join t_material material on entry.material_material_id=material.id \r\n");
 		sql.append("inner join product_map proMap on proMap.material_id=entry.material_material_id \r\n");
-		sql.append("where head.biz_date>='"+startDate+"' and head.biz_date<='"+endDate+"' \r\n");
+		sql.append("where head.status=4 and entry.is_return<>'Y' and head.biz_date>='"+startDate+"' and head.biz_date<='"+endDate+"' \r\n");
 		if(request.getParameter("deliveryNumber")!=null&&request.getParameter("deliveryNumber").trim().length()>0){
 			sql.append("and noti.DELIVER_NUMBER like '%"+request.getParameter("deliveryNumber")+"%' \r\n");
 		}
 		if(request.getParameter("ikeaNumber")!=null&&request.getParameter("ikeaNumber").trim().length()>0){
 			sql.append("and proMap.ikea_id like '%"+request.getParameter("ikeaNumber")+"%' \r\n");
 		}
-
-		CommonEvents.writeJsonDataToExt(response, DataFetchEvents.executeSelectSQL(request,sql.toString()));
-		
-		return "sucess";
+		return sql.toString();
 	}
-	
 }

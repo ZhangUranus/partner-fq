@@ -91,6 +91,9 @@ Ext.define('SCM.model.ProductOutwarehouse.ProductOutwarehouseEditEntryModel', {
 							return new Date(value);
 						},
 						persist : false
+					}, {
+						name : 'isReturn',
+						type : 'string'
 					}],
 			idgen : 'uuid', // 使用uuid生成记录id 每个模型必须要有id字段
 			proxy : {
