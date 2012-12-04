@@ -48,6 +48,7 @@
 		<field name="sealNumber" type="id-long"></field><!-- 封条号 -->
 		<field name="sort" type="int"></field>
 		<field name="lastUpdatedStamp" type="date-time"></field>
+		<field name="isReturn" type="indicator"></field><!-- 是否退回 1 -->
 		<prim-key field="id" />
 	</entity>
 	<!-- 表头视图 -->

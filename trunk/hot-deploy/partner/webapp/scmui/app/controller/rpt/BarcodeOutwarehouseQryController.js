@@ -75,5 +75,41 @@ Ext.define('SCM.controller.rpt.BarcodeOutwarehouseQryController', {
 					this.listPanel.store.getProxy().extraParams.ikeaNumber = "";
 				}
 				this.listPanel.store.load();
+			},
+			/**
+			 * 获取报表参数
+			 * 
+			 * @return {}
+			 */
+			getParams : function() {
+				var tempheader = this.listPanel.headerCt.query('{isVisible()}');
+				var header = "";
+				var dataIndex = "";
+				var count = 0;
+				Ext.each(tempheader, function(column, index, length) {
+							if (column.xtype != 'rownumberer') {
+								if (count != 0) {
+									header += ",";
+									dataIndex += ",";
+								}
+								header += column.text;
+								dataIndex += column.dataIndex;
+								count++;
+							}
+						});
+				
+				with (this.listPanel.store) {
+					var params = getProxy().extraParams;
+
+					// 页面参数
+					params.sort = Ext.encode(getSorters());
+					params.report = 'barcodeOut';
+					params.title = '出库条码查询'; // sheet页名称
+					params.header = header; // 表头
+					params.dataIndex = dataIndex; // 数据引用
+					params.pattern = 'SQL';
+					params.type = 'EXCEL';
+					return params;
+				}
 			}
 		});

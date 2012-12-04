@@ -73,6 +73,10 @@ public class DataFetchEvents {
 			list = getPurchaseMatchReportDetailList(request);
 		} else if("PSR".equals(request.getParameter("report"))){
 			list = getProductStaticsReportList(request);
+		}  else if("barcodeIn".equals(request.getParameter("report"))){
+			list = getListWithSQL(request, BarcodeQryReportEvents.getQueryInBarcodeSQl(request));
+		}  else if("barcodeOut".equals(request.getParameter("report"))){
+			list = getListWithSQL(request, BarcodeQryReportEvents.getQueryOutBarcodeSql(request));
 		}
 		return list;
 	}

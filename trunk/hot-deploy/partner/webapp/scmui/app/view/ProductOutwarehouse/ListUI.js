@@ -157,6 +157,12 @@ Ext.define('SCM.view.ProductOutwarehouse.ListUI', {
 													dataIndex : 'qantity',
 													format : '0',
 													text : '板数量'
+												}, {
+													xtype : 'gridcolumn',
+													renderer : SCM.store.basiccode.validRenderer,
+													dataIndex : 'isReturn',
+													width : 100,
+													text : '是否退回'
 												}]
 									}]
 						});
