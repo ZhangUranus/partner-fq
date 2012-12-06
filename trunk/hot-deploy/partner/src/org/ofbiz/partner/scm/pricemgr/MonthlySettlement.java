@@ -362,17 +362,17 @@ public class MonthlySettlement {
 		mergeCompareValue("ProductManualOutwarehouse", composeCond, allBillList);
 
 		// 排序单据
-		Object[] billsArr = allBillList.toArray();
-		Arrays.sort(billsArr);
-
-		// 封装单据返回
-		List<GenericValue> seqList = new ArrayList<GenericValue>();
-		for (int i = 0; i < billsArr.length; i++) {
-			seqList.add(((GenericValue4Compare) billsArr[i]).getValue());
-		}
+//		Object[] billsArr = allBillList.toArray();
+//		Arrays.sort(billsArr);
+//
+//		// 封装单据返回
+//		List<GenericValue> seqList = new ArrayList<GenericValue>();
+//		for (int i = 0; i < billsArr.length; i++) {
+//			seqList.add(((GenericValue4Compare) billsArr[i]).getValue());
+//		}
 
 		Debug.logInfo("获取系统所有业务单据，按时间升序排序，操作结束~~~~~~", module);
-		return seqList;
+		return allBillList;
 	}
 
 	/**
