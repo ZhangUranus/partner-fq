@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -155,14 +154,14 @@ public class MonthlySettlement {
 
 			checkCanSettle();
 
-			// 获取系统本期所有业务单据，按提交时间升序排序
-			List<GenericValue> seqBillValueList = getSeqBillValue();
-
-			// 清空所有单价表信息到月初状态
-			clearMidTable();
-
-			// 按顺序进行业务处理
-			processCalItem(seqBillValueList);
+//			// 获取系统本期所有业务单据，按提交时间升序排序
+//			List<GenericValue> seqBillValueList = getSeqBillValue();
+//
+//			// 清空所有单价表信息到月初状态
+//			clearMidTable();
+//
+//			// 按顺序进行业务处理
+//			processCalItem(seqBillValueList);
 
 			// 将所有单价表结算到下一个月
 			settleMidTable();
@@ -283,37 +282,19 @@ public class MonthlySettlement {
 	 */
 	private List<GenericValue> getSeqBillValue() throws Exception {
 		Debug.logInfo("获取系统所有业务单据，按时间升序排序，操作开始~~~~~~~", module);
-		
-		//modified by Mark 2012-12-06 ArrayList 修改为LinkedList
-		List<GenericValue> allBillList = new LinkedList<GenericValue>();
+		List<GenericValue4Compare> allBillList = new ArrayList<GenericValue4Compare>();
 		// 过滤条件 ,系统期间时间段，单据状态为提交状态(4)
 		Calendar cal = Calendar.getInstance();
 		cal.set(year, month - 1, 1, 0, 0, 0);
 		Date fromDate = cal.getTime();
 		cal.add(Calendar.MONTH, 1);
 		Date endDate = cal.getTime();
-		
-		
 		List<EntityCondition> condList = new ArrayList<EntityCondition>();
 		condList.add(EntityCondition.makeCondition("bizDate", EntityOperator.GREATER_THAN_EQUAL_TO, new Timestamp(fromDate.getTime())));
 		condList.add(EntityCondition.makeCondition("bizDate", EntityOperator.LESS_THAN, new Timestamp(endDate.getTime())));
 		condList.add(EntityCondition.makeCondition("status", EntityOperator.EQUALS, 4));
 		EntityCondition composeCond = EntityCondition.makeCondition(condList);
-       
-		/**
-		 * 下面单据的顺序很重要
-		 */
-		
-		
-		// 库存调整单
-		mergeCompareValue("StockAdjust", composeCond, allBillList);
 
-		// 车间调整单
-		mergeCompareValue("WorkshopStockAdjust", composeCond, allBillList);
-
-		// 供应商调整单
-		mergeCompareValue("SupplierStockAdjust", composeCond, allBillList);
-		
 		// 采购入库单
 		mergeCompareValue("PurchaseWarehousing", composeCond, allBillList);
 
@@ -350,7 +331,14 @@ public class MonthlySettlement {
 		// 进货单
 		mergeCompareValue("ReturnProductWarehousing", composeCond, allBillList);
 
-		
+		// 库存调整单
+		mergeCompareValue("StockAdjust", composeCond, allBillList);
+
+		// 车间调整单
+		mergeCompareValue("WorkshopStockAdjust", composeCond, allBillList);
+
+		// 供应商调整单
+		mergeCompareValue("SupplierStockAdjust", composeCond, allBillList);
 
 		// 成品进仓单
 		mergeCompareValue("ProductInwarehouse", composeCond, allBillList);
@@ -362,17 +350,17 @@ public class MonthlySettlement {
 		mergeCompareValue("ProductManualOutwarehouse", composeCond, allBillList);
 
 		// 排序单据
-//		Object[] billsArr = allBillList.toArray();
-//		Arrays.sort(billsArr);
-//
-//		// 封装单据返回
-//		List<GenericValue> seqList = new ArrayList<GenericValue>();
-//		for (int i = 0; i < billsArr.length; i++) {
-//			seqList.add(((GenericValue4Compare) billsArr[i]).getValue());
-//		}
+		Object[] billsArr = allBillList.toArray();
+		Arrays.sort(billsArr);
+
+		// 封装单据返回
+		List<GenericValue> seqList = new ArrayList<GenericValue>();
+		for (int i = 0; i < billsArr.length; i++) {
+			seqList.add(((GenericValue4Compare) billsArr[i]).getValue());
+		}
 
 		Debug.logInfo("获取系统所有业务单据，按时间升序排序，操作结束~~~~~~", module);
-		return allBillList;
+		return seqList;
 	}
 
 	/**
@@ -907,23 +895,14 @@ public class MonthlySettlement {
 	 * 
 	 * @param entityName
 	 * @param list
-	 * 
-	 * 修改记录：
-	 * modified by mark 2012-12-06 添加按submitStamp字段排序，去除不同类型单据排序功能
-	 * 
-	 *
 	 */
-	private void mergeCompareValue(String entityName, EntityCondition composeCond, List<GenericValue> allBillList) throws Exception {
-		
-		List<String> orderbyList=new ArrayList<String>();
-		orderbyList.add("submitStamp asc");
-		List<GenericValue> purInWsList = delegator.findList(entityName, composeCond, null, orderbyList, null, false);
+	private void mergeCompareValue(String entityName, EntityCondition composeCond, List<GenericValue4Compare> allBillList) throws Exception {
+		List<GenericValue> purInWsList = delegator.findList(entityName, composeCond, null, null, null, false);
 		if (purInWsList != null && purInWsList.size() > 0) {
 			for (GenericValue v : purInWsList) {
-//				if (v.getTimestamp("submitStamp") == null)
-//					throw new Exception("submitStamp is null !!!!!!");
-//				allBillList.add(new GenericValue4Compare(v, "submitStamp"));
-				allBillList.add(v);
+				if (v.getTimestamp("submitStamp") == null)
+					throw new Exception("submitStamp is null !!!!!!");
+				allBillList.add(new GenericValue4Compare(v, "submitStamp"));
 			}
 		}
 	}
