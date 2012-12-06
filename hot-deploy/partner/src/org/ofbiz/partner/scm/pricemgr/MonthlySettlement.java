@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -282,19 +283,37 @@ public class MonthlySettlement {
 	 */
 	private List<GenericValue> getSeqBillValue() throws Exception {
 		Debug.logInfo("获取系统所有业务单据，按时间升序排序，操作开始~~~~~~~", module);
-		List<GenericValue4Compare> allBillList = new ArrayList<GenericValue4Compare>();
+		
+		//modified by Mark 2012-12-06 ArrayList 修改为LinkedList
+		List<GenericValue> allBillList = new LinkedList<GenericValue>();
 		// 过滤条件 ,系统期间时间段，单据状态为提交状态(4)
 		Calendar cal = Calendar.getInstance();
 		cal.set(year, month - 1, 1, 0, 0, 0);
 		Date fromDate = cal.getTime();
 		cal.add(Calendar.MONTH, 1);
 		Date endDate = cal.getTime();
+		
+		
 		List<EntityCondition> condList = new ArrayList<EntityCondition>();
 		condList.add(EntityCondition.makeCondition("bizDate", EntityOperator.GREATER_THAN_EQUAL_TO, new Timestamp(fromDate.getTime())));
 		condList.add(EntityCondition.makeCondition("bizDate", EntityOperator.LESS_THAN, new Timestamp(endDate.getTime())));
 		condList.add(EntityCondition.makeCondition("status", EntityOperator.EQUALS, 4));
 		EntityCondition composeCond = EntityCondition.makeCondition(condList);
+       
+		/**
+		 * 下面单据的顺序很重要
+		 */
+		
+		
+		// 库存调整单
+		mergeCompareValue("StockAdjust", composeCond, allBillList);
 
+		// 车间调整单
+		mergeCompareValue("WorkshopStockAdjust", composeCond, allBillList);
+
+		// 供应商调整单
+		mergeCompareValue("SupplierStockAdjust", composeCond, allBillList);
+		
 		// 采购入库单
 		mergeCompareValue("PurchaseWarehousing", composeCond, allBillList);
 
@@ -331,14 +350,7 @@ public class MonthlySettlement {
 		// 进货单
 		mergeCompareValue("ReturnProductWarehousing", composeCond, allBillList);
 
-		// 库存调整单
-		mergeCompareValue("StockAdjust", composeCond, allBillList);
-
-		// 车间调整单
-		mergeCompareValue("WorkshopStockAdjust", composeCond, allBillList);
-
-		// 供应商调整单
-		mergeCompareValue("SupplierStockAdjust", composeCond, allBillList);
+		
 
 		// 成品进仓单
 		mergeCompareValue("ProductInwarehouse", composeCond, allBillList);
@@ -895,14 +907,23 @@ public class MonthlySettlement {
 	 * 
 	 * @param entityName
 	 * @param list
+	 * 
+	 * 修改记录：
+	 * modified by mark 2012-12-06 添加按submitStamp字段排序，去除不同类型单据排序功能
+	 * 
+	 *
 	 */
-	private void mergeCompareValue(String entityName, EntityCondition composeCond, List<GenericValue4Compare> allBillList) throws Exception {
-		List<GenericValue> purInWsList = delegator.findList(entityName, composeCond, null, null, null, false);
+	private void mergeCompareValue(String entityName, EntityCondition composeCond, List<GenericValue> allBillList) throws Exception {
+		
+		List<String> orderbyList=new ArrayList<String>();
+		orderbyList.add("submitStamp asc");
+		List<GenericValue> purInWsList = delegator.findList(entityName, composeCond, null, orderbyList, null, false);
 		if (purInWsList != null && purInWsList.size() > 0) {
 			for (GenericValue v : purInWsList) {
-				if (v.getTimestamp("submitStamp") == null)
-					throw new Exception("submitStamp is null !!!!!!");
-				allBillList.add(new GenericValue4Compare(v, "submitStamp"));
+//				if (v.getTimestamp("submitStamp") == null)
+//					throw new Exception("submitStamp is null !!!!!!");
+//				allBillList.add(new GenericValue4Compare(v, "submitStamp"));
+				allBillList.add(v);
 			}
 		}
 	}
