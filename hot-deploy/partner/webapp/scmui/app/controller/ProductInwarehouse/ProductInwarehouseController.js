@@ -4,7 +4,7 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 			views : ['ProductInwarehouse.ListUI', 'ProductInwarehouse.EditUI', 'ProductInwarehouse.DetailListUI', 'ProductInwarehouse.DetailEditUI', 'ProductInwarehouse.ScanUI',
 					'ProductInwarehouse.UnScanUI', 'ProductInwarehouse.CheckListUI'],
 			stores : ['ProductInwarehouse.ProductInwarehouseStore', 'ProductInwarehouse.ProductInwarehouseEditStore', 'ProductInwarehouse.ProductInwarehouseEditEntryStore',
-					'ProductInwarehouse.ProductInwarehouseEntryDetailStore', 'ProductInwarehouse.ProductInwarehouseCheckStore'],
+					'ProductInwarehouse.ProductInwarehouseEntryDetailStore', 'ProductInwarehouse.ProductInwarehouseCheckStore','ProductInwarehouse.ProductInwarehouseEntryExtStore'],
 			requires : ['SCM.model.ProductInwarehouse.ProductInwarehouseActionModel'],
 			gridTitle : '成品进仓单',
 			editName : 'ProductInwarehouseedit',
@@ -160,7 +160,9 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 
 				this.detailEditEntry.addListener('edit', this.detailEntryEditAction, this);
 
-				/* 进仓单分录 store */
+				/* 进仓单分录 store 
+				 * 
+				 * noted by mark 2012-12-07删除进仓单分录查询，性能效率差
 				Ext.create('ProductInwarehouseEditEntryStore', {
 							pageSize : SCM.pageSize,
 							storeId : 'PIHEntryStore',
@@ -169,7 +171,8 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 										property : 'lastUpdatedStamp',
 										direction : 'DESC'
 									}]
-						});
+						});*/
+				
 
 				// 初始化扫描、反扫描界面
 				this.getScanUI();
@@ -624,6 +627,12 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 										}
 									}
 								}
+								
+								
+								/*初始化完后，load进仓单分录
+								 * added by mark
+								 */
+								me.scanGrid.store.load();
 							}
 						});
 				return this.winScan;

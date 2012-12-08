@@ -810,6 +810,15 @@
 	<!-- 手工进仓出仓操作(不影响库存) -->
 	
 	
+	<!-- 系统效率优化类 -->
+	<request-map uri="getProductInEntry">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.ext.ProductInWarehouseExtEvents" invoke="queryProductInEntry" />
+		<response name="success" type="none" />
+	</request-map>
+	
+	<!-- end 系统效率优化类 -->
+	
 	<!-- 系统工具类  -->
 	
 	

@@ -4,7 +4,9 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilMisc;
@@ -150,37 +152,43 @@ public class ProductOutwarehouseBizImp implements IBizStock {
 	private List<ConsumeMaterial> getMaterialList(String barcode1, String barcode2, Date lastUpdatedStamp) throws Exception {
 		List<ConsumeMaterial> consumeMaterialList = new ArrayList<ConsumeMaterial>();
 		/* 1.根据条码，获取入仓单据分录编码 */
-		List<GenericValue> entryList = delegator.findByAnd("ProductInwarehouseEntry", UtilMisc.toMap("barcode1", barcode1, "barcode2", barcode2));
-		GenericValue tempValue = null;
-		GenericValue oneValue = null;
-		for(GenericValue entryValue : entryList) {
-			oneValue = entryValue;		//避免最后没有取到值
-			Date inDate = (Date) entryValue.get("lastUpdatedStamp");
-			// 只取出仓单时间大于 进仓单时间的
-			if(lastUpdatedStamp.after(inDate)){
-				if(tempValue != null){
-					// 只去最近一次进仓单单据
-					if(inDate.after((Date) tempValue.get("lastUpdatedStamp"))){
-						tempValue = entryValue;
-					}
-				} else {
-					tempValue = entryValue;
-				}
-			}
-		}
-		String entryId = "";
-		if(tempValue != null){
-			entryId = tempValue.getString("id");
-		} else {
-			entryId = oneValue.getString("id");
-		}
+//		List<GenericValue> entryList = delegator.findByAnd("ProductInwarehouseEntry", UtilMisc.toMap("barcode1", barcode1, "barcode2", barcode2));
+//		GenericValue tempValue = null;
+//		GenericValue oneValue = null;
+//		for(GenericValue entryValue : entryList) {
+//			oneValue = entryValue;		//避免最后没有取到值
+//			Date inDate = (Date) entryValue.get("lastUpdatedStamp");
+//			// 只取出仓单时间大于 进仓单时间的
+//			if(lastUpdatedStamp.after(inDate)){
+//				if(tempValue != null){
+//					// 只去最近一次进仓单单据
+//					if(inDate.after((Date) tempValue.get("lastUpdatedStamp"))){
+//						tempValue = entryValue;
+//					}
+//				} else {
+//					tempValue = entryValue;
+//				}
+//			}
+//		}
+//		String entryId = "";
+//		if(tempValue != null){
+//			entryId = tempValue.getString("id");
+//		} else {
+//			entryId = oneValue.getString("id");
+//		}
 		
 		/* 2. 从实际耗料表取 */
-		List<GenericValue> actualMaterialList = delegator.findByAnd("ProductInwarehouseEntryDetail", UtilMisc.toMap("parentId", entryId));
+		List<GenericValue> actualMaterialList = delegator.findByAnd("ProductInwarehouseEntryDetail",  UtilMisc.toMap("barcode1", barcode1, "barcode2", barcode2));
 		/* 3. 实际耗料表存在耗料信息 */
 		if (actualMaterialList != null && actualMaterialList.size() > 0) {
+			Map<String, Boolean> consumeMaterialMap=new HashMap<String, Boolean>();
 			for (GenericValue v : actualMaterialList) {
-				consumeMaterialList.add(new ConsumeMaterial(v.getString("materialId"), v.getBigDecimal("quantity"), v.getBigDecimal("price"), v.getString("id")));
+				String materialId=v.getString("materialId");
+				if(!consumeMaterialMap.containsKey(materialId)){
+					consumeMaterialList.add(new ConsumeMaterial(materialId, v.getBigDecimal("quantity"), v.getBigDecimal("price"), v.getString("id")));
+					consumeMaterialMap.put(materialId, true);
+				}
+				
 			}
 		}
 		return consumeMaterialList;
