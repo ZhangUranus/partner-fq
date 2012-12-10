@@ -51,7 +51,7 @@ Ext.define('SCM.view.ProductInwarehouse.EditUI', {
 																allowBlank : false
 															}, {
 																xtype : 'combogrid',
-																fieldLabel : '领料人',
+																fieldLabel : '操作人',
 																name : 'inspectorSystemUserId',
 																valueField : 'id',
 																displayField : 'name',

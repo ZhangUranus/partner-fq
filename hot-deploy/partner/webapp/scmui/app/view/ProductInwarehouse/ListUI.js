@@ -71,7 +71,7 @@ Ext.define('SCM.view.ProductInwarehouse.ListUI', {
 													dataIndex : 'inspectorSystemUserName',
 													width : 150,
 													groupable : false,
-													text : '领料人'
+													text : '操作人'
 												}, {
 													xtype : 'gridcolumn',
 													dataIndex : 'submitterSystemUserName',

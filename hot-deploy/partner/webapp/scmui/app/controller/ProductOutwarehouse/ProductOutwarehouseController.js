@@ -349,7 +349,7 @@ Ext.define('SCM.controller.ProductOutwarehouse.ProductOutwarehouseController', {
 										me.barcode2Field.setValue('');
 										me.scanBoardCount++;
 										me.boardCountLabel.setText(me.scanBoardCount);
-										me.scanGrid.store.load();
+										//me.scanGrid.store.load();		//由于效率太低，暂时取消自动刷新
 										me.barcode1Field.focus(true);
 									} else {
 										me.barcode1Field.setValue('');
@@ -432,7 +432,7 @@ Ext.define('SCM.controller.ProductOutwarehouse.ProductOutwarehouseController', {
 											if (result.success) {
 												me.unScanBarcode1Field.setValue('');
 												me.unScanBarcode2Field.setValue('');
-												me.unScanGrid.store.load();
+												//me.unScanGrid.store.load();	//由于效率太低，暂时取消自动刷新。
 												Ext.Msg.alert("提示", "撤销成功！");
 												me.unScanBarcode1Field.focus(true);
 											} else {

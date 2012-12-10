@@ -16,6 +16,7 @@
 		<field name="id" type="id-long"></field>
 		<field name="number" type="name"></field>
 		<field name="bizDate" type="date-time"></field>
+		<field name="inspectorSystemUserId" type="id-long"></field>
 		<field name="submitterSystemUserId" type="id-long"></field>
 		<field name="totalsum" type="fixed-point"></field>
 		<field name="note" type="description"></field>
@@ -56,9 +57,11 @@
 		<member-entity entity-alias="ProductOutwarehouseV" entity-name="ProductOutwarehouse"></member-entity>
 		<member-entity entity-alias="ProductOutwarehouseEntryV" entity-name="ProductOutwarehouseEntry"></member-entity>
 		<member-entity entity-alias="materialMaterialV" entity-name="TMaterial"></member-entity>
+		<member-entity entity-alias="inspectorSystemUserV" entity-name="SystemUser"></member-entity>
 		<member-entity entity-alias="submitterSystemUserV" entity-name="SystemUser"></member-entity>
 		<alias-all entity-alias="ProductOutwarehouseV"></alias-all>
 		<alias name="materialMaterialId" entity-alias="ProductOutwarehouseEntryV" field="materialMaterialId"></alias>
+		<alias name="inspectorSystemUserName" entity-alias="inspectorSystemUserV" field="name"></alias>
 		<alias name="submitterSystemUserName" entity-alias="submitterSystemUserV" field="name"></alias>
 		
 		<!-- 查询条件需要取物料编码、物料名称，在查询数据中需要distinct -->
@@ -70,6 +73,9 @@
 		</view-link>
 		<!-- 查询条件需要取物料编码、物料名称，在查询数据中需要distinct -->
 		
+		<view-link entity-alias="ProductOutwarehouseV" rel-entity-alias="inspectorSystemUserV" rel-optional="true">
+			<key-map field-name="inspectorSystemUserId" rel-field-name="id" />
+		</view-link>
 		<view-link entity-alias="ProductOutwarehouseV" rel-entity-alias="submitterSystemUserV" rel-optional="true">
 			<key-map field-name="submitterSystemUserId" rel-field-name="id" />
 		</view-link>
@@ -79,8 +85,10 @@
 		<member-entity entity-alias="ProductOutwarehouseV" entity-name="ProductOutwarehouse"></member-entity>
 		<member-entity entity-alias="ProductOutwarehouseEntryV" entity-name="ProductOutwarehouseEntry"></member-entity>
 		<member-entity entity-alias="materialMaterialV" entity-name="TMaterial"></member-entity>
+		<member-entity entity-alias="inspectorSystemUserV" entity-name="SystemUser"></member-entity>
 		<member-entity entity-alias="submitterSystemUserV" entity-name="SystemUser"></member-entity>
 		<alias-all entity-alias="ProductOutwarehouseV"></alias-all>
+		<alias name="inspectorSystemUserName" entity-alias="inspectorSystemUserV" field="name"></alias>
 		<alias name="submitterSystemUserName" entity-alias="submitterSystemUserV" field="name"></alias>
 		
 		<!-- 查询条件需要取物料编码、物料名称，在查询数据中需要distinct -->
@@ -92,6 +100,9 @@
 		</view-link>
 		<!-- 查询条件需要取物料编码、物料名称，在查询数据中需要distinct -->
 		
+		<view-link entity-alias="ProductOutwarehouseV" rel-entity-alias="inspectorSystemUserV" rel-optional="true">
+			<key-map field-name="inspectorSystemUserId" rel-field-name="id" />
+		</view-link>
 		<view-link entity-alias="ProductOutwarehouseV" rel-entity-alias="submitterSystemUserV" rel-optional="true">
 			<key-map field-name="submitterSystemUserId" rel-field-name="id" />
 		</view-link>

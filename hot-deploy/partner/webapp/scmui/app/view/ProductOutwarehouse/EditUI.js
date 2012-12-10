@@ -49,6 +49,32 @@ Ext.define('SCM.view.ProductOutwarehouse.EditUI', {
 																allowBlank : false
 															}, {
 																xtype : 'combogrid',
+																fieldLabel : '操作人',
+																name : 'inspectorSystemUserId',
+																valueField : 'id',
+																displayField : 'name',
+																initStore : Ext.data.StoreManager.lookup('SUComboInitStore'),
+																store : Ext.data.StoreManager.lookup('SUComboStore'),
+																margin : 5,
+																matchFieldWidth : false,
+																readOnly : true,
+																listConfig : {
+																	width : 185,
+																	height : SCM.MaxSize.COMBOGRID_HEIGHT,
+																	columns : [{
+																				header : '编码',
+																				dataIndex : 'number',
+																				width : 100,
+																				hideable : false
+																			}, {
+																				header : '名称',
+																				dataIndex : 'name',
+																				width : 80,
+																				hideable : false
+																			}]
+																}
+															}, {
+																xtype : 'combogrid',
 																fieldLabel : '提交人',
 																name : 'submitterSystemUserId',
 																valueField : 'id',
