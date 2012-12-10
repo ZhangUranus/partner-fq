@@ -166,6 +166,9 @@ Ext.define('SCM.controller.ProductOutNotification.ProductOutNotificationControll
 				this.searchMaterialId = this.listPanel.down('combogrid[name=searchMaterialId]');
 				this.searchCustId = this.listPanel.down('combogrid[name=searchCustId]');
 				this.searchStatus = this.listPanel.down('combobox[name=status]');
+				this.deliverNumber = this.listPanel.down('textfield[name=diliveryNumber]');
+				this.cargoNumber = this.listPanel.down('textfield[name=cargoNumber]');
+				
 				this.allColumn = this.editEntry.query('gridcolumn');
 				this.addLineButton = this.win.down('gridpanel button[action=addLine]');
 				this.deleteLineButton = this.win.down('gridpanel button[action=deleteLine]');
@@ -281,6 +284,22 @@ Ext.define('SCM.controller.ProductOutNotification.ProductOutNotificationControll
 					}
 					tempString += 'ProductOutNotificationV.status = \'' + this.searchStatus.getValue() + '\'';
 				}
+				
+				if (this.deliverNumber.getValue() && this.deliverNumber.getValue() != '') {
+					if (tempString != '') {
+						tempString += ' and ';
+					}
+					tempString += 'ProductOutNotificationV.deliver_Number like \'%' + this.deliverNumber.getValue() + '%\'';
+				}
+				if (this.cargoNumber.getValue() && this.cargoNumber.getValue() != '') {
+					if (tempString != '') {
+						tempString += ' and ';
+					}
+					tempString += 'ProductOutNotificationV.good_Number like \'%' + this.cargoNumber.getValue() + '%\'';
+				}
+				
+				
+				
 				this.listPanel.store.getProxy().extraParams.whereStr = tempString;
 				this.listPanel.store.load();
 				this.detailPanel.store.removeAll();

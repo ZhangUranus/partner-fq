@@ -234,6 +234,25 @@ Ext.define('SCM.view.ProductOutNotification.ListUI', {
 											xtype : 'billsearchtoolbar',// 工具栏
 											custType : 'customer',
 											border : '0 1 1 1'
+										},{
+											xtype : 'toolbar',
+											defaults : {
+												margin : '0 0 0 0',
+												xtype : 'button'
+											},
+											items : [ {
+														xtype : 'textfield',
+														name : 'diliveryNumber',
+														minWidth : 135,
+														labelWidth : 35,
+														fieldLabel : '单号'
+													},  {
+														xtype : 'textfield',
+														name : 'cargoNumber',
+														minWidth : 135,
+														labelWidth : 35,
+														fieldLabel : '货号'
+													}]
 										}, {
 											dock : 'bottom',
 											xtype : 'pagingtoolbar',
