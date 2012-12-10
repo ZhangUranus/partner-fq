@@ -19,6 +19,13 @@ Ext.define('SCM.model.ProductOutwarehouse.ProductOutwarehouseModel', {
 						type : 'date',
 						dateFormat : 'time'
 					}, {
+						name : 'inspectorSystemUserId',
+						type : 'string'
+					}, {
+						name : 'inspectorSystemUserName',
+						type : 'string',
+						persist : false
+					}, {
 						name : 'submitterSystemUserId',
 						type : 'string'
 					}, {
