@@ -260,6 +260,7 @@ public class ProductOutwarehouseEvents {
 				billHead.setString("id", billId);
 				billHead.setString("number", new SerialNumberHelper().getSerialNumber(request, "ProductOutwarehouse"));
 				billHead.set("bizDate", new Timestamp(currentDate.getTime()));
+				billHead.set("inspectorSystemUserId", CommonEvents.getAttributeFormSession(request, "uid"));
 				billHead.set("submitterSystemUserId", CommonEvents.getAttributeFormSession(request, "uid"));
 				billHead.set("status", 0); // 保存状态
 				billHead.set("billType", 2); // 扫描类型，只能进行提交操作，不能删除
@@ -420,10 +421,6 @@ public class ProductOutwarehouseEvents {
 			barcode1 = entry.getString("barcode1");
 			barcode2 = entry.getString("barcode2");
 
-			// 1.2确定条码、序列号可以进仓
-			BarCode barcode=new BarCode(barcode1,barcode2);
-			ProductBarcodeBoxMgr.getInstance().update(barcode.getCodeForIkea(),barcode.getProductWeek(),entry.getString("materialMaterialId"),entry.getString("warehouseWarehouseId"),barcode1, barcode2,new BigDecimal(barcode.getQuantity()), false);
-
 			/* 2 获取单据分录条目 */
 			List<GenericValue> entryList = delegator.findByAnd("ProductOutwarehouseEntry", UtilMisc.toMap("barcode1", barcode1, "barcode2", barcode2));
 			GenericValue entryValue = null;
@@ -446,7 +443,10 @@ public class ProductOutwarehouseEvents {
 			} else {
 				throw new Exception("无法找到该产品条码、序列号，请确认是否已经扫描！");
 			}
-
+			
+			// 1.2确定条码、序列号可以进仓
+			BarCode barcode=new BarCode(barcode1,barcode2);
+			ProductBarcodeBoxMgr.getInstance().update(barcode.getCodeForIkea(),barcode.getProductWeek(),entryValue.getString("materialMaterialId"),entryValue.getString("warehouseWarehouseId"),barcode1, barcode2,new BigDecimal(barcode.getQuantity()), false);
 			/*
 			 * 扫描时不进行提交操作，后面再人工提交进仓单
 			 * 
@@ -542,6 +542,7 @@ public class ProductOutwarehouseEvents {
 									headValue.set("containerNumber", v.getString("finalContainerNumber"));
 									headValue.set("sealNumber", v.getString("sealNumber"));
 									headValue.set("destinhouseNumber", v.getString("finalHouseNumber"));
+									headValue.set("goodNumber", goodNumber);
 								}
 							} else {
 								if (materialId.equals(verifyEntry.getString("materialId"))) {
@@ -556,6 +557,7 @@ public class ProductOutwarehouseEvents {
 									headValue.set("containerNumber", "");
 									headValue.set("sealNumber", "");
 									headValue.set("destinhouseNumber", "");
+									headValue.set("goodNumber", goodNumber);
 								}
 							}
 						}
