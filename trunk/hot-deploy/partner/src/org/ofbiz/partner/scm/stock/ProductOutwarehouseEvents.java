@@ -38,7 +38,7 @@ public class ProductOutwarehouseEvents {
 	private static final String module = org.ofbiz.partner.scm.stock.ProductOutwarehouseEvents.class.getName();
 
 	/**
-	 * 成品出仓提交
+	 * 成品出仓提交 
 	 * 
 	 * @param request
 	 * @param response
