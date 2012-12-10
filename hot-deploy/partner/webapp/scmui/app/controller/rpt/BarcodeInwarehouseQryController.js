@@ -48,8 +48,7 @@ Ext.define('SCM.controller.rpt.BarcodeInwarehouseQryController', {
 				if (!Ext.isEmpty(this.searchWeek.getValue())) {
 					this.listPanel.store.getProxy().extraParams.week = this.searchWeek.getValue();
 				} else {
-					showWarning('请输入生产周！');
-					return;
+					this.listPanel.store.getProxy().extraParams.week ="";
 				}
 				if (!Ext.isEmpty(this.ikeaNumber.getValue())) {
 					this.listPanel.store.getProxy().extraParams.ikeaNumber = this.ikeaNumber.getValue();

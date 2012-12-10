@@ -35,11 +35,11 @@ public class BarcodeQryReportEvents {
 	}
 	
 	public static String getQueryInBarcodeSQl(HttpServletRequest request) throws Exception {
-		String weekStr;//查询周
+//		String weekStr;//查询周
 //		StringBuffer filterMaterial=new StringBuffer();//物料过滤?
 		
-		if(request.getParameter("week")==null)throw new Exception("周不能为空！");
-		weekStr=request.getParameter("week");
+//		if(request.getParameter("week")==null)throw new Exception("周不能为空！");
+//		weekStr=request.getParameter("week");
 		
 //		if(request.getParameter("searchMaterialId")!=null&&request.getParameter("searchMaterialId").trim().length()>0){
 //			filterMaterial.append(" and  material.id='").append(request.getParameter("searchMaterialId")).append("'");
@@ -61,7 +61,10 @@ public class BarcodeQryReportEvents {
 		sql.append("FROM product_barcode_box p \r\n");
 		sql.append("inner join warehouse wh on wh.id=p.warehouse_id \r\n");
 		sql.append("inner join t_material material on material.id=p.material_id \r\n");
-		sql.append("where p.week='").append(weekStr).append("' \r\n");
+		sql.append("where 1=1 \r\n");
+		if(request.getParameter("week")!=null&&request.getParameter("week").trim().length()>0){
+			sql.append("and p.week='").append(request.getParameter("week")).append("' \r\n");
+		}
 		if(request.getParameter("ikeaNumber")!=null&&request.getParameter("ikeaNumber").trim().length()>0){
 			sql.append("and p.ikea_number like '%").append(request.getParameter("ikeaNumber")).append("%' \r\n");
 		}
