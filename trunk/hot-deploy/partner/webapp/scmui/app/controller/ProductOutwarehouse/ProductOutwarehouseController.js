@@ -550,6 +550,7 @@ Ext.define('SCM.controller.ProductOutwarehouse.ProductOutwarehouseController', {
 			 */
 			clearQantity : function() {
 				this.boardCountLabel.setText('0');
+				this.scanBoardCount = 0;
 			},
 			
 			/**
