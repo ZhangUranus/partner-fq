@@ -27,7 +27,7 @@ Ext.define('SCM.view.ProductOutwarehouse.EditUI', {
 										layout : 'border',
 										items : [{
 													xtype : 'container',
-													height : 100,
+													height : 140,
 													layout : {
 														columns : 3,
 														type : 'table'
@@ -107,6 +107,10 @@ Ext.define('SCM.view.ProductOutwarehouse.EditUI', {
 																hidden : true,
 																name : 'totalsum',
 																margin : 5
+															}, {
+																xtype : 'label'
+															}, {
+																xtype : 'label'
 															}, {
 																xtype : 'textarea',
 																name : 'note',
