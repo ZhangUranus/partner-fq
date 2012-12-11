@@ -190,22 +190,25 @@ Ext.define('SCM.controller.PurchaseWarehousing.PurchaseWarehousingController', {
 					this.setScheduleVolume(e.record, this.supplierFields.getValue(), e.value);
 				}
 				e.record.set('entrysum', e.record.get('price') * e.record.get('volume'));
-				this.changeMaterialPrice(e.grid.store);
+				this.calTotalAmount(e.grid.store);
 			},
-
+			
+			//编辑分录更新
+			entryUpdate : function(store,record,operation,modifiedFieldNames,eOpts ){
+				this.calTotalAmount(store);
+			},
+			//编辑分录删除
+			entryRemove :  function(store,record,index,eOpts ){
+				this.calTotalAmount(store);
+			},
 			/**
 			 * 计算总金额
 			 * 
 			 * @param {}
 			 *            store
 			 */
-			changeMaterialPrice : function(store) {
-				var count = store.getCount();
-				var sum = 0;
-				for (var i = 0; i < count; i++) {
-					sum += store.getAt(i).get('entrysum');
-				}
-				this.totalFields.setValue(sum);
+			calTotalAmount : function(store) {
+				this.totalFields.setValue(store.sum('entrysum'));
 			},
 
 			/**

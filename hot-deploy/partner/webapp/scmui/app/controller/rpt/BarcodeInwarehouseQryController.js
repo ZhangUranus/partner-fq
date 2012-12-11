@@ -65,7 +65,7 @@ Ext.define('SCM.controller.rpt.BarcodeInwarehouseQryController', {
 				} else {
 					this.listPanel.store.getProxy().extraParams.barcode = "";
 				}
-				this.listPanel.store.load();
+				this.listPanel.store.loadPage(1);
 			},
 			/**
 			 * 获取报表参数

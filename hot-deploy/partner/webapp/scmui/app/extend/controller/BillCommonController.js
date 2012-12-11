@@ -75,10 +75,16 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 					this.saveButton = this.win.down('button[action=save]');
 					this.clearButton = this.win.down('button[action=clear]');
 					this.editEntry.addListener('edit', this.initMaterialInfo, this); // 监控列表编辑事件
+					
+					this.editEntry.store.addListener('add',this.entryAdd,this);//编辑界面分录添加
+					this.editEntry.store.addListener('update',this.entryUpdate,this);//编辑界面分录更新
+					this.editEntry.store.addListener('remove',this.entryRemove,this);//编辑界面分录删除
 				}
 				return this.win;
 			},
-
+			entryAdd : Ext.emptyFn,
+			entryUpdate : Ext.emptyFn,
+			entryRemove : Ext.emptyFn,
 			/**
 			 * 当用户编辑grid时，同步更新相关表单数据
 			 * 

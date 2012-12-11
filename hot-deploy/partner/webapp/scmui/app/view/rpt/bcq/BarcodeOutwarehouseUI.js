@@ -114,7 +114,13 @@ Ext.define('SCM.view.rpt.bcq.BarcodeOutwarehouseUI', {
 												}],
 										viewConfig : {
 
-										}
+										},
+										dockedItems: [{
+											dock : 'bottom',
+											xtype : 'pagingtoolbar',
+											store : 'rpt.BarcodeOutwarehouseQryStore',
+											displayInfo : true
+										}]
 									}]
 						});
 				me.callParent(arguments);
