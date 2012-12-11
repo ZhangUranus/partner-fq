@@ -96,17 +96,18 @@ Ext.define('SCM.controller.ProductOutVerify.ProductOutVerifyController', {
 				if(this.searchEndDate.getRawValue()){
 					this.listPanel.store.getProxy().extraParams.bizEndDate = this.searchEndDate.getRawValue();
 				}
-				if(!Ext.isEmpty(this.searchDeliverNum.getValue())){
-					this.listPanel.store.getProxy().extraParams.deliverNum = this.searchDeliverNum.getValue();
+				if(!Ext.isEmpty(this.searchDeliverNum.getRawValue())){
+					this.listPanel.store.getProxy().extraParams.deliverNum = this.searchDeliverNum.getRawValue();
 				}
-				if(!Ext.isEmpty(this.searchMaterialId.getValue())){
-					this.listPanel.store.getProxy().extraParams.searchMaterialId = this.searchMaterialId.getValue();
+				if(!Ext.isEmpty(this.searchMaterialId.getRawValue())){
+					this.listPanel.store.getProxy().extraParams.searchMaterialId = this.searchMaterialId.getRawValue();
 				}
 				if ((!Ext.isEmpty(this.searchStatus.getValue())) || this.searchStatus.getValue() == 0) {
 					this.listPanel.store.getProxy().extraParams.status = this.searchStatus.getValue();
 				}
 				
-				this.listPanel.store.load();
+				
+				this.listPanel.store.loadPage(1);
 				
 				this.detailPanel.store.removeAll();
 				this.changeComponentsState();

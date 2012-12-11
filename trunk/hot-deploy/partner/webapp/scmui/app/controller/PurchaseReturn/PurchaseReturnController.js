@@ -190,13 +190,26 @@ Ext.define('SCM.controller.PurchaseReturn.PurchaseReturnController', {
 				}
 				e.record.set('entrysum', e.record.get('price') * e.record.get('volume'));
 				var count = e.grid.store.getCount();
-				var sum = 0;
-				for (var i = 0; i < count; i++) {
-					sum += e.grid.store.getAt(i).get('entrysum');
-				}
-				this.totalFields.setValue(sum);
+				calTotalAmount(e.grid.store);
 			},
-			
+
+			//编辑分录更新
+			entryUpdate : function(store,record,operation,modifiedFieldNames,eOpts ){
+				this.calTotalAmount(store);
+			},
+			//编辑分录删除
+			entryRemove :  function(store,record,index,eOpts ){
+				this.calTotalAmount(store);
+			},
+			/**
+			 * 计算总金额
+			 * 
+			 * @param {}
+			 *            store
+			 */
+			calTotalAmount : function(store) {
+				this.totalFields.setValue(store.sum('entrysum'));
+			},
 			/**
 			 * 修改库存
 			 */

@@ -74,7 +74,7 @@ Ext.define('SCM.controller.rpt.BarcodeOutwarehouseQryController', {
 				} else {
 					this.listPanel.store.getProxy().extraParams.ikeaNumber = "";
 				}
-				this.listPanel.store.load();
+				this.listPanel.store.loadPage(1);
 			},
 			/**
 			 * 获取报表参数
