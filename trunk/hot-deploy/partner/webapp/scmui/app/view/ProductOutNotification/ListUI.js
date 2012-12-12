@@ -313,16 +313,15 @@ Ext.define('SCM.view.ProductOutNotification.ListUI', {
 													xtype : 'gridcolumn',
 													dataIndex : 'grossSize',
 													text : '订单毛体积'
+												}, {
+													xtype : 'numbercolumn',
+													dataIndex : 'sumBoardVolume',
+													text : '总托盘数量'
+												}, {
+													xtype : 'numbercolumn',
+													dataIndex : 'paperBoxVolume',
+													text : '纸箱数量'
 												}
-//												, {
-//													xtype : 'numbercolumn',
-//													dataIndex : 'sumBoardVolume',
-//													text : '总托盘数量'
-//												}, {
-//													xtype : 'numbercolumn',
-//													dataIndex : 'paperBoxVolume',
-//													text : '纸箱数量'
-//												}
 												, {
 													xtype : 'gridcolumn',
 													dataIndex : 'regionId',
