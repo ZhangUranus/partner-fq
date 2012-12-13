@@ -152,7 +152,7 @@
 	<!-- 分录明细耗料视图 -->
 	<view-entity entity-name="ProductInwarehouseEntryDetailView" package-name="org.ofbiz.scm.ProductInwarehouse" title="ProductInwarehouseEntryDetailView  Entity">
 		<member-entity entity-alias="ProductInwarehouseEntryDetailV" entity-name="ProductInwarehouseEntryDetail"></member-entity>
-		<member-entity entity-alias="materialMaterialV" entity-name="Material"></member-entity>
+		<member-entity entity-alias="materialMaterialV" entity-name="TMaterial"></member-entity>
 		<member-entity entity-alias="unitUnitV" entity-name="Unit"></member-entity>
 		<alias-all entity-alias="ProductInwarehouseEntryDetailV"></alias-all>
 		<alias name="materialMaterialName" entity-alias="materialMaterialV" field="name"></alias>
