@@ -125,18 +125,12 @@
 	<TSystemLogType id='86152121-b01a-45b5-81fa-7b4eeb77c213' number='LOG100120' name='成品进仓单' operateType='删除' keyWord='deleteWithEntry?headEntity=productInwarehouse&amp;entryEntity=ProductInwarehouseEntry' valid='1' />
 	<TSystemLogType id='81e57375-cbab-4858-9e1f-b604c0c6f3c2' number='LOG100121' name='成品进仓单' operateType='提交' keyWord='submitProductInwarehouse' valid='1' />
 	<TSystemLogType id='b172c74d-db93-4789-937e-ed11265c8a8f' number='LOG100122' name='成品进仓单' operateType='撤销' keyWord='rollbackProductInwarehouse' valid='1' />
-	<TSystemLogType id='d9fe0d7b-2d9c-4d45-9aeb-d57a4ff67a01' number='LOG100123' name='成品进仓确认单' operateType='查看' keyWord='getUserPermissions?menuId=productInwarehouseConfirm' valid='0' />
-	<TSystemLogType id='7a357294-ff34-482f-8c3b-61510ec3b76d' number='LOG100124' name='成品进仓确认单' operateType='同步' keyWord='syncProductInwarehouseConfirm' valid='1' />
-	<TSystemLogType id='67145957-cfcd-486e-9bbc-c8e447ef7eb4' number='LOG100125' name='成品进仓确认单' operateType='提交' keyWord='submitProductInwarehouseConfirm' valid='1' />
 	<TSystemLogType id='02ed3871-6c2e-4cd9-ba32-08cddbe0a229' number='LOG100126' name='成品出仓单' operateType='查看' keyWord='getUserPermissions?menuId=productOutwarehouse' valid='0' />
 	<TSystemLogType id='ad4f3f64-dc1d-46a5-a2c7-dfd044c6eab3' number='LOG100127' name='成品出仓单' operateType='新增' keyWord='createWithEntry?headEntity=ProductOutwarehouse&amp;entryEntity=ProductOutwarehouseEntry' valid='1' />
 	<TSystemLogType id='1248788a-1745-4b71-9587-9a3f42452674' number='LOG100128' name='成品出仓单' operateType='修改' keyWord='updateWithEntry?headEntity=ProductOutwarehouse&amp;entryEntity=ProductOutwarehouseEntry' valid='1' />
 	<TSystemLogType id='b67b6c78-0c5d-4d2a-9900-7d0ee8e351c7' number='LOG100129' name='成品出仓单' operateType='删除' keyWord='deleteWithEntry?headEntity=ProductOutwarehouse&amp;entryEntity=ProductOutwarehouseEntry' valid='1' />
-	<TSystemLogType id='3c925fae-8a12-48f9-a860-2c8e8febeb6e' number='LOG100130' name='成品出仓单' operateType='提交' keyWord='submitProductInwarehouse' valid='1' />
-	<TSystemLogType id='ecc2d717-501b-4b14-974c-3e95991190ca' number='LOG100131' name='成品出仓单' operateType='撤销' keyWord='rollbackProductInwarehouse' valid='1' />
-	<TSystemLogType id='8b3c57c8-0501-4d35-a946-3dee6a9bc4e5' number='LOG100132' name='成品出仓确认单' operateType='查看' keyWord='getUserPermissions?menuId=productOutwarehouseConfirm' valid='0' />
-	<TSystemLogType id='aa42a873-6812-497f-8f44-e849cdfb43a7' number='LOG100133' name='成品出仓确认单' operateType='同步' keyWord='syncProductOutwarehouseConfirm' valid='1' />
-	<TSystemLogType id='aff6aa9b-5002-43fe-9c80-76899948956a' number='LOG100134' name='成品出仓确认单' operateType='提交' keyWord='submitProductOutwarehouseConfirm' valid='1' />
+	<TSystemLogType id='3c925fae-8a12-48f9-a860-2c8e8febeb6e' number='LOG100130' name='成品出仓单' operateType='提交' keyWord='submitProductOutwarehouse' valid='1' />
+	<TSystemLogType id='ecc2d717-501b-4b14-974c-3e95991190ca' number='LOG100131' name='成品出仓单' operateType='撤销' keyWord='rollbackProductOutwarehouse' valid='1' />
 	<TSystemLogType id='e6514ca0-188f-40d3-b78a-689ccc82a0a7' number='LOG100135' name='出货通知单' operateType='查看' keyWord='getUserPermissions?menuId=productOutNotification' valid='0' />
 	<TSystemLogType id='e4bd2e90-6548-4196-8915-a4776cbdd6ae' number='LOG100136' name='出货通知单' operateType='新增' keyWord='createWithEntry?headEntity=ProductOutNotification&amp;entryEntity=ProductOutNotificationEntry' valid='1' />
 	<TSystemLogType id='a73c837d-f04c-4bd6-b883-bff82fcb060d' number='LOG100137' name='出货通知单' operateType='修改' keyWord='updateWithEntry?headEntity=ProductOutNotification&amp;entryEntity=ProductOutNotificationEntry' valid='1' />
@@ -183,4 +177,12 @@
 	<TSystemLogType id='69e19b11-2df3-4e9c-86ae-b7d9ff4f4ae4' number='LOG100178' name='成品手工出仓单' operateType='删除' keyWord='deleteWithEntry?headEntity=ProductManualOutwarehouse&amp;entryEntity=ProductManualOutwarehouse' valid='1' />
 	<TSystemLogType id='cb9d1d32-95f9-44c8-a695-b06503ebad1c' number='LOG100179' name='成品手工出仓单' operateType='提交' keyWord='submitProductManualOutwarehouse' valid='1' />
 	<TSystemLogType id='0f95bb15-fbee-4313-a327-deef324b3599' number='LOG100180' name='成品手工出仓单' operateType='撤销' keyWord='rollbackProductManualOutwarehouse' valid='1' />
+	
+	<TSystemLogType id='95c2900e-2986-4897-b7b2-e9eb0cff70b5' number='LOG100181' name='成品退货单' operateType='查看' keyWord='getUserPermissions?menuId=productReturn' valid='0' />
+	<TSystemLogType id='f5b3b7d1-3dda-43d3-a174-0d23e674a927' number='LOG100182' name='成品退货单' operateType='新增' keyWord='createWithEntry?headEntity=ProductReturn&amp;entryEntity=ProductReturnEntry' valid='1' />
+	<TSystemLogType id='b64e6224-346d-4bfc-b563-998238fc1971' number='LOG100183' name='成品退货单' operateType='修改' keyWord='updateWithEntry?headEntity=ProductReturn&amp;entryEntity=ProductReturnEntry' valid='1' />
+	<TSystemLogType id='1f31f47a-1345-461f-ab1b-6837ec8b8c11' number='LOG100184' name='成品退货单' operateType='删除' keyWord='deleteWithEntry?headEntity=ProductReturn&amp;entryEntity=ProductReturnEntry' valid='1' />
+	<TSystemLogType id='d078d3a4-a190-4098-86db-c3848b3f68d8' number='LOG100185' name='成品退货单' operateType='提交' keyWord='submitProductReturn' valid='1' />
+	<TSystemLogType id='0d186590-dd4a-48e2-a820-86e9d32a062e' number='LOG100186' name='成品退货单' operateType='撤销' keyWord='rollbackProductReturn' valid='1' />
+	
 </entity-engine-xml>

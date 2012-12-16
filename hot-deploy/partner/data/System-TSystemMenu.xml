@@ -22,10 +22,9 @@
 	<TSystemMenu menuId='productionPlan' menuName='生产计划' menuType='1' parentId='workshopManufacture' sort='136' hyperlink='productionplan' styleName='production-plan' display='1' description='生产计划' />
 	<TSystemMenu menuId='productMgr' menuName='成品管理' menuType='0' parentId='warehouseManagement' sort='14' hyperlink='' styleName='product-mgr' display='1' description='成品管理' />
 	<TSystemMenu menuId='productInwarehouse' menuName='成品进仓单' menuType='1' parentId='productMgr' sort='141' hyperlink='ProductInwarehouselist' styleName='product-inwarehouse' display='1' description='成品进仓单' />
-	<!-- TSystemMenu menuId='productInwarehouseConfirm' menuName='成品进仓确认单' menuType='1' parentId='productMgr' sort='142' hyperlink='ProductInwarehouseConfirmlist' styleName='product-inwarehouse-confirm' display='1' description='成品进仓确认单' /-->
-	<TSystemMenu menuId='productOutwarehouse' menuName='成品出仓单' menuType='1' parentId='productMgr' sort='143' hyperlink='ProductOutwarehouselist' styleName='product-outwarehouse' display='1' description='成品出仓单' />
-	<!-- SystemMenu menuId='productOutwarehouseConfirm' menuName='成品出仓确认单' menuType='1' parentId='productMgr' sort='144' hyperlink='ProductOutwarehouseConfirmlist' styleName='product-outwarehouse-confirm' display='1' description='成品出仓确认单' /-->
-	<TSystemMenu menuId='productManualOutwarehouse' menuName='成品手工出仓单' menuType='1' parentId='productMgr' sort='144' hyperlink='ProductManualOutwarehouselist' styleName='product-manual-outwarehouse' display='1' description='成品手工出仓单' />
+	<TSystemMenu menuId='productOutwarehouse' menuName='成品出仓单' menuType='1' parentId='productMgr' sort='142' hyperlink='ProductOutwarehouselist' styleName='product-outwarehouse' display='1' description='成品出仓单' />
+	<TSystemMenu menuId='productManualOutwarehouse' menuName='成品手工出仓单' menuType='1' parentId='productMgr' sort='143' hyperlink='ProductManualOutwarehouselist' styleName='product-manual-outwarehouse' display='1' description='成品手工出仓单' />
+	<TSystemMenu menuId='productReturn' menuName='成品退货单' menuType='1' parentId='productMgr' sort='144' hyperlink='ProductReturnlist' styleName='product-return' display='1' description='成品退货单' />
 	<TSystemMenu menuId='productOutNotification' menuName='出货通知单' menuType='1' parentId='productMgr' sort='145' hyperlink='ProductOutNotificationlist' styleName='product-out-notification' display='1' description='出货通知单' />
 	<TSystemMenu menuId='productOutVerify' menuName='出货对数单' menuType='1' parentId='productMgr' sort='146' hyperlink='ProductOutVerifyList' styleName='product-out-notification' display='1' description='出货对数单' />
 	
