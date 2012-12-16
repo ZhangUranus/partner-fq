@@ -26,4 +26,5 @@ public enum BillType {
 	,SupplierStockAdjust//供应商调整单
 	,ProductOutwarehouse//成品出仓单
 	,ProductManualOutwarehouse//成品手工出仓单
+	,ProductReturn//成品退货单
 }
