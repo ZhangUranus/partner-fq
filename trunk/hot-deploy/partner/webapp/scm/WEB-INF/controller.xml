@@ -464,6 +464,31 @@
 		<response name="success" type="none" />
 	</request-map>
 	
+	<!-- 成品退货单提交 -->
+	<request-map uri="submitProductReturn">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductReturnEvents" invoke="submitBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 成品退货单撤销 -->
+	<request-map uri="rollbackProductReturn">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductReturnEvents" invoke="rollbackBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 成品扫描退货提交 -->
+	<request-map uri="scanSubmitProductReturn">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductReturnEvents" invoke="scanSubmit" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 成品扫描退货撤销 -->
+	<request-map uri="scanRollbackProductReturn">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductReturnEvents" invoke="scanRollback" />
+		<response name="success" type="none" />
+	</request-map>
+	
 	
 	<!-- 出货通知单提交 -->
 	<request-map uri="submitProductOutNotification">
