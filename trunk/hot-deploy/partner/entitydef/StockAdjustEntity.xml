@@ -90,7 +90,7 @@
 	<view-entity entity-name="StockAdjustEntryView" package-name="org.ofbiz.scm.StockAdjust" title="StockAdjustEntryView  Entity">
 		<member-entity entity-alias="StockAdjustEntryV" entity-name="StockAdjustEntry"></member-entity>
 		<member-entity entity-alias="warehouseWarehouseV" entity-name="Warehouse"></member-entity>
-		<member-entity entity-alias="materialMaterialV" entity-name="Material"></member-entity>
+		<member-entity entity-alias="materialMaterialV" entity-name="TMaterial"></member-entity>
 		<member-entity entity-alias="unitUnitV" entity-name="Unit"></member-entity>
 		<alias-all entity-alias="StockAdjustEntryV"></alias-all>
 		<alias name="warehouseWarehouseName" entity-alias="warehouseWarehouseV" field="name"></alias>

@@ -120,7 +120,7 @@
 	<view-entity entity-name="WorkshopWarehousingEntryView" package-name="org.ofbiz.scm.WorkshopWarehousing" title="WorkshopWarehousingEntryView  Entity">
 		<member-entity entity-alias="WorkshopWarehousingEntryV" entity-name="WorkshopWarehousingEntry"></member-entity>
 		<member-entity entity-alias="warehouseWarehouseV" entity-name="Warehouse"></member-entity>
-		<member-entity entity-alias="materialMaterialV" entity-name="Material"></member-entity>
+		<member-entity entity-alias="materialMaterialV" entity-name="TMaterial"></member-entity>
 		<member-entity entity-alias="unitUnitV" entity-name="Unit"></member-entity>
 		<member-entity entity-alias="MaterialBomV" entity-name="MaterialBom"></member-entity>
 		<alias-all entity-alias="WorkshopWarehousingEntryV"></alias-all>

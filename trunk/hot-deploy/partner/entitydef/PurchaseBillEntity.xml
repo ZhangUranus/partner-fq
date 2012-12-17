@@ -145,7 +145,7 @@
 	<!--表体视图 -->
 	<view-entity entity-name="PurchaseBillEntryView" package-name="org.ofbiz.scm.PurchaseBill" title="PurchaseBillEntryView  Entity">
 		<member-entity entity-alias="PurchaseBillEntryV" entity-name="PurchaseBillEntry"></member-entity>
-		<member-entity entity-alias="materialMaterialV" entity-name="Material"></member-entity>
+		<member-entity entity-alias="materialMaterialV" entity-name="TMaterial"></member-entity>
 		<member-entity entity-alias="unitUnitV" entity-name="Unit"></member-entity>
 		<member-entity entity-alias="warehouseV" entity-name="Warehouse"></member-entity>
 		<alias-all entity-alias="PurchaseBillEntryV"></alias-all>

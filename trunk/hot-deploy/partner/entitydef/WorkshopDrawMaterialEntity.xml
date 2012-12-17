@@ -112,7 +112,7 @@
 	<view-entity entity-name="WorkshopDrawMaterialEntryView" package-name="org.ofbiz.scm.WorkshopDrawMaterial" title="WorkshopDrawMaterialEntryView  Entity">
 		<member-entity entity-alias="WorkshopDrawMaterialEntryV" entity-name="WorkshopDrawMaterialEntry"></member-entity>
 		<member-entity entity-alias="warehouseWarehouseV" entity-name="Warehouse"></member-entity>
-		<member-entity entity-alias="materialMaterialV" entity-name="Material"></member-entity>
+		<member-entity entity-alias="materialMaterialV" entity-name="TMaterial"></member-entity>
 		<member-entity entity-alias="unitUnitV" entity-name="Unit"></member-entity>
 		<alias-all entity-alias="WorkshopDrawMaterialEntryV"></alias-all>
 		<alias name="warehouseWarehouseName" entity-alias="warehouseWarehouseV" field="name"></alias>

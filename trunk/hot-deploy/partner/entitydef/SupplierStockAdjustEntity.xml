@@ -90,7 +90,7 @@
 	<view-entity entity-name="SupplierStockAdjustEntryView" package-name="org.ofbiz.scm.SupplierStockAdjust" title="SupplierStockAdjustEntryView  Entity">
 		<member-entity entity-alias="SupplierStockAdjustEntryV" entity-name="SupplierStockAdjustEntry"></member-entity>
 		<member-entity entity-alias="processorSupplierV" entity-name="Supplier"></member-entity>
-		<member-entity entity-alias="materialMaterialV" entity-name="Material"></member-entity>
+		<member-entity entity-alias="materialMaterialV" entity-name="TMaterial"></member-entity>
 		<member-entity entity-alias="unitUnitV" entity-name="Unit"></member-entity>
 		<alias-all entity-alias="SupplierStockAdjustEntryV"></alias-all>
 		<alias name="processorSupplierName" entity-alias="processorSupplierV" field="name"></alias>

@@ -128,7 +128,7 @@
 		<member-entity entity-alias="ProductInwarehouseEntryV" entity-name="ProductInwarehouseEntry"></member-entity>
 		<member-entity entity-alias="workshopWorkshopV" entity-name="Workshop"></member-entity>
 		<member-entity entity-alias="warehouseWarehouseV" entity-name="Warehouse"></member-entity>
-		<member-entity entity-alias="materialMaterialV" entity-name="Material"></member-entity>
+		<member-entity entity-alias="materialMaterialV" entity-name="TMaterial"></member-entity>
 		<member-entity entity-alias="unitUnitV" entity-name="Unit"></member-entity>
 		<alias-all entity-alias="ProductInwarehouseEntryV"></alias-all>
 		<alias name="workshopWorkshopName" entity-alias="workshopWorkshopV" field="name"></alias>

@@ -138,7 +138,7 @@
 	<view-entity entity-name="WorkshopReturnProductEntryView" package-name="org.ofbiz.scm.WorkshopReturnProduct" title="WorkshopReturnProductEntryView  Entity">
 		<member-entity entity-alias="WorkshopReturnProductEntryV" entity-name="WorkshopReturnProductEntry"></member-entity>
 		<member-entity entity-alias="warehouseWarehouseV" entity-name="Warehouse"></member-entity>
-		<member-entity entity-alias="materialMaterialV" entity-name="Material"></member-entity>
+		<member-entity entity-alias="materialMaterialV" entity-name="TMaterial"></member-entity>
 		<member-entity entity-alias="unitUnitV" entity-name="Unit"></member-entity>
 		<member-entity entity-alias="MaterialBomV" entity-name="MaterialBom"></member-entity>
 		<alias-all entity-alias="WorkshopReturnProductEntryV"></alias-all>
