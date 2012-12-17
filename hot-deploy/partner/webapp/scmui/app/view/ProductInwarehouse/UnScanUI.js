@@ -57,7 +57,7 @@ Ext.define('SCM.view.ProductInwarehouse.UnScanUI', {
 													title : '',
 													region : 'center',
 													multiSelect : true,
-													store : Ext.data.StoreManager.lookup('PIHEntryStore'),
+													store : 'ProductInwarehouse.ProductInwarehouseEntryExtStore',
 													columns : [{
 																header : '序号',
 																xtype : 'rownumberer',
