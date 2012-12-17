@@ -122,7 +122,7 @@
 	<view-entity entity-name="ConsignWarehousingEntryView" package-name="org.ofbiz.scm.ConsignWarehousing" title="ConsignWarehousingEntryView  Entity">
 		<member-entity entity-alias="ConsignWarehousingEntryV" entity-name="ConsignWarehousingEntry"></member-entity>
 		<member-entity entity-alias="warehouseWarehouseV" entity-name="Warehouse"></member-entity>
-		<member-entity entity-alias="materialMaterialV" entity-name="Material"></member-entity>
+		<member-entity entity-alias="materialMaterialV" entity-name="TMaterial"></member-entity>
 		<member-entity entity-alias="unitUnitV" entity-name="Unit"></member-entity>
 		<member-entity entity-alias="MaterialBomV" entity-name="MaterialBom"></member-entity>
 		<alias-all entity-alias="ConsignWarehousingEntryV"></alias-all>

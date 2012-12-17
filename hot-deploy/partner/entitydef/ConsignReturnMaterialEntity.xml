@@ -111,7 +111,7 @@
 	<view-entity entity-name="ConsignReturnMaterialEntryView" package-name="org.ofbiz.scm.ConsignReturnMaterial" title="ConsignReturnMaterialEntryView  Entity">
 		<member-entity entity-alias="ConsignReturnMaterialEntryV" entity-name="ConsignReturnMaterialEntry"></member-entity>
 		<member-entity entity-alias="warehouseWarehouseV" entity-name="Warehouse"></member-entity>
-		<member-entity entity-alias="materialMaterialV" entity-name="Material"></member-entity>
+		<member-entity entity-alias="materialMaterialV" entity-name="TMaterial"></member-entity>
 		<member-entity entity-alias="unitUnitV" entity-name="Unit"></member-entity>
 		<alias-all entity-alias="ConsignReturnMaterialEntryV"></alias-all>
 		<alias name="warehouseWarehouseName" entity-alias="warehouseWarehouseV" field="name"></alias>

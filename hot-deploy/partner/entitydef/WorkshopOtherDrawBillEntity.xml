@@ -115,7 +115,7 @@
 	<view-entity entity-name="WorkshopOtherDrawBillEntryView" package-name="org.ofbiz.scm.WorkshopOtherDrawBill" title="WorkshopOtherDrawBillEntryView  Entity">
 		<member-entity entity-alias="WorkshopOtherDrawBillEntryV" entity-name="WorkshopOtherDrawBillEntry"></member-entity>
 		<member-entity entity-alias="warehouseWarehouseV" entity-name="Warehouse"></member-entity>
-		<member-entity entity-alias="materialMaterialV" entity-name="Material"></member-entity>
+		<member-entity entity-alias="materialMaterialV" entity-name="TMaterial"></member-entity>
 		<member-entity entity-alias="unitUnitV" entity-name="Unit"></member-entity>
 		<alias-all entity-alias="WorkshopOtherDrawBillEntryV"></alias-all>
 		<alias name="warehouseWarehouseName" entity-alias="warehouseWarehouseV" field="name"></alias>

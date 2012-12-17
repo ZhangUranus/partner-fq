@@ -55,7 +55,7 @@
 		<member-entity entity-alias="issuerSystemUserV" entity-name="SystemUser"></member-entity>
 		<member-entity entity-alias="submitterSystemUserV" entity-name="SystemUser"></member-entity>
 		<member-entity entity-alias="MaterialBomV" entity-name="MaterialBom"></member-entity>
-		<member-entity entity-alias="processedMaterialMaterialV" entity-name="Material"></member-entity>
+		<member-entity entity-alias="processedMaterialMaterialV" entity-name="TMaterial"></member-entity>
 		<alias-all entity-alias="ConsignDrawMaterialV"></alias-all>
 		<alias name="materialMaterialId" entity-alias="ConsignDrawMaterialEntryV" field="materialMaterialId"></alias>
 		<alias name="processorSupplierName" entity-alias="processorSupplierV" field="name"></alias>
@@ -97,7 +97,7 @@
 		<member-entity entity-alias="issuerSystemUserV" entity-name="SystemUser"></member-entity>
 		<member-entity entity-alias="submitterSystemUserV" entity-name="SystemUser"></member-entity>
 		<member-entity entity-alias="MaterialBomV" entity-name="MaterialBom"></member-entity>
-		<member-entity entity-alias="processedMaterialMaterialV" entity-name="Material"></member-entity>
+		<member-entity entity-alias="processedMaterialMaterialV" entity-name="TMaterial"></member-entity>
 		<alias-all entity-alias="ConsignDrawMaterialV"></alias-all>
 		<alias name="processorSupplierName" entity-alias="processorSupplierV" field="name"></alias>
 		<alias name="issuerSystemUserName" entity-alias="issuerSystemUserV" field="name"></alias>
@@ -133,7 +133,7 @@
 	<view-entity entity-name="ConsignDrawMaterialEntryView" package-name="org.ofbiz.scm.ConsignDrawMaterial" title="ConsignDrawMaterialEntryView  Entity">
 		<member-entity entity-alias="ConsignDrawMaterialEntryV" entity-name="ConsignDrawMaterialEntry"></member-entity>
 		<member-entity entity-alias="warehouseWarehouseV" entity-name="Warehouse"></member-entity>
-		<member-entity entity-alias="materialMaterialV" entity-name="Material"></member-entity>
+		<member-entity entity-alias="materialMaterialV" entity-name="TMaterial"></member-entity>
 		<member-entity entity-alias="unitUnitV" entity-name="Unit"></member-entity>
 		<alias-all entity-alias="ConsignDrawMaterialEntryV"></alias-all>
 		<alias name="warehouseWarehouseName" entity-alias="warehouseWarehouseV" field="name"></alias>
