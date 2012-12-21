@@ -57,15 +57,15 @@
 		<member-entity entity-alias="ProductOutwarehouseV" entity-name="ProductOutwarehouse"></member-entity>
 		<member-entity entity-alias="ProductOutwarehouseEntryV" entity-name="ProductOutwarehouseEntry"></member-entity>
 		<member-entity entity-alias="materialMaterialV" entity-name="TMaterial"></member-entity>
-		<member-entity entity-alias="inspectorSystemUserV" entity-name="SystemUser"></member-entity>
-		<member-entity entity-alias="submitterSystemUserV" entity-name="SystemUser"></member-entity>
+		<member-entity entity-alias="inspectorSystemUserV" entity-name="TSystemUser"></member-entity>
+		<member-entity entity-alias="submitterSystemUserV" entity-name="TSystemUser"></member-entity>
 		<alias-all entity-alias="ProductOutwarehouseV"></alias-all>
 		<alias name="materialMaterialId" entity-alias="ProductOutwarehouseEntryV" field="materialMaterialId"></alias>
-		<alias name="inspectorSystemUserName" entity-alias="inspectorSystemUserV" field="name"></alias>
-		<alias name="submitterSystemUserName" entity-alias="submitterSystemUserV" field="name"></alias>
+		<alias name="inspectorSystemUserName" entity-alias="inspectorSystemUserV" field="userName"></alias>
+		<alias name="submitterSystemUserName" entity-alias="submitterSystemUserV" field="userName"></alias>
 		
 		<!-- 查询条件需要取物料编码、物料名称，在查询数据中需要distinct -->
-		<view-link entity-alias="ProductOutwarehouseV" rel-entity-alias="ProductOutwarehouseEntryV" rel-optional="true">
+		<view-link entity-alias="ProductOutwarehouseV" rel-entity-alias="ProductOutwarehouseEntryV" rel-optional="false">
 			<key-map field-name="id" rel-field-name="parentId" />
 		</view-link>
 		<view-link entity-alias="ProductOutwarehouseEntryV" rel-entity-alias="materialMaterialV" rel-optional="true">
