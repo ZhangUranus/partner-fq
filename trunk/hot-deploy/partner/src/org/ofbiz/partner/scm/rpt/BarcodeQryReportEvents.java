@@ -100,7 +100,6 @@ public class BarcodeQryReportEvents {
 			throw new Exception("日期不能为空！");
 		}
 		
-		
 		StringBuffer  sql=new StringBuffer();
 		sql.append("SELECT \r\n");
 		sql.append("noti.DELIVER_NUMBER DELIVERY_NUMBER, \r\n");
@@ -116,7 +115,7 @@ public class BarcodeQryReportEvents {
 		sql.append("inner join product_out_notification noti on noti.good_number=entry.good_number \r\n");
 		sql.append("inner join t_material material on entry.material_material_id=material.id \r\n");
 		sql.append("inner join product_map proMap on proMap.material_id=entry.material_material_id \r\n");
-		sql.append("where head.status=4 and entry.is_return<>'Y' and head.biz_date>='"+startDate+"' and head.biz_date<='"+endDate+"' \r\n");
+		sql.append("where head.status=4 and (entry.is_return is null or entry.is_return<>'Y') and head.biz_date>='"+startDate+"' and head.biz_date<='"+endDate+"' \r\n");
 		if(request.getParameter("deliveryNumber")!=null&&request.getParameter("deliveryNumber").trim().length()>0){
 			sql.append("and noti.DELIVER_NUMBER like '%"+request.getParameter("deliveryNumber")+"%' \r\n");
 		}
@@ -125,4 +124,6 @@ public class BarcodeQryReportEvents {
 		}
 		return sql.toString();
 	}
+	
+	
 }
