@@ -82,19 +82,19 @@
 	<view-entity entity-name="ProductOutNotificationView" package-name="org.ofbiz.scm.ProductOutNotification" title="ProductOutNotificationView  Entity">
 		<member-entity entity-alias="productOutNotificationV" entity-name="ProductOutNotification"></member-entity>
 		<member-entity entity-alias="productOutNotificationEntryV" entity-name="ProductOutNotificationEntry"></member-entity>
-		<member-entity entity-alias="submitterSystemUserV" entity-name="SystemUser"></member-entity>
+		<member-entity entity-alias="submitterSystemUserV" entity-name="TSystemUser"></member-entity>
 		<member-entity entity-alias="customerV" entity-name="Customer"></member-entity>
 		<member-entity entity-alias="warehouseV" entity-name="Warehouse"></member-entity>
 		<alias-all entity-alias="productOutNotificationV"></alias-all>
 		<alias name="materialId" entity-alias="productOutNotificationEntryV" field="materialId"></alias>
-		<alias name="submitterSystemUserName" entity-alias="submitterSystemUserV" field="name"></alias>
+		<alias name="submitterSystemUserName" entity-alias="submitterSystemUserV" field="userName"></alias>
 		<alias name="customerNumber" entity-alias="customerV" field="number"></alias>
 		<alias name="customerName" entity-alias="customerV" field="name"></alias>
 		<alias name="customerContractor" entity-alias="customerV" field="contractor"></alias>
 		<alias name="customerPhone" entity-alias="customerV" field="phone"></alias>
 		<alias name="customerAddress" entity-alias="customerV" field="address"></alias>
 		<alias name="warehouseName" entity-alias="warehouseV" field="name"></alias>
-		<view-link entity-alias="productOutNotificationV" rel-entity-alias="productOutNotificationEntryV" rel-optional="true">
+		<view-link entity-alias="productOutNotificationV" rel-entity-alias="productOutNotificationEntryV" rel-optional="false">
 			<key-map field-name="id" rel-field-name="parentId" />
 		</view-link>
 		<view-link entity-alias="productOutNotificationV" rel-entity-alias="submitterSystemUserV" rel-optional="true">
