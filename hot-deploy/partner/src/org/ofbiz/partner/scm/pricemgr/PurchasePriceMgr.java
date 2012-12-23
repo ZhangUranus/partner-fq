@@ -43,7 +43,7 @@ public class PurchasePriceMgr {
 	}
 
 	/**
-	 * 更新金额、数量
+	 * 更新金额、数量（采购入库单）
 	 * @param supplierId
 	 * @param materialId
 	 * @param volume
@@ -112,6 +112,60 @@ public class PurchasePriceMgr {
 				delegator.create(gv);
 			}
 		}
+	}
+	/**
+	 * 更新金额、数量（采购单）
+	 * @param supplierId
+	 * @param materialId
+	 * @param volume
+	 * @param totalsum
+	 * @throws Exception
+	 */
+	public void updateBillValue(String supplierId, String materialId, BigDecimal volume, BigDecimal price, boolean isOut, boolean isCancel) throws Exception {
+		synchronized (updateLock) {
+			if (supplierId == null || materialId == null || volume == null || price == null) {
+				throw new Exception("supplierId or materialId or volume or price is null");
+			}
+			// 查找供应商结存对数表
+			GenericValue gv = delegator.findOne("CurPurchasePrice", UtilMisc.toMap("year", new Integer(year), "month", new Integer(month), "supplierId", supplierId, "materialId", materialId), false);
+			if (gv != null) {
+				BigDecimal oldVolume = gv.getBigDecimal("billVolume");
+				if( oldVolume==null ){
+					oldVolume = BigDecimal.ZERO;
+				}
+				if(isOut){
+					volume = volume.negate();
+				}
+				BigDecimal entrySum = gv.getBigDecimal("billEntrySum");
+				if(entrySum == null){
+					entrySum = BigDecimal.ZERO;
+				}
+				BigDecimal curInSum = price.multiply(volume);
+				gv.set("billEntrySum", entrySum.add(curInSum));
+				
+				BigDecimal tempVolume = oldVolume.add(volume);
+				gv.set("billVolume", tempVolume);
+				
+				delegator.store(gv);
+			} else {// 新增记录
+				BigDecimal billEntrySum = BigDecimal.ZERO;//本期收入金额
+				
+				gv = delegator.makeValue("CurPurchasePrice");
+				gv.set("year", year);
+				gv.set("month", month);
+				gv.set("supplierId", supplierId);
+				gv.set("materialId", materialId);
+				
+				if(isOut){
+					volume = volume.negate();
+				}
+				gv.set("billVolume", volume);
 
+				BigDecimal curInSum = price.multiply(volume);
+				gv.set("billEntrySum", billEntrySum.add(curInSum));
+				
+				delegator.create(gv);
+			}
+		}
 	}
 }
