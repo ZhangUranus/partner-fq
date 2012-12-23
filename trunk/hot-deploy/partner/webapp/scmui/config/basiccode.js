@@ -34,6 +34,13 @@ SCM.store.basiccode.validRenderer = function(value) {
 		return "否"
 };
 
+SCM.store.basiccode.validColorRenderer = function(value) {
+	if (value == "Y") {
+		return "<font color='green'><b>是</b></font>";
+	} else
+		return "<font color='red'><b>否</b></font>";
+};
+
 SCM.store.basiccode.billStatusStore = new Ext.data.Store({
 			fields : ['id', 'name'],
 			data : [{

@@ -59,7 +59,7 @@ Ext.define('SCM.view.ProductOutwarehouse.NotificationDetailListUI', {
 													text : '已出仓数量'
 												}, {
 													xtype : 'gridcolumn',
-													renderer : SCM.store.basiccode.validRenderer,
+													renderer : SCM.store.basiccode.validColorRenderer,
 													dataIndex : 'isFinished',
 													width : 80,
 													text : '是否完成'
