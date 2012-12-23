@@ -193,7 +193,7 @@ Ext.define('SCM.view.rpt.pmr.ListUI', {
 										            }
 												}, {
 													xtype : 'numbercolumn',
-													dataIndex : 'ENTRY_SUM',
+													dataIndex : 'BILL_ENTRY_SUM',
 													width : 100,
 													text : '采购金额',
 													summaryType: 'sum',
@@ -202,9 +202,27 @@ Ext.define('SCM.view.rpt.pmr.ListUI', {
 										            }
 												}, {
 													xtype : 'numbercolumn',
-													dataIndex : 'VOLUME',
+													dataIndex : 'BILL_VOLUME',
 													width : 100,
 													text : '采购数量',
+													summaryType: 'sum',
+										            summaryRenderer: function(value, summaryData, dataIndex) {
+										                return '<font size=2 color=blue><b>' + Ext.util.Format.number(value,'0,000.0000') + '</b></font>';
+										            }
+												}, {
+													xtype : 'numbercolumn',
+													dataIndex : 'ENTRY_SUM',
+													width : 100,
+													text : '采购单发生金额',
+													summaryType: 'sum',
+										            summaryRenderer: function(value, summaryData, dataIndex) {
+										                return '<font size=2 color=blue><b>' + Ext.util.Format.number(value,'0,000.0000') + '</b></font>';
+										            }
+												}, {
+													xtype : 'numbercolumn',
+													dataIndex : 'VOLUME',
+													width : 100,
+													text : '采购单发生数量',
 													summaryType: 'sum',
 										            summaryRenderer: function(value, summaryData, dataIndex) {
 										                return '<font size=2 color=blue><b>' + Ext.util.Format.number(value,'0,000.0000') + '</b></font>';
