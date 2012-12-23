@@ -17,6 +17,8 @@ import org.ofbiz.entity.transaction.GenericTransactionException;
 import org.ofbiz.entity.transaction.TransactionUtil;
 import org.ofbiz.partner.scm.common.BillBaseEvent;
 import org.ofbiz.partner.scm.common.CommonEvents;
+import org.ofbiz.partner.scm.pricemgr.BillType;
+import org.ofbiz.partner.scm.pricemgr.BizStockImpFactory;
 import org.ofbiz.partner.scm.pricemgr.Utils;
 import org.ofbiz.partner.scm.purplan.PurPlanBalance;
 
@@ -151,8 +153,12 @@ public class PurchaseBillBizEvents {
 					for (GenericValue v : entryList) {
 						PurPlanBalance.getInstance().updateInWarehouse(supplierId, v.getString("materialMaterialId"), v.getBigDecimal("volume"));
 					}
+					
+					//执行业务类
+					BizStockImpFactory.getBizStockImp(BillType.PurchaseBill).updateStock(billHead, false, false);
 				}
 			}
+			
 			
 			BillBaseEvent.auditBill(request, response);// 更新单据状态
 			
@@ -208,6 +214,9 @@ public class PurchaseBillBizEvents {
 						// 每个记录入库数量需要转换为负数
 						PurPlanBalance.getInstance().updateInWarehouse(supplierId, v.getString("materialMaterialId"), BigDecimal.ZERO.subtract(v.getBigDecimal("volume")));
 					}
+					
+					//执行业务类
+					BizStockImpFactory.getBizStockImp(BillType.PurchaseBill).updateStock(billHead, true, false);
 				}
 			}
 			
