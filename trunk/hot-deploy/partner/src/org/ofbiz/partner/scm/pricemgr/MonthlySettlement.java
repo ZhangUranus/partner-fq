@@ -223,6 +223,9 @@ public class MonthlySettlement {
 		if (checkExist("PurchaseReturn", cond))
 			throw new Exception("本期间存在保存状态的采购退库单，不能进行结算！！");
 
+		if (checkExist("PurchaseBill", cond))
+			throw new Exception("本期间存在保存状态的采购单，不能进行结算！！");
+		
 		if (checkExist("ConsignDrawMaterial", cond))
 			throw new Exception("本期间保存提交状态的委外领料单，不能进行结算！！");
 
@@ -303,6 +306,9 @@ public class MonthlySettlement {
 
 		// 采购退库
 		mergeCompareValue("PurchaseReturn", composeCond, allBillList);
+		
+		// 采购单
+		mergeCompareValue("PurchaseBill", composeCond, allBillList);
 
 		// 委外领料
 		mergeCompareValue("ConsignDrawMaterial", composeCond, allBillList);
@@ -452,6 +458,9 @@ public class MonthlySettlement {
 		} else if (en.equalsIgnoreCase("PurchaseReturn")) {// 采购退货
 			return true;
 
+		} else if (en.equalsIgnoreCase("PurchaseBill")) {// 采购单
+			return true;
+
 		} else if (en.equalsIgnoreCase("ConsignDrawMaterial")) {// 委外领料
 			return true;
 
@@ -521,6 +530,9 @@ public class MonthlySettlement {
 
 		} else if (en.equalsIgnoreCase("PurchaseReturn")) {// 采购退货
 			return BizStockImpFactory.getBizStockImp(BillType.PurchaseReturn);
+
+		} else if (en.equalsIgnoreCase("PurchaseBill")) {// 采购单
+			return BizStockImpFactory.getBizStockImp(BillType.PurchaseBill);
 
 		} else if (en.equalsIgnoreCase("ConsignDrawMaterial")) {// 委外领料
 			return BizStockImpFactory.getBizStockImp(BillType.ConsignDrawMaterial);
@@ -771,8 +783,8 @@ public class MonthlySettlement {
 		if (checkExist("PurchaseWarehousing", cond))
 			throw new Exception("本期间存在提交状态的采购入库单，不能进行反结算！！");
 
-		if (checkExist("PurchaseReturn", cond))
-			throw new Exception("本期间存在提交状态的采购退库单，不能进行反结算！！");
+		if (checkExist("PurchaseBill", cond))
+			throw new Exception("本期间存在提交状态的采购单，不能进行反结算！！");
 
 		if (checkExist("ConsignDrawMaterial", cond))
 			throw new Exception("本期间存在提交状态的委外领料单，不能进行反结算！！");

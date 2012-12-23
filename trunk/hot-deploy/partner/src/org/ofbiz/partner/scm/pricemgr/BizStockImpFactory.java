@@ -19,6 +19,7 @@ import org.ofbiz.partner.scm.pricemgr.bizStockImp.WorkshopReturnMaterialBizImp;
 import org.ofbiz.partner.scm.pricemgr.bizStockImp.WorkshopReturnProductBizImp;
 import org.ofbiz.partner.scm.pricemgr.bizStockImp.WorkshopStockAdjustBizImp;
 import org.ofbiz.partner.scm.pricemgr.bizStockImp.WorkshopWarehousingBizImp;
+import org.ofbiz.partner.scm.pricemgr.bizStockImp.PurchaseBillBizImp;
 
 public class BizStockImpFactory {
 	private static IBizStock inspectiveBizImp =new InspectiveBizImp();
@@ -40,6 +41,7 @@ public class BizStockImpFactory {
 	private static IBizStock productOutwarehouseBizImp =new ProductOutwarehouseBizImp();
 	private static IBizStock productManualOutwarehouseBizImp =new ProductManualOutwarehouseBizImp();
 	private static IBizStock productReturnBizImp =new ProductReturnBizImp();
+	private static IBizStock purchaseBillBizImp =new PurchaseBillBizImp();
 	public static IBizStock getBizStockImp(BillType billType) throws Exception{
 		switch (billType) {
 		case PurchaseWarehouse:
@@ -80,6 +82,8 @@ public class BizStockImpFactory {
 			return productManualOutwarehouseBizImp;
 		case ProductReturn:
 			return productReturnBizImp;
+		case PurchaseBill:
+				return purchaseBillBizImp;
 		default:
 			throw new Exception("不支持该类型接口实现");
 		}
