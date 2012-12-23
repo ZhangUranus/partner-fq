@@ -35,6 +35,12 @@ Ext.define('SCM.model.rpt.PurchaseMatchingReportModel', {
 						name : 'OUT_VOLUME',
 						type : 'float'
 					}, {
+						name : 'BILL_ENTRY_SUM',
+						type : 'float'
+					}, {
+						name : 'BILL_VOLUME',
+						type : 'float'
+					}, {
 						name : 'ENTRY_SUM',
 						type : 'float'
 					}, {
