@@ -117,6 +117,21 @@ Ext.define('SCM.view.rpt.psr.ListUI', {
 																text : '产品数'
 															}]
 												}, {
+													text : '当前结存',
+													columns : [{
+																xtype : 'numbercolumn',
+																dataIndex : 'VOLUME',
+																width : 80,
+																sortable : true,
+																text : '板数'
+															}, {
+																xtype : 'numbercolumn',
+																dataIndex : 'PRODUCT_VOLUME',
+																width : 80,
+																sortable : true,
+																text : '产品数'
+															}]
+												}, {
 													text : '当月累计',
 													columns : [{
 																xtype : 'numbercolumn',

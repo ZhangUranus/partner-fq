@@ -46,6 +46,12 @@ Ext.define('SCM.model.rpt.ProductStaticsReportModel', {
 					}, {
 						name : 'THIS_MONTH_OUT_PRODUCT_VOLUME',
 						type : 'float'
+					}, {
+						name : 'VOLUME',
+						type : 'float'
+					}, {
+						name : 'PRODUCT_VOLUME',
+						type : 'float'
 					}],
 			proxy : {
 				type : 'jsonajax',
