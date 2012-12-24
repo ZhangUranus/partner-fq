@@ -1,6 +1,6 @@
 Ext.define('SCM.controller.ProductOutVerify.ProductOutVerifyController', {
 			extend : 'Ext.app.Controller',
-			mixins : [ 'SCM.extend.controller.BillCommonController'],
+			mixins : ['SCM.extend.controller.BillCommonController'],
 			views : ['ProductOutVerify.ListUI', 'ProductOutVerify.EditUI'],
 			stores : ['ProductOutVerify.ProductOutVerifyEditStore', 'ProductOutVerify.ProductOutVerifyEditEntryStore', 'ProductOutVerify.DeliverNumberStore'],
 			requires : ['SCM.model.ProductOutVerify.ProductOutVerifyActionModel'],
@@ -78,7 +78,7 @@ Ext.define('SCM.controller.ProductOutVerify.ProductOutVerifyController', {
 				this.searchDeliverNum = this.listContainer.down('combogrid[name=deliverNumber]');
 				this.searchMaterialId = this.listContainer.down('combogrid[name=searchMaterialId]');
 				this.searchStatus = this.listContainer.down('combobox[name=status]');
-				
+
 				this.MaterialStore = Ext.data.StoreManager.lookup('MAllStore');
 			},
 
@@ -87,42 +87,41 @@ Ext.define('SCM.controller.ProductOutVerify.ProductOutVerifyController', {
 			 * 
 			 */
 			refreshRecord : function() {
-				this.listPanel.store.getProxy().extraParams.bizDate=null;
-				this.listPanel.store.getProxy().extraParams.deliverNum=null;
-				
-				if(this.searchBeginDate.getRawValue()){
+				this.listPanel.store.getProxy().extraParams.bizDate = null;
+				this.listPanel.store.getProxy().extraParams.deliverNum = null;
+
+				if (this.searchBeginDate.getRawValue()) {
 					this.listPanel.store.getProxy().extraParams.bizBeginDate = this.searchBeginDate.getRawValue();
 				}
-				if(this.searchEndDate.getRawValue()){
+				if (this.searchEndDate.getRawValue()) {
 					this.listPanel.store.getProxy().extraParams.bizEndDate = this.searchEndDate.getRawValue();
 				}
-				if(!Ext.isEmpty(this.searchDeliverNum.getRawValue())){
+				if (!Ext.isEmpty(this.searchDeliverNum.getRawValue())) {
 					this.listPanel.store.getProxy().extraParams.deliverNum = this.searchDeliverNum.getRawValue();
 				}
-				if(!Ext.isEmpty(this.searchMaterialId.getRawValue())){
+				if (!Ext.isEmpty(this.searchMaterialId.getRawValue())) {
 					this.listPanel.store.getProxy().extraParams.searchMaterialId = this.searchMaterialId.getRawValue();
 				}
 				if ((!Ext.isEmpty(this.searchStatus.getValue())) || this.searchStatus.getValue() == 0) {
 					this.listPanel.store.getProxy().extraParams.status = this.searchStatus.getValue();
 				}
-				
-				
+
 				this.listPanel.store.loadPage(1);
-				
+
 				this.detailPanel.store.removeAll();
 				this.changeComponentsState();
 			},
-			
-			//显示分录
+
+			// 显示分录
 			showDetail : function(me, record, index, eOpts) {
-				if (record != null && record.get("deliverNumber") != null&&record.get("materialId") != null) {
+				if (record != null && record.get("deliverNumber") != null && record.get("materialId") != null) {
 					var entryStore = this.detailPanel.store;
 					if (entryStore != null) {
 						entryStore.clearFilter(true);
 						entryStore.filter([{
 									property : "deliverNumber",
 									value : record.get("deliverNumber")
-								},{
+								}, {
 									property : "parentMaterialId",
 									value : record.get("materialId")
 								}]);
@@ -131,7 +130,7 @@ Ext.define('SCM.controller.ProductOutVerify.ProductOutVerifyController', {
 				}
 				this.changeComponentsState();
 			},
-			
+
 			/**
 			 * 根据用户权限初始化按钮状态
 			 * 
@@ -148,7 +147,7 @@ Ext.define('SCM.controller.ProductOutVerify.ProductOutVerifyController', {
 					this.deleteButton.setVisible(false);
 				}
 			},
-			
+
 			/**
 			 * 点击删除按钮
 			 * 
@@ -168,28 +167,28 @@ Ext.define('SCM.controller.ProductOutVerify.ProductOutVerifyController', {
 					if (id == 'yes') {
 						/* 判断是否可提交 */
 						if (me.hasSubmitLock()) {
-							me.getSubmitLock();//获取提交锁
+							me.getSubmitLock();// 获取提交锁
 							Ext.Ajax.request({
-								scope : me,
-								url : "../../scm/control/removeVerifyHead",
-								timeout : SCM.shortTimes,
-								params : {
-									deliverNumber : record.get("deliverNumber"),
-									materialId : record.get("materialId")
-								},
-								success : function(response, option) {
-									if (response.responseText.length < 1) {
-										showError('检查出货通知单状态出错！');
-									}
-									var result = Ext.decode(response.responseText)
-									if (result.success) {
-										showInfo('删除成功！');
-									} else {
-										showError('检查出货通知单状态出错！');
-									}
-									me.releaseSubmitLock();
-								}
-							});
+										scope : me,
+										url : "../../scm/control/removeVerifyHead",
+										timeout : SCM.shortTimes,
+										params : {
+											deliverNumber : record.get("deliverNumber"),
+											materialId : record.get("materialId")
+										},
+										success : function(response, option) {
+											if (response.responseText.length < 1) {
+												showError('检查出货通知单状态出错！');
+											}
+											var result = Ext.decode(response.responseText)
+											if (result.success) {
+												showInfo('删除成功！');
+											} else {
+												showError('检查出货通知单状态出错！');
+											}
+											me.releaseSubmitLock();
+										}
+									});
 							me.refreshRecord();
 						} else {
 							showWarning('上一次操作还未完成，请稍等！');
@@ -197,7 +196,7 @@ Ext.define('SCM.controller.ProductOutVerify.ProductOutVerifyController', {
 					}
 				}
 			},
-			
+
 			/**
 			 * 编辑事件
 			 * 
@@ -223,7 +222,7 @@ Ext.define('SCM.controller.ProductOutVerify.ProductOutVerifyController', {
 				editStore.load({
 							scope : this,
 							callback : function(records, operation, success) {
-								//this.editForm.loadRecord(records[0]);
+								// this.editForm.loadRecord(records[0]);
 								var entryStore = this.editEntry.store;
 								entryStore.removeAll();// 清除记录
 								entryStore.clearFilter();
@@ -239,7 +238,7 @@ Ext.define('SCM.controller.ProductOutVerify.ProductOutVerifyController', {
 							}
 						});
 			},
-			
+
 			/**
 			 * 根据状态设置编辑界面状态
 			 * 
@@ -259,7 +258,7 @@ Ext.define('SCM.controller.ProductOutVerify.ProductOutVerifyController', {
 				this.submitEditButton.setVisible(false);
 				this.clearButton.setVisible(false);
 			},
-			
+
 			/**
 			 * 保存事件
 			 * 
@@ -272,25 +271,34 @@ Ext.define('SCM.controller.ProductOutVerify.ProductOutVerifyController', {
 				if (!this.isValidate()) {
 					return;
 				}
-				
+
 				var entryStore = me.editEntry.store;
-				var record=me.editForm.getRecord();
+				var record = me.editForm.getRecord();
 				record.set(values);
-				
+
 				var oneEntryModel = Ext.create('ProductOutVerifyActionModel');
 				oneEntryModel = processOneEntryModel(oneEntryModel, record, entryStore);
 				oneEntryModel.save({
-						scope:me,
-					    success : function(model,reponse) {
-						        showInfo('保存成功');
-				 				me.refreshRecord();
-				 				if (me.win.isVisible()) {
+							scope : me,
+							success : function(model, reponse) {
+								var result = Ext.decode(reponse.response.responseText);
+								if (result.success) {
+									if(result.result==-1){
+										showInfo('保存成功，订单总数量<font color="red"><b>小于</b></font>已打板总数量！');
+									}else if(result.result==1){
+										showInfo('保存成功，订单总数量<font color="red"><b>大于</b></font>已打板总数量！');
+									}else{
+										showInfo('保存成功，订单总数量<font color="green"><b>等于</b></font>已打板总数量！');
+									}
+								}
+								me.refreshRecord();
+								if (me.win.isVisible()) {
 									me.win.close();
 								}
-						}
-				});
+							}
+						});
 			},
-			
+
 			// 新增分录
 			addLine : function(button) {
 				var entryRecord = Ext.create(this.entryModelName);
@@ -298,27 +306,27 @@ Ext.define('SCM.controller.ProductOutVerify.ProductOutVerifyController', {
 				// 设置父id
 				entryRecord.set('deliverNumber', this.editForm.getValues().deliverNumber);
 				entryRecord.set('parentMaterialId', this.editForm.getValues().materialId);
-				
-				entryRecord.set('sort', this.editEntry.store.getCount()+1);
+
+				entryRecord.set('sort', this.editEntry.store.getCount() + 1);
 				this.editEntry.store.add(entryRecord);
 			},
 			// 删除分录
 			deleteLine : function(button) {
 				this.editEntry.store.remove(this.getSelectedEntry());
 			},
-			
-			//导出单据
-			exportBill : function(button){
-				if(!(this.searchBeginDate.getRawValue()&&this.searchEndDate.getRawValue())){
+
+			// 导出单据
+			exportBill : function(button) {
+				if (!(this.searchBeginDate.getRawValue() && this.searchEndDate.getRawValue())) {
 					showError('请输入导出日期范围');
-					return ;
+					return;
 				}
-				
-				Ext.Msg.confirm('提示', '确定导出' + this.searchBeginDate.getRawValue() +'至'+this.searchEndDate.getRawValue()+ '所有记录 ？', confirmChange, this);
+
+				Ext.Msg.confirm('提示', '确定导出' + this.searchBeginDate.getRawValue() + '至' + this.searchEndDate.getRawValue() + '所有记录 ？', confirmChange, this);
 				function confirmChange(id) {
 					if (id == 'yes') {
-						window.location.href = '../scm/control/exportVerifyBill?fromDate='+this.searchBeginDate.getRawValue()+'&endDate='+this.searchEndDate.getRawValue();
-						
+						window.location.href = '../scm/control/exportVerifyBill?fromDate=' + this.searchBeginDate.getRawValue() + '&endDate=' + this.searchEndDate.getRawValue();
+
 					}
 				}
 			},
@@ -328,6 +336,5 @@ Ext.define('SCM.controller.ProductOutVerify.ProductOutVerifyController', {
 					return selMod.getLastSelected();
 				}
 			}
-			
-			
+
 		});
