@@ -529,7 +529,7 @@ Ext.define('SCM.controller.ProductOutwarehouse.ProductOutwarehouseController', {
 				if (!this.winNotiDetailList || this.winNotiDetailList.isDestroyed) {
 					this.winNotiDetailList = Ext.widget('ProductOutwarehouseNotificationDetailList');
 					this.notiDetailListGrid = this.winNotiDetailList.down('gridpanel');
-					this.deliverNumberNotiField = this.winNotiDetailList.down('textfield[name=deliverNumber]');
+					this.deliverNumberNotiField = this.winNotiDetailList.down('combogrid[name=deliverNumber]');
 					this.searchStartDateNotiDetail = this.winNotiDetailList.down('datefield[name=searchStartDate]');
 					this.searchEndDateNotiDetail = this.winNotiDetailList.down('datefield[name=searchEndDate]');
 				}

@@ -94,10 +94,26 @@ Ext.define('SCM.view.ProductOutwarehouse.NotificationDetailListUI', {
 																value : today,
 																editable : false
 															}, {
-																xtype : 'textfield',
+																xtype : 'combogrid',
 																name : 'deliverNumber',
-																minWidth : 200,
-																emptyText : '请输入单号'
+																width : 150,
+																labelWidth : 40,
+																fieldLabel : '单号',
+																valueField : 'number',
+																displayField : 'number',
+																store : Ext.data.StoreManager.lookup('DNSComboStore'),
+																matchFieldWidth : false,
+																emptyText : '所有单号',
+																listConfig : {
+																	width : 300,
+																	height : SCM.MaxSize.COMBOGRID_HEIGHT,
+																	columns : [{
+																				header : '单号',
+																				dataIndex : 'number',
+																				width : 250,
+																				hideable : false
+																			}]
+																}
 															}, {
 																text : '查询',
 																iconCls : 'system-search',
