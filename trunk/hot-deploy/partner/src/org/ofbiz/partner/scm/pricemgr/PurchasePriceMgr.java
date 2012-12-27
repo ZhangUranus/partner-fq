@@ -59,6 +59,9 @@ public class PurchasePriceMgr {
 			GenericValue gv = delegator.findOne("CurPurchasePrice", UtilMisc.toMap("year", new Integer(year), "month", new Integer(month), "supplierId", supplierId, "materialId", materialId), false);
 			if (gv != null) {
 				BigDecimal oldVolume = gv.getBigDecimal("volume");
+				if(oldVolume == null){
+					oldVolume = BigDecimal.ZERO;
+				}
 				if((isOut && !isCancel) || (!isOut && isCancel)){
 					BigDecimal outVolume = gv.getBigDecimal("outVolume");
 					if(outVolume == null){

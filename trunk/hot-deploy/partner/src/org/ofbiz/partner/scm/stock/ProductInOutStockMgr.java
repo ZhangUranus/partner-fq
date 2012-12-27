@@ -61,7 +61,8 @@ public class ProductInOutStockMgr {
 		/* 1. 查询是否存在该物料的记录 */
 		GenericValue record = delegator.findOne("ProInOutDateDetail", false, "materialId", materialId, "tradDate", sdf.format(date), "qantity", qantity);
 		
-		BigDecimal curPreMonthVolume = BigDecimal.ZERO;
+		// 20121227：报表中的上月数量在库存表中获取cur_material_balance，字段preMonthVolume弃用。
+		// BigDecimal curPreMonthVolume = BigDecimal.ZERO;
 		BigDecimal curTodayInVolume = BigDecimal.ZERO;
 		BigDecimal curTodayOutVolume = BigDecimal.ZERO;
 		BigDecimal curTodayVolume = BigDecimal.ZERO;
@@ -77,22 +78,25 @@ public class ProductInOutStockMgr {
 		
 		if (record == null) {
 			List<GenericValue> balanceList = delegator.findByAnd("CurMaterialBalance", UtilMisc.toMap("materialId", materialId));
-			for(GenericValue bv : balanceList){
-				if(bv.getBigDecimal("volume")!=null){
-					curPreMonthVolume = curPreMonthVolume.add(bv.getBigDecimal("volume"));
-				}
-			}
+			
+			// 20121227：报表中的上月数量在库存表中获取cur_material_balance，字段preMonthVolume弃用。
+//			for(GenericValue bv : balanceList){
+//				if(bv.getBigDecimal("volume")!=null){
+//					curPreMonthVolume = curPreMonthVolume.add(bv.getBigDecimal("volume"));
+//				}
+//			}
 			// curPreMonthVolume = curPreMonthVolume.subtract(volume);//获取时已经加了本次更新数量
-			if(curPreMonthVolume.compareTo(BigDecimal.ZERO) < 0){
-				curPreMonthVolume = BigDecimal.ZERO;
-			}
-			curTodayVolume = curPreMonthVolume;
+//			if(curPreMonthVolume.compareTo(BigDecimal.ZERO) < 0){
+//				curPreMonthVolume = BigDecimal.ZERO;
+//			}
+			//curTodayVolume = curPreMonthVolume;
 			record = delegator.makeValue("ProInOutDateDetail");
 			record.setString("tradDate", sdf.format(date));
 			record.setString("materialId", materialId);
 			record.set("qantity", qantity);
-			record.set("preMonthVolume", curPreMonthVolume);
-			record.set("todayVolume", curTodayVolume);
+			// 20121227：报表中的上月数量在库存表中获取cur_material_balance，字段preMonthVolume弃用。
+			// record.set("preMonthVolume", curPreMonthVolume);
+			record.set("todayVolume", volume);
 		} else {
 			if(record.getBigDecimal("todayInVolume") != null)curTodayInVolume = record.getBigDecimal("todayInVolume");
 			if(record.getBigDecimal("todayOutVolume") != null)curTodayOutVolume = record.getBigDecimal("todayOutVolume");
