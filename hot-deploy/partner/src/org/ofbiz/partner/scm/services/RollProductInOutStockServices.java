@@ -56,11 +56,13 @@ public class RollProductInOutStockServices {
 				nextV.set("todayVolume", BigDecimal.ZERO);
 				if(isFirstDayOfMonth){
 					// 上月数量 ＝上月最后一天（上月数量 + （当月累计入库数量 － 当月累计出库数量））
-					nextV.set("preMonthVolume", v.getBigDecimal("preMonthVolume").add(v.getBigDecimal("thisMonthInVolume").subtract(v.getBigDecimal("thisMonthOutVolume"))));
+					// 20121227：报表中的上月数量在库存表中获取cur_material_balance，字段preMonthVolume弃用。
+					// nextV.set("preMonthVolume", v.getBigDecimal("preMonthVolume").add(v.getBigDecimal("thisMonthInVolume").subtract(v.getBigDecimal("thisMonthOutVolume"))));
 					nextV.set("thisMonthInVolume", BigDecimal.ZERO);
 					nextV.set("thisMonthOutVolume", BigDecimal.ZERO);
 				} else {
-					nextV.set("preMonthVolume", v.getBigDecimal("preMonthVolume"));
+					// 20121227：报表中的上月数量在库存表中获取cur_material_balance，字段preMonthVolume弃用。
+					//nextV.set("preMonthVolume", v.getBigDecimal("preMonthVolume"));
 					nextV.set("thisMonthInVolume", v.getBigDecimal("thisMonthInVolume"));
 					nextV.set("thisMonthOutVolume", v.getBigDecimal("thisMonthOutVolume"));
 				}

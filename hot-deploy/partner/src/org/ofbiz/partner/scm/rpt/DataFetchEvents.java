@@ -1143,6 +1143,7 @@ public class DataFetchEvents {
 	public static String getProductStaticsReportSql(HttpServletRequest request) throws Exception {
 		String searchDate = null;
 		String keyWord = null;
+		String tableName = null;
 
 		if(request.getParameter("searchDate") != null){
 			searchDate = request.getParameter("searchDate");
@@ -1150,16 +1151,25 @@ public class DataFetchEvents {
 		if(request.getParameter("keyWord") != null){
 			keyWord = request.getParameter("keyWord");
 		}
+		Calendar cal= Calendar.getInstance();
+		//月份需要减一，月份是从0开始
+		cal.set(Integer.parseInt(searchDate.substring(0, 4)), Integer.parseInt(searchDate.substring(5, 7))-1, 01, 0, 0, 0);
+		cal.set(Calendar.MILLISECOND, 0);
+		if(org.ofbiz.partner.scm.pricemgr.Utils.isCurPeriod(cal.getTime())){
+			tableName = " CUR_MATERIAL_BALANCE ";
+		} else {
+			tableName = " HIS_MATERIAL_BALANCE ";
+		}
 		
 		String sql =" SELECT "+
 					" 	PIODD.TRAD_DATE, "+
 					" 	PIODD.MATERIAL_ID, "+
 					" 	TM.NAME AS MATERIAL_NAME, "+
 					" 	PIODD.QANTITY, "+
-					" 	ROUND(IFNULL(PIODD.PRE_MONTH_VOLUME,0),4) AS PRE_MONTH_VOLUME, "+
-					" 	ROUND(IFNULL(PIODD.PRE_MONTH_VOLUME*PIODD.QANTITY,0),4) AS PRE_MONTH_PRODUCT_VOLUME, "+
-					" 	ROUND(IFNULL(PIODD.PRE_MONTH_VOLUME+PIODD.THIS_MONTH_IN_VOLUME-PIODD.THIS_MONTH_OUT_VOLUME,0),4) AS VOLUME, "+
-					" 	ROUND(IFNULL((PIODD.PRE_MONTH_VOLUME+PIODD.THIS_MONTH_IN_VOLUME-PIODD.THIS_MONTH_OUT_VOLUME)*PIODD.QANTITY,0),4) AS PRODUCT_VOLUME, "+
+					" 	ROUND(IFNULL(MB.BEGINVOLUME,0),4) AS PRE_MONTH_VOLUME, "+
+					" 	ROUND(IFNULL(MB.BEGINVOLUME*PIODD.QANTITY,0),4) AS PRE_MONTH_PRODUCT_VOLUME, "+
+					" 	ROUND(IFNULL(MB.BEGINVOLUME+PIODD.THIS_MONTH_IN_VOLUME-PIODD.THIS_MONTH_OUT_VOLUME,0),4) AS VOLUME, "+
+					" 	ROUND(IFNULL((MB.BEGINVOLUME+PIODD.THIS_MONTH_IN_VOLUME-PIODD.THIS_MONTH_OUT_VOLUME)*PIODD.QANTITY,0),4) AS PRODUCT_VOLUME, "+
 					" 	ROUND(IFNULL(PIODD.TODAY_IN_VOLUME,0),4) AS TODAY_IN_VOLUME, "+
 					" 	ROUND(IFNULL(PIODD.TODAY_OUT_VOLUME,0),4) AS TODAY_OUT_VOLUME, "+
 					" 	ROUND(IFNULL(PIODD.TODAY_VOLUME,0),4) AS TODAY_VOLUME, "+
@@ -1169,6 +1179,7 @@ public class DataFetchEvents {
 					" 	ROUND(IFNULL(PIODD.THIS_MONTH_OUT_VOLUME,0),4) AS THIS_MONTH_OUT_VOLUME, "+
 					" 	ROUND(IFNULL(PIODD.THIS_MONTH_OUT_VOLUME*PIODD.QANTITY,0),4) AS THIS_MONTH_OUT_PRODUCT_VOLUME "+
 					" FROM PRO_IN_OUT_DATE_DETAIL PIODD "+
+					" LEFT JOIN " + tableName + " MB ON PIODD.MATERIAL_ID = MB.MATERIAL_ID AND MB.YEAR=SUBSTRING(PIODD.TRAD_DATE,1,4) AND MB.MONTH=SUBSTRING(PIODD.TRAD_DATE,5,2)"+
 					" LEFT JOIN T_MATERIAL TM ON PIODD.MATERIAL_ID = TM.ID "+
 					" WHERE ";
 		if(keyWord == null ){
