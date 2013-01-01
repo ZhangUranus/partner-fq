@@ -8,10 +8,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javolution.util.FastList;
+
 import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericValue;
+import org.ofbiz.entity.condition.EntityCondition;
+import org.ofbiz.entity.condition.EntityConditionList;
+import org.ofbiz.entity.condition.EntityOperator;
 import org.ofbiz.partner.scm.pricemgr.BillType;
 import org.ofbiz.partner.scm.pricemgr.ConsumeMaterial;
 import org.ofbiz.partner.scm.pricemgr.IBizStock;
@@ -178,7 +183,17 @@ public class ProductOutwarehouseBizImp implements IBizStock {
 //		}
 		
 		/* 2. 从实际耗料表取 */
-		List<GenericValue> actualMaterialList = delegator.findByAnd("ProductInwarehouseEntryDetail",  UtilMisc.toMap("barcode1", barcode1, "barcode2", barcode2));
+//		List<GenericValue> actualMaterialList = delegator.findByAnd("ProductInwarehouseEntryDetail",  UtilMisc.toMap("barcode1", barcode1, "barcode2", barcode2));
+		EntityConditionList<EntityCondition> condition = null;
+		List<EntityCondition> conds = FastList.newInstance();
+		conds.add(EntityCondition.makeCondition("barcode1", barcode1));
+		conds.add(EntityCondition.makeCondition("barcode2", barcode2));
+		condition = EntityCondition.makeCondition(conds);
+		//增加排序字段
+		List<String> orders = new ArrayList<String>();
+		orders.add("price");
+		List<GenericValue> actualMaterialList = delegator.findList("ProductInwarehouseEntryDetail", condition, null, orders, null, false);
+		
 		/* 3. 实际耗料表存在耗料信息 */
 		if (actualMaterialList != null && actualMaterialList.size() > 0) {
 			Map<String, Boolean> consumeMaterialMap=new HashMap<String, Boolean>();
