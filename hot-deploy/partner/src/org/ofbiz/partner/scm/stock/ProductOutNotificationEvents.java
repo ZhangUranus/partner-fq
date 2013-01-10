@@ -104,9 +104,12 @@ public class ProductOutNotificationEvents {
 					throw new Exception("can`t find ProductOutNotification bill or bizdate is null");
 				}
 				Date bizDate = (Date) billHead.get("bizDate");
-				if (bizDate == null || !Utils.isCurPeriod(bizDate)) {
-					throw new Exception("单据业务日期不在当前系统期间");
-				}
+				/**
+				 * 出货通知单不需要判断是否当前系统期间
+				 */
+//				if (bizDate == null || !Utils.isCurPeriod(bizDate)) {
+//					throw new Exception("单据业务日期不在当前系统期间");
+//				}
 				BillBaseEvent.rollbackBill(request, response);// 撤销单据
 			}
 			TransactionUtil.commit(beganTransaction);
