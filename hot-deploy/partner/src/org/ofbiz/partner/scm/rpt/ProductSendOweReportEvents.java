@@ -320,7 +320,9 @@ public class ProductSendOweReportEvents {
 //				throw new Exception("周汇总表没有对应记录,week :"+weekStr+" ; material:"+materialId);
 				for(int i=1;i<=7;i++){
 					//查询改天的计划出货数
-					plnPs.setDate(1, new java.sql.Date(cal.getTimeInMillis()));
+					plnPs.setString(1, dateFormat.format(cal.getTime())+" 00:00:00");
+					plnPs.setString(2, dateFormat.format(cal.getTime())+" 23:59:59");
+					plnPs.setString(3, materialId);
 				    ResultSet plnRs=plnPs.executeQuery();
 				    BigDecimal plnQty=BigDecimal.ZERO;
 					if(plnRs!=null&&plnRs.next()){
