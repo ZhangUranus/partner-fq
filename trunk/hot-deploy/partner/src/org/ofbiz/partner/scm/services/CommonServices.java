@@ -29,23 +29,23 @@ public class CommonServices {
 			
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			Calendar calendar = Calendar.getInstance();
-			calendar.add(Calendar.MONTH, -6);	//6个月前
+			calendar.add(Calendar.DATE, -10);	//6个月前
 			String dateStr = sdf.format(calendar.getTime());
-			
-			//清理多余的日志信息
-			String deleteExtraLogSql = " DELETE FROM SERVER_HIT WHERE ID NOT IN (" +
-					"   SELECT SH.ID" +
-					"   FROM (SELECT SHI.ID,SHI.REQUEST_URL FROM SERVER_HIT SHI) SH, T_SYSTEM_LOG_TYPE TSLT" +
-					"   WHERE TSLT.VALID = '1'" +
-					"   AND SH.REQUEST_URL LIKE CONCAT('%',TSLT.KEY_WORD,'%')" +
-					" )";
 			
 			//清理半年前的日志信息
 			String deleteLogByTimeSql = " DELETE FROM SERVER_HIT WHERE HIT_START_DATE_TIME < '" + dateStr + "'";
 			
+//			//清理多余的日志信息
+//			String deleteExtraLogSql = " DELETE FROM SERVER_HIT WHERE ID NOT IN (" +
+//					"   SELECT SH.ID" +
+//					"   FROM (SELECT SHI.ID,SHI.REQUEST_URL FROM SERVER_HIT SHI) SH, T_SYSTEM_LOG_TYPE TSLT" +
+//					"   WHERE TSLT.VALID = '1'" +
+//					"   AND SH.REQUEST_URL LIKE CONCAT('%',TSLT.KEY_WORD,'%')" +
+//					" )";
+			
 			Statement st = conn.createStatement();
-			st.addBatch(deleteExtraLogSql);
 			st.addBatch(deleteLogByTimeSql);
+//			st.addBatch(deleteExtraLogSql);
 			st.executeBatch();
 			
 			Debug.logInfo("完成日志清除任务！", module);
