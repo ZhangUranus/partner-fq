@@ -183,24 +183,35 @@ public class ProductSendOweReportEvents {
 			"   union all \r\n"+
 			"		 SELECT\r\n"+
 			"'"+		weekStr+"' as WEEK,\r\n"+
-			"		verifyEntry.material_id as MATERIAL_ID,\r\n"+
-			"		material.name as MATERIAL_NAME,\r\n"+
+			"		t.material_id as MATERIAL_ID,\r\n"+
+			"		t.material_name as MATERIAL_NAME,\r\n"+
 			"		0 as LAST_WEEK_BAL_QTY,\r\n"+
 			"		0 as THIS_WEEK_OUT_QTY,\r\n"+
 			"		0 as THIS_WEEK_IN_QTY,\r\n"+
 			"		0 as THIS_WEEK_CHG_QTY,\r\n"+
 			"		0 as THIS_WEEK_BAL_QTY,\r\n"+
-			"		sum(ifnull(verifyEntry.order_Qty,0)) as THIS_WEEK_PLN_QTY,\r\n"+
+			"		sum(ifnull(t.order_Qty,0)) as THIS_WEEK_PLN_QTY,\r\n"+
 			"		0 as THIS_WEEK_OWE_QTY,\r\n"+
-			"		sum(ifnull(material.safe_Stock,0) )as STOCKING,\r\n"+
-			"		sum(ifnull(verifyEntry.order_Qty,0))-sum(ifnull(verifyEntry.sent_Qty,0))-sum(ifnull(material.safe_Stock,0) ) as STOCKINGBAL"+
-			"		FROM Product_Out_Notification notification"+
-			"		inner join Product_Out_Notification_Entry notificationEntry on notificationEntry.parent_Id=notification.id"+
-			"   	inner  join Product_Out_Verify_entry verifyEntry on (notification.deliver_number=verifyEntry.deliver_number and notificationEntry.material_id=verifyEntry.parent_material_id)"+
-			"	  	inner join t_material material on (verifyEntry.material_id=material.id"+filterMaterial.toString()+")"+
-			"	  	where notification.plan_Delivery_Date>='"+dateFormat.format(weekDatePeriod.fromDate)+"' and notification.plan_Delivery_Date<='"+timeFormat.format(weekDatePeriod.endDate)+"' and notification.status=4"+
-			"	  	group by verifyEntry.material_id , material.name"+
-			") t group by WEEK ,MATERIAL_ID,MATERIAL_NAME" ;
+			"		sum(ifnull(t.safe_Stock,0) )as STOCKING,\r\n"+
+			"		sum(ifnull(t.order_Qty,0))-sum(ifnull(t.sent_Qty,0))-sum(ifnull(t.safe_Stock,0) ) as STOCKINGBAL \r\n"+
+			"		FROM \r\n"+
+			"		( \r\n"+
+			"		select \r\n"+
+			"		distinct \r\n"+
+			"		verifyEntry.id, \r\n"+
+			"		verifyEntry.material_id, \r\n"+
+			"		verifyEntry.order_qty, \r\n"+
+			"		verifyEntry.sent_Qty, \r\n"+
+			"		material.name material_name, \r\n"+
+			"		material.safe_Stock \r\n"+
+			"		FROM Product_Out_Notification notification \r\n"+
+			"		inner  join Product_Out_Notification_Entry notificationEntry on notificationEntry.parent_Id=notification.id \r\n"+
+			"		inner  join Product_Out_Verify_entry verifyEntry on (notification.deliver_number=verifyEntry.deliver_number and notificationEntry.material_id=verifyEntry.parent_material_id) \r\n"+
+			"	  	inner join t_material material on (verifyEntry.material_id=material.id"+filterMaterial.toString()+")\r\n"+
+			"	  	where notification.plan_Delivery_Date>='"+dateFormat.format(weekDatePeriod.fromDate)+"' and notification.plan_Delivery_Date<='"+timeFormat.format(weekDatePeriod.endDate)+"' and notification.status=4\r\n"+
+			"		) t \r\n"+
+			"		group by t.material_id , t.material_name \r\n"+
+			"		) t group by week ,MATERIAL_ID,MATERIAL_NAME \r\n";
 		
 		CommonEvents.writeJsonDataToExt(response, DataFetchEvents.executeSelectSQL(request,sql));
 		
@@ -261,16 +272,20 @@ public class ProductSendOweReportEvents {
 		
 		
 		StringBuffer plnQtySql=new StringBuffer();
+		plnQtySql.append("select sum(ifnull(order_Qty,0)) as THIS_WEEK_PLN_QTY from (\r\n" );
 		plnQtySql.append("SELECT\r\n" );
-		plnQtySql.append("sum(ifnull(verifyEntry.order_Qty,0)) as THIS_WEEK_PLN_QTY\r\n" );
+		plnQtySql.append("distinct\r\n" );
+		plnQtySql.append("verifyEntry.id,\r\n" );
+		plnQtySql.append("verifyEntry.material_id,\r\n" );
+		plnQtySql.append("verifyEntry.order_qty\r\n" );
 		plnQtySql.append("FROM Product_Out_Notification notification\r\n" );
 		plnQtySql.append("inner  join Product_Out_Notification_Entry notificationEntry on notificationEntry.parent_Id=notification.id\r\n" );
 		plnQtySql.append("inner  join Product_Out_Verify_entry verifyEntry on (notification.deliver_number=verifyEntry.deliver_number and notificationEntry.material_id=verifyEntry.parent_material_id)\r\n" );
 		plnQtySql.append("where  notification.plan_Delivery_Date>=? and notification.plan_Delivery_Date<=?  and verifyEntry.material_id=? and  notification.status=4\r\n" );
-		plnQtySql.append("group by verifyEntry.material_id\r\n" );
+		plnQtySql.append(") t\r\n" );
+		plnQtySql.append("group by t.material_id\r\n" );
 		
-		
-		
+				
 		//json 结果
 		JSONObject jsResult=new JSONObject();
 		jsResult.put("sucess", true);
