@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -111,6 +110,12 @@ public class ProductSendOweReportEvents {
 		
 	 * */
 	public static String queryMainData(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		CommonEvents.writeJsonDataToExt(response, DataFetchEvents.executeSelectSQL(request,getMainDataSql(request)));
+		
+		return "sucess";
+	}
+	
+	public static String getMainDataSql(HttpServletRequest request) throws Exception {
 		String weekStr;//查询周
 		DatePeriod weekDatePeriod;//周日期范围
 		StringBuffer filterMaterial=new StringBuffer();//物料过滤
@@ -212,10 +217,7 @@ public class ProductSendOweReportEvents {
 			"		) t \r\n"+
 			"		group by t.material_id , t.material_name \r\n"+
 			"		) t group by week ,MATERIAL_ID,MATERIAL_NAME \r\n";
-		
-		CommonEvents.writeJsonDataToExt(response, DataFetchEvents.executeSelectSQL(request,sql));
-		
-		return "sucess";
+		return sql;
 	}
 	
 	/**
