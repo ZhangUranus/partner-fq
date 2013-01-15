@@ -107,8 +107,8 @@ Ext.define('SCM.controller.rpt.ProductSendOweReportController', {
 
 					// 页面参数
 					params.sort = Ext.encode(getSorters());
-					params.report = 'PR';
-					params.title = '成品报表'; // sheet页名称
+					params.report = 'PSOR';
+					params.title = '综合欠数表'; // sheet页名称
 					params.header = header; // 表头
 					params.dataIndex = dataIndex; // 数据引用
 					params.pattern = 'SQL';
