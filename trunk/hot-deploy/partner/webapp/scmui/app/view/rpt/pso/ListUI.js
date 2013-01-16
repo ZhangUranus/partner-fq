@@ -94,9 +94,10 @@ Ext.define('SCM.view.rpt.pso.ListUI', {
 													width : 110,
 													text : '本周计划出仓板数'
 												}, {
-													xtype : 'numbercolumn',
+													xtype : 'gridcolumn',
 													dataIndex : 'THIS_WEEK_OWE_QTY',
 													width : 100,
+													renderer : SCM.store.basiccode.numberColorRenderer,
 													text : '本周欠货情况'
 												}, {
 													xtype : 'numbercolumn',
