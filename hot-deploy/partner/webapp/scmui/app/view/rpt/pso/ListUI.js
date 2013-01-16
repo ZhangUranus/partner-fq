@@ -24,10 +24,10 @@ Ext.define('SCM.view.rpt.pso.ListUI', {
 													name : 'week',
 													width : 145,
 													labelWidth : 35,
-													regex:/^\d\d\d\d-\d\d?W$/,
-													regexTExt:'格式:2012-12W',
+													regex:/^\d\d\d\d-\d\dW$/,
+													regexTExt:'格式:2012-01W',
 													fieldLabel : '周',
-													emptyText : '格式:2012-12W'
+													emptyText : '格式:2012-01W'
 												}, {
 													xtype : 'textfield',
 													name : 'searchKeyWord',
