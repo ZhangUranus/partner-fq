@@ -360,7 +360,13 @@ public class Utils {
 		}else if(cl.get(Calendar.MONTH)==Calendar.DECEMBER && cl.get(Calendar.WEEK_OF_YEAR)==1){
 			year++; //下一年
 		}
-        return ""+year+"-"+week+"W";
+		StringBuffer weekStrBuf=new StringBuffer();
+		weekStrBuf.append(year).append("-");
+		if(week<10){
+			weekStrBuf.append("0");
+		}
+		weekStrBuf.append(week).append("W");
+        return weekStrBuf.toString();
 	}
 	
 	
