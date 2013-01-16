@@ -256,6 +256,13 @@ SCM.store.basiccode.warningRenderer = function(value) {
 	}
 };
 
+SCM.store.basiccode.numberColorRenderer = function(value) {
+	if (value < 0) {
+		return "<font color='red'><b>"+Ext.util.Format.number(value,'0,000.00')+"</b></font>";
+	} else
+		return "<font color='green'><b>"+Ext.util.Format.number(value,'0,000.00')+"</b></font>";
+};
+
 /**
  * 用于处理提交数据 封装表头标题数据
  */
