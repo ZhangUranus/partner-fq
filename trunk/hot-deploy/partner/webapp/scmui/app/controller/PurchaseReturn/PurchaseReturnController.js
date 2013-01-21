@@ -284,7 +284,7 @@ Ext.define('SCM.controller.PurchaseReturn.PurchaseReturnController', {
 				+"<th bindfield='materialMaterialModel' width='15%'>规格</th> "
 				+"<th bindfield='unitUnitName' width='8%'>单位</th>" 
 				+"<th bindfield='volume' width='13%'>数量</th> "
-				+"<th bindfield='price' width='13%'>单价</th> "
+				+"<th bindfield='refPrice' width='13%'>单价</th> "
 				+"<th bindfield='entrysum' width='13%'>金额</th> "
 				+"</tr> "
 				+"</table>" 
