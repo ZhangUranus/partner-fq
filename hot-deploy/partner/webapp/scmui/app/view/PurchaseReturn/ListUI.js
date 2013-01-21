@@ -123,7 +123,11 @@ Ext.define('SCM.view.PurchaseReturn.ListUI', {
 												}, {
 													xtype : 'numbercolumn',
 													dataIndex : 'price',
-													text : '单价'
+													text : '结算单价'
+												}, {
+													xtype : 'numbercolumn',
+													dataIndex : 'refPrice',
+													text : '实际填写单价'
 												}, {
 													xtype : 'numbercolumn',
 													dataIndex : 'entrysum',

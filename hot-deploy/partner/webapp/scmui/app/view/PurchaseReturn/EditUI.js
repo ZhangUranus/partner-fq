@@ -260,18 +260,18 @@ Ext.define('SCM.view.PurchaseReturn.EditUI', {
 																width : 80
 															}, {
 																xtype : 'numbercolumn',
+																dataIndex : 'price',
+																text : '结算单价',
+																width : 80
+															}, {
+																xtype : 'numbercolumn',
 																editor : {
 																	xtype : 'numberfield',
 																	allowBlank : false,
 																	hideTrigger : true
 																},
-																dataIndex : 'price',
-																text : '单价',
-																width : 80
-															}, {
-																xtype : 'numbercolumn',
 																dataIndex : 'refPrice',
-																text : '参考单价',
+																text : '实际填写单价',
 																width : 80
 															}, {
 																xtype : 'numbercolumn',
@@ -318,6 +318,16 @@ Ext.define('SCM.view.PurchaseReturn.EditUI', {
 																valueField : 'id',
 																readOnly : true,
 																fieldLabel : '单据状态'
+															}, {
+																xtype : 'label',
+																text : '注意：物料单价、金额、单据总金额在单据提交后才能显示！',
+																margin : 5,
+																colspan : 3,
+																style : {
+																	'font-weight': 'bold',
+																	'color': 'red',
+																	'font-size':12
+																}
 															}]
 												}]
 									}],
