@@ -64,7 +64,7 @@ Ext.define('SCM.view.rpt.pso.ListUI', {
 													text : '产品名称'
 												}, {
 													xtype : 'numbercolumn',
-													dataIndex : 'LAST_WEEK_BAL_QTY',
+													dataIndex : 'LAST_WEEK_OWE_QTY',
 													width : 100,
 													text : '上周库存板数'
 												}, {
