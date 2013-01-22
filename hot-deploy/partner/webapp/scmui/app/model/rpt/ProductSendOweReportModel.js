@@ -14,7 +14,7 @@ Ext.define('SCM.model.rpt.ProductSendOweReportModel', {
 						name : 'MATERIAL_NAME',
 						type : 'string'
 					}, {
-						name : 'LAST_WEEK_BAL_QTY',
+						name : 'LAST_WEEK_OWE_QTY',
 						type : 'float'
 					}, {
 						name : 'THIS_WEEK_OUT_QTY',
