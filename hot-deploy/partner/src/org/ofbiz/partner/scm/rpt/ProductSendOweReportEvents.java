@@ -117,12 +117,21 @@ public class ProductSendOweReportEvents {
 	
 	public static String getMainDataSql(HttpServletRequest request) throws Exception {
 		String weekStr;//查询周
+		String lastWeekStr="";//上一周
 		DatePeriod weekDatePeriod;//周日期范围
+		DatePeriod lastWeekDatePeriod;//上一周日期范围
 		StringBuffer filterMaterial=new StringBuffer();//物料过滤
 		
 		if(request.getParameter("week")==null)throw new Exception("周不能为空！");
 		weekStr=request.getParameter("week");
 		weekDatePeriod=Utils.getDatePeriodFromWeekStr(weekStr);
+		
+		// 初始化上周的参数
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(weekDatePeriod.fromDate);
+		cal.add(Calendar.WEEK_OF_YEAR, -1);
+		lastWeekStr = Utils.getYearWeekStr(cal.getTime());
+		lastWeekDatePeriod = Utils.getDatePeriodFromWeekStr(lastWeekStr);
 		
 //		if(request.getParameter("searchMaterialId")!=null&&request.getParameter("searchMaterialId").trim().length()>0){
 //			filterMaterial.append(" and  material.id='").append(request.getParameter("searchMaterialId")).append("'");
@@ -132,91 +141,177 @@ public class ProductSendOweReportEvents {
 			filterMaterial.append(" and  (material.name like '%").append(request.getParameter("keyWord")).append("%' or material.number like '%").append(request.getParameter("keyWord")).append("%')");
 		}
 		
-		
-		String sql=
-			"select WEEK ,MATERIAL_ID,MATERIAL_NAME ,\r\n"+
-			"sum(LAST_WEEK_BAL_QTY) as LAST_WEEK_BAL_QTY,\r\n"+
-			"sum(THIS_WEEK_OUT_QTY) as THIS_WEEK_OUT_QTY,\r\n"+
-			"sum(THIS_WEEK_IN_QTY)  as THIS_WEEK_IN_QTY,\r\n"+
-			"sum(THIS_WEEK_CHG_QTY) as THIS_WEEK_CHG_QTY,\r\n"+
-			"sum(LAST_WEEK_BAL_QTY)-sum(THIS_WEEK_OUT_QTY)+sum(THIS_WEEK_IN_QTY)+sum(THIS_WEEK_CHG_QTY) as THIS_WEEK_BAL_QTY,\r\n"+
-			"sum(THIS_WEEK_PLN_QTY) as THIS_WEEK_PLN_QTY,\r\n"+
-			"sum(THIS_WEEK_IN_QTY)+sum(LAST_WEEK_BAL_QTY)+sum(THIS_WEEK_CHG_QTY)-sum(THIS_WEEK_PLN_QTY) as THIS_WEEK_OWE_QTY,\r\n"+
-			"sum(STOCKING) as STOCKING,\r\n"+
-			"sum(STOCKINGBAL) as STOCKINGBAL from ("+
-			"    SELECT"+
-			"'"+		weekStr+"' as WEEK,\r\n"+
-			"		weekinout.material_id as MATERIAL_ID,\r\n"+
-			"		material.name as MATERIAL_NAME,\r\n"+
-			"		sum(weekinout.week_Bal_Qty) as LAST_WEEK_BAL_QTY,\r\n"+
-			"		0 as THIS_WEEK_OUT_QTY,\r\n"+
-			"		0 as THIS_WEEK_IN_QTY,\r\n"+
-			"		0 as THIS_WEEK_CHG_QTY,\r\n"+
-			"		0 as THIS_WEEK_BAL_QTY,\r\n"+
-			"		0 as THIS_WEEK_PLN_QTY,\r\n"+
-			"		0 as THIS_WEEK_OWE_QTY,\r\n"+
-			"		0 as STOCKING,\r\n"+
-			"		0 as STOCKINGBAL"+
-			"		FROM prd_in_out_week_detail weekinout"+
-			"		inner join t_material material on (weekinout.material_id=material.id "+filterMaterial.toString()+")"+
-			"		where weekinout.week<'"+weekStr+"'"+
-			"		group by weekinout.material_id,material.name,weekinout.week"+
-			"		union all"+
-			"		SELECT"+
-			"'"+		weekStr+"' as WEEK,\r\n"+
-			"		weekinout.material_id as MATERIAL_ID,\r\n"+
-			"		material.name as MATERIAL_NAME,\r\n"+
-			"		0 as LAST_WEEK_BAL_QTY,\r\n"+
-			"		sum(ifnull(weekinout.sun_nor_out_qty,0))+sum(ifnull(weekinout.mon_nor_out_qty,0))+sum(ifnull(weekinout.tue_nor_out_qty,0))"+
-			"		+sum(ifnull(weekinout.wen_nor_out_qty,0))+sum(ifnull(weekinout.thu_nor_out_qty,0))+sum(ifnull(weekinout.fri_nor_out_qty,0))"+
-			"		+sum(ifnull(weekinout.sta_nor_out_qty,0)) as THIS_WEEK_OUT_QTY,\r\n"+
-			"		sum(ifnull(weekinout.sun_nor_in_qty,0))+sum(ifnull(weekinout.mon_nor_in_qty,0))+sum(ifnull(weekinout.tue_nor_in_qty,0))"+
-			"		+sum(ifnull(weekinout.wen_nor_in_qty,0))+sum(ifnull(weekinout.thu_nor_in_qty,0))+sum(ifnull(weekinout.fri_nor_in_qty,0))"+
-			"		+sum(ifnull(weekinout.sta_nor_in_qty,0))  as THIS_WEEK_IN_QTY,\r\n"+
-			"		sum(ifnull(weekinout.sun_chg_brd_qty,0))+sum(ifnull(weekinout.mon_chg_brd_qty,0))+sum(ifnull(weekinout.tue_chg_brd_qty,0))"+
-			"		+sum(ifnull(weekinout.wen_chg_brd_qty,0))+sum(ifnull(weekinout.thu_chg_brd_qty,0))+sum(ifnull(weekinout.fri_chg_brd_qty,0))"+
-			"		+sum(ifnull(weekinout.sta_chg_brd_qty,0))  as THIS_WEEK_CHG_QTY,\r\n"+
-			"		0 as THIS_WEEK_BAL_QTY,\r\n"+
-			"		0 as THIS_WEEK_PLN_QTY,\r\n"+
-			"		0 as THIS_WEEK_OWE_QTY,\r\n"+
-			"		0 as STOCKING,\r\n"+
-			"		0 as STOCKINGBAL"+
-			"		FROM prd_in_out_week_detail weekinout"+
-			"		inner join t_material material on (weekinout.material_id=material.id "+filterMaterial.toString()+")"+
-			"		where weekinout.week='"+weekStr+"'"+
-			"		group by weekinout.material_id,material.name,weekinout.week"+
-			"   union all \r\n"+
-			"		 SELECT\r\n"+
-			"'"+		weekStr+"' as WEEK,\r\n"+
-			"		t.material_id as MATERIAL_ID,\r\n"+
-			"		t.material_name as MATERIAL_NAME,\r\n"+
-			"		0 as LAST_WEEK_BAL_QTY,\r\n"+
-			"		0 as THIS_WEEK_OUT_QTY,\r\n"+
-			"		0 as THIS_WEEK_IN_QTY,\r\n"+
-			"		0 as THIS_WEEK_CHG_QTY,\r\n"+
-			"		0 as THIS_WEEK_BAL_QTY,\r\n"+
-			"		sum(ifnull(t.order_Qty,0)) as THIS_WEEK_PLN_QTY,\r\n"+
-			"		0 as THIS_WEEK_OWE_QTY,\r\n"+
-			"		sum(ifnull(t.safe_Stock,0) )as STOCKING,\r\n"+
-			"		sum(ifnull(t.order_Qty,0))-sum(ifnull(t.sent_Qty,0))-sum(ifnull(t.safe_Stock,0) ) as STOCKINGBAL \r\n"+
-			"		FROM \r\n"+
-			"		( \r\n"+
-			"		select \r\n"+
-			"		distinct \r\n"+
-			"		verifyEntry.id, \r\n"+
-			"		verifyEntry.material_id, \r\n"+
-			"		verifyEntry.order_qty, \r\n"+
-			"		verifyEntry.sent_Qty, \r\n"+
-			"		material.name material_name, \r\n"+
-			"		material.safe_Stock \r\n"+
-			"		FROM Product_Out_Notification notification \r\n"+
-			"		inner  join Product_Out_Notification_Entry notificationEntry on notificationEntry.parent_Id=notification.id \r\n"+
-			"		inner  join Product_Out_Verify_entry verifyEntry on (notification.deliver_number=verifyEntry.deliver_number and notificationEntry.material_id=verifyEntry.parent_material_id) \r\n"+
-			"	  	inner join t_material material on (verifyEntry.material_id=material.id"+filterMaterial.toString()+")\r\n"+
-			"	  	where notification.plan_Delivery_Date>='"+dateFormat.format(weekDatePeriod.fromDate)+"' and notification.plan_Delivery_Date<='"+timeFormat.format(weekDatePeriod.endDate)+"' and notification.status=4\r\n"+
-			"		) t \r\n"+
-			"		group by t.material_id , t.material_name \r\n"+
-			"		) t group by week ,MATERIAL_ID,MATERIAL_NAME \r\n";
+		String sql = "SELECT\r\n"+
+				"	WEEK,\r\n"+
+				"	MATERIAL_ID,\r\n"+
+				"	MATERIAL_NAME,\r\n"+
+				"	SUM(LAST_WEEK_BAL_QTY) AS LAST_WEEK_BAL_QTY,\r\n"+
+				"	SUM(THIS_WEEK_OUT_QTY) AS THIS_WEEK_OUT_QTY,\r\n"+
+				"	SUM(THIS_WEEK_IN_QTY) AS THIS_WEEK_IN_QTY,\r\n"+
+				"	SUM(THIS_WEEK_CHG_QTY) AS THIS_WEEK_CHG_QTY,\r\n"+
+				"	SUM(LAST_WEEK_BAL_QTY)-SUM(THIS_WEEK_OUT_QTY)+SUM(THIS_WEEK_IN_QTY)+SUM(THIS_WEEK_CHG_QTY) AS THIS_WEEK_BAL_QTY,\r\n"+
+				"	SUM(THIS_WEEK_PLN_QTY) AS THIS_WEEK_PLN_QTY,\r\n"+
+				"	SUM(THIS_WEEK_IN_QTY)+SUM(LAST_WEEK_BAL_QTY)+SUM(THIS_WEEK_CHG_QTY)-SUM(THIS_WEEK_PLN_QTY) AS THIS_WEEK_OWE_QTY,\r\n"+
+				"	SUM(STOCKING) AS STOCKING,\r\n"+
+				"	SUM(STOCKINGBAL) AS STOCKINGBAL,\r\n"+
+				"	SUM(LAST_WEEK_IN_QTY)+SUM(LAST_LAST_WEEK_BAL_QTY)+SUM(LAST_WEEK_CHG_QTY)-SUM(LAST_WEEK_PLN_QTY) AS LAST_WEEK_OWE_QTY\r\n"+
+				"FROM (    \r\n"+
+				"		SELECT '"+	weekStr+"' as WEEK,\r\n"+
+				"			WEEKINOUT.MATERIAL_ID AS MATERIAL_ID,\r\n"+
+				"			MATERIAL.NAME AS MATERIAL_NAME,\r\n"+
+				"			SUM(WEEKINOUT.WEEK_BAL_QTY) AS LAST_WEEK_BAL_QTY,\r\n"+
+				"			0 AS THIS_WEEK_OUT_QTY,\r\n"+
+				"			0 AS THIS_WEEK_IN_QTY,\r\n"+
+				"			0 AS THIS_WEEK_CHG_QTY,\r\n"+
+				"			0 AS THIS_WEEK_BAL_QTY,\r\n"+
+				"			0 AS THIS_WEEK_PLN_QTY,\r\n"+
+				"			0 AS THIS_WEEK_OWE_QTY,\r\n"+
+				"			0 AS STOCKING,\r\n"+
+				"			0 AS STOCKINGBAL,\r\n"+
+				"			0 AS LAST_WEEK_IN_QTY,\r\n"+
+				"			0 AS LAST_LAST_WEEK_BAL_QTY,\r\n"+
+				"			0 AS LAST_WEEK_CHG_QTY,\r\n"+
+				"			0 AS LAST_WEEK_PLN_QTY\r\n"+
+				"		FROM PRD_IN_OUT_WEEK_DETAIL WEEKINOUT	\r\n"+
+				"		INNER JOIN T_MATERIAL MATERIAL ON (WEEKINOUT.MATERIAL_ID=MATERIAL.ID "+filterMaterial.toString()+") \r\n"+
+				"		WHERE WEEKINOUT.WEEK<'"+weekStr+"' \r\n"+
+				"		GROUP BY WEEKINOUT.MATERIAL_ID,MATERIAL.NAME,WEEKINOUT.WEEK	\r\n"+
+				"		UNION ALL	\r\n"+
+				"		SELECT '"+weekStr+"' as WEEK,\r\n"+
+				"			WEEKINOUT.MATERIAL_ID AS MATERIAL_ID,\r\n"+
+				"			MATERIAL.NAME AS MATERIAL_NAME,\r\n"+
+				"			0 AS LAST_WEEK_BAL_QTY,\r\n"+
+				"			0 AS THIS_WEEK_OUT_QTY,\r\n"+
+				"			0 AS THIS_WEEK_IN_QTY,\r\n"+
+				"			0 AS THIS_WEEK_CHG_QTY,\r\n"+
+				"			0 AS THIS_WEEK_BAL_QTY,\r\n"+
+				"			0 AS THIS_WEEK_PLN_QTY,\r\n"+
+				"			0 AS THIS_WEEK_OWE_QTY,\r\n"+
+				"			0 AS STOCKING,\r\n"+
+				"			0 AS STOCKINGBAL,\r\n"+
+				"			0 AS LAST_WEEK_IN_QTY,\r\n"+
+				"			SUM(WEEKINOUT.WEEK_BAL_QTY) AS LAST_LAST_WEEK_BAL_QTY,\r\n"+
+				"			0 AS LAST_WEEK_CHG_QTY,\r\n"+
+				"			0 AS LAST_WEEK_PLN_QTY\r\n"+
+				"		FROM PRD_IN_OUT_WEEK_DETAIL WEEKINOUT	\r\n"+
+				"		INNER JOIN T_MATERIAL MATERIAL ON (WEEKINOUT.MATERIAL_ID=MATERIAL.ID "+filterMaterial.toString()+") \r\n"+
+				"		WHERE WEEKINOUT.WEEK<'"+lastWeekStr+"' \r\n"+
+				"		GROUP BY WEEKINOUT.MATERIAL_ID,MATERIAL.NAME,WEEKINOUT.WEEK	\r\n"+
+				"		UNION ALL	\r\n"+
+				"		SELECT'"+weekStr+"' AS WEEK,\r\n"+
+				"			WEEKINOUT.MATERIAL_ID AS MATERIAL_ID,\r\n"+
+				"			MATERIAL.NAME AS MATERIAL_NAME,\r\n"+
+				"			0 AS LAST_WEEK_BAL_QTY,\r\n"+
+				"			SUM(IFNULL(WEEKINOUT.SUN_NOR_OUT_QTY,0))+SUM(IFNULL(WEEKINOUT.MON_NOR_OUT_QTY,0))+SUM(IFNULL(WEEKINOUT.TUE_NOR_OUT_QTY,0))		+SUM(IFNULL(WEEKINOUT.WEN_NOR_OUT_QTY,0))+SUM(IFNULL(WEEKINOUT.THU_NOR_OUT_QTY,0))+SUM(IFNULL(WEEKINOUT.FRI_NOR_OUT_QTY,0))		+SUM(IFNULL(WEEKINOUT.STA_NOR_OUT_QTY,0)) AS THIS_WEEK_OUT_QTY,\r\n"+
+				"			SUM(IFNULL(WEEKINOUT.SUN_NOR_IN_QTY,0))+SUM(IFNULL(WEEKINOUT.MON_NOR_IN_QTY,0))+SUM(IFNULL(WEEKINOUT.TUE_NOR_IN_QTY,0))		+SUM(IFNULL(WEEKINOUT.WEN_NOR_IN_QTY,0))+SUM(IFNULL(WEEKINOUT.THU_NOR_IN_QTY,0))+SUM(IFNULL(WEEKINOUT.FRI_NOR_IN_QTY,0))		+SUM(IFNULL(WEEKINOUT.STA_NOR_IN_QTY,0))  AS THIS_WEEK_IN_QTY,\r\n"+
+				"			SUM(IFNULL(WEEKINOUT.SUN_CHG_BRD_QTY,0))+SUM(IFNULL(WEEKINOUT.MON_CHG_BRD_QTY,0))+SUM(IFNULL(WEEKINOUT.TUE_CHG_BRD_QTY,0))		+SUM(IFNULL(WEEKINOUT.WEN_CHG_BRD_QTY,0))+SUM(IFNULL(WEEKINOUT.THU_CHG_BRD_QTY,0))+SUM(IFNULL(WEEKINOUT.FRI_CHG_BRD_QTY,0))		+SUM(IFNULL(WEEKINOUT.STA_CHG_BRD_QTY,0))  AS THIS_WEEK_CHG_QTY,\r\n"+
+				"			0 AS THIS_WEEK_BAL_QTY,\r\n"+
+				"			0 AS THIS_WEEK_PLN_QTY,\r\n"+
+				"			0 AS THIS_WEEK_OWE_QTY,\r\n"+
+				"			0 AS STOCKING,\r\n"+
+				"			0 AS STOCKINGBAL,\r\n"+
+				"			0 AS LAST_WEEK_IN_QTY,\r\n"+
+				"			0 AS LAST_LAST_WEEK_BAL_QTY,\r\n"+
+				"			0 AS LAST_WEEK_CHG_QTY,\r\n"+
+				"			0 AS LAST_WEEK_PLN_QTY\r\n"+
+				"		FROM PRD_IN_OUT_WEEK_DETAIL WEEKINOUT	\r\n"+
+				"		INNER JOIN T_MATERIAL MATERIAL ON (WEEKINOUT.MATERIAL_ID=MATERIAL.ID "+filterMaterial.toString()+") \r\n"+
+				"		WHERE WEEKINOUT.WEEK='"+weekStr+"' \r\n"+
+				"		GROUP BY WEEKINOUT.MATERIAL_ID,MATERIAL.NAME,WEEKINOUT.WEEK \r\n"+
+				"		UNION ALL	\r\n"+
+				"		SELECT'"+weekStr+"' AS WEEK,\r\n"+
+				"			WEEKINOUT.MATERIAL_ID AS MATERIAL_ID,\r\n"+
+				"			MATERIAL.NAME AS MATERIAL_NAME,\r\n"+
+				"			0 AS LAST_WEEK_BAL_QTY,\r\n"+
+				"			0 AS THIS_WEEK_OUT_QTY,\r\n"+
+				"			0 AS THIS_WEEK_IN_QTY,\r\n"+
+				"			0 AS THIS_WEEK_CHG_QTY,\r\n"+
+				"			0 AS THIS_WEEK_BAL_QTY,\r\n"+
+				"			0 AS THIS_WEEK_PLN_QTY,\r\n"+
+				"			0 AS THIS_WEEK_OWE_QTY,\r\n"+
+				"			0 AS STOCKING,\r\n"+
+				"			0 AS STOCKINGBAL,\r\n"+
+				"			SUM(IFNULL(WEEKINOUT.SUN_NOR_IN_QTY,0))+SUM(IFNULL(WEEKINOUT.MON_NOR_IN_QTY,0))+SUM(IFNULL(WEEKINOUT.TUE_NOR_IN_QTY,0))+SUM(IFNULL(WEEKINOUT.WEN_NOR_IN_QTY,0))+SUM(IFNULL(WEEKINOUT.THU_NOR_IN_QTY,0))+SUM(IFNULL(WEEKINOUT.FRI_NOR_IN_QTY,0))+SUM(IFNULL(WEEKINOUT.STA_NOR_IN_QTY,0)) AS LAST_WEEK_IN_QTY,\r\n"+
+				"			0 AS LAST_LAST_WEEK_BAL_QTY,\r\n"+
+				"			SUM(IFNULL(WEEKINOUT.SUN_CHG_BRD_QTY,0))+SUM(IFNULL(WEEKINOUT.MON_CHG_BRD_QTY,0))+SUM(IFNULL(WEEKINOUT.TUE_CHG_BRD_QTY,0))+SUM(IFNULL(WEEKINOUT.WEN_CHG_BRD_QTY,0))+SUM(IFNULL(WEEKINOUT.THU_CHG_BRD_QTY,0))+SUM(IFNULL(WEEKINOUT.FRI_CHG_BRD_QTY,0))+SUM(IFNULL(WEEKINOUT.STA_CHG_BRD_QTY,0)) AS LAST_WEEK_CHG_QTY,\r\n"+
+				"			0 AS LAST_WEEK_PLN_QTY\r\n"+
+				"		FROM PRD_IN_OUT_WEEK_DETAIL WEEKINOUT	\r\n"+
+				"		INNER JOIN T_MATERIAL MATERIAL ON (WEEKINOUT.MATERIAL_ID=MATERIAL.ID "+filterMaterial.toString()+") \r\n"+
+				"		WHERE WEEKINOUT.WEEK='"+lastWeekStr+"' \r\n"+
+				"		GROUP BY WEEKINOUT.MATERIAL_ID,MATERIAL.NAME,WEEKINOUT.WEEK \r\n"+
+				"		UNION ALL \r\n"+
+				"		SELECT\r\n"+
+				"			'"+weekStr+"' AS WEEK,\r\n"+
+				"			T1.MATERIAL_ID AS MATERIAL_ID,\r\n"+
+				"			T1.MATERIAL_NAME AS MATERIAL_NAME,\r\n"+
+				"			0 AS LAST_WEEK_BAL_QTY,\r\n"+
+				"			0 AS THIS_WEEK_OUT_QTY,\r\n"+
+				"			0 AS THIS_WEEK_IN_QTY,\r\n"+
+				"			0 AS THIS_WEEK_CHG_QTY,\r\n"+
+				"			0 AS THIS_WEEK_BAL_QTY,\r\n"+
+				"			SUM(IFNULL(T1.ORDER_QTY,0)) AS THIS_WEEK_PLN_QTY,\r\n"+
+				"			0 AS THIS_WEEK_OWE_QTY,\r\n"+
+				"			SUM(IFNULL(T1.SAFE_STOCK,0) )AS STOCKING,\r\n"+
+				"			SUM(IFNULL(T1.ORDER_QTY,0))-SUM(IFNULL(T1.SENT_QTY,0))-SUM(IFNULL(T1.SAFE_STOCK,0) ) AS STOCKINGBAL,\r\n"+
+				"			0 AS LAST_WEEK_IN_QTY,\r\n"+
+				"			0 AS LAST_LAST_WEEK_BAL_QTY,\r\n"+
+				"			0 AS LAST_WEEK_CHG_QTY,\r\n"+
+				"			0 AS LAST_WEEK_PLN_QTY\r\n"+
+				"		FROM ( \r\n"+
+				"			SELECT \r\n"+
+				"				DISTINCT \r\n"+
+				"				VERIFYENTRY.ID, \r\n"+
+				"				VERIFYENTRY.MATERIAL_ID, \r\n"+
+				"				VERIFYENTRY.ORDER_QTY, \r\n"+
+				"				VERIFYENTRY.SENT_QTY, \r\n"+
+				"				MATERIAL.NAME MATERIAL_NAME, \r\n"+
+				"				MATERIAL.SAFE_STOCK \r\n"+
+				"			FROM PRODUCT_OUT_NOTIFICATION NOTIFICATION \r\n"+
+				"			INNER JOIN PRODUCT_OUT_NOTIFICATION_ENTRY NOTIFICATIONENTRY ON NOTIFICATIONENTRY.PARENT_ID=NOTIFICATION.ID \r\n"+
+				"			INNER JOIN PRODUCT_OUT_VERIFY_ENTRY VERIFYENTRY ON (NOTIFICATION.DELIVER_NUMBER=VERIFYENTRY.DELIVER_NUMBER AND NOTIFICATIONENTRY.MATERIAL_ID=VERIFYENTRY.PARENT_MATERIAL_ID) \r\n"+
+				"			INNER JOIN T_MATERIAL MATERIAL ON (VERIFYENTRY.MATERIAL_ID=MATERIAL.ID "+filterMaterial.toString()+")\r\n"+
+				"			WHERE NOTIFICATION.PLAN_DELIVERY_DATE>='"+dateFormat.format(weekDatePeriod.fromDate)+"'\r\n"+
+				"				AND NOTIFICATION.PLAN_DELIVERY_DATE<='"+timeFormat.format(weekDatePeriod.endDate)+"' \r\n"+
+				"				AND NOTIFICATION.STATUS=4\r\n"+
+				"			) T1\r\n"+
+				"		GROUP BY T1.MATERIAL_ID,T1.MATERIAL_NAME\r\n"+
+				"		UNION ALL \r\n"+
+				"		SELECT\r\n"+
+				"			'"+weekStr+"' AS WEEK,\r\n"+
+				"			T2.MATERIAL_ID AS MATERIAL_ID,\r\n"+
+				"			T2.MATERIAL_NAME AS MATERIAL_NAME,\r\n"+
+				"			0 AS LAST_WEEK_BAL_QTY,\r\n"+
+				"			0 AS THIS_WEEK_OUT_QTY,\r\n"+
+				"			0 AS THIS_WEEK_IN_QTY,\r\n"+
+				"			0 AS THIS_WEEK_CHG_QTY,\r\n"+
+				"			0 AS THIS_WEEK_BAL_QTY,\r\n"+
+				"			0 AS THIS_WEEK_PLN_QTY,\r\n"+
+				"			0 AS THIS_WEEK_OWE_QTY,\r\n"+
+				"			0 AS STOCKING,\r\n"+
+				"			0 AS STOCKINGBAL,\r\n"+
+				"			0 AS LAST_WEEK_IN_QTY,\r\n"+
+				"			0 AS LAST_LAST_WEEK_BAL_QTY,\r\n"+
+				"			0 AS LAST_WEEK_CHG_QTY,\r\n"+
+				"			SUM(IFNULL(T2.ORDER_QTY,0)) AS LAST_WEEK_PLN_QTY\r\n"+
+				"		FROM ( \r\n"+
+				"			SELECT \r\n"+
+				"				DISTINCT \r\n"+
+				"				VERIFYENTRY.ID, \r\n"+
+				"				VERIFYENTRY.MATERIAL_ID,\r\n"+
+				"				VERIFYENTRY.ORDER_QTY, \r\n"+
+				"				VERIFYENTRY.SENT_QTY, \r\n"+
+				"				MATERIAL.NAME MATERIAL_NAME,\r\n"+
+				"				MATERIAL.SAFE_STOCK\r\n"+
+				"			FROM PRODUCT_OUT_NOTIFICATION NOTIFICATION\r\n"+
+				"			INNER JOIN PRODUCT_OUT_NOTIFICATION_ENTRY NOTIFICATIONENTRY ON NOTIFICATIONENTRY.PARENT_ID=NOTIFICATION.ID \r\n"+
+				"			INNER JOIN PRODUCT_OUT_VERIFY_ENTRY VERIFYENTRY ON (NOTIFICATION.DELIVER_NUMBER=VERIFYENTRY.DELIVER_NUMBER AND NOTIFICATIONENTRY.MATERIAL_ID=VERIFYENTRY.PARENT_MATERIAL_ID)\r\n"+
+				"			INNER JOIN T_MATERIAL MATERIAL ON (VERIFYENTRY.MATERIAL_ID=MATERIAL.ID "+filterMaterial.toString()+")\r\n"+
+				"			WHERE NOTIFICATION.PLAN_DELIVERY_DATE>='"+dateFormat.format(lastWeekDatePeriod.fromDate)+"'\r\n"+
+				"				AND NOTIFICATION.PLAN_DELIVERY_DATE<='"+timeFormat.format(lastWeekDatePeriod.endDate)+"'\r\n"+
+				"				AND NOTIFICATION.STATUS=4\r\n"+
+				"			) T2\r\n"+
+				"		GROUP BY T2.MATERIAL_ID,T2.MATERIAL_NAME\r\n"+
+				"	)T GROUP BY WEEK ,MATERIAL_ID,MATERIAL_NAME";
 		return sql;
 	}
 	
