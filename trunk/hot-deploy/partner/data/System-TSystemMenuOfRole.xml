@@ -506,8 +506,6 @@
 	<TSystemMenuOfRole id='463bf0e2-1693-4404-98d6-4da20e45e15a' menuId='productOutVerify' roleId='3ee6c8bf-0478-472c-a799-e0c6f0a70e48' operateType='E' />
 	<TSystemMenuOfRole id='8f9b4180-ce58-414b-89e3-4ed22f8404e6' menuId='productOutVerify' roleId='3ee6c8bf-0478-472c-a799-e0c6f0a70e48' operateType='D' />
 	<TSystemMenuOfRole id='7687e747-f73e-4798-9449-000a155b482d' menuId='productOutVerify' roleId='6f4150c3-c743-458b-9434-66670d272b9c' operateType='V' />
-	<TSystemMenuOfRole id='bb182fcb-6a30-48f2-a1d8-7fe11c08049b' menuId='productOutVerify' roleId='6f4150c3-c743-458b-9434-66670d272b9c' operateType='E' />
-	<TSystemMenuOfRole id='ad94b560-42a5-47f8-bb33-e68e204a0cfc' menuId='productOutVerify' roleId='6f4150c3-c743-458b-9434-66670d272b9c' operateType='D' />
 	
 	
 	<TSystemMenuOfRole id='0266dd34-44d1-407a-b19b-8bbbc5762eeb' menuId='barcodeInReport' roleId='b29ff561-c3f3-479e-9496-35b6c87026e1' operateType='V' />
