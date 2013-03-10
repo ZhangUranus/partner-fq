@@ -34,8 +34,12 @@ public class ConsignWarehousingBizImp implements IBizStock {
 			String warehouseId = v.getString("warehouseWarehouseId");// 仓库id
 			String materialId = MaterialBomMgr.getInstance().getMaterialIdByBomId(v.getString("bomId"));// 物料id
 			BigDecimal volume = v.getBigDecimal("volume");// 数量
+			BigDecimal processPrice = v.getBigDecimal("processPrice"); //加工单价
 			if(volume.compareTo(BigDecimal.ZERO)<=0){
 				throw new Exception("委外入库数量不能小于等于零，请重新输入！");
+			}
+			if(processPrice == null || processPrice.compareTo(BigDecimal.ZERO)<=0){
+				throw new Exception("委外入库加工单价不能小于等于零，请重新输入！");
 			}
 			BigDecimal sum = null;
 			if (!isOut) {
@@ -46,7 +50,7 @@ public class ConsignWarehousingBizImp implements IBizStock {
 //				}
 				// log 20120814 jeff 将单件耗料改为总耗料
 				BigDecimal materialSum = ConsignPriceMgr.getInstance().CreateConsignPriceDetailList(processorId, v.getString("bomId"), v.getString("id"), volume);
-				sum = materialSum.add(v.getBigDecimal("processPrice").multiply(volume));
+				sum = materialSum.add(processPrice.multiply(volume));
 				BigDecimal price = materialSum.divide(volume, 6, RoundingMode.DOWN);
 				
 				//耗料金额

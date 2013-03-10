@@ -34,6 +34,10 @@ public class InspectiveBizImp implements IBizStock {
 			if(volume.compareTo(BigDecimal.ZERO)<=0){
 				throw new Exception("采购入库物料数量不能小于等于零，请重新输入！");
 			}
+			if(price == null || price.compareTo(BigDecimal.ZERO)<=0){
+				throw new Exception("采购入库物料单价不能小于等于零，请重新输入！");
+			}
+			
 			BigDecimal sum = v.getBigDecimal("entrysum");// 金额
 			Debug.log("采购入库单价计算:物料id" + materialId + ";数量" + volume + ";金额" + sum, "InspectiveBizImp");
 
