@@ -28,6 +28,9 @@ public class PurchaseReturnBizImp implements IBizStock {
 		BigDecimal totalSum = BigDecimal.ZERO;
 		for (GenericValue v : entryList) {
 			String warehouseId = v.getString("warehouseWarehouseId");// 仓库id
+			if (warehouseId == null || warehouseId.length() < 1) {
+				throw new Exception("仓库不能为空，请检查后重新提交！");
+			}
 			String materialId = v.getString("materialMaterialId");// 物料id
 			BigDecimal volume = v.getBigDecimal("volume");// 数量
 //			BigDecimal price = v.getBigDecimal("price");// 单价

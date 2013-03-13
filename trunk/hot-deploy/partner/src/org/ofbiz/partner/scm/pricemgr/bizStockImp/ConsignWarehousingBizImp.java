@@ -25,6 +25,9 @@ public class ConsignWarehousingBizImp implements IBizStock {
 		Date bizDate = (Date) billValue.get("bizDate");
 		// 供应商id
 		String processorId = billValue.getString("processorSupplierId");
+		if (processorId == null || processorId.length() < 1) {
+			throw new Exception("供应商不能为空，请检查后重新提交！");
+		}
 
 		// 获取单据id分录条目
 		List<GenericValue> entryList = delegator.findByAnd("ConsignWarehousingEntry", UtilMisc.toMap("parentId", billValue.getString("id")));
@@ -32,6 +35,9 @@ public class ConsignWarehousingBizImp implements IBizStock {
 		BigDecimal totalSum = BigDecimal.ZERO;
 		for (GenericValue v : entryList) {
 			String warehouseId = v.getString("warehouseWarehouseId");// 仓库id
+			if (warehouseId == null || warehouseId.length() < 1) {
+				throw new Exception("仓库不能为空，请检查后重新提交！");
+			}
 			String materialId = MaterialBomMgr.getInstance().getMaterialIdByBomId(v.getString("bomId"));// 物料id
 			BigDecimal volume = v.getBigDecimal("volume");// 数量
 			BigDecimal processPrice = v.getBigDecimal("processPrice"); //加工单价

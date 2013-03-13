@@ -33,6 +33,9 @@ public class StockAdjustBizImp implements IBizStock {
 			}
 			
 			String warehouseId = v.getString("warehouseWarehouseId");// 仓库id
+			if (warehouseId == null || warehouseId.length() < 1) {
+				throw new Exception("仓库不能为空，请检查后重新提交！");
+			}
 			String materialId = v.getString("materialMaterialId");// 物料id
 			BigDecimal volume = v.getBigDecimal("volume");// 数量
 			//2012-08-30 不允许用户输入单价，调整单没有单价

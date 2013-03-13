@@ -27,7 +27,10 @@ public class SupplierStockAdjustBizImp implements IBizStock {
 				isOut = true;
 			}
 			
-			String supplierId = v.getString("processorSupplierId");// 仓库id
+			String supplierId = v.getString("processorSupplierId");// 供应商
+			if (supplierId == null || supplierId.length() < 1) {
+				throw new Exception("供应商不能为空，请检查后重新提交！");
+			}
 			String materialId = v.getString("materialMaterialId");// 物料id
 			BigDecimal volume = v.getBigDecimal("volume");// 数量
 			//2012-08-30 不允许用户输入单价，调整单没有单价
