@@ -59,6 +59,9 @@ public class ProductOutwarehouseBizImp implements IBizStock {
 			String outwarehouseType = v.getString("outwarehouseType");// 仓库id
 			String workshopId = v.getString("workshopWorkshopId");// 车间id
 			String warehouseId = v.getString("warehouseWarehouseId");// 仓库id
+			if (warehouseId == null || warehouseId.length() < 1) {
+				throw new Exception("仓库不能为空，请检查后重新提交！");
+			}
 			String materialId = v.getString("materialMaterialId");// 物料id
 			BigDecimal volume = v.getBigDecimal("volume");// 出仓数量
 			Date lastUpdatedStamp = (Date) v.get("lastUpdatedStamp");
