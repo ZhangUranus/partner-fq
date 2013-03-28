@@ -1474,8 +1474,8 @@ public class DataFetchEvents {
 	 */
 	public static String queryMaterialVolumeDetail(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String materialString = "";
-		if(request.getParameter("materialId") != null && request.getParameter("materialId")!=""){
-			materialString = " WHERE CMB.MATERIAL_ID = '" + request.getParameter("materialId") + "'";
+		if(request.getParameter("keyWord") != null && request.getParameter("keyWord")!=""){
+			materialString = " WHERE TM.NUMBER LIKE  '%" + request.getParameter("keyWord") + "%' OR TM.NAME LIKE '%" + request.getParameter("keyWord") + "%'";
 		}
 		String sql =" SELECT " +
 						" TM.ID AS ID, " +
