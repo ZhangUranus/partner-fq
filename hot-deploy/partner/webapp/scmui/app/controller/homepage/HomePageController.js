@@ -30,7 +30,7 @@ Ext.define('SCM.controller.homepage.HomePageController', {
 				this.westPanel = view.down('panel gridpanel[region=west]');
 				this.centerPanel = view.down('gridpanel[region=south]');
 				this.volumeRefreshButton = view.down('panel button');
-				this.searchMaterialId = view.down('panel combogrid[name=searchMaterialId]');
+				this.searchKeyWord = view.down('panel textfield[name=searchKeyWord]');
 				this.statusRefreshButton = this.centerPanel.tools.refresh;
 				this.volumeRefreshButton.addListener('click',this.refreshVolumeList,this);
 				this.statusRefreshButton.addListener('click',this.refreshStatusList,this);
@@ -58,10 +58,10 @@ Ext.define('SCM.controller.homepage.HomePageController', {
 			 * @param {} me
 			 */
 			refreshVolumeList : function(me){
-				if (!Ext.isEmpty(this.searchMaterialId.getValue())) {
-					this.westPanel.store.getProxy().extraParams.materialId = this.searchMaterialId.getValue();
+				if (!Ext.isEmpty(this.searchKeyWord.getValue())) {
+					this.westPanel.store.getProxy().extraParams.keyWord = this.searchKeyWord.getValue();
 				} else {
-					this.westPanel.store.getProxy().extraParams.materialId = "";
+					this.westPanel.store.getProxy().extraParams.keyWord = "";
 				}
 				this.westPanel.store.load();
 			},
