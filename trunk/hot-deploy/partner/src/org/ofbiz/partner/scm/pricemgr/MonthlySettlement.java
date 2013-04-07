@@ -400,8 +400,8 @@ public class MonthlySettlement {
 			ps.executeUpdate();
 
 			// 当前采购对数中间表CurPurchasePrice【out_Volume=0,in_Volume=0,entry_Sum=0,volume=0】
-			Debug.logInfo("执行update Cur_Purchase_Price set out_Volume=0,in_Volume=0,entry_Sum=0,volume=0 ", module);
-			ps = conn.prepareStatement("update Cur_Purchase_Price set out_Volume=0,in_Volume=0,entry_Sum=0,volume=0 ");
+			Debug.logInfo("执行update Cur_Purchase_Price set out_Volume=0,in_Volume=0,entry_Sum=0,volume=0,bill_Entry_Sum=0,bill_volume=0 ", module);
+			ps = conn.prepareStatement("update Cur_Purchase_Price set out_Volume=0,in_Volume=0,entry_Sum=0,volume=0,bill_Entry_Sum=0,bill_volume=0 ");
 			ps.executeUpdate();
 
 			// 当前车间单价中间表CurWorkshopPrice 【volume=beginvolume、totalSum=beginsum】
@@ -642,8 +642,8 @@ public class MonthlySettlement {
 			Debug.logInfo("执行insert His_Purchase_Price select * from Cur_Purchase_Price", module);
 			ps = conn.prepareStatement("insert His_Purchase_Price select * from Cur_Purchase_Price");
 			ps.executeUpdate();
-			Debug.logInfo("执行update Cur_Purchase_Price set year=" + yearOfnextMonth + " ,month=" + monthOfnextMonth + " ,  out_Volume=0,in_Volume=0,entry_Sum=0,volume=0 ", module);
-			ps = conn.prepareStatement("update Cur_Purchase_Price set year=" + yearOfnextMonth + " ,month=" + monthOfnextMonth + " ,  out_Volume=0,in_Volume=0,entry_Sum=0,volume=0 ");
+			Debug.logInfo("执行update Cur_Purchase_Price set year=" + yearOfnextMonth + " ,month=" + monthOfnextMonth + " ,  out_Volume=0,in_Volume=0,entry_Sum=0,volume=0,bill_Entry_Sum=0,bill_volume=0 ", module);
+			ps = conn.prepareStatement("update Cur_Purchase_Price set year=" + yearOfnextMonth + " ,month=" + monthOfnextMonth + " ,  out_Volume=0,in_Volume=0,entry_Sum=0,volume=0,bill_Entry_Sum=0,bill_volume=0 ");
 			ps.executeUpdate();
 
 			// 当前车间单价中间表CurWorkshopPrice 数据转移到历史表，当前余额表更新【年、月、期初数量、期初金额】
