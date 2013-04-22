@@ -226,7 +226,7 @@ public class Utils {
 		billHead = delegator.makeValue("ReturnProductWarehousing");
 		billHead.set("id", billValue.getString("id"));
 		billHead.set("number", billValue.getString("number"));
-		billHead.set("bizDate", new Timestamp(System.currentTimeMillis()));
+		billHead.set("bizDate", Utils.getCurDate());
 		billHead.set("processorId", billValue.containsKey("processorSupplierId") ? billValue.getString("processorSupplierId"):billValue.getString("workshopWorkshopId"));
 		billHead.set("submitterSystemUserId", billValue.getString("submitterSystemUserId"));
 		billHead.set("totalsum", billValue.getBigDecimal("totalsum"));
