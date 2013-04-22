@@ -288,7 +288,7 @@ public class ProductOutVerifyEvents {
 			sql.append("select sum(volume) as volume ");
 			sql.append("FROM product_out_notification t1 ");
 			sql.append("inner join product_out_notification_entry t2 on t1.id=t2.parent_id ");
-			sql.append("where deliver_number = '" + v.getString("deliverNumber")+"'");
+			sql.append("where t1.status = 4 and deliver_number = '" + v.getString("deliverNumber")+"'");
 			sql.append("and material_id = '" + v.getString("materialId") +"'");
 			Connection conn = ConnectionFactory.getConnection(org.ofbiz.partner.scm.common.Utils.getConnectionHelperName());
 
