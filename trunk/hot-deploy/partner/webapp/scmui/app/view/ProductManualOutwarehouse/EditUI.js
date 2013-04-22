@@ -235,11 +235,6 @@ Ext.define('SCM.view.ProductManualOutwarehouse.EditUI', {
 																width : 80
 															}, {
 																xtype : 'numbercolumn',
-																editor : {
-																	xtype : 'numberfield',
-																	allowBlank : false,
-																	hideTrigger : true
-																},
 																dataIndex : 'price',
 																text : '单价',
 																width : 80
