@@ -52,7 +52,7 @@ public class ProductInwarehouseEvents {
 	public static String submitBill(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		boolean beganTransaction = false;
 		try {
-			beganTransaction = TransactionUtil.begin();
+			beganTransaction = TransactionUtil.begin(Utils.getTimeout());
 
 			Delegator delegator = (Delegator) request.getAttribute("delegator");
 			String billId = request.getParameter("billId");// 单据id
@@ -145,7 +145,7 @@ public class ProductInwarehouseEvents {
 	public static String rollbackBill(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		boolean beganTransaction = false;
 		try {
-			beganTransaction = TransactionUtil.begin();
+			beganTransaction = TransactionUtil.begin(Utils.getTimeout());
 
 			Delegator delegator = (Delegator) request.getAttribute("delegator");
 			String billId = request.getParameter("billId");// 单据id
