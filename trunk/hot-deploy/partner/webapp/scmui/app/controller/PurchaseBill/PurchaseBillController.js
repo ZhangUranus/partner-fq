@@ -118,7 +118,7 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 				//this.searchMaterialId = this.listPanel.down('combogrid[name=searchMaterialId]');
 				this.searchKeyWord = this.listPanel.down('textfield[name=searchKeyWord]');
 				this.MaterialStore = Ext.data.StoreManager.lookup('MAllStore');
-				this.SystemUserStore = Ext.data.StoreManager.lookup('SystemUserStore');
+				this.SystemUserStore = Ext.data.StoreManager.lookup('SUComboInitStore');
 				
 				
 				this.searchCustId = this.listPanel.down('combogrid[name=searchCustId]');
@@ -234,7 +234,8 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 			 * 判断用户是否属于同一部门，属于同一部门才有权限进行审批
 			 */
 			hasAuditPermission : function(id) {
-				var record = this.SystemUserStore.store.findRecord("id", id);
+				debugger;
+				var record = this.SystemUserStore.findRecord("id", id);
 				if (SCM.CurrentUser.departmentId == record.get("departmentId")) {
 					return true;
 				}
