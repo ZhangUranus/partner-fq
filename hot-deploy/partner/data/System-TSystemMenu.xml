@@ -64,4 +64,7 @@
 	<TSystemMenu menuId='WorkshopMaintaince' menuName='车间资料维护' menuType='1' parentId='basicSetting' sort='41' hyperlink='workshoplist' styleName='workshop-maintaince' display='1' description='车间管理' />
 	<TSystemMenu menuId='RegionMaintaince' menuName='地区表维护' menuType='1' parentId='basicSetting' sort='42' hyperlink='regionlist' styleName='region-maintaince' display='1' description='地区表维护' />
 	<TSystemMenu menuId='ProductMapMaintaince' menuName='产品资料表维护' menuType='1' parentId='basicSetting' sort='43' hyperlink='productmaplist' styleName='product-map-maintaince' display='1' description='产品资料表维护' />
+	
+	<!-- 质量控制 -->
+	<TSystemMenu menuId='ProcessMaintaince' menuName='工序表维护' menuType='1' parentId='basicSetting' sort='44' hyperlink='processinfomaintaince' styleName='product-map-maintaince' display='1' description='工序表维护' />
 </entity-engine-xml>
