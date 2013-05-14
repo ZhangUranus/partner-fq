@@ -177,6 +177,14 @@
 	<TSystemMenuOfRole id='7f0835d0-1c29-4766-a51f-7514aaf6dccf' menuId='productOutNotification' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='N' />
 	<TSystemMenuOfRole id='d89f5067-1ca5-45a2-b237-bb696e881cc2' menuId='productOutNotification' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='S' />
 	
+	<!-- 质量控制 -->
+	<TSystemMenuOfRole id='510d5b0a-8b0a-4fd1-9bd2-f8d73441ab30' menuId='ProcessMaintaince' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='V' />
+	<TSystemMenuOfRole id='0ccf10fb-5485-450e-bab7-da20bd76dafa' menuId='ProcessMaintaince' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='E' />
+	<TSystemMenuOfRole id='89077644-87ee-4920-b269-2944a4c4a807' menuId='ProcessMaintaince' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='D' />
+	<TSystemMenuOfRole id='c0e459e4-6429-46de-9746-7d17fa82530e' menuId='ProcessMaintaince' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='N' />
+	<!-- 质量控制 -->
+	
+	
 	<TSystemMenuOfRole id='286030a3-ad3a-40e7-9ef0-64287827173e' menuId='warehouseManagement' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='V' />
 	<TSystemMenuOfRole id='363f88bb-891f-4ed6-8111-24addd353e6f' menuId='systemManagement' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='V' />
 	<TSystemMenuOfRole id='2f9701c3-aed9-4d66-bdf6-fc8be7f86516' menuId='basicSetting' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='V' />
