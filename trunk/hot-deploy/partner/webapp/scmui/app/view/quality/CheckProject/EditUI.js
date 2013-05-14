@@ -1,8 +1,8 @@
-Ext.define('SCM.view.quality.Process.EditUI', {
+Ext.define('SCM.view.quality.CheckProject.EditUI', {
 			extend : 'Ext.window.Window',
 			requires : ['SCM.extend.toolbar.SaveToolbar'],
-			alias : 'widget.processedit',
-			title : '工序',
+			alias : 'widget.checkprojectedit',
+			title : '检验项目',
 			layout : 'fit',
 			width : SCM.DefaultSize.WINDOW_WIDTH,
 			modal : true,// 背景变灰，不能编辑
@@ -41,8 +41,18 @@ Ext.define('SCM.view.quality.Process.EditUI', {
 													maxLength : 50
 												}, {
 													xtype : 'textarea',
-													name : 'description',
-													fieldLabel : '描述',
+													name : 'checkRequire',
+													fieldLabel : '检验要求',
+													maxLength : 254
+												}, {
+													xtype : 'textarea',
+													name : 'checkMethod',
+													fieldLabel : '检验方法',
+													maxLength : 254
+												}, {
+													xtype : 'textarea',
+													name : 'reference',
+													fieldLabel : '参考文件',
 													maxLength : 254
 												}]
 									}],
