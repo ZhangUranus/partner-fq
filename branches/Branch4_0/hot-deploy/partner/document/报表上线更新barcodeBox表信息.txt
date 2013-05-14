@@ -1,0 +1,26 @@
+// 查找11月以及之前的已提交单据,建立临时表，这时数据barcode1，barcode2 有重复
+
+create  table iwtemp1(
+ select head.biz_date,entry.id, entry.product_week,entry.material_material_id,entry.barcode1,entry.barcode2,map.ikea_id,map.board_count,entry.warehouse_warehouse_id
+ from product_inwarehouse_entry entry ,product_inwarehouse head,product_map map  where entry.parent_id=head.id and map.material_id=entry.material_material_id
+ )
+
+
+//获取表里barcode1 ，barcode2 重复的，按biz_date排序最晚的记录 ,新建临时表，删除之前的临时表
+create table iwtemp2 (
+ select t1.* from iwtemp1 t1 where not exists(select 1 from iwtemp1  where barcode1=t1.barcode1 and barcode2=t1.barcode2  and biz_date>t1.biz_date)
+)
+drop table iwtemp1
+
+//关联更新 product_barcode_box 表
+
+update product_barcode_box ,iwtemp2 b
+set product_barcode_box.ikea_number=b.ikea_id,
+product_barcode_box.week=b.product_week,
+product_barcode_box.material_id=b.material_material_id,
+product_barcode_box.warehouse_id=b.warehouse_warehouse_id,
+product_barcode_box.per_board_qty=b.board_count
+where product_barcode_box.barcode1=b.barcode1 and product_barcode_box.barcode2=b.barcode2
+
+//删除临时表iwtemp2
+drop table iwtemp2

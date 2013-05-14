@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+ <Worksheet ss:Name="Table1">
+  <Table>
+   <Column ss:Index="1" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="2" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="3" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="4" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="5" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="6" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="7" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="8" ss:AutoFitWidth="0" ss:Width="110"/>   <Row>
+    <Cell><Data ss:Type="String">ID</Data></Cell>
+    <Cell><Data ss:Type="String">NUMBER</Data></Cell>
+    <Cell><Data ss:Type="String">NAME</Data></Cell>
+    <Cell><Data ss:Type="String">DESCRIPTION</Data></Cell>
+    <Cell><Data ss:Type="String">LAST_UPDATED_STAMP</Data></Cell>
+    <Cell><Data ss:Type="String">LAST_UPDATED_TX_STAMP</Data></Cell>
+    <Cell><Data ss:Type="String">CREATED_STAMP</Data></Cell>
+    <Cell><Data ss:Type="String">CREATED_TX_STAMP</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">00b819db-e2a1-413e-a2f9-30b7ffae986d</Data></Cell>
+    <Cell><Data ss:Type="String">UNT100010</Data></Cell>
+    <Cell><Data ss:Type="String">辆</Data></Cell>
+    <Cell><Data ss:Type="String"/></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:37:14</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:37:14</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:37:14</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:37:14</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">2849d243-715d-479f-a6d6-60cc4bd5cc5a</Data></Cell>
+    <Cell><Data ss:Type="String">UNT100008</Data></Cell>
+    <Cell><Data ss:Type="String">件</Data></Cell>
+    <Cell><Data ss:Type="String"/></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:36:49</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:36:49</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:36:49</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:36:49</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">3963fbe7-152e-4217-b74b-ff322408344d</Data></Cell>
+    <Cell><Data ss:Type="String">UNT100005</Data></Cell>
+    <Cell><Data ss:Type="String">包</Data></Cell>
+    <Cell><Data ss:Type="String"/></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:36:39</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:36:39</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:36:39</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:36:39</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">512f1578-a11c-45b8-ae23-12d7a28aa21e</Data></Cell>
+    <Cell><Data ss:Type="String">UNT100006</Data></Cell>
+    <Cell><Data ss:Type="String">打</Data></Cell>
+    <Cell><Data ss:Type="String"/></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:36:42</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:36:42</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:36:42</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:36:42</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">589b0546-fd9a-43e5-9ad9-c1b3f5025efe</Data></Cell>
+    <Cell><Data ss:Type="String">UNT100003</Data></Cell>
+    <Cell><Data ss:Type="String">米</Data></Cell>
+    <Cell><Data ss:Type="String"/></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:36:27</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:36:27</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:36:27</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:36:27</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">70e764a2-3ad5-443b-b187-cfbdf6d42a38</Data></Cell>
+    <Cell><Data ss:Type="String">UNT100007</Data></Cell>
+    <Cell><Data ss:Type="String">个</Data></Cell>
+    <Cell><Data ss:Type="String"/></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:36:44</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:36:44</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:36:44</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:36:44</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">7543376c-632c-4f8f-b697-a9f79adb0328</Data></Cell>
+    <Cell><Data ss:Type="String">UNT100009</Data></Cell>
+    <Cell><Data ss:Type="String">支</Data></Cell>
+    <Cell><Data ss:Type="String"/></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:37:05</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:37:05</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:37:05</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:37:05</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">9751a815-3906-442d-98a2-1c933b0abef1</Data></Cell>
+    <Cell><Data ss:Type="String">UNT100002</Data></Cell>
+    <Cell><Data ss:Type="String">千克</Data></Cell>
+    <Cell><Data ss:Type="String"/></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:36:23</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:36:23</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:36:23</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:36:23</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">a689e999-e726-4b40-bd22-214fadc54b3e</Data></Cell>
+    <Cell><Data ss:Type="String">UNT100001</Data></Cell>
+    <Cell><Data ss:Type="String">克</Data></Cell>
+    <Cell><Data ss:Type="String"/></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:36:19</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:36:19</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:36:19</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:36:19</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">e4488780-18c9-4573-ba29-67563c6d235a</Data></Cell>
+    <Cell><Data ss:Type="String">UNT100004</Data></Cell>
+    <Cell><Data ss:Type="String">千米</Data></Cell>
+    <Cell><Data ss:Type="String"/></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:36:30</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:36:30</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:36:30</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:36:30</Data></Cell>
+   </Row>
+  </Table>
+ </Worksheet>
+</Workbook>

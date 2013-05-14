@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements. See the NOTICE file distributed with this work for additional information regarding copyright ownership. 
+	The ASF licenses this file to you under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 
+	Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+	See the License for the specific language governing permissions and limitations under the License. -->
+<entitymodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/entitymodel.xsd">
+	<!-- ========================================================= -->
+	<!-- ======================== Defaults ======================= -->
+	<!-- ========================================================= -->
+	<title>Entity of an Open For Business Project Component</title>
+	<description>None</description>
+	<copyright>Copyright 2001-2009 The Apache Software Foundation</copyright>
+	<author>None</author>
+	<version>1.0</version>
+	<!-- 表头 -->
+	<entity entity-name="PurchaseReturn" package-name="org.ofbiz.scm.PurchaseReturn" title="PurchaseReturn Entity">
+		<field name="id" type="id-long"></field>
+		<field name="number" type="name"></field>
+		<field name="bizDate" type="date-time"></field>
+		<field name="type" type="int"></field><!--1：采购单；2：调整单 -->
+		<field name="supplierSupplierId" type="id-long"></field>
+		<field name="returnerSystemUserId" type="id-long"></field>
+		<field name="submitterSystemUserId" type="id-long"></field>
+		<field name="totalsum" type="fixed-point"></field>
+		<field name="note" type="description"></field>
+		<field name="status" type="int"></field>
+		<field name="createdStamp" type="date-time"></field>
+		<field name="lastUpdatedStamp" type="date-time"></field>
+		<field name="submitStamp" type="date-time"></field>
+		<prim-key field="id" />
+	</entity>
+	<!-- 分录 -->
+	<entity entity-name="PurchaseReturnEntry" package-name="org.ofbiz.scm.PurchaseReturn" title="PurchaseReturnEntry Entity">
+		<field name="id" type="id-long"></field>
+		<field name="parentId" type="id-long"></field>
+		<field name="warehouseWarehouseId" type="id-long"></field>
+		<field name="materialMaterialId" type="id-long"></field>
+		<field name="materialMaterialModel" type="value"></field>
+		<field name="volume" type="fixed-point"></field>
+		<field name="stockVolume" type="fixed-point"></field>
+		<field name="unitUnitId" type="id-long"></field>
+		<field name="price" type="fixed-point"></field><!--系统加权平均值，用户后台计算-->
+		<field name="refPrice" type="fixed-point"></field><!--用户填写字段，用于打印-->
+		<field name="entrysum" type="fixed-point"></field>
+		<field name="sort" type="int"></field>
+		<prim-key field="id" />
+	</entity>
+	<!-- 表头视图 -->
+	<view-entity entity-name="PurchaseReturnView" package-name="org.ofbiz.scm.PurchaseReturn" title="PurchaseReturnView  Entity">
+		<member-entity entity-alias="PurchaseReturnV" entity-name="PurchaseReturn"></member-entity>
+		<member-entity entity-alias="PurchaseReturnEntryV" entity-name="PurchaseReturnEntry"></member-entity>
+		<member-entity entity-alias="materialMaterialV" entity-name="TMaterial"></member-entity>
+		<member-entity entity-alias="supplierSupplierV" entity-name="Supplier"></member-entity>
+		<member-entity entity-alias="returnerSystemUserV" entity-name="SystemUser"></member-entity>
+		<member-entity entity-alias="submitterSystemUserV" entity-name="SystemUser"></member-entity>
+		<alias-all entity-alias="PurchaseReturnV"></alias-all>
+		<alias name="materialMaterialId" entity-alias="PurchaseReturnEntryV" field="materialMaterialId"></alias>
+		<alias name="supplierSupplierName" entity-alias="supplierSupplierV" field="name"></alias>
+		<alias name="returnerSystemUserName" entity-alias="returnerSystemUserV" field="name"></alias>
+		<alias name="submitterSystemUserName" entity-alias="submitterSystemUserV" field="name"></alias>
+		
+		<!-- 查询条件需要取物料编码、物料名称，在查询数据中需要distinct -->
+		<view-link entity-alias="PurchaseReturnV" rel-entity-alias="PurchaseReturnEntryV" rel-optional="true">
+			<key-map field-name="id" rel-field-name="parentId" />
+		</view-link>
+		<view-link entity-alias="PurchaseReturnEntryV" rel-entity-alias="materialMaterialV" rel-optional="true">
+			<key-map field-name="materialMaterialId" rel-field-name="id" />
+		</view-link>
+		<!-- 查询条件需要取物料编码、物料名称，在查询数据中需要distinct -->
+		
+		<view-link entity-alias="PurchaseReturnV" rel-entity-alias="supplierSupplierV" rel-optional="true">
+			<key-map field-name="supplierSupplierId" rel-field-name="id" />
+		</view-link>
+		<view-link entity-alias="PurchaseReturnV" rel-entity-alias="returnerSystemUserV" rel-optional="true">
+			<key-map field-name="returnerSystemUserId" rel-field-name="id" />
+		</view-link>
+		<view-link entity-alias="PurchaseReturnV" rel-entity-alias="submitterSystemUserV" rel-optional="true">
+			<key-map field-name="submitterSystemUserId" rel-field-name="id" />
+		</view-link>
+	</view-entity>
+	<!-- 导出视图 -->
+	<view-entity entity-name="PurchaseReturnExportView" package-name="org.ofbiz.scm.PurchaseReturn" title="PurchaseReturnExportView  Entity">
+		<member-entity entity-alias="PurchaseReturnV" entity-name="PurchaseReturn"></member-entity>
+		<member-entity entity-alias="PurchaseReturnEntryV" entity-name="PurchaseReturnEntry"></member-entity>
+		<member-entity entity-alias="materialMaterialV" entity-name="TMaterial"></member-entity>
+		<member-entity entity-alias="supplierSupplierV" entity-name="Supplier"></member-entity>
+		<member-entity entity-alias="returnerSystemUserV" entity-name="SystemUser"></member-entity>
+		<member-entity entity-alias="submitterSystemUserV" entity-name="SystemUser"></member-entity>
+		<alias-all entity-alias="PurchaseReturnV"></alias-all>
+		<alias name="supplierSupplierName" entity-alias="supplierSupplierV" field="name"></alias>
+		<alias name="returnerSystemUserName" entity-alias="returnerSystemUserV" field="name"></alias>
+		<alias name="submitterSystemUserName" entity-alias="submitterSystemUserV" field="name"></alias>
+		
+		<!-- 查询条件需要取物料编码、物料名称，在查询数据中需要distinct -->
+		<view-link entity-alias="PurchaseReturnV" rel-entity-alias="PurchaseReturnEntryV" rel-optional="true">
+			<key-map field-name="id" rel-field-name="parentId" />
+		</view-link>
+		<view-link entity-alias="PurchaseReturnEntryV" rel-entity-alias="materialMaterialV" rel-optional="true">
+			<key-map field-name="materialMaterialId" rel-field-name="id" />
+		</view-link>
+		<!-- 查询条件需要取物料编码、物料名称，在查询数据中需要distinct -->
+		
+		<view-link entity-alias="PurchaseReturnV" rel-entity-alias="supplierSupplierV" rel-optional="true">
+			<key-map field-name="supplierSupplierId" rel-field-name="id" />
+		</view-link>
+		<view-link entity-alias="PurchaseReturnV" rel-entity-alias="returnerSystemUserV" rel-optional="true">
+			<key-map field-name="returnerSystemUserId" rel-field-name="id" />
+		</view-link>
+		<view-link entity-alias="PurchaseReturnV" rel-entity-alias="submitterSystemUserV" rel-optional="true">
+			<key-map field-name="submitterSystemUserId" rel-field-name="id" />
+		</view-link>
+	</view-entity>
+	<!--表体视图 -->
+	<view-entity entity-name="PurchaseReturnEntryView" package-name="org.ofbiz.scm.PurchaseReturn" title="PurchaseReturnEntryView  Entity">
+		<member-entity entity-alias="PurchaseReturnEntryV" entity-name="PurchaseReturnEntry"></member-entity>
+		<member-entity entity-alias="warehouseWarehouseV" entity-name="Warehouse"></member-entity>
+		<member-entity entity-alias="materialMaterialV" entity-name="TMaterial"></member-entity>
+		<member-entity entity-alias="unitUnitV" entity-name="Unit"></member-entity>
+		<alias-all entity-alias="PurchaseReturnEntryV"></alias-all>
+		<alias name="warehouseWarehouseName" entity-alias="warehouseWarehouseV" field="name"></alias>
+		<alias name="materialMaterialName" entity-alias="materialMaterialV" field="name"></alias>
+		<alias name="unitUnitName" entity-alias="unitUnitV" field="name"></alias>
+		<view-link entity-alias="PurchaseReturnEntryV" rel-entity-alias="warehouseWarehouseV" rel-optional="true">
+			<key-map field-name="warehouseWarehouseId" rel-field-name="id" />
+		</view-link>
+		<view-link entity-alias="PurchaseReturnEntryV" rel-entity-alias="materialMaterialV" rel-optional="true">
+			<key-map field-name="materialMaterialId" rel-field-name="id" />
+		</view-link>
+		<view-link entity-alias="PurchaseReturnEntryV" rel-entity-alias="unitUnitV" rel-optional="true">
+			<key-map field-name="unitUnitId" rel-field-name="id" />
+		</view-link>
+	</view-entity>
+</entitymodel>

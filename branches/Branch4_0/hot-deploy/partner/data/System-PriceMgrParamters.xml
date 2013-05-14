@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements. See the NOTICE file distributed with this work for additional information regarding copyright ownership. The ASF licenses this file to you under the Apache License, Version 2.0 (the "License"); you 
+	may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
+	OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. -->
+<entity-engine-xml>
+	<PriceMgrParamters id='001' value='2012-09-01 00:00:00.000' />
+	<PriceMgrParamters id='002' value='2012-09-01 00:00:00.000' />
+	<PriceMgrParamters id='003' value='20120801' /><!-- 成品进仓确认最后同步日期 -->
+	<PriceMgrParamters id='004' number='isNeedNotification' name='是否需要出货通知单' value='Y' />
+	<PriceMgrParamters id='005' number='ProductInOutWorkshop' name='成品出入车间' value='f981f9cc-0283-4bd2-8d9e-5eb1d49144cb' />
+	<PriceMgrParamters id='006' number='ProductInOutWarehouse' name='成品出入仓库' value='59a924e6-212b-47e4-8ba4-238b9ab0cdb5' />
+</entity-engine-xml>

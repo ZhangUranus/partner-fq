@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements. See the NOTICE file distributed with this work for additional information regarding copyright ownership. The ASF licenses this file to you under the Apache License, Version 2.0 (the "License"); you 
+	may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
+	OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. -->
+<entitymodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/entitymodel.xsd">
+	<!-- ========================================================= -->
+	<!-- ======================== Defaults ======================= -->
+	<!-- ========================================================= -->
+	<title>Entity of an Open For Business Project Component</title>
+	<description>None</description>
+	<copyright>Copyright 2001-2009 The Apache Software Foundation</copyright>
+	<author>None</author>
+	<version>1.0</version>
+	<!-- 表头 -->
+	<entity entity-name="ProductMap" package-name="org.ofbiz.scm.ProductMap" title="ProductMap Entity">
+		<field name="id" type="id-long"></field>
+		<field name="number" type="name"></field>
+		<field name="ikeaId" type="name"></field>
+		<field name="materialId" type="id-long"></field>
+		<field name="boardCount" type="int"></field>
+		<field name="entryMaterialId" type="id-long"></field>
+		<field name="packageType" type="indicator"></field>
+		<prim-key field="id" />
+	</entity>
+	<!-- 表头视图 -->
+	<view-entity entity-name="ProductMapView" package-name="org.ofbiz.scm.ProductMap" title="ProductMapView  Entity">
+		<member-entity entity-alias="ProductMapV" entity-name="ProductMap"></member-entity>
+		<member-entity entity-alias="TMaterialV" entity-name="TMaterial"></member-entity>
+		<member-entity entity-alias="TMaterialEntryV" entity-name="TMaterial"></member-entity>
+		<alias-all entity-alias="ProductMapV"></alias-all>
+		<alias name="materialName" entity-alias="TMaterialV" field="name"></alias>
+		<alias name="materialNumber" entity-alias="TMaterialV" field="number"></alias>
+		<alias name="entryMaterialName" entity-alias="TMaterialEntryV" field="name"></alias>
+		<alias name="entryMaterialNumber" entity-alias="TMaterialEntryV" field="number"></alias>
+		<view-link entity-alias="ProductMapV" rel-entity-alias="TMaterialV" rel-optional="true">
+			<key-map field-name="materialId" rel-field-name="id" />
+		</view-link>
+		<view-link entity-alias="ProductMapV" rel-entity-alias="TMaterialEntryV" rel-optional="true">
+			<key-map field-name="entryMaterialId" rel-field-name="id" />
+		</view-link>
+	</view-entity>
+	<!-- 出货时，通过产品编码过滤成品板列表 -->
+	<view-entity entity-name="ProductWithProductIdView" package-name="org.ofbiz.scm.ProductMap" title="ProductWithProductIdView Entity">
+		<member-entity entity-alias="ProductMapV" entity-name="ProductMap"></member-entity>
+		<member-entity entity-alias="TMaterialV" entity-name="TMaterial"></member-entity>
+		<alias name="productId" entity-alias="ProductMapV" field="entryMaterialId"></alias>
+		<alias name="id" entity-alias="TMaterialV" field="id"></alias>
+		<alias name="number" entity-alias="TMaterialV" field="number"></alias>
+		<alias name="name" entity-alias="TMaterialV" field="name"></alias>
+		<alias name="model" entity-alias="TMaterialV" field="model"></alias>
+		<alias name="defaultPrice" entity-alias="TMaterialV" field="defaultPrice"></alias>
+		<alias name="defaultSupplierId" entity-alias="TMaterialV" field="defaultSupplierId"></alias>
+		<alias name="safeStock" entity-alias="TMaterialV" field="safeStock"></alias>
+		<alias name="defaultUnitId" entity-alias="TMaterialV" field="defaultUnitId"></alias>
+		<alias name="materialTypeId" entity-alias="TMaterialV" field="materialTypeId"></alias>
+		<view-link entity-alias="ProductMapV" rel-entity-alias="TMaterialV" rel-optional="true">
+			<key-map field-name="materialId" rel-field-name="id" />
+		</view-link>
+	</view-entity>
+</entitymodel>

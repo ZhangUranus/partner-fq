@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+ <Worksheet ss:Name="Table1">
+  <Table>
+   <Column ss:Index="1" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="2" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="3" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="4" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="5" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="9" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="12" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="13" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="14" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="15" ss:AutoFitWidth="0" ss:Width="110"/>   <Row>
+    <Cell><Data ss:Type="String">ID</Data></Cell>
+    <Cell><Data ss:Type="String">PARENT_ID</Data></Cell>
+    <Cell><Data ss:Type="String">WAREHOUSE_WAREHOUSE_ID</Data></Cell>
+    <Cell><Data ss:Type="String">MATERIAL_MATERIAL_ID</Data></Cell>
+    <Cell><Data ss:Type="String">MATERIAL_MATERIAL_MODEL</Data></Cell>
+    <Cell><Data ss:Type="String">CURRENT_CHECK_VOLUME</Data></Cell>
+    <Cell><Data ss:Type="String">CHECKED_VOLUME</Data></Cell>
+    <Cell><Data ss:Type="String">VOLUME</Data></Cell>
+    <Cell><Data ss:Type="String">UNIT_UNIT_ID</Data></Cell>
+    <Cell><Data ss:Type="String">PRICE</Data></Cell>
+    <Cell><Data ss:Type="String">ENTRYSUM</Data></Cell>
+    <Cell><Data ss:Type="String">LAST_UPDATED_STAMP</Data></Cell>
+    <Cell><Data ss:Type="String">LAST_UPDATED_TX_STAMP</Data></Cell>
+    <Cell><Data ss:Type="String">CREATED_STAMP</Data></Cell>
+    <Cell><Data ss:Type="String">CREATED_TX_STAMP</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">1e0419d5-96b7-48ce-8ee6-28362847b3dc</Data></Cell>
+    <Cell><Data ss:Type="String">00433696-b21c-4023-8b03-56837fbc1cba</Data></Cell>
+    <Cell><Data ss:Type="String">eb73af61-855a-438a-83af-02c02a35b2ec</Data></Cell>
+    <Cell><Data ss:Type="String">301e67c1-a1fb-4b44-957d-75720fa0cc6a</Data></Cell>
+    <Cell><Data ss:Type="String">3MM</Data></Cell>
+    <Cell><Data ss:Type="Number">0.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">20.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">20.000000</Data></Cell>
+    <Cell><Data ss:Type="String">9751a815-3906-442d-98a2-1c933b0abef1</Data></Cell>
+    <Cell><Data ss:Type="Number">0.157500</Data></Cell>
+    <Cell><Data ss:Type="Number">3.150000</Data></Cell>
+    <Cell><Data ss:Type="String">2012-02-09 11:08:20</Data></Cell>
+    <Cell><Data ss:Type="String">2012-02-09 11:08:20</Data></Cell>
+    <Cell><Data ss:Type="String">2012-02-09 11:07:11</Data></Cell>
+    <Cell><Data ss:Type="String">2012-02-09 11:07:11</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">858bf6be-dcdb-46bb-8433-2caac6c205b4</Data></Cell>
+    <Cell><Data ss:Type="String">20efa9e0-fdfb-4e76-bb9b-c0a51a89f70f</Data></Cell>
+    <Cell><Data ss:Type="String">eb73af61-855a-438a-83af-02c02a35b2ec</Data></Cell>
+    <Cell><Data ss:Type="String">301e67c1-a1fb-4b44-957d-75720fa0cc6a</Data></Cell>
+    <Cell><Data ss:Type="String">3MM</Data></Cell>
+    <Cell><Data ss:Type="Number">0.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">4.000000</Data></Cell>
+    <Cell><Data ss:Type="Number">4.000000</Data></Cell>
+    <Cell><Data ss:Type="String">9751a815-3906-442d-98a2-1c933b0abef1</Data></Cell>
+    <Cell><Data ss:Type="Number">0.157500</Data></Cell>
+    <Cell><Data ss:Type="Number">0.630000</Data></Cell>
+    <Cell><Data ss:Type="String">2012-02-09 10:47:39</Data></Cell>
+    <Cell><Data ss:Type="String">2012-02-09 10:47:39</Data></Cell>
+    <Cell><Data ss:Type="String">2012-01-03 09:53:00</Data></Cell>
+    <Cell><Data ss:Type="String">2012-01-03 09:53:00</Data></Cell>
+   </Row>
+  </Table>
+ </Worksheet>
+</Workbook>

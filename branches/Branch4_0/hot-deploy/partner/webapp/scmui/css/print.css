@@ -1,0 +1,64 @@
+
+div{
+/*width:100px;
+*/
+font-size: 9px;
+font-family:黑体;
+font-weight:bold;
+letter-spacing: 0px; 
+}
+/*打印单据标题*/
+div.caption { 
+	padding: 0 0 0 0; 
+	font-size:15px;
+	font-weight:bold;
+	text-align: center; 
+	letter-spacing: 0px; 
+}
+div.field{
+	left:0px;
+	top: 0px;
+	/*内容超过规定宽度时是否换行*/
+	white-space: nowrap; 
+	/*内容超过规定宽度时截取超长部分*/
+	overflow:hidden;
+	padding: 1px 1px 1px 2px; 
+	letter-spacing: 0px; 
+}
+/*打印元素分页该元素后面内容会在另外页打印*/
+div.nextPage{
+	page-break-after:always;
+}
+/*下一行开始*/
+div.nextLine{
+	clear: both;
+}
+table{
+ font-size: 9px;
+ border-left: none;
+ border-right: none ;
+ border-top: 1px solid ;
+ border-bottom: 1px solid ;
+ width:100%;
+ position: relative;
+ border-collapse:collapse;
+ table-layout:fixed;
+ letter-spacing: 0px; 
+}
+th {  
+ font-size: 9px;
+ border: none ; 
+ text-align: left; 
+ padding: 1px; 
+ word-break:break-all;
+}
+td{
+ border: none ; 
+ text-align: left; 
+ height:30px;
+ text-overflow:ellipsis;
+ --overflow:hidden;
+ --white-space: nowrap;
+ word-break:break-all;
+ padding:1px;
+}
