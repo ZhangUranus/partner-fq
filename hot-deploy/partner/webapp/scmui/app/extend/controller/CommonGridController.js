@@ -270,7 +270,7 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 				if (sm.hasSelection()) {// 判断是否选择行记录
 					// 删除选择的记录
 					records = sm.getSelection();
-					Ext.Msg.confirm('提示', '确定删除该' + this.gridTitle + '？', confirmChange, this);
+					Ext.Msg.confirm('提示', '删除操作将影响历史数据的展示，请确定删除该' + this.gridTitle + '？', confirmChange, this);
 					function confirmChange(id) {
 						if (id == 'yes') {
 							/* 判断是否可提交 */

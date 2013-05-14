@@ -182,6 +182,11 @@
 	<TSystemMenuOfRole id='0ccf10fb-5485-450e-bab7-da20bd76dafa' menuId='ProcessMaintaince' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='E' />
 	<TSystemMenuOfRole id='89077644-87ee-4920-b269-2944a4c4a807' menuId='ProcessMaintaince' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='D' />
 	<TSystemMenuOfRole id='c0e459e4-6429-46de-9746-7d17fa82530e' menuId='ProcessMaintaince' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='N' />
+	
+	<TSystemMenuOfRole id='56377295-9709-4736-80e9-7596b5b9f012' menuId='CheckProjectMaintaince' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='V' />
+	<TSystemMenuOfRole id='207449d4-6d10-4a11-b6ec-bd663855ba39' menuId='CheckProjectMaintaince' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='E' />
+	<TSystemMenuOfRole id='9daeff0b-87cc-43da-b87a-4eb4dabc4818' menuId='CheckProjectMaintaince' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='D' />
+	<TSystemMenuOfRole id='c6fd6c70-144e-49f4-929f-4e124a7ebe34' menuId='CheckProjectMaintaince' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='N' />
 	<!-- 质量控制 -->
 	
 	

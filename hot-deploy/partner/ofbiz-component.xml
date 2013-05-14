@@ -40,6 +40,7 @@
 	
 	<!-- 质量控制 -->
 	<entity-resource type="model" reader-name="main" loader="main" location="entitydef/quality/ProcessEntity.xml"/>
+	<entity-resource type="model" reader-name="main" loader="main" location="entitydef/quality/CheckProjectEntity.xml"/>
 	
 	
 	<!-- 系统基础数据 -->
@@ -49,8 +50,8 @@
 	<entity-resource type="data" reader-name="seed" loader="main" location="data/System-TSystemLogType.xml"/>
 	<entity-resource type="data" reader-name="seed" loader="main" location="data/System-TSystemMenu.xml"/>
 	<entity-resource type="data" reader-name="seed" loader="main" location="data/System-TSystemMenuOfRole.xml"/>
-	<!--entity-resource type="data" reader-name="seed" loader="main" location="data/System-TSystemRole.xml"/>
 	<entity-resource type="data" reader-name="seed" loader="main" location="data/System-TSystemSerialNumber.xml"/>
+	<!--entity-resource type="data" reader-name="seed" loader="main" location="data/System-TSystemRole.xml"/>
 	<entity-resource type="data" reader-name="seed" loader="main" location="data/System-TSystemUser.xml"/>
 	<entity-resource type="data" reader-name="seed" loader="main" location="data/System-TSystemUserOfRole.xml"/>
 	<entity-resource type="data" reader-name="seed" loader="main" location="data/System-TMaterialType.xml"/-->
