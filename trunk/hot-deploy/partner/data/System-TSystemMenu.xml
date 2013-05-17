@@ -67,5 +67,6 @@
 	
 	<!-- 质量控制 -->
 	<TSystemMenu menuId='ProcessMaintaince' menuName='工序表维护' menuType='1' parentId='basicSetting' sort='44' hyperlink='processinfomaintaince' styleName='product-map-maintaince' display='1' description='工序表维护' />
-	<TSystemMenu menuId='CheckProjectMaintaince' menuName='检查项目维护' menuType='1' parentId='basicSetting' sort='44' hyperlink='checkprojectinfomaintaince' styleName='product-map-maintaince' display='1' description='检查项目维护' />
+	<TSystemMenu menuId='CheckProjectMaintaince' menuName='检查项目维护' menuType='1' parentId='basicSetting' sort='45' hyperlink='checkprojectinfomaintaince' styleName='product-map-maintaince' display='1' description='检查项目维护' />
+	<TSystemMenu menuId='SamplingPlanMaintaince' menuName='抽样计划维护' menuType='1' parentId='basicSetting' sort='46' hyperlink='samplingplaninfomaintaince' styleName='product-map-maintaince' display='1' description='抽样计划维护' />
 </entity-engine-xml>

@@ -1,62 +1,62 @@
-Ext.define('SCM.controller.quality.Process.ProcessController', {
+Ext.define('SCM.controller.quality.SamplingPlan.SamplingPlanController', {
 			extend : 'Ext.app.Controller',
 			mixins : ['SCM.extend.exporter.Exporter', 'SCM.extend.controller.CommonGridController'],
-			views : ['quality.Process.ListUI', 'quality.Process.EditUI'],
-			stores : ['quality.Process.ProcessStore'],
-			gridTitle : '工序表',
-			gridName : 'processinfomaintaince',
-			editName : 'processedit',
-			modelName : 'ProcessModel',
-			entityName : 'ProcessView',
+			views : ['quality.SamplingPlan.ListUI', 'quality.SamplingPlan.EditUI'],
+			stores : ['quality.SamplingPlan.SamplingPlanStore'],
+			gridTitle : '抽样计划',
+			gridName : 'samplingplaninfomaintaince',
+			editName : 'samplingplanedit',
+			modelName : 'SamplingPlanModel',
+			entityName : 'SamplingPlanView',
 
 			/**
 			 * 初始化controller 增加事件监控
 			 */
 			init : function() {
 				this.control({
-							'processinfomaintaince' : {
+							'samplingplaninfomaintaince' : {
 								afterrender : this.initComponent, // 在界面完成初始化后调用
 								itemdblclick : this.modifyRecord, // 双击列表，弹出编辑界面
 								itemclick : this.changeComponentsState
 								// 点击列表，改变修改、删除按钮状态
 							},
 							// 列表新增按钮
-							'processinfomaintaince button[action=addNew]' : {
+							'samplingplaninfomaintaince button[action=addNew]' : {
 								click : this.addNewRecord
 							},
 							// 列表修改按钮
-							'processinfomaintaince button[action=modify]' : {
+							'samplingplaninfomaintaince button[action=modify]' : {
 								click : this.editRecord
 							},
 							// 列表删除按钮
-							'processinfomaintaince button[action=delete]' : {
+							'samplingplaninfomaintaince button[action=delete]' : {
 								click : this.deleteRecord
 							},
 							// 列表查询按钮
-							'processinfomaintaince button[action=search]' : {
+							'samplingplaninfomaintaince button[action=search]' : {
 								click : this.refreshRecord
 							},
-							'processinfomaintaince button[action=export]' : {
+							'samplingplaninfomaintaince button[action=export]' : {
 								click : this.exportExcel
 							},
 							// 编辑界面保存
-							'processedit button[action=save]' : {
+							'samplingplanedit button[action=save]' : {
 								click : this.saveRecord
 							},
 							// 编辑界面重填
-							'processedit button[action=clear]' : {
+							'samplingplanedit button[action=clear]' : {
 								click : this.clear
 							},
 							// 编辑界面取消
-							'processedit button[action=cancel]' : {
+							'samplingplanedit button[action=cancel]' : {
 								click : this.cancel
 							},
 							//列表打印按钮
-							'processedit button[action=print]' : {
+							'samplingplanedit button[action=print]' : {
 								click : this.print
 							},
 							// 监听各field值变动事件，只监听可见控件
-							'processedit form textfield{isVisible()}' : {
+							'samplingplanedit form textfield{isVisible()}' : {
 								change : this.fieldChange
 							}
 						});

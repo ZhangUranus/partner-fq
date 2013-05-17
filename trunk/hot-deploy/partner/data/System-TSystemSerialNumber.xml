@@ -38,4 +38,5 @@
 	<!-- 质量控制 -->
 	<TSystemSerialNumber id='9d9f9560-ce23-4cee-9610-28f99da5b9c0' serialDate='20130101' entityName='Process' prefix='PRO' serialNumber='100001' initNumber='100001' description='工序编号' hasDate='0' />
 	<TSystemSerialNumber id='784b9b53-e31a-40a7-a64d-2dc1965c0197' serialDate='20130101' entityName='CheckProject' prefix='CHK' serialNumber='100001' initNumber='100001' description='检查项目维护' hasDate='0' />
+	<TSystemSerialNumber id='a6d86257-1354-4d4a-809a-27284035f753' serialDate='20130101' entityName='SamplingPlan' prefix='PLA' serialNumber='100001' initNumber='100001' description='抽样计划维护' hasDate='0' />
 </entity-engine-xml>
