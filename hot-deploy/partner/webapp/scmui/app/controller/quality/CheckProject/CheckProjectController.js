@@ -70,7 +70,6 @@ Ext.define('SCM.controller.quality.CheckProject.CheckProjectController', {
 			 *            button 保存按钮
 			 */
 			saveRecord : function(button) {
-				debugger;
 				var values = this.editForm.getValues();
 				if (!this.isValidate()) {
 					return;

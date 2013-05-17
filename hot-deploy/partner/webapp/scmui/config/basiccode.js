@@ -263,6 +263,10 @@ SCM.store.basiccode.numberColorRenderer = function(value) {
 		return "<font color='green'><b>"+Ext.util.Format.number(value,'0,000.00')+"</b></font>";
 };
 
+SCM.store.basiccode.percentRenderer = function(value) {
+	return Ext.util.Format.number(value,'0,000.00')*100 + "%";
+};
+
 /**
  * 用于处理提交数据 封装表头标题数据
  */
