@@ -13,7 +13,6 @@ Ext.define('SCM.controller.quality.CheckProject.CheckProjectController', {
 			 * 初始化controller 增加事件监控
 			 */
 			init : function() {
-				debugger;
 				this.control({
 							'checkprojectinfomaintaince' : {
 								afterrender : this.initComponent, // 在界面完成初始化后调用

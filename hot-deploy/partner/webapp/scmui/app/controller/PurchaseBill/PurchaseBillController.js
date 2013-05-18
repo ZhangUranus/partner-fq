@@ -234,7 +234,6 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 			 * 判断用户是否属于同一部门，属于同一部门才有权限进行审批
 			 */
 			hasAuditPermission : function(id) {
-				debugger;
 				var record = this.SystemUserStore.findRecord("id", id);
 				if (SCM.CurrentUser.departmentId == record.get("departmentId")) {
 					return true;
