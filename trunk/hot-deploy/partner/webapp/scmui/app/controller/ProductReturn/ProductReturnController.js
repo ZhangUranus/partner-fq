@@ -286,7 +286,6 @@ Ext.define('SCM.controller.ProductReturn.ProductReturnController', {
 			 * 初始化扫描进仓界面，只初始化一次，关闭时候隐藏
 			 */
 			getScanUI : function() {
-				debugger;
 				if (!this.winScan || this.winScan.isDestroyed) {
 					this.winScan = Ext.widget('ProductReturnScan');
 					this.scanForm = this.winScan.down('form');
