@@ -24,10 +24,10 @@ under the License.
     <vendor>OFBiz</vendor>
     <version>1.0</version>
     <!-- Service Engine Services -->
-    <service name="logCleanJobService" engine="java"
+    <!-- service name="logCleanJobService" engine="java"
             location="org.ofbiz.partner.scm.services.CommonServices" invoke="logCleanJobService" auth="false" use-transaction="false" semaphore="wait">
         <description>logCleanJob</description>
-    </service>
+    </service-->
     <!--service name="syncScanDataService" engine="java"
             location="org.ofbiz.partner.scm.services.SyncScanDataServices" invoke="syncService" auth="false" use-transaction="false" semaphore="wait">
         <description>syncService</description>
