@@ -525,10 +525,10 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				if (!this.isRollbackBillAble(record)) {
 					return;
 				}
-				//if(!this.isSubmitUser(record)){
-					//showWarning('非该单据提交人，无法进行撤销操作！');
-					//return;
-				//}
+				if(!this.isSubmitUser(record)){
+					showWarning('非该单据提交人，无法进行撤销操作！');
+					return;
+				}
 				Ext.Msg.confirm('提示', '确定撤销该' + this.gridTitle + '？', confirmChange, this);
 				function confirmChange(id) {
 					Ext.getBody().mask('正在进行撤销操作....');
