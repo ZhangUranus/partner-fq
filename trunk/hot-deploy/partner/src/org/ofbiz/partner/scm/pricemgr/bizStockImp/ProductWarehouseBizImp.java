@@ -82,7 +82,12 @@ public class ProductWarehouseBizImp implements IBizStock {
 				//手工定义是总耗料
 				BigDecimal bomAmount =element.getDetailId()==null? volume.multiply(element.getConsumeQty()):element.getConsumeQty();
 				/*2.2  从车间库存表查找耗料单价*/
-				BigDecimal curPrice=WorkshopPriceMgr.getInstance().getPrice(workshopId, bomMaterialId);
+				BigDecimal curPrice = BigDecimal.ZERO;
+				if(!isOut&&!isCancel){
+					curPrice = WorkshopPriceMgr.getInstance().getPrice(workshopId, bomMaterialId);
+				} else {
+					curPrice = element.getPrice();
+				}
 				/*2.3 计算成本 并汇总总成本*/
 				BigDecimal curCost = bomAmount.multiply(curPrice);
 				/*2.4 计算成本 并汇总总成本*/
@@ -115,12 +120,12 @@ public class ProductWarehouseBizImp implements IBizStock {
 						delegator.storeByCondition("ProductInwarehouseEntryDetail", UtilMisc.toMap("price",curPrice ,"amount",curCost), EntityCondition.makeCondition("id", element.getDetailId()));
 					}
 					/*2.4.2 扣减车间单价表数量、金额*/
-					WorkshopPriceMgr.getInstance().update(workshopId, bomMaterialId, bomAmount.negate(), bomAmount.multiply(curPrice).negate());
+					WorkshopPriceMgr.getInstance().update(workshopId, bomMaterialId, bomAmount.negate(), curCost.negate());
 				}else if (isOut&&isCancel){//撤销出仓
 					/*2.4.3 清除明细单价和金额*/
 					delegator.storeByCondition("ProductInwarehouseEntryDetail", UtilMisc.toMap("price",BigDecimal.ZERO ,"amount",BigDecimal.ZERO), EntityCondition.makeCondition("id", element.getDetailId()));
 					/*2.4.4 仓库出仓到车间返回扣减的耗料*/
-					WorkshopPriceMgr.getInstance().update(workshopId, bomMaterialId, bomAmount, bomAmount.multiply(curPrice));
+					WorkshopPriceMgr.getInstance().update(workshopId, bomMaterialId, bomAmount, curCost);
 				} 
 			}
 			
