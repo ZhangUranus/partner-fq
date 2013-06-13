@@ -144,6 +144,7 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 				this.addLineButton = this.win.down('gridpanel button[action=addLine]');
 				this.deleteLineButton = this.win.down('gridpanel button[action=deleteLine]');
 				this.MaterialBOMStore = Ext.data.StoreManager.lookup('MBAllStore');
+				this.MaterialStore = Ext.data.StoreManager.lookup('MAllStore');
 
 				// 耗料明细页面
 				this.viewDetailButton = this.win.down('gridpanel button[action=viewDetail]');
@@ -517,7 +518,7 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 			detailEntryEditAction : function(editor, e) {
 				// 自动填写规格型号和计量单位
 				if (e.field == 'materialId') {
-					var record = this.searchMaterialId.store.findRecord('id', e.value);
+					var record = this.MaterialStore.findRecord('id', e.value);
 					if (record) {
 						e.record.set('model', record.get('model'));
 						e.record.set('unitUnitId', record.get('defaultUnitId'));

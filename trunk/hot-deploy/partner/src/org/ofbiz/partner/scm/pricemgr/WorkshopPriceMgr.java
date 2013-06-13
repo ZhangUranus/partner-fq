@@ -94,6 +94,7 @@ public class WorkshopPriceMgr {
 			throw new Exception("workshopId or bomId is null");
 		}
 		// 根据入库加工件，获取耗料列表
+		/** 修改逻辑，允许用户修改耗料列表 20130613
 		List<GenericValue> entryList = delegator.findByAnd("MaterialBomListView", "id", bomId, "status", 1, "valid", "Y");
 		BigDecimal totalSum = BigDecimal.ZERO;
 		for (GenericValue value : entryList) {
@@ -119,6 +120,41 @@ public class WorkshopPriceMgr {
 				gv.create();
 			}
 			totalSum = totalSum.add(price.multiply(volume));
+		}
+		return totalSum;
+		**/
+		List<GenericValue> valusList = delegator.findByAnd("WorkshopPriceDetail", UtilMisc.toMap("parentId", entryId, "bomId", bomId));//修复bug
+		BigDecimal totalSum = BigDecimal.ZERO;
+		BigDecimal volume = BigDecimal.ZERO;
+		if(valusList.size() > 0){
+			// 存在用户编辑耗料
+			for (GenericValue value : valusList) {
+				String materialId = value.getString("materialId");
+				BigDecimal price = this.getPrice(workshopId, materialId);
+				volume = value.getBigDecimal("volume");
+				value.set("price", price);
+				value.store();
+				totalSum = totalSum.add(price.multiply(volume));
+			}
+		} else {
+			// 不存在用户编辑耗料
+			List<GenericValue> entryList = delegator.findByAnd("MaterialBomListView", "id", bomId, "status", 1, "valid", "Y");
+			for (GenericValue entry : entryList) {
+				volume = entry.getBigDecimal("volume");
+				String bomMaterialId = entry.getString("bomMaterialId");
+				BigDecimal price = this.getPrice(workshopId, bomMaterialId);
+				
+				volume = entryVolume.multiply(volume);	//将单件耗料改为总耗料
+				GenericValue gv = delegator.makeValue("WorkshopPriceDetail");// 新建一个值对象
+				gv.set("id", UUID.randomUUID().toString());
+				gv.set("parentId", entryId);
+				gv.set("bomId", bomId);
+				gv.set("materialId", bomMaterialId);
+				gv.set("volume", volume);
+				gv.set("price", price);
+				gv.create();
+			}
+			
 		}
 		return totalSum;
 	}
