@@ -446,9 +446,8 @@ Ext.define('SCM.controller.ConsignWarehousing.ConsignWarehousingController', {
 						+ "<th bindfield='materialMaterialName' width='28%'>物料名称</th>"
 						+ "<th bindfield='materialMaterialModel' width='15%'>规格型号</th> "
 						+ "<th bindfield='unitUnitName' width='8%'>单位</th> "
-						+ "<th bindfield='volume' width='12%'>数量</th> "
-						+ "<th bindfield='price' width='12%'>单价</th> "
-						+ "<th bindfield='entrysum' width='12%'>金额</th> "
+						+ "<th bindfield='processPrice' width='12%'>单价</th> "
+						+ "<th bindfield='volume*processPrice' width='12%'>金额</th> "
 						+ "</tr> "
 						+ "</table>"
 						+ "<div class='field' style='width:20%;float:left;'>验收员:<span class='dataField' fieldindex='data.checkerSystemUserName' width=150px></span></div>"
@@ -471,9 +470,8 @@ Ext.define('SCM.controller.ConsignWarehousing.ConsignWarehousingController', {
 						+ "<th bindfield='materialMaterialName' width='28%'>物料名称</th>"
 						+ "<th bindfield='materialMaterialModel' width='15%'>规格型号</th> "
 						+ "<th bindfield='unitUnitName' width='8%'>单位</th> "
-						+ "<th bindfield='volume' width='12%'>数量</th> "
-						+ "<th bindfield='price' width='12%'>单价</th> "
-						+ "<th bindfield='entrysum' width='12%'>金额</th> "
+						+ "<th bindfield='processPrice' width='12%'>单价</th> "
+						+ "<th bindfield='volume*processPrice' width='12%'>金额</th> "
 						+ "</tr> "
 						+ "<tr> "
 						+ "<td ></th>"
@@ -482,7 +480,7 @@ Ext.define('SCM.controller.ConsignWarehousing.ConsignWarehousingController', {
 						+ "<td ></th>"
 						+ "<td ></th> "
 						+ "<td ></th> "
-						+ "<td ><span class='dataField' fieldindex='data.totalsum' width=150px></span></th> "
+						+ "<td ><span class='dataField' fieldindex='data.processSum' width=150px></span></th> "
 						+ "</tr> "
 						+ "</table>"
 						+ "<div class='field' style='width:20%;float:left;'>验收员:<span class='dataField' fieldindex='data.checkerSystemUserName' width=150px></span></div>"
@@ -490,6 +488,52 @@ Ext.define('SCM.controller.ConsignWarehousing.ConsignWarehousingController', {
 						+ "<div class='field' style='width:80px;float:right;'>第<span class='dataField' fieldindex='data.curPage'></span>页/共<span class='dataField' fieldindex='data.totalPages'></span>页</div>"
 						+ "</div>";
 			},
+			
+			//取打印数据公共方法
+			getPrintData : function(id) {
+				/**
+				 * added by mark 2012-8-18 添加自定义打印表头表体view方法
+				 * 覆盖getPrintHeadView 和 getPrintEntryView 
+				 */
+				var headView=this.entityName + 'View';
+				var entryView= this.entityName + 'EntryView'
+				if(this.getPrintHeadView){
+					headView=this.getPrintHeadView();
+				}
+				if(this.getPrintEntryView){
+					entryView=this.getPrintEntryView();
+				}
+				
+				Ext.Ajax.request({
+							scope : this,
+							params : {
+								headId : id,
+								headView : headView,
+								entryView : entryView
+							},
+							url : '../../scm/control/getPrintData',
+							timeout : SCM.shortTimes,
+							success : function(response) {
+								var responseObj = Ext.decode(response.responseText);
+								if (responseObj.success) {
+									var printData = responseObj.printData;
+									if (printData) {
+										//添加打印时间
+										printData.printTime = printHelper.getPrintTime();
+										var sum = 0;
+										for(var value in printData.entry){
+											sum = sum + printData.entry[value].volume*printData.entry[value].processPrice;
+										}
+										printData.processSum = sum;
+									}
+									this.doPrint(printData);
+								} else {
+									showError("打印数据格式出错");
+								}
+							}
+						});
+			},
+			
 			getPrintCfg : function() {
 				var cfg = new PrintConfig();
 				cfg.mainBodyDiv = this.getMainPrintHTML();
