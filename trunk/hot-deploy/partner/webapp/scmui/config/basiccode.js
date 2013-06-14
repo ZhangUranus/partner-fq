@@ -585,7 +585,34 @@ PrintHelper.prototype.fillPage = function(/* 填充数据的Element对象 */page
 						var cell = row.insertCell(cn);
 						// 获取每列的值
 						try {
-							var value = eval(bindEntryIndex + "[" + k + "]." + fieldMapArr[cn]);/* 查找data对象的打印值 */
+							// 20130614 Jeff 支持简单运算
+							var index = 0;
+							var len = fieldMapArr[cn].length;
+							var value;
+							if(fieldMapArr[cn].indexOf("+")>=0){
+								index = fieldMapArr[cn].indexOf("+");
+								var field1 = fieldMapArr[cn].substring(0,index);
+								var field2 = fieldMapArr[cn].substring(index+1,len);
+								value = eval(bindEntryIndex + "[" + k + "]." + field1)+eval(bindEntryIndex + "[" + k + "]." + field2);/* 查找data对象的打印值 */
+							}else if(fieldMapArr[cn].indexOf("-")>=0){
+								index = fieldMapArr[cn].indexOf("-");
+								var field1 = fieldMapArr[cn].substring(0,index);
+								var field2 = fieldMapArr[cn].substring(index+1,len);
+								value = eval(bindEntryIndex + "[" + k + "]." + field1)-eval(bindEntryIndex + "[" + k + "]." + field2);/* 查找data对象的打印值 */
+							}else if(fieldMapArr[cn].indexOf("*")>=0){
+								index = fieldMapArr[cn].indexOf("*");
+								var field1 = fieldMapArr[cn].substring(0,index);
+								var field2 = fieldMapArr[cn].substring(index+1,len);
+								value = eval(bindEntryIndex + "[" + k + "]." + field1)*eval(bindEntryIndex + "[" + k + "]." + field2);/* 查找data对象的打印值 */
+							}else if(fieldMapArr[cn].indexOf("/")>=0){
+								index = fieldMapArr[cn].indexOf("/");
+								var field1 = fieldMapArr[cn].substring(0,index);
+								var field2 = fieldMapArr[cn].substring(index+1,len);
+								value = eval(bindEntryIndex + "[" + k + "]." + field1)/eval(bindEntryIndex + "[" + k + "]." + field2);/* 查找data对象的打印值 */
+							}else {
+								value = eval(bindEntryIndex + "[" + k + "]." + fieldMapArr[cn]);/* 查找data对象的打印值 */
+							}
+							
 							if ((typeof value) == 'number') {
 								value = value.toFixed(4);//显示四位小数
 							}
