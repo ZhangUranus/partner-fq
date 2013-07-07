@@ -64,6 +64,15 @@ Ext.define('SCM.extend.toolbar.BillBaseToolbar', {
 							action : 'print'
 						}]);
 				
+				// 增加打印按钮按钮
+				if (me.extraPrint) {
+					tools = tools.concat([{
+							text : '其它打印',
+							iconCls : 'system-print',
+							action : 'extraPrint'
+						}]);
+				}
+				
 				// 增加扫描按钮
 				if (me.scan) {
 					tools = tools.concat([{

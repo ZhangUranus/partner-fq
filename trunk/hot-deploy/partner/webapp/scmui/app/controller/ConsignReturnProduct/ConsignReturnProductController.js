@@ -49,6 +49,10 @@ Ext.define('SCM.controller.ConsignReturnProduct.ConsignReturnProductController',
 							'ConsignReturnProductlist button[action=print]' : {
 								click : this.print
 							},
+							// 列表打印按钮
+							'ConsignReturnProductlist button[action=extraPrint]' : {
+								click : this.extraPrint
+							},
 							// 列表导出
 							'ConsignReturnProductlist button[action=export]' : {
 								click : this.exportExcel
@@ -347,5 +351,150 @@ Ext.define('SCM.controller.ConsignReturnProduct.ConsignReturnProductController',
 				+"<div class='field' style='width:30%;float:left;'>供应商确认:</div>"
 				+"<div class='field' style='width:80px;float:right;'>第<span class='dataField' fieldindex='data.curPage'></span>页/共<span class='dataField' fieldindex='data.totalPages'></span>页</div>"
 				+"</div>";
+			},
+			
+			/**
+			 * 其它打印
+			 */
+			extraPrint : function(button) {
+				var sm = this.listPanel.getSelectionModel();
+				if (!sm.hasSelection()) {// 判断是否选择行记录
+					showError("请选择打印记录");
+					return;
+				}
+
+				var record = sm.getLastSelected();
+				if (record.get('checkStatus') == 2 ) {
+					this.getExtraPrintData(record.get('id'));
+				} else {
+					showError('单据未完成验收，不能打印！');
+				}
+
+			},
+			
+			/**
+			 * 取打印数据公共方法
+			 */
+			getExtraPrintData : function(id) {
+				
+				/**
+				 * added by mark 2012-8-18 添加自定义打印表头表体view方法
+				 * 覆盖getPrintHeadView 和 getPrintEntryView 
+				 */
+				var headView=this.entityName + 'View';
+				var entryView= this.entityName + 'EntryView'
+				if(this.getPrintHeadView){
+					headView=this.getPrintHeadView();
+				}
+				if(this.getPrintEntryView){
+					entryView=this.getPrintEntryView();
+				}
+				
+				Ext.Ajax.request({
+							scope : this,
+							params : {
+								headId : id,
+								headView : headView,
+								entryView : entryView
+							},
+							url : '../../scm/control/getPrintData',
+							timeout : SCM.shortTimes,
+							success : function(response) {
+								var responseObj = Ext.decode(response.responseText);
+								if (responseObj.success) {
+									var printData = responseObj.printData;
+									if (printData) {
+										//添加打印时间
+										printData.printTime = printHelper.getPrintTime();
+									}
+									this.doExtraPrint(printData);
+								} else {
+									showError("打印数据格式出错");
+								}
+							}
+						});
+			},
+			
+			/**
+			 * 调用打印
+			 */
+			doExtraPrint : function(data) {
+				if (window.printframe) {
+					var printDom = window.printframe.document;
+					printDom.clear();//清除旧打印内容
+
+					//构建打印设置对象
+					var printConfig = new PrintConfig();
+					printConfig.mainBodyDiv = this.getExtraMainPrintHTML();
+					printConfig.loopBodyDiv = this.getLoopPrintHTML();
+					printConfig.tailDiv = this.getExtraTailPrintHTML();
+					printConfig.useTailWhenOnePage = true;
+					
+					printHelper.writePrintContent(printDom, data, printConfig);
+					printDom.close();
+					window.printframe.print();
+				}
+			},
+			
+			
+			getExtraMainPrintHTML : function() {
+				return "<div>"
+						+ "<div class='caption' >江门市蓬江区富桥旅游用品厂有限公司</div>"
+						+ "<div class='caption' >委外加工验收单</div>"
+						+ "<div class='field' style='width:45%;float:left;'  >单据编号:<span class='dataField' fieldindex='data.number' width=150px></span></div>"
+						+ "<div class='field' align='right' style='width:45%;float:right;'>打印时间:<span class='dataField' fieldindex='data.printTime' width=150px ></span></div>"
+						+ "<div class='field' style='width:45%;float:left;'>加工单位:<span class='dataField' fieldindex='data.processorSupplierName' width=150px></span></div>"
+						+ "<div class='field' align='right' style='width:45%;float:right;'>日期:<span class='dataField' fieldindex='data.bizDate' width=150px></span></div>"
+						+ "<div class='nextLine'></div>"
+						+ "<table  cellspacing='0' class='dataEntry' fieldindex='data.entry'>"
+						+ "<tr> "
+						+ "<th bindfield='materialMaterialNumber' width='13%'>货号</th> "
+						+ "<th bindfield='materialMaterialName' width='28%'>物料名称</th>"
+						+ "<th bindfield='materialMaterialModel' width='15%'>规格型号</th> "
+						+ "<th bindfield='unitUnitName' width='8%'>单位</th> "
+						+ "<th bindfield='volume' width='12%'>数量</th> "
+						+ "<th bindfield='inputprice' width='12%'>单价</th> "
+						+ "<th bindfield='volume*inputprice' width='12%'>金额</th> "
+						+ "</tr> "
+						+ "</table>"
+						+ "<div class='field' style='width:20%;float:left;'>验收员:<span class='dataField' fieldindex='data.checkerSystemUserName' width=150px></span></div>"
+						+ "<div class='field' style='width:25%;float:left;'>供应商确认:</div>"
+						+ "<div class='field' style='width:80px;float:right;'>第<span class='dataField' fieldindex='data.curPage'></span>页/共<span class='dataField' fieldindex='data.totalPages'></span>页</div>"
+						+ "</div>";
+			},
+			getExtraTailPrintHTML : function() {
+				return "<div>"
+						+ "<div class='caption' >江门市蓬江区富桥旅游用品厂有限公司</div>"
+						+ "<div class='caption' >委外加工验收单</div>"
+						+ "<div class='field' style='width:45%;float:left;'  >单据编号:<span class='dataField' fieldindex='data.number' width=150px></span></div>"
+						+ "<div class='field' align='right' style='width:45%;float:right;'>打印时间:<span class='dataField' fieldindex='data.printTime' width=150px ></span></div>"
+						+ "<div class='field' style='width:45%;float:left;'>加工单位:<span class='dataField' fieldindex='data.processorSupplierName' width=150px></span></div>"
+						+ "<div class='field' align='right' style='width:45%;float:right;'>日期:<span class='dataField' fieldindex='data.bizDate' width=150px></span></div>"
+						+ "<div class='nextLine'></div>"
+						+ "<table  cellspacing='0' class='dataEntry' fieldindex='data.entry'>"
+						+ "<tr> "
+						+ "<th bindfield='materialMaterialNumber' width='13%'>货号</th> "
+						+ "<th bindfield='materialMaterialName' width='28%'>物料名称</th>"
+						+ "<th bindfield='materialMaterialModel' width='15%'>规格型号</th> "
+						+ "<th bindfield='unitUnitName' width='8%'>单位</th> "
+						+ "<th bindfield='volume' width='12%'>数量</th> "
+						+ "<th bindfield='inputprice' width='12%'>单价</th> "
+						+ "<th bindfield='volume*inputprice' width='12%'>金额</th> "
+						+ "</tr> "
+						+ "<tr> "
+						+ "<td ></th>"
+						+ "<td >合计：</th> "
+						+ "<td ></th> "
+						+ "<td ></th>"
+						+ "<td ></th> "
+						+ "<td ></th> "
+						+ "<td ><span class='dataField' fieldindex='data.processSum' width=150px></span></th> "
+						+ "</tr> "
+						+ "</table>"
+						+ "<div class='field' style='width:20%;float:left;'>验收员:<span class='dataField' fieldindex='data.checkerSystemUserName' width=150px></span></div>"
+						+ "<div class='field' style='width:25%;float:left;'>供应商确认:</div>"
+						+ "<div class='field' style='width:80px;float:right;'>第<span class='dataField' fieldindex='data.curPage'></span>页/共<span class='dataField' fieldindex='data.totalPages'></span>页</div>"
+						+ "</div>";
 			}
+			
 		});

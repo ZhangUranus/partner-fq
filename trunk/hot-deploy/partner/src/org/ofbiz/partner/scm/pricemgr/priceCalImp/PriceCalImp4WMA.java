@@ -143,8 +143,8 @@ public class PriceCalImp4WMA implements IPriceCal {
 			BigDecimal beginVolume=BigDecimal.ZERO;//月初数量
 			BigDecimal beginSum=BigDecimal.ZERO;//月初金额
 			if(preMonthValue!=null){
-				beginVolume=preMonthValue.getBigDecimal("beginVolume").add(preMonthValue.getBigDecimal("volume"));
-				beginSum=preMonthValue.getBigDecimal("beginsum").add(preMonthValue.getBigDecimal("totalSum"));
+				beginVolume=preMonthValue.getBigDecimal("volume");
+				beginSum=preMonthValue.getBigDecimal("totalSum");
 			}
 			
 			calAmount = beginVolume.add(item.getAmount());// 计算后数量

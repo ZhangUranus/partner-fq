@@ -16,6 +16,7 @@ import org.ofbiz.partner.scm.pricemgr.ConsumeMaterial;
 import org.ofbiz.partner.scm.pricemgr.IBizStock;
 import org.ofbiz.partner.scm.pricemgr.PriceCalItem;
 import org.ofbiz.partner.scm.pricemgr.PriceMgr;
+import org.ofbiz.partner.scm.pricemgr.ProductPriceMgr;
 import org.ofbiz.partner.scm.pricemgr.Utils;
 import org.ofbiz.partner.scm.pricemgr.WorkshopPriceMgr;
 
@@ -65,6 +66,7 @@ public class ProductWarehouseBizImp implements IBizStock {
 				throw new Exception("仓库不能为空，请检查后重新提交！");
 			}
 			String materialId = v.getString("materialMaterialId");// 打板物料id
+			String inwarehouseType = v.getString("inwarehouseType");// 仓库id
 			BigDecimal volume=v.getBigDecimal("volume");//入库数量（板）
 			if(volume.compareTo(BigDecimal.ZERO)<=0){
 				throw new Exception("成品进仓数量不能小于等于零！");
@@ -159,6 +161,10 @@ public class ProductWarehouseBizImp implements IBizStock {
 
 			// 计算板成品单价
 			PriceMgr.getInstance().calPrice(item);
+
+			// 成品报表计算
+			ProductPriceMgr.getInstance().update(inwarehouseType, warehouseId, materialId, volume, entryCost, isOut, isCancel);
+			
 			v.store();
 		}
 		// 返填总金额

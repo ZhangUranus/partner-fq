@@ -19,7 +19,8 @@ Ext.define('SCM.view.ConsignReturnProduct.ListUI', {
 										xtype : 'billbasetoolbar',// 工具栏
 										submit : true,
 										region : 'north',
-										border : '0 1 1 1'
+										border : '0 1 1 1',
+										extraPrint : true
 									}, {
 										xtype : 'gridpanel',
 										margin : '0 0 0 0',

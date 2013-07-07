@@ -16,12 +16,12 @@ import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericValue;
 import org.ofbiz.entity.condition.EntityCondition;
 import org.ofbiz.entity.condition.EntityConditionList;
-import org.ofbiz.entity.condition.EntityOperator;
 import org.ofbiz.partner.scm.pricemgr.BillType;
 import org.ofbiz.partner.scm.pricemgr.ConsumeMaterial;
 import org.ofbiz.partner.scm.pricemgr.IBizStock;
 import org.ofbiz.partner.scm.pricemgr.PriceCalItem;
 import org.ofbiz.partner.scm.pricemgr.PriceMgr;
+import org.ofbiz.partner.scm.pricemgr.ProductPriceMgr;
 import org.ofbiz.partner.scm.pricemgr.Utils;
 import org.ofbiz.partner.scm.pricemgr.WorkshopPriceMgr;
 
@@ -140,6 +140,9 @@ public class ProductOutwarehouseBizImp implements IBizStock {
 
 			// 计算分录单价
 			PriceMgr.getInstance().calPrice(item);
+			
+			// 成品报表计算
+			ProductPriceMgr.getInstance().update(outwarehouseType, warehouseId, materialId, volume, sum, isOut, isCancel);
 
 			// 保存单价、金额
 			v.store();
