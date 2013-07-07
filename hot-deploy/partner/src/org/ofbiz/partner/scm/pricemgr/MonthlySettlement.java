@@ -383,10 +383,14 @@ public class MonthlySettlement {
 		Connection conn = ConnectionFactory.getConnection(org.ofbiz.partner.scm.common.Utils.getConnectionHelperName());
 
 		try {
-			// 当前余额表CurMaterialBalance 【inVolume、inSum、outVolume、outSum】设置为零
-			// 【volume=beginvolume、totalSum=beginsum】
+			// 当前余额表CurMaterialBalance 【inVolume、inSum、outVolume、outSum】设置为零【volume=beginvolume、totalSum=beginsum】
 			Debug.logInfo("执行update cur_material_balance set in_Volume=0 ,in_Sum=0,out_Volume=0,out_Sum=0,volume=beginvolume,total_Sum=beginsum ", module);
 			PreparedStatement ps = conn.prepareStatement("update cur_material_balance set in_Volume=0 ,in_Sum=0,out_Volume=0,out_Sum=0,volume=beginvolume,total_Sum=beginsum ");
+			ps.executeUpdate();
+			
+			// 当前余额表CurProductBalance 【inVolume、inSum、outVolume、outSum、changeInVolume、changeInSum、changeOutVolume、changeOutSum、reworkInVolume、reworkInSum、reworkOutVolume、reworkOutSum】设置为零
+			Debug.logInfo("执行update cur_product_balance set in_Volume=0 ,in_Sum=0,out_Volume=0,out_Sum=0,change_In_Volume=0,change_In_Sum=0,change_Out_Volume=0,change_Out_Sum=0,rework_In_Volume=0,rework_In_Sum=0,rework_Out_Volume=0,rework_Out_Sum=0,volume=beginvolume,total_Sum=beginsum,change_Volume=change_Begin_Volume,change_Total_Sum=change_Begin_Sum,rework_Volume=rework_Begin_Volume,rework_Total_Sum=rework_Begin_Sum ", module);
+			ps = conn.prepareStatement("update cur_product_balance set in_Volume=0 ,in_Sum=0,out_Volume=0,out_Sum=0,change_In_Volume=0,change_In_Sum=0,change_Out_Volume=0,change_Out_Sum=0,rework_In_Volume=0,rework_In_Sum=0,rework_Out_Volume=0,rework_Out_Sum=0,volume=beginvolume,total_Sum=beginsum,change_Volume=change_Begin_Volume,change_Total_Sum=change_Begin_Sum,rework_Volume=rework_Begin_Volume,rework_Total_Sum=rework_Begin_Sum ");
 			ps.executeUpdate();
 
 			// 当前委外单价中间表CurConsignPrice 【volume=beginvolume、totalsum=beginsum】
@@ -599,18 +603,26 @@ public class MonthlySettlement {
 		int yearOfnextMonth = Utils.getYearOfNextMonth(year, month);
 		int monthOfnextMonth = Utils.getMonthOfNextMonth(year, month);
 		try {
-			// 当前余额表CurMaterialBalance 转移到历史表 ，当前余额表【in_Volume=0
-			// ,in_Sum=0,out_Volume=0,out_Sum=0,beginvolume=volume,beginsum=total_Sum】
+			// 当前余额表CurMaterialBalance 转移到历史表 ，当前余额表【in_Volume=0,in_Sum=0,out_Volume=0,out_Sum=0,beginvolume=volume,beginsum=total_Sum】
 			Debug.logInfo("执行delete from  his_material_balance where year=" + year + " and month=" + month, module);
 			PreparedStatement ps = conn.prepareStatement("delete from  his_material_balance where year=" + year + " and month=" + month);
 			ps.executeUpdate();
 			Debug.logInfo("执行insert his_material_balance select * from cur_material_balance", module);
 			ps = conn.prepareStatement("insert his_material_balance select * from cur_material_balance");
 			ps.executeUpdate();
-			Debug.logInfo("执行update cur_material_balance set year=" + yearOfnextMonth + " ,month=" + monthOfnextMonth
-					+ " ,in_Volume=0 ,in_Sum=0,out_Volume=0,out_Sum=0,beginvolume=volume,beginsum=total_Sum", module);
-			ps = conn.prepareStatement("update cur_material_balance set year=" + yearOfnextMonth + " ,month=" + monthOfnextMonth
-					+ " ,in_Volume=0 ,in_Sum=0,out_Volume=0,out_Sum=0,beginvolume=volume,beginsum=total_Sum");
+			Debug.logInfo("执行update cur_material_balance set year=" + yearOfnextMonth + " ,month=" + monthOfnextMonth + " ,in_Volume=0 ,in_Sum=0,out_Volume=0,out_Sum=0,beginvolume=volume,beginsum=total_Sum", module);
+			ps = conn.prepareStatement("update cur_material_balance set year=" + yearOfnextMonth + " ,month=" + monthOfnextMonth+ " ,in_Volume=0 ,in_Sum=0,out_Volume=0,out_Sum=0,beginvolume=volume,beginsum=total_Sum");
+			ps.executeUpdate();
+			
+			// 当前余额表CurProductBalance 转移到历史表 ，当前余额表【in_Volume=0,in_Sum=0,out_Volume=0,out_Sum=0,beginvolume=volume,beginsum=total_Sum】
+			Debug.logInfo("执行delete from  his_product_balance where year=" + year + " and month=" + month, module);
+			ps = conn.prepareStatement("delete from  his_product_balance where year=" + year + " and month=" + month);
+			ps.executeUpdate();
+			Debug.logInfo("执行insert his_product_balance select * from cur_product_balance", module);
+			ps = conn.prepareStatement("insert his_product_balance select * from cur_product_balance");
+			ps.executeUpdate();
+			Debug.logInfo("执行update cur_product_balance set year=" + yearOfnextMonth + " ,month=" + monthOfnextMonth + " ,in_Volume=0 ,in_Sum=0,out_Volume=0,out_Sum=0,change_In_Volume=0,change_In_Sum=0,change_Out_Volume=0,change_Out_Sum=0,rework_In_Volume=0,rework_In_Sum=0,rework_Out_Volume=0,rework_Out_Sum=0,volume=beginvolume,total_Sum=beginsum,change_Volume=change_Begin_Volume,change_Total_Sum=change_Begin_Sum,rework_Volume=rework_Begin_Volume,rework_Total_Sum=rework_Begin_Sum ", module);
+			ps = conn.prepareStatement("update cur_product_balance set year=" + yearOfnextMonth + " ,month=" + monthOfnextMonth+ " ,in_Volume=0 ,in_Sum=0,out_Volume=0,out_Sum=0,change_In_Volume=0,change_In_Sum=0,change_Out_Volume=0,change_Out_Sum=0,rework_In_Volume=0,rework_In_Sum=0,rework_Out_Volume=0,rework_Out_Sum=0,volume=beginvolume,total_Sum=beginsum,change_Volume=change_Begin_Volume,change_Total_Sum=change_Begin_Sum,rework_Volume=rework_Begin_Volume,rework_Total_Sum=rework_Begin_Sum ");
 			ps.executeUpdate();
 
 			// 当前委外单价中间表CurConsignPrice数据转移到历史表，当前余额表更新【年、月、期初数量、期初金额】
@@ -864,6 +876,9 @@ public class MonthlySettlement {
 		Connection conn = ConnectionFactory.getConnection(org.ofbiz.partner.scm.common.Utils.getConnectionHelperName());
 		// 删除本期数据,转移库存余额表
 		copyPreMonthData(conn, "His_Material_Balance", "Cur_Material_Balance");
+		
+		// 删除本期数据,转移库存余额表
+		copyPreMonthData(conn, "His_Product_Balance", "Cur_Product_Balance");
 
 		// 删除本期数据,转移委外中间表
 		copyPreMonthData(conn, "His_Consign_Price", "Cur_Consign_Price");

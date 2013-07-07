@@ -16,6 +16,7 @@ import org.ofbiz.partner.scm.pricemgr.ConsumeMaterial;
 import org.ofbiz.partner.scm.pricemgr.IBizStock;
 import org.ofbiz.partner.scm.pricemgr.PriceCalItem;
 import org.ofbiz.partner.scm.pricemgr.PriceMgr;
+import org.ofbiz.partner.scm.pricemgr.ProductPriceMgr;
 import org.ofbiz.partner.scm.pricemgr.Utils;
 
 public class ProductReturnBizImp implements IBizStock {
@@ -107,6 +108,10 @@ public class ProductReturnBizImp implements IBizStock {
 
 			// 计算板成品单价
 			PriceMgr.getInstance().calPrice(item);
+			
+			// 成品报表计算
+			ProductPriceMgr.getInstance().update("1", warehouseId, materialId, volume, entryCost, isOut, isCancel);
+			
 			v.store();
 		}
 		// 返填总金额

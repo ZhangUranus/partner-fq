@@ -962,21 +962,6 @@ public class DataFetchEvents {
 		String keyWord = null;
 		String tableName = null;
 		
-		//获取所有子类型
-		ArrayList<String> numberList = new ArrayList<String>();
-		ArrayList<String> paramList = new ArrayList<String>();
-		StringBuffer numberStr = new StringBuffer();
-		paramList.add("MTT100005");
-		numberList = getMaterialTypeByParentId(paramList);
-		int count = 0;
-		for(String number : numberList){
-			if(count != 0){
-				numberStr.append("','");
-			}
-			numberStr.append(number);
-			count ++;
-		}
-		
 		if(request.getParameter("year") != null && request.getParameter("month") != null){
 			year = request.getParameter("year");
 			month = request.getParameter("month");
@@ -988,9 +973,9 @@ public class DataFetchEvents {
 		cal.set(Integer.parseInt(year), Integer.parseInt(month)-1, 01, 0, 0, 0);
 		cal.set(Calendar.MILLISECOND, 0);
 		if(org.ofbiz.partner.scm.pricemgr.Utils.isCurPeriod(cal.getTime())){
-			tableName = " CUR_MATERIAL_BALANCE ";
+			tableName = " CUR_PRODUCT_BALANCE ";
 		} else {
-			tableName = " HIS_MATERIAL_BALANCE ";
+			tableName = " HIS_PRODUCT_BALANCE ";
 		}
 		
 		if(request.getParameter("warehouseId") != null){
@@ -1018,16 +1003,18 @@ public class DataFetchEvents {
 						" ROUND(SUM(ROUND(IFNULL(CMB.IN_SUM,0),4))/SUM(ROUND(IFNULL(CMB.IN_VOLUME,0)*IFNULL(PM.BOARD_COUNT,0),4)),4) AS INPRICE, "+
 						" SUM(ROUND(IFNULL(CMB.OUT_VOLUME,0)*IFNULL(PM.BOARD_COUNT,0),4)) AS OUTVOLUME, "+
 						" SUM(ROUND(IFNULL(CMB.OUT_SUM,0),4)) AS OUTSUM, "+
-						" ROUND(SUM(ROUND(IFNULL(CMB.OUT_SUM,0),4))/SUM(ROUND(IFNULL(CMB.OUT_VOLUME,0)*IFNULL(PM.BOARD_COUNT,0),4)),4) AS OUTPRICE "+
+						" ROUND(SUM(ROUND(IFNULL(CMB.OUT_SUM,0),4))/SUM(ROUND(IFNULL(CMB.OUT_VOLUME,0)*IFNULL(PM.BOARD_COUNT,0),4)),4) AS OUTPRICE, "+
+						" SUM(ROUND(IFNULL(CMB.CHANGE_BEGIN_VOLUME+CMB.REWORK_BEGIN_VOLUME,0)*IFNULL(PM.BOARD_COUNT,0),4)) AS OTHERBEGINVOLUME, "+
+						" SUM(ROUND(IFNULL(CMB.CHANGE_IN_VOLUME+CMB.REWORK_IN_VOLUME,0)*IFNULL(PM.BOARD_COUNT,0),4)) AS OTHERINVOLUME, "+
+						" SUM(ROUND(IFNULL(CMB.CHANGE_OUT_VOLUME+CMB.REWORK_OUT_VOLUME,0)*IFNULL(PM.BOARD_COUNT,0),4)) AS OTHEROUTVOLUME, "+
+						" SUM(ROUND(IFNULL(CMB.CHANGE_VOLUME+CMB.REWORK_VOLUME,0)*IFNULL(PM.BOARD_COUNT,0),4)) AS OTHERVOLUME "+
 					" FROM " + tableName + " CMB "+
 					" LEFT JOIN WAREHOUSE WH ON CMB.WAREHOUSE_ID = WH.ID "+
 					" LEFT JOIN PRODUCT_MAP PM ON CMB.MATERIAL_ID = PM.MATERIAL_ID "+
 					" LEFT JOIN T_MATERIAL TM ON PM.ENTRY_MATERIAL_ID = TM.ID "+
 					" LEFT JOIN T_MATERIAL TMB ON CMB.MATERIAL_ID = TMB.ID "+
-					" LEFT JOIN T_MATERIAL_TYPE TMT ON TMB.MATERIAL_TYPE_ID = TMT.ID " +
 					" LEFT JOIN UNIT UN ON TM.DEFAULT_UNIT_ID = UN.ID "+
-					" WHERE TMT.NUMBER IN ('"+numberStr.toString()+"') " +
-					" AND YEAR = " + year +
+					" WHERE YEAR = " + year +
 					" AND MONTH = " + month ;
 		if(keyWord != null && !"".equals(keyWord)){
 			sql += " AND (TM.NUMBER LIKE '%" + keyWord + "%' OR TM.NAME LIKE '%" + keyWord + "%')";
@@ -1049,20 +1036,6 @@ public class DataFetchEvents {
 	public static String queryProductChart(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String warehouseId = null;
 		String keyWord = null;
-		//获取所有子类型
-		ArrayList<String> numberList = new ArrayList<String>();
-		ArrayList<String> paramList = new ArrayList<String>();
-		StringBuffer numberStr = new StringBuffer();
-		paramList.add("MTT100005");
-		numberList = getMaterialTypeByParentId(paramList);
-		int count = 0;
-		for(String number : numberList){
-			if(count != 0){
-				numberStr.append("','");
-			}
-			numberStr.append(number);
-			count ++;
-		}
 		
 		if(request.getParameter("warehouseId") != null){
 			warehouseId = request.getParameter("warehouseId");
@@ -1075,12 +1048,11 @@ public class DataFetchEvents {
 						" CONCAT(YEAR,IF(MONTH<10,CONCAT(0,MONTH),MONTH)) AS MONTH, " +
 						" ROUND(IFNULL(CMB.IN_SUM,0),4) AS INSUM, " +
 						" ROUND(IFNULL(CMB.OUT_SUM,0),4) AS OUTSUM " +
-					" FROM HIS_MATERIAL_BALANCE CMB " +
+					" FROM HIS_PRODUCT_BALANCE CMB " +
 					" LEFT JOIN WAREHOUSE WH ON CMB.WAREHOUSE_ID = WH.ID " +
 					" LEFT JOIN T_MATERIAL TM ON CMB.MATERIAL_ID = TM.ID " +
-					" LEFT JOIN T_MATERIAL_TYPE TMT ON TM.MATERIAL_TYPE_ID = TMT.ID " +
 					" LEFT JOIN UNIT UN ON TM.DEFAULT_UNIT_ID = UN.ID " +
-					" WHERE TMT.NUMBER IN ('"+numberStr.toString()+"') ";
+					" WHERE 1=1 ";
 		if(keyWord != null && !"".equals(keyWord)){
 			sql += " AND (TM.NUMBER LIKE '%" + keyWord + "%' OR TM.NAME LIKE '%" + keyWord + "%')";
 		}
@@ -1094,12 +1066,11 @@ public class DataFetchEvents {
 		sql += 	" CONCAT(YEAR,IF(MONTH<10,CONCAT(0,MONTH),MONTH)) AS MONTH, " ;
 		sql +=	" ROUND(IFNULL(CMB.IN_SUM,0),4) AS INSUM, " ;
 		sql +=	" ROUND(IFNULL(CMB.OUT_SUM,0),4) AS OUTSUM " ;
-		sql += " FROM CUR_MATERIAL_BALANCE CMB " ;
+		sql += " FROM CUR_PRODUCT_BALANCE CMB " ;
 		sql += " LEFT JOIN WAREHOUSE WH ON CMB.WAREHOUSE_ID = WH.ID " ;
 		sql += " LEFT JOIN T_MATERIAL TM ON CMB.MATERIAL_ID = TM.ID " ;
-		sql += " LEFT JOIN T_MATERIAL_TYPE TMT ON TM.MATERIAL_TYPE_ID = TMT.ID ";
 		sql += " LEFT JOIN UNIT UN ON TM.DEFAULT_UNIT_ID = UN.ID " ;
-		sql += " WHERE TMT.NUMBER IN ('"+numberStr.toString()+"') " ;
+		sql += " WHERE 1=1 " ;
 		if(keyWord != null && !"".equals(keyWord)){
 			sql += " AND (TM.NUMBER LIKE '%" + keyWord + "%' OR TM.NAME LIKE '%" + keyWord + "%')";
 		}
@@ -1268,7 +1239,7 @@ public class DataFetchEvents {
 						" WWE.MATERIAL_MATERIAL_MODEL AS MATERIALMODEL, " +
 						" UIT.NAME AS UNITNAME, " +
 						" SUM(ROUND(IFNULL(WWE.VOLUME,0),4)) AS VOLUME, " +
-						" SUM(ROUND(IFNULL(WWE.PRICE,0),4)) AS PRICE, " +
+						" ROUND(IFNULL(SUM(WWE.ENTRYSUM)/SUM(WWE.VOLUME),0),4) AS PRICE, " +
 						" SUM(ROUND(IFNULL(WWE.ENTRYSUM,0),4)) AS ENTRYSUM " +
 					" FROM WORKSHOP_WAREHOUSING WW " +
 					" LEFT JOIN WORKSHOP_WAREHOUSING_ENTRY WWE ON WW.ID = WWE.PARENT_ID " +
@@ -1298,7 +1269,7 @@ public class DataFetchEvents {
 		sql += " 	CWE.MATERIAL_MATERIAL_MODEL AS MATERIALMODEL, ";
 		sql += " 	UIT.NAME AS UNITNAME, ";
 		sql += " 	SUM(ROUND(IFNULL(CWE.VOLUME,0),4)) AS VOLUME, ";
-		sql += " 	SUM(ROUND(IFNULL(CWE.PRICE,0),4)) AS PRICE, ";
+		sql += " 	ROUND(IFNULL(SUM(CWE.ENTRYSUM)/SUM(CWE.VOLUME),0),4) AS PRICE, ";
 		sql += " 	SUM(ROUND(IFNULL(CWE.ENTRYSUM,0),4)) AS ENTRYSUM ";
 		sql += " FROM CONSIGN_WAREHOUSING CW ";
 		sql += " LEFT JOIN CONSIGN_WAREHOUSING_ENTRY CWE ON CW.ID = CWE.PARENT_ID ";

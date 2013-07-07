@@ -59,6 +59,76 @@
 		<prim-key field="warehouseId" />
 		<prim-key field="materialId" />
 	</entity>
+	<!-- 历史成品余额表 -->
+	<entity entity-name="HisProductBalance" package-name="org.ofbiz.scm.pricemgr" title="HisMaterialBalance Entity">
+		<field name="year" type="int"></field>
+		<field name="month" type="int"></field>
+		<field name="warehouseId" type="id-long"></field>
+		<field name="materialId" type="id-long"></field>
+		<field name="beginvolume" type="fixed-point"></field>
+		<field name="beginsum" type="fixed-point"></field>
+		<field name="inVolume" type="fixed-point"></field>
+		<field name="inSum" type="fixed-point"></field>
+		<field name="outVolume" type="fixed-point"></field>
+		<field name="outSum" type="fixed-point"></field>
+		<field name="volume" type="fixed-point"></field>
+		<field name="totalSum" type="fixed-point"></field>
+		<field name="changeBeginVolume" type="fixed-point"></field>
+		<field name="changeBeginSum" type="fixed-point"></field>
+		<field name="changeInVolume" type="fixed-point"></field>
+		<field name="changeInSum" type="fixed-point"></field>
+		<field name="changeOutVolume" type="fixed-point"></field>
+		<field name="changeOutSum" type="fixed-point"></field>
+		<field name="changeVolume" type="fixed-point"></field>
+		<field name="changeTotalSum" type="fixed-point"></field>
+		<field name="reworkBeginVolume" type="fixed-point"></field>
+		<field name="reworkBeginSum" type="fixed-point"></field>
+		<field name="reworkInVolume" type="fixed-point"></field>
+		<field name="reworkInSum" type="fixed-point"></field>
+		<field name="reworkOutVolume" type="fixed-point"></field>
+		<field name="reworkOutSum" type="fixed-point"></field>
+		<field name="reworkVolume" type="fixed-point"></field>
+		<field name="reworkTotalSum" type="fixed-point"></field>
+		<prim-key field="year" />
+		<prim-key field="month" />
+		<prim-key field="warehouseId" />
+		<prim-key field="materialId" />
+	</entity>
+	<!-- 当前成品余额表 -->
+	<entity entity-name="CurProductBalance" package-name="org.ofbiz.scm.pricemgr" title="CurMaterialBalance Entity">
+		<field name="year" type="int"></field>
+		<field name="month" type="int"></field>
+		<field name="warehouseId" type="id-long"></field>
+		<field name="materialId" type="id-long"></field>
+		<field name="beginvolume" type="fixed-point"></field>
+		<field name="beginsum" type="fixed-point"></field>
+		<field name="inVolume" type="fixed-point"></field>
+		<field name="inSum" type="fixed-point"></field>
+		<field name="outVolume" type="fixed-point"></field>
+		<field name="outSum" type="fixed-point"></field>
+		<field name="volume" type="fixed-point"></field>
+		<field name="totalSum" type="fixed-point"></field>
+		<field name="changeBeginVolume" type="fixed-point"></field>
+		<field name="changeBeginSum" type="fixed-point"></field>
+		<field name="changeInVolume" type="fixed-point"></field>
+		<field name="changeInSum" type="fixed-point"></field>
+		<field name="changeOutVolume" type="fixed-point"></field>
+		<field name="changeOutSum" type="fixed-point"></field>
+		<field name="changeVolume" type="fixed-point"></field>
+		<field name="changeTotalSum" type="fixed-point"></field>
+		<field name="reworkBeginVolume" type="fixed-point"></field>
+		<field name="reworkBeginSum" type="fixed-point"></field>
+		<field name="reworkInVolume" type="fixed-point"></field>
+		<field name="reworkInSum" type="fixed-point"></field>
+		<field name="reworkOutVolume" type="fixed-point"></field>
+		<field name="reworkOutSum" type="fixed-point"></field>
+		<field name="reworkVolume" type="fixed-point"></field>
+		<field name="reworkTotalSum" type="fixed-point"></field>
+		<prim-key field="year" />
+		<prim-key field="month" />
+		<prim-key field="warehouseId" />
+		<prim-key field="materialId" />
+	</entity>
 	<!-- 物料出库时，通过仓库过滤物料 -->
 	<view-entity entity-name="MaterialWithWarehouseView" package-name="org.ofbiz.scm.pricemgr" title="MaterialWithWarehouseView Entity">
 		<member-entity entity-alias="CurMaterialBalanceV" entity-name="CurMaterialBalance"></member-entity>

@@ -58,6 +58,18 @@ Ext.define('SCM.model.rpt.ProductReportModel', {
 					}, {
 						name : 'OUTPRICE',
 						type : 'float'
+					}, {
+						name : 'OTHERBEGINVOLUME',
+						type : 'float'
+					}, {
+						name : 'OTHERINVOLUME',
+						type : 'float'
+					}, {
+						name : 'OTHEROUTVOLUME',
+						type : 'float'
+					}, {
+						name : 'OTHERVOLUME',
+						type : 'float'
 					}],
 			proxy : {
 				type : 'jsonajax',

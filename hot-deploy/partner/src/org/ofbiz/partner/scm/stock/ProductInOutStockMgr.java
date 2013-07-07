@@ -3,10 +3,8 @@ package org.ofbiz.partner.scm.stock;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 import org.ofbiz.base.util.Debug;
-import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericValue;
 import org.ofbiz.partner.scm.common.Utils;
@@ -77,7 +75,7 @@ public class ProductInOutStockMgr {
 //		<field name="thisMonthOutVolume" type="fixed-point"></field><!-- 当月累计出库数量 -->
 		
 		if (record == null) {
-			List<GenericValue> balanceList = delegator.findByAnd("CurMaterialBalance", UtilMisc.toMap("materialId", materialId));
+			//List<GenericValue> balanceList = delegator.findByAnd("CurMaterialBalance", UtilMisc.toMap("materialId", materialId));
 			
 			// 20121227：报表中的上月数量在库存表中获取cur_material_balance，字段preMonthVolume弃用。
 //			for(GenericValue bv : balanceList){
