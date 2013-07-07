@@ -11,7 +11,8 @@ left join t_material_type tmt on tmt.id = tm.material_type_id
 where tmt.number='MTT100005';
 
 
-update cur_product_balance set in_Volume=0,in_Sum=0,out_Volume=0,out_Sum=0,volume=beginvolume,total_Sum=beginsum,change_Begin_Volume=0,change_Begin_Sum=0,change_In_Volume=0,change_In_Sum=0,change_Out_Volume=0,change_Out_Sum=0,change_Volume=0,change_Total_Sum=0,rework_Begin_Volume=0,rework_Begin_Sum=0,rework_In_Volume=0,rework_In_Sum=0,rework_Out_Volume=0,rework_Out_Sum=0,rework_Volume=0,rework_Total_Sum=0;
+--update cur_product_balance set in_Volume=0,in_Sum=0,out_Volume=0,out_Sum=0,volume=beginvolume,total_Sum=beginsum,change_Begin_Volume=0,change_Begin_Sum=0,change_In_Volume=0,change_In_Sum=0,change_Out_Volume=0,change_Out_Sum=0,change_Volume=0,change_Total_Sum=0,rework_Begin_Volume=0,rework_Begin_Sum=0,rework_In_Volume=0,rework_In_Sum=0,rework_Out_Volume=0,rework_Out_Sum=0,rework_Volume=0,rework_Total_Sum=0;
+update cur_product_balance set change_Begin_Volume=0,change_Begin_Sum=0,change_In_Volume=0,change_In_Sum=0,change_Out_Volume=0,change_Out_Sum=0,change_Volume=0,change_Total_Sum=0,rework_Begin_Volume=0,rework_Begin_Sum=0,rework_In_Volume=0,rework_In_Sum=0,rework_Out_Volume=0,rework_Out_Sum=0,rework_Volume=0,rework_Total_Sum=0;
 
 
 测试：
