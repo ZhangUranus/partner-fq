@@ -391,26 +391,7 @@
 		<security https="false" auth="false" />
 		<event type="java" path="org.ofbiz.partner.scm.stock.ProductInwarehouseEvents" invoke="checkSubmitBill" />
 		<response name="success" type="none" />
-	</request-map>
-	
-	<!-- 成品进仓确认单提交 -->
-	<request-map uri="submitProductInwarehouseConfirm">
-		<security https="false" auth="false" />
-		<event type="java" path="org.ofbiz.partner.scm.stock.ProductInwarehouseConfirmEvents" invoke="submitBill" />
-		<response name="success" type="none" />
-	</request-map>
-	<!-- 成品进仓单确认撤销 -->
-	<request-map uri="rollbackProductInwarehouseConfirm">
-		<security https="false" auth="false" />
-		<event type="java" path="org.ofbiz.partner.scm.stock.ProductInwarehouseConfirmEvents" invoke="rollbackBill" />
-		<response name="success" type="none" />
 	</request-map>	
-	<!-- 成品进仓单确认同步 -->
-	<request-map uri="syncProductInwarehouseConfirm">
-		<security https="false" auth="false" />
-		<event type="java" path="org.ofbiz.partner.scm.stock.ProductInwarehouseConfirmEvents" invoke="synchronizeRecords" />
-		<response name="success" type="none" />
-	</request-map>		
 	
 	<!-- 成品出仓单提交 -->
 	<request-map uri="submitProductOutwarehouse">
@@ -435,19 +416,6 @@
 	<request-map uri="scanRollbackProductOutwarehouse">
 		<security https="false" auth="false" />
 		<event type="java" path="org.ofbiz.partner.scm.stock.ProductOutwarehouseEvents" invoke="scanRollback" />
-		<response name="success" type="none" />
-	</request-map>
-	
-	<!-- 成品确认出仓单提交 -->
-	<request-map uri="submitProductOutwarehouseConfirm">
-		<security https="false" auth="false" />
-		<event type="java" path="org.ofbiz.partner.scm.stock.ProductOutwarehouseConfirmEvents" invoke="submitBill" />
-		<response name="success" type="none" />
-	</request-map>
-	<!-- 成品确认出仓单同步-->
-	<request-map uri="syncProductOutwarehouseConfirm">
-		<security https="false" auth="false" />
-		<event type="java" path="org.ofbiz.partner.scm.stock.ProductOutwarehouseConfirmEvents" invoke="synchronizeRecords" />
 		<response name="success" type="none" />
 	</request-map>
 	
