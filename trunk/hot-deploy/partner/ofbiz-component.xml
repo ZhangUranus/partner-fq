@@ -25,12 +25,10 @@
 	<entity-resource type="model" reader-name="main" loader="main" location="entitydef/ReturnProductWarehousingEntity.xml"/>
 	<entity-resource type="model" reader-name="main" loader="main" location="entitydef/WorkshopOtherDrawBillEntity.xml"/>
 	<entity-resource type="model" reader-name="main" loader="main" location="entitydef/ProductInwarehouseEntity.xml"/>
-	<entity-resource type="model" reader-name="main" loader="main" location="entitydef/ProductInwarehouseConfirmEntity.xml"/>
 	<entity-resource type="model" reader-name="main" loader="main" location="entitydef/StockAdjustEntity.xml"/>
 	<entity-resource type="model" reader-name="main" loader="main" location="entitydef/WorkshopStockAdjustEntity.xml"/>
 	<entity-resource type="model" reader-name="main" loader="main" location="entitydef/SupplierStockAdjustEntity.xml"/>
 	<entity-resource type="model" reader-name="main" loader="main" location="entitydef/ProductOutwarehouseEntity.xml"/>
-	<entity-resource type="model" reader-name="main" loader="main" location="entitydef/ProductOutwarehouseConfirmEntity.xml"/>
 	<entity-resource type="model" reader-name="main" loader="main" location="entitydef/ProductManualOutwarehouseEntity.xml"/>
 	<entity-resource type="model" reader-name="main" loader="main" location="entitydef/ProductMapEntity.xml"/>
 	<entity-resource type="model" reader-name="main" loader="main" location="entitydef/ProductOutNotificationEntity.xml"/>
