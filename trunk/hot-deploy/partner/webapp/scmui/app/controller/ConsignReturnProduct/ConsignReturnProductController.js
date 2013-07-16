@@ -406,6 +406,13 @@ Ext.define('SCM.controller.ConsignReturnProduct.ConsignReturnProductController',
 									if (printData) {
 										//添加打印时间
 										printData.printTime = printHelper.getPrintTime();
+										
+										var sum = 0;
+										for(var value in printData.entry){
+											sum = sum + printData.entry[value].volume*printData.entry[value].inputprice;
+										}
+										printData.processSum = sum;
+										
 									}
 									this.doExtraPrint(printData);
 								} else {
