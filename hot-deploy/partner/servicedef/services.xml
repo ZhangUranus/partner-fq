@@ -24,16 +24,16 @@ under the License.
     <vendor>OFBiz</vendor>
     <version>1.0</version>
     <!-- Service Engine Services -->
-    <!-- service name="logCleanJobService" engine="java"
-            location="org.ofbiz.partner.scm.services.CommonServices" invoke="logCleanJobService" auth="false" use-transaction="false" semaphore="wait">
+    <service name="optimizeTableService" engine="java"
+            location="org.ofbiz.partner.scm.services.CommonServices" invoke="optimizeTableService" auth="false" transaction-timeout="12000" use-transaction="true" semaphore="wait">
         <description>logCleanJob</description>
-    </service-->
-    <!--service name="syncScanDataService" engine="java"
-            location="org.ofbiz.partner.scm.services.SyncScanDataServices" invoke="syncService" auth="false" use-transaction="false" semaphore="wait">
-        <description>syncService</description>
-    </service-->
+    </service>
+    <service name="logCleanJobService" engine="java"
+            location="org.ofbiz.partner.scm.services.CommonServices" invoke="logCleanJobService" auth="false" transaction-timeout="12000" use-transaction="true" semaphore="wait">
+        <description>logCleanJob</description>
+    </service>
     <service name="rollNextDateService" engine="java"
-            location="org.ofbiz.partner.scm.services.RollProductInOutStockServices" invoke="rollService" auth="false" use-transaction="false" semaphore="wait">
+            location="org.ofbiz.partner.scm.services.RollProductInOutStockServices" invoke="rollService" auth="false" use-transaction="true" semaphore="wait">
         <description>syncService</description>
     </service>
     <service name="SCMEntityExportAll" engine="java"

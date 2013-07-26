@@ -2,20 +2,23 @@ package org.ofbiz.partner.scm.pricemgr.bizStockImp;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javolution.util.FastList;
 
 import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.entity.Delegator;
+import org.ofbiz.entity.GenericEntityException;
 import org.ofbiz.entity.GenericValue;
 import org.ofbiz.entity.condition.EntityCondition;
 import org.ofbiz.entity.condition.EntityConditionList;
+import org.ofbiz.entity.jdbc.ConnectionFactory;
 import org.ofbiz.partner.scm.pricemgr.BillType;
 import org.ofbiz.partner.scm.pricemgr.ConsumeMaterial;
 import org.ofbiz.partner.scm.pricemgr.IBizStock;
@@ -64,7 +67,6 @@ public class ProductOutwarehouseBizImp implements IBizStock {
 			}
 			String materialId = v.getString("materialMaterialId");// 物料id
 			BigDecimal volume = v.getBigDecimal("volume");// 出仓数量
-			Date lastUpdatedStamp = (Date) v.get("lastUpdatedStamp");
 
 			String barcode1 = v.getString("barcode1");// 条码1
 			String barcode2 = v.getString("barcode2");// 条码2
@@ -72,9 +74,20 @@ public class ProductOutwarehouseBizImp implements IBizStock {
 			if (volume.compareTo(BigDecimal.ZERO) <= 0) {
 				throw new Exception("成品出仓数量不能小于等于零，请重新输入！");
 			}
+			
+
+			// 提交操作，先更新明细耗料表的编码字段
+			if (isOut){
+				EntityConditionList<EntityCondition> condition = null;
+				List<EntityCondition> conds = FastList.newInstance();
+				conds.add(EntityCondition.makeCondition("barcode1", barcode1));
+				conds.add(EntityCondition.makeCondition("barcode2", barcode2));
+				condition = EntityCondition.makeCondition(conds);
+				delegator.storeByCondition("ProductInwarehouseEntryDetail", UtilMisc.toMap("outBizDate", bizDate,"outParentParentId",billValue.getString("id") ,"outParentId",v.getString("id"),"isOut","1"), condition);
+			}
 
 			/* 1. 获取实际耗料列表 */
-			List<ConsumeMaterial> materialList = getMaterialList(barcode1, barcode2, lastUpdatedStamp);
+			List<ConsumeMaterial> materialList = getMaterialList(v.getString("id"), isOut);
 			if (materialList.size() <= 0) {
 				throw new Exception("未找到对应入仓单据，请确认输入产品条码、序列号是否正确？");
 			}
@@ -160,58 +173,111 @@ public class ProductOutwarehouseBizImp implements IBizStock {
 	 * @param barcode2
 	 * @return
 	 */
-	private List<ConsumeMaterial> getMaterialList(String barcode1, String barcode2, Date lastUpdatedStamp) throws Exception {
+	private List<ConsumeMaterial> getMaterialList(String outParentId, boolean isOut) throws Exception {
 		List<ConsumeMaterial> consumeMaterialList = new ArrayList<ConsumeMaterial>();
-		/* 1.根据条码，获取入仓单据分录编码 */
-//		List<GenericValue> entryList = delegator.findByAnd("ProductInwarehouseEntry", UtilMisc.toMap("barcode1", barcode1, "barcode2", barcode2));
-//		GenericValue tempValue = null;
-//		GenericValue oneValue = null;
-//		for(GenericValue entryValue : entryList) {
-//			oneValue = entryValue;		//避免最后没有取到值
-//			Date inDate = (Date) entryValue.get("lastUpdatedStamp");
-//			// 只取出仓单时间大于 进仓单时间的
-//			if(lastUpdatedStamp.after(inDate)){
-//				if(tempValue != null){
-//					// 只去最近一次进仓单单据
-//					if(inDate.after((Date) tempValue.get("lastUpdatedStamp"))){
-//						tempValue = entryValue;
-//					}
-//				} else {
-//					tempValue = entryValue;
-//				}
-//			}
-//		}
-//		String entryId = "";
-//		if(tempValue != null){
-//			entryId = tempValue.getString("id");
-//		} else {
-//			entryId = oneValue.getString("id");
-//		}
+		List<GenericValue> actualMaterialList = new ArrayList<GenericValue>();
+		String inParentId = "";
+
+		/* 1. 从实际耗料表取，20130710修改程序后，已出仓的数据会迁移的历史表，所有在进仓单中一个编码只对应一个耗料明细 */
+		if(isOut){
+			actualMaterialList = delegator.findByAnd("ProductInwarehouseEntryDetail",  UtilMisc.toMap("outParentId", outParentId));
+			moveDetailData(outParentId,isOut);
+		} else {
+			moveDetailData(outParentId,isOut);
+			actualMaterialList = delegator.findByAnd("ProductInwarehouseEntryDetail",  UtilMisc.toMap("outParentId", outParentId));
+		}
 		
-		/* 2. 从实际耗料表取 */
-//		List<GenericValue> actualMaterialList = delegator.findByAnd("ProductInwarehouseEntryDetail",  UtilMisc.toMap("barcode1", barcode1, "barcode2", barcode2));
-		EntityConditionList<EntityCondition> condition = null;
-		List<EntityCondition> conds = FastList.newInstance();
-		conds.add(EntityCondition.makeCondition("barcode1", barcode1));
-		conds.add(EntityCondition.makeCondition("barcode2", barcode2));
-		condition = EntityCondition.makeCondition(conds);
-		//增加排序字段
-		List<String> orders = new ArrayList<String>();
-		orders.add("price");
-		List<GenericValue> actualMaterialList = delegator.findList("ProductInwarehouseEntryDetail", condition, null, orders, null, false);
 		
-		/* 3. 实际耗料表存在耗料信息 */
+		/* 2. 实际耗料表存在耗料信息 */
 		if (actualMaterialList != null && actualMaterialList.size() > 0) {
-			Map<String, Boolean> consumeMaterialMap=new HashMap<String, Boolean>();
 			for (GenericValue v : actualMaterialList) {
-				String materialId=v.getString("materialId");
-				if(!consumeMaterialMap.containsKey(materialId)){
-					consumeMaterialList.add(new ConsumeMaterial(materialId, v.getBigDecimal("quantity"), v.getBigDecimal("price"), v.getString("id")));
-					consumeMaterialMap.put(materialId, true);
+				consumeMaterialList.add(new ConsumeMaterial(v.getString("materialId"), v.getBigDecimal("quantity"), v.getBigDecimal("price"), v.getString("id")));
+				if(inParentId.isEmpty()){
+					inParentId = v.getString("inParentId");
 				}
-				
 			}
 		}
+		updateIsOut(inParentId,isOut);
+		
 		return consumeMaterialList;
+	}
+	
+	/**
+	 * 更新相应进仓单isOut标识
+	 * @param inParentId
+	 * @param isOut
+	 * @throws GenericEntityException
+	 */
+	private void updateIsOut(String inParentId, boolean isOut) throws GenericEntityException{
+		if(isOut){
+			delegator.storeByCondition("ProductInwarehouseEntry", UtilMisc.toMap("isOut","1"), EntityCondition.makeCondition("id", inParentId));
+		}else  {
+			delegator.storeByCondition("ProductInwarehouseEntry", UtilMisc.toMap("isOut","0"), EntityCondition.makeCondition("id", inParentId));
+		}
+	}
+	
+	/**
+	 * 成品出仓时，将明细耗料迁移到历史表，撤销时，将历史表数据迁移到明细耗料表
+	 * @param barcode1
+	 * @param barcode2
+	 */
+	private void moveDetailData(String outParentId, boolean isOut){
+		Connection conn = null;
+		String fromTableName = "";
+		String toTableName = "";
+		String out = "";
+		if(isOut){
+			fromTableName = "PRODUCT_INWAREHOUSE_ENTRY_DETAIL";
+			toTableName = "PRODUCT_INWAREHOUSE_ENTRY_DETAIL_HIS";
+			out = "1";
+		} else {
+
+			fromTableName = "PRODUCT_INWAREHOUSE_ENTRY_DETAIL_HIS";
+			toTableName = "PRODUCT_INWAREHOUSE_ENTRY_DETAIL";
+			out = "0";
+		}
+		try {
+			conn = ConnectionFactory.getConnection(org.ofbiz.partner.scm.common.Utils.getConnectionHelperName());
+			
+			// 将明细数据迁移到历史表中
+			String insertSql = "INSERT INTO "+ toTableName +"(ID,IN_BIZ_DATE,IN_PARENT_PARENT_ID,IN_PARENT_ID,OUT_BIZ_DATE,OUT_PARENT_PARENT_ID,OUT_PARENT_ID,BARCODE1,BARCODE2,MATERIAL_ID,MODEL,QUANTITY,UNIT_UNIT_ID,PRICE,AMOUNT,IS_IN,IS_OUT) " +
+								"SELECT ID," +
+									"IN_BIZ_DATE," +
+									"IN_PARENT_PARENT_ID," +
+									"IN_PARENT_ID," +
+									"OUT_BIZ_DATE," +
+									"OUT_PARENT_PARENT_ID," +
+									"OUT_PARENT_ID," +
+									"BARCODE1," +
+									"BARCODE2," +
+									"MATERIAL_ID," +
+									"MODEL," +
+									"QUANTITY," +
+									"UNIT_UNIT_ID," +
+									"PRICE," +
+									"AMOUNT," +
+									"IS_IN," +
+									"'"+out+"'" +
+									"FROM "+ fromTableName +" " +
+									"WHERE OUT_PARENT_ID='"+outParentId+"'";
+			
+			// 删除原表记录
+			String deleteSql = "DELETE FROM "+ fromTableName +" WHERE OUT_PARENT_ID='"+outParentId+"'";
+			
+			Statement st = conn.createStatement();
+			st.addBatch(insertSql);
+			st.addBatch(deleteSql);
+			st.executeBatch();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 }

@@ -28,8 +28,8 @@ Ext.define('SCM.view.ProductInwarehouse.DetailEditUI', {
 										store : entryStore,
 										columns : [{
 													xtype : 'gridcolumn',
-													dataIndex : 'parentId',
-													text : 'parentId',
+													dataIndex : 'inParentId',
+													text : 'inParentId',
 													hidden : true
 												}, {
 													xtype : 'combocolumn',

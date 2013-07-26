@@ -38,4 +38,24 @@ public class MonthlyProcessCheckEvents {
 		CommonEvents.writeJsonDataToExt(response, "{success:true}");
 		return "success";
 	}
+	
+	/**
+	 * 修改耗料明细代码，数据迁移程序
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public static String moveDetailData(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Date curDate=Utils.getCurDate();
+		Calendar   cal   =   Calendar.getInstance();
+		cal.setTime(curDate);
+		int year=cal.get(Calendar.YEAR);
+		int month=cal.get(Calendar.MONTH)+1;
+		request.setAttribute("year", year);
+		request.setAttribute("month", month);
+		MonthlySettlement.getInstance().monthlySettleCheck(request, response);
+		CommonEvents.writeJsonDataToExt(response, "{success:true}");
+		return "success";
+	}
 }

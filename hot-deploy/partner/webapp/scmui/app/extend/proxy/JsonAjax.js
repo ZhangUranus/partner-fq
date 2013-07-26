@@ -1,6 +1,7 @@
 Ext.define('SCM.extend.proxy.JsonAjax', {
 			extend : 'Ext.data.proxy.Ajax',
 			alias : 'proxy.jsonajax',
+			timeout : 600000,
 			actionMethods : {// 将read方法修改为POST提交，避免中文乱码
 				read : 'POST'
 			},

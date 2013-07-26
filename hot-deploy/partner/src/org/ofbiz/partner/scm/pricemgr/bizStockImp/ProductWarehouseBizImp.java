@@ -103,7 +103,9 @@ public class ProductWarehouseBizImp implements IBizStock {
 						 /*新增耗料明细*/
 					     GenericValue entryDetailValue=delegator.makeValue("ProductInwarehouseEntryDetail");
 					     entryDetailValue.set("id", UUID.randomUUID().toString());
-					     entryDetailValue.set("parentId", entryId);
+					     entryDetailValue.set("inBizDate", bizDate);
+					     entryDetailValue.set("inParentParentId", billValue.getString("id"));
+					     entryDetailValue.set("inParentId", entryId);
 					     entryDetailValue.set("barcode1", v.getString("barcode1"));
 					     entryDetailValue.set("barcode2", v.getString("barcode2"));
 					     /* 设置物料信息, 规格型号、计量单位*/
@@ -116,16 +118,19 @@ public class ProductWarehouseBizImp implements IBizStock {
 					     
 					     entryDetailValue.set("price", curPrice);
 					     entryDetailValue.set("amount", curCost);
+					     entryDetailValue.set("isIn", 1);
+					     entryDetailValue.set("isOut", 0);
+					     
 					     delegator.create(entryDetailValue);
 					}else{
 						/* 更新耗料明细*/
-						delegator.storeByCondition("ProductInwarehouseEntryDetail", UtilMisc.toMap("price",curPrice ,"amount",curCost), EntityCondition.makeCondition("id", element.getDetailId()));
+						delegator.storeByCondition("ProductInwarehouseEntryDetail", UtilMisc.toMap("inBizDate", bizDate,"price",curPrice ,"amount",curCost,"isIn","1"), EntityCondition.makeCondition("id", element.getDetailId()));
 					}
 					/*2.4.2 扣减车间单价表数量、金额*/
 					WorkshopPriceMgr.getInstance().update(workshopId, bomMaterialId, bomAmount.negate(), curCost.negate());
 				}else if (isOut&&isCancel){//撤销出仓
 					/*2.4.3 清除明细单价和金额*/
-					delegator.storeByCondition("ProductInwarehouseEntryDetail", UtilMisc.toMap("price",BigDecimal.ZERO ,"amount",BigDecimal.ZERO), EntityCondition.makeCondition("id", element.getDetailId()));
+					delegator.storeByCondition("ProductInwarehouseEntryDetail", UtilMisc.toMap("price",BigDecimal.ZERO ,"amount",BigDecimal.ZERO,"isIn","0"), EntityCondition.makeCondition("id", element.getDetailId()));
 					/*2.4.4 仓库出仓到车间返回扣减的耗料*/
 					WorkshopPriceMgr.getInstance().update(workshopId, bomMaterialId, bomAmount, curCost);
 				} 
@@ -184,7 +189,7 @@ public class ProductWarehouseBizImp implements IBizStock {
 	private List<ConsumeMaterial> getMaterialList(String entryId, String materialId) throws Exception {
 		List<ConsumeMaterial> consumeMaterialList=new ArrayList<ConsumeMaterial>();
 		/*1. 从实际耗料表取*/
-		List<GenericValue> actualMaterialList=delegator.findByAnd("ProductInwarehouseEntryDetail", UtilMisc.toMap("parentId", entryId));
+		List<GenericValue> actualMaterialList=delegator.findByAnd("ProductInwarehouseEntryDetail", UtilMisc.toMap("inParentId", entryId));
 		/*2. 实际耗料表存在耗料信息*/
 		if(actualMaterialList!=null&&actualMaterialList.size()>0){
 			for(GenericValue v:actualMaterialList){

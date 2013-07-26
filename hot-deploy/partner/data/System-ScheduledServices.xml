@@ -18,7 +18,7 @@ specific language governing permissions and limitations
 under the License.
 -->
 <entity-engine-xml>
-    <!-- JobSandbox jobId="LOG_CLEAN" jobName="logCleanJobService" runTime="2000-01-01 00:00:00.000" serviceName="logCleanJobService" poolId="pool" runAsUser="system" tempExprId="HOUR_00" maxRecurrenceCount="-1"/-->
-    <!-- JobSandbox jobId="SYNC_SCAN" jobName="syncScanDataService" runTime="2000-01-01 00:00:00.000" serviceName="syncScanDataService" poolId="pool" runAsUser="system" tempExprId="MINUTE_04" maxRecurrenceCount="-1"/-->
-    <JobSandbox jobId="ROLL_NEXT_DATE" jobName="rollNextDateService" runTime="2000-01-01 00:00:00.000" serviceName="rollNextDateService" poolId="pool" runAsUser="system" tempExprId="HOUR_00" maxRecurrenceCount="-1"/>
+	<JobSandbox jobId="OPTIMIZE" jobName="optimizeTableService" runTime="2013-07-27 01:00:00.000" serviceName="optimizeTableService" poolId="pool" runAsUser="system" tempExprId="HOUR_00" maxRecurrenceCount="-1"/>
+    <JobSandbox jobId="LOG_CLEAN" jobName="logCleanJobService" runTime="2013-07-27 01:00:00.000" serviceName="logCleanJobService" poolId="pool" runAsUser="system" tempExprId="HOUR_01" maxRecurrenceCount="-1"/>
+    <JobSandbox jobId="ROLL_NEXT_DATE" jobName="rollNextDateService" runTime="2013-07-27 01:00:00.000" serviceName="rollNextDateService" poolId="pool" runAsUser="system" tempExprId="HOUR_00" maxRecurrenceCount="-1"/>
 </entity-engine-xml>

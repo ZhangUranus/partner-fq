@@ -239,8 +239,13 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 				var sm = this.editEntry.getSelectionModel();
 				if (sm.hasSelection()) {// 判断是否选择行记录
 					record = sm.getLastSelected();
-
-					this.detailEntry.store.getProxy().extraParams.whereStr = "parent_id = '" + record.get('id') + "'";
+					if(record.get('isOut')==1){
+						this.detailEntry.store.getProxy().extraParams.entity ='ProductInwarehouseEntryDetailHisView';
+					}else {
+						this.detailEntry.store.getProxy().extraParams.entity ='ProductInwarehouseEntryDetailView';
+					}
+					
+					this.detailEntry.store.getProxy().extraParams.whereStr = "in_parent_id = '" + record.get('id') + "'";
 					this.detailEntry.store.load();
 					this.detailWin.show();
 				} else {
@@ -267,7 +272,8 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 				}
 
 				// 获取耗料列表
-				me.detailEditEntry.store.getProxy().extraParams.whereStr = 'parent_id = \'' + record.get('id') + '\'';
+				me.detailEditEntry.store.getProxy().extraParams.entity ='ProductInwarehouseEntryDetailView';
+				me.detailEditEntry.store.getProxy().extraParams.whereStr = 'in_parent_id = \'' + record.get('id') + '\'';
 				me.detailEditEntry.store.load(function(records, operation, success) {
 							if (records.length <= 0) {// 如果不存在耗料列表，获取初始列表
 								// 获取耗料列表
@@ -287,7 +293,8 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 														var entryRecord = Ext.create('ProductInwarehouseEntryDetailModel');
 														entryRecord.phantom = true;
 														// 设置父id
-														entryRecord.set('parentId', record.get('id'));
+														entryRecord.set('inParentParentId', record.get('parentId'));
+														entryRecord.set('inParentId', record.get('id'));
 														entryRecord.set('barcode1', record.get('barcode1'));
 														entryRecord.set('barcode2', record.get('barcode2'));
 														entryRecord.set('materialId', values[i].materialId);
@@ -296,6 +303,8 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 														entryRecord.set('unitUnitId', values[i].unitId);
 														entryRecord.set('price', 0);
 														entryRecord.set('amount', 0);
+														entryRecord.set('isIn', 0);
+														entryRecord.set('isOut', 0);
 														me.detailEditEntry.store.add(entryRecord);
 													}
 												} else {
@@ -407,12 +416,15 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 				var detailRecord = Ext.create('ProductInwarehouseEntryDetailModel');
 				detailRecord.phantom = true;
 				// 设置父id
-				detailRecord.set('parentId', this.currentDetailRecord.get('id'));
+				detailRecord.set('inParentParentId', record.get('parentId'));
+				detailRecord.set('inParentId', this.currentDetailRecord.get('id'));
 				detailRecord.set('barcode1', this.currentDetailRecord.get('barcode1'));
 				detailRecord.set('barcode2', this.currentDetailRecord.get('barcode2'));
 				// 默认单价，金额为零
 				detailRecord.set('price', 0);
 				detailRecord.set('amount', 0);
+				detailRecord.set('isIn', 0);
+				detailRecord.set('isOut', 0);
 				this.detailEditEntry.store.add(detailRecord);
 			},
 			/**

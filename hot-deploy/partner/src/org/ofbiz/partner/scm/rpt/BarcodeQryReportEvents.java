@@ -1,24 +1,11 @@
 package org.ofbiz.partner.scm.rpt;
 
-import java.math.BigDecimal;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-
-import org.ofbiz.entity.jdbc.ConnectionFactory;
 import org.ofbiz.partner.scm.common.CommonEvents;
-import org.ofbiz.partner.scm.common.DatePeriod;
-import org.ofbiz.partner.scm.pricemgr.Utils;
 
 
 public class BarcodeQryReportEvents {

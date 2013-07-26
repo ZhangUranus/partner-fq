@@ -52,6 +52,20 @@
 		<field name="isReturn" type="indicator"></field><!-- 是否退回 1 -->
 		<prim-key field="id" />
 	</entity>
+	
+	<!-- 出仓明细视图（用于跑数） -->
+	<view-entity entity-name="ProductOutwarehouseEntryDetailView" package-name="org.ofbiz.scm.ProductOutwarehouse" title="ProductOutwarehouseEntryDetailView  Entity">
+		<member-entity entity-alias="ProductOutwarehouseV" entity-name="ProductOutwarehouse"></member-entity>
+		<member-entity entity-alias="ProductOutwarehouseEntryV" entity-name="ProductOutwarehouseEntry"></member-entity>
+		<alias-all entity-alias="ProductOutwarehouseV"></alias-all>
+		<alias name="entryId" entity-alias="ProductOutwarehouseEntryV" field="id"></alias>
+		<alias name="barcode1" entity-alias="ProductOutwarehouseEntryV" field="barcode1"></alias>
+		<alias name="barcode2" entity-alias="ProductOutwarehouseEntryV" field="barcode2"></alias>
+		<view-link entity-alias="ProductOutwarehouseV" rel-entity-alias="ProductOutwarehouseEntryV" rel-optional="false">
+			<key-map field-name="id" rel-field-name="parentId" />
+		</view-link>
+	</view-entity>
+	
 	<!-- 表头视图 -->
 	<view-entity entity-name="ProductOutwarehouseView" package-name="org.ofbiz.scm.ProductOutwarehouse" title="ProductOutwarehouseView  Entity">
 		<member-entity entity-alias="ProductOutwarehouseV" entity-name="ProductOutwarehouse"></member-entity>

@@ -64,6 +64,16 @@ Ext.define('SCM.view.tools.EntityDataUI', {
 																iconCls : 'system-save',
 																action : 'warehouseWithout'
 															}]
+												}, {
+													xtype : 'fieldset',
+													title : '迁移明细数据类',
+													collapsible : true,
+													items : [{
+																xtype : 'button',
+																text : '开始',
+																iconCls : 'system-save',
+																action : 'write'
+															}]
 												}]
 									}]
 						});

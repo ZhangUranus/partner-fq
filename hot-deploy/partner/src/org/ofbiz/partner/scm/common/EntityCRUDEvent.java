@@ -170,9 +170,32 @@ public class EntityCRUDEvent {
 						if(!"".equals(entityNumber)){//判断系统编码是否存在，存在的使用系统编码
 							v.set("number", entityNumber);
 						}
+					}else if (record.get(fieldName)!=null&&vModelField.getType().equals("date-time")){//时间字段的转换
+						long tsl=Long.valueOf(record.get(fieldName).toString());
+						Timestamp ts=new Timestamp(tsl);
+						v.set(fieldName, ts);
+					}else if(record.get(fieldName)!=null&&vModelField.getType().equals("boolean")){ 
+						//布尔值处理，客户端传来的事ture or false 转换为 整数 1 or 0
+						Boolean bv=Boolean.valueOf(record.get(fieldName).toString());
+						if(bv){
+							v.set(fieldName,Integer.valueOf(1));
+						}else{
+							v.set(fieldName,Integer.valueOf(0));
+						}
+						
+					}else if(record.get(fieldName)!=null && vModelField.getType().equals("fixed-point")){
+						BigDecimal bd = new BigDecimal(record.get(fieldName).toString());
+						v.set(fieldName, bd);
+					}else if(record.get(fieldName)!=null && vModelField.getType().equals("numeric")){
+						Long bd = Long.parseLong(record.get(fieldName).toString());
+						v.set(fieldName, bd);
+					}else if(record.get(fieldName)!=null && vModelField.getType().equals("int")){
+						int bd = Integer.parseInt(record.get(fieldName).toString());
+						v.set(fieldName, bd);
 					}else{
 						v.set(fieldName, record.get(fieldName));
 					}
+					
 				}
 			}
 			

@@ -44,29 +44,86 @@
 		<field name="qantity" type="numeric"></field><!-- 板数量 -->
 		<field name="inwarehouseType" type="value"></field>
 		<field name="sort" type="int"></field>
+		<field name="isOut" type="int"></field><!-- 是否已经提交出仓单（0：未提交，1：已提交） -->
 		<field name="lastUpdatedStamp" type="date-time"></field>
 		<prim-key field="id" />
 	</entity>
 	<!-- 进仓单分录额外耗料表 记录进仓单每一个成品的实际耗料数 -->
 	<entity entity-name="ProductInwarehouseEntryDetail" package-name="org.ofbiz.scm.ProductInwarehouse" title="ProductInwarehouseEntryDetail Entity">
 		<field name="id" type="id-long"></field>
-		<field name="parentId" type="id-long"></field>
-		<field name="barcode1" type="value"></field><!-- 为提供处理销量增加 -->
-		<field name="barcode2" type="value"></field><!-- 为提供处理销量增加 -->
+		<field name="inBizDate" type="date-time"></field><!-- 进仓单业务日期 -->
+		<field name="inParentParentId" type="id-long"></field><!-- 进仓单主单据编码 -->
+		<field name="inParentId" type="id-long"></field><!-- 进仓单分录单据编码 -->
+		<field name="outBizDate" type="date-time"></field><!-- 出仓单业务日期 -->
+		<field name="outParentParentId" type="id-long"></field><!-- 出仓单主单据编码 -->
+		<field name="outParentId" type="id-long"></field><!-- 出仓单分录单据编码 -->
+		<field name="barcode1" type="value"></field>
+		<field name="barcode2" type="value"></field>
 		<field name="materialId" type="id-long"></field>
 		<field name="model" type="value"></field>
 		<field name="quantity" type="fixed-point"></field>
 		<field name="unitUnitId" type="id-long"></field>
 		<field name="price" type="fixed-point"></field>
 		<field name="amount" type="fixed-point"></field>
+		<field name="isIn" type="int"></field><!-- 是否已经提交进仓单（0：未提交，1：已提交） -->
+		<field name="isOut" type="int"></field><!-- 是否已经提交出仓单（0：未提交，1：已提交） -->
 		<prim-key field="id" />
 		<index name="PRT_INS_ENR_DTL_PTI" unique="false">
-            <index-field name="parentId"/>
+            <index-field name="inParentId"/>
 		</index>
 		<index name="PRT_INS_ENR_DTL_BARC" unique="false">
             <index-field name="barcode1"/>
             <index-field name="barcode2"/>
 		</index>
+	</entity>
+	<!-- 进仓单分录额外耗料表历史表，为提高效率，将已经出仓数据转入历史表 -->
+	<entity entity-name="ProductInwarehouseEntryDetailHis" package-name="org.ofbiz.scm.ProductInwarehouse" title="ProductInwarehouseEntryDetailHis Entity">
+		<field name="id" type="id-long"></field>
+		<field name="inBizDate" type="date-time"></field><!-- 进仓单业务日期 -->
+		<field name="inParentParentId" type="id-long"></field><!-- 进仓单主单据编码 -->
+		<field name="inParentId" type="id-long"></field><!-- 进仓单分录单据编码 -->
+		<field name="outBizDate" type="date-time"></field><!-- 出仓单业务日期 -->
+		<field name="outParentParentId" type="id-long"></field><!-- 出仓单主单据编码 -->
+		<field name="outParentId" type="id-long"></field><!-- 出仓单分录单据编码 -->
+		<field name="barcode1" type="value"></field>
+		<field name="barcode2" type="value"></field>
+		<field name="materialId" type="id-long"></field>
+		<field name="model" type="value"></field>
+		<field name="quantity" type="fixed-point"></field>
+		<field name="unitUnitId" type="id-long"></field>
+		<field name="price" type="fixed-point"></field>
+		<field name="amount" type="fixed-point"></field>
+		<field name="isIn" type="int"></field><!-- 是否已经提交进仓单（0：未提交，1：已提交） -->
+		<field name="isOut" type="int"></field><!-- 是否已经提交出仓单（0：未提交，1：已提交） -->
+		<prim-key field="id" />
+		<index name="PRT_INS_ENR_DTL_PTI_HIS" unique="false">
+            <index-field name="inParentId"/>
+		</index>
+		<index name="PRT_INS_ENR_DTL_BARC_HIS" unique="false">
+            <index-field name="barcode1"/>
+            <index-field name="barcode2"/>
+		</index>
+	</entity>
+	<!-- 进仓单分录额外耗料表备份表，将历史表中出仓超过3个月的数据备份到这个表 -->
+	<entity entity-name="ProductInwarehouseEntryDetailBackup" package-name="org.ofbiz.scm.ProductInwarehouse" title="ProductInwarehouseEntryDetailBackup Entity">
+		<field name="id" type="id-long"></field>
+		<field name="inBizDate" type="date-time"></field><!-- 进仓单业务日期 -->
+		<field name="inParentParentId" type="id-long"></field><!-- 进仓单主单据编码 -->
+		<field name="inParentId" type="id-long"></field><!-- 进仓单分录单据编码 -->
+		<field name="outBizDate" type="date-time"></field><!-- 出仓单业务日期 -->
+		<field name="outParentParentId" type="id-long"></field><!-- 出仓单主单据编码 -->
+		<field name="outParentId" type="id-long"></field><!-- 出仓单分录单据编码 -->
+		<field name="barcode1" type="value"></field>
+		<field name="barcode2" type="value"></field>
+		<field name="materialId" type="id-long"></field>
+		<field name="model" type="value"></field>
+		<field name="quantity" type="fixed-point"></field>
+		<field name="unitUnitId" type="id-long"></field>
+		<field name="price" type="fixed-point"></field>
+		<field name="amount" type="fixed-point"></field>
+		<field name="isIn" type="int"></field><!-- 是否已经提交进仓单（0：未提交，1：已提交） -->
+		<field name="isOut" type="int"></field><!-- 是否已经提交出仓单（0：未提交，1：已提交） -->
+		<prim-key field="id" />
 	</entity>
 	<!-- 表头视图 -->
 	<view-entity entity-name="ProductInwarehouseView" package-name="org.ofbiz.scm.ProductInwarehouse" title="ProductInwarehouseView  Entity">
@@ -161,6 +218,22 @@
 			<key-map field-name="materialId" rel-field-name="id" />
 		</view-link>
 		<view-link entity-alias="ProductInwarehouseEntryDetailV" rel-entity-alias="unitUnitV" rel-optional="true">
+			<key-map field-name="unitUnitId" rel-field-name="id" />
+		</view-link>
+	</view-entity>
+	
+	<!-- 分录历史明细耗料视图 -->
+	<view-entity entity-name="ProductInwarehouseEntryDetailHisView" package-name="org.ofbiz.scm.ProductInwarehouse" title="ProductInwarehouseEntryDetailHisView  Entity">
+		<member-entity entity-alias="ProductInwarehouseEntryDetailHisV" entity-name="ProductInwarehouseEntryDetailHis"></member-entity>
+		<member-entity entity-alias="materialMaterialV" entity-name="TMaterial"></member-entity>
+		<member-entity entity-alias="unitUnitV" entity-name="Unit"></member-entity>
+		<alias-all entity-alias="ProductInwarehouseEntryDetailHisV"></alias-all>
+		<alias name="materialMaterialName" entity-alias="materialMaterialV" field="name"></alias>
+		<alias name="unitUnitName" entity-alias="unitUnitV" field="name"></alias>
+		<view-link entity-alias="ProductInwarehouseEntryDetailHisV" rel-entity-alias="materialMaterialV" rel-optional="true">
+			<key-map field-name="materialId" rel-field-name="id" />
+		</view-link>
+		<view-link entity-alias="ProductInwarehouseEntryDetailHisV" rel-entity-alias="unitUnitV" rel-optional="true">
 			<key-map field-name="unitUnitId" rel-field-name="id" />
 		</view-link>
 	</view-entity>

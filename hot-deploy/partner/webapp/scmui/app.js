@@ -22,7 +22,7 @@ Ext.application({
 					'ConsignReturnProduct.ConsignReturnProductController', 'WorkshopReturnProduct.WorkshopReturnProductController', 'WorkshopOtherDrawBill.WorkshopOtherDrawBillController','StockAdjust.StockAdjustController','WorkshopStockAdjust.WorkshopStockAdjustController','SupplierStockAdjust.SupplierStockAdjustController','rpt.ConsignProcessMatchingReportController',
 					'ProductInwarehouse.ProductInwarehouseController','ProductOutwarehouse.ProductOutwarehouseController', 'basedata.RegionController', 'ProductMap.ProductMapController', 'ProductOutNotification.ProductOutNotificationController', 'ProductManualOutwarehouse.ProductManualOutwarehouseController','ProductOutVerify.ProductOutVerifyController', 'ProductReturn.ProductReturnController',
 					'rpt.StockDetailReportController', 'rpt.WorkshopStockDetailReportController', 'rpt.PackingMaterialReportController', 'ProductionPlan.ProductionPlanController', 'rpt.ProductReportController', 'rpt.SemiProductCostReportController', 'rpt.PurchaseMatchingReportController','rpt.ProductSendOweReportController','rpt.ProductStaticsReportController','rpt.BarcodeInwarehouseQryController','rpt.BarcodeOutwarehouseQryController',
-					'quality.Process.ProcessController','quality.CheckProject.CheckProjectController','quality.SamplingPlan.SamplingPlanController'],
+					'quality.Process.ProcessController','quality.CheckProject.CheckProjectController','quality.SamplingPlan.SamplingPlanController','rpt.MaterialDetailQryController'],
 					
 			launch : function() {
 				var viewport = Ext.create('SCM.view.Viewport');
