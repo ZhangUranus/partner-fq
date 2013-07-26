@@ -57,3 +57,4 @@ SCM.shortTimes = 60000;	//60秒
 SCM.normalTimes = 600000;	//10分钟
 SCM.longTimes = 1800000;	//30分钟
 SCM.limitTimes = 7200000;	//2小时
+SCM.bigLimitTimes = 72000000;	//20小时

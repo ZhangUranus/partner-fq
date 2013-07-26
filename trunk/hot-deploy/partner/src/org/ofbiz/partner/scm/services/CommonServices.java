@@ -27,28 +27,86 @@ public class CommonServices {
 		try {
 			conn = ConnectionFactory.getConnection(Utils.getConnectionHelperName());
 			
+
+			Debug.log("开始日志清除任务！", module);
+			
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			Calendar calendar = Calendar.getInstance();
 			calendar.add(Calendar.DATE, -10);	//6个月前
 			String dateStr = sdf.format(calendar.getTime());
 			
+			
 			//清理半年前的日志信息
 			String deleteLogByTimeSql = " DELETE FROM SERVER_HIT WHERE HIT_START_DATE_TIME < '" + dateStr + "'";
-			
-//			//清理多余的日志信息
-//			String deleteExtraLogSql = " DELETE FROM SERVER_HIT WHERE ID NOT IN (" +
-//					"   SELECT SH.ID" +
-//					"   FROM (SELECT SHI.ID,SHI.REQUEST_URL FROM SERVER_HIT SHI) SH, T_SYSTEM_LOG_TYPE TSLT" +
-//					"   WHERE TSLT.VALID = '1'" +
-//					"   AND SH.REQUEST_URL LIKE CONCAT('%',TSLT.KEY_WORD,'%')" +
-//					" )";
+
+			String deleteLogbinByTimeSql = " DELETE FROM SERVER_HIT_BIN WHERE BIN_START_DATE_TIME < '" + dateStr + "'";
+
+			String deleteVisitByTimeSql = " DELETE FROM VISIT WHERE FROM_DATE < '" + dateStr + "'";
+
+			String deleteVisitorByTimeSql = " DELETE FROM VISITOR WHERE LAST_UPDATED_STAMP < '" + dateStr + "'";
 			
 			Statement st = conn.createStatement();
 			st.addBatch(deleteLogByTimeSql);
-//			st.addBatch(deleteExtraLogSql);
+			st.addBatch(deleteLogbinByTimeSql);
+			st.addBatch(deleteVisitByTimeSql);
+			st.addBatch(deleteVisitorByTimeSql);
+			
 			st.executeBatch();
 			
-			Debug.logInfo("完成日志清除任务！", module);
+			Debug.log("完成日志清除任务！", module);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ServiceUtil.returnError(e.getMessage());
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					return ServiceUtil.returnError(e.getMessage());
+				}
+			}
+		}
+		return ServiceUtil.returnSuccess();
+	}
+	
+	/**
+	 * 整理大表索引
+	 * @param dctx
+	 * @param context
+	 * @return
+	 */
+	public static Map<String, Object> optimizeTableService(DispatchContext dctx, Map<String, ? extends Object> context) {
+		Connection conn = null;
+		try {
+			conn = ConnectionFactory.getConnection(Utils.getConnectionHelperName());
+
+			Debug.log("开始整理大表索引任务！", module);
+			
+			// 整理大表索引
+			String optimizeSql1 = "OPTIMIZE TABLE PRODUCT_INWAREHOUSE_ENTRY_DETAIL";
+			String optimizeSql2 = "OPTIMIZE TABLE PRODUCT_INWAREHOUSE_ENTRY_DETAIL_HIS";
+			String optimizeSql3 = "OPTIMIZE TABLE PRODUCT_INWAREHOUSE_ENTRY_DETAIL_BACKUP";
+			String optimizeSql4 = "OPTIMIZE TABLE PRODUCT_INWAREHOUSE_ENTRY";
+			String optimizeSql5 = "OPTIMIZE TABLE PRODUCT_OUTWAREHOUSE_ENTRY";
+			String optimizeSql6 = "OPTIMIZE TABLE SERVER_HIT";
+			String optimizeSql7 = "OPTIMIZE TABLE SERVER_HIT_BIN";
+			String optimizeSql8 = "OPTIMIZE TABLE VISIT";
+			String optimizeSql9 = "OPTIMIZE TABLE WORKSHOP_DRAW_MATERIAL_ENTRY";
+			
+			Statement st = conn.createStatement();
+			st.addBatch(optimizeSql1);
+			st.addBatch(optimizeSql2);
+			st.addBatch(optimizeSql3);
+			st.addBatch(optimizeSql4);
+			st.addBatch(optimizeSql5);
+			st.addBatch(optimizeSql6);
+			st.addBatch(optimizeSql7);
+			st.addBatch(optimizeSql8);
+			st.addBatch(optimizeSql9);
+			st.executeBatch();
+			
+			Debug.log("完成整理大表索引任务！", module);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ServiceUtil.returnError(e.getMessage());

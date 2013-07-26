@@ -25,6 +25,9 @@ Ext.define('SCM.controller.tools.EntityDataController', {
 				
 				this.warehouseWithoutButton = this.listContainer.down('button[action=warehouseWithout]');
 				this.warehouseWithoutButton.addListener('click', this.warehouseWithout, this); // 监听所有请求回调
+				
+				this.writeButton = this.listContainer.down('button[action=write]');
+				this.writeButton.addListener('click', this.writeOutDataToDetail, this); // 监听所有请求回调
 			},
 			
 			/**
@@ -89,6 +92,28 @@ Ext.define('SCM.controller.tools.EntityDataController', {
 								var result = Ext.decode(response.responseText)
 								if (result.success) {
 									Ext.Msg.alert("提示", "手工进仓成功！");
+								} else {
+									showError(result.message);
+								}
+							}
+						});
+			},
+			
+			/**
+			 * 迁移明细数据类
+			 */
+			writeOutDataToDetail : function() {
+				Ext.Ajax.request({
+							scope : this,
+							url : "../../scm/control/writeInOutDateToDetail",
+							timeout : SCM.bigLimitTimes,
+							success : function(response, option) {
+								if (response.responseText.length < 1) {
+									showError('系统没有返回结果');
+								}
+								var result = Ext.decode(response.responseText)
+								if (result.success) {
+									Ext.Msg.alert("提示", "返填数据成功！");
 								} else {
 									showError(result.message);
 								}

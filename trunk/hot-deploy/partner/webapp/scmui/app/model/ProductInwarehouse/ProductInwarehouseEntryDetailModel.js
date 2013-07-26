@@ -7,7 +7,32 @@ Ext.define('SCM.model.ProductInwarehouse.ProductInwarehouseEntryDetailModel', {
 						name : 'id',
 						type : 'string'
 					}, {
-						name : 'parentId',
+						name : 'inBizDate',
+						defaultValue : new Date(),
+						type : 'date',
+						format : 'time',
+						convert : function(value, record) {
+							return new Date(value);
+						}
+					}, {
+						name : 'inParentId',
+						type : 'string'
+					}, {
+						name : 'inParentParentId',
+						type : 'string'
+					}, {
+						name : 'outBizDate',
+						defaultValue : new Date(),
+						type : 'date',
+						format : 'time',
+						convert : function(value, record) {
+							return new Date(value);
+						}
+					}, {
+						name : 'outParentId',
+						type : 'string'
+					}, {
+						name : 'outParentParentId',
 						type : 'string'
 					}, {
 						name : 'barcode1',
@@ -33,12 +58,21 @@ Ext.define('SCM.model.ProductInwarehouse.ProductInwarehouseEntryDetailModel', {
 					}, {
 						name : 'amount',
 						type : 'string'
+					}, {
+						name : 'isIn',
+						type : 'int',
+						defaultValue : 0
+					}, {
+						name : 'isOut',
+						type : 'int',
+						defaultValue : 0
 					}],
 			idgen : 'uuid', // 使用uuid生成记录id 每个模型必须要有id字段
 			proxy : {
 				type : 'jsonajax',
 				api : {
-					read : '../../scm/control/requestJsonData?entity=ProductInwarehouseEntryDetailView',
+					//请求时动态增加entity参数
+					read : '../../scm/control/requestJsonData',
 					create : '../../scm/control/addnewJsonData?entity=ProductInwarehouseEntryDetail',
 					update : '../../scm/control/updateJsonData?entity=ProductInwarehouseEntryDetail',
 					destroy : '../../scm/control/deleteJsonData?entity=ProductInwarehouseEntryDetail'

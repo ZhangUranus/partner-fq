@@ -1,16 +1,25 @@
 package org.ofbiz.partner.scm.pricemgr.bizStockImp;
 
 import java.math.BigDecimal;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
+
+import javolution.util.FastList;
 
 import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericValue;
+import org.ofbiz.entity.condition.EntityCondition;
+import org.ofbiz.entity.condition.EntityConditionList;
+import org.ofbiz.entity.jdbc.ConnectionFactory;
 import org.ofbiz.partner.scm.pricemgr.BillType;
 import org.ofbiz.partner.scm.pricemgr.ConsumeMaterial;
 import org.ofbiz.partner.scm.pricemgr.IBizStock;
@@ -62,7 +71,11 @@ public class ProductReturnBizImp implements IBizStock {
 				throw new Exception("成品退货数量不能小于等于零！");
 			}
 			/*1. 获取实际耗料列表  ， 支持10层的bom物料查找*/
-			List<ConsumeMaterial> materialList = getMaterialList(v.getString("barcode1"),v.getString("barcode2"));
+			List<ConsumeMaterial> materialList = getMaterialList(v.getString("barcode1"),v.getString("barcode2"),isOut,bizDate,v.getString("id"),billValue.getString("id"));
+			
+			if (materialList.size() <= 0) {
+				throw new Exception("未找到对应出仓单据，请确认输入产品条码、序列号是否正确？");
+			}
 			
 			BigDecimal cost=BigDecimal.ZERO;//打板成品单一板的成本
 			
@@ -127,22 +140,98 @@ public class ProductReturnBizImp implements IBizStock {
 	 * @param barcode2
 	 * @return
 	 */
-	private List<ConsumeMaterial> getMaterialList(String barcode1, String barcode2) throws Exception {
+	private List<ConsumeMaterial> getMaterialList(String barcode1, String barcode2, boolean isOut,Date bizDate,String parentId,String parentParentId) throws Exception {
 		List<ConsumeMaterial> consumeMaterialList = new ArrayList<ConsumeMaterial>();
-		/* 2. 从实际耗料表取 */
-		List<GenericValue> actualMaterialList = delegator.findByAnd("ProductInwarehouseEntryDetail",  UtilMisc.toMap("barcode1", barcode1, "barcode2", barcode2));
-		/* 3. 实际耗料表存在耗料信息 */
-		if (actualMaterialList != null && actualMaterialList.size() > 0) {
-			Map<String, Boolean> consumeMaterialMap=new HashMap<String, Boolean>();
-			for (GenericValue v : actualMaterialList) {
-				String materialId=v.getString("materialId");
-				if(!consumeMaterialMap.containsKey(materialId)){
-					consumeMaterialList.add(new ConsumeMaterial(materialId, v.getBigDecimal("quantity"), v.getBigDecimal("price"), v.getString("id")));
-					consumeMaterialMap.put(materialId, true);
-				}
-				
+		List<GenericValue> actualMaterialList = new ArrayList<GenericValue>();
+		if(isOut){
+			actualMaterialList = delegator.findByAnd("ProductInwarehouseEntryDetail", UtilMisc.toMap("barcode1", barcode1,"barcode2",barcode2));
+			moveDetailData(barcode1, barcode2, isOut,bizDate,parentId,parentParentId);
+		} else {
+			moveDetailData(barcode1, barcode2, isOut,bizDate,parentId,parentParentId);
+			actualMaterialList = delegator.findByAnd("ProductInwarehouseEntryDetail", UtilMisc.toMap("barcode1", barcode1,"barcode2",barcode2));
+		}
+		/*2. 实际耗料表存在耗料信息*/
+		if(actualMaterialList!=null&&actualMaterialList.size()>0){
+			for(GenericValue v:actualMaterialList){
+				consumeMaterialList.add(new ConsumeMaterial(v.getString("materialId"),v.getBigDecimal("quantity"),v.getBigDecimal("price"),v.getString("id")));
 			}
 		}
 		return consumeMaterialList;
+	}
+	
+	/**
+	 * 成品退货进仓时，复制历史表中最新出仓记录数据，生成进仓耗料明细数据
+	 * @param barcode1
+	 * @param barcode2
+	 */
+	private void moveDetailData(String barcode1, String barcode2, boolean isOut,Date bizDate,String parentId,String parentParentId) throws Exception{
+		if(isOut){
+			Connection conn = null;
+			try {
+				conn = ConnectionFactory.getConnection(org.ofbiz.partner.scm.common.Utils.getConnectionHelperName());
+				
+				// 删除原表记录
+				String deleteSql = "DELETE FROM PRODUCT_INWAREHOUSE_ENTRY_DETAIL WHERE IN_PARENT_ID='"+parentId+"'";
+				
+				Statement st = conn.createStatement();
+				st.addBatch(deleteSql);
+				st.executeBatch();
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				if (conn != null) {
+					try {
+						conn.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		} else {
+			List<GenericValue> actualMaterialList = new ArrayList<GenericValue>();
+			
+			EntityConditionList<EntityCondition> condition = null;
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("barcode1", barcode1));
+			conds.add(EntityCondition.makeCondition("barcode2", barcode2));
+			condition = EntityCondition.makeCondition(conds);
+			//增加排序字段，优先取最晚出仓数据
+			List<String> orders = new ArrayList<String>();
+			orders.add("outBizDate DESC");
+			actualMaterialList = delegator.findList("ProductInwarehouseEntryDetailHis", condition, null, orders, null, false);
+			
+			/* 3. 实际耗料表存在耗料信息 */
+			if (actualMaterialList != null && actualMaterialList.size() > 0) {
+				String entryId = "";
+				for (GenericValue v : actualMaterialList) {
+					if(entryId.isEmpty()){
+						entryId = v.getString("outParentId");
+					}
+					if(entryId.equals(v.getString("outParentId"))){
+						/*新增耗料明细*/
+					     GenericValue entryDetailValue=delegator.makeValue("ProductInwarehouseEntryDetail");
+					     entryDetailValue.set("id", UUID.randomUUID().toString());
+					     entryDetailValue.set("inBizDate", bizDate);
+					     entryDetailValue.set("inParentParentId", parentParentId);
+					     entryDetailValue.set("inParentId", parentId);
+					     entryDetailValue.set("barcode1", v.getString("barcode1"));
+					     entryDetailValue.set("barcode2", v.getString("barcode2"));
+					     /* 设置物料信息, 规格型号、计量单位*/
+					     entryDetailValue.set("materialId", v.getString("materialId"));
+					     
+					     entryDetailValue.set("model", v.getString("model"));
+					     entryDetailValue.set("quantity",v.getString("quantity"));//保存总耗料
+					     entryDetailValue.set("unitUnitId", v.getString("unitUnitId"));
+					     
+					     entryDetailValue.set("price", v.getString("price"));
+					     entryDetailValue.set("amount", v.getString("amount"));
+					     entryDetailValue.set("isIn", 1);
+					     entryDetailValue.set("isOut", 0);
+					     
+					     delegator.create(entryDetailValue);
+					}
+				}
+			}
+		}
 	}
 }

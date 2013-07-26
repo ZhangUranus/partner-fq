@@ -300,9 +300,9 @@ public class ProductPriceMgr {
 					throwExceptionOfMaterialNotEnough(materialId);		//库存数量不足，抛出异常
 				}
 				
-				if(calChangeVolume.compareTo(BigDecimal.ZERO) > 0 ){
-					throwExceptionOfMaterialNotEnoughOther(materialId,"改板");		//出仓数量不足，抛出异常
-				}
+//				if(calChangeVolume.compareTo(BigDecimal.ZERO) > 0 ){
+//					throwExceptionOfMaterialNotEnoughOther(materialId,"改板");		//出仓数量不足，抛出异常
+//				}
 				
 				if(isOut == isCancel){//取消操作并非正常出入库
 					changeInVolume = volume;
@@ -360,9 +360,9 @@ public class ProductPriceMgr {
 					throwExceptionOfMaterialNotEnough(materialId);  //库存数量不足，抛出异常
 				}
 				
-				if(calChangeVolume.compareTo(BigDecimal.ZERO) > 0 ){
-					throwExceptionOfMaterialNotEnoughOther(materialId,"改板");		//出仓数量不足，抛出异常
-				}
+//				if(calChangeVolume.compareTo(BigDecimal.ZERO) > 0 ){
+//					throwExceptionOfMaterialNotEnoughOther(materialId,"改板");		//出仓数量不足，抛出异常
+//				}
 				
 				// 如果库存余额表没有改物料，则新增
 				curValue = delegator.makeValue("CurProductBalance");
@@ -459,9 +459,9 @@ public class ProductPriceMgr {
 					throwExceptionOfMaterialNotEnough(materialId);		//库存数量不足，抛出异常
 				}
 				
-				if(calReworkVolume.compareTo(BigDecimal.ZERO) > 0 ){
-					throwExceptionOfMaterialNotEnoughOther(materialId,"返工");		//出仓数量不足，抛出异常
-				}
+//				if(calReworkVolume.compareTo(BigDecimal.ZERO) > 0 ){
+//					throwExceptionOfMaterialNotEnoughOther(materialId,"返工");		//出仓数量不足，抛出异常
+//				}
 				
 				if(isOut == isCancel){//取消操作并非正常出入库
 					reworkInVolume = volume;
@@ -519,9 +519,9 @@ public class ProductPriceMgr {
 					throwExceptionOfMaterialNotEnough(materialId);  //库存数量不足，抛出异常
 				}
 				
-				if(calReworkVolume.compareTo(BigDecimal.ZERO) > 0 ){
-					throwExceptionOfMaterialNotEnoughOther(materialId,"返工");		//出仓数量不足，抛出异常
-				}
+//				if(calReworkVolume.compareTo(BigDecimal.ZERO) > 0 ){
+//					throwExceptionOfMaterialNotEnoughOther(materialId,"返工");		//出仓数量不足，抛出异常
+//				}
 				
 				// 如果库存余额表没有改物料，则新增
 				curValue = delegator.makeValue("CurProductBalance");

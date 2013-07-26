@@ -243,11 +243,6 @@ Ext.define('SCM.view.rpt.pr.ListUI', {
 													text : '期末金额'
 												}, {
 													xtype : 'numbercolumn',
-													dataIndex : 'OTHERBEGINVOLUME',
-													width : 100,
-													text : '非正常期初数量'
-												}, {
-													xtype : 'numbercolumn',
 													dataIndex : 'OTHERINVOLUME',
 													width : 100,
 													text : '非正常收入数量'
@@ -256,11 +251,6 @@ Ext.define('SCM.view.rpt.pr.ListUI', {
 													dataIndex : 'OTHEROUTVOLUME',
 													width : 100,
 													text : '非正常发出数量'
-												}, {
-													xtype : 'numbercolumn',
-													dataIndex : 'OTHERVOLUME',
-													width : 100,
-													text : '非正常期末数量'
 												}],
 										dockedItems : [{
 													dock : 'bottom',

@@ -690,6 +690,13 @@
 		<response name="success" type="none" />
 	</request-map>
 	
+	<!-- 材料耗用汇总明细表 -->
+	<request-map uri="queryMaterialDetail">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.rpt.MaterialDetailQryReportEvents" invoke="queryMaterialDetail" />
+		<response name="success" type="none" />
+	</request-map>
+	
 	<!-- 生产计划列表 -->
 	<request-map uri="queryProductionPlan">
 		<security https="false" auth="false" />
@@ -811,6 +818,15 @@
 	</request-map>
 	
 	<!-- end 系统效率优化类 -->
+	
+	
+	<!-- 迁移明细数据类 -->
+	<request-map uri="writeInOutDateToDetail">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.tools.MoveDetailDataEvents" invoke="writeInOutDateToDetail" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 迁移明细数据类 -->
 	
 	<!-- 系统工具类  -->
 	

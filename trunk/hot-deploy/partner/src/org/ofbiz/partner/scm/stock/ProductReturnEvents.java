@@ -215,7 +215,7 @@ public class ProductReturnEvents {
 	 * @return
 	 * @throws Exception
 	 */
-	public static String scanSubmit(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public static synchronized String scanSubmit(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		
@@ -335,7 +335,7 @@ public class ProductReturnEvents {
 	 * @return
 	 * @throws Exception
 	 */
-	public static String scanRollback(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public static synchronized String scanRollback(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
 
 		boolean beganTransaction = false;

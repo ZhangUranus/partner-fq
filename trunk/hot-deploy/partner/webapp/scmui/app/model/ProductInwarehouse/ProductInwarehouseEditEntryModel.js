@@ -71,6 +71,10 @@ Ext.define('SCM.model.ProductInwarehouse.ProductInwarehouseEditEntryModel', {
 						name : 'sort',
 						type : 'int'
 					}, {
+						name : 'isOut',
+						defaultValue : 0,
+						type : 'int'
+					}, {
 						name : 'lastUpdatedStamp',
 						defaultValue : new Date(),
 						type : 'date',

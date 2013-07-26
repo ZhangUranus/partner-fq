@@ -226,7 +226,7 @@ public class ProductOutwarehouseEvents {
 	 * @return
 	 * @throws Exception
 	 */
-	public static String scanSubmit(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public static synchronized String scanSubmit(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 
@@ -402,7 +402,7 @@ public class ProductOutwarehouseEvents {
 	 * @return
 	 * @throws Exception
 	 */
-	public static String scanRollback(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public static synchronized String scanRollback(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
 
 		boolean beganTransaction = false;
@@ -491,8 +491,16 @@ public class ProductOutwarehouseEvents {
 					throw new Exception("未找到产品对应的出货通知单，请检查货号是否填写正确。如果无相应出货通知单，请先提交通知单！");
 				}
 			}
-
+			
+			String parentId = entryValue.getString("parentId");// 父id
+			
 			entryValue.remove(); // 删除分录
+			
+			// 判断是否需要删除主单
+			List<GenericValue> tmpList = delegator.findByAnd("ProductOutwarehouseEntry", UtilMisc.toMap("parentId", parentId));
+			if(tmpList.size()==0){
+				billHead.remove();
+			}
 
 			BillBaseEvent.writeSuccessMessageToExt(response, "进仓成功！");
 			TransactionUtil.commit(beganTransaction);

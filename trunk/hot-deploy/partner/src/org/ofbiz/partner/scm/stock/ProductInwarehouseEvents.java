@@ -225,7 +225,7 @@ public class ProductInwarehouseEvents {
 	 * @return
 	 * @throws Exception
 	 */
-	public static String scanSubmit(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public static synchronized String scanSubmit(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		
@@ -371,7 +371,7 @@ public class ProductInwarehouseEvents {
 	 * @return
 	 * @throws Exception
 	 */
-	public static String scanRollback(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public static synchronized String scanRollback(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
 
 		boolean beganTransaction = false;
@@ -451,7 +451,17 @@ public class ProductInwarehouseEvents {
 			WeeklyStockMgr.getInstance().updateStock(materialId, bizDate, type, volume, true);
 			ProductInOutStockMgr.getInstance().updateStock(materialId, ProductStockType.IN, qantity, volume, true);
 			 
+			String parentId = entryValue.getString("parentId");// 父id
+			
 			entryValue.remove(); // 删除分录
+			
+			delegator.removeByAnd("ProductInwarehouseEntryDetail", UtilMisc.toMap("inParentId", entryValue.getString("id")));
+			
+			// 判断是否需要删除主单
+			List<GenericValue> tmpList = delegator.findByAnd("ProductInwarehouseEntry", UtilMisc.toMap("parentId", parentId));
+			if(tmpList.size()==0){
+				billHead.remove();
+			}
 
 			BillBaseEvent.writeSuccessMessageToExt(response, "出仓成功！");
 			TransactionUtil.commit(beganTransaction);
@@ -500,7 +510,7 @@ public class ProductInwarehouseEvents {
 					/*1. 获取实际耗料列表  ， 支持10层的bom物料查找*/
 					List<ConsumeMaterial> consumeMaterialList=new ArrayList<ConsumeMaterial>();
 					/*1. 从实际耗料表取*/
-					List<GenericValue> actualMaterialList=delegator.findByAnd("ProductInwarehouseEntryDetail", UtilMisc.toMap("parentId", entryId));
+					List<GenericValue> actualMaterialList=delegator.findByAnd("ProductInwarehouseEntryDetail", UtilMisc.toMap("inParentId", entryId));
 					/*2. 实际耗料表存在耗料信息*/
 					if(actualMaterialList!=null&&actualMaterialList.size()>0){
 						for(GenericValue v:actualMaterialList){

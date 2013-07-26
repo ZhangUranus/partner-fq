@@ -177,6 +177,12 @@
 	<TSystemMenuOfRole id='7f0835d0-1c29-4766-a51f-7514aaf6dccf' menuId='productOutNotification' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='N' />
 	<TSystemMenuOfRole id='d89f5067-1ca5-45a2-b237-bb696e881cc2' menuId='productOutNotification' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='S' />
 	
+	<TSystemMenuOfRole id='8db89949-baa4-448d-a74b-b2b5419d830f' menuId='materialDetailReport' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='V' />
+	<TSystemMenuOfRole id='0a57bfcc-bbac-48d2-8fdf-793c38c0d4a5' menuId='materialDetailReport' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='E' />
+	<TSystemMenuOfRole id='0dba0683-1b12-4783-a973-1c72c64a1b27' menuId='materialDetailReport' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='D' />
+	<TSystemMenuOfRole id='464b38dc-ed9b-49ea-9132-f8e4e637db5b' menuId='materialDetailReport' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='N' />
+	<TSystemMenuOfRole id='020645d6-b102-42f1-a714-dd72406c885a' menuId='materialDetailReport' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='S' />
+	
 	<!-- 质量控制 -->
 	<TSystemMenuOfRole id='510d5b0a-8b0a-4fd1-9bd2-f8d73441ab30' menuId='ProcessMaintaince' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='V' />
 	<TSystemMenuOfRole id='0ccf10fb-5485-450e-bab7-da20bd76dafa' menuId='ProcessMaintaince' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='E' />
@@ -320,6 +326,13 @@
 	<TSystemMenuOfRole id='530d3d54-e0ca-4d4b-80d4-b055baf02c26' menuId='supplierStockAdjust' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='D' />
 	<TSystemMenuOfRole id='4a002238-b44b-4d8d-a65e-9f1b4d790c74' menuId='supplierStockAdjust' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='N' />
 	<TSystemMenuOfRole id='9fc26cfd-6dd5-4ab7-a28b-259e632a3410' menuId='supplierStockAdjust' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='S' />
+	
+	<TSystemMenuOfRole id='429fbf2e-7ab4-43fa-909a-90df92657e55' menuId='materialDetailReport' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='V' />
+	<TSystemMenuOfRole id='2edec1a5-192d-4fac-a201-bf84fb8f8cc5' menuId='materialDetailReport' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='E' />
+	<TSystemMenuOfRole id='eb496d3a-a902-4b07-beb8-26c71fdff82f' menuId='materialDetailReport' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='D' />
+	<TSystemMenuOfRole id='a7a8ac20-5890-4c23-b9c4-2954eb312b9c' menuId='materialDetailReport' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='N' />
+	<TSystemMenuOfRole id='71ca0429-8812-4f13-b3f6-1aeae9787a20' menuId='materialDetailReport' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='S' />
+	
 	<TSystemMenuOfRole id='5c1f8237-5ea0-48dc-b447-7e160b51b621' menuId='warehouseManagement' roleId='bb13cf14-fd7d-498a-a5bf-4bf0fa1e00ea' operateType='V' />
 	<TSystemMenuOfRole id='13e37bf2-cfd7-4ad5-bc9c-93a6caeda7ef' menuId='systemManagement' roleId='bb13cf14-fd7d-498a-a5bf-4bf0fa1e00ea' operateType='V' />
 	<TSystemMenuOfRole id='028b7934-7fab-4481-9ddb-aa4b69023a1f' menuId='basicSetting' roleId='bb13cf14-fd7d-498a-a5bf-4bf0fa1e00ea' operateType='V' />
