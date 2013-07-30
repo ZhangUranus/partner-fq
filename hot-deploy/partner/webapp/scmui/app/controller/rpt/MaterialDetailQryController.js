@@ -102,8 +102,8 @@ Ext.define('SCM.controller.rpt.MaterialDetailQryController', {
 
 					// 页面参数
 					params.sort = Ext.encode(getSorters());
-					params.report = 'barcodeOut';
-					params.title = '出库条码查询'; // sheet页名称
+					params.report = 'MDQR';
+					params.title = '材料耗用汇总明细表'; // sheet页名称
 					params.header = header; // 表头
 					params.dataIndex = dataIndex; // 数据引用
 					params.pattern = 'SQL';

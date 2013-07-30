@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
 
 import org.ofbiz.base.util.Debug;
@@ -32,7 +33,7 @@ public class CommonServices {
 			
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			Calendar calendar = Calendar.getInstance();
-			calendar.add(Calendar.DATE, -10);	//6个月前
+			calendar.add(Calendar.DATE, -10);	//10天前
 			String dateStr = sdf.format(calendar.getTime());
 			
 			
@@ -107,6 +108,64 @@ public class CommonServices {
 			st.executeBatch();
 			
 			Debug.log("完成整理大表索引任务！", module);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ServiceUtil.returnError(e.getMessage());
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					return ServiceUtil.returnError(e.getMessage());
+				}
+			}
+		}
+		return ServiceUtil.returnSuccess();
+	}
+	
+	
+	/**
+	 * 备份大表数据，并清理
+	 * @param dctx
+	 * @param context
+	 * @return
+	 */
+	public static Map<String, Object> backupAndClearTableData(DispatchContext dctx, Map<String, ? extends Object> context) {
+		Connection conn = null;
+		try {
+			conn = ConnectionFactory.getConnection(Utils.getConnectionHelperName());
+
+			Debug.log("开始备份大表数据任务！", module);
+
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+			String dateStr = sdf.format(new Date());
+			
+			SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Calendar calendar = Calendar.getInstance();
+			calendar.add(Calendar.MONTH, -3);	//3个月前
+			String dateStr2 = sdf2.format(calendar.getTime());
+			
+			// 整理大表索引
+			String moveSql = "INSERT INTO PRODUCT_INWAREHOUSE_ENTRY_DETAIL_BACKUP SELECT * FROM PRODUCT_INWAREHOUSE_ENTRY_DETAIL_HIS WHERE OUT_BIZ_DATE <'"+dateStr2+"'";
+			String deleteSql = "DELETE FROM PRODUCT_INWAREHOUSE_ENTRY_DETAIL_HIS WHERE OUT_BIZ_DATE <'"+dateStr2+"'";
+			String backupSql = "SELECT * FROM PRODUCT_INWAREHOUSE_ENTRY_DETAIL_BACKUP INTO OUTFILE \"D:/partner/data_backup/PRODUCT_INWAREHOUSE_ENTRY_DETAIL_BACKUP."+dateStr+"\"";
+			String clearSql = "TRUNCATE TABLE PRODUCT_INWAREHOUSE_ENTRY_DETAIL_BACKUP";
+			
+			Statement st = conn.createStatement();
+			
+			st.execute(moveSql);
+			st.execute(deleteSql);
+			st.execute(backupSql);
+			st.execute(clearSql);
+			
+//			st.addBatch(moveSql);
+//			st.addBatch(deleteSql);
+//			st.addBatch(backupSql);
+//			st.addBatch(clearSql);
+//			st.executeBatch();
+			
+			Debug.log("完成备份大表数据任务！", module);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ServiceUtil.returnError(e.getMessage());
