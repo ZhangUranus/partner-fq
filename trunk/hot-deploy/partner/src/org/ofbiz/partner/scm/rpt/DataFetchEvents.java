@@ -79,6 +79,8 @@ public class DataFetchEvents {
 			list = getListWithSQL(request, BarcodeQryReportEvents.getQueryOutBarcodeSql(request));
 		}  else if("PSOR".equals(request.getParameter("report"))){
 			list = getListWithSQL(request, ProductSendOweReportEvents.getMainDataSql(request));
+		}  else if("MDQR".equals(request.getParameter("report"))){
+			list = getListWithSQL(request, MaterialDetailQryReportEvents.getQueryMaterialDetailSql(request));
 		}
 		return list;
 	}

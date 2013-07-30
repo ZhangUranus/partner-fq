@@ -89,11 +89,10 @@ join product_inwarehouse pi on pi.id = pie.parent_id;
 
 
 --将出仓超过3个月历史数据迁移到备份表
-insert into product_inwarehouse_entry_detail_backup
-SELECT * FROM product_inwarehouse_entry_detail_his where out_biz_date <'2013-04-25 23:59:59';
+INSERT INTO PRODUCT_INWAREHOUSE_ENTRY_DETAIL_BACKUP SELECT * FROM PRODUCT_INWAREHOUSE_ENTRY_DETAIL_HIS WHERE OUT_BIZ_DATE <'2013-04-25 23:59:59';
 
 --删除出仓超过3个月历史数据
-delete FROM product_inwarehouse_entry_detail_his where out_biz_date <'2013-04-25 23:59:59';
+DELETE FROM PRODUCT_INWAREHOUSE_ENTRY_DETAIL_HIS WHERE OUT_BIZ_DATE <'2013-04-25 23:59:59';
 
 
 
@@ -290,6 +289,8 @@ GROUP BY MD.ID,TM.NUMBER,TM.NAME;
 测试结果：正常
 
 
+RENAME TABLE PRODUCT_INWAREHOUSE_ENTRY_DETAIL_HIS TO PRODUCT_INWAREHOUSE_ENTRY_DETAIL_HIS_TEMP;
 
+insert into ofbiz.PRODUCT_INWAREHOUSE_ENTRY_DETAIL_HIS SELECT * FROM ofbiz.PRODUCT_INWAREHOUSE_ENTRY_DETAIL_HIS_TEMP where out_biz_date >'2013-04-30 23:59:59';
 
-
+LOAD DATA LOCAL INFILE 'D:\\ddd.csv' INTO TABLE ofbiz.PRODUCT_INWAREHOUSE_ENTRY_DETAIL_HIS;

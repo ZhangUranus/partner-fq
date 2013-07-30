@@ -26,11 +26,15 @@ under the License.
     <!-- Service Engine Services -->
     <service name="optimizeTableService" engine="java"
             location="org.ofbiz.partner.scm.services.CommonServices" invoke="optimizeTableService" auth="false" transaction-timeout="12000" use-transaction="true" semaphore="wait">
-        <description>logCleanJob</description>
+        <description>optimizeTableService</description>
     </service>
     <service name="logCleanJobService" engine="java"
             location="org.ofbiz.partner.scm.services.CommonServices" invoke="logCleanJobService" auth="false" transaction-timeout="12000" use-transaction="true" semaphore="wait">
         <description>logCleanJob</description>
+    </service>
+    <service name="backupAndClearTableData" engine="java"
+            location="org.ofbiz.partner.scm.services.CommonServices" invoke="backupAndClearTableData" auth="false" transaction-timeout="12000" use-transaction="true" semaphore="wait">
+        <description>backupAndClearTableData</description>
     </service>
     <service name="rollNextDateService" engine="java"
             location="org.ofbiz.partner.scm.services.RollProductInOutStockServices" invoke="rollService" auth="false" use-transaction="true" semaphore="wait">
