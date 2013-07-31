@@ -5,11 +5,15 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+
+import javolution.util.FastMap;
 
 import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericValue;
+import org.ofbiz.entity.condition.EntityCondition;
 import org.ofbiz.partner.scm.dao.TMaterial;
 
 /**
@@ -145,6 +149,9 @@ public class WorkshopPriceMgr {
 				BigDecimal price = this.getPrice(workshopId, bomMaterialId);
 				
 				volume = entryVolume.multiply(volume);	//将单件耗料改为总耗料
+				
+				totalSum = totalSum.add(price.multiply(volume));
+				
 				GenericValue gv = delegator.makeValue("WorkshopPriceDetail");// 新建一个值对象
 				gv.set("id", UUID.randomUUID().toString());
 				gv.set("parentId", entryId);
@@ -152,6 +159,7 @@ public class WorkshopPriceMgr {
 				gv.set("materialId", bomMaterialId);
 				gv.set("volume", volume);
 				gv.set("price", price);
+				
 				gv.create();
 			}
 			
@@ -160,13 +168,15 @@ public class WorkshopPriceMgr {
 	}
 
 	/**
-	 * 根据分录编码删除耗料列表
+	 * 根据分录编码修改单价
 	 * 
 	 * @param entryId
 	 * @throws Exception
 	 */
 	public void removeMaterialList(String entryId) throws Exception {
-		delegator.removeByAnd("WorkshopPriceDetail", UtilMisc.toMap("parentId", entryId));
+		Map<String, Object> fieldSet = FastMap.newInstance();
+		fieldSet.put("price", 0);
+		delegator.storeByCondition("WorkshopPriceDetail", fieldSet, EntityCondition.makeCondition("parentId",entryId));
 	}
 
 	/**
