@@ -5,9 +5,11 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javolution.util.FastList;
+import javolution.util.FastMap;
 
 import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.entity.Delegator;
@@ -130,7 +132,9 @@ public class ConsignPriceMgr {
 	 * @throws Exception
 	 */
 	public void removeMaterialList(String entryId) throws Exception {
-		delegator.removeByAnd("ConsignPriceDetail", UtilMisc.toMap("parentId", entryId));
+		Map<String, Object> fieldSet = FastMap.newInstance();
+		fieldSet.put("price", 0);
+		delegator.storeByCondition("ConsignPriceDetail", fieldSet, EntityCondition.makeCondition("parentId",entryId));
 	}
 	
 	/**
