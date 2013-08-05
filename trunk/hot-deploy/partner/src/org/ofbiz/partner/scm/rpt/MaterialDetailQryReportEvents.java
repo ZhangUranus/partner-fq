@@ -50,7 +50,7 @@ public class MaterialDetailQryReportEvents {
 		sql.append(" 	WHERE IN_BIZ_DATE > '"+startDate+"' ");
 		sql.append(" 		AND IN_BIZ_DATE < '"+endDate+"' ");
 		if(!request.getParameter("ikeaNumber").isEmpty()){
-			sql.append(" 		AND SUBSTR(BARCODE1,4,8) = '"+request.getParameter("ikeaNumber").trim()+"' ");
+			sql.append(" 		AND (SUBSTR(BARCODE1,4,8) = '"+request.getParameter("ikeaNumber").trim()+"' OR SUBSTR(BARCODE1,1,8) = '"+request.getParameter("ikeaNumber").trim()+"' )");
 		}
 		sql.append(" 	UNION ALL ");
 		sql.append(" 	SELECT  ");
@@ -61,7 +61,7 @@ public class MaterialDetailQryReportEvents {
 		sql.append(" 	WHERE IN_BIZ_DATE > '"+startDate+"' ");
 		sql.append(" 		AND IN_BIZ_DATE < '"+endDate+"' ");
 		if(!request.getParameter("ikeaNumber").isEmpty()){
-			sql.append(" 		AND SUBSTR(BARCODE1,4,8) = '"+request.getParameter("ikeaNumber").trim()+"' ");
+			sql.append(" 		AND (SUBSTR(BARCODE1,4,8) = '"+request.getParameter("ikeaNumber").trim()+"' OR SUBSTR(BARCODE1,1,8) = '"+request.getParameter("ikeaNumber").trim()+"' )");
 		}
 		sql.append(" 	UNION ALL ");
 		sql.append(" 	SELECT  ");
@@ -74,7 +74,7 @@ public class MaterialDetailQryReportEvents {
 		sql.append(" 		AND PIED.OUT_BIZ_DATE < '"+endDate+"' ");
 		sql.append(" 		AND (POE.OUTWAREHOUSE_TYPE = 2 OR POE.OUTWAREHOUSE_TYPE = 3) ");
 		if(!request.getParameter("ikeaNumber").isEmpty()){
-			sql.append(" 		AND SUBSTR(PIED.BARCODE1,4,8) = '"+request.getParameter("ikeaNumber").trim()+"' ");
+			sql.append(" 		AND (SUBSTR(PIED.BARCODE1,4,8) = '"+request.getParameter("ikeaNumber").trim()+"' OR SUBSTR(PIED.BARCODE1,1,8) = '"+request.getParameter("ikeaNumber").trim()+"' )");
 		}
 		sql.append(" 	UNION ALL ");
 		sql.append(" 	SELECT  ");
@@ -87,7 +87,7 @@ public class MaterialDetailQryReportEvents {
 		sql.append(" 		AND PIED.OUT_BIZ_DATE < '"+endDate+"' ");
 		sql.append(" 		AND (POE.OUTWAREHOUSE_TYPE = 2 OR POE.OUTWAREHOUSE_TYPE = 3) ");
 		if(!request.getParameter("ikeaNumber").isEmpty()){
-			sql.append(" 		AND SUBSTR(PIED.BARCODE1,4,8) = '"+request.getParameter("ikeaNumber").trim()+"' ");
+			sql.append(" 		AND (SUBSTR(PIED.BARCODE1,4,8) = '"+request.getParameter("ikeaNumber").trim()+"' OR SUBSTR(PIED.BARCODE1,1,8) = '"+request.getParameter("ikeaNumber").trim()+"' )");
 		}
 		sql.append(" ) AS MD  ");
 		sql.append(" LEFT JOIN T_MATERIAL TM ON MD.ID = TM.ID ");
