@@ -127,12 +127,53 @@ Ext.define('SCM.view.ConsignReturnMaterial.EditUI', {
 																			}]
 																}
 															}, {
+																xtype : 'combogrid',
+																fieldLabel : '加工件',
+																name : 'processedBomId',
+																valueField : 'id',
+																displayField : 'materialName',
+																initStore : Ext.data.StoreManager.lookup('MBComboInitStore'),
+																store : Ext.data.StoreManager.lookup('MBComboStore'),
+																margin : 5,
+																matchFieldWidth : false,
+																allowBlank : false,
+																listConfig : {
+																	width : 500,
+																	height : SCM.MaxSize.COMBOGRID_HEIGHT,
+																	columns : [{
+																				header : '编码',
+																				dataIndex : 'materialNumber',
+																				width : 100,
+																				hideable : false
+																			}, {
+																				header : '名称',
+																				dataIndex : 'materialName',
+																				width : 280,
+																				hideable : false
+																			}, {
+																				header : '备注',
+																				dataIndex : 'note',
+																				width : 100,
+																				hideable : false
+																			}]
+																}
+															}, {
+																xtype : 'numberfield',
+																hideTrigger : true,
+																fieldLabel : '数量',
+																name : 'materialVolume',
+																allowBlank : false,
+																minValue : 1,
+																margin : 5
+															}, {
 																xtype : 'numberfield',
 																hideTrigger : true,
 																fieldLabel : '总金额',
 																readOnly : true,
 																name : 'totalsum',
 																margin : 5
+															}, {
+																xtype : 'label'
 															}, {
 																xtype : 'textarea',
 																name : 'note',
@@ -203,22 +244,7 @@ Ext.define('SCM.view.ConsignReturnMaterial.EditUI', {
 																	displayField : 'name',
 																	initStore : Ext.data.StoreManager.lookup('MComboInitStore'),
 																	store : Ext.data.StoreManager.lookup('MComboStore'),
-																	matchFieldWidth : false,
-																	listConfig : {
-																		width : 400,
-																		height : SCM.MaxSize.COMBOGRID_HEIGHT,
-																		columns : [{
-																					header : '编码',
-																					dataIndex : 'number',
-																					width : 100,
-																					hideable : false
-																				}, {
-																					header : '名称',
-																					dataIndex : 'name',
-																					width : 280,
-																					hideable : false
-																				}]
-																	}
+																	readOnly : true
 																}
 															}, {
 																xtype : 'gridcolumn',

@@ -68,6 +68,18 @@ Ext.define('SCM.view.ConsignReturnMaterial.ListUI', {
 													groupable : false,
 													text : '提交人'
 												}, {
+													xtype : 'gridcolumn',
+													dataIndex : 'processedMaterialMaterialName',
+													width : 150,
+													groupable : false,
+													text : '加工件'
+												}, {
+													xtype : 'numbercolumn',
+													dataIndex : 'materialVolume',
+													width : 100,
+													groupable : false,
+													text : '数量'
+												}, {
 													xtype : 'numbercolumn',
 													dataIndex : 'totalsum',
 													width : 100,

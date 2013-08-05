@@ -456,7 +456,7 @@ public class DataFetchEvents {
 				" AND YEAR(BIZ_DATE) = " + year +
 				" AND MONTH(BIZ_DATE) = " + month +
 				supplierSeleteStr1 +
-				" UNION" +
+				" UNION ALL" +
 				" SELECT DATE(CRP.BIZ_DATE) AS BIZ_DATE," +
 				" '委外退货' AS NAME," +
 				" CRP.NUMBER," +
@@ -480,7 +480,7 @@ public class DataFetchEvents {
 				" AND YEAR(BIZ_DATE) = " + year +
 				" AND MONTH(BIZ_DATE) = " + month +
 				supplierSeleteStr2 +
-				" UNION" +
+				" UNION ALL" +
 				" SELECT DATE(RPW.BIZ_DATE) AS BIZ_DATE," +
 				" '委外验收' AS NAME," +
 				" RPW.NUMBER," +
@@ -691,7 +691,7 @@ public class DataFetchEvents {
 				" AND YEAR(BIZ_DATE) = " + year +
 				" AND MONTH(BIZ_DATE) = " + month +
 				supplierSeleteStr1 +
-				" UNION" +
+				" UNION ALL" +
 				" SELECT DATE(PR.BIZ_DATE) AS BIZ_DATE," +
 				" '采购退货' AS NAME," +
 				" PR.NUMBER," +
@@ -878,7 +878,11 @@ public class DataFetchEvents {
 						" ROUND(IFNULL(AVG(PIED.PRICE*PIED.QUANTITY),0),4) AS ENTRYSUM " +
 					" FROM PRODUCT_INWAREHOUSE PI " +
 					" LEFT JOIN PRODUCT_INWAREHOUSE_ENTRY PIE ON PI.ID = PIE.PARENT_ID " +
-					" LEFT JOIN PRODUCT_INWAREHOUSE_ENTRY_DETAIL PIED ON PIE.ID = PIED.PARENT_ID " +
+					" LEFT JOIN (" +
+					"	SELECT IN_PARENT_ID,MATERIAL_ID,QUANTITY,PRICE FROM PRODUCT_INWAREHOUSE_ENTRY_DETAIL " +
+					" 	UNION ALL " +
+					" 	SELECT IN_PARENT_ID,MATERIAL_ID,QUANTITY,PRICE FROM PRODUCT_INWAREHOUSE_ENTRY_DETAIL_HIS" +
+					"	) PIED ON PIE.ID = PIED.IN_PARENT_ID " +
 					" LEFT JOIN T_MATERIAL TM ON PIED.MATERIAL_ID = TM.ID " +
 					" LEFT JOIN UNIT UIT ON TM.DEFAULT_UNIT_ID = UIT.ID " +
 					" WHERE PI.NUMBER = '" + number + "'" +
@@ -1063,7 +1067,7 @@ public class DataFetchEvents {
 		}
 		sql += " GROUP BY CONCAT(YEAR,IF(MONTH<10,CONCAT(0,MONTH),MONTH)) ";
 		sql += " LIMIT 11 " ;
-		sql += " UNION " ;
+		sql += " UNION ALL" ;
 		sql += " SELECT " ;
 		sql += 	" CONCAT(YEAR,IF(MONTH<10,CONCAT(0,MONTH),MONTH)) AS MONTH, " ;
 		sql +=	" ROUND(IFNULL(CMB.IN_SUM,0),4) AS INSUM, " ;
@@ -1260,7 +1264,7 @@ public class DataFetchEvents {
 			sql += " AND (TM.NUMBER LIKE '%" + keyWord + "%' OR TM.NAME LIKE '%" + keyWord + "%')";
 		}
 		sql += " GROUP BY WW.NUMBER,WH.NAME,WWE.BOM_ID,TM.NAME,WWE.MATERIAL_MATERIAL_MODEL,UIT.NAME ";
-		sql += " union ";
+		sql += " UNION ALL ";
 		sql += " SELECT ";
 		sql += " 	CW.BIZ_DATE, ";
 		sql += " 	CW.NUMBER, ";
@@ -1329,7 +1333,7 @@ public class DataFetchEvents {
 					" WHERE WW.NUMBER = '" + number + "'" +
 					" AND WWE.BOM_ID = '" + bomId + "'";
 		sql += " GROUP BY WW.NUMBER,WWE.WAREHOUSE_WAREHOUSE_ID,MB.MATERIAL_ID,TM.NUMBER,TM.NAME,WWE.VOLUME ";
-		sql += " UNION ";
+		sql += " UNION ALL";
 		sql += " SELECT ";
 		sql += " 	CW.NUMBER, ";
 		sql += " 	CWE.WAREHOUSE_WAREHOUSE_ID AS WAREHOUSEID, ";
@@ -1492,7 +1496,7 @@ public class DataFetchEvents {
 					" LEFT JOIN WAREHOUSE WH ON CMB.WAREHOUSE_ID = WH.ID " +
 					materialString +
 					" GROUP BY WH.NAME " +
-					" UNION " +
+					" UNION ALL" +
 					" SELECT " +
 						" WS.NAME AS NAME, " +
 						" SUM(IFNULL(CWP.VOLUME,0)) AS VOLUME " +
@@ -1500,7 +1504,7 @@ public class DataFetchEvents {
 					" LEFT JOIN WORKSHOP WS ON CWP.WORKSHOP_ID = WS.ID " +
 					materialString +
 					" GROUP BY WS.NAME " +
-					" UNION " +
+					" UNION ALL" +
 					" SELECT " +
 						" SP.NAME AS NAME, " +
 						" SUM(IFNULL(CCP.VOLUME,0)) AS VOLUME " +
@@ -1540,7 +1544,7 @@ public class DataFetchEvents {
 					" ) AS DETAIL " +
 					" FROM PURCHASE_BILL " +
 					conditionString +
-					" UNION " +
+					" UNION ALL" +
 					" SELECT " +
 					" 1 AS ODER, " +
 					monthString +
@@ -1551,7 +1555,7 @@ public class DataFetchEvents {
 					" ) AS DETAIL " +
 					" FROM PURCHASE_WAREHOUSING " +
 					conditionString +
-					" UNION " +
+					" UNION ALL" +
 					" SELECT " +
 					" 2 AS ODER, " +
 					monthString +
@@ -1562,7 +1566,7 @@ public class DataFetchEvents {
 					" ) AS DETAIL " +
 					" FROM PURCHASE_RETURN " +
 					conditionString +
-					" UNION " +
+					" UNION ALL" +
 					" SELECT " +
 					" 3 AS ODER, " +
 					monthString +
@@ -1573,7 +1577,7 @@ public class DataFetchEvents {
 					" ) AS DETAIL " +
 					" FROM CONSIGN_DRAW_MATERIAL " +
 					conditionString +
-					" UNION " +
+					" UNION ALL" +
 					" SELECT " +
 					" 4 AS ODER, " +
 					monthString +
@@ -1584,7 +1588,7 @@ public class DataFetchEvents {
 					" ) AS DETAIL " +
 					" FROM CONSIGN_RETURN_MATERIAL " +
 					conditionString +
-					" UNION " +
+					" UNION ALL" +
 					" SELECT " +
 					" 5 AS ODER, " +
 					monthString +
@@ -1595,7 +1599,7 @@ public class DataFetchEvents {
 					" ) AS DETAIL " +
 					" FROM CONSIGN_WAREHOUSING " +
 					conditionString +
-					" UNION " +
+					" UNION ALL" +
 					" SELECT " +
 					" 6 AS ODER, " +
 					monthString +
@@ -1609,7 +1613,7 @@ public class DataFetchEvents {
 					" ) AS DETAIL " +
 					" FROM CONSIGN_RETURN_PRODUCT " +
 					conditionString +
-					" UNION " +
+					" UNION ALL" +
 					" SELECT " +
 					" 7 AS ODER, " +
 					monthString +
@@ -1620,7 +1624,7 @@ public class DataFetchEvents {
 					" ) AS DETAIL " +
 					" FROM WORKSHOP_DRAW_MATERIAL " +
 					conditionString +
-					" UNION " +
+					" UNION ALL" +
 					" SELECT " +
 					" 8 AS ODER, " +
 					monthString +
@@ -1631,7 +1635,7 @@ public class DataFetchEvents {
 					" ) AS DETAIL " +
 					" FROM WORKSHOP_RETURN_MATERIAL " +
 					conditionString +
-					" UNION " +
+					" UNION ALL" +
 					" SELECT " +
 					" 9 AS ODER, " +
 					monthString +
@@ -1642,7 +1646,7 @@ public class DataFetchEvents {
 					" ) AS DETAIL " +
 					" FROM WORKSHOP_WAREHOUSING " +
 					conditionString +
-					" UNION " +
+					" UNION ALL" +
 					" SELECT " +
 					" 10 AS ODER, " +
 					monthString +

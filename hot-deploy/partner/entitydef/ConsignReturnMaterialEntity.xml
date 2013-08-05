@@ -20,6 +20,8 @@
 		<field name="processorSupplierId" type="id-long"></field>
 		<field name="checkerSystemUserId" type="id-long"></field>
 		<field name="submitterSystemUserId" type="id-long"></field>
+		<field name="processedBomId" type="id-long"></field>
+		<field name="materialVolume" type="fixed-point"></field>
 		<field name="totalsum" type="fixed-point"></field>
 		<field name="note" type="description"></field>
 		<field name="status" type="int"></field>
@@ -36,6 +38,7 @@
 		<field name="materialMaterialId" type="id-long"></field>
 		<field name="materialMaterialModel" type="value"></field>
 		<field name="volume" type="fixed-point"></field>
+		<field name="perVolume" type="fixed-point"></field>
 		<field name="unitUnitId" type="id-long"></field>
 		<field name="price" type="fixed-point"></field>
 		<field name="entrysum" type="fixed-point"></field>
@@ -50,11 +53,14 @@
 		<member-entity entity-alias="processorSupplierV" entity-name="Supplier"></member-entity>
 		<member-entity entity-alias="checkerSystemUserV" entity-name="SystemUser"></member-entity>
 		<member-entity entity-alias="submitterSystemUserV" entity-name="SystemUser"></member-entity>
+		<member-entity entity-alias="MaterialBomV" entity-name="MaterialBom"></member-entity>
+		<member-entity entity-alias="processedMaterialMaterialV" entity-name="TMaterial"></member-entity>
 		<alias-all entity-alias="ConsignReturnMaterialV"></alias-all>
 		<alias name="materialMaterialId" entity-alias="ConsignReturnMaterialEntryV" field="materialMaterialId"></alias>
 		<alias name="processorSupplierName" entity-alias="processorSupplierV" field="name"></alias>
 		<alias name="checkerSystemUserName" entity-alias="checkerSystemUserV" field="name"></alias>
 		<alias name="submitterSystemUserName" entity-alias="submitterSystemUserV" field="name"></alias>
+		<alias name="processedMaterialMaterialName" entity-alias="processedMaterialMaterialV" field="name"></alias>
 		
 		<!-- 查询条件需要取物料编码、物料名称，在查询数据中需要distinct -->
 		<view-link entity-alias="ConsignReturnMaterialV" rel-entity-alias="ConsignReturnMaterialEntryV" rel-optional="true">
@@ -73,6 +79,12 @@
 		</view-link>
 		<view-link entity-alias="ConsignReturnMaterialV" rel-entity-alias="submitterSystemUserV" rel-optional="true">
 			<key-map field-name="submitterSystemUserId" rel-field-name="id" />
+		</view-link>
+		<view-link entity-alias="ConsignReturnMaterialV" rel-entity-alias="MaterialBomV" rel-optional="true">
+			<key-map field-name="processedBomId" rel-field-name="id" />
+		</view-link>
+		<view-link entity-alias="MaterialBomV" rel-entity-alias="processedMaterialMaterialV" rel-optional="true">
+			<key-map field-name="materialId" rel-field-name="id" />
 		</view-link>
 	</view-entity>
 	<!-- 导出视图 -->
@@ -83,10 +95,13 @@
 		<member-entity entity-alias="processorSupplierV" entity-name="Supplier"></member-entity>
 		<member-entity entity-alias="checkerSystemUserV" entity-name="SystemUser"></member-entity>
 		<member-entity entity-alias="submitterSystemUserV" entity-name="SystemUser"></member-entity>
+		<member-entity entity-alias="MaterialBomV" entity-name="MaterialBom"></member-entity>
+		<member-entity entity-alias="processedMaterialMaterialV" entity-name="TMaterial"></member-entity>
 		<alias-all entity-alias="ConsignReturnMaterialV"></alias-all>
 		<alias name="processorSupplierName" entity-alias="processorSupplierV" field="name"></alias>
 		<alias name="checkerSystemUserName" entity-alias="checkerSystemUserV" field="name"></alias>
 		<alias name="submitterSystemUserName" entity-alias="submitterSystemUserV" field="name"></alias>
+		<alias name="processedMaterialMaterialName" entity-alias="processedMaterialMaterialV" field="name"></alias>
 		
 		<!-- 查询条件需要取物料编码、物料名称，在查询数据中需要distinct -->
 		<view-link entity-alias="ConsignReturnMaterialV" rel-entity-alias="ConsignReturnMaterialEntryV" rel-optional="true">
@@ -105,6 +120,12 @@
 		</view-link>
 		<view-link entity-alias="ConsignReturnMaterialV" rel-entity-alias="submitterSystemUserV" rel-optional="true">
 			<key-map field-name="submitterSystemUserId" rel-field-name="id" />
+		</view-link>
+		<view-link entity-alias="ConsignReturnMaterialV" rel-entity-alias="MaterialBomV" rel-optional="true">
+			<key-map field-name="processedBomId" rel-field-name="id" />
+		</view-link>
+		<view-link entity-alias="MaterialBomV" rel-entity-alias="processedMaterialMaterialV" rel-optional="true">
+			<key-map field-name="materialId" rel-field-name="id" />
 		</view-link>
 	</view-entity>
 	<!--表体视图 -->

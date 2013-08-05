@@ -294,11 +294,6 @@ Ext.define('SCM.view.ConsignDrawMaterial.EditUI', {
 
 													},
 													plugins : [cellEditing]
-													// ,
-												// dockedItems : [{
-												// xtype : 'gridedittoolbar',
-												// dock : 'top'
-												// }]
 											}	, {
 													xtype : 'container',
 													height : 50,

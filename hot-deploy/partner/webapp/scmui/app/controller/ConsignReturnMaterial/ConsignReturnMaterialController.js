@@ -102,11 +102,16 @@ Ext.define('SCM.controller.ConsignReturnMaterial.ConsignReturnMaterialController
 //				this.searchMaterialId = this.listPanel.down('combogrid[name=searchMaterialId]');
 				this.searchKeyWord = this.listPanel.down('textfield[name=searchKeyWord]');
 				this.MaterialStore = Ext.data.StoreManager.lookup('MAllStore');
+				this.MaterialBOMStore = Ext.data.StoreManager.lookup('MBAllStore');
 				
 				this.searchCustId = this.listPanel.down('combogrid[name=searchCustId]');
 				this.searchStatus = this.listPanel.down('combobox[name=status]');
 				this.totalFields = this.editForm.down('textfield[name=totalsum]');
 				this.processorFields = this.editForm.down('combogrid[name=processorSupplierId]');
+				this.processedBomIdFields = this.editForm.down('combogrid[name=processedBomId]');
+				this.processedBomIdFields.addListener('change', this.initMaterialGrid, this);
+				this.materialVolumeFields = this.editForm.down('numberfield[name=materialVolume]');
+				this.materialVolumeFields.addListener('change', this.materialVolumeChange, this);
 			},
 			
 			/**
@@ -183,6 +188,66 @@ Ext.define('SCM.controller.ConsignReturnMaterial.ConsignReturnMaterialController
 						e.record.set('unitUnitName', record.get('defaultUnitName'));
 
 					}
+				}
+			},
+			
+			/**
+			 * 选择加工件时，初始化物料列表
+			 * 
+			 * @param {}
+			 *            field
+			 * @param {}
+			 *            newValue
+			 * @param {}
+			 *            oldValue
+			 */
+			initMaterialGrid : function(field, newValue, oldValue) {
+				var me = this;
+				me.MaterialBOMStore.getProxy().extraParams.whereStr = 'MaterialBomV.id = \'' + newValue + '\'';
+				me.MaterialBOMStore.load(function(records, operation, success) {
+							
+							// 使用新方法删除原来数据
+							var tempRecords = [];
+							me.editEntry.store.each(function(record){
+									tempRecords.push(record);
+								}
+							);
+							me.editEntry.store.remove(tempRecords);
+							
+							for (var i = 0; i < records.length; i++) {
+								var materialVolume = me.materialVolumeFields.getValue() ? me.materialVolumeFields.getValue() : 0;
+								var tempRecord = records[i];
+								var entryRecord = Ext.create(me.entryModelName);
+								entryRecord.phantom = true;
+
+								// 设置父id
+								entryRecord.set('parentId', me.editForm.getValues().id);
+								entryRecord.set('materialMaterialId', tempRecord.get('bomMaterialId'));
+								entryRecord.set('materialMaterialName', tempRecord.get('bomMaterialName'));
+								entryRecord.set('materialMaterialModel', tempRecord.get('bomMaterialModel'));
+								entryRecord.set('perVolume', tempRecord.get('volume'));
+								entryRecord.set('volume', materialVolume * tempRecord.get('volume'));
+								entryRecord.set('unitUnitId', tempRecord.get('unitId'));
+								entryRecord.set('unitUnitName', tempRecord.get('unitName'));
+								entryRecord.set('sort', i + 1);
+								me.editEntry.store.add(entryRecord);
+							}
+							me.MaterialBOMStore.getProxy().extraParams.whereStr = "";
+							me.MaterialBOMStore.load(); // 重新加载，避免获取不到单位。
+						});
+			},
+
+			/**
+			 * 修改加工件数量时，刷新表格数据
+			 */
+			materialVolumeChange : function(field, newValue, oldValue) {
+				debugger;
+				var me = this;
+				var count = me.editEntry.store.getCount();
+				var materialVolume = newValue ? newValue : 0;
+				for (var i = 0; i < count; i++) {
+					var tempRecord = me.editEntry.store.getAt(i);
+					tempRecord.set('volume', materialVolume * tempRecord.get('perVolume'));
 				}
 			},
 

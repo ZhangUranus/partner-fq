@@ -31,6 +31,9 @@ Ext.define('SCM.model.ConsignReturnMaterial.ConsignReturnMaterialEditEntryModel'
 						name : 'volume',
 						type : 'float'
 					}, {
+						name : 'perVolume',
+						type : 'float'
+					}, {
 						name : 'unitUnitId',
 						type : 'string'
 					}, {
