@@ -51,7 +51,7 @@ Ext.define('SCM.view.rpt.bcq.MaterialDetailUI', {
 													name : 'materialName',
 													minWidth : 180,
 													labelWidth : 60,
-													fieldLabel : '产品名称'
+													fieldLabel : '耗料名称'
 												},{
 													text : '查询',
 													iconCls : 'system-search',
