@@ -40,6 +40,16 @@ Ext.define('SCM.model.ConsignReturnMaterial.ConsignReturnMaterialModel', {
 						type : 'string',
 						persist : false
 					}, {
+						name : 'processedBomId',
+						type : 'string'
+					}, {
+						name : 'processedMaterialMaterialName',
+						type : 'string',
+						persist : false
+					}, {
+						name : 'materialVolume',
+						type : 'float'
+					}, {
 						name : 'totalsum',
 						type : 'float'
 					}, {

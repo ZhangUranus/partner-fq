@@ -10,7 +10,9 @@ import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericValue;
 import org.ofbiz.partner.scm.pricemgr.BillType;
 import org.ofbiz.partner.scm.pricemgr.ConsignPriceMgr;
+import org.ofbiz.partner.scm.pricemgr.ConsignProcessedPriceMgr;
 import org.ofbiz.partner.scm.pricemgr.IBizStock;
+import org.ofbiz.partner.scm.pricemgr.MaterialBomMgr;
 import org.ofbiz.partner.scm.pricemgr.PriceCalItem;
 import org.ofbiz.partner.scm.pricemgr.PriceMgr;
 import org.ofbiz.partner.scm.pricemgr.Utils;
@@ -78,6 +80,17 @@ public class ConsignReturnMaterialBizImp implements IBizStock {
 
 			v.store();
 		}
+		
+
+		// 退料操作类似于领料操作的撤销，所以这里按照领料的撤销逻辑进行,提交是isOut=false,isCancel=false,isCancelNegate=true;撤销是isOut=true,isCancel=true,isCancelNegate=false;
+		// 而领料的提交：isOut=true,isCancel=false,撤销是：isOut=false,isCancel=true;
+		boolean isCancelNegate = !isCancel;
+		BigDecimal processedVolume = billValue.getBigDecimal("materialVolume");
+		if(!isOut){
+			processedVolume = processedVolume.negate();
+		}
+		ConsignProcessedPriceMgr.getInstance().update(1,processorId, MaterialBomMgr.getInstance().getMaterialIdByBomId(billValue.getString("processedBomId")), processedVolume, null, isOut, isCancelNegate);
+		
 		// 返填总金额
 		billValue.set("totalsum", totalSum);
 		billValue.store();
