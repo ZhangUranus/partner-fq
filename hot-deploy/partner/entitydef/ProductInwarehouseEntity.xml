@@ -71,6 +71,9 @@
 		<index name="PRT_INS_ENR_DTL_PTI" unique="false">
             <index-field name="inParentId"/>
 		</index>
+		<index name="PRT_INS_ENR_DTL_PTO" unique="false">
+            <index-field name="outParentId"/>
+		</index>
 		<index name="PRT_INS_ENR_DTL_BARC" unique="false">
             <index-field name="barcode1"/>
             <index-field name="barcode2"/>
@@ -98,6 +101,9 @@
 		<prim-key field="id" />
 		<index name="PRT_INS_ENR_DTL_PTI_HIS" unique="false">
             <index-field name="inParentId"/>
+		</index>
+		<index name="PRT_INS_ENR_DTL_PTO_HIS" unique="false">
+            <index-field name="outParentId"/>
 		</index>
 		<index name="PRT_INS_ENR_DTL_BARC_HIS" unique="false">
             <index-field name="barcode1"/>

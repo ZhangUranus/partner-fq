@@ -14,7 +14,6 @@ import javolution.util.FastList;
 import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.entity.Delegator;
-import org.ofbiz.entity.GenericEntityException;
 import org.ofbiz.entity.GenericValue;
 import org.ofbiz.entity.condition.EntityCondition;
 import org.ofbiz.entity.condition.EntityConditionList;
@@ -30,6 +29,7 @@ import org.ofbiz.partner.scm.pricemgr.WorkshopPriceMgr;
 
 public class ProductOutwarehouseBizImp implements IBizStock {
 	private Delegator delegator = org.ofbiz.partner.scm.common.Utils.getDefaultDelegator();
+	List<String> inParentList = new ArrayList<String>();
 
 	/**
 	 * 成品出仓单业务实现类，结算时会调用该接口进行计算
@@ -54,7 +54,9 @@ public class ProductOutwarehouseBizImp implements IBizStock {
 			throw new Exception("成品出仓单业务操作出错!");
 		}
 
-		List<String> parentList = new ArrayList<String>();
+		List<String> outParentList = new ArrayList<String>();
+		inParentList.clear();
+		
 		// 获取单据id分录条目
 		List<GenericValue> entryList = delegator.findByAnd("ProductOutwarehouseEntry", UtilMisc.toMap("parentId", billValue.getString("id")));
 
@@ -81,18 +83,28 @@ public class ProductOutwarehouseBizImp implements IBizStock {
 			if (isOut){
 				EntityConditionList<EntityCondition> condition = null;
 				List<EntityCondition> conds = FastList.newInstance();
-				conds.add(EntityCondition.makeCondition("barcode1", barcode1));
-				conds.add(EntityCondition.makeCondition("barcode2", barcode2));
+				
+				List<String> orders = new ArrayList<String>();
+				orders.add("inBizDate");		//增加排序字段
+				
+				// 避免取两个进仓单的明细
+				List<GenericValue> tempList = delegator.findByAnd("ProductInwarehouseEntryDetail",  UtilMisc.toMap("barcode1", barcode1, "barcode2", barcode2), orders);
+				if(tempList.size()>0){
+					conds.add(EntityCondition.makeCondition("inParentId", tempList.get(0).getString("inParentId")));
+				} else {
+					throw new Exception("未找到对应入仓单据，请确认输入产品条码、序列号是否正确？");
+				}
 				condition = EntityCondition.makeCondition(conds);
 				delegator.storeByCondition("ProductInwarehouseEntryDetail", UtilMisc.toMap("outBizDate", bizDate,"outParentParentId",billValue.getString("id") ,"outParentId",v.getString("id"),"isOut","1"), condition);
 			}
 			
 
-			parentList.add(v.getString("id"));
+			outParentList.add(v.getString("id"));
 
 			/* 1. 获取实际耗料列表 */
 			List<ConsumeMaterial> materialList = getMaterialList(v.getString("id"), isOut);
 			if (materialList.size() <= 0) {
+				Debug.log("未找到对应进仓单："+v.getString("id")+"-----------"+v.getString("barcode2"));
 				throw new Exception("未找到对应入仓单据，请确认输入产品条码、序列号是否正确？");
 			}
 
@@ -164,7 +176,7 @@ public class ProductOutwarehouseBizImp implements IBizStock {
 			// 保存单价、金额
 			v.store();
 		}
-		moveDetailData(parentList,isOut);
+		moveDetailData(outParentList,isOut);
 		// 返填总金额
 		billValue.set("totalsum", totalSum);
 		billValue.store();
@@ -187,13 +199,8 @@ public class ProductOutwarehouseBizImp implements IBizStock {
 		/* 1. 从实际耗料表取，20130710修改程序后，已出仓的数据会迁移的历史表，所有在进仓单中一个编码只对应一个耗料明细 */
 		if(isOut){
 			actualMaterialList = delegator.findByAnd("ProductInwarehouseEntryDetail",  UtilMisc.toMap("outParentId", outParentId));
-
-			//moveDetailData(outParentId,isOut);
-
 		} else {
-			//moveDetailData(outParentId,isOut);
-
-			actualMaterialList = delegator.findByAnd("ProductInwarehouseEntryDetail",  UtilMisc.toMap("outParentId", outParentId));
+			actualMaterialList = delegator.findByAnd("ProductInwarehouseEntryDetailHis",  UtilMisc.toMap("outParentId", outParentId));
 		}
 		
 		
@@ -206,34 +213,16 @@ public class ProductOutwarehouseBizImp implements IBizStock {
 				}
 			}
 		}
-		updateIsOut(inParentId,isOut);
+		inParentList.add(inParentId);
 
 		return consumeMaterialList;
 	}
 	
-	/**
-	 * 更新相应进仓单isOut标识
-	 * @param inParentId
-	 * @param isOut
-	 * @throws GenericEntityException
-	 */
-	private void updateIsOut(String inParentId, boolean isOut) throws GenericEntityException{
-		if(isOut){
-			delegator.storeByCondition("ProductInwarehouseEntry", UtilMisc.toMap("isOut","1"), EntityCondition.makeCondition("id", inParentId));
-		}else  {
-			delegator.storeByCondition("ProductInwarehouseEntry", UtilMisc.toMap("isOut","0"), EntityCondition.makeCondition("id", inParentId));
-		}
-	}
 	
-	/**
-	 * 成品出仓时，将明细耗料迁移到历史表，撤销时，将历史表数据迁移到明细耗料表
-	 * @param barcode1
-	 * @param barcode2
-	 */
-	private void moveDetailData(List<String> parentList, boolean isOut){
+	private String listToString(List<String> list){
 		StringBuffer instr = new StringBuffer();
 		boolean isFirst = true;
-		for(String parentId : parentList){
+		for(String parentId : list){
 			if(isFirst){
 				isFirst = false;
 			} else {
@@ -241,6 +230,17 @@ public class ProductOutwarehouseBizImp implements IBizStock {
 			}
 			instr.append("'").append(parentId).append("'");
 		}
+		return instr.toString();
+	}
+	
+	/**
+	 * 成品出仓时，将明细耗料迁移到历史表，撤销时，将历史表数据迁移到明细耗料表
+	 * @param barcode1
+	 * @param barcode2
+	 */
+	private void moveDetailData(List<String> outParentList, boolean isOut){
+		String inWhereStr = listToString(inParentList);
+		String outWhereStr = listToString(outParentList);
 		
 		Connection conn = null;
 		String fromTableName = "";
@@ -279,14 +279,18 @@ public class ProductOutwarehouseBizImp implements IBizStock {
 									"IS_IN," +
 									"'"+out+"'" +
 									"FROM "+ fromTableName +" " +
-									"WHERE OUT_PARENT_ID IN ("+instr.toString()+")";
+									"WHERE OUT_PARENT_ID IN ("+outWhereStr+")";
 			
 			// 删除原表记录
-			String deleteSql = "DELETE FROM "+ fromTableName +" WHERE OUT_PARENT_ID IN ("+instr.toString()+")";
+			String deleteSql = "DELETE FROM "+ fromTableName +" WHERE OUT_PARENT_ID IN ("+outWhereStr+")";
+			
+			// 更新进仓单据分录
+			String updateSql = "UPDATE PRODUCT_INWAREHOUSE_ENTRY SET IS_OUT ='"+out+"' WHERE ID IN ("+inWhereStr+")";
 			
 			Statement st = conn.createStatement();
 			st.addBatch(insertSql);
 			st.addBatch(deleteSql);
+			st.addBatch(updateSql);
 			st.executeBatch();
 		} catch (Exception e) {
 			e.printStackTrace();
