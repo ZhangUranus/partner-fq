@@ -37,7 +37,7 @@ import org.ofbiz.partner.scm.pojo.WorkshopStock;
  */
 public class Utils {
 	private static final String module = org.ofbiz.partner.scm.pricemgr.Utils.class.getName();
-	private static int transactionTimeout = 3600;	//事务超时为1小时
+	private static int transactionTimeout = 7200;	//事务超时为1小时
 	
 	
 	public static int getTimeout(){

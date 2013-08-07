@@ -42,6 +42,7 @@ public class ProductOutwarehouseBizImp implements IBizStock {
 	 */
 	public synchronized void updateStock(GenericValue billValue, boolean isOut, boolean isCancel) throws Exception {
 		// 注意不能使用billHead.getDate方法，出产生castException异常
+		
 		Date bizDate = (Date) billValue.get("bizDate");
 		if (bizDate == null || !Utils.isCurPeriod(bizDate)) {
 			throw new Exception("单据业务日期不在当前系统期间");
@@ -53,6 +54,7 @@ public class ProductOutwarehouseBizImp implements IBizStock {
 			throw new Exception("成品出仓单业务操作出错!");
 		}
 
+		List<String> parentList = new ArrayList<String>();
 		// 获取单据id分录条目
 		List<GenericValue> entryList = delegator.findByAnd("ProductOutwarehouseEntry", UtilMisc.toMap("parentId", billValue.getString("id")));
 
@@ -74,7 +76,6 @@ public class ProductOutwarehouseBizImp implements IBizStock {
 			if (volume.compareTo(BigDecimal.ZERO) <= 0) {
 				throw new Exception("成品出仓数量不能小于等于零，请重新输入！");
 			}
-			
 
 			// 提交操作，先更新明细耗料表的编码字段
 			if (isOut){
@@ -85,6 +86,9 @@ public class ProductOutwarehouseBizImp implements IBizStock {
 				condition = EntityCondition.makeCondition(conds);
 				delegator.storeByCondition("ProductInwarehouseEntryDetail", UtilMisc.toMap("outBizDate", bizDate,"outParentParentId",billValue.getString("id") ,"outParentId",v.getString("id"),"isOut","1"), condition);
 			}
+			
+
+			parentList.add(v.getString("id"));
 
 			/* 1. 获取实际耗料列表 */
 			List<ConsumeMaterial> materialList = getMaterialList(v.getString("id"), isOut);
@@ -160,9 +164,11 @@ public class ProductOutwarehouseBizImp implements IBizStock {
 			// 保存单价、金额
 			v.store();
 		}
+		moveDetailData(parentList,isOut);
 		// 返填总金额
 		billValue.set("totalsum", totalSum);
 		billValue.store();
+		Debug.log("完成单据提交：" + billValue.getString("number"));
 	}
 
 	/**
@@ -181,9 +187,12 @@ public class ProductOutwarehouseBizImp implements IBizStock {
 		/* 1. 从实际耗料表取，20130710修改程序后，已出仓的数据会迁移的历史表，所有在进仓单中一个编码只对应一个耗料明细 */
 		if(isOut){
 			actualMaterialList = delegator.findByAnd("ProductInwarehouseEntryDetail",  UtilMisc.toMap("outParentId", outParentId));
-			moveDetailData(outParentId,isOut);
+
+			//moveDetailData(outParentId,isOut);
+
 		} else {
-			moveDetailData(outParentId,isOut);
+			//moveDetailData(outParentId,isOut);
+
 			actualMaterialList = delegator.findByAnd("ProductInwarehouseEntryDetail",  UtilMisc.toMap("outParentId", outParentId));
 		}
 		
@@ -198,7 +207,7 @@ public class ProductOutwarehouseBizImp implements IBizStock {
 			}
 		}
 		updateIsOut(inParentId,isOut);
-		
+
 		return consumeMaterialList;
 	}
 	
@@ -221,7 +230,18 @@ public class ProductOutwarehouseBizImp implements IBizStock {
 	 * @param barcode1
 	 * @param barcode2
 	 */
-	private void moveDetailData(String outParentId, boolean isOut){
+	private void moveDetailData(List<String> parentList, boolean isOut){
+		StringBuffer instr = new StringBuffer();
+		boolean isFirst = true;
+		for(String parentId : parentList){
+			if(isFirst){
+				isFirst = false;
+			} else {
+				instr.append(",");
+			}
+			instr.append("'").append(parentId).append("'");
+		}
+		
 		Connection conn = null;
 		String fromTableName = "";
 		String toTableName = "";
@@ -259,10 +279,10 @@ public class ProductOutwarehouseBizImp implements IBizStock {
 									"IS_IN," +
 									"'"+out+"'" +
 									"FROM "+ fromTableName +" " +
-									"WHERE OUT_PARENT_ID='"+outParentId+"'";
+									"WHERE OUT_PARENT_ID IN ("+instr.toString()+")";
 			
 			// 删除原表记录
-			String deleteSql = "DELETE FROM "+ fromTableName +" WHERE OUT_PARENT_ID='"+outParentId+"'";
+			String deleteSql = "DELETE FROM "+ fromTableName +" WHERE OUT_PARENT_ID IN ("+instr.toString()+")";
 			
 			Statement st = conn.createStatement();
 			st.addBatch(insertSql);
