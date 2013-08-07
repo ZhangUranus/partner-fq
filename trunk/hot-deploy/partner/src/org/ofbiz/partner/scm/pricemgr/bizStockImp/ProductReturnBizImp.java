@@ -142,11 +142,11 @@ public class ProductReturnBizImp implements IBizStock {
 		List<ConsumeMaterial> consumeMaterialList = new ArrayList<ConsumeMaterial>();
 		List<GenericValue> actualMaterialList = new ArrayList<GenericValue>();
 		if(isOut){
-			actualMaterialList = delegator.findByAnd("ProductInwarehouseEntryDetail", UtilMisc.toMap("barcode1", barcode1,"barcode2",barcode2));
+			actualMaterialList = delegator.findByAnd("ProductInwarehouseEntryDetail", UtilMisc.toMap("inParentId", parentId));
 			moveDetailData(barcode1, barcode2, isOut,bizDate,parentId,parentParentId);
 		} else {
 			moveDetailData(barcode1, barcode2, isOut,bizDate,parentId,parentParentId);
-			actualMaterialList = delegator.findByAnd("ProductInwarehouseEntryDetail", UtilMisc.toMap("barcode1", barcode1,"barcode2",barcode2));
+			actualMaterialList = delegator.findByAnd("ProductInwarehouseEntryDetail", UtilMisc.toMap("inParentId", parentId));
 		}
 		/*2. 实际耗料表存在耗料信息*/
 		if(actualMaterialList!=null&&actualMaterialList.size()>0){
