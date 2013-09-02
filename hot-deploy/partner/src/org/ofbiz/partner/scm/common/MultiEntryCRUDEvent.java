@@ -15,13 +15,16 @@ import javolution.util.FastList;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericValue;
 import org.ofbiz.entity.condition.EntityCondition;
 import org.ofbiz.entity.model.ModelEntity;
 import org.ofbiz.entity.model.ModelField;
+import org.ofbiz.entity.transaction.GenericTransactionException;
 import org.ofbiz.entity.transaction.TransactionUtil;
+import org.ofbiz.partner.scm.pricemgr.Utils;
 
 public class MultiEntryCRUDEvent {
 	
@@ -211,8 +214,9 @@ public class MultiEntryCRUDEvent {
 		String headEntityName = request.getParameter("headEntity").toString();
 		String entryEntityName = request.getParameter("entryEntity").toString();
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		boolean beganTransaction = false;
 		try {
-			TransactionUtil.begin();
+			beganTransaction = TransactionUtil.begin(Utils.getTimeout());
 
 			/**
 			 * @author mark 2012-7-8 级联删除
@@ -225,27 +229,40 @@ public class MultiEntryCRUDEvent {
 			for(Object o:records){
 				JSONObject jo=(JSONObject) o;
 				String headId=jo.getString("id");
-				delegator.removeByAnd(headEntityName, UtilMisc.toMap("id", headId));//删除表头记录
 				
-				if(casDelArr!=null&&casDelArr.length>0){
-					//查询所有分录id
-					List<GenericValue> entryIds=delegator.findList(entryEntityName, EntityCondition.makeCondition("parentId", headId), selFields, null, null, false);
-					//删除级联实体记录
-					if(entryIds!=null&&entryIds.size()>0){
-						for(GenericValue v:entryIds){
-							for(int i=0;i<casDelArr.length;i++){
-								delegator.removeByAnd(casDelArr[i], "parentId",v.getString("id"));
+				GenericValue headvalue = delegator.findOne(headEntityName, UtilMisc.toMap("id", headId), false);
+				if(headvalue != null){
+					if(headvalue.getInteger("status") == 0){
+						delegator.removeByAnd(headEntityName, UtilMisc.toMap("id", headId));//删除表头记录
+						
+						if(casDelArr!=null&&casDelArr.length>0){
+							//查询所有分录id
+							List<GenericValue> entryIds=delegator.findList(entryEntityName, EntityCondition.makeCondition("parentId", headId), selFields, null, null, false);
+							//删除级联实体记录
+							if(entryIds!=null&&entryIds.size()>0){
+								for(GenericValue v:entryIds){
+									for(int i=0;i<casDelArr.length;i++){
+										delegator.removeByAnd(casDelArr[i], "parentId",v.getString("id"));
+									}
+								}
 							}
 						}
+						
+						delegator.removeByAnd(entryEntityName, UtilMisc.toMap("parentId", headId));//删除分录
+					} else {
+						throw new Exception("单据状态已经改变，请刷新数据，重新尝试删除操作！");
 					}
+				} else {
+					throw new Exception("单据已删除，请重新刷新数据！");
 				}
-				
-				delegator.removeByAnd(entryEntityName, UtilMisc.toMap("parentId", headId));//删除分录
-				
 			}
-			TransactionUtil.commit();
+			TransactionUtil.commit(beganTransaction);
 		} catch (Exception e) {
-			TransactionUtil.rollback();
+			try {
+				TransactionUtil.rollback(beganTransaction, e.getMessage(), e);
+			} catch (GenericTransactionException e2) {
+			}
+			throw e;
 		}
 		return "success";
 	}

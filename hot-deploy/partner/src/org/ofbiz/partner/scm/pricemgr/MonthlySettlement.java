@@ -622,7 +622,7 @@ public class MonthlySettlement {
 			ps = conn.prepareStatement("insert his_product_balance select * from cur_product_balance");
 			ps.executeUpdate();
 			Debug.logInfo("执行update cur_product_balance set year=" + yearOfnextMonth + " ,month=" + monthOfnextMonth + " ,in_Volume=0 ,in_Sum=0,out_Volume=0,out_Sum=0,change_In_Volume=0,change_In_Sum=0,change_Out_Volume=0,change_Out_Sum=0,rework_In_Volume=0,rework_In_Sum=0,rework_Out_Volume=0,rework_Out_Sum=0,volume=beginvolume,total_Sum=beginsum,change_Volume=change_Begin_Volume,change_Total_Sum=change_Begin_Sum,rework_Volume=rework_Begin_Volume,rework_Total_Sum=rework_Begin_Sum ", module);
-			ps = conn.prepareStatement("update cur_product_balance set year=" + yearOfnextMonth + " ,month=" + monthOfnextMonth+ " ,in_Volume=0 ,in_Sum=0,out_Volume=0,out_Sum=0,change_In_Volume=0,change_In_Sum=0,change_Out_Volume=0,change_Out_Sum=0,rework_In_Volume=0,rework_In_Sum=0,rework_Out_Volume=0,rework_Out_Sum=0,volume=beginvolume,total_Sum=beginsum,change_Volume=change_Begin_Volume,change_Total_Sum=change_Begin_Sum,rework_Volume=rework_Begin_Volume,rework_Total_Sum=rework_Begin_Sum ");
+			ps = conn.prepareStatement("update cur_product_balance set year=" + yearOfnextMonth + " ,month=" + monthOfnextMonth+ " ,in_Volume=0 ,in_Sum=0,out_Volume=0,out_Sum=0,change_In_Volume=0,change_In_Sum=0,change_Out_Volume=0,change_Out_Sum=0,rework_In_Volume=0,rework_In_Sum=0,rework_Out_Volume=0,rework_Out_Sum=0,beginvolume=volume,beginsum=total_Sum,change_Begin_Volume=change_Volume,change_Begin_Sum=change_Total_Sum,rework_Begin_Volume=rework_Volume,rework_Begin_Sum=rework_Total_Sum ");
 			ps.executeUpdate();
 
 			// 当前委外单价中间表CurConsignPrice数据转移到历史表，当前余额表更新【年、月、期初数量、期初金额】
