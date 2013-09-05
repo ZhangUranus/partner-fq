@@ -476,9 +476,29 @@ public class Utils {
 		Delegator delegator = DelegatorFactory.getDelegator("default");
 		List<GenericValue> entryList = delegator.findByAnd("ProductMap", "ikeaId", ikeaId, "boardCount", Integer.parseInt(qantity));
 		if(entryList.size() > 0 && !"".equals(entryList.get(0).getString("materialId")) && entryList.get(0).getString("materialId") != null){
+			if(entryList.size()>1){
+				throw new Exception("同一个宜家编码和一个板数量不允许对应多个BOM单，请检查“产品资料表”！");
+			}
 			return entryList.get(0).getString("materialId");
 		} else {
 			throw new Exception("未找到产品条码对应的产品编码，请检查“产品资料表”！");
+		}
+	}
+	
+	/**
+	 * 根据宜家编码，板数量和物料编码，判断是否存在产品
+	 * @param ikeaId
+	 * @param qantity
+	 * @return
+	 * @throws Exception
+	 */
+	public static boolean hasProduct(String ikeaId, String qantity, String materialId) throws Exception{
+		Delegator delegator = DelegatorFactory.getDelegator("default");
+		List<GenericValue> entryList = delegator.findByAnd("ProductMap", "ikeaId", ikeaId, "boardCount", Integer.parseInt(qantity),"materialId", materialId );
+		if( entryList.size() > 0 ){
+			return true;
+		} else {
+			return false;
 		}
 	}
 	
