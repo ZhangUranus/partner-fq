@@ -82,12 +82,9 @@ public class ProductInwarehouseEvents {
 					String barcode2 = v.getString("barcode2");
 					
 					BarCode barcode = new BarCode(barcode1, barcode2);
-					String testMaterialId = Utils.getMaterialIdByIkea(barcode.getCodeForIkea(), barcode.getQuantity());
-					if (testMaterialId == null || "".equals(testMaterialId)) {
-						throw new Exception("通过条码获取产品错误，请检查产品资料表是否已经存在该产品。");
-					}
 					String materialId = v.getString("materialMaterialId");// 打板物料id
-					if (!testMaterialId.equals(materialId)) {
+					
+					if (!Utils.hasProduct(barcode.getCodeForIkea(), barcode.getQuantity(),materialId)) {
 						throw new Exception("选择的产品和产品条码核对错误，请重新检查！");
 					}
 					BigDecimal volume = v.getBigDecimal("volume");// 入库数量（板）
