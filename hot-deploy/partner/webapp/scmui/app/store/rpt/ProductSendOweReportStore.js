@@ -6,8 +6,13 @@ Ext.define('SCM.store.rpt.ProductSendOweReportStore', {
 			remoteSort : true, // 服务器排序
 			autoLoad : false,
 			autoSync : false,
+			groupField : 'ENTRY_MATERIAL_NAME',
 			sorters : [{
-				property : 'MATERIAL_NAME',
+				property : 'ENTRY_MATERIAL_NAME',
 				direction : 'ASC'
+			}],
+			sorters : [{
+				property : 'SORT',
+				direction : 'DESC'
 			}]
 		});

@@ -8,6 +8,12 @@ Ext.define('SCM.model.rpt.ProductSendOweReportModel', {
 						name : 'WEEK',
 						type : 'string'
 					}, {
+						name : 'SORT',
+						type : 'int'
+					}, {
+						name : 'ENTRY_MATERIAL_NAME',
+						type : 'string'
+					}, {
 						name : 'MATERIAL_ID',
 						type : 'string'
 					}, {
@@ -36,6 +42,9 @@ Ext.define('SCM.model.rpt.ProductSendOweReportModel', {
 						type : 'float'
 					}, {
 						name : 'THIS_WEEK_OWE_QTY',
+						type : 'float'
+					}, {
+						name : 'AGGREGATE_BALANCE',
 						type : 'float'
 					}, {
 						name : 'STOCKING',

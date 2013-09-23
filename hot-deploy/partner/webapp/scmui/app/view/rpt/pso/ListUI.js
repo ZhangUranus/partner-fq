@@ -47,6 +47,23 @@ Ext.define('SCM.view.rpt.pso.ListUI', {
 										margin : '1 0 0 0',
 										title : '',
 										region : 'center',
+										features: [{
+								            id: 'group',
+								            ftype: 'groupingsummary',
+								            groupHeaderTpl: '{name}',
+								            hideGroupedHeader: true,
+								            enableGroupingMenu: false
+								        }],
+								        viewConfig : {
+								        	getRowClass: function(record, rowIndex, rowParams, store){
+								        		var cls;
+								        		debugger;
+								        		if(record.get('SORT') == 0){
+								        			cls =  'yellow-row';
+								        		}
+								        		return cls;
+								        	}
+								        },
 										store : 'rpt.ProductSendOweReportStore',
 										columns : [{
 													header : '序号',
@@ -56,7 +73,11 @@ Ext.define('SCM.view.rpt.pso.ListUI', {
 													xtype : 'gridcolumn',
 													dataIndex : 'WEEK',
 													width : 80,
-													text : '周'
+													text : '周',
+													summaryType: 'count',
+													summaryRenderer: function(value, summaryData, dataIndex) {
+														return '<p style="color:blue;font-size:12px;font-family:tahoma,arial,verdana,sans-serif">产品汇总</p>';
+													}
 												}, {
 													xtype : 'gridcolumn',
 													dataIndex : 'MATERIAL_NAME',
@@ -66,49 +87,74 @@ Ext.define('SCM.view.rpt.pso.ListUI', {
 													xtype : 'numbercolumn',
 													dataIndex : 'LAST_WEEK_OWE_QTY',
 													width : 100,
-													text : '上周库存板数'
+													text : '上周库存板数',
+													summaryType: 'sum',
+										            summaryRenderer: SCM.store.basiccode.sumRenderer
 												}, {
 													xtype : 'numbercolumn',
 													dataIndex : 'THIS_WEEK_OUT_QTY',
 													width : 100,
 													hidden:true,
-													text : '本周出货总板数'
+													text : '本周出货总板数',
+													summaryType: 'sum',
+										            summaryRenderer: SCM.store.basiccode.sumRenderer
 												}, {
 													xtype : 'numbercolumn',
 													dataIndex : 'THIS_WEEK_IN_QTY',
 													width : 100,
-													text : '本周进货总板数'
+													text : '本周进货总板数',
+													summaryType: 'sum',
+										            summaryRenderer: SCM.store.basiccode.sumRenderer
 												}, {
 													xtype : 'numbercolumn',
 													dataIndex : 'THIS_WEEK_CHG_QTY',
 													width : 100,
-													text : '本周改板总板数'
+													text : '本周改板总板数',
+													summaryType: 'sum',
+										            summaryRenderer: SCM.store.basiccode.sumRenderer
 												}, {
 													xtype : 'numbercolumn',
 													dataIndex : 'THIS_WEEK_BAL_QTY',
 													width : 100,
-													text : '本周库存板数'
+													text : '本周库存板数',
+													summaryType: 'sum',
+										            summaryRenderer: SCM.store.basiccode.sumRenderer
 												}, {
 													xtype : 'numbercolumn',
 													dataIndex : 'THIS_WEEK_PLN_QTY',
-													width : 110,
-													text : '本周计划出仓板数'
+													width : 125,
+													text : '本周计划出仓板数(套)',
+													summaryType: 'sum',
+										            summaryRenderer: SCM.store.basiccode.sumRenderer
 												}, {
 													xtype : 'gridcolumn',
 													dataIndex : 'THIS_WEEK_OWE_QTY',
-													width : 100,
+													width : 110,
 													renderer : SCM.store.basiccode.numberColorRenderer,
-													text : '本周欠货情况'
+													text : '本周欠货情况(套)',
+													summaryType: 'sum',
+										            summaryRenderer: SCM.store.basiccode.sumRenderer
+												}, {
+													xtype : 'gridcolumn',
+													dataIndex : 'AGGREGATE_BALANCE',
+													width : 100,
+													text : '总结余(套)',
+													summaryType: 'sum',
+										            summaryRenderer: SCM.store.basiccode.sumRenderer
 												}, {
 													xtype : 'numbercolumn',
 													dataIndex : 'STOCKING',
 													width : 100,
-													text : '备货数'
+													text : '备货数',
+													summaryType: 'sum',
+										            summaryRenderer: SCM.store.basiccode.sumRenderer
 												}, {
 													xtype : 'numbercolumn',
 													dataIndex : 'STOCKINGBAL',
-													width : 100,
-													text : '备货余欠情况'
+													width : 105,
+													text : '备货余欠情况(套)',
+													summaryType: 'sum',
+										            summaryRenderer: SCM.store.basiccode.sumRenderer
 												}],
 										viewConfig : {
 

@@ -139,6 +139,13 @@
 	</request-map>
 	
 	
+	<!-- 料品备货数导入 -->
+	<request-map uri="importMaterialSafeStock">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.MaterialEvents" invoke="importMaterialSafeStock" />
+		<response name="success" type="none" />
+	</request-map>
+	
 	<!-- business request -->
 	<!-- 采购申请单提交 -->
 	<request-map uri="submitPurchaseBill">
@@ -480,6 +487,12 @@
 	<request-map uri="hasVerifyBill">
 		<security https="false" auth="false" />
 		<event type="java" path="org.ofbiz.partner.scm.stock.ProductOutNotificationEvents" invoke="hasVerifyBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 将单据提交报表分析 -->
+	<request-map uri="submitToReport">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductOutNotificationEvents" invoke="submitToReport" />
 		<response name="success" type="none" />
 	</request-map>
 	<!-- 出货通知单导入 -->

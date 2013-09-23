@@ -27,6 +27,7 @@ import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericEntityException;
 import org.ofbiz.entity.GenericValue;
+import org.ofbiz.entity.condition.EntityCondition;
 import org.ofbiz.entity.jdbc.ConnectionFactory;
 import org.ofbiz.entity.transaction.GenericTransactionException;
 import org.ofbiz.entity.transaction.TransactionUtil;
@@ -188,6 +189,36 @@ public class ProductOutNotificationEvents {
 		CommonEvents.writeJsonDataToExt(response, jsonRs.toString()); // 将结果返回前端Ext
 		return "success";
 	}
+	
+	/**
+	 * 将单据提交欠数表分析
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public static String submitToReport(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String billId = request.getParameter("billId");
+		if (billId == null || billId.trim().length() == 0) {
+			throw new Exception("未找到单据编码！");
+		}
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		Map<String, Object> fieldSet = new HashMap<String, Object>();
+		fieldSet.put("status", 5);// 设置为审核状态
+		int count = delegator.storeByCondition("ProductOutNotification", fieldSet, EntityCondition.makeConditionWhere("id='" + billId + "'"));
+		
+		// 结果json字符串
+		StringBuffer jsonRs = new StringBuffer();
+		if(count!=0){
+			jsonRs.append("{'success':true}");
+		}else{
+			jsonRs.append("{'success':false}");
+		}
+		
+		CommonEvents.writeJsonDataToExt(response, jsonRs.toString()); // 将结果返回前端Ext
+		return "success";
+	}
 
 	/**
 	 * 导入发货通知单
@@ -215,6 +246,8 @@ public class ProductOutNotificationEvents {
 			 * 2. 解析数据文件，生成对应的数据实体记录，保存实体记录到数据库
 			 */
 			SerialNumberHelper snh = new SerialNumberHelper();
+			boolean isHas = false;			//是否存在出货通知单
+			GenericValue tempRecord = null;
 
 			HSSFWorkbook wb = new HSSFWorkbook(new FileInputStream(tmpFile));
 			Delegator delegator = (Delegator) request.getAttribute("delegator");
@@ -238,6 +271,26 @@ public class ProductOutNotificationEvents {
 				if (headEntityMap.containsKey(cargoNum)) {// 存在表头记录
 					headEntity = headEntityMap.get(cargoNum);
 				} else {
+					List<GenericValue> tempList = delegator.findByAnd("ProductOutNotification", UtilMisc.toMap("goodNumber", cargoNum));
+					// 存在货号
+					if(tempList.size()==1){
+						isHas = true;
+						tempRecord = tempList.get(0); // 只取第一条，默认一个货号只能唯一对应一条通知单
+						if(tempRecord.getInteger("status")!=null && tempRecord.getInteger("status")==4){
+							throw new Exception("出货通知单已存在并提交，导入数据无法替换存在的出货通知单！");
+						}
+					} else if(tempList.size()>1){
+						throw new Exception("一个货号对应多个出货通知单，请检查并重新导入！");
+					} else {
+						isHas = false;
+					}
+					
+					if(isHas){
+						//删除已经存在的出货通知单
+						delegator.removeByAnd("ProductOutNotificationEntry", UtilMisc.toMap("parentId", tempRecord.getString("id")));
+						tempRecord.remove();
+					}
+					
 					// 生成新表头实体
 					headEntity = delegator.makeValue("ProductOutNotification");
 					// 设置表头字段值

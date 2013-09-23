@@ -139,11 +139,7 @@ Ext.define('SCM.view.rpt.cpmr.ListUI', {
 										columns : [{
 													header : '序号',
 													xtype : 'rownumberer',
-													width : 40,
-													summaryType: 'count',
-													summaryRenderer: function(value, summaryData, dataIndex) {
-										                return '<font size=2 color=blue><b>99</b></font>';
-										            }
+													width : 40
 												}, {
 													xtype : 'gridcolumn',
 													dataIndex : 'SUPPLIER_NAME',
@@ -151,8 +147,8 @@ Ext.define('SCM.view.rpt.cpmr.ListUI', {
 													text : '加工商',
 													summaryType: 'count',
 													summaryRenderer: function(value, summaryData, dataIndex) {
-										                return '<font size=2 color=blue><b>汇总</b></font>';
-										            }
+														return '<p style="color:blue;font-size:12px;font-family:tahoma,arial,verdana,sans-serif">汇总</p>';
+													}
 												}, {
 													xtype : 'gridcolumn',
 													dataIndex : 'TYPE_NAME',
@@ -165,7 +161,7 @@ Ext.define('SCM.view.rpt.cpmr.ListUI', {
 													text : '加工件',
 													summaryType: 'count',
 										            summaryRenderer: function(value, summaryData, dataIndex) {
-										                return '<font size=2 color=blue><b>(' + value + ' 种加工件)</b></font>';
+										                return '<p style="color:blue;font-size:12px;font-family:tahoma,arial,verdana,sans-serif">(' + value + ' 种加工件)</p>';
 										            }
 												}, {
 													xtype : 'gridcolumn',
@@ -183,54 +179,42 @@ Ext.define('SCM.view.rpt.cpmr.ListUI', {
 													width : 100,
 													text : '期初数量',
 													summaryType: 'sum',
-										            summaryRenderer: function(value, summaryData, dataIndex) {
-										                return '<font size=2 color=blue><b>' + Ext.util.Format.number(value,'0,000.0000') + '</b></font>';
-										            }
+										            summaryRenderer: SCM.store.basiccode.sumRenderer
 												}, {
 													xtype : 'numbercolumn',
 													dataIndex : 'IN_VOLUME',
 													width : 100,
 													text : '收入数量',
 													summaryType: 'sum',
-										            summaryRenderer: function(value, summaryData, dataIndex) {
-										                return '<font size=2 color=blue><b>' + Ext.util.Format.number(value,'0,000.0000') + '</b></font>';
-										            }
+										            summaryRenderer: SCM.store.basiccode.sumRenderer
 												}, {
 													xtype : 'numbercolumn',
 													dataIndex : 'IN_SUM',
 													width : 100,
 													text : '收入金额',
 													summaryType: 'sum',
-										            summaryRenderer: function(value, summaryData, dataIndex) {
-										                return '<font size=2 color=blue><b>' + Ext.util.Format.number(value,'0,000.0000') + '</b></font>';
-										            }
+										            summaryRenderer: SCM.store.basiccode.sumRenderer
 												}, {
 													xtype : 'numbercolumn',
 													dataIndex : 'OUT_VOLUME',
 													width : 100,
 													text : '发出数量',
 													summaryType: 'sum',
-										            summaryRenderer: function(value, summaryData, dataIndex) {
-										                return '<font size=2 color=blue><b>' + Ext.util.Format.number(value,'0,000.0000') + '</b></font>';
-										            }
+										            summaryRenderer: SCM.store.basiccode.sumRenderer
 												}, {
 													xtype : 'numbercolumn',
 													dataIndex : 'OUT_SUM',
 													width : 100,
 													text : '发出金额',
 													summaryType: 'sum',
-										            summaryRenderer: function(value, summaryData, dataIndex) {
-										                return '<font size=2 color=blue><b>' + Ext.util.Format.number(value,'0,000.0000') + '</b></font>';
-										            }
+										            summaryRenderer: SCM.store.basiccode.sumRenderer
 												}, {
 													xtype : 'numbercolumn',
 													dataIndex : 'VOLUME',
 													width : 100,
 													text : '结存数量',
 													summaryType: 'sum',
-										            summaryRenderer: function(value, summaryData, dataIndex) {
-										                return '<font size=2 color=blue><b>' + Ext.util.Format.number(value,'0,000.0000') + '</b></font>';
-										            }
+										            summaryRenderer: SCM.store.basiccode.sumRenderer
 												}],
 										dockedItems : [{
 													dock : 'bottom',

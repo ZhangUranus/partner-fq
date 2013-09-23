@@ -298,3 +298,7 @@
 		background-image: url( ../images/icons/sync_down_sel.png ) !important;
 }
 
+.yellow-row .x-grid-cell{
+	background-color:#FFFF00 !important;
+}
+

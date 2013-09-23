@@ -62,6 +62,10 @@ Ext.define('SCM.controller.ProductOutNotification.ProductOutNotificationControll
 							'ProductOutNotificationlist button[action=import]' : {
 								click : this.importExcel
 							},
+							// 提交分析
+							'ProductOutNotificationlist button[action=submitreport]' : {
+								click : this.submitToReport
+							},
 							// 编辑界面分录新增
 							'ProductOutNotificationedit gridpanel button[action=addLine]' : {
 								click : this.addLine
@@ -191,7 +195,7 @@ Ext.define('SCM.controller.ProductOutNotification.ProductOutNotificationControll
 			 *            isReadOnly
 			 */
 			changeEditStatus : function(record) {
-				if (record.get('status') == '0') {
+				if (record.get('status') == '0' || record.get('status') == '5') {
 					this.setFieldsReadOnly(false);
 					this.setGridEditAble(true);
 					this.saveButton.setDisabled(false);
@@ -224,7 +228,7 @@ Ext.define('SCM.controller.ProductOutNotification.ProductOutNotificationControll
 				Ext.each(this.fields, function(item, index, length) {
 							item.setReadOnly(isReadOnly);
 							if(isSubmit){
-								if(item.name == 'bizDate'){
+								if(item.name == 'bizDate' || item.name =='deliverNumber' || item.name =='goodNumber'){
 									item.setReadOnly(true);
 								}
 							}
@@ -494,6 +498,54 @@ Ext.define('SCM.controller.ProductOutNotification.ProductOutNotificationControll
 			 */
 			importExcel : function(){
 			     Ext.widget('purchasebillimportui').show();
+			},
+			
+			/**
+			 * 提交报表分析
+			 */
+			submitToReport : function(){
+				record = this.getSelectRecord();
+				if (record.get('status') == '1' || record.get('status') == '2') {
+					showWarning('单据为已审核状态，不允许提交分析！');
+					return;
+				} else if (record.get('status') == '3') {
+					showWarning('单据为已结算状态，不允许提交分析！');
+					return;
+				} else if (record.get('status') == '4') {
+					showWarning('单据为已提交状态，不允许提交分析！');
+					return;
+				}
+				Ext.Msg.confirm('提示', '确定提交分析该' + this.gridTitle + '？', confirmChange, this);
+				function confirmChange(id) {
+					if (id == 'yes') {
+						/* 判断是否可提交 */
+						if (this.hasSubmitLock()) {
+							this.getSubmitLock();//获取提交锁
+							Ext.Ajax.request({
+								scope : this,
+								params : {
+									billId : record.get('id'),
+									entity : this.entityName
+								},
+								url : "../../scm/control/submitToReport",
+								timeout : SCM.limitTimes,
+								success : function(response, option) {
+									var result = Ext.decode(response.responseText)
+									if (result.success) {
+										Ext.Msg.alert("提示", "提交分析成功！");
+									} else {
+										showError(result.message);
+									}
+			 						Ext.getBody().unmask();
+									this.refreshRecord();
+									this.releaseSubmitLock();
+								}
+							});
+						} else {
+							showWarning('上一次操作还未完成，请稍等！');
+						}
+					}
+				}
 			},
 			
 			/**
