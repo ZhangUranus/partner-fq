@@ -140,11 +140,7 @@ Ext.define('SCM.view.rpt.pmr.ListUI', {
 										columns : [{
 													header : '序号',
 													xtype : 'rownumberer',
-													width : 40,
-													summaryType: 'count',
-													summaryRenderer: function(value, summaryData, dataIndex) {
-										                return '<font size=2 color=blue><b>99</b></font>';
-										            }
+													width : 40
 												}, {
 													xtype : 'gridcolumn',
 													dataIndex : 'SUPPLIER_NAME',
@@ -152,8 +148,8 @@ Ext.define('SCM.view.rpt.pmr.ListUI', {
 													text : '供应商',
 													summaryType: 'count',
 													summaryRenderer: function(value, summaryData, dataIndex) {
-										                return '<font size=2 color=blue><b>汇总</b></font>';
-										            }
+														return '<p style="color:blue;font-size:12px;font-family:tahoma,arial,verdana,sans-serif">汇总</p>';
+													}
 												}, {
 													xtype : 'gridcolumn',
 													dataIndex : 'MATERIAL_NAME',
@@ -161,7 +157,7 @@ Ext.define('SCM.view.rpt.pmr.ListUI', {
 													text : '物料',
 													summaryType: 'count',
 										            summaryRenderer: function(value, summaryData, dataIndex) {
-										                return '<font size=2 color=blue><b>(' + value + ' 种物料)</b></font>';
+										                return '<p style="color:blue;font-size:12px;font-family:tahoma,arial,verdana,sans-serif">(' + value + ' 种物料)</p>';
 										            }
 												}, {
 													xtype : 'gridcolumn',
@@ -179,54 +175,42 @@ Ext.define('SCM.view.rpt.pmr.ListUI', {
 													width : 100,
 													text : '收入数量',
 													summaryType: 'sum',
-										            summaryRenderer: function(value, summaryData, dataIndex) {
-										                return '<font size=2 color=blue><b>' + Ext.util.Format.number(value,'0,000.0000') + '</b></font>';
-										            }
+										            summaryRenderer: SCM.store.basiccode.sumRenderer
 												}, {
 													xtype : 'numbercolumn',
 													dataIndex : 'OUT_VOLUME',
 													width : 100,
 													text : '发出数量',
 													summaryType: 'sum',
-										            summaryRenderer: function(value, summaryData, dataIndex) {
-										                return '<font size=2 color=blue><b>' + Ext.util.Format.number(value,'0,000.0000') + '</b></font>';
-										            }
+										            summaryRenderer: SCM.store.basiccode.sumRenderer
 												}, {
 													xtype : 'numbercolumn',
 													dataIndex : 'BILL_ENTRY_SUM',
 													width : 100,
 													text : '采购金额',
 													summaryType: 'sum',
-										            summaryRenderer: function(value, summaryData, dataIndex) {
-										                return '<font size=2 color=blue><b>' + Ext.util.Format.number(value,'0,000.0000') + '</b></font>';
-										            }
+										            summaryRenderer: SCM.store.basiccode.sumRenderer
 												}, {
 													xtype : 'numbercolumn',
 													dataIndex : 'BILL_VOLUME',
 													width : 100,
 													text : '采购数量',
 													summaryType: 'sum',
-										            summaryRenderer: function(value, summaryData, dataIndex) {
-										                return '<font size=2 color=blue><b>' + Ext.util.Format.number(value,'0,000.0000') + '</b></font>';
-										            }
+										            summaryRenderer: SCM.store.basiccode.sumRenderer
 												}, {
 													xtype : 'numbercolumn',
 													dataIndex : 'ENTRY_SUM',
 													width : 100,
 													text : '采购单发生金额',
 													summaryType: 'sum',
-										            summaryRenderer: function(value, summaryData, dataIndex) {
-										                return '<font size=2 color=blue><b>' + Ext.util.Format.number(value,'0,000.0000') + '</b></font>';
-										            }
+										            summaryRenderer: SCM.store.basiccode.sumRenderer
 												}, {
 													xtype : 'numbercolumn',
 													dataIndex : 'VOLUME',
 													width : 100,
 													text : '采购单发生数量',
 													summaryType: 'sum',
-										            summaryRenderer: function(value, summaryData, dataIndex) {
-										                return '<font size=2 color=blue><b>' + Ext.util.Format.number(value,'0,000.0000') + '</b></font>';
-										            }
+										            summaryRenderer: SCM.store.basiccode.sumRenderer
 												}],
 										dockedItems : [{
 													dock : 'bottom',

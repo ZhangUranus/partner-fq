@@ -58,6 +58,9 @@ SCM.store.basiccode.billStatusStore = new Ext.data.Store({
 					}, {
 						'id' : 4,
 						'name' : '已提交'
+					}, {
+						'id' : 5,
+						'name' : '已提交分析'
 					}]
 		});
 SCM.store.basiccode.billStatusRenderer = function(value) {
@@ -71,6 +74,8 @@ SCM.store.basiccode.billStatusRenderer = function(value) {
 		return '审核不通过';
 	} else if (value == 4) {
 		return '已提交';
+	} else if (value == 5) {
+		return '已提交分析';
 	}
 };
 
@@ -266,6 +271,11 @@ SCM.store.basiccode.numberColorRenderer = function(value) {
 SCM.store.basiccode.percentRenderer = function(value) {
 	return Ext.util.Format.number(value,'0,000.00')*100 + "%";
 };
+
+
+SCM.store.basiccode.sumRenderer=function(value, summaryData, dataIndex) {
+    return '<p style="color:blue;font-size:12px;font-family:tahoma,arial,verdana,sans-serif">'+Ext.util.Format.number(value,'0,000.0000')+'</p>';
+}
 
 /**
  * 用于处理提交数据 封装表头标题数据

@@ -1,7 +1,7 @@
 Ext.define('SCM.controller.basedata.MaterialController', {
 			extend : 'Ext.app.Controller',
 			mixins : ['SCM.extend.exporter.Exporter', 'SCM.extend.controller.CommonGridController'],
-			views : ['basedata.material.ListUI', 'basedata.material.EditUI','basedata.material.TypeEditUI'],
+			views : ['basedata.material.ListUI', 'basedata.material.EditUI','basedata.material.TypeEditUI','basedata.material.ImportUI'],
 			stores : ['basedata.MaterialTypeTreeStore', 'basedata.MaterialTypeStore', 'basedata.MaterialStore', 'basedata.MaterialComboStore', 'basedata.MaterialWarehouseComboStore', 'basedata.ProductComboStore'],
 			models : ['basedata.MaterialTypeTreeModel'],
 			gridTitle : '料品资料',
@@ -63,6 +63,10 @@ Ext.define('SCM.controller.basedata.MaterialController', {
 							},
 							'materialinfomaintaince button[action=export]' : {
 								click : this.exportExcel
+							},
+							// 列表导入
+							'materialinfomaintaince button[action=import]' : {
+								click : this.importExcel
 							},
 							// 编辑界面保存
 							'materialedit button[action=save]' : {
@@ -299,6 +303,13 @@ Ext.define('SCM.controller.basedata.MaterialController', {
 				if(this.treePanel!=undefined&&this.treePanel!=null ){
 					return this.treePanel.getSelectionModel().getSelection()[0];
 				}
+			},
+			
+			/**
+			 * 导入发货通知单
+			 */
+			importExcel : function(){
+			     Ext.widget('materialimportui').show();
 			}
 			
 		});

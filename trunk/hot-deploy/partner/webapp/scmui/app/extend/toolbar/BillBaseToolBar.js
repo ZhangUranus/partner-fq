@@ -86,12 +86,21 @@ Ext.define('SCM.extend.toolbar.BillBaseToolbar', {
 							}]);
 				}
 				
-				// 增加提交按钮
+				// 增加导入按钮
 				if (me.isImport) {
 					tools = tools.concat([{
 								text : '导入',
 								iconCls : 'system-import',
 								action : 'import'
+							}]);
+				}
+				
+				// 增加提交按钮
+				if (me.isSubmitReport) {
+					tools = tools.concat([{
+								text : '提交欠数表',
+								iconCls : 'system-submit',
+								action : 'submitreport'
 							}]);
 				}
 				

@@ -45,7 +45,15 @@ Ext.define('SCM.extend.toolbar.BaseToolbar', {
 							iconCls : 'system-export',
 							action : 'export'
 						}]);
-
+				
+				// 增加导入按钮
+				if (me.isImport) {
+					tools = tools.concat([{
+								text : '导入',
+								iconCls : 'system-import',
+								action : 'import'
+							}]);
+				}
 				Ext.applyIf(me, {
 							xtype : 'toolbar',
 							height : 28,

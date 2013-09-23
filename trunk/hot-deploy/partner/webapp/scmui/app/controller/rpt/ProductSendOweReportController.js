@@ -74,11 +74,13 @@ Ext.define('SCM.controller.rpt.ProductSendOweReportController', {
 			 * 显示分录明细
 			 */
 			showDetail : function(me,record, index,eOpts){
-				this.detailPanel.store.getProxy().extraParams.week =record.get('WEEK'); 
-				this.detailPanel.store.getProxy().extraParams.materialId =record.get('MATERIAL_ID');
-				this.detailPanel.store.getProxy().extraParams.materialName =record.get('MATERIAL_NAME');
-				this.detailPanel.store.getProxy().extraParams.preWeekBal =record.get('LAST_WEEK_BAL_QTY');
-				this.detailPanel.store.load();
+				if(record.get('MATERIAL_ID')){
+					this.detailPanel.store.getProxy().extraParams.week =record.get('WEEK'); 
+					this.detailPanel.store.getProxy().extraParams.materialId =record.get('MATERIAL_ID');
+					this.detailPanel.store.getProxy().extraParams.materialName =record.get('MATERIAL_NAME');
+					this.detailPanel.store.getProxy().extraParams.preWeekBal =record.get('LAST_WEEK_BAL_QTY');
+					this.detailPanel.store.load();
+				}
 			},
 			/**
 			 * 获取报表参数

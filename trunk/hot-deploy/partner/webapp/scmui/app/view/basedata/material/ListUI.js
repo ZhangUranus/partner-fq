@@ -14,6 +14,7 @@ Ext.define('SCM.view.basedata.material.ListUI', {
 				Ext.applyIf(me, {
 							items : [{
 										xtype : 'basetoolbar',
+										isImport : true,
 										region : 'north'
 									}, {
 										xtype : 'treepanel',
