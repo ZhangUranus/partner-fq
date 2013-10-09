@@ -131,7 +131,7 @@ Ext.define('SCM.view.rpt.pso.ListUI', {
 													dataIndex : 'THIS_WEEK_OWE_QTY',
 													width : 110,
 													renderer : SCM.store.basiccode.numberColorRenderer,
-													text : '本周欠货情况(套)',
+													text : '本周欠货情况',
 													summaryType: 'sum',
 										            summaryRenderer: SCM.store.basiccode.sumRenderer
 												}, {

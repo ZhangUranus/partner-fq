@@ -348,7 +348,7 @@ public class Utils {
 	 */
 	public static int getWeekOfYear(Calendar cl) throws Exception{
         cl.setFirstDayOfWeek(Calendar.SUNDAY);// 每周以周日开始
-        cl.setMinimalDaysInFirstWeek(3);  // 每年的第一周必须大于或等于3天，否则就算上一年的最后一周
+        cl.setMinimalDaysInFirstWeek(6);  // 每年的第一周必须大于或等于6天，否则就算上一年的最后一周
         return cl.get(Calendar.WEEK_OF_YEAR);
 	}
 	
