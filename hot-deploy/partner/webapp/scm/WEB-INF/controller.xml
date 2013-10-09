@@ -677,6 +677,23 @@
 		<response name="success" type="none" />
 	</request-map>
 	
+	<!-- 综合发货欠数报表(日) -->
+	<request-map uri="queryProductSendOweReportDay">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.rpt.ProductSendOweReportDayEvents" invoke="queryMainData" />
+		<response name="success" type="none" />
+	</request-map>
+	<request-map uri="queryProductSendOweDetailReportDay">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.rpt.ProductSendOweReportDayEvents" invoke="queryDetailList" />
+		<response name="success" type="none" />
+	</request-map>
+	<request-map uri="queryProductSendOweEntryReportDay">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.rpt.ProductSendOweReportDayEvents" invoke="queryDetailEntryList" />
+		<response name="success" type="none" />
+	</request-map>
+	
 	<!-- 在库条码查询报表 -->
 	<request-map uri="queryBarcodeInwarehouseReport">
 		<security https="false" auth="false" />

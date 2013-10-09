@@ -1,0 +1,49 @@
+// 定义数据模型
+Ext.define('SCM.model.rpt.ProductSendOweEntryReportDayModel', {
+			extend : 'Ext.data.Model',
+			alias : 'ProductSendOweEntryReportDayModel',
+			requires : ['SCM.extend.proxy.JsonAjax'],
+			fields : [// 字段
+			        {
+						name : 'ORDER_NUMBER',
+						type : 'string'
+					}, {
+			        	name : 'REQUIRE_RECEIVE_DATE',
+			        	type : 'date',
+			        	defaultValue : new Date(),
+			        	convert : function(value, record) {
+			        		return new Date(value);
+			        	}
+			        }, {
+			        	name : 'ORDER_GET_DATE',
+			        	type : 'date',
+			        	defaultValue : new Date(),
+			        	convert : function(value, record) {
+			        		return new Date(value);
+			        	}
+			        }, {
+						name : 'MATERIAL_ID',
+						type : 'string'
+					}, {
+						name : 'MATERIAL_NAME',
+						type : 'string'
+					}, {
+						name : 'ORDER_QTY',
+						type : 'float'
+					}, {
+						name : 'TODAY_BAL',
+						type : 'float'
+					}, {
+						name : 'VOLUME',
+						type : 'float'
+					}, {
+						name : 'TODAY_TOTAL',
+						type : 'float'
+					}],
+			proxy : {
+				type : 'jsonajax',
+				api : {
+					read : '../../scm/control/queryProductSendOweEntryReportDay'
+				}
+			}
+		});

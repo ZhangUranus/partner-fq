@@ -177,7 +177,7 @@ public class MonthlySettlement {
 			ConsignPriceMgr.getInstance().refreshPeriod();
 			ConsignProcessedPriceMgr.getInstance().refreshPeriod();
 			PurchasePriceMgr.getInstance().refreshPeriod();
-			// ProductPriceMgr.getInstance().refreshPeriod();
+			ProductPriceMgr.getInstance().refreshPeriod();
 			WorkshopPriceMgr.getInstance().refreshPeriod();
 
 		} catch (Exception e) {
@@ -744,7 +744,7 @@ public class MonthlySettlement {
 			ConsignPriceMgr.getInstance().refreshPeriod();
 			ConsignProcessedPriceMgr.getInstance().refreshPeriod();
 			PurchasePriceMgr.getInstance().refreshPeriod();
-			// ProductPriceMgr.getInstance().refreshPeriod();
+			ProductPriceMgr.getInstance().refreshPeriod();
 			WorkshopPriceMgr.getInstance().refreshPeriod();
 
 		} catch (Exception e) {
