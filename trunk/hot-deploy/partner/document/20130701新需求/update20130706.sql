@@ -1,4 +1,4 @@
-insert into cur_product_balance(year,month,warehouse_id,material_id,beginvolume,beginsum,in_Volume,in_Sum,out_Volume,out_Sum,volume,total_Sum)
+﻿insert into cur_product_balance(year,month,warehouse_id,material_id,beginvolume,beginsum,in_Volume,in_Sum,out_Volume,out_Sum,volume,total_Sum)
 SELECT year,month,warehouse_id,material_id,beginvolume,beginsum,in_Volume,in_Sum,out_Volume,out_Sum,volume,total_Sum FROM cur_material_balance cmb
 left join t_material tm on cmb.material_id =tm.id
 left join t_material_type tmt on tmt.id = tm.material_type_id
@@ -39,7 +39,7 @@ left join t_material tm on cmb.material_id =tm.id
 left join t_material_type tmt on tmt.id = tm.material_type_id
 where tmt.number='MTT100005'
 ) cpbb SET cpb.beginvolume=cpbb.beginvolume,cpb.beginsum=cpbb.beginsum,cpb.volume=cpbb.volume,cpb.total_Sum=cpbb.total_Sum
-WHERE cpb.material_id= cpbb.material_id;
+WHERE cpb.material_id= cpbb.material_id and cpb.warehouse_id = cpbb.warehouse_id;
 
 
 

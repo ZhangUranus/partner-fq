@@ -1,7 +1,7 @@
 Ext.define('SCM.view.rpt.psod.DetailListUI', {
 			extend : 'Ext.window.Window',
 			alias : 'widget.productSendOweReportDayDetailList',
-			height : 700,
+			height : 650,
 			width : 900,
 			title : '明细情况',
 			layout : {
