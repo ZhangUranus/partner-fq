@@ -184,23 +184,6 @@
 	<TSystemMenuOfRole id='464b38dc-ed9b-49ea-9132-f8e4e637db5b' menuId='materialDetailReport' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='N' />
 	<TSystemMenuOfRole id='020645d6-b102-42f1-a714-dd72406c885a' menuId='materialDetailReport' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='S' />
 	
-	<!-- 质量控制 -->
-	<TSystemMenuOfRole id='510d5b0a-8b0a-4fd1-9bd2-f8d73441ab30' menuId='ProcessMaintaince' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='V' />
-	<TSystemMenuOfRole id='0ccf10fb-5485-450e-bab7-da20bd76dafa' menuId='ProcessMaintaince' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='E' />
-	<TSystemMenuOfRole id='89077644-87ee-4920-b269-2944a4c4a807' menuId='ProcessMaintaince' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='D' />
-	<TSystemMenuOfRole id='c0e459e4-6429-46de-9746-7d17fa82530e' menuId='ProcessMaintaince' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='N' />
-	
-	<TSystemMenuOfRole id='56377295-9709-4736-80e9-7596b5b9f012' menuId='CheckProjectMaintaince' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='V' />
-	<TSystemMenuOfRole id='207449d4-6d10-4a11-b6ec-bd663855ba39' menuId='CheckProjectMaintaince' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='E' />
-	<TSystemMenuOfRole id='9daeff0b-87cc-43da-b87a-4eb4dabc4818' menuId='CheckProjectMaintaince' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='D' />
-	<TSystemMenuOfRole id='c6fd6c70-144e-49f4-929f-4e124a7ebe34' menuId='CheckProjectMaintaince' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='N' />
-	
-	<TSystemMenuOfRole id='f65d9532-2580-482c-b9bd-2d6d07175114' menuId='SamplingPlanMaintaince' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='V' />
-	<TSystemMenuOfRole id='d442a4c2-7a26-4c3f-84a1-3a999a9dcac1' menuId='SamplingPlanMaintaince' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='E' />
-	<TSystemMenuOfRole id='aa5c4128-7dba-41ed-bd59-270a1bb0e7b7' menuId='SamplingPlanMaintaince' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='D' />
-	<TSystemMenuOfRole id='a3258e39-f017-4c6b-aeeb-35e746eecfd7' menuId='SamplingPlanMaintaince' roleId='18f85a5d-1c39-44f4-9f2f-e7d64056ff8b' operateType='N' />
-	<!-- 质量控制 -->
-	
 	
 	<TSystemMenuOfRole id='286030a3-ad3a-40e7-9ef0-64287827173e' menuId='warehouseManagement' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='V' />
 	<TSystemMenuOfRole id='363f88bb-891f-4ed6-8111-24addd353e6f' menuId='systemManagement' roleId='5eb8a565-7f0a-4233-8ff0-d6704daa5492' operateType='V' />
