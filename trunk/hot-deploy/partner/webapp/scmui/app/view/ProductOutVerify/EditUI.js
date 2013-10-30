@@ -135,7 +135,7 @@ Ext.define('SCM.view.ProductOutVerify.EditUI', {
 																dataIndex : 'materialId',
 																text : '打板方式',
 																gridId : 'ProductOutVerify-edit-grid',
-																width : 150,
+																width : 300,
 																editor : {
 																	xtype : 'combogrid',
 																	valueField : 'id',
@@ -150,17 +150,17 @@ Ext.define('SCM.view.ProductOutVerify.EditUI', {
 																		}
 																	},
 																	listConfig : {
-																		width : SCM.MaxSize.COMBOGRID_WIDTH,
+																		width : 300,
 																		height : SCM.MaxSize.COMBOGRID_HEIGHT,
 																		columns : [{
 																					header : '编码',
 																					dataIndex : 'number',
-																					width : 100,
+																					width : 70,
 																					hideable : false
 																				}, {
 																					header : '名称',
 																					dataIndex : 'name',
-																					width : 280,
+																					width : 230,
 																					hideable : false
 																				}]
 																	}
