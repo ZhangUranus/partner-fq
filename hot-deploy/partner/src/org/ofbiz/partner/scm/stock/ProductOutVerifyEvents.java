@@ -1,11 +1,9 @@
 package org.ofbiz.partner.scm.stock;
 
-import java.io.File;
 import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +18,7 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericValue;
@@ -27,6 +26,7 @@ import org.ofbiz.entity.condition.EntityCondition;
 import org.ofbiz.entity.condition.EntityConditionList;
 import org.ofbiz.entity.condition.EntityOperator;
 import org.ofbiz.entity.jdbc.ConnectionFactory;
+import org.ofbiz.entity.transaction.GenericTransactionException;
 import org.ofbiz.entity.transaction.TransactionUtil;
 import org.ofbiz.partner.scm.common.BillBaseEvent;
 import org.ofbiz.partner.scm.common.CommonEvents;
@@ -226,6 +226,8 @@ public class ProductOutVerifyEvents {
 	 * @throws Exception
 	 */
 	public static String saveProductOutVerify(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		boolean beganTransaction = false;
+		boolean isPass = false;
 		if (request.getParameter("record") == null) {
 			throw new Exception("新建带分录实体时参数(record)无效");
 		}
@@ -240,7 +242,7 @@ public class ProductOutVerifyEvents {
 		String entryEntityName = "ProductOutVerifyEntry";
 		String jsonResult = "";
 		try {
-			TransactionUtil.begin();
+			beganTransaction = TransactionUtil.begin(Utils.getTimeout());
 			// 更新表头
 			GenericValue v = delegator.makeValue(headEntityName);// 新建一个值对象
 			MultiEntryCRUDEvent.setGenValFromJsonObj(headRecord, v);
@@ -311,16 +313,28 @@ public class ProductOutVerifyEvents {
 
 			if (realVolume.compareTo(packagedVolume) == -1) {
 				jsonResult = "{success:true,result:-1}";
+				isPass = false;
 			} else if (realVolume.compareTo(packagedVolume) == 1) {
 				jsonResult = "{success:true,result:1}";
+				isPass = false;
 			} else {
 				jsonResult = "{success:true,result:0}";
+				isPass = true;
 			}
-
+			
 			delegator.createOrStore(v);
-			TransactionUtil.commit();
+			if(isPass){
+				TransactionUtil.commit(beganTransaction);
+			} else {
+				TransactionUtil.rollback(beganTransaction, "保存失败，回退！", new Exception("保存失败，回退！") );
+			}
 		} catch (Exception e) {
-			TransactionUtil.rollback();
+			Debug.logError(e, module);
+			try {
+				TransactionUtil.rollback(beganTransaction, e.getMessage(), e);
+			} catch (GenericTransactionException e2) {
+				Debug.logError(e2, "Unable to rollback transaction", module);
+			}
 			throw e;
 		}
 		CommonEvents.writeJsonDataToExt(response, jsonResult); // 将结果返回前端Ext

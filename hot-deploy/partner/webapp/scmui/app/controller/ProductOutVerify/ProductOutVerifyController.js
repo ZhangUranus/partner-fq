@@ -284,16 +284,16 @@ Ext.define('SCM.controller.ProductOutVerify.ProductOutVerifyController', {
 								var result = Ext.decode(reponse.response.responseText);
 								if (result.success) {
 									if(result.result==-1){
-										showInfo('保存成功，订单总数量<font color="red"><b>小于</b></font>已打板总数量！');
+										showInfo('保存失败，订单总数量<font color="red"><b>小于</b></font>已打板总数量！');
 									}else if(result.result==1){
-										showInfo('保存成功，订单总数量<font color="red"><b>大于</b></font>已打板总数量！');
+										showInfo('保存失败，订单总数量<font color="red"><b>大于</b></font>已打板总数量！');
 									}else{
 										showInfo('保存成功，订单总数量<font color="green"><b>等于</b></font>已打板总数量！');
+										me.refreshRecord();
+										if (me.win.isVisible()) {
+											me.win.close();
+										}
 									}
-								}
-								me.refreshRecord();
-								if (me.win.isVisible()) {
-									me.win.close();
 								}
 							}
 						});
