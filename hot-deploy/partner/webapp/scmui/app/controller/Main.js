@@ -136,7 +136,7 @@ Ext.define('SCM.controller.Main', {
 						}).load();
 
 				/* 包括单个产品编码字段的板产品 store */
-				Ext.create('ProductComboStore', {
+				Ext.create('ProductComboValidStore', {
 							pageSize : SCM.comboPageSize,
 							storeId : 'PComboStore' //下拉框－－选择时使用
 						}).load();

@@ -121,6 +121,7 @@ public class ProductSendOweReportEvents {
 		DatePeriod weekDatePeriod;//周日期范围
 		DatePeriod lastWeekDatePeriod;//上一周日期范围
 		StringBuffer filterMaterial=new StringBuffer();//物料过滤
+		StringBuffer filterMaterialEntry=new StringBuffer();//物料过滤
 		
 		if(request.getParameter("week")==null)throw new Exception("周不能为空！");
 		weekStr=request.getParameter("week");
@@ -139,6 +140,7 @@ public class ProductSendOweReportEvents {
 		
 		if(request.getParameter("keyWord")!=null&&request.getParameter("keyWord").trim().length()>0){
 			filterMaterial.append(" and  (tm.name like '%").append(request.getParameter("keyWord")).append("%' or tm.number like '%").append(request.getParameter("keyWord")).append("%')");
+			filterMaterialEntry.append(" and  (tme.name like '%").append(request.getParameter("keyWord")).append("%' or tme.number like '%").append(request.getParameter("keyWord")).append("%')");
 		}
 		
 		String sql = "SELECT\r\n"+
@@ -313,7 +315,7 @@ public class ProductSendOweReportEvents {
 				"			0 AS LAST_WEEK_PLN_QTY\r\n"+
 				"		FROM PRODUCT_OUT_NOTIFICATION NOTIFICATION \r\n"+
 				"		INNER JOIN PRODUCT_OUT_NOTIFICATION_ENTRY NOTIFICATIONENTRY ON NOTIFICATIONENTRY.PARENT_ID=NOTIFICATION.ID \r\n"+
-				"		INNER JOIN T_MATERIAL TME ON (NOTIFICATIONENTRY.MATERIAL_ID=TME.ID "+filterMaterial.toString()+")\r\n"+
+				"		INNER JOIN T_MATERIAL TME ON (NOTIFICATIONENTRY.MATERIAL_ID=TME.ID "+filterMaterialEntry.toString()+")\r\n"+
 				"		WHERE NOTIFICATION.PLAN_DELIVERY_DATE>='"+dateFormat.format(weekDatePeriod.fromDate)+"'\r\n"+
 				"			AND NOTIFICATION.PLAN_DELIVERY_DATE<='"+timeFormat.format(weekDatePeriod.endDate)+"' \r\n"+
 				"			AND NOTIFICATION.STATUS=5\r\n"+
@@ -340,7 +342,7 @@ public class ProductSendOweReportEvents {
 				"			SUM(IFNULL(NOTIFICATIONENTRY.VOLUME,0)) AS LAST_WEEK_PLN_QTY\r\n"+
 				"		FROM PRODUCT_OUT_NOTIFICATION NOTIFICATION \r\n"+
 				"		INNER JOIN PRODUCT_OUT_NOTIFICATION_ENTRY NOTIFICATIONENTRY ON NOTIFICATIONENTRY.PARENT_ID=NOTIFICATION.ID \r\n"+
-				"		INNER JOIN T_MATERIAL TME ON (NOTIFICATIONENTRY.MATERIAL_ID=TME.ID "+filterMaterial.toString()+")\r\n"+
+				"		INNER JOIN T_MATERIAL TME ON (NOTIFICATIONENTRY.MATERIAL_ID=TME.ID "+filterMaterialEntry.toString()+")\r\n"+
 				"		WHERE NOTIFICATION.PLAN_DELIVERY_DATE<='"+timeFormat.format(lastWeekDatePeriod.endDate)+"'\r\n"+
 				"			AND NOTIFICATION.STATUS=5\r\n"+
 				"		GROUP BY TME.NAME\r\n"+

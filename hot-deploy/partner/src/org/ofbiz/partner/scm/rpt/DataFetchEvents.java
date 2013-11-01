@@ -81,6 +81,8 @@ public class DataFetchEvents {
 			list = getListWithSQL(request, ProductSendOweReportEvents.getMainDataSql(request));
 		}  else if("MDQR".equals(request.getParameter("report"))){
 			list = getListWithSQL(request, MaterialDetailQryReportEvents.getQueryMaterialDetailSql(request));
+		}  else if("PSORD".equals(request.getParameter("report"))){
+			list = getListWithSQL(request, ProductSendOweReportDayEvents.getMainDataSql(request));
 		}
 		return list;
 	}
