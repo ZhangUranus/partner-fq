@@ -342,7 +342,7 @@ public class Utils {
 	/**
 	 * 根据日期返回当年周数
 	 *  	1 . 一周开始时间是从星期天开始
-	 * 		2 . 一年的第一周最少是3天以及以上才算是当年第一周，否则算是上一年最后一周
+	 * 		2 . 一年的第一周最少是6天以及以上才算是当年第一周，否则算是上一年最后一周
 	 * 
 	 * @author Mark 2012-7-11
 	 */
@@ -393,7 +393,7 @@ public class Utils {
 		
 		Calendar c = Calendar.getInstance();
 		c.setFirstDayOfWeek(Calendar.SUNDAY);
-		c.setMinimalDaysInFirstWeek(3);
+		c.setMinimalDaysInFirstWeek(6);
 		c.set(Calendar.YEAR,year);
 		c.set(Calendar.WEEK_OF_YEAR,week);
 		c.set(Calendar.DAY_OF_WEEK, 1);

@@ -34,6 +34,12 @@ Ext.define('SCM.model.basedata.ProductComboModel', {
 					}, {
 						name : 'materialTypeId',
 						type : 'string'
+					}, {
+						name : 'status',
+						type : 'string'
+					}, {
+						name : 'valid',
+						type : 'string'
 					}],
 			idgen : 'uuid', // 使用uuid生成记录id 每个模型必须要有id字段
 			proxy : {

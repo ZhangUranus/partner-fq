@@ -2,7 +2,7 @@ Ext.define('SCM.controller.basedata.MaterialController', {
 			extend : 'Ext.app.Controller',
 			mixins : ['SCM.extend.exporter.Exporter', 'SCM.extend.controller.CommonGridController'],
 			views : ['basedata.material.ListUI', 'basedata.material.EditUI','basedata.material.TypeEditUI','basedata.material.ImportUI'],
-			stores : ['basedata.MaterialTypeTreeStore', 'basedata.MaterialTypeStore', 'basedata.MaterialStore', 'basedata.MaterialComboStore', 'basedata.MaterialWarehouseComboStore', 'basedata.ProductComboStore'],
+			stores : ['basedata.MaterialTypeTreeStore', 'basedata.MaterialTypeStore', 'basedata.MaterialStore', 'basedata.MaterialComboStore', 'basedata.MaterialWarehouseComboStore', 'basedata.ProductComboStore', 'basedata.ProductComboValidStore'],
 			models : ['basedata.MaterialTypeTreeModel'],
 			gridTitle : '料品资料',
 			gridName : 'materialinfomaintaince',
