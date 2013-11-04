@@ -17,9 +17,13 @@ Ext.define('SCM.model.rpt.BarcodeOutwarehouseQryModel', {
 					}, {
 						name : 'PRODUCT_WEEK',
 						type : 'string'
-					}, {
+					},{
 						name : 'PRODUCT_OUT_DATE',
-						type : 'string'
+						type : 'date',
+						format : 'time',
+						convert : function(value, record) {
+							return new Date(value);
+						}
 					}, {
 						name : 'PER_BOARD_QTY',
 						type : 'float'

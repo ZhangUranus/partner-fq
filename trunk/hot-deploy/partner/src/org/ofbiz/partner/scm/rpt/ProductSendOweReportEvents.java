@@ -184,6 +184,7 @@ public class ProductSendOweReportEvents {
 				"		INNER JOIN T_MATERIAL TM ON (WEEKINOUT.MATERIAL_ID=TM.ID "+filterMaterial.toString()+") \r\n"+
 				"		INNER JOIN T_MATERIAL TME ON PM.ENTRY_MATERIAL_ID=TME.ID \r\n"+
 				"		WHERE WEEKINOUT.WEEK<'"+weekStr+"' \r\n"+
+				"		AND LENGTH(PM.IKEA_ID) = 8 \r\n"+
 				"		GROUP BY TME.NAME,WEEKINOUT.MATERIAL_ID,TM.NAME,WEEKINOUT.WEEK	\r\n"+
 				"		UNION ALL	\r\n"+
 				"		SELECT'"+weekStr+"' AS WEEK,\r\n"+
@@ -209,6 +210,7 @@ public class ProductSendOweReportEvents {
 				"		INNER JOIN T_MATERIAL TM ON (WEEKINOUT.MATERIAL_ID=TM.ID "+filterMaterial.toString()+") \r\n"+
 				"		INNER JOIN T_MATERIAL TME ON PM.ENTRY_MATERIAL_ID=TME.ID \r\n"+
 				"		WHERE WEEKINOUT.WEEK='"+weekStr+"' \r\n"+
+				"		AND LENGTH(PM.IKEA_ID) = 8 \r\n"+
 				"		GROUP BY TME.NAME,WEEKINOUT.MATERIAL_ID,TM.NAME,WEEKINOUT.WEEK \r\n"+
 				"		UNION ALL	\r\n"+
 				"		SELECT\r\n"+
@@ -250,6 +252,7 @@ public class ProductSendOweReportEvents {
 				"			WHERE NOTIFICATION.PLAN_DELIVERY_DATE>='"+dateFormat.format(weekDatePeriod.fromDate)+"'\r\n"+
 				"				AND NOTIFICATION.PLAN_DELIVERY_DATE<='"+timeFormat.format(weekDatePeriod.endDate)+"' \r\n"+
 				"				AND NOTIFICATION.STATUS=4\r\n"+
+				"				AND LENGTH(PM.IKEA_ID) = 8 \r\n"+
 				"			) T1\r\n"+
 				"		GROUP BY T1.ENTRY_MATERIAL_NAME,T1.MATERIAL_ID,T1.MATERIAL_NAME\r\n"+
 				"		UNION ALL \r\n"+
@@ -291,6 +294,7 @@ public class ProductSendOweReportEvents {
 				"			INNER JOIN T_MATERIAL TME ON PM.ENTRY_MATERIAL_ID=TME.ID \r\n"+
 				"			WHERE NOTIFICATION.PLAN_DELIVERY_DATE<='"+timeFormat.format(lastWeekDatePeriod.endDate)+"'\r\n"+
 				"				AND NOTIFICATION.STATUS=4\r\n"+
+				"				AND LENGTH(PM.IKEA_ID) = 8 \r\n"+
 				"			) T2\r\n"+
 				"		GROUP BY T2.ENTRY_MATERIAL_NAME,T2.MATERIAL_ID,T2.MATERIAL_NAME\r\n"+
 				"		UNION ALL	\r\n"+

@@ -40,7 +40,7 @@ public class BarcodeQryReportEvents {
 		sql.append("p.ikea_number IKEA_NUMBER, \r\n");
 		sql.append("material.name MATERIAL_NAME, \r\n");
 		sql.append("p.week PRODUCT_WEEK, \r\n");
-		sql.append("date_format(p.biz_Date,'%Y-%m-%d') PRODUCT_IN_DATE, \r\n");
+		sql.append("p.biz_Date PRODUCT_IN_DATE, \r\n");
 		sql.append("p.PER_BOARD_QTY PER_BOARD_QTY, \r\n");
 		sql.append("p.BARCODE1 BARCODE1, \r\n");
 		sql.append("p.BARCODE2 BARCODE2, \r\n");
@@ -88,26 +88,42 @@ public class BarcodeQryReportEvents {
 		}
 		
 		StringBuffer  sql=new StringBuffer();
-		sql.append("SELECT \r\n");
-		sql.append("noti.DELIVER_NUMBER DELIVERY_NUMBER, \r\n");
-		sql.append("proMap.ikea_id IKEA_NUMBER, \r\n");
-		sql.append("material.name MATERIAL_NAME, \r\n");
-		sql.append("entry.PRD_WEEK PRODUCT_WEEK, \r\n");
-		sql.append("date_format(head.biz_date,'%Y-%m-%d') PRODUCT_OUT_DATE, \r\n");
-		sql.append("proMap.board_count PER_BOARD_QTY, \r\n");
-		sql.append("entry.BARCODE1 BARCODE1, \r\n");
-		sql.append("entry.BARCODE2 BARCODE2 \r\n");
-		sql.append("FROM product_outwarehouse_entry entry \r\n");
-		sql.append("inner join product_outwarehouse head on entry.parent_id=head.id \r\n");
-		sql.append("inner join product_out_notification noti on noti.good_number=entry.good_number \r\n");
-		sql.append("inner join t_material material on entry.material_material_id=material.id \r\n");
-		sql.append("inner join product_map proMap on proMap.material_id=entry.material_material_id \r\n");
-		sql.append("where head.status=4 and (entry.is_return is null or entry.is_return<>'Y') and head.biz_date>='"+startDate+"' and head.biz_date<='"+endDate+"' \r\n");
+		sql.append(" SELECT \r\n");
+		sql.append(" 	NOTI.DELIVER_NUMBER DELIVERY_NUMBER,  \r\n");
+		sql.append(" 	PROMAP.IKEA_ID IKEA_NUMBER,  \r\n");
+		sql.append(" 	MATERIAL.NAME MATERIAL_NAME,  \r\n");
+		sql.append(" 	ENTRY_TEMP.PRD_WEEK PRODUCT_WEEK,  \r\n");
+		sql.append(" 	ENTRY_TEMP.BIZ_DATE PRODUCT_OUT_DATE, \r\n");
+		sql.append(" 	PROMAP.BOARD_COUNT PER_BOARD_QTY,  \r\n");
+		sql.append(" 	ENTRY_TEMP.BARCODE1 BARCODE1,  \r\n");
+		sql.append(" 	ENTRY_TEMP.BARCODE2 BARCODE2  \r\n");
+		sql.append(" FROM ( \r\n");
+		sql.append(" 		SELECT  \r\n");
+		sql.append(" 			ENTRY.PRD_WEEK PRODUCT_WEEK,  \r\n");
+		sql.append(" 			HEAD.BIZ_DATE BIZ_DATE, \r\n");
+		sql.append(" 			ENTRY.BARCODE1 BARCODE1,  \r\n");
+		sql.append(" 			ENTRY.BARCODE2 BARCODE2, \r\n");
+		sql.append(" 			ENTRY.GOOD_NUMBER, \r\n");
+		sql.append(" 			ENTRY.PRD_WEEK, \r\n");
+		sql.append(" 			ENTRY.MATERIAL_MATERIAL_ID \r\n");
+		sql.append(" 		FROM ( \r\n");
+		sql.append(" 				SELECT  \r\n");
+		sql.append(" 					ID, \r\n");
+		sql.append(" 					BIZ_DATE \r\n");
+		sql.append(" 				FROM PRODUCT_OUTWAREHOUSE \r\n");
+		sql.append(" 				WHERE STATUS = 4 \r\n");
+		sql.append(" 				AND BIZ_DATE BETWEEN '"+startDate+"' AND '"+endDate+"' \r\n");
+		sql.append(" 			) HEAD  \r\n");
+		sql.append(" 		INNER JOIN PRODUCT_OUTWAREHOUSE_ENTRY ENTRY ON HEAD.ID = ENTRY.PARENT_ID \r\n");
+		sql.append(" 		) ENTRY_TEMP \r\n");
+		sql.append(" INNER JOIN PRODUCT_OUT_NOTIFICATION NOTI ON ENTRY_TEMP.GOOD_NUMBER=NOTI.GOOD_NUMBER \r\n");
+		sql.append(" INNER JOIN T_MATERIAL MATERIAL ON ENTRY_TEMP.MATERIAL_MATERIAL_ID=MATERIAL.ID  \r\n");
+		sql.append(" INNER JOIN PRODUCT_MAP PROMAP ON ENTRY_TEMP.MATERIAL_MATERIAL_ID=PROMAP.MATERIAL_ID \r\n");
 		if(request.getParameter("deliveryNumber")!=null&&request.getParameter("deliveryNumber").trim().length()>0){
-			sql.append("and noti.DELIVER_NUMBER like '%"+request.getParameter("deliveryNumber")+"%' \r\n");
+			sql.append("AND NOTI.DELIVER_NUMBER like '%"+request.getParameter("deliveryNumber")+"%' \r\n");
 		}
 		if(request.getParameter("ikeaNumber")!=null&&request.getParameter("ikeaNumber").trim().length()>0){
-			sql.append("and proMap.ikea_id like '%"+request.getParameter("ikeaNumber")+"%' \r\n");
+			sql.append("AND PROMAP.IKEA_ID like '%"+request.getParameter("ikeaNumber")+"%' \r\n");
 		}
 		return sql.toString();
 	}
