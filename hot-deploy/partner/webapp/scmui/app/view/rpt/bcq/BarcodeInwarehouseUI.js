@@ -81,9 +81,11 @@ Ext.define('SCM.view.rpt.bcq.BarcodeInwarehouseUI', {
 													width : 100,
 													text : '生产周期'
 												}, {
-													xtype : 'gridcolumn',
+													xtype : 'datecolumn',
 													dataIndex : 'PRODUCT_IN_DATE',
-													width : 100,
+													width : 120,
+													format : 'Y-m-d',
+													groupable : false,
 													text : '入仓日期'
 												}, {
 													xtype : 'numbercolumn',
