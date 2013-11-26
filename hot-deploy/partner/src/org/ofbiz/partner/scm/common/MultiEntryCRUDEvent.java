@@ -2,9 +2,11 @@ package org.ofbiz.partner.scm.common;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +17,6 @@ import javolution.util.FastList;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericValue;
@@ -25,6 +26,7 @@ import org.ofbiz.entity.model.ModelField;
 import org.ofbiz.entity.transaction.GenericTransactionException;
 import org.ofbiz.entity.transaction.TransactionUtil;
 import org.ofbiz.partner.scm.pricemgr.Utils;
+import org.ofbiz.service.LocalDispatcher;
 
 public class MultiEntryCRUDEvent {
 	
@@ -41,6 +43,10 @@ public class MultiEntryCRUDEvent {
 				||request.getParameter("entryEntity")==null){
 			throw new Exception("新建带分录实体时参数(record、headEntity、entryEntity)无效");
 		}
+		
+		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
+		Map<String, String> billInfoMap = new HashMap<String, String>();			//单据信息
+		
 		//构建总实体json
 		JSONObject record=JSONObject.fromObject(request.getParameter("record").toString());
 		JSONObject headRecord=record.getJSONObject("head");//取表头信息
@@ -54,8 +60,9 @@ public class MultiEntryCRUDEvent {
 			GenericValue v = delegator.makeValue(headEntityName);// 新建一个值对象	
 			setGenValFromJsonObj(headRecord, v);
 			
+			String entityNumber="";
 			if(v.getString("number")==null || "".equals(v.getString("number"))){
-			String entityNumber = CommonEvents.getSerialNumberHelper().getSerialNumber(request, headEntityName);
+				entityNumber = CommonEvents.getSerialNumberHelper().getSerialNumber(request, headEntityName);
 				if(!"".equals(entityNumber)){//判断系统编码是否存在，存在的使用系统编码
 					if (v.getModelEntity().getField("number") != null) {
 						v.set("number", entityNumber);
@@ -71,6 +78,17 @@ public class MultiEntryCRUDEvent {
 				setGenValFromJsonObj(jo, ev);
 				delegator.create(ev);
 		    }
+		    
+		    /* 开始 增加单据处理任务 */
+		    if(!entityNumber.isEmpty()){
+				billInfoMap.put("number", entityNumber);
+				billInfoMap.put("billType", headEntityName);
+				billInfoMap.put("operationType", "0");
+				dispatcher.runAsync("addBillHandleJobService", billInfoMap);
+		    }
+			/* 结束 增加单据处理任务 */
+		    
+		    
 			TransactionUtil.commit();
 		} catch (Exception e) {
 			TransactionUtil.rollback();
@@ -134,6 +152,10 @@ public class MultiEntryCRUDEvent {
 				||request.getParameter("entryEntity")==null){
 			throw new Exception("新建带分录实体时参数(record、headEntity、entryEntity)无效");
 		}
+
+		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
+		Map<String, String> billInfoMap = new HashMap<String, String>();			//单据信息
+		
 		//构建总实体json
 		JSONObject record=JSONObject.fromObject(request.getParameter("record").toString());
 		JSONObject headRecord=record.getJSONObject("head");//取表头信息
@@ -184,6 +206,15 @@ public class MultiEntryCRUDEvent {
 					}
 				}
 		    }
+		    
+		    /* 开始 增加单据处理任务 */
+		    if(!v.getString("number").isEmpty()){
+				billInfoMap.put("number", v.getString("number"));
+				billInfoMap.put("billType", headEntityName);
+				billInfoMap.put("operationType", "1");
+				dispatcher.runAsync("addBillHandleJobService", billInfoMap);
+		    }
+			/* 结束 增加单据处理任务 */
 			
 			TransactionUtil.commit();
 		} catch (Exception e) {
@@ -208,12 +239,16 @@ public class MultiEntryCRUDEvent {
 				||request.getParameter("entryEntity")==null){
 			throw new Exception("新建带分录实体时参数(record、headEntity、entryEntity)无效");
 		}
-		//
+
+		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
+		Map<String, String> billInfoMap = new HashMap<String, String>();			//单据信息
+		
 		List records = CommonEvents.getRecordsFromRequest(request);
 		
 		String headEntityName = request.getParameter("headEntity").toString();
 		String entryEntityName = request.getParameter("entryEntity").toString();
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		String entityNumber = "";
 		boolean beganTransaction = false;
 		try {
 			beganTransaction = TransactionUtil.begin(Utils.getTimeout());
@@ -233,6 +268,9 @@ public class MultiEntryCRUDEvent {
 				GenericValue headvalue = delegator.findOne(headEntityName, UtilMisc.toMap("id", headId), false);
 				if(headvalue != null){
 					if(headvalue.getInteger("status") == 0){
+						if(!headvalue.getString("number").isEmpty()){
+							entityNumber = headvalue.getString("number");
+						}
 						delegator.removeByAnd(headEntityName, UtilMisc.toMap("id", headId));//删除表头记录
 						
 						if(casDelArr!=null&&casDelArr.length>0){
@@ -256,6 +294,16 @@ public class MultiEntryCRUDEvent {
 					throw new Exception("单据已删除，请重新刷新数据！");
 				}
 			}
+			
+			/* 开始 增加单据处理任务 */
+			if(!entityNumber.isEmpty()){
+				billInfoMap.put("number", entityNumber);
+				billInfoMap.put("billType", headEntityName);
+				billInfoMap.put("operationType", "2");
+				dispatcher.runAsync("addBillHandleJobService", billInfoMap);
+			}
+			/* 结束 增加单据处理任务 */
+			
 			TransactionUtil.commit(beganTransaction);
 		} catch (Exception e) {
 			try {

@@ -1,7 +1,9 @@
 package org.ofbiz.partner.scm.stock;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +19,7 @@ import org.ofbiz.partner.scm.common.CommonEvents;
 import org.ofbiz.partner.scm.pricemgr.BillType;
 import org.ofbiz.partner.scm.pricemgr.BizStockImpFactory;
 import org.ofbiz.partner.scm.pricemgr.Utils;
+import org.ofbiz.service.LocalDispatcher;
 
 /**
  * 验收单业务事件类
@@ -36,6 +39,8 @@ public class ConsignReturnProductEvents {
 	 * @throws Exception
 	 */
 	public static String submitBill(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
+		Map<String, String> billInfoMap = new HashMap<String, String>();			//单据信息
 		boolean beganTransaction = false;
 		try {
 			beganTransaction = TransactionUtil.begin();
@@ -87,6 +92,14 @@ public class ConsignReturnProductEvents {
 						Utils.createReturnProductWarehousingBill(billHead,request);	//创建进货单
 						Utils.submitReturnProductWarehousing(billHead,request);	//提交
 						billHead.set("checkStatus", 2);
+						
+						
+						/* 开始 增加单据处理任务 */
+						billInfoMap.put("number", billHead.get("number").toString());
+						billInfoMap.put("billType", "ConsignReturnProduct");
+						billInfoMap.put("operationType", "3");
+						dispatcher.runAsync("addBillHandleJobService", billInfoMap);
+						/* 结束 增加单据处理任务 */
 					}
 					billHead.set("checkerSystemUserId", CommonEvents.getAttributeFormSession(request, "uid"));
 					billHead.store();
@@ -115,6 +128,8 @@ public class ConsignReturnProductEvents {
 	 * @throws Exception
 	 */
 	public static String rollbackBill(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
+		Map<String, String> billInfoMap = new HashMap<String, String>();			//单据信息
 		boolean beganTransaction = false;
 		try {
 			beganTransaction = TransactionUtil.begin();
@@ -131,6 +146,13 @@ public class ConsignReturnProductEvents {
 				BizStockImpFactory.getBizStockImp(BillType.ConsignReturnProduct).updateStock(billHead, false, true);
 
 				BillBaseEvent.rollbackBill(request, response);// 撤销单据
+				
+				/* 开始 增加单据处理任务 */
+				billInfoMap.put("number", billHead.get("number").toString());
+				billInfoMap.put("billType", "ConsignReturnProduct");
+				billInfoMap.put("operationType", "4");
+				dispatcher.runAsync("addBillHandleJobService", billInfoMap);
+				/* 结束 增加单据处理任务 */
 			}
 			TransactionUtil.commit(beganTransaction);
 		} catch (Exception e) {

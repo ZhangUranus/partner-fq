@@ -150,4 +150,18 @@
 			<key-map field-name="unitUnitId" rel-field-name="id" />
 		</view-link>
 	</view-entity>
+	<!-- 当前库存统计 -->
+	<view-entity entity-name="ConsignDrawMaterialStock" package-name="org.ofbiz.scm.ConsignDrawMaterial" title="ConsignDrawMaterialStock  Entity">
+		<member-entity entity-alias="ConsignDrawMaterialV" entity-name="ConsignDrawMaterial"></member-entity>
+		<member-entity entity-alias="ConsignDrawMaterialEntryV" entity-name="ConsignDrawMaterialEntry"></member-entity>
+		<alias-all entity-alias="ConsignDrawMaterialV"></alias-all>
+		<alias name="warehouseWarehouseId" entity-alias="ConsignDrawMaterialEntryV" field="warehouseWarehouseId"></alias>
+		<alias name="materialMaterialId" entity-alias="ConsignDrawMaterialEntryV" field="materialMaterialId"></alias>
+		<alias name="volume" entity-alias="ConsignDrawMaterialEntryV" field="volume"></alias>
+		<alias name="entrysum" entity-alias="ConsignDrawMaterialEntryV" field="entrysum"></alias>
+		
+		<view-link entity-alias="ConsignDrawMaterialV" rel-entity-alias="ConsignDrawMaterialEntryV" rel-optional="true">
+			<key-map field-name="id" rel-field-name="parentId" />
+		</view-link>
+	</view-entity>
 </entitymodel>

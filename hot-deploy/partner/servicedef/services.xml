@@ -47,4 +47,14 @@ under the License.
         <attribute name="txTimeout" type="Integer" mode="IN" optional="true"/>
         <attribute name="results" type="List" mode="OUT" optional="false"/>
     </service>
+    <service name="addBillHandleJobService" engine="java" auth="false" location="org.ofbiz.partner.scm.services.CurrentStockHandleServices" invoke="addBillHandleJobService">
+        <description>Create a bill job</description>
+        <attribute name="number" type="String" mode="IN" optional="true"/>
+        <attribute name="billType" type="String" mode="IN" optional="true"/>
+        <attribute name="operationType" type="String" mode="IN" optional="true"/>
+        <attribute name="parameter" type="String" mode="IN" optional="true"/>
+    </service>
+    <service name="doBillHandleJobService" engine="java" auth="false" location="org.ofbiz.partner.scm.services.CurrentStockHandleServices" invoke="doBillHandleJobService" transaction-timeout="120000" use-transaction="true" semaphore="fail">
+        <description>do bill job</description>
+    </service>
 </services>

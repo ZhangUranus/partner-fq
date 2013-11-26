@@ -117,4 +117,19 @@
 			<key-map field-name="unitUnitId" rel-field-name="id" />
 		</view-link>
 	</view-entity>
+	
+	<!-- 当前库存统计 -->
+	<view-entity entity-name="ProductManualOutwarehouseStock" package-name="org.ofbiz.scm.ProductManualOutwarehouse" title="ProductManualOutwarehouseStock  Entity">
+		<member-entity entity-alias="ProductManualOutwarehouseV" entity-name="ProductManualOutwarehouse"></member-entity>
+		<member-entity entity-alias="ProductManualOutwarehouseEntryV" entity-name="ProductManualOutwarehouseEntry"></member-entity>
+		<alias-all entity-alias="ProductManualOutwarehouseV"></alias-all>
+		<alias name="warehouseWarehouseId" entity-alias="ProductManualOutwarehouseEntryV" field="warehouseWarehouseId"></alias>
+		<alias name="materialMaterialId" entity-alias="ProductManualOutwarehouseEntryV" field="materialMaterialId"></alias>
+		<alias name="volume" entity-alias="ProductManualOutwarehouseEntryV" field="volume"></alias>
+		<alias name="entrysum" entity-alias="ProductManualOutwarehouseEntryV" field="entrysum"></alias>
+		
+		<view-link entity-alias="ProductManualOutwarehouseV" rel-entity-alias="ProductManualOutwarehouseEntryV" rel-optional="true">
+			<key-map field-name="id" rel-field-name="parentId" />
+		</view-link>
+	</view-entity>
 </entitymodel>

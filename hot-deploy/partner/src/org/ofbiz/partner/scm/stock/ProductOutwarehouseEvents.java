@@ -4,7 +4,9 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +29,7 @@ import org.ofbiz.partner.scm.dao.TMaterial;
 import org.ofbiz.partner.scm.pricemgr.BillType;
 import org.ofbiz.partner.scm.pricemgr.BizStockImpFactory;
 import org.ofbiz.partner.scm.pricemgr.Utils;
+import org.ofbiz.service.LocalDispatcher;
 
 /**
  * 成品出仓单业务事件类
@@ -46,6 +49,8 @@ public class ProductOutwarehouseEvents {
 	 * @throws Exception
 	 */
 	public static String submitBill(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
+		Map<String, String> billInfoMap = new HashMap<String, String>();			//单据信息
 		boolean beganTransaction = false;
 		try {
 			beganTransaction = TransactionUtil.begin(Utils.getTimeout());
@@ -115,6 +120,13 @@ public class ProductOutwarehouseEvents {
 				BizStockImpFactory.getBizStockImp(BillType.ProductOutwarehouse).updateStock(billHead, true, false);
 
 				BillBaseEvent.submitBill(request, response);// 更新单据状态
+				
+				/* 开始 增加单据处理任务 */
+				billInfoMap.put("number", billHead.get("number").toString());
+				billInfoMap.put("billType", "ProductOutwarehouse");
+				billInfoMap.put("operationType", "3");
+				dispatcher.runAsync("addBillHandleJobService", billInfoMap);
+				/* 结束 增加单据处理任务 */
 			}
 			TransactionUtil.commit(beganTransaction);
 		} catch (Exception e) {
@@ -138,6 +150,8 @@ public class ProductOutwarehouseEvents {
 	 * @throws Exception
 	 */
 	public static String rollbackBill(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
+		Map<String, String> billInfoMap = new HashMap<String, String>();			//单据信息
 		boolean beganTransaction = false;
 		try {
 			beganTransaction = TransactionUtil.begin(Utils.getTimeout());
@@ -203,6 +217,13 @@ public class ProductOutwarehouseEvents {
 				BizStockImpFactory.getBizStockImp(BillType.ProductOutwarehouse).updateStock(billHead, false, true);
 
 				BillBaseEvent.rollbackBill(request, response);// 撤销单据
+				
+				/* 开始 增加单据处理任务 */
+				billInfoMap.put("number", billHead.get("number").toString());
+				billInfoMap.put("billType", "ProductOutwarehouse");
+				billInfoMap.put("operationType", "4");
+				dispatcher.runAsync("addBillHandleJobService", billInfoMap);
+				/* 结束 增加单据处理任务 */
 			}
 
 			TransactionUtil.commit(beganTransaction);
@@ -227,6 +248,8 @@ public class ProductOutwarehouseEvents {
 	 * @throws Exception
 	 */
 	public static synchronized String scanSubmit(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
+		Map<String, String> billInfoMap = new HashMap<String, String>();			//单据信息
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 
@@ -377,6 +400,14 @@ public class ProductOutwarehouseEvents {
 			 * BizStockImpFactory.getBizStockImp(BillType.ProductOutwarehouse
 			 * ).updateStock(billHead, true, false);
 			 */
+			
+			/* 开始 增加单据处理任务 */
+			billInfoMap.put("number", billHead.get("number").toString());
+			billInfoMap.put("billType", "ProductOutwarehouse");
+			billInfoMap.put("operationType", "0");
+			billInfoMap.put("parameter", entryId);
+			dispatcher.runAsync("addBillHandleJobService", billInfoMap);
+			/* 结束 增加单据处理任务 */
 
 			StringBuffer jsonStr = new StringBuffer();
 			jsonStr.append("{'success':true,'qantity':" + barcode.getQuantity() + "}");
@@ -403,6 +434,8 @@ public class ProductOutwarehouseEvents {
 	 * @throws Exception
 	 */
 	public static synchronized String scanRollback(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
+		Map<String, String> billInfoMap = new HashMap<String, String>();			//单据信息
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
 
 		boolean beganTransaction = false;
@@ -493,6 +526,15 @@ public class ProductOutwarehouseEvents {
 			}
 			
 			String parentId = entryValue.getString("parentId");// 父id
+			
+			/* 开始 增加单据处理任务 */
+			billInfoMap.put("number", billHead.get("number").toString());
+			billInfoMap.put("billType", "ProductOutwarehouse");
+			billInfoMap.put("operationType", "2");
+			billInfoMap.put("parameter", entryValue.getString("id"));
+			dispatcher.runAsync("addBillHandleJobService", billInfoMap);
+			/* 结束 增加单据处理任务 */
+			
 			
 			entryValue.remove(); // 删除分录
 			
