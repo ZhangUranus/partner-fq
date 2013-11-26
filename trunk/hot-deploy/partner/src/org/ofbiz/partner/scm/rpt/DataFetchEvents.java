@@ -83,6 +83,8 @@ public class DataFetchEvents {
 			list = getListWithSQL(request, MaterialDetailQryReportEvents.getQueryMaterialDetailSql(request));
 		}  else if("PSORD".equals(request.getParameter("report"))){
 			list = getListWithSQL(request, ProductSendOweReportDayEvents.getMainDataSql(request));
+		}  else if("CSQM".equals(request.getParameter("report"))){
+			list = getListWithSQL(request, CurrentStockQryReportEvents.getQueryCurrentStockSql(request));
 		}
 		return list;
 	}

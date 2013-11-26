@@ -433,7 +433,7 @@ Ext.define('SCM.controller.ConsignWarehousing.ConsignWarehousingController', {
 			},
 			getMainPrintHTML : function() {
 				return "<div>"
-						+ "<div class='caption' >江门市蓬江区富桥旅游用品厂有限公司</div>"
+						+ "<div class='caption' >"+SCM.CompanyName+"</div>"
 						+ "<div class='caption' >委外加工验收单</div>"
 						+ "<div class='field' style='width:45%;float:left;'  >单据编号:<span class='dataField' fieldindex='data.number' width=150px></span></div>"
 						+ "<div class='field' align='right' style='width:45%;float:right;'>打印时间:<span class='dataField' fieldindex='data.printTime' width=150px ></span></div>"
@@ -458,7 +458,7 @@ Ext.define('SCM.controller.ConsignWarehousing.ConsignWarehousingController', {
 			},
 			getTailPrintHTML : function() {
 				return "<div>"
-						+ "<div class='caption' >江门市蓬江区富桥旅游用品厂有限公司</div>"
+						+ "<div class='caption' >"+SCM.CompanyName+"</div>"
 						+ "<div class='caption' >委外加工验收单</div>"
 						+ "<div class='field' style='width:45%;float:left;'  >单据编号:<span class='dataField' fieldindex='data.number' width=150px></span></div>"
 						+ "<div class='field' align='right' style='width:45%;float:right;'>打印时间:<span class='dataField' fieldindex='data.printTime' width=150px ></span></div>"

@@ -1,7 +1,9 @@
 package org.ofbiz.partner.scm.stock;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,6 +20,7 @@ import org.ofbiz.partner.scm.pricemgr.BizStockImpFactory;
 import org.ofbiz.partner.scm.pricemgr.ConsignPriceMgr;
 import org.ofbiz.partner.scm.pricemgr.MaterialBomMgr;
 import org.ofbiz.partner.scm.pricemgr.Utils;
+import org.ofbiz.service.LocalDispatcher;
 /**
  * 验收单业务事件类
  * 
@@ -36,6 +39,8 @@ public class ConsignWarehousingEvents {
 	 * @throws Exception
 	 */
 	public static String submitBill(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
+		Map<String, String> billInfoMap = new HashMap<String, String>();			//单据信息
 		boolean beganTransaction = false;
 		try {
 			beganTransaction = TransactionUtil.begin();
@@ -71,6 +76,13 @@ public class ConsignWarehousingEvents {
 				BizStockImpFactory.getBizStockImp(BillType.ConsignWarehousing).updateStock(billHead, false, false);
 
 				BillBaseEvent.submitBill(request, response);// 更新单据状态
+				
+				/* 开始 增加单据处理任务 */
+				billInfoMap.put("number", billHead.get("number").toString());
+				billInfoMap.put("billType", "ConsignWarehousing");
+				billInfoMap.put("operationType", "3");
+				dispatcher.runAsync("addBillHandleJobService", billInfoMap);
+				/* 结束 增加单据处理任务 */
 			}
 			TransactionUtil.commit(beganTransaction);
 		} catch (Exception e) {
@@ -94,6 +106,8 @@ public class ConsignWarehousingEvents {
 	 * @throws Exception
 	 */
 	public static String rollbackBill(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
+		Map<String, String> billInfoMap = new HashMap<String, String>();			//单据信息
 		boolean beganTransaction = false;
 		try {
 			beganTransaction = TransactionUtil.begin();
@@ -110,6 +124,13 @@ public class ConsignWarehousingEvents {
 				BizStockImpFactory.getBizStockImp(BillType.ConsignWarehousing).updateStock(billHead, true, true);
 
 				BillBaseEvent.rollbackBill(request, response);// 撤销单据
+				
+				/* 开始 增加单据处理任务 */
+				billInfoMap.put("number", billHead.get("number").toString());
+				billInfoMap.put("billType", "ConsignWarehousing");
+				billInfoMap.put("operationType", "4");
+				dispatcher.runAsync("addBillHandleJobService", billInfoMap);
+				/* 结束 增加单据处理任务 */
 			}
 			TransactionUtil.commit(beganTransaction);
 		} catch (Exception e) {

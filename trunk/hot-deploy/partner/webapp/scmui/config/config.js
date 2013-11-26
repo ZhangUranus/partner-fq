@@ -6,6 +6,9 @@ Ext.namespace('SCM');
 SCM.CurrentUser="";
 SCM.SystemMonthlyYear=2012;
 SCM.SystemMonthlyMonth=1;
+SCM.CompanyName="江门市蓬江区富桥旅游用品厂有限公司";
+//SCM.CompanyName="江门市西北五金钢管厂有限公司"; //02系统
+//SCM.CompanyName="江门市蓬江区富桥旅游用品厂有限公司"; //03系统
 /**
  * 系统默认尺寸
  */
@@ -49,6 +52,7 @@ SCM.pageSize=20;		//整页面页大小
 SCM.halfPageSize=10;	//一半页面页大小
 SCM.billPageSize=15;	//单据页大小
 SCM.comboPageSize=50;		//下拉框最大条数
+SCM.limitPageSize=200;		//下拉框最大条数
 SCM.unpageSize=10000;	//不分页大小
 /**
  * 服务器请求timeout时间

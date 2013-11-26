@@ -18,8 +18,10 @@ specific language governing permissions and limitations
 under the License.
 -->
 <entity-engine-xml>
+	<TemporalExpression tempExprId="EVERY_MINUTE" tempExprTypeId="FREQUENCY" description="Every minute" integer1="12" integer2="1"/>
 	<JobSandbox jobId="OPTIMIZE" jobName="optimizeTableService" runTime="2013-07-31 01:00:00.000" serviceName="optimizeTableService" poolId="pool" runAsUser="system" tempExprId="HOUR_00" maxRecurrenceCount="-1"/>
     <JobSandbox jobId="LOG_CLEAN" jobName="logCleanJobService" runTime="2013-07-31 01:00:00.000" serviceName="logCleanJobService" poolId="pool" runAsUser="system" tempExprId="HOUR_01" maxRecurrenceCount="-1"/>
     <JobSandbox jobId="BACKUP_TABLE" jobName="backupAndClearTableData" runTime="2013-09-01 01:00:00.000" serviceName="backupAndClearTableData" poolId="pool" runAsUser="system" tempExprId="DAYOFMONTH_01" maxRecurrenceCount="-1"/>
     <JobSandbox jobId="ROLL_NEXT_DATE" jobName="rollNextDateService" runTime="2013-07-31 01:00:00.000" serviceName="rollNextDateService" poolId="pool" runAsUser="system" tempExprId="HOUR_00" maxRecurrenceCount="-1"/>
+    <JobSandbox jobId="DO_BILL_JOB" jobName="doBillHandleJobService" runTime="2013-07-31 01:00:00.000" serviceName="doBillHandleJobService" poolId="pool" runAsUser="system" tempExprId="EVERY_MINUTE" maxRecurrenceCount="-1"/>
 </entity-engine-xml>

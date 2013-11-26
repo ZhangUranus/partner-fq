@@ -131,4 +131,19 @@
 			<key-map field-name="unitUnitId" rel-field-name="id" />
 		</view-link>
 	</view-entity>
+	
+	<!-- 当前库存统计 -->
+	<view-entity entity-name="WorkshopOtherDrawBillStock" package-name="org.ofbiz.scm.WorkshopOtherDrawBill" title="WorkshopOtherDrawBillStock  Entity">
+		<member-entity entity-alias="WorkshopOtherDrawBillV" entity-name="WorkshopOtherDrawBill"></member-entity>
+		<member-entity entity-alias="WorkshopOtherDrawBillEntryV" entity-name="WorkshopOtherDrawBillEntry"></member-entity>
+		<alias-all entity-alias="WorkshopOtherDrawBillV"></alias-all>
+		<alias name="warehouseWarehouseId" entity-alias="WorkshopOtherDrawBillEntryV" field="warehouseWarehouseId"></alias>
+		<alias name="materialMaterialId" entity-alias="WorkshopOtherDrawBillEntryV" field="materialMaterialId"></alias>
+		<alias name="volume" entity-alias="WorkshopOtherDrawBillEntryV" field="volume"></alias>
+		<alias name="entrysum" entity-alias="WorkshopOtherDrawBillEntryV" field="entrysum"></alias>
+		
+		<view-link entity-alias="WorkshopOtherDrawBillV" rel-entity-alias="WorkshopOtherDrawBillEntryV" rel-optional="true">
+			<key-map field-name="id" rel-field-name="parentId" />
+		</view-link>
+	</view-entity>
 </entitymodel>

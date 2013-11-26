@@ -390,7 +390,7 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 			
 			getMainPrintHTML : function() {
 				return "<div>" +
-				"<div class='caption' style='font-size:20px;width:60%;float:left;text-align:left;' >江门市蓬江区富桥旅游用品厂有限公司</div><div style='width:39%;float:left;text-align:left;'>页数：<span class='dataField' fieldindex='data.curPage'></span> of <span  class='dataField' fieldindex='data.totalPages'></span></div>" +						
+				"<div class='caption' style='font-size:20px;width:60%;float:left;text-align:left;' >"+SCM.CompanyName+"</div><div style='width:39%;float:left;text-align:left;'>页数：<span class='dataField' fieldindex='data.curPage'></span> of <span  class='dataField' fieldindex='data.totalPages'></span></div>" +						
 				"<div class='caption' style='font-size:15px;width:60%;float:left;text-align:left;'>PO 采购回笼单	</div>	<div style='width:39%;float:left;'>采购回笼单号：<span class='dataField' fieldindex='data.number' ></span></div>" +
 				"<div style='width:100%;float:left;'>&nbsp;</div>" +
 				"<div style='width:50%;float:left;'>订购日期：<span class='dataField' fieldindex='data.bizDate' ></span></div><div style='width:49%;float:left;'>供应商名称:<span class='dataField' fieldindex='data.supplierSupplierName' ></span></div>" +	
@@ -446,7 +446,7 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 			},
 //			getLoopPrintHTML: function() {
 //				return "<div>" +
-//				"<div class='caption' >江门市富桥旅游用品厂有限公司</div>"+							
+//				"<div class='caption' >"+SCM.CompanyName+"</div>"+							
 //				"<div class='caption'>Purchasing Order 采购回笼单	</div>"+						
 //				"<div class='caption'>江门市潮连卢边工业区				</div>"+				
 //				"<div class='caption'>Tel: 0750-3720617     Fax: 0750-3722789</div>"+								
@@ -478,7 +478,7 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 //			},
 			getTailPrintHTML: function() {
 				return "<div>" +
-				"<div class='caption' style='font-size:20px;width:60%;float:left;text-align:left;' >江门市蓬江区富桥旅游用品厂有限公司</div><div style='width:39%;float:left;text-align:left;'>页数：<span class='dataField' fieldindex='data.curPage'></span> of <span  class='dataField' fieldindex='data.totalPages'></span></div>" +						
+				"<div class='caption' style='font-size:20px;width:60%;float:left;text-align:left;' >"+SCM.CompanyName+"</div><div style='width:39%;float:left;text-align:left;'>页数：<span class='dataField' fieldindex='data.curPage'></span> of <span  class='dataField' fieldindex='data.totalPages'></span></div>" +						
 				"<div class='caption' style='font-size:15px;width:60%;float:left;text-align:left;'>PO 采购回笼单	</div>	<div style='width:39%;float:left;'>采购回笼单号：<span class='dataField' fieldindex='data.number' ></span></div>" +
 				"<div style='width:100%;float:left;'>&nbsp;</div>" +
 				"<div style='width:50%;float:left;'>订购日期：<span class='dataField' fieldindex='data.bizDate' ></span></div><div style='width:49%;float:left;'>供应商名称:<span class='dataField' fieldindex='data.supplierSupplierName' ></span></div>" +	

@@ -42,6 +42,7 @@
 	<TSystemMenu menuId='barcodeOutReport' menuName='已出仓条码查询' menuType='1' parentId='analyticStatistics' sort='167' hyperlink='BarcodeOutwarehouseUI' styleName='product-statics-report' display='1' description='已出仓条码查询' />
 	<TSystemMenu menuId='materialDetailReport' menuName='材料耗用汇总明细表' menuType='1' parentId='analyticStatistics' sort='168' hyperlink='MaterialDetailUI' styleName='product-statics-report' display='1' description='材料耗用汇总明细表' />
 	<TSystemMenu menuId='productSendOweReportDay' menuName='综合出货欠数表(日)' menuType='1' parentId='analyticStatistics' sort='161' hyperlink='productsendowereportday' styleName='product-send-owe-report' display='1' description='综合出货欠数表(日)' />
+	<TSystemMenu menuId='currentStockReport' menuName='实时库存情况' menuType='1' parentId='analyticStatistics' sort='169' hyperlink='currentstockreport' styleName='stock-detail' display='1' description='实时库存情况' />
 	
 	<TSystemMenu menuId='stockAdjustManagement' menuName='库存调整' menuType='0' parentId='warehouseManagement' sort='16' hyperlink='' styleName='stock-adjust-management' display='1' description='库存调整' />
 	<TSystemMenu menuId='stockAdjust' menuName='仓库调整单' menuType='1' parentId='stockAdjustManagement' sort='161' hyperlink='stockadjustlist' styleName='stock-adjust' display='1' description='仓库调整单' />

@@ -160,4 +160,19 @@
 			<key-map field-name="unitUnitId" rel-field-name="id" />
 		</view-link>
 	</view-entity>
+	
+	<!-- 当前库存统计 -->
+	<view-entity entity-name="WorkshopReturnProductStock" package-name="org.ofbiz.scm.WorkshopReturnProduct" title="WorkshopReturnProductStock  Entity">
+		<member-entity entity-alias="WorkshopReturnProductV" entity-name="WorkshopReturnProduct"></member-entity>
+		<member-entity entity-alias="WorkshopReturnProductEntryV" entity-name="WorkshopReturnProductEntry"></member-entity>
+		<alias-all entity-alias="WorkshopReturnProductV"></alias-all>
+		<alias name="warehouseWarehouseId" entity-alias="WorkshopReturnProductEntryV" field="warehouseWarehouseId"></alias>
+		<alias name="bomId" entity-alias="WorkshopReturnProductEntryV" field="bomId"></alias>
+		<alias name="volume" entity-alias="WorkshopReturnProductEntryV" field="volume"></alias>
+		<alias name="entrysum" entity-alias="WorkshopReturnProductEntryV" field="entrysum"></alias>
+		
+		<view-link entity-alias="WorkshopReturnProductV" rel-entity-alias="WorkshopReturnProductEntryV" rel-optional="true">
+			<key-map field-name="id" rel-field-name="parentId" />
+		</view-link>
+	</view-entity>
 </entitymodel>
