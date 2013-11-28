@@ -97,14 +97,16 @@ public class CurrentStockHandleServices {
 							List<GenericValue> pwList = delegator.findList("PurchaseWarehousingStock", EntityCondition.makeCondition("number", job.getString("number")), null, null, null, false);
 							if (pwList != null && pwList.size() > 0) {
 								for (GenericValue bill : pwList) {
-									GenericValue billStock = delegator.makeValue("CurSaveMaterialBalance");
-									billStock.set("id", UUID.randomUUID().toString());
-									billStock.set("warehouseId", bill.getString("warehouseWarehouseId"));
-									billStock.set("materialId", bill.getString("materialMaterialId"));
-									billStock.set("number", bill.getString("number"));
-									billStock.set("volume", bill.getBigDecimal("volume"));
-									billStock.set("totalSum", bill.getBigDecimal("entrysum"));
-									billStock.create();
+									if(bill.getString("warehouseWarehouseId")!=null && !bill.getString("warehouseWarehouseId").isEmpty() && bill.getString("materialMaterialId")!=null && !bill.getString("materialMaterialId").isEmpty()){
+										GenericValue billStock = delegator.makeValue("CurSaveMaterialBalance");
+										billStock.set("id", UUID.randomUUID().toString());
+										billStock.set("warehouseId", bill.getString("warehouseWarehouseId"));
+										billStock.set("materialId", bill.getString("materialMaterialId"));
+										billStock.set("number", bill.getString("number"));
+										billStock.set("volume", bill.getBigDecimal("volume"));
+										billStock.set("totalSum", bill.getBigDecimal("entrysum"));
+										billStock.create();
+									}
 								}
 							}
 						} else if ("2".equals(job.getString("operationType")) || "3".equals(job.getString("operationType"))) {
@@ -126,14 +128,16 @@ public class CurrentStockHandleServices {
 							List<GenericValue> pwList = delegator.findList("PurchaseReturnStock", EntityCondition.makeCondition("number", job.getString("number")), null, null, null, false);
 							if (pwList != null && pwList.size() > 0) {
 								for (GenericValue bill : pwList) {
-									GenericValue billStock = delegator.makeValue("CurSaveMaterialBalance");
-									billStock.set("id", UUID.randomUUID().toString());
-									billStock.set("warehouseId", bill.getString("warehouseWarehouseId"));
-									billStock.set("materialId", bill.getString("materialMaterialId"));
-									billStock.set("number", bill.getString("number"));
-									billStock.set("volume", bill.getBigDecimal("volume").negate());
-									billStock.set("totalSum", bill.getBigDecimal("volume").negate().multiply(PriceMgr.getInstance().getPrice(bill.getString("warehouseWarehouseId"), bill.getString("materialMaterialId"))));
-									billStock.create();
+									if(bill.getString("warehouseWarehouseId")!=null && !bill.getString("warehouseWarehouseId").isEmpty() && bill.getString("materialMaterialId")!=null && !bill.getString("materialMaterialId").isEmpty()){
+										GenericValue billStock = delegator.makeValue("CurSaveMaterialBalance");
+										billStock.set("id", UUID.randomUUID().toString());
+										billStock.set("warehouseId", bill.getString("warehouseWarehouseId"));
+										billStock.set("materialId", bill.getString("materialMaterialId"));
+										billStock.set("number", bill.getString("number"));
+										billStock.set("volume", bill.getBigDecimal("volume").negate());
+										billStock.set("totalSum", bill.getBigDecimal("volume").negate().multiply(PriceMgr.getInstance().getPrice(bill.getString("warehouseWarehouseId"), bill.getString("materialMaterialId"))));
+										billStock.create();
+									}
 								}
 							}
 						} else if ("2".equals(job.getString("operationType")) || "3".equals(job.getString("operationType"))) {
@@ -159,28 +163,32 @@ public class CurrentStockHandleServices {
 								BigDecimal totalSum = BigDecimal.ZERO;
 								
 								for (GenericValue bill : pwList) {
-									// 在仓库中扣除领料
-									BigDecimal sum = bill.getBigDecimal("volume").multiply(PriceMgr.getInstance().getPrice(bill.getString("warehouseWarehouseId"), bill.getString("materialMaterialId")));
-									totalSum = totalSum.add(sum);
-									
-									GenericValue billStock = delegator.makeValue("CurSaveMaterialBalance");
-									billStock.set("id", UUID.randomUUID().toString());
-									billStock.set("warehouseId", bill.getString("warehouseWarehouseId"));
-									billStock.set("materialId", bill.getString("materialMaterialId"));
-									billStock.set("number", bill.getString("number"));
-									billStock.set("volume", bill.getBigDecimal("volume").negate());
-									billStock.set("totalSum", sum.negate());
-									billStock.create();
+									if(bill.getString("warehouseWarehouseId")!=null && !bill.getString("warehouseWarehouseId").isEmpty() && bill.getString("materialMaterialId")!=null && !bill.getString("materialMaterialId").isEmpty()){
+										// 在仓库中扣除领料
+										BigDecimal sum = bill.getBigDecimal("volume").multiply(PriceMgr.getInstance().getPrice(bill.getString("warehouseWarehouseId"), bill.getString("materialMaterialId")));
+										totalSum = totalSum.add(sum);
+										
+										GenericValue billStock = delegator.makeValue("CurSaveMaterialBalance");
+										billStock.set("id", UUID.randomUUID().toString());
+										billStock.set("warehouseId", bill.getString("warehouseWarehouseId"));
+										billStock.set("materialId", bill.getString("materialMaterialId"));
+										billStock.set("number", bill.getString("number"));
+										billStock.set("volume", bill.getBigDecimal("volume").negate());
+										billStock.set("totalSum", sum.negate());
+										billStock.create();
+									}
 								}
-								// 在加工商中增加加工件
-								GenericValue consignStock = delegator.makeValue("CurSaveConsignBalance");
-								consignStock.set("id", UUID.randomUUID().toString());
-								consignStock.set("supplierId", head.getString("processorSupplierId"));
-								consignStock.set("materialId", MaterialBomMgr.getInstance().getMaterialIdByBomId(head.getString("processedBomId")));
-								consignStock.set("number", head.getString("number"));
-								consignStock.set("volume", head.getBigDecimal("materialVolume"));
-								consignStock.set("totalSum", totalSum);
-								consignStock.create();
+								if(head.getString("processorSupplierId")!=null && !head.getString("processorSupplierId").isEmpty() && head.getString("processedBomId")!=null && !head.getString("processedBomId").isEmpty()){
+									// 在加工商中增加加工件
+									GenericValue consignStock = delegator.makeValue("CurSaveConsignBalance");
+									consignStock.set("id", UUID.randomUUID().toString());
+									consignStock.set("supplierId", head.getString("processorSupplierId"));
+									consignStock.set("materialId", MaterialBomMgr.getInstance().getMaterialIdByBomId(head.getString("processedBomId")));
+									consignStock.set("number", head.getString("number"));
+									consignStock.set("volume", head.getBigDecimal("materialVolume"));
+									consignStock.set("totalSum", totalSum);
+									consignStock.create();
+								}
 							}
 						} else if ("2".equals(job.getString("operationType")) || "3".equals(job.getString("operationType"))) {
 							/* 3.2 删除，提交 */
@@ -206,28 +214,32 @@ public class CurrentStockHandleServices {
 								BigDecimal totalSum = BigDecimal.ZERO;
 								
 								for (GenericValue bill : pwList) {
-									// 在仓库中增加物料
-									BigDecimal sum = bill.getBigDecimal("volume").multiply(ConsignPriceMgr.getInstance().getPrice(bill.getString("processorSupplierId"), bill.getString("materialMaterialId")));
-									totalSum = totalSum.add(sum);
-									
-									GenericValue billStock = delegator.makeValue("CurSaveMaterialBalance");
-									billStock.set("id", UUID.randomUUID().toString());
-									billStock.set("warehouseId", bill.getString("warehouseWarehouseId"));
-									billStock.set("materialId", bill.getString("materialMaterialId"));
-									billStock.set("number", bill.getString("number"));
-									billStock.set("volume", bill.getBigDecimal("volume"));
-									billStock.set("totalSum", sum);
-									billStock.create();
+									if(bill.getString("warehouseWarehouseId")!=null && !bill.getString("warehouseWarehouseId").isEmpty() && bill.getString("materialMaterialId")!=null && !bill.getString("materialMaterialId").isEmpty()){
+										// 在仓库中增加物料
+										BigDecimal sum = bill.getBigDecimal("volume").multiply(ConsignPriceMgr.getInstance().getPrice(bill.getString("processorSupplierId"), bill.getString("materialMaterialId")));
+										totalSum = totalSum.add(sum);
+										
+										GenericValue billStock = delegator.makeValue("CurSaveMaterialBalance");
+										billStock.set("id", UUID.randomUUID().toString());
+										billStock.set("warehouseId", bill.getString("warehouseWarehouseId"));
+										billStock.set("materialId", bill.getString("materialMaterialId"));
+										billStock.set("number", bill.getString("number"));
+										billStock.set("volume", bill.getBigDecimal("volume"));
+										billStock.set("totalSum", sum);
+										billStock.create();
+									}
 								}
-								// 在加工商中减少加工件
-								GenericValue consignStock = delegator.makeValue("CurSaveConsignBalance");
-								consignStock.set("id", UUID.randomUUID().toString());
-								consignStock.set("supplierId", head.getString("processorSupplierId"));
-								consignStock.set("materialId", MaterialBomMgr.getInstance().getMaterialIdByBomId(head.getString("processedBomId")));
-								consignStock.set("number", head.getString("number"));
-								consignStock.set("volume", head.getBigDecimal("materialVolume").negate());
-								consignStock.set("totalSum", totalSum.negate());
-								consignStock.create();
+								if(head.getString("processorSupplierId")!=null && !head.getString("processorSupplierId").isEmpty() && head.getString("processedBomId")!=null && !head.getString("processedBomId").isEmpty()){
+									// 在加工商中减少加工件
+									GenericValue consignStock = delegator.makeValue("CurSaveConsignBalance");
+									consignStock.set("id", UUID.randomUUID().toString());
+									consignStock.set("supplierId", head.getString("processorSupplierId"));
+									consignStock.set("materialId", MaterialBomMgr.getInstance().getMaterialIdByBomId(head.getString("processedBomId")));
+									consignStock.set("number", head.getString("number"));
+									consignStock.set("volume", head.getBigDecimal("materialVolume").negate());
+									consignStock.set("totalSum", totalSum.negate());
+									consignStock.create();
+								}
 							}
 						} else if ("2".equals(job.getString("operationType")) || "3".equals(job.getString("operationType"))) {
 							/* 4.2 删除，提交 */
@@ -250,25 +262,27 @@ public class CurrentStockHandleServices {
 							List<GenericValue> pwList = delegator.findList("ConsignWarehousingStock", EntityCondition.makeCondition("number", job.getString("number")), null, null, null, false);
 							if (pwList != null && pwList.size() > 0) {
 								for (GenericValue bill : pwList) {
-									// 在仓库中增加加工件
-									GenericValue billStock = delegator.makeValue("CurSaveMaterialBalance");
-									billStock.set("id", UUID.randomUUID().toString());
-									billStock.set("warehouseId", bill.getString("warehouseWarehouseId"));
-									billStock.set("materialId", MaterialBomMgr.getInstance().getMaterialIdByBomId(bill.getString("bomId")));
-									billStock.set("number", bill.getString("number"));
-									billStock.set("volume", bill.getBigDecimal("volume"));
-									billStock.set("totalSum", BigDecimal.ZERO);
-									billStock.create();
-									
-									// 在加工商中减少加工件(暂时无法计算金额)
-									GenericValue consignStock = delegator.makeValue("CurSaveConsignBalance");
-									consignStock.set("id", UUID.randomUUID().toString());
-									consignStock.set("supplierId", bill.getString("processorSupplierId"));
-									consignStock.set("materialId", MaterialBomMgr.getInstance().getMaterialIdByBomId(bill.getString("bomId")));
-									consignStock.set("number", bill.getString("number"));
-									consignStock.set("volume", bill.getBigDecimal("volume").negate());
-									consignStock.set("totalSum", BigDecimal.ZERO);
-									consignStock.create();
+									if(bill.getString("warehouseWarehouseId")!=null && !bill.getString("warehouseWarehouseId").isEmpty() && bill.getString("processorSupplierId")!=null && !bill.getString("processorSupplierId").isEmpty() && bill.getString("bomId")!=null && !bill.getString("bomId").isEmpty()){
+										// 在仓库中增加加工件
+										GenericValue billStock = delegator.makeValue("CurSaveMaterialBalance");
+										billStock.set("id", UUID.randomUUID().toString());
+										billStock.set("warehouseId", bill.getString("warehouseWarehouseId"));
+										billStock.set("materialId", MaterialBomMgr.getInstance().getMaterialIdByBomId(bill.getString("bomId")));
+										billStock.set("number", bill.getString("number"));
+										billStock.set("volume", bill.getBigDecimal("volume"));
+										billStock.set("totalSum", BigDecimal.ZERO);
+										billStock.create();
+										
+										// 在加工商中减少加工件(暂时无法计算金额)
+										GenericValue consignStock = delegator.makeValue("CurSaveConsignBalance");
+										consignStock.set("id", UUID.randomUUID().toString());
+										consignStock.set("supplierId", bill.getString("processorSupplierId"));
+										consignStock.set("materialId", MaterialBomMgr.getInstance().getMaterialIdByBomId(bill.getString("bomId")));
+										consignStock.set("number", bill.getString("number"));
+										consignStock.set("volume", bill.getBigDecimal("volume").negate());
+										consignStock.set("totalSum", BigDecimal.ZERO);
+										consignStock.create();
+									}
 								}
 							}
 						} else if ("2".equals(job.getString("operationType")) || "3".equals(job.getString("operationType"))) {
@@ -293,27 +307,29 @@ public class CurrentStockHandleServices {
 							List<GenericValue> pwList = delegator.findList("ConsignReturnProductStock", EntityCondition.makeCondition("number", job.getString("number")), null, null, null, false);
 							if (pwList != null && pwList.size() > 0) {
 								for (GenericValue bill : pwList) {
-									// 在仓库中减少加工件
-									GenericValue billStock = delegator.makeValue("CurSaveMaterialBalance");
-									billStock.set("id", UUID.randomUUID().toString());
-									billStock.set("warehouseId", bill.getString("warehouseWarehouseId"));
-									billStock.set("materialId", MaterialBomMgr.getInstance().getMaterialIdByBomId(bill.getString("bomId")));
-									billStock.set("number", bill.getString("number"));
-									billStock.set("volume", bill.getBigDecimal("volume").negate());
-									billStock.set("totalSum", BigDecimal.ZERO);
-									billStock.create();
+									if(bill.getString("warehouseWarehouseId")!=null && !bill.getString("warehouseWarehouseId").isEmpty() && bill.getString("bomId")!=null && !bill.getString("bomId").isEmpty()){
+										// 在仓库中减少加工件
+										GenericValue billStock = delegator.makeValue("CurSaveMaterialBalance");
+										billStock.set("id", UUID.randomUUID().toString());
+										billStock.set("warehouseId", bill.getString("warehouseWarehouseId"));
+										billStock.set("materialId", MaterialBomMgr.getInstance().getMaterialIdByBomId(bill.getString("bomId")));
+										billStock.set("number", bill.getString("number"));
+										billStock.set("volume", bill.getBigDecimal("volume").negate());
+										billStock.set("totalSum", BigDecimal.ZERO);
+										billStock.create();
 									
-									// 在加工商中增加加工件(暂时无法计算金额)
-									/* 和客户确认，退货不需要增加加工商的加工件
-									GenericValue consignStock = delegator.makeValue("CurSaveConsignBalance");
-									consignStock.set("id", UUID.randomUUID().toString());
-									consignStock.set("supplierId", bill.getString("processorSupplierId"));
-									consignStock.set("materialId", MaterialBomMgr.getInstance().getMaterialIdByBomId(bill.getString("bomId")));
-									consignStock.set("number", bill.getString("number"));
-									consignStock.set("volume", bill.getBigDecimal("volume"));
-									consignStock.set("totalSum", BigDecimal.ZERO);
-									consignStock.create();
-									*/
+										// 在加工商中增加加工件(暂时无法计算金额)
+										/* 和客户确认，退货不需要增加加工商的加工件
+										GenericValue consignStock = delegator.makeValue("CurSaveConsignBalance");
+										consignStock.set("id", UUID.randomUUID().toString());
+										consignStock.set("supplierId", bill.getString("processorSupplierId"));
+										consignStock.set("materialId", MaterialBomMgr.getInstance().getMaterialIdByBomId(bill.getString("bomId")));
+										consignStock.set("number", bill.getString("number"));
+										consignStock.set("volume", bill.getBigDecimal("volume"));
+										consignStock.set("totalSum", BigDecimal.ZERO);
+										consignStock.create();
+										*/
+									}
 								}
 							}
 						} else if ("2".equals(job.getString("operationType")) || "3".equals(job.getString("operationType"))) {
@@ -338,28 +354,30 @@ public class CurrentStockHandleServices {
 							List<GenericValue> pwList = delegator.findList("WorkshopDrawMaterialStock", EntityCondition.makeCondition("number", job.getString("number")), null, null, null, false);
 							if (pwList != null && pwList.size() > 0) {								
 								for (GenericValue bill : pwList) {
-									// 在仓库中扣除领料
-									BigDecimal sum = bill.getBigDecimal("volume").multiply(PriceMgr.getInstance().getPrice(bill.getString("warehouseWarehouseId"), bill.getString("materialMaterialId")));
-									
-									GenericValue billStock = delegator.makeValue("CurSaveMaterialBalance");
-									billStock.set("id", UUID.randomUUID().toString());
-									billStock.set("warehouseId", bill.getString("warehouseWarehouseId"));
-									billStock.set("materialId", bill.getString("materialMaterialId"));
-									billStock.set("number", bill.getString("number"));
-									billStock.set("volume", bill.getBigDecimal("volume").negate());
-									billStock.set("totalSum", sum.negate());
-									billStock.create();
-									
-
-									// 在车间中增加物料
-									GenericValue workshopStock = delegator.makeValue("CurSaveWorkshopBalance");
-									workshopStock.set("id", UUID.randomUUID().toString());
-									workshopStock.set("workshopId", bill.getString("workshopWorkshopId"));
-									workshopStock.set("materialId", bill.getString("materialMaterialId"));
-									workshopStock.set("number", bill.getString("number"));
-									workshopStock.set("volume", bill.getBigDecimal("volume"));
-									workshopStock.set("totalSum", sum);
-									workshopStock.create();
+									if(bill.getString("warehouseWarehouseId")!=null && !bill.getString("warehouseWarehouseId").isEmpty() && bill.getString("workshopWorkshopId")!=null && !bill.getString("workshopWorkshopId").isEmpty() && bill.getString("materialMaterialId")!=null && !bill.getString("materialMaterialId").isEmpty()){
+										// 在仓库中扣除领料
+										BigDecimal sum = bill.getBigDecimal("volume").multiply(PriceMgr.getInstance().getPrice(bill.getString("warehouseWarehouseId"), bill.getString("materialMaterialId")));
+										
+										GenericValue billStock = delegator.makeValue("CurSaveMaterialBalance");
+										billStock.set("id", UUID.randomUUID().toString());
+										billStock.set("warehouseId", bill.getString("warehouseWarehouseId"));
+										billStock.set("materialId", bill.getString("materialMaterialId"));
+										billStock.set("number", bill.getString("number"));
+										billStock.set("volume", bill.getBigDecimal("volume").negate());
+										billStock.set("totalSum", sum.negate());
+										billStock.create();
+										
+	
+										// 在车间中增加物料
+										GenericValue workshopStock = delegator.makeValue("CurSaveWorkshopBalance");
+										workshopStock.set("id", UUID.randomUUID().toString());
+										workshopStock.set("workshopId", bill.getString("workshopWorkshopId"));
+										workshopStock.set("materialId", bill.getString("materialMaterialId"));
+										workshopStock.set("number", bill.getString("number"));
+										workshopStock.set("volume", bill.getBigDecimal("volume"));
+										workshopStock.set("totalSum", sum);
+										workshopStock.create();
+									}
 								}
 							}
 						} else if ("2".equals(job.getString("operationType")) || "3".equals(job.getString("operationType"))) {
@@ -384,28 +402,30 @@ public class CurrentStockHandleServices {
 							List<GenericValue> pwList = delegator.findList("WorkshopReturnMaterialStock", EntityCondition.makeCondition("number", job.getString("number")), null, null, null, false);
 							if (pwList != null && pwList.size() > 0) {								
 								for (GenericValue bill : pwList) {
-									// 在仓库中增加物料
-									BigDecimal sum = bill.getBigDecimal("volume").multiply(WorkshopPriceMgr.getInstance().getPrice(bill.getString("workshopWorkshopId"), bill.getString("materialMaterialId")));
-									
-									GenericValue billStock = delegator.makeValue("CurSaveMaterialBalance");
-									billStock.set("id", UUID.randomUUID().toString());
-									billStock.set("warehouseId", bill.getString("warehouseWarehouseId"));
-									billStock.set("materialId", bill.getString("materialMaterialId"));
-									billStock.set("number", bill.getString("number"));
-									billStock.set("volume", bill.getBigDecimal("volume"));
-									billStock.set("totalSum", sum);
-									billStock.create();
-									
-
-									// 在车间中减少物料
-									GenericValue workshopStock = delegator.makeValue("CurSaveWorkshopBalance");
-									workshopStock.set("id", UUID.randomUUID().toString());
-									workshopStock.set("workshopId", bill.getString("workshopWorkshopId"));
-									workshopStock.set("materialId", bill.getString("materialMaterialId"));
-									workshopStock.set("number", bill.getString("number"));
-									workshopStock.set("volume", bill.getBigDecimal("volume").negate());
-									workshopStock.set("totalSum", sum.negate());
-									workshopStock.create();
+									if(bill.getString("warehouseWarehouseId")!=null && !bill.getString("warehouseWarehouseId").isEmpty() && bill.getString("workshopWorkshopId")!=null && !bill.getString("workshopWorkshopId").isEmpty() && bill.getString("materialMaterialId")!=null && !bill.getString("materialMaterialId").isEmpty()){
+										// 在仓库中增加物料
+										BigDecimal sum = bill.getBigDecimal("volume").multiply(WorkshopPriceMgr.getInstance().getPrice(bill.getString("workshopWorkshopId"), bill.getString("materialMaterialId")));
+										
+										GenericValue billStock = delegator.makeValue("CurSaveMaterialBalance");
+										billStock.set("id", UUID.randomUUID().toString());
+										billStock.set("warehouseId", bill.getString("warehouseWarehouseId"));
+										billStock.set("materialId", bill.getString("materialMaterialId"));
+										billStock.set("number", bill.getString("number"));
+										billStock.set("volume", bill.getBigDecimal("volume"));
+										billStock.set("totalSum", sum);
+										billStock.create();
+										
+	
+										// 在车间中减少物料
+										GenericValue workshopStock = delegator.makeValue("CurSaveWorkshopBalance");
+										workshopStock.set("id", UUID.randomUUID().toString());
+										workshopStock.set("workshopId", bill.getString("workshopWorkshopId"));
+										workshopStock.set("materialId", bill.getString("materialMaterialId"));
+										workshopStock.set("number", bill.getString("number"));
+										workshopStock.set("volume", bill.getBigDecimal("volume").negate());
+										workshopStock.set("totalSum", sum.negate());
+										workshopStock.create();
+									}
 								}
 							}
 						} else if ("2".equals(job.getString("operationType")) || "3".equals(job.getString("operationType"))) {
@@ -430,28 +450,30 @@ public class CurrentStockHandleServices {
 							List<GenericValue> pwList = delegator.findList("WorkshopWarehousingStock", EntityCondition.makeCondition("number", job.getString("number")), null, null, null, false);
 							if (pwList != null && pwList.size() > 0) {
 								for (GenericValue bill : pwList) {
-									// 在仓库中增加加工件
-									GenericValue billStock = delegator.makeValue("CurSaveMaterialBalance");
-									billStock.set("id", UUID.randomUUID().toString());
-									billStock.set("warehouseId", bill.getString("warehouseWarehouseId"));
-									billStock.set("materialId", MaterialBomMgr.getInstance().getMaterialIdByBomId(bill.getString("bomId")));
-									billStock.set("number", bill.getString("number"));
-									billStock.set("volume", bill.getBigDecimal("volume"));
-									billStock.set("totalSum", BigDecimal.ZERO);
-									billStock.create();
+									if(bill.getString("warehouseWarehouseId")!=null && !bill.getString("warehouseWarehouseId").isEmpty() && bill.getString("workshopWorkshopId")!=null && !bill.getString("workshopWorkshopId").isEmpty() && bill.getString("bomId")!=null && !bill.getString("bomId").isEmpty()){
+										// 在仓库中增加加工件
+										GenericValue billStock = delegator.makeValue("CurSaveMaterialBalance");
+										billStock.set("id", UUID.randomUUID().toString());
+										billStock.set("warehouseId", bill.getString("warehouseWarehouseId"));
+										billStock.set("materialId", MaterialBomMgr.getInstance().getMaterialIdByBomId(bill.getString("bomId")));
+										billStock.set("number", bill.getString("number"));
+										billStock.set("volume", bill.getBigDecimal("volume"));
+										billStock.set("totalSum", BigDecimal.ZERO);
+										billStock.create();
 									
-									// 在车间中减少加工件(暂时无法计算金额)
-									WorkshopPriceMgr.getInstance().CreateWorkshopPriceDetailList(bill.getString("workshopWorkshopId"), bill.getString("bomId"), bill.getString("entryId"), bill.getBigDecimal("volume"));
-									List<List<Object>> materialList = WorkshopPriceMgr.getInstance().getMaterialList(bill.getString("entryId"));
-									for (List<Object> element : materialList) {
-										GenericValue workshopStock = delegator.makeValue("CurSaveWorkshopBalance");
-										workshopStock.set("id", UUID.randomUUID().toString());
-										workshopStock.set("workshopId", bill.getString("workshopWorkshopId"));
-										workshopStock.set("materialId", (String) element.get(0));
-										workshopStock.set("number", bill.getString("number"));
-										workshopStock.set("volume", ((BigDecimal)element.get(1)).negate());
-										workshopStock.set("totalSum", ((BigDecimal)element.get(2)).negate());
-										workshopStock.create();
+										// 在车间中减少加工件(暂时无法计算金额)
+										WorkshopPriceMgr.getInstance().CreateWorkshopPriceDetailList(bill.getString("workshopWorkshopId"), bill.getString("bomId"), bill.getString("entryId"), bill.getBigDecimal("volume"));
+										List<List<Object>> materialList = WorkshopPriceMgr.getInstance().getMaterialList(bill.getString("entryId"));
+										for (List<Object> element : materialList) {
+											GenericValue workshopStock = delegator.makeValue("CurSaveWorkshopBalance");
+											workshopStock.set("id", UUID.randomUUID().toString());
+											workshopStock.set("workshopId", bill.getString("workshopWorkshopId"));
+											workshopStock.set("materialId", (String) element.get(0));
+											workshopStock.set("number", bill.getString("number"));
+											workshopStock.set("volume", ((BigDecimal)element.get(1)).negate());
+											workshopStock.set("totalSum", ((BigDecimal)element.get(2)).negate());
+											workshopStock.create();
+										}
 									}
 								}
 							}
@@ -477,15 +499,17 @@ public class CurrentStockHandleServices {
 							List<GenericValue> pwList = delegator.findList("WorkshopReturnProductStock", EntityCondition.makeCondition("number", job.getString("number")), null, null, null, false);
 							if (pwList != null && pwList.size() > 0) {
 								for (GenericValue bill : pwList) {
-									// 在仓库中减少加工件
-									GenericValue billStock = delegator.makeValue("CurSaveMaterialBalance");
-									billStock.set("id", UUID.randomUUID().toString());
-									billStock.set("warehouseId", bill.getString("warehouseWarehouseId"));
-									billStock.set("materialId", MaterialBomMgr.getInstance().getMaterialIdByBomId(bill.getString("bomId")));
-									billStock.set("number", bill.getString("number"));
-									billStock.set("volume", bill.getBigDecimal("volume").negate());
-									billStock.set("totalSum", BigDecimal.ZERO);
-									billStock.create();
+									if(bill.getString("warehouseWarehouseId")!=null && !bill.getString("warehouseWarehouseId").isEmpty() && bill.getString("bomId")!=null && !bill.getString("bomId").isEmpty()){
+										// 在仓库中减少加工件
+										GenericValue billStock = delegator.makeValue("CurSaveMaterialBalance");
+										billStock.set("id", UUID.randomUUID().toString());
+										billStock.set("warehouseId", bill.getString("warehouseWarehouseId"));
+										billStock.set("materialId", MaterialBomMgr.getInstance().getMaterialIdByBomId(bill.getString("bomId")));
+										billStock.set("number", bill.getString("number"));
+										billStock.set("volume", bill.getBigDecimal("volume").negate());
+										billStock.set("totalSum", BigDecimal.ZERO);
+										billStock.create();
+									}
 								}
 							}
 						} else if ("2".equals(job.getString("operationType")) || "3".equals(job.getString("operationType"))) {
@@ -510,28 +534,30 @@ public class CurrentStockHandleServices {
 							List<GenericValue> pwList = delegator.findList("WorkshopOtherDrawBillStock", EntityCondition.makeCondition("number", job.getString("number")), null, null, null, false);
 							if (pwList != null && pwList.size() > 0) {								
 								for (GenericValue bill : pwList) {
-									// 在仓库中扣除领料
-									BigDecimal sum = bill.getBigDecimal("volume").multiply(PriceMgr.getInstance().getPrice(bill.getString("warehouseWarehouseId"), bill.getString("materialMaterialId")));
-									
-									GenericValue billStock = delegator.makeValue("CurSaveMaterialBalance");
-									billStock.set("id", UUID.randomUUID().toString());
-									billStock.set("warehouseId", bill.getString("warehouseWarehouseId"));
-									billStock.set("materialId", bill.getString("materialMaterialId"));
-									billStock.set("number", bill.getString("number"));
-									billStock.set("volume", bill.getBigDecimal("volume").negate());
-									billStock.set("totalSum", sum.negate());
-									billStock.create();
-									
-
-									// 在车间中增加物料
-									GenericValue workshopStock = delegator.makeValue("CurSaveWorkshopBalance");
-									workshopStock.set("id", UUID.randomUUID().toString());
-									workshopStock.set("workshopId", bill.getString("workshopWorkshopId"));
-									workshopStock.set("materialId", bill.getString("materialMaterialId"));
-									workshopStock.set("number", bill.getString("number"));
-									workshopStock.set("volume", bill.getBigDecimal("volume"));
-									workshopStock.set("totalSum", sum);
-									workshopStock.create();
+									if(bill.getString("warehouseWarehouseId")!=null && !bill.getString("warehouseWarehouseId").isEmpty() && bill.getString("workshopWorkshopId")!=null && !bill.getString("workshopWorkshopId").isEmpty() && bill.getString("materialMaterialId")!=null && !bill.getString("materialMaterialId").isEmpty()){
+										// 在仓库中扣除领料
+										BigDecimal sum = bill.getBigDecimal("volume").multiply(PriceMgr.getInstance().getPrice(bill.getString("warehouseWarehouseId"), bill.getString("materialMaterialId")));
+										
+										GenericValue billStock = delegator.makeValue("CurSaveMaterialBalance");
+										billStock.set("id", UUID.randomUUID().toString());
+										billStock.set("warehouseId", bill.getString("warehouseWarehouseId"));
+										billStock.set("materialId", bill.getString("materialMaterialId"));
+										billStock.set("number", bill.getString("number"));
+										billStock.set("volume", bill.getBigDecimal("volume").negate());
+										billStock.set("totalSum", sum.negate());
+										billStock.create();
+										
+	
+										// 在车间中增加物料
+										GenericValue workshopStock = delegator.makeValue("CurSaveWorkshopBalance");
+										workshopStock.set("id", UUID.randomUUID().toString());
+										workshopStock.set("workshopId", bill.getString("workshopWorkshopId"));
+										workshopStock.set("materialId", bill.getString("materialMaterialId"));
+										workshopStock.set("number", bill.getString("number"));
+										workshopStock.set("volume", bill.getBigDecimal("volume"));
+										workshopStock.set("totalSum", sum);
+										workshopStock.create();
+									}
 								}
 							}
 						} else if ("2".equals(job.getString("operationType")) || "3".equals(job.getString("operationType"))) {
@@ -637,14 +663,16 @@ public class CurrentStockHandleServices {
 							List<GenericValue> pwList = delegator.findList("ProductManualOutwarehouseStock", EntityCondition.makeCondition("number", job.getString("number")), null, null, null, false);
 							if (pwList != null && pwList.size() > 0) {
 								for (GenericValue bill : pwList) {
-									GenericValue billStock = delegator.makeValue("CurSaveMaterialBalance");
-									billStock.set("id", UUID.randomUUID().toString());
-									billStock.set("warehouseId", bill.getString("warehouseWarehouseId"));
-									billStock.set("materialId", bill.getString("materialMaterialId"));
-									billStock.set("number", bill.getString("number"));
-									billStock.set("volume", bill.getBigDecimal("volume").negate());
-									billStock.set("totalSum", bill.getBigDecimal("volume").multiply(PriceMgr.getInstance().getPrice(bill.getString("warehouseWarehouseId"), bill.getString("materialMaterialId"))).negate());
-									billStock.create();
+									if(bill.getString("warehouseWarehouseId")!=null && !bill.getString("warehouseWarehouseId").isEmpty() && bill.getString("materialMaterialId")!=null && !bill.getString("materialMaterialId").isEmpty()){
+										GenericValue billStock = delegator.makeValue("CurSaveMaterialBalance");
+										billStock.set("id", UUID.randomUUID().toString());
+										billStock.set("warehouseId", bill.getString("warehouseWarehouseId"));
+										billStock.set("materialId", bill.getString("materialMaterialId"));
+										billStock.set("number", bill.getString("number"));
+										billStock.set("volume", bill.getBigDecimal("volume").negate());
+										billStock.set("totalSum", bill.getBigDecimal("volume").multiply(PriceMgr.getInstance().getPrice(bill.getString("warehouseWarehouseId"), bill.getString("materialMaterialId"))).negate());
+										billStock.create();
+									}
 								}
 							}
 						} else if ("2".equals(job.getString("operationType")) || "3".equals(job.getString("operationType"))) {
@@ -700,27 +728,31 @@ public class CurrentStockHandleServices {
 		// 增加保存单据数据到当前库存表中
 		GenericValue gValue = delegator.findOne("ProductInwarehouseEntry", UtilMisc.toMap("id", entryId), false);
 		if (gValue != null ) {
-			GenericValue billStock = delegator.makeValue("CurSaveMaterialBalance");
-			billStock.set("id", UUID.randomUUID().toString());
-			billStock.set("warehouseId", gValue.getString("warehouseWarehouseId"));
-			billStock.set("materialId", gValue.getString("materialMaterialId"));
-			billStock.set("number", entryId);
-			billStock.set("volume", gValue.getBigDecimal("volume"));
-			billStock.set("totalSum", BigDecimal.ZERO);
-			billStock.create();
+			if(gValue.getString("warehouseWarehouseId")!=null && !gValue.getString("warehouseWarehouseId").isEmpty() && gValue.getString("workshopWorkshopId")!=null && !gValue.getString("workshopWorkshopId").isEmpty() && gValue.getString("materialMaterialId")!=null && !gValue.getString("materialMaterialId").isEmpty()){
+				GenericValue billStock = delegator.makeValue("CurSaveMaterialBalance");
+				billStock.set("id", UUID.randomUUID().toString());
+				billStock.set("warehouseId", gValue.getString("warehouseWarehouseId"));
+				billStock.set("materialId", gValue.getString("materialMaterialId"));
+				billStock.set("number", entryId);
+				billStock.set("volume", gValue.getBigDecimal("volume"));
+				billStock.set("totalSum", BigDecimal.ZERO);
+				billStock.create();
+			}
 			
 			List<GenericValue> pwList = delegator.findList("ProductInwarehouseEntryDetail", EntityCondition.makeCondition("inParentId", entryId), null, null, null, false);
 			if (pwList != null && pwList.size() > 0) {								
 				for (GenericValue entry : pwList) {
-					// 在车间中减少物料
-					GenericValue workshopStock = delegator.makeValue("CurSaveWorkshopBalance");
-					workshopStock.set("id", UUID.randomUUID().toString());
-					workshopStock.set("workshopId", gValue.getString("workshopWorkshopId"));
-					workshopStock.set("materialId", entry.getString("materialId"));
-					workshopStock.set("number", entryId);
-					workshopStock.set("volume", entry.getBigDecimal("quantity").negate());
-					workshopStock.set("totalSum", BigDecimal.ZERO);
-					workshopStock.create();
+					if(entry.getString("materialId")!=null && !entry.getString("materialId").isEmpty()){
+						// 在车间中减少物料
+						GenericValue workshopStock = delegator.makeValue("CurSaveWorkshopBalance");
+						workshopStock.set("id", UUID.randomUUID().toString());
+						workshopStock.set("workshopId", gValue.getString("workshopWorkshopId"));
+						workshopStock.set("materialId", entry.getString("materialId"));
+						workshopStock.set("number", entryId);
+						workshopStock.set("volume", entry.getBigDecimal("quantity").negate());
+						workshopStock.set("totalSum", BigDecimal.ZERO);
+						workshopStock.create();
+					}
 				}
 			}
 		}
@@ -735,14 +767,16 @@ public class CurrentStockHandleServices {
 		// 增加保存单据数据到当前库存表中
 		GenericValue gValue = delegator.findOne("ProductOutwarehouseEntry", UtilMisc.toMap("id", entryId), false);
 		if (gValue != null ) {
-			GenericValue billStock = delegator.makeValue("CurSaveMaterialBalance");
-			billStock.set("id", UUID.randomUUID().toString());
-			billStock.set("warehouseId", gValue.getString("warehouseWarehouseId"));
-			billStock.set("materialId", gValue.getString("materialMaterialId"));
-			billStock.set("number", entryId);
-			billStock.set("volume", gValue.getBigDecimal("volume").negate());
-			billStock.set("totalSum", BigDecimal.ZERO);
-			billStock.create();
+			if(gValue.getString("warehouseWarehouseId")!=null && !gValue.getString("warehouseWarehouseId").isEmpty() && gValue.getString("materialMaterialId")!=null && !gValue.getString("materialMaterialId").isEmpty()){
+				GenericValue billStock = delegator.makeValue("CurSaveMaterialBalance");
+				billStock.set("id", UUID.randomUUID().toString());
+				billStock.set("warehouseId", gValue.getString("warehouseWarehouseId"));
+				billStock.set("materialId", gValue.getString("materialMaterialId"));
+				billStock.set("number", entryId);
+				billStock.set("volume", gValue.getBigDecimal("volume").negate());
+				billStock.set("totalSum", BigDecimal.ZERO);
+				billStock.create();
+			}
 		}
 	}
 }
