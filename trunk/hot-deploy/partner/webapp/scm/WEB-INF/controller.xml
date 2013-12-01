@@ -658,6 +658,18 @@
 		<response name="success" type="none" />
 	</request-map>
 	
+	<!-- 成品出货情况 -->
+	<request-map uri="queryProductOutReport">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="queryProductOutReport" />
+		<response name="success" type="none" />
+	</request-map>
+	<request-map uri="queryProductOutReportDetail">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.rpt.DataFetchEvents" invoke="queryProductOutReportDetail" />
+		<response name="success" type="none" />
+	</request-map>
+	
 	<!-- 综合成品帐报表 -->
 	<request-map uri="queryProductStaticsReport">
 		<security https="false" auth="false" />

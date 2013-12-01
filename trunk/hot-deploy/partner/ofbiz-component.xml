@@ -119,7 +119,7 @@
 	<entity-resource type="data" reader-name="seed" loader="main" location="data/Int03_CurMaterialBalance.xml"/>
 -->
 	<!-- 计划任务数据 -->
-	<entity-resource type="data" reader-name="seed" loader="main" location="data/System-ScheduledServices.xml"/>
+	<!-- entity-resource type="data" reader-name="seed" loader="main" location="data/System-ScheduledServices.xml"/-->
 	
 	<service-resource type="model" loader="main" location="servicedef/services.xml"/>
 	

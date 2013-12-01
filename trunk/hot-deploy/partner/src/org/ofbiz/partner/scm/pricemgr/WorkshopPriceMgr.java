@@ -93,7 +93,7 @@ public class WorkshopPriceMgr {
 	 * @return price 单价
 	 * @log 20120814 jeff 将单件耗料改为总耗料
 	 */
-	public BigDecimal CreateWorkshopPriceDetailList(String workshopId, String bomId, String entryId, BigDecimal entryVolume) throws Exception {
+	public synchronized BigDecimal CreateWorkshopPriceDetailList(String workshopId, String bomId, String entryId, BigDecimal entryVolume) throws Exception {
 		if (workshopId == null || bomId == null) {
 			throw new Exception("workshopId or bomId is null");
 		}
