@@ -1,9 +1,9 @@
-Ext.define('SCM.controller.rpt.ConsignProcessMatchingReportController', {
+Ext.define('SCM.controller.rpt.ProductOutReportController', {
 			extend : 'Ext.app.Controller',
 			mixins : ['SCM.extend.exporter.Exporter'],
-			views : ['rpt.cpmr.ListUI'],
-			stores : ['rpt.ConsignProcessMatchingReportStore', 'rpt.ConsignProcessMatchingChartStore'],
-			models : ['rpt.ConsignProcessMatchingReportModel', 'rpt.ConsignProcessMatchingChartModel', 'rpt.MonthModel'],
+			views : ['rpt.pr.ListOutStatUI'],
+			stores : ['rpt.ProductOutReportStore','rpt.ProductOutReportDetailStore'],
+			models : ['rpt.ProductOutReportModel', 'rpt.ProductOutReportDetailModel', 'rpt.MonthModel'],
 
 			/**
 			 * 初始化controller 增加事件监控
@@ -11,20 +11,20 @@ Ext.define('SCM.controller.rpt.ConsignProcessMatchingReportController', {
 			init : function() {
 				this.control({
 							// 完成日志界面初始化后调用
-							'consignprocessmatchingreport' : {
+							'productoutreport' : {
 								afterrender : this.initComponent
 							},
+							// 列表事件
+							'productoutreport gridpanel[region=center]' : {
+								select : this.showDetail
+							},
 							// 列表界面刷新
-							'consignprocessmatchingreport button[action=search]' : {
+							'productoutreport button[action=search]' : {
 								click : this.refreshRecord
 							},
 							// 数据导出
-							'consignprocessmatchingreport button[action=export]' : {
+							'productoutreport button[action=export]' : {
 								click : this.exportExcel
-							},
-							// 数据导出
-							'consignprocessmatchingreport button[action=exportDetail]' : {
-								click : this.exportDetailExcel
 							}
 						});
 			},
@@ -37,9 +37,8 @@ Ext.define('SCM.controller.rpt.ConsignProcessMatchingReportController', {
 			 */
 			initComponent : function(view) {
 				this.listPanel = view.down('gridpanel');
-				this.chartPanel = view.down('panel chart');
+				this.detailPanel = view.down('gridpanel[region=south]');// 明细列表
 				this.searchMonth = view.down('combobox[name=searchMonth]');
-				this.searchSupplierId = view.down('combogrid[name=searchSupplierId]');
 				this.searchKeyWord = view.down('textfield[name=searchKeyWord]');
 				this.searchMonth.store.load({
 							scope : this,
@@ -48,7 +47,6 @@ Ext.define('SCM.controller.rpt.ConsignProcessMatchingReportController', {
 								this.refreshRecord();
 							}
 						});
-
 			},
 
 			/**
@@ -60,16 +58,9 @@ Ext.define('SCM.controller.rpt.ConsignProcessMatchingReportController', {
 					var tempStr = this.searchMonth.getValue().split('-');
 					this.listPanel.store.getProxy().extraParams.year = tempStr[0];
 					this.listPanel.store.getProxy().extraParams.month = tempStr[1];
-					this.chartPanel.store.getProxy().extraParams.year = tempStr[0];
-					this.chartPanel.store.getProxy().extraParams.month = tempStr[1];
 				} else {
 					showWarning('请选择月份！');
 					return;
-				}
-				if (!Ext.isEmpty(this.searchSupplierId.getValue())) {
-					this.listPanel.store.getProxy().extraParams.supplier = this.searchSupplierId.getValue();
-				} else {
-					this.listPanel.store.getProxy().extraParams.supplier = "";
 				}
 				if (!Ext.isEmpty(this.searchKeyWord.getValue())) {
 					this.listPanel.store.getProxy().extraParams.keyWord = this.searchKeyWord.getValue();
@@ -77,17 +68,23 @@ Ext.define('SCM.controller.rpt.ConsignProcessMatchingReportController', {
 					this.listPanel.store.getProxy().extraParams.keyWord = "";
 				}
 				this.listPanel.store.load();
-				this.chartPanel.store.load({
-							scope : this,
-							callback : function(records, operation, success) {
-								if(records.length==0){
-									this.chartPanel.setVisible(false);
-								} else {
-									this.chartPanel.setVisible(true);
-									this.chartPanel.redraw();
-								}
-							}
-						});
+			},
+			
+			/**
+			 * 显示分录信息
+			 * @param {} me
+			 * @param {} record
+			 * @param {} index
+			 * @param {} eOpts
+			 */
+			showDetail : function(me, record, index, eOpts) {
+				if (record != null && record.get("MATERIAL_ID") != null ) {
+					this.detailPanel.store.getProxy().extraParams.material_id = record.get("MATERIAL_ID");
+					var tempStr = this.searchMonth.getValue().split('-');
+					this.detailPanel.store.getProxy().extraParams.year = tempStr[0];
+					this.detailPanel.store.getProxy().extraParams.month = tempStr[1];
+					this.detailPanel.store.load();
+				}
 			},
 
 			/**
@@ -117,33 +114,8 @@ Ext.define('SCM.controller.rpt.ConsignProcessMatchingReportController', {
 
 					// 页面参数
 					params.sort = Ext.encode(getSorters());
-					params.report = 'CPMR';
-					params.title = '加工商对数表'; // sheet页名称
-					params.header = header; // 表头
-					params.dataIndex = dataIndex; // 数据引用
-					params.pattern = 'SQL';
-					params.type = 'EXCEL';
-					return params;
-				}
-			},
-			
-			
-			/**
-			 * 获取报表参数
-			 * 
-			 * @return {}
-			 */
-			getDetailParams : function() {
-				var tempheader = this.listPanel.headerCt.query('{isVisible()}');
-				var header = "日期,单据类型,单据编码,供应商名称,提交人,仓库名称,加工件名称,单位,数量,加工单价,金额";
-				var dataIndex = "BIZ_DATE,NAME,NUMBER,SUPPLIER_NAME,USER_NAME,WAREHOUSE_NAME,MATERIAL_NAME,UNIT_NAME,VOLUME,PROCESS_PRICE,PROCESS_SUM";
-				
-				with (this.listPanel.store) {
-					var params = getProxy().extraParams;
-
-					// 页面参数
-					params.report = 'CPMRD';
-					params.title = '加工商对数明细表'; // sheet页名称
+					params.report = 'POR';
+					params.title = '成品出货情况'; // sheet页名称
 					params.header = header; // 表头
 					params.dataIndex = dataIndex; // 数据引用
 					params.pattern = 'SQL';

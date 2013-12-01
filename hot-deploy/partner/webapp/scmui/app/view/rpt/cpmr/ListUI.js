@@ -57,6 +57,11 @@ Ext.define('SCM.view.rpt.cpmr.ListUI', {
 																}]
 													}
 												}, {
+													xtype : 'textfield',
+													name : 'searchKeyWord',
+													minWidth : 150,
+													emptyText : '请输入物料名称或编码'
+												}, {
 													text : '查询',
 													iconCls : 'system-search',
 													action : 'search'

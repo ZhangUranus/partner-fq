@@ -61,6 +61,8 @@ public class DataFetchEvents {
 			list = getConsignMatchReportList(request);
 		} else if("PR".equals(request.getParameter("report"))){
 			list = getProductReportList(request);
+		} else if("POR".equals(request.getParameter("report"))){
+			list = getProductOutReportList(request);
 		} else if("SPC".equals(request.getParameter("report"))){
 			list = getSemiProductCostReportList(request);
 		} else if("SL".equals(request.getParameter("report"))){
@@ -349,6 +351,7 @@ public class DataFetchEvents {
 		String year = null;
 		String month = null;
 		String supplierId = null;
+		String keyWord = null;
 		String tableName = null;
 		if(request.getParameter("year") != null && request.getParameter("month") != null){
 			year = request.getParameter("year");
@@ -368,6 +371,10 @@ public class DataFetchEvents {
 		
 		if(request.getParameter("supplier") != null){
 			supplierId = request.getParameter("supplier");
+		}
+
+		if(request.getParameter("keyWord") != null){
+			keyWord = request.getParameter("keyWord");
 		}
 		String sql =" SELECT "+
 						" CCPP.SUPPLIER_ID, "+
@@ -392,6 +399,9 @@ public class DataFetchEvents {
 					" AND MONTH = " + month ;
 		if(supplierId != null && !"".equals(supplierId)){
 			sql += " AND CCPP.SUPPLIER_ID = '" + supplierId + "'";
+		}
+		if(keyWord != null && !"".equals(keyWord)){
+			sql += " AND (TM.NUMBER LIKE '%" + keyWord + "%' OR TM.NAME LIKE '%" + keyWord + "%')";
 		}
 		return sql;
 	}
@@ -1022,7 +1032,6 @@ public class DataFetchEvents {
 					" LEFT JOIN WAREHOUSE WH ON CMB.WAREHOUSE_ID = WH.ID "+
 					" LEFT JOIN PRODUCT_MAP PM ON CMB.MATERIAL_ID = PM.MATERIAL_ID "+
 					" LEFT JOIN T_MATERIAL TM ON PM.ENTRY_MATERIAL_ID = TM.ID "+
-					" LEFT JOIN T_MATERIAL TMB ON CMB.MATERIAL_ID = TMB.ID "+
 					" LEFT JOIN UNIT UN ON TM.DEFAULT_UNIT_ID = UN.ID "+
 					" WHERE YEAR = " + year +
 					" AND MONTH = " + month ;
@@ -1089,6 +1098,125 @@ public class DataFetchEvents {
 		}
 		sql += " GROUP BY CONCAT(YEAR,IF(MONTH<10,CONCAT(0,MONTH),MONTH)) ";
 		sql += " ORDER BY MONTH " ;
+		
+		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(request,sql));
+		return "sucess";
+	}
+	
+	/**
+	 * 成品出货情况
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public static String queryProductOutReport(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(request,getProductOutReportSql(request)));
+		return "sucess";
+	}
+	
+	/**
+	 * 获取成品出货情况
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public static List<Map<String ,Object>> getProductOutReportList(HttpServletRequest request) throws Exception {
+		return getListWithSQL(request,getProductOutReportSql(request));
+	}
+	
+	/**
+	 * 获取成品出货情况SQL
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	public static String getProductOutReportSql(HttpServletRequest request) throws Exception {
+		String year = null;
+		String month = null;
+		String keyWord = null;
+		String tableName = null;
+		String monthStr = "";
+		
+		if(request.getParameter("year") != null && request.getParameter("month") != null){
+			year = request.getParameter("year");
+			month = request.getParameter("month");
+			monthStr = year +"年"+ month +"月";
+		}else{
+			throw new Exception("找不到日期参数！");
+		}
+		Calendar cal= Calendar.getInstance();
+		//月份需要减一，月份是从0开始
+		cal.set(Integer.parseInt(year), Integer.parseInt(month)-1, 01, 0, 0, 0);
+		cal.set(Calendar.MILLISECOND, 0);
+		if(org.ofbiz.partner.scm.pricemgr.Utils.isCurPeriod(cal.getTime())){
+			tableName = " CUR_PRODUCT_BALANCE ";
+		} else {
+			tableName = " HIS_PRODUCT_BALANCE ";
+		}
+		
+		if(request.getParameter("keyWord") != null){
+			keyWord = request.getParameter("keyWord");
+		}
+		
+		String sql =" SELECT "+
+						" '"+monthStr+"', " +
+						" PM.ENTRY_MATERIAL_ID AS MATERIAL_ID, "+
+						" TM.NUMBER AS NUMBER, "+
+						" TM.NAME AS MATERIAL_NAME, "+
+						" TM.DEFAULT_UNIT_ID, "+
+						" UN.NAME AS DEFAULT_UNIT_NAME, "+
+						" SUM(ROUND(IFNULL(CMB.BEGINVOLUME,0)*IFNULL(PM.BOARD_COUNT,0),4)) AS BEGINVOLUME, "+
+						" SUM(ROUND(IFNULL(CMB.VOLUME,0)*IFNULL(PM.BOARD_COUNT,0),4)) AS ENDVOLUME, "+
+						" SUM(ROUND(IFNULL(CMB.IN_VOLUME,0)*IFNULL(PM.BOARD_COUNT,0),4)) AS INVOLUME, "+
+						" SUM(ROUND(IFNULL(CMB.OUT_VOLUME,0)*IFNULL(PM.BOARD_COUNT,0),4)) AS OUTVOLUME "+
+					" FROM " + tableName + " CMB "+
+					" LEFT JOIN PRODUCT_MAP PM ON CMB.MATERIAL_ID = PM.MATERIAL_ID "+
+					" LEFT JOIN T_MATERIAL TM ON PM.ENTRY_MATERIAL_ID = TM.ID "+
+					" LEFT JOIN UNIT UN ON TM.DEFAULT_UNIT_ID = UN.ID "+
+					" WHERE PM.ENTRY_MATERIAL_ID IS NOT NULL AND YEAR = " + year +
+					" AND MONTH = " + month ;
+		if(keyWord != null && !"".equals(keyWord)){
+			sql += " AND (TM.NUMBER LIKE '%" + keyWord + "%' OR TM.NAME LIKE '%" + keyWord + "%')";
+		}
+		sql += " GROUP BY PM.ENTRY_MATERIAL_ID,TM.NAME,TM.DEFAULT_UNIT_ID,UN.NAME ";
+		return sql;
+	}
+	
+	/**
+	 * 获取成品出货情况明细SQL
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public static String queryProductOutReportDetail(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String year = null;
+		String month = null;
+		String material_id = null;
+		
+		if(request.getParameter("year") != null && request.getParameter("month") != null){
+			year = request.getParameter("year");
+			month = request.getParameter("month");
+		}else{
+			throw new Exception("找不到日期参数！");
+		}
+		
+		if(request.getParameter("material_id") != null){
+			material_id = request.getParameter("material_id");
+		}
+		
+		String sql =" SELECT "+
+				"   PON.PLAN_DELIVERY_DATE, "+
+				"   PON.GOOD_NUMBER, "+
+				"   SUM(IFNULL(PONE.VOLUME,0)) AS VOLUME "+
+				" FROM PRODUCT_OUT_NOTIFICATION PON "+
+				" LEFT JOIN PRODUCT_OUT_NOTIFICATION_ENTRY PONE ON PON.ID = PONE.PARENT_ID "+
+				" WHERE YEAR(PON.PLAN_DELIVERY_DATE) = " + year +
+				" AND MONTH(PON.PLAN_DELIVERY_DATE) = " + month +
+				" AND MATERIAL_ID = '" + material_id +"'" +
+				" GROUP BY PON.PLAN_DELIVERY_DATE,PON.GOOD_NUMBER ";
 		
 		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(request,sql));
 		return "sucess";
