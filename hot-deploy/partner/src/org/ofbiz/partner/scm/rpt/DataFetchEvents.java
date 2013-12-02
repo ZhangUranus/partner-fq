@@ -1136,7 +1136,6 @@ public class DataFetchEvents {
 		String year = null;
 		String month = null;
 		String keyWord = null;
-		String tableName = null;
 		String monthStr = "";
 		
 		if(request.getParameter("year") != null && request.getParameter("month") != null){
@@ -1150,33 +1149,60 @@ public class DataFetchEvents {
 		//月份需要减一，月份是从0开始
 		cal.set(Integer.parseInt(year), Integer.parseInt(month)-1, 01, 0, 0, 0);
 		cal.set(Calendar.MILLISECOND, 0);
+		String sql = "";
 		if(org.ofbiz.partner.scm.pricemgr.Utils.isCurPeriod(cal.getTime())){
-			tableName = " CUR_PRODUCT_BALANCE ";
+			sql =" SELECT  " +
+					 " '"+monthStr+"', " +
+					 " PM.ENTRY_MATERIAL_ID AS MATERIAL_ID, "+
+					 " TM.NUMBER AS NUMBER, "+
+					 " TM.NAME AS MATERIAL_NAME, "+
+					 " TM.DEFAULT_UNIT_ID, "+
+					 " UN.NAME AS DEFAULT_UNIT_NAME, "+
+					 " SUM(ROUND(IFNULL(CMB.BEGINVOLUME,0)*IFNULL(PM.BOARD_COUNT,0),4)) AS BEGINVOLUME, "+
+					 " SUM(ROUND(IFNULL(CMB.VOLUME,0)*IFNULL(PM.BOARD_COUNT,0),4)) AS ENDVOLUME, "+
+					 " SUM(ROUND(IFNULL(CMB.IN_VOLUME,0)*IFNULL(PM.BOARD_COUNT,0),4)) AS INVOLUME, "+
+					 " SUM(ROUND(IFNULL(CMB.OUT_VOLUME+POET.VOLUME,0)*IFNULL(PM.BOARD_COUNT,0),4)) AS OUTVOLUME "+
+					 " FROM CUR_PRODUCT_BALANCE CMB "+
+					 " LEFT JOIN ( "+
+					 "  SELECT "+
+					 "	POE.MATERIAL_MATERIAL_ID, "+
+					 "	SUM(IFNULL(POE.VOLUME,0)) AS VOLUME "+
+					 " 	FROM PRODUCT_OUTWAREHOUSE PO "+
+					 "	LEFT JOIN PRODUCT_OUTWAREHOUSE_ENTRY POE ON PO.ID = POE.PARENT_ID "+
+					 "	WHERE BIZ_DATE > '"+year+"-"+month+"-01 00:00:00' "+
+					 "	AND OUTWAREHOUSE_TYPE = 1 "+
+					 "	GROUP BY POE.MATERIAL_MATERIAL_ID "+
+					 " ) POET ON CMB.MATERIAL_ID = POET.MATERIAL_MATERIAL_ID "+
+					 " LEFT JOIN PRODUCT_MAP PM ON CMB.MATERIAL_ID = PM.MATERIAL_ID "+
+					 " LEFT JOIN T_MATERIAL TM ON PM.ENTRY_MATERIAL_ID = TM.ID "+
+					 " LEFT JOIN UNIT UN ON TM.DEFAULT_UNIT_ID = UN.ID "+
+					 " WHERE PM.ENTRY_MATERIAL_ID IS NOT NULL "+
+					 " AND YEAR = " + year +
+					 " AND MONTH = " + month ;
 		} else {
-			tableName = " HIS_PRODUCT_BALANCE ";
+			sql =" SELECT "+
+					" '"+monthStr+"', " +
+					" PM.ENTRY_MATERIAL_ID AS MATERIAL_ID, "+
+					" TM.NUMBER AS NUMBER, "+
+					" TM.NAME AS MATERIAL_NAME, "+
+					" TM.DEFAULT_UNIT_ID, "+
+					" UN.NAME AS DEFAULT_UNIT_NAME, "+
+					" SUM(ROUND(IFNULL(CMB.BEGINVOLUME,0)*IFNULL(PM.BOARD_COUNT,0),4)) AS BEGINVOLUME, "+
+					" SUM(ROUND(IFNULL(CMB.VOLUME,0)*IFNULL(PM.BOARD_COUNT,0),4)) AS ENDVOLUME, "+
+					" SUM(ROUND(IFNULL(CMB.IN_VOLUME,0)*IFNULL(PM.BOARD_COUNT,0),4)) AS INVOLUME, "+
+					" SUM(ROUND(IFNULL(CMB.OUT_VOLUME,0)*IFNULL(PM.BOARD_COUNT,0),4)) AS OUTVOLUME "+
+				" FROM HIS_PRODUCT_BALANCE CMB "+
+				" LEFT JOIN PRODUCT_MAP PM ON CMB.MATERIAL_ID = PM.MATERIAL_ID "+
+				" LEFT JOIN T_MATERIAL TM ON PM.ENTRY_MATERIAL_ID = TM.ID "+
+				" LEFT JOIN UNIT UN ON TM.DEFAULT_UNIT_ID = UN.ID "+
+				" WHERE PM.ENTRY_MATERIAL_ID IS NOT NULL " +
+				" AND YEAR = " + year +
+				" AND MONTH = " + month ;
 		}
 		
 		if(request.getParameter("keyWord") != null){
 			keyWord = request.getParameter("keyWord");
 		}
-		
-		String sql =" SELECT "+
-						" '"+monthStr+"', " +
-						" PM.ENTRY_MATERIAL_ID AS MATERIAL_ID, "+
-						" TM.NUMBER AS NUMBER, "+
-						" TM.NAME AS MATERIAL_NAME, "+
-						" TM.DEFAULT_UNIT_ID, "+
-						" UN.NAME AS DEFAULT_UNIT_NAME, "+
-						" SUM(ROUND(IFNULL(CMB.BEGINVOLUME,0)*IFNULL(PM.BOARD_COUNT,0),4)) AS BEGINVOLUME, "+
-						" SUM(ROUND(IFNULL(CMB.VOLUME,0)*IFNULL(PM.BOARD_COUNT,0),4)) AS ENDVOLUME, "+
-						" SUM(ROUND(IFNULL(CMB.IN_VOLUME,0)*IFNULL(PM.BOARD_COUNT,0),4)) AS INVOLUME, "+
-						" SUM(ROUND(IFNULL(CMB.OUT_VOLUME,0)*IFNULL(PM.BOARD_COUNT,0),4)) AS OUTVOLUME "+
-					" FROM " + tableName + " CMB "+
-					" LEFT JOIN PRODUCT_MAP PM ON CMB.MATERIAL_ID = PM.MATERIAL_ID "+
-					" LEFT JOIN T_MATERIAL TM ON PM.ENTRY_MATERIAL_ID = TM.ID "+
-					" LEFT JOIN UNIT UN ON TM.DEFAULT_UNIT_ID = UN.ID "+
-					" WHERE PM.ENTRY_MATERIAL_ID IS NOT NULL AND YEAR = " + year +
-					" AND MONTH = " + month ;
 		if(keyWord != null && !"".equals(keyWord)){
 			sql += " AND (TM.NUMBER LIKE '%" + keyWord + "%' OR TM.NAME LIKE '%" + keyWord + "%')";
 		}
