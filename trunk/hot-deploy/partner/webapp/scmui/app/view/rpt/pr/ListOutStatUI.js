@@ -66,22 +66,22 @@ Ext.define('SCM.view.rpt.pr.ListOutStatUI', {
 												}, {
 													xtype : 'numbercolumn',
 													dataIndex : 'BEGINVOLUME',
-													width : 80,
+													width : 120,
 													text : '期初数量'
 												}, {
 													xtype : 'numbercolumn',
 													dataIndex : 'INVOLUME',
-													width : 80,
+													width : 120,
 													text : '收入数量'
 												}, {
 													xtype : 'numbercolumn',
 													dataIndex : 'OUTVOLUME',
-													width : 80,
-													text : '发出数量'
+													width : 150,
+													text : '发出数量(保存状态)'
 												}, {
 													xtype : 'numbercolumn',
 													dataIndex : 'ENDVOLUME',
-													width : 80,
+													width : 120,
 													text : '结存数量'
 												}],
 										dockedItems : [{
