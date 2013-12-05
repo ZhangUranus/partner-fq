@@ -127,17 +127,32 @@ public class WorkshopPriceMgr {
 		}
 		return totalSum;
 		**/
+		// 判断单据是否已经提交
+		boolean isSumit = false;
+		GenericValue billEntry = delegator.findOne("WorkshopWarehousingEntry", UtilMisc.toMap("id", entryId), false);
+		GenericValue headEntry = delegator.findOne("WorkshopWarehousing", UtilMisc.toMap("id", billEntry.getString("parentId")), false);
+		if(headEntry.getInteger("status").intValue()==4){
+			isSumit = true;
+		}
+		
+		
 		List<GenericValue> valusList = delegator.findByAnd("WorkshopPriceDetail", UtilMisc.toMap("parentId", entryId, "bomId", bomId));//修复bug
 		BigDecimal totalSum = BigDecimal.ZERO;
 		BigDecimal volume = BigDecimal.ZERO;
+		BigDecimal price = BigDecimal.ZERO;
 		if(valusList.size() > 0){
 			// 存在用户编辑耗料
 			for (GenericValue value : valusList) {
-				String materialId = value.getString("materialId");
-				BigDecimal price = this.getPrice(workshopId, materialId);
-				volume = value.getBigDecimal("volume");
-				value.set("price", price);
-				value.store();
+				if(isSumit){
+					price = value.getBigDecimal("price");
+					volume = value.getBigDecimal("volume");
+				}else {
+					String materialId = value.getString("materialId");
+					price = this.getPrice(workshopId, materialId);
+					volume = value.getBigDecimal("volume");
+					value.set("price", price);
+					value.store();
+				}
 				totalSum = totalSum.add(price.multiply(volume));
 			}
 		} else {
@@ -146,7 +161,7 @@ public class WorkshopPriceMgr {
 			for (GenericValue entry : entryList) {
 				volume = entry.getBigDecimal("volume");
 				String bomMaterialId = entry.getString("bomMaterialId");
-				BigDecimal price = this.getPrice(workshopId, bomMaterialId);
+				price = this.getPrice(workshopId, bomMaterialId);
 				
 				volume = entryVolume.multiply(volume);	//将单件耗料改为总耗料
 				

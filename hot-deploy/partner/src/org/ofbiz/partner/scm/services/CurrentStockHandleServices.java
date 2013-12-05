@@ -462,7 +462,10 @@ public class CurrentStockHandleServices {
 										billStock.create();
 									
 										// 在车间中减少加工件(暂时无法计算金额)
-										WorkshopPriceMgr.getInstance().CreateWorkshopPriceDetailList(bill.getString("workshopWorkshopId"), bill.getString("bomId"), bill.getString("entryId"), bill.getBigDecimal("volume"));
+										// 如果是已经提交单据，不需要执行
+										if(bill.getInteger("status").intValue()!=4){
+											WorkshopPriceMgr.getInstance().CreateWorkshopPriceDetailList(bill.getString("workshopWorkshopId"), bill.getString("bomId"), bill.getString("entryId"), bill.getBigDecimal("volume"));
+										}
 										List<List<Object>> materialList = WorkshopPriceMgr.getInstance().getMaterialList(bill.getString("entryId"));
 										for (List<Object> element : materialList) {
 											GenericValue workshopStock = delegator.makeValue("CurSaveWorkshopBalance");
