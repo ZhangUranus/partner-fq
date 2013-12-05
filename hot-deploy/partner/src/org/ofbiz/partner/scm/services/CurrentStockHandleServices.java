@@ -18,6 +18,7 @@ import org.ofbiz.partner.scm.pricemgr.ConsignPriceMgr;
 import org.ofbiz.partner.scm.pricemgr.MaterialBomMgr;
 import org.ofbiz.partner.scm.pricemgr.PriceMgr;
 import org.ofbiz.partner.scm.pricemgr.WorkshopPriceMgr;
+import org.ofbiz.partner.scm.stock.WorkshopWarehousingEvents;
 import org.ofbiz.service.DispatchContext;
 import org.ofbiz.service.ServiceUtil;
 
@@ -464,7 +465,12 @@ public class CurrentStockHandleServices {
 										// 在车间中减少加工件(暂时无法计算金额)
 										// 如果是已经提交单据，不需要执行
 										if(bill.getInteger("status").intValue()!=4){
-											WorkshopPriceMgr.getInstance().CreateWorkshopPriceDetailList(bill.getString("workshopWorkshopId"), bill.getString("bomId"), bill.getString("entryId"), bill.getBigDecimal("volume"));
+											synchronized (WorkshopWarehousingEvents.updateLock) {
+												Debug.log("3.开始入库单处理!", module);
+												WorkshopPriceMgr.getInstance().CreateWorkshopPriceDetailList(bill.getString("workshopWorkshopId"), bill.getString("bomId"), bill.getString("entryId"), bill.getBigDecimal("volume"));
+
+												Debug.log("4.完成入库单处理!", module);
+											}
 										}
 										List<List<Object>> materialList = WorkshopPriceMgr.getInstance().getMaterialList(bill.getString("entryId"));
 										for (List<Object> element : materialList) {

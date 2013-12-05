@@ -31,6 +31,7 @@ import org.ofbiz.service.LocalDispatcher;
  */
 public class WorkshopWarehousingEvents {
 	private static final String module = org.ofbiz.partner.scm.stock.WorkshopWarehousingEvents.class.getName();
+	public static Object updateLock = new Object();// 余额表更新锁
 
 	/**
 	 * 制造入库提交
@@ -44,38 +45,40 @@ public class WorkshopWarehousingEvents {
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
 		Map<String, String> billInfoMap = new HashMap<String, String>();			//单据信息
 		boolean beganTransaction = false;
-		try {
-			beganTransaction = TransactionUtil.begin();
-
-			Delegator delegator = (Delegator) request.getAttribute("delegator");
-			String billId = request.getParameter("billId");// 单据id
-			if (delegator != null && billId != null) {
-				Debug.log("入库单提交:" + billId, module);
-				GenericValue billHead = delegator.findOne("WorkshopWarehousing", UtilMisc.toMap("id", billId), false);
-				if (billHead == null || billHead.get("bizDate") == null) {
-					throw new Exception("can`t find WorkshopWarehousing bill or bizdate is null");
-				}
-
-				BizStockImpFactory.getBizStockImp(BillType.WorkshopWarehousing).updateStock(billHead, false, false);
-
-				BillBaseEvent.submitBill(request, response);// 更新单据状态
-				
-				/* 开始 增加单据处理任务 */
-				billInfoMap.put("number", billHead.get("number").toString());
-				billInfoMap.put("billType", "WorkshopWarehousing");
-				billInfoMap.put("operationType", "3");
-				dispatcher.runAsync("addBillHandleJobService", billInfoMap);
-				/* 结束 增加单据处理任务 */
-			}
-			TransactionUtil.commit(beganTransaction);
-		} catch (Exception e) {
-			Debug.logError(e, module);
+		synchronized (updateLock) {
 			try {
-				TransactionUtil.rollback(beganTransaction, e.getMessage(), e);
-			} catch (GenericTransactionException e2) {
-				Debug.logError(e2, "Unable to rollback transaction", module);
+				beganTransaction = TransactionUtil.begin();
+	
+				Delegator delegator = (Delegator) request.getAttribute("delegator");
+				String billId = request.getParameter("billId");// 单据id
+				if (delegator != null && billId != null) {
+					Debug.log("入库单提交:" + billId, module);
+					GenericValue billHead = delegator.findOne("WorkshopWarehousing", UtilMisc.toMap("id", billId), false);
+					if (billHead == null || billHead.get("bizDate") == null) {
+						throw new Exception("can`t find WorkshopWarehousing bill or bizdate is null");
+					}
+	
+					BizStockImpFactory.getBizStockImp(BillType.WorkshopWarehousing).updateStock(billHead, false, false);
+	
+					BillBaseEvent.submitBill(request, response);// 更新单据状态
+					
+					/* 开始 增加单据处理任务 */
+					billInfoMap.put("number", billHead.get("number").toString());
+					billInfoMap.put("billType", "WorkshopWarehousing");
+					billInfoMap.put("operationType", "3");
+					dispatcher.runAsync("addBillHandleJobService", billInfoMap);
+					/* 结束 增加单据处理任务 */
+				}
+				TransactionUtil.commit(beganTransaction);
+			} catch (Exception e) {
+				Debug.logError(e, module);
+				try {
+					TransactionUtil.rollback(beganTransaction, e.getMessage(), e);
+				} catch (GenericTransactionException e2) {
+					Debug.logError(e2, "Unable to rollback transaction", module);
+				}
+				throw e;
 			}
-			throw e;
 		}
 		return "success";
 	}
