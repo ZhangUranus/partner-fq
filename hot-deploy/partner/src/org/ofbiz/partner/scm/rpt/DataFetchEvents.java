@@ -1300,6 +1300,7 @@ public class DataFetchEvents {
 		
 		String sql =" SELECT "+
 					" 	PIODD.TRAD_DATE, "+
+					" 	TME.NAME AS ENTRY_MATERIAL_NAME, "+
 					" 	PIODD.MATERIAL_ID, "+
 					" 	TM.NAME AS MATERIAL_NAME, "+
 					" 	PIODD.QANTITY, "+
@@ -1318,6 +1319,8 @@ public class DataFetchEvents {
 					" FROM PRO_IN_OUT_DATE_DETAIL PIODD "+
 					" LEFT JOIN " + tableName + " MB ON PIODD.MATERIAL_ID = MB.MATERIAL_ID AND MB.YEAR=SUBSTRING(PIODD.TRAD_DATE,1,4) AND MB.MONTH=SUBSTRING(PIODD.TRAD_DATE,5,2)"+
 					" LEFT JOIN T_MATERIAL TM ON PIODD.MATERIAL_ID = TM.ID "+
+					" LEFT JOIN PRODUCT_MAP PM ON PIODD.MATERIAL_ID=PM.MATERIAL_ID \r\n"+
+					" LEFT JOIN T_MATERIAL TME ON PM.ENTRY_MATERIAL_ID=TME.ID \r\n"+
 					" WHERE ";
 		if(keyWord == null ){
 			keyWord = "";
