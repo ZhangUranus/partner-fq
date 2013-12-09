@@ -97,6 +97,9 @@ Ext.define('SCM.view.rpt.pr.ListOutStatUI', {
 										height : 250,
 										split : true,
 										store : 'rpt.ProductOutReportDetailStore',
+										features: [{
+									        ftype: 'summary'
+									    }],
 										columns : [{
 													header : '序号',
 													xtype : 'rownumberer',
@@ -107,15 +110,25 @@ Ext.define('SCM.view.rpt.pr.ListOutStatUI', {
 													width : 120,
 													format : 'Y-m-d',
 													groupable : false,
-													text : '计划出货日期'
+													text : '计划出货日期',
+													summaryType: 'count',
+													summaryRenderer: function(value, summaryData, dataIndex) {
+														return '<p style="color:blue;font-size:12px;font-family:tahoma,arial,verdana,sans-serif">汇总</p>';
+													}
 												}, {
 													xtype : 'gridcolumn',
 													dataIndex : 'GOOD_NUMBER',
-													text : '货号'
+													text : '货号',
+													summaryType: 'count',
+										            summaryRenderer: function(value, summaryData, dataIndex) {
+										                return '<p style="color:blue;font-size:12px;font-family:tahoma,arial,verdana,sans-serif">(' + value + ' 个货号)</p>';
+										            }
 												}, {
 													xtype : 'gridcolumn',
 													dataIndex : 'VOLUME',
-													text : '出货数量'
+													text : '出货数量',
+													summaryType: 'sum',
+										            summaryRenderer: SCM.store.basiccode.sumRenderer
 												}]
 									}]
 						});

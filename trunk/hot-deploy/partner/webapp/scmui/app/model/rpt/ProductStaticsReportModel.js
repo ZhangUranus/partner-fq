@@ -8,6 +8,9 @@ Ext.define('SCM.model.rpt.ProductStaticsReportModel', {
 						name : 'TRAD_DATE',
 						type : 'string'
 					}, {
+						name : 'ENTRY_MATERIAL_NAME',
+						type : 'string'
+					}, {
 						name : 'MATERIAL_ID',
 						type : 'string'
 					}, {

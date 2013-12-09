@@ -51,6 +51,13 @@ Ext.define('SCM.view.rpt.psr.ListUI', {
 										region : 'center',
 										split : true,
 										store : 'rpt.ProductStaticsReportStore',
+										features: [{
+								            id: 'group',
+								            ftype: 'groupingsummary',
+								            groupHeaderTpl: '{name}',
+								            hideGroupedHeader: true,
+								            enableGroupingMenu: false
+								        }],
 										columns : [{
 													header : '序号',
 													xtype : 'rownumberer',
@@ -59,7 +66,11 @@ Ext.define('SCM.view.rpt.psr.ListUI', {
 													xtype : 'gridcolumn',
 													dataIndex : 'TRAD_DATE',
 													width : 70,
-													text : '日期'
+													text : '日期',
+													summaryType: 'count',
+													summaryRenderer: function(value, summaryData, dataIndex) {
+														return '<p style="color:blue;font-size:12px;font-family:tahoma,arial,verdana,sans-serif">产品汇总</p>';
+													}
 												}, {
 													xtype : 'gridcolumn',
 													dataIndex : 'MATERIAL_NAME',
@@ -78,13 +89,17 @@ Ext.define('SCM.view.rpt.psr.ListUI', {
 																dataIndex : 'PRE_MONTH_VOLUME',
 																width : 80,
 																sortable : true,
-																text : '板数'
+																text : '板数',
+																summaryType: 'sum',
+													            summaryRenderer: SCM.store.basiccode.sumRenderer
 															}, {
 																xtype : 'numbercolumn',
 																dataIndex : 'PRE_MONTH_PRODUCT_VOLUME',
 																width : 80,
 																sortable : true,
-																text : '产品数'
+																text : '产品数',
+																summaryType: 'sum',
+													            summaryRenderer: SCM.store.basiccode.sumRenderer
 															}]
 												}, {
 													text : '本日发生（板数）',
@@ -93,13 +108,17 @@ Ext.define('SCM.view.rpt.psr.ListUI', {
 																dataIndex : 'TODAY_IN_VOLUME',
 																width : 80,
 																sortable : true,
-																text : '入库'
+																text : '入库',
+																summaryType: 'sum',
+													            summaryRenderer: SCM.store.basiccode.sumRenderer
 															}, {
 																xtype : 'numbercolumn',
 																dataIndex : 'TODAY_OUT_VOLUME',
 																width : 80,
 																sortable : true,
-																text : '出库'
+																text : '出库',
+																summaryType: 'sum',
+													            summaryRenderer: SCM.store.basiccode.sumRenderer
 															}]
 												}, {
 													text : '本日结存',
@@ -108,13 +127,17 @@ Ext.define('SCM.view.rpt.psr.ListUI', {
 																dataIndex : 'TODAY_VOLUME',
 																width : 80,
 																sortable : true,
-																text : '板数'
+																text : '板数',
+																summaryType: 'sum',
+													            summaryRenderer: SCM.store.basiccode.sumRenderer
 															}, {
 																xtype : 'numbercolumn',
 																dataIndex : 'TODAY_PRODUCT_VOLUME',
 																width : 80,
 																sortable : true,
-																text : '产品数'
+																text : '产品数',
+																summaryType: 'sum',
+													            summaryRenderer: SCM.store.basiccode.sumRenderer
 															}]
 												}, {
 													text : '当前结存',
@@ -123,13 +146,17 @@ Ext.define('SCM.view.rpt.psr.ListUI', {
 																dataIndex : 'VOLUME',
 																width : 80,
 																sortable : true,
-																text : '板数'
+																text : '板数',
+																summaryType: 'sum',
+													            summaryRenderer: SCM.store.basiccode.sumRenderer
 															}, {
 																xtype : 'numbercolumn',
 																dataIndex : 'PRODUCT_VOLUME',
 																width : 80,
 																sortable : true,
-																text : '产品数'
+																text : '产品数',
+																summaryType: 'sum',
+													            summaryRenderer: SCM.store.basiccode.sumRenderer
 															}]
 												}, {
 													text : '当月累计',
@@ -138,25 +165,33 @@ Ext.define('SCM.view.rpt.psr.ListUI', {
 																dataIndex : 'THIS_MONTH_IN_VOLUME',
 																width : 80,
 																sortable : true,
-																text : '入库板数'
+																text : '入库板数',
+																summaryType: 'sum',
+													            summaryRenderer: SCM.store.basiccode.sumRenderer
 															}, {
 																xtype : 'numbercolumn',
 																dataIndex : 'THIS_MONTH_OUT_VOLUME',
 																width : 80,
 																sortable : true,
-																text : '出库板数'
+																text : '出库板数',
+																summaryType: 'sum',
+													            summaryRenderer: SCM.store.basiccode.sumRenderer
 															}, {
 																xtype : 'numbercolumn',
 																dataIndex : 'THIS_MONTH_IN_PRODUCT_VOLUME',
 																width : 80,
 																sortable : true,
-																text : '入库产品数'
+																text : '入库产品数',
+																summaryType: 'sum',
+													            summaryRenderer: SCM.store.basiccode.sumRenderer
 															}, {
 																xtype : 'numbercolumn',
 																dataIndex : 'THIS_MONTH_OUT_PRODUCT_VOLUME',
 																width : 80,
 																sortable : true,
-																text : '出库产品数'
+																text : '出库产品数',
+																summaryType: 'sum',
+													            summaryRenderer: SCM.store.basiccode.sumRenderer
 															}]
 												}],
 										dockedItems : [{
