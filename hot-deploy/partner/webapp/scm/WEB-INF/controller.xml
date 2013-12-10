@@ -303,6 +303,13 @@
 		<response name="success" type="none" />
 	</request-map>
 	
+	<!-- 检查是否后台任务未执行 -->
+	<request-map uri="getDetailCount">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.WorkshopWarehousingEvents" invoke="getDetailCount" />
+		<response name="success" type="none" />
+	</request-map>
+	
 	
 	<!-- 制造退货单提交 -->
 	<request-map uri="submitWorkshopReturnProduct">

@@ -16,6 +16,7 @@ import org.ofbiz.entity.GenericValue;
 import org.ofbiz.entity.transaction.GenericTransactionException;
 import org.ofbiz.entity.transaction.TransactionUtil;
 import org.ofbiz.partner.scm.common.BillBaseEvent;
+import org.ofbiz.partner.scm.common.CommonEvents;
 import org.ofbiz.partner.scm.pojo.VolumeOfProduct;
 import org.ofbiz.partner.scm.pojo.WorkshopStock;
 import org.ofbiz.partner.scm.pricemgr.BillType;
@@ -33,6 +34,23 @@ public class WorkshopWarehousingEvents {
 	private static final String module = org.ofbiz.partner.scm.stock.WorkshopWarehousingEvents.class.getName();
 	public static Object updateLock = new Object();// 余额表更新锁
 
+	
+	public static String getDetailCount(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		String parentId = request.getParameter("parentId");// 单据id
+		String jsonResult="{success:true,count:0}";
+		if (delegator != null && parentId != null) {
+			synchronized (updateLock) {
+				List<GenericValue> detailList = delegator.findByAnd("WorkshopPriceDetail", UtilMisc.toMap("parentId", parentId));
+				if(detailList.size()>0){
+					jsonResult="{success:true,count:"+detailList.size()+"}";
+				}
+			}
+		}
+		CommonEvents.writeJsonDataToExt(response, jsonResult); // 将结果返回前端Ext
+		return "success";
+	}
+	
 	/**
 	 * 制造入库提交
 	 * 

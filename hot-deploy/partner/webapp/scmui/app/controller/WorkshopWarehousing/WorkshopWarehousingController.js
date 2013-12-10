@@ -396,6 +396,7 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 		var me = this;
 		me.currentDetailRecord = record;
 		me.detailEditWin.uiStatus = 'Modify';
+		me.currentDetailCount = 0;		//编辑时，耗料明细条数
 
 		var materialVolume = 1;
 		if (record.get('volume') != 0) {
@@ -405,6 +406,7 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 		// 获取耗料列表
 		me.detailEditEntry.store.getProxy().extraParams.whereStr = 'parent_id = \'' + record.get('id') + '\'';
 		me.detailEditEntry.store.load(function(records, operation, success) {
+			me.currentDetailCount = records.length;
 			if (records.length <= 0) {// 如果不存在耗料列表，获取初始列表
 				me.MaterialBOMStore.getProxy().extraParams.whereStr = 'MaterialBomV.id = \'' + record.get('bomId') + '\'';
 				me.MaterialBOMStore.load(function(records, operation, success) {
@@ -518,16 +520,42 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 	 */
 	saveDetailRecord : function(button) {
 		var me = this;
-		me.detailEditEntry.store.sync({
-			callback : function(batch, options) {
-				if (!batch.hasException) {
-					if (me.detailEditWin.isVisible()) {
+		
+		Ext.Ajax.request({
+			scope : me,
+			url : "../../scm/control/getDetailCount",
+			timeout : SCM.shortTimes,
+			params : {
+				parentId : me.currentDetailRecord.get('id')
+			},
+			success : function(response, option) {
+				if (response.responseText.length < 1) {
+					showError('系统没有返回结果');
+				}
+				var responseArray = Ext.JSON.decode(response.responseText);
+				if (responseArray.success) {
+					if (responseArray.count !=me.currentDetailCount) {
+						showError('耗料明细已经更新，请重新打开编辑界面！');
 						me.detailEditWin.close();
+					} else {
+						// 如果编辑和保存时的耗料明细条数一致，直接保存
+						me.detailEditEntry.store.sync({
+							callback : function(batch, options) {
+								if (!batch.hasException) {
+									if (me.detailEditWin.isVisible()) {
+										me.detailEditWin.close();
+									}
+									Ext.Msg.alert("提示", "保存成功！");
+								}
+							}
+						});
 					}
-					Ext.Msg.alert("提示", "保存成功！");
+				} else {
+					showError(responseArray.message);
 				}
 			}
 		});
+		
 	},
 
 	/**
