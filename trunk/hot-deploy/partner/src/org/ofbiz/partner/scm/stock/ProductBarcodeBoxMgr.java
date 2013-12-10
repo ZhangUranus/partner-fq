@@ -10,7 +10,6 @@ import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericValue;
-import org.ofbiz.partner.scm.common.BarCode;
 import org.ofbiz.partner.scm.common.Utils;
 
 /**

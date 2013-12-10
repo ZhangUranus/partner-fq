@@ -104,7 +104,7 @@ public class ProductOutNotificationEvents {
 				if (billHead == null || billHead.get("bizDate") == null) {
 					throw new Exception("can`t find ProductOutNotification bill or bizdate is null");
 				}
-				Date bizDate = (Date) billHead.get("bizDate");
+//				Date bizDate = (Date) billHead.get("bizDate");
 				/**
 				 * 出货通知单不需要判断是否当前系统期间
 				 */

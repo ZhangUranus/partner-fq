@@ -10,6 +10,7 @@ import java.util.UUID;
 
 import javolution.util.FastMap;
 
+import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericValue;
@@ -157,6 +158,7 @@ public class WorkshopPriceMgr {
 			}
 		} else {
 			// 不存在用户编辑耗料
+			Debug.log("新增耗料列表 entryId :" + entryId +"，bomId : "+bomId+"，workshopId : "+workshopId, module);
 			List<GenericValue> entryList = delegator.findByAnd("MaterialBomListView", "id", bomId, "status", 1, "valid", "Y");
 			for (GenericValue entry : entryList) {
 				volume = entry.getBigDecimal("volume");

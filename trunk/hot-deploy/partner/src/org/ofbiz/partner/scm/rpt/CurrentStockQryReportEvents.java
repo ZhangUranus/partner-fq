@@ -101,7 +101,7 @@ public class CurrentStockQryReportEvents {
 		sql.append(" 	0 AS VOLUME, ");
 		sql.append(" 	0 AS WORKSHOP_VOLUME, ");
 		sql.append(" 	SUM(IFNULL(VOLUME,0)) AS SUPPLIER_VOLUME, ");
-		sql.append(" 	SUM(IFNULL(BALANCE,0)) AS PLAN_VOLUME ");
+		sql.append(" 	0 AS PLAN_VOLUME ");
 		sql.append(" FROM  ");
 		sql.append(" ( ");
 		sql.append(" 	SELECT  ");
@@ -116,9 +116,31 @@ public class CurrentStockQryReportEvents {
 		sql.append(" 		VOLUME ");
 		sql.append(" 	FROM CUR_SAVE_CONSIGN_BALANCE ");
 		sql.append(" ) CCP  ");
-		sql.append(" LEFT JOIN PUR_PLAN_BALANCE PPB ON CCP.SUPPLIER_ID = PPB.CCP.SUPPLIER_ID AND CCP.MATERIAL_ID = PPB.MATERIAL_ID ");
 		sql.append(" LEFT JOIN SUPPLIER SP ON CCP.SUPPLIER_ID = SP.ID ");
 		sql.append(" LEFT JOIN T_MATERIAL TM ON CCP.MATERIAL_ID = TM.ID ");
+		sql.append(" LEFT JOIN UNIT UT ON TM.DEFAULT_UNIT_ID = UT.ID ");
+		sql.append(" WHERE SP.NAME IS NOT NULL AND TM.NAME IS NOT NULL ");
+		if(!request.getParameter("supplier").isEmpty()){
+			sql.append(" 		AND SP.NAME like '%"+request.getParameter("supplier").trim()+"%'");
+		}
+		if(!request.getParameter("material").isEmpty()){
+			sql.append(" 		AND (TM.NAME like '%"+request.getParameter("material").trim()+"%' OR TM.NUMBER like '%"+request.getParameter("material").trim()+"%')");
+		}
+		sql.append(" GROUP BY TM.NUMBER,TM.NAME,UT.NAME,SP.NAME ");
+		sql.append(" UNION ALL ");
+		sql.append(" SELECT ");
+		sql.append(" 	TM.NUMBER, ");
+		sql.append(" 	TM.NAME AS MATERIAL_NAME, ");
+		sql.append(" 	UT.NAME AS UNIT_NAME, ");
+		sql.append(" 	SP.NAME AS HOUSE_NAME, ");
+		sql.append(" 	0 AS VOLUME, ");
+		sql.append(" 	0 AS WORKSHOP_VOLUME, ");
+		sql.append(" 	0 AS SUPPLIER_VOLUME, ");
+		sql.append(" 	SUM(IFNULL(BALANCE,0)) AS PLAN_VOLUME ");
+		sql.append(" FROM  ");
+		sql.append(" PUR_PLAN_BALANCE PPB ");
+		sql.append(" LEFT JOIN SUPPLIER SP ON PPB.SUPPLIER_ID = SP.ID ");
+		sql.append(" LEFT JOIN T_MATERIAL TM ON PPB.MATERIAL_ID = TM.ID ");
 		sql.append(" LEFT JOIN UNIT UT ON TM.DEFAULT_UNIT_ID = UT.ID ");
 		sql.append(" WHERE SP.NAME IS NOT NULL AND TM.NAME IS NOT NULL ");
 		if(!request.getParameter("supplier").isEmpty()){
