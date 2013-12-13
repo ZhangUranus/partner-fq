@@ -21,7 +21,7 @@ import org.ofbiz.partner.scm.pricemgr.Utils;
 import org.ofbiz.partner.scm.pricemgr.WorkshopPriceMgr;
 
 public class ProductWarehouseBizImp implements IBizStock {
-	private Delegator delegator = org.ofbiz.partner.scm.common.Utils.getDefaultDelegator();
+	private static Delegator delegator = org.ofbiz.partner.scm.common.Utils.getDefaultDelegator();
 	private static final String module = org.ofbiz.partner.scm.pricemgr.bizStockImp.ProductWarehouseBizImp.class.getName();
 	
 	/**
@@ -186,7 +186,7 @@ public class ProductWarehouseBizImp implements IBizStock {
 	 * @param  materialId
 	 * @return
 	 */
-	private List<ConsumeMaterial> getMaterialList(String entryId, String materialId) throws Exception {
+	public static List<ConsumeMaterial> getMaterialList(String entryId, String materialId) throws Exception {
 		List<ConsumeMaterial> consumeMaterialList=new ArrayList<ConsumeMaterial>();
 		/*1. 从实际耗料表取*/
 		List<GenericValue> actualMaterialList=delegator.findByAnd("ProductInwarehouseEntryDetail", UtilMisc.toMap("inParentId", entryId));
