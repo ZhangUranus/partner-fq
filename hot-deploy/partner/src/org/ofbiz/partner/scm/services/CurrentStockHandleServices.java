@@ -15,9 +15,11 @@ import org.ofbiz.entity.condition.EntityCondition;
 import org.ofbiz.entity.transaction.GenericTransactionException;
 import org.ofbiz.entity.transaction.TransactionUtil;
 import org.ofbiz.partner.scm.pricemgr.ConsignPriceMgr;
+import org.ofbiz.partner.scm.pricemgr.ConsumeMaterial;
 import org.ofbiz.partner.scm.pricemgr.MaterialBomMgr;
 import org.ofbiz.partner.scm.pricemgr.PriceMgr;
 import org.ofbiz.partner.scm.pricemgr.WorkshopPriceMgr;
+import org.ofbiz.partner.scm.pricemgr.bizStockImp.ProductWarehouseBizImp;
 import org.ofbiz.partner.scm.stock.WorkshopWarehousingEvents;
 import org.ofbiz.service.DispatchContext;
 import org.ofbiz.service.ServiceUtil;
@@ -747,20 +749,20 @@ public class CurrentStockHandleServices {
 				billStock.create();
 			}
 
-			List<GenericValue> pwList = delegator.findList("ProductInwarehouseEntryDetail", EntityCondition.makeCondition("inParentId", entryId), null, null, null, false);
-			if (pwList != null && pwList.size() > 0) {
-				for (GenericValue entry : pwList) {
-					if (entry.getString("materialId") != null && !entry.getString("materialId").isEmpty()) {
-						// 在车间中减少物料
-						GenericValue workshopStock = delegator.makeValue("CurSaveWorkshopBalance");
-						workshopStock.set("id", UUID.randomUUID().toString());
-						workshopStock.set("workshopId", gValue.getString("workshopWorkshopId"));
-						workshopStock.set("materialId", entry.getString("materialId"));
-						workshopStock.set("number", entryId);
-						workshopStock.set("volume", entry.getBigDecimal("quantity").negate());
-						workshopStock.set("totalSum", BigDecimal.ZERO);
-						workshopStock.create();
-					}
+			List<ConsumeMaterial> materialList = ProductWarehouseBizImp.getMaterialList(entryId, gValue.getString("materialMaterialId"));
+			for (ConsumeMaterial element : materialList) {
+				if (element.getMaterialId() != null && !element.getMaterialId().isEmpty()) {
+					// 在车间中减少物料
+					BigDecimal bomAmount =element.getDetailId()==null? gValue.getBigDecimal("volume").multiply(element.getConsumeQty()):element.getConsumeQty();
+					
+					GenericValue workshopStock = delegator.makeValue("CurSaveWorkshopBalance");
+					workshopStock.set("id", UUID.randomUUID().toString());
+					workshopStock.set("workshopId", gValue.getString("workshopWorkshopId"));
+					workshopStock.set("materialId", element.getMaterialId());
+					workshopStock.set("number", entryId);
+					workshopStock.set("volume", bomAmount.negate());
+					workshopStock.set("totalSum", BigDecimal.ZERO);
+					workshopStock.create();
 				}
 			}
 		}
