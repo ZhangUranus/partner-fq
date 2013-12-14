@@ -29,15 +29,9 @@ Ext.define('SCM.view.rpt.sdr.CurrentStockUI', {
 												},{
 													xtype : 'textfield',
 													name : 'warehouse',
-													minWidth : 200,
-													labelWidth : 80,
-													fieldLabel : '仓库名称'
-												},{
-													xtype : 'textfield',
-													name : 'supplier',
-													minWidth : 180,
-													labelWidth : 60,
-													fieldLabel : '客户'
+													minWidth : 240,
+													labelWidth : 120,
+													fieldLabel : '仓库/车间/客户'
 												},{
 													text : '查询',
 													iconCls : 'system-search',

@@ -37,7 +37,6 @@ Ext.define('SCM.controller.rpt.CurrentStockQryController', {
 				this.searchEndDate = view.down('datefield[name=searchEndDate]');
 				this.material = view.down('textfield[name=material]');
 				this.warehouse = view.down('textfield[name=warehouse]');
-				this.supplier = view.down('textfield[name=supplier]');
 			},
 
 			/**
@@ -57,11 +56,6 @@ Ext.define('SCM.controller.rpt.CurrentStockQryController', {
 					this.listPanel.store.getProxy().extraParams.warehouse = "";
 				}
 				
-				if (!Ext.isEmpty(this.supplier.getValue())) {
-					this.listPanel.store.getProxy().extraParams.supplier = this.supplier.getValue();
-				} else {
-					this.listPanel.store.getProxy().extraParams.supplier = "";
-				}
 				this.listPanel.store.load();
 			},
 			/**
