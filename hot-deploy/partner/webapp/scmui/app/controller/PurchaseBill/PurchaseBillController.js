@@ -148,7 +148,7 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 				record.set('buyerDepartmentId', SCM.CurrentUser.departmentId);
 				record.set('payType', '月结');
 				record.set('tax', 'VAT17%');
-				record.set('deliveryAddr', '江门市蓬江区潮连卢边工业区青年公路162号');
+				record.set('deliveryAddr', SCM.DeliveryAddr);
 			},
 
 			/**
