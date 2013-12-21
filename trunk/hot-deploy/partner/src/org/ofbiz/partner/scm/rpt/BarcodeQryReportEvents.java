@@ -111,7 +111,7 @@ public class BarcodeQryReportEvents {
 		sql.append(" 					ID, \r\n");
 		sql.append(" 					BIZ_DATE \r\n");
 		sql.append(" 				FROM PRODUCT_OUTWAREHOUSE \r\n");
-		sql.append(" 				WHERE STATUS = 4 \r\n");
+		sql.append(" 				WHERE STATUS IN (0,4) \r\n");
 		sql.append(" 				AND BIZ_DATE BETWEEN '"+startDate+"' AND '"+endDate+"' \r\n");
 		sql.append(" 			) HEAD  \r\n");
 		sql.append(" 		INNER JOIN PRODUCT_OUTWAREHOUSE_ENTRY ENTRY ON HEAD.ID = ENTRY.PARENT_ID \r\n");

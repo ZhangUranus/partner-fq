@@ -43,6 +43,10 @@ Ext.define('SCM.view.rpt.pr.ListOutStatUI', {
 													text : '导出',
 													iconCls : 'system-export',
 													action : 'export'
+												}, {
+													text : '导出明细',
+													iconCls : 'system-exportDetail',
+													action : 'exportDetail'
 												}]
 									}, {
 										xtype : 'gridpanel',
@@ -106,11 +110,11 @@ Ext.define('SCM.view.rpt.pr.ListOutStatUI', {
 													width : 40
 												}, {
 													xtype : 'datecolumn',
-													dataIndex : 'PLAN_DELIVERY_DATE',
+													dataIndex : 'BIZ_DATE',
 													width : 120,
 													format : 'Y-m-d',
 													groupable : false,
-													text : '计划出货日期',
+													text : '出货日期',
 													summaryType: 'count',
 													summaryRenderer: function(value, summaryData, dataIndex) {
 														return '<p style="color:blue;font-size:12px;font-family:tahoma,arial,verdana,sans-serif">汇总</p>';

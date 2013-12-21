@@ -25,6 +25,10 @@ Ext.define('SCM.controller.rpt.ProductOutReportController', {
 							// 数据导出
 							'productoutreport button[action=export]' : {
 								click : this.exportExcel
+							},
+							// 数据导出
+							'productoutreport button[action=exportDetail]' : {
+								click : this.exportDetailExcel
 							}
 						});
 			},
@@ -116,6 +120,29 @@ Ext.define('SCM.controller.rpt.ProductOutReportController', {
 					params.sort = Ext.encode(getSorters());
 					params.report = 'POR';
 					params.title = '成品出货情况'; // sheet页名称
+					params.header = header; // 表头
+					params.dataIndex = dataIndex; // 数据引用
+					params.pattern = 'SQL';
+					params.type = 'EXCEL';
+					return params;
+				}
+			},
+			
+			/**
+			 * 获取报表参数
+			 * 
+			 * @return {}
+			 */
+			getDetailParams : function() {
+				var header = "产品名称,出货日期,货号,数量";
+				var dataIndex = "MATERIAL_NAME,BIZ_DATE,GOOD_NUMBER,VOLUME";
+				
+				with (this.detailPanel.store) {
+					var params = getProxy().extraParams;
+
+					// 页面参数
+					params.report = 'PORD';
+					params.title = '成品出货情况明细'; // sheet页名称
 					params.header = header; // 表头
 					params.dataIndex = dataIndex; // 数据引用
 					params.pattern = 'SQL';

@@ -63,6 +63,8 @@ public class DataFetchEvents {
 			list = getProductReportList(request);
 		} else if("POR".equals(request.getParameter("report"))){
 			list = getProductOutReportList(request);
+		} else if("PORD".equals(request.getParameter("report"))){
+			list = queryProductOutReportDetailList(request);
 		} else if("SPC".equals(request.getParameter("report"))){
 			list = getSemiProductCostReportList(request);
 		} else if("SL".equals(request.getParameter("report"))){
@@ -1211,13 +1213,36 @@ public class DataFetchEvents {
 	}
 	
 	/**
-	 * 获取成品出货情况明细SQL
+	 * 成品出货情况明细
 	 * @param request
 	 * @param response
 	 * @return
 	 * @throws Exception
 	 */
 	public static String queryProductOutReportDetail(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(request,getProductOutReportDetailSql(request)));
+		return "sucess";
+	}
+	
+	/**
+	 * 获取成品出货情况明细
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public static List<Map<String ,Object>> queryProductOutReportDetailList(HttpServletRequest request) throws Exception {
+		return getListWithSQL(request,getProductOutReportDetailSql(request));
+	}
+	
+	/**
+	 * 获取成品出货情况明细SQL
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public static String getProductOutReportDetailSql(HttpServletRequest request) throws Exception {
 		String year = null;
 		String month = null;
 		String material_id = null;
@@ -1233,19 +1258,22 @@ public class DataFetchEvents {
 			material_id = request.getParameter("material_id");
 		}
 		
-		String sql =" SELECT "+
-				"   PON.PLAN_DELIVERY_DATE, "+
-				"   PON.GOOD_NUMBER, "+
-				"   SUM(IFNULL(PONE.VOLUME,0)) AS VOLUME "+
-				" FROM PRODUCT_OUT_NOTIFICATION PON "+
-				" LEFT JOIN PRODUCT_OUT_NOTIFICATION_ENTRY PONE ON PON.ID = PONE.PARENT_ID "+
-				" WHERE YEAR(PON.PLAN_DELIVERY_DATE) = " + year +
-				" AND MONTH(PON.PLAN_DELIVERY_DATE) = " + month +
-				" AND MATERIAL_ID = '" + material_id +"'" +
-				" GROUP BY PON.PLAN_DELIVERY_DATE,PON.GOOD_NUMBER ";
+		String sql = " SELECT \r\n"+
+					" 	TM.NAME AS MATERIAL_NAME, \r\n"+
+					" 	DATE(PO.BIZ_DATE) AS BIZ_DATE, \r\n"+
+					" 	POE.GOOD_NUMBER, \r\n"+
+					" 	SUM(BOARD_COUNT) AS VOLUME  \r\n"+
+					" FROM PRODUCT_OUTWAREHOUSE PO \r\n"+
+					" 	LEFT JOIN PRODUCT_OUTWAREHOUSE_ENTRY POE ON PO.ID=POE.PARENT_ID \r\n"+
+					" 	LEFT JOIN PRODUCT_MAP PM ON POE.MATERIAL_MATERIAL_ID = PM.MATERIAL_ID \r\n"+
+					" 	LEFT JOIN T_MATERIAL TM ON PM.ENTRY_MATERIAL_ID = TM.ID \r\n"+
+					" WHERE YEAR(PO.BIZ_DATE) = "+year+" \r\n"+
+					" 	AND MONTH(PO.BIZ_DATE) ="+month+" \r\n"+
+					" 	AND PM.ENTRY_MATERIAL_ID='"+material_id+"' \r\n"+
+					" 	AND POE.OUTWAREHOUSE_TYPE=1 \r\n"+
+					" GROUP BY TM.NAME,DATE(PO.BIZ_DATE),POE.GOOD_NUMBER ";
 		
-		CommonEvents.writeJsonDataToExt(response, executeSelectSQL(request,sql));
-		return "sucess";
+		return sql;
 	}
 	
 	/**

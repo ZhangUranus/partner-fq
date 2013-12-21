@@ -7,7 +7,7 @@ Ext.define('SCM.store.rpt.ProductOutReportDetailStore', {
 			autoLoad : false,
 			autoSync : false,
 			sorters : [{// 根据PLAN_DELIVERY_DATE字段排序
-				property : 'PLAN_DELIVERY_DATE',
+				property : 'BIZ_DATE',
 				direction : 'ASC'
 			}]
 		});

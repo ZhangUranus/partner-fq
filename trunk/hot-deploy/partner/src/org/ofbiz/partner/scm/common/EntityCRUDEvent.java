@@ -229,6 +229,7 @@ public class EntityCRUDEvent {
 		// 循环每个记录更新
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
 		String entityName = request.getParameter("entity").toString();
+		List<GenericValue> valueList = new ArrayList<GenericValue>();
 		for (Object r : records) {
 			JSONObject record = (JSONObject) r;// 单条记录
 			GenericValue v = delegator.makeValue(entityName);// 新建一个值对象
@@ -283,14 +284,14 @@ public class EntityCRUDEvent {
 			}
 			try {
 				delegator.store(v);
-				List<GenericValue> valueList = new ArrayList<GenericValue>();
 				valueList.add(v);
-				String jsonStr = getJsonFromGenValList(valueList,1); // 将查询结果转换为json字符串
-				CommonEvents.writeJsonDataToExt(response, jsonStr); // 将结果返回前端Ext
 			} catch (GenericEntityException e) {
 				throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "UpdateRecordToDBEntityException"));
 			}
 		}
+
+		String jsonStr = getJsonFromGenValList(valueList,1); // 将查询结果转换为json字符串
+		CommonEvents.writeJsonDataToExt(response, jsonStr); // 将结果返回前端Ext
 		return "success";
 
 	}

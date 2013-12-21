@@ -65,8 +65,8 @@ Ext.define('SCM.controller.rpt.CurrentStockQryController', {
 			 */
 			getParams : function() {
 				var tempheader = this.listPanel.headerCt.query('{isVisible()}');
-				var header = "";
-				var dataIndex = "";
+				var header = "产品名称,";
+				var dataIndex = "MATERIAL_NAME,";
 				var count = 0;
 				Ext.each(tempheader, function(column, index, length) {
 							if (column.xtype != 'rownumberer') {
