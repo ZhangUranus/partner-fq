@@ -5,7 +5,10 @@ Ext.define('SCM.model.rpt.ProductOutReportDetailModel', {
 	requires : [ 'SCM.extend.proxy.JsonAjax' ],
 	fields : [// 字段
 	{
-		name : 'PLAN_DELIVERY_DATE',
+	    name : 'MATERIAL_NAME',
+	    type : 'string'
+	},{
+		name : 'BIZ_DATE',
 		type : 'date',
 		defaultValue : new Date(),
 		convert : function(value, record) {
