@@ -93,7 +93,7 @@ public class ProductReturnEvents {
 						ProductBarcodeBoxMgr.getInstance().update(barcode.getCodeForIkea(),barcode.getProductWeek(),materialId,v.getString("warehouseWarehouseId"),barcode1, barcode2,new BigDecimal(barcode.getQuantity()), false);
 						
 						// 成品汇总表
-						WeeklyStockMgr.getInstance().updateStock(materialId, bizDate, ProductStockType.IN, volume, false);
+						WeeklyStockMgr.getInstance().updateStock(materialId, bizDate, ProductStockType.CHG, volume, false);
 						
 						//综合成品账
 						ProductInOutStockMgr.getInstance().updateStock(materialId, ProductStockType.IN, qantity, volume, false);
@@ -174,7 +174,7 @@ public class ProductReturnEvents {
 						ProductBarcodeBoxMgr.getInstance().update(null,null,null,null,barcode1, barcode2,null, true);
 						
 						// 成品周汇总表
-						WeeklyStockMgr.getInstance().updateStock(materialId, bizDate, ProductStockType.IN, volume, true);
+						WeeklyStockMgr.getInstance().updateStock(materialId, bizDate, ProductStockType.CHG, volume, true);
 						
 						// 综合成品账
 						ProductInOutStockMgr.getInstance().updateStock(materialId, ProductStockType.IN, qantity, volume, true);

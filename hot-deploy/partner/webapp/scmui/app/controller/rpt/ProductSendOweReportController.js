@@ -79,6 +79,7 @@ Ext.define('SCM.controller.rpt.ProductSendOweReportController', {
 					this.detailPanel.store.getProxy().extraParams.materialId =record.get('MATERIAL_ID');
 					this.detailPanel.store.getProxy().extraParams.materialName =record.get('MATERIAL_NAME');
 					this.detailPanel.store.getProxy().extraParams.preWeekBal =record.get('LAST_WEEK_BAL_QTY');
+					this.detailPanel.store.getProxy().extraParams.preWeekOwe =record.get('LAST_WEEK_OWE_QTY');
 					this.detailPanel.store.load();
 				}
 			},
