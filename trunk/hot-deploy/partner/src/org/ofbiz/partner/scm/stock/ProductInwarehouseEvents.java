@@ -98,7 +98,7 @@ public class ProductInwarehouseEvents {
 					// 如果是扫描单据，在扫描时已经更新了周汇总和综合成品账报表数据，提交时不需要重复处理
 					if(!isScanBill){
 						ProductStockType type = ProductStockType.IN;
-						if("2".equals(v.getString("inwarehouseType"))){
+						if("2".equals(v.getString("inwarehouseType")) || "3".equals(v.getString("inwarehouseType"))){
 							type = ProductStockType.CHG;
 						}
 						
@@ -194,7 +194,7 @@ public class ProductInwarehouseEvents {
 					if(!isScanBill){
 						// 进仓类型
 						ProductStockType type = ProductStockType.IN;
-						if("2".equals(v.getString("inwarehouseType"))){
+						if("2".equals(v.getString("inwarehouseType")) || "3".equals(v.getString("inwarehouseType"))){
 							type = ProductStockType.CHG;
 						}
 						
@@ -347,7 +347,7 @@ public class ProductInwarehouseEvents {
 			delegator.create(entryValue);
 			
 			ProductStockType type = ProductStockType.IN;
-			if("2".equals(inWarehouseType)){
+			if("2".equals(inWarehouseType) || "3".equals(inWarehouseType)){
 				type = ProductStockType.CHG;
 			}
 			
@@ -472,7 +472,7 @@ public class ProductInwarehouseEvents {
 			Long qantity = entryValue.getLong("qantity");// 板数量（一板有多少产品）
 			
 			ProductStockType type = ProductStockType.IN;
-			if("2".equals(entryValue.getString("inwarehouseType"))){
+			if("2".equals(entryValue.getString("inwarehouseType")) || "3".equals(entryValue.getString("inwarehouseType"))){
 				type = ProductStockType.CHG;
 			}
 			

@@ -23,92 +23,7 @@ import org.ofbiz.partner.scm.pricemgr.Utils;
 public class ProductSendOweReportEvents {
 	static final SimpleDateFormat timeFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	static final SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
-	/*
-	 * 查询周出入库汇总情况
-	select week ,MATERIAL_ID,MATERIAL_NAME ,
-	sum(LAST_WEEK_BAL_QTY) as LAST_WEEK_BAL_QTY,
-	sum(THIS_WEEK_OUT_QTY) as THIS_WEEK_OUT_QTY,
-	sum(THIS_WEEK_IN_QTY)  as THIS_WEEK_IN_QTY,
-	sum(THIS_WEEK_CHG_QTY) as THIS_WEEK_CHG_QTY,
-	sum(LAST_WEEK_BAL_QTY)-sum(THIS_WEEK_OUT_QTY)+sum(THIS_WEEK_IN_QTY)+sum(THIS_WEEK_CHG_QTY) as THIS_WEEK_BAL_QTY,
-	sum(THIS_WEEK_PLN_QTY) as THIS_WEEK_PLN_QTY,
-	sum(THIS_WEEK_IN_QTY)+sum(LAST_WEEK_BAL_QTY)+sum(THIS_WEEK_CHG_QTY)-sum(THIS_WEEK_PLN_QTY) as THIS_WEEK_OWE_QTY,
-	sum(STOCKING) as STOCKING,
-	sum(STOCKINGBAL) as STOCKINGBAL from (
 	
-	//查询上周库存余额
-    SELECT
-		'2012-30W' as week,
-		weekinout.material_id as MATERIAL_ID,
-		material.name as MATERIAL_NAME,
-		sum(weekinout.week_Bal_Qty) as LAST_WEEK_BAL_QTY,
-		0 as THIS_WEEK_OUT_QTY,
-		0 as THIS_WEEK_IN_QTY,
-		0 as THIS_WEEK_CHG_QTY,
-		0 as THIS_WEEK_BAL_QTY,
-		0 as THIS_WEEK_PLN_QTY,
-		0 as THIS_WEEK_OWE_QTY,
-		0 as STOCKING,
-		0 as STOCKINGBAL
-		FROM prd_in_out_week_detail weekinout
-		inner join t_material material on weekinout.material_id=material.id
-		where weekinout.week<'2012-30W'
-		group by weekinout.material_id,material.name,weekinout.week
-		union all
-		//查询本周进出改
-		SELECT
-		'2012-30W' as week,
-		weekinout.material_id as MATERIAL_ID,
-		material.name as MATERIAL_NAME,
-		0 as LAST_WEEK_BAL_QTY,
-		sum(ifnull(weekinout.sun_nor_out_qty,0))+sum(ifnull(weekinout.mon_nor_out_qty,0))+sum(ifnull(weekinout.tue_nor_out_qty,0))
-		+sum(ifnull(weekinout.wen_nor_out_qty,0))+sum(ifnull(weekinout.thu_nor_out_qty,0))+sum(ifnull(weekinout.fri_nor_out_qty,0))
-		+sum(ifnull(weekinout.sta_nor_out_qty,0)) as THIS_WEEK_OUT_QTY,
-		
-		sum(ifnull(weekinout.sun_nor_in_qty,0))+sum(ifnull(weekinout.mon_nor_in_qty,0))+sum(ifnull(weekinout.tue_nor_in_qty,0))
-		+sum(ifnull(weekinout.wen_nor_in_qty,0))+sum(ifnull(weekinout.thu_nor_in_qty,0))+sum(ifnull(weekinout.fri_nor_in_qty,0))
-		+sum(ifnull(weekinout.sta_nor_in_qty,0))  as THIS_WEEK_IN_QTY,
-		
-		sum(ifnull(weekinout.sun_chg_brd_qty,0))+sum(ifnull(weekinout.mon_chg_brd_qty,0))+sum(ifnull(weekinout.tue_chg_brd_qty,0))
-		+sum(ifnull(weekinout.wen_chg_brd_qty,0))+sum(ifnull(weekinout.thu_chg_brd_qty,0))+sum(ifnull(weekinout.fri_chg_brd_qty,0))
-		+sum(ifnull(weekinout.sta_chg_brd_qty,0))  as THIS_WEEK_CHG_QTY,
-		
-		0 as THIS_WEEK_BAL_QTY,
-		0 as THIS_WEEK_PLN_QTY,
-		0 as THIS_WEEK_OWE_QTY,
-		0 as STOCKING,
-		0 as STOCKINGBAL
-		FROM prd_in_out_week_detail weekinout
-		inner join t_material material on weekinout.material_id=material.id
-		where weekinout.week='2012-30W'
-		group by weekinout.material_id,material.name,weekinout.week
-		
-    union all
-    //查询本周欠货
- 		SELECT
-		'2012-30W' as week,
-		verifyEntry.material_id as MATERIAL_ID,
-		material.name as MATERIAL_NAME,
-		0 as LAST_WEEK_BAL_QTY,
-		0 as THIS_WEEK_OUT_QTY,
-		0 as THIS_WEEK_IN_QTY,
-		0 as THIS_WEEK_CHG_QTY,
-		0 as THIS_WEEK_BAL_QTY,
-		0 as THIS_WEEK_PLN_QTY,
-		sum(ifnull(verifyEntry.order_Qty,0)) as THIS_WEEK_OWE_QTY,
-		sum(ifnull(material.safe_Stock,0) )as STOCKING,
-		sum(ifnull(verifyEntry.order_Qty,0))-sum(ifnull(verifyEntry.sent_Qty,0))-sum(ifnull(material.safe_Stock,0) ) as STOCKINGBAL
-		FROM Product_Out_Notification notification
-		inner  join Product_Out_Notification_Entry notificationEntry on notificationEntry.parent_Id=notification.id
-    	inner  join Product_Out_Verify_entry verifyEntry on (notification.deliver_number=verifyEntry.deliver_number and notificationEntry.material_id=verifyEntry.parent_material_id)
-	  	inner join t_material material on verifyEntry.material_id=material.id
-	  	where notification.plan_Delivery_Date>=DATE('2012-7-22 00:00:00.000') and notification.plan_Delivery_Date<=DATE('2012-7-28 23:59:59.999') and
-    	notification.status=4
-	  	group by verifyEntry.material_id , material.name
-
-) t group by week ,MATERIAL_ID,MATERIAL_NAME
-		
-	 * */
 	public static String queryMainData(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		CommonEvents.writeJsonDataToExt(response, DataFetchEvents.executeSelectSQL(request,getMainDataSql(request)));
 		
@@ -134,10 +49,6 @@ public class ProductSendOweReportEvents {
 		lastWeekStr = Utils.getYearWeekStr(cal.getTime());
 		lastWeekDatePeriod = Utils.getDatePeriodFromWeekStr(lastWeekStr);
 		
-//		if(request.getParameter("searchMaterialId")!=null&&request.getParameter("searchMaterialId").trim().length()>0){
-//			filterMaterial.append(" and  material.id='").append(request.getParameter("searchMaterialId")).append("'");
-//		}
-		
 		if(request.getParameter("keyWord")!=null&&request.getParameter("keyWord").trim().length()>0){
 			filterMaterial.append(" and  (tm.name like '%").append(request.getParameter("keyWord")).append("%' or tm.number like '%").append(request.getParameter("keyWord")).append("%')");
 			filterMaterialEntry.append(" and  (tme.name like '%").append(request.getParameter("keyWord")).append("%' or tme.number like '%").append(request.getParameter("keyWord")).append("%')");
@@ -149,7 +60,7 @@ public class ProductSendOweReportEvents {
 				"	ENTRY_MATERIAL_NAME,\r\n"+
 				"	T.MATERIAL_ID,\r\n"+
 				"	MATERIAL_NAME,\r\n"+
-				"	SUM(LAST_WEEK_BAL_QTY) AS LAST_WEEK_BAL_QTY,\r\n"+
+				"	SUM(LAST_WEEK_IN_QTY)+SUM(LAST_WEEK_CHG_QTY)-SUM(LAST_WEEK_PLN_QTY) AS LAST_WEEK_OWE_QTY,\r\n"+
 				"	SUM(THIS_WEEK_OUT_QTY) AS THIS_WEEK_OUT_QTY,\r\n"+
 				"	SUM(THIS_WEEK_IN_QTY) AS THIS_WEEK_IN_QTY,\r\n"+
 				"	SUM(THIS_WEEK_CHG_QTY) AS THIS_WEEK_CHG_QTY,\r\n"+
@@ -158,15 +69,14 @@ public class ProductSendOweReportEvents {
 				"	SUM(LAST_WEEK_IN_QTY)+SUM(LAST_WEEK_CHG_QTY)-SUM(LAST_WEEK_PLN_QTY)+SUM(THIS_WEEK_IN_QTY)+SUM(THIS_WEEK_CHG_QTY)-SUM(THIS_WEEK_PLN_QTY) AS THIS_WEEK_OWE_QTY,\r\n"+
 				"	SUM(LAST_WEEK_IN_QTY*BOARD_COUNT)+SUM(LAST_WEEK_CHG_QTY*BOARD_COUNT)-SUM(LAST_WEEK_PLN_QTY*BOARD_COUNT)+SUM(THIS_WEEK_IN_QTY*BOARD_COUNT)+SUM(THIS_WEEK_CHG_QTY*BOARD_COUNT)-SUM(THIS_WEEK_PLN_QTY*BOARD_COUNT) AS AGGREGATE_BALANCE,\r\n"+
 				"	SUM(STOCKING) AS STOCKING,\r\n"+
-				"	SUM(LAST_WEEK_IN_QTY*BOARD_COUNT)+SUM(LAST_WEEK_CHG_QTY*BOARD_COUNT)-SUM(LAST_WEEK_PLN_QTY*BOARD_COUNT)+SUM(THIS_WEEK_IN_QTY*BOARD_COUNT)+SUM(THIS_WEEK_CHG_QTY*BOARD_COUNT)-SUM(THIS_WEEK_PLN_QTY*BOARD_COUNT)-SUM(STOCKING) AS STOCKINGBAL,\r\n"+
-				"	SUM(LAST_WEEK_IN_QTY)+SUM(LAST_WEEK_CHG_QTY)-SUM(LAST_WEEK_PLN_QTY) AS LAST_WEEK_OWE_QTY\r\n"+
+				"	SUM(LAST_WEEK_IN_QTY*BOARD_COUNT)+SUM(LAST_WEEK_CHG_QTY*BOARD_COUNT)-SUM(LAST_WEEK_PLN_QTY*BOARD_COUNT)+SUM(THIS_WEEK_IN_QTY*BOARD_COUNT)+SUM(THIS_WEEK_CHG_QTY*BOARD_COUNT)-SUM(THIS_WEEK_PLN_QTY*BOARD_COUNT)-SUM(STOCKING) AS STOCKINGBAL \r\n"+
 				"FROM (    \r\n"+
 				"		SELECT '"+	weekStr+"' as WEEK,\r\n"+
 				"			1 AS sort,\r\n"+
 				"			TME.NAME AS ENTRY_MATERIAL_NAME,\r\n"+
 				"			WEEKINOUT.MATERIAL_ID AS MATERIAL_ID,\r\n"+
 				"			TM.NAME AS MATERIAL_NAME,\r\n"+
-				"			SUM(WEEKINOUT.WEEK_BAL_QTY) AS LAST_WEEK_BAL_QTY,\r\n"+
+				"			SUM(IFNULL(WEEKINOUT.WEEK_BAL_QTY,0)) AS LAST_WEEK_BAL_QTY,\r\n"+
 				"			0 AS THIS_WEEK_OUT_QTY,\r\n"+
 				"			0 AS THIS_WEEK_IN_QTY,\r\n"+
 				"			0 AS THIS_WEEK_CHG_QTY,\r\n"+
@@ -175,7 +85,6 @@ public class ProductSendOweReportEvents {
 				"			0 AS THIS_WEEK_OWE_QTY,\r\n"+
 				"			AVG(IFNULL(TM.SAFE_STOCK,0)) AS STOCKING,\r\n"+
 				"			AVG(IFNULL(PM.BOARD_COUNT,0)) AS BOARD_COUNT,\r\n"+
-				"			0 AS STOCKINGBAL,\r\n"+
 				"			SUM(IFNULL(WEEKINOUT.SUN_NOR_IN_QTY,0))+SUM(IFNULL(WEEKINOUT.MON_NOR_IN_QTY,0))+SUM(IFNULL(WEEKINOUT.TUE_NOR_IN_QTY,0))+SUM(IFNULL(WEEKINOUT.WEN_NOR_IN_QTY,0))+SUM(IFNULL(WEEKINOUT.THU_NOR_IN_QTY,0))+SUM(IFNULL(WEEKINOUT.FRI_NOR_IN_QTY,0))+SUM(IFNULL(WEEKINOUT.STA_NOR_IN_QTY,0)) AS LAST_WEEK_IN_QTY,\r\n"+
 				"			SUM(IFNULL(WEEKINOUT.SUN_CHG_BRD_QTY,0))+SUM(IFNULL(WEEKINOUT.MON_CHG_BRD_QTY,0))+SUM(IFNULL(WEEKINOUT.TUE_CHG_BRD_QTY,0))+SUM(IFNULL(WEEKINOUT.WEN_CHG_BRD_QTY,0))+SUM(IFNULL(WEEKINOUT.THU_CHG_BRD_QTY,0))+SUM(IFNULL(WEEKINOUT.FRI_CHG_BRD_QTY,0))+SUM(IFNULL(WEEKINOUT.STA_CHG_BRD_QTY,0)) AS LAST_WEEK_CHG_QTY,\r\n"+
 				"			0 AS LAST_WEEK_PLN_QTY\r\n"+
@@ -185,7 +94,7 @@ public class ProductSendOweReportEvents {
 				"		INNER JOIN T_MATERIAL TME ON PM.ENTRY_MATERIAL_ID=TME.ID \r\n"+
 				"		WHERE WEEKINOUT.WEEK<'"+weekStr+"' \r\n"+
 				"		AND LENGTH(PM.IKEA_ID) = 8 \r\n"+
-				"		GROUP BY TME.NAME,WEEKINOUT.MATERIAL_ID,TM.NAME,WEEKINOUT.WEEK	\r\n"+
+				"		GROUP BY TME.NAME,WEEKINOUT.MATERIAL_ID,TM.NAME 	\r\n"+
 				"		UNION ALL	\r\n"+
 				"		SELECT'"+weekStr+"' AS WEEK,\r\n"+
 				"			1 AS sort,\r\n"+
@@ -201,7 +110,6 @@ public class ProductSendOweReportEvents {
 				"			0 AS THIS_WEEK_OWE_QTY,\r\n"+
 				"			AVG(IFNULL(TM.SAFE_STOCK,0)) AS STOCKING,\r\n"+
 				"			AVG(IFNULL(PM.BOARD_COUNT,0)) AS BOARD_COUNT,\r\n"+
-				"			0 AS STOCKINGBAL,\r\n"+
 				"			0 AS LAST_WEEK_IN_QTY,\r\n"+
 				"			0 AS LAST_WEEK_CHG_QTY,\r\n"+
 				"			0 AS LAST_WEEK_PLN_QTY\r\n"+
@@ -211,7 +119,7 @@ public class ProductSendOweReportEvents {
 				"		INNER JOIN T_MATERIAL TME ON PM.ENTRY_MATERIAL_ID=TME.ID \r\n"+
 				"		WHERE WEEKINOUT.WEEK='"+weekStr+"' \r\n"+
 				"		AND LENGTH(PM.IKEA_ID) = 8 \r\n"+
-				"		GROUP BY TME.NAME,WEEKINOUT.MATERIAL_ID,TM.NAME,WEEKINOUT.WEEK \r\n"+
+				"		GROUP BY TME.NAME,WEEKINOUT.MATERIAL_ID,TM.NAME  \r\n"+
 				"		UNION ALL	\r\n"+
 				"		SELECT\r\n"+
 				"			'"+weekStr+"' AS WEEK,\r\n"+
@@ -228,7 +136,6 @@ public class ProductSendOweReportEvents {
 				"			0 AS THIS_WEEK_OWE_QTY,\r\n"+
 				"			AVG(IFNULL(T1.SAFE_STOCK,0)) AS STOCKING,\r\n"+
 				"			AVG(IFNULL(T1.BOARD_COUNT,0)) AS BOARD_COUNT,\r\n"+
-				"			SUM(IFNULL(T1.ORDER_QTY,0))-SUM(IFNULL(T1.SENT_QTY,0))-AVG(IFNULL(T1.SAFE_STOCK,0) ) AS STOCKINGBAL,\r\n"+
 				"			0 AS LAST_WEEK_IN_QTY,\r\n"+
 				"			0 AS LAST_WEEK_CHG_QTY,\r\n"+
 				"			0 AS LAST_WEEK_PLN_QTY\r\n"+
@@ -271,7 +178,6 @@ public class ProductSendOweReportEvents {
 				"			0 AS THIS_WEEK_OWE_QTY,\r\n"+
 				"			AVG(IFNULL(T2.SAFE_STOCK,0)) AS STOCKING,\r\n"+
 				"			AVG(IFNULL(T2.BOARD_COUNT,0)) AS BOARD_COUNT,\r\n"+
-				"			0 AS STOCKINGBAL,\r\n"+
 				"			0 AS LAST_WEEK_IN_QTY,\r\n"+
 				"			0 AS LAST_WEEK_CHG_QTY,\r\n"+
 				"			SUM(IFNULL(T2.ORDER_QTY,0)) AS LAST_WEEK_PLN_QTY\r\n"+
@@ -313,7 +219,6 @@ public class ProductSendOweReportEvents {
 				"			0 AS THIS_WEEK_OWE_QTY,\r\n"+
 				"			AVG(IFNULL(TME.SAFE_STOCK,0)) AS STOCKING,\r\n"+
 				"			1 AS BOARD_COUNT,\r\n"+
-				"			0 AS STOCKINGBAL,\r\n"+
 				"			0 AS LAST_WEEK_IN_QTY,\r\n"+
 				"			0 AS LAST_WEEK_CHG_QTY,\r\n"+
 				"			0 AS LAST_WEEK_PLN_QTY\r\n"+
@@ -340,7 +245,6 @@ public class ProductSendOweReportEvents {
 				"			0 AS THIS_WEEK_OWE_QTY,\r\n"+
 				"			AVG(IFNULL(TME.SAFE_STOCK,0)) AS STOCKING,\r\n"+
 				"			1 AS BOARD_COUNT,\r\n"+
-				"			0 AS STOCKINGBAL,\r\n"+
 				"			0 AS LAST_WEEK_IN_QTY,\r\n"+
 				"			0 AS LAST_WEEK_CHG_QTY,\r\n"+
 				"			SUM(IFNULL(NOTIFICATIONENTRY.VOLUME,0)) AS LAST_WEEK_PLN_QTY\r\n"+
@@ -364,18 +268,26 @@ public class ProductSendOweReportEvents {
 	 * @throws Exception
 	 */
 	public static String queryDetailData(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		/*
+		 * 1.欠货情况(THIS_DAY_OWE_QTY)= 库存板数(THIS_DAY_BAL_QTY)-计划出仓板数(THIS_DAY_PLN_QTY)
+		 * 2.库存板数(THIS_DAY_BAL_QTY) = 昨天的欠货情况(THIS_DAY_OWE_QTY) + 进货总板数(THIS_DAY_IN_QTY) + 改版总板数(THIS_DAY_CHG_QTY)
+		 * 
+		 */
 		String weekStr;//查询周
 		String materialId;//物料id
 		String materialName;//物料名称
 		String preWeekBalStr;//上周库存余额
+		String preWeekOweStr; //上周欠数情况
 		if(request.getParameter("week")==null||request.getParameter("week").trim().length()<1)throw new Exception("周不能为空！");
 		if(request.getParameter("materialId")==null||request.getParameter("materialId").trim().length()<1)throw new Exception("物料不能为空！");
 		if(request.getParameter("materialName")==null||request.getParameter("materialName").trim().length()<1)throw new Exception("物料名称不能为空！");
 		if(request.getParameter("preWeekBal")==null||request.getParameter("preWeekBal").trim().length()<1)throw new Exception("上周库存余额不能为空！");
+		if(request.getParameter("preWeekOwe")==null||request.getParameter("preWeekOwe").trim().length()<1)throw new Exception("上周欠数情况不能为空！");
 		weekStr=request.getParameter("week");
 		materialId=request.getParameter("materialId");
 		materialName=request.getParameter("materialName");
 		preWeekBalStr=request.getParameter("preWeekBal");
+		preWeekOweStr=request.getParameter("preWeekOwe");
 		DatePeriod  dp=Utils.getDatePeriodFromWeekStr(weekStr);
 		
 		//查询对应的周汇总表记录
@@ -410,19 +322,65 @@ public class ProductSendOweReportEvents {
 		
 		
 		StringBuffer plnQtySql=new StringBuffer();
-		plnQtySql.append("select sum(ifnull(order_Qty,0)) as THIS_WEEK_PLN_QTY from (\r\n" );
-		plnQtySql.append("SELECT\r\n" );
-		plnQtySql.append("distinct\r\n" );
-		plnQtySql.append("verifyEntry.id,\r\n" );
-		plnQtySql.append("verifyEntry.material_id,\r\n" );
-		plnQtySql.append("verifyEntry.order_qty\r\n" );
-		plnQtySql.append("FROM Product_Out_Notification notification\r\n" );
-		plnQtySql.append("inner  join Product_Out_Notification_Entry notificationEntry on notificationEntry.parent_Id=notification.id\r\n" );
-		plnQtySql.append("inner  join Product_Out_Verify_entry verifyEntry on (notification.deliver_number=verifyEntry.deliver_number and notificationEntry.material_id=verifyEntry.parent_material_id)\r\n" );
-		plnQtySql.append("where  notification.plan_Delivery_Date>=? and notification.plan_Delivery_Date<=?  and verifyEntry.material_id=? and  notification.status=4\r\n" );
-		plnQtySql.append(") t\r\n" );
-		plnQtySql.append("group by t.material_id\r\n" );
+		plnQtySql.append(" SELECT  \r\n" );
+		plnQtySql.append(" 	SUM(ORDER_QTY) AS THIS_WEEK_PLN_QTY \r\n" );
+		plnQtySql.append(" FROM ( \r\n" );
+		plnQtySql.append(" 	SELECT \r\n" );
+		plnQtySql.append(" 		DISTINCT \r\n" );
+		plnQtySql.append(" 	  	VERIFYENTRY.ID, \r\n" );
+		plnQtySql.append(" 	  	VERIFYENTRY.MATERIAL_ID, \r\n" );
+		plnQtySql.append(" 		IFNULL(VERIFYENTRY.ORDER_QTY,0) AS ORDER_QTY \r\n" );
+		plnQtySql.append(" 	FROM PRODUCT_OUT_NOTIFICATION NOTIFICATION \r\n" );
+		plnQtySql.append(" 	INNER JOIN PRODUCT_OUT_NOTIFICATION_ENTRY NOTIFICATIONENTRY ON NOTIFICATIONENTRY.PARENT_ID=NOTIFICATION.ID \r\n" );
+		plnQtySql.append(" 	INNER JOIN PRODUCT_OUT_VERIFY_ENTRY VERIFYENTRY ON (NOTIFICATION.DELIVER_NUMBER=VERIFYENTRY.DELIVER_NUMBER AND NOTIFICATIONENTRY.MATERIAL_ID=VERIFYENTRY.PARENT_MATERIAL_ID) \r\n" );
+		plnQtySql.append(" 	WHERE NOTIFICATION.PLAN_DELIVERY_DATE >= ? \r\n" );
+		plnQtySql.append(" 		AND NOTIFICATION.PLAN_DELIVERY_DATE <= ? \r\n" );
+		plnQtySql.append(" 		AND NOTIFICATION.STATUS = 4 \r\n" );
+		plnQtySql.append(" 	AND VERIFYENTRY.MATERIAL_ID = ? \r\n" );
+		plnQtySql.append(" ) T GROUP BY MATERIAL_ID \r\n" );
 		
+		
+		// 可以通过前端传数得到
+//		StringBuffer oweSql =new StringBuffer();
+//		oweSql.append(" SELECT \r\n" );
+//		oweSql.append(" 	SUM(LAST_WEEK_IN_QTY)+SUM(LAST_WEEK_CHG_QTY)-SUM(LAST_WEEK_PLN_QTY) AS LAST_WEEK_OWE_QTY \r\n" );
+//		oweSql.append(" FROM (     \r\n" );
+//		oweSql.append(" 		SELECT WEEKINOUT.MATERIAL_ID AS MATERIAL_ID, \r\n" );
+//		oweSql.append(" 			SUM(IFNULL(WEEKINOUT.SUN_NOR_IN_QTY,0))+SUM(IFNULL(WEEKINOUT.MON_NOR_IN_QTY,0))+SUM(IFNULL(WEEKINOUT.TUE_NOR_IN_QTY,0))+SUM(IFNULL(WEEKINOUT.WEN_NOR_IN_QTY,0))+SUM(IFNULL(WEEKINOUT.THU_NOR_IN_QTY,0))+SUM(IFNULL(WEEKINOUT.FRI_NOR_IN_QTY,0))+SUM(IFNULL(WEEKINOUT.STA_NOR_IN_QTY,0)) AS LAST_WEEK_IN_QTY, \r\n" );
+//		oweSql.append(" 			SUM(IFNULL(WEEKINOUT.SUN_CHG_BRD_QTY,0))+SUM(IFNULL(WEEKINOUT.MON_CHG_BRD_QTY,0))+SUM(IFNULL(WEEKINOUT.TUE_CHG_BRD_QTY,0))+SUM(IFNULL(WEEKINOUT.WEN_CHG_BRD_QTY,0))+SUM(IFNULL(WEEKINOUT.THU_CHG_BRD_QTY,0))+SUM(IFNULL(WEEKINOUT.FRI_CHG_BRD_QTY,0))+SUM(IFNULL(WEEKINOUT.STA_CHG_BRD_QTY,0)) AS LAST_WEEK_CHG_QTY, \r\n" );
+//		oweSql.append(" 			0 AS LAST_WEEK_PLN_QTY \r\n" );
+//		oweSql.append(" 		FROM PRD_IN_OUT_WEEK_DETAIL WEEKINOUT	 \r\n" );
+//		oweSql.append(" 		INNER JOIN PRODUCT_MAP PM ON WEEKINOUT.MATERIAL_ID=PM.MATERIAL_ID  \r\n" );
+//		oweSql.append(" 		WHERE WEEKINOUT.WEEK < ?  \r\n" );
+//		oweSql.append(" 		AND LENGTH(PM.IKEA_ID) = 8  \r\n" );
+//		oweSql.append(" 		GROUP BY WEEKINOUT.MATERIAL_ID  \r\n" );
+//		oweSql.append(" 		UNION ALL	 \r\n" );
+//		oweSql.append(" 		SELECT \r\n" );
+//		oweSql.append(" 			T2.MATERIAL_ID AS MATERIAL_ID, \r\n" );
+//		oweSql.append(" 			0 AS LAST_WEEK_IN_QTY, \r\n" );
+//		oweSql.append(" 			0 AS LAST_WEEK_CHG_QTY, \r\n" );
+//		oweSql.append(" 			SUM(IFNULL(T2.ORDER_QTY,0)) AS LAST_WEEK_PLN_QTY \r\n" );
+//		oweSql.append(" 		FROM (  \r\n" );
+//		oweSql.append(" 			SELECT  \r\n" );
+//		oweSql.append(" 				DISTINCT  \r\n" );
+//		oweSql.append(" 				VERIFYENTRY.ID,  \r\n" );
+//		oweSql.append(" 				VERIFYENTRY.MATERIAL_ID, \r\n" );
+//		oweSql.append(" 				VERIFYENTRY.ORDER_QTY \r\n" );
+//		oweSql.append(" 			FROM PRODUCT_OUT_NOTIFICATION NOTIFICATION \r\n" );
+//		oweSql.append(" 			INNER JOIN PRODUCT_OUT_NOTIFICATION_ENTRY NOTIFICATIONENTRY ON NOTIFICATIONENTRY.PARENT_ID=NOTIFICATION.ID  \r\n" );
+//		oweSql.append(" 			INNER JOIN PRODUCT_OUT_VERIFY_ENTRY VERIFYENTRY ON (NOTIFICATION.DELIVER_NUMBER=VERIFYENTRY.DELIVER_NUMBER AND NOTIFICATIONENTRY.MATERIAL_ID=VERIFYENTRY.PARENT_MATERIAL_ID) \r\n" );
+//		oweSql.append(" 			INNER JOIN PRODUCT_MAP PM ON VERIFYENTRY.MATERIAL_ID=PM.MATERIAL_ID  \r\n" );
+//		oweSql.append(" 			WHERE NOTIFICATION.PLAN_DELIVERY_DATE < ? \r\n" );
+//		oweSql.append(" 				AND NOTIFICATION.STATUS=4 \r\n" );
+//		oweSql.append(" 				AND LENGTH(PM.IKEA_ID) = 8  \r\n" );
+//		oweSql.append(" 			) T2 \r\n" );
+//		oweSql.append(" 		GROUP BY T2.MATERIAL_ID \r\n" );
+//		oweSql.append(" 	) T  \r\n" );
+//		oweSql.append(" LEFT JOIN MATERIAL_BOM MB ON T.MATERIAL_ID = MB.MATERIAL_ID    \r\n" );
+//		oweSql.append(" WHERE MB.VALID = 'Y' \r\n" );
+//		oweSql.append(" 	AND T.MATERIAL_ID = ? \r\n" );
+//		oweSql.append(" GROUP BY T.MATERIAL_ID \r\n" );
+
 				
 		//json 结果
 		JSONObject jsResult=new JSONObject();
@@ -443,7 +401,11 @@ public class ProductSendOweReportEvents {
 			cal.setTime(firstDate);
 			
 			BigDecimal preDayBal=new BigDecimal(preWeekBalStr);//上一天余额
+			BigDecimal preOweQty=new BigDecimal(preWeekOweStr);//前一天欠数情况
+			
 			PreparedStatement plnPs=conn.prepareStatement(plnQtySql.toString());
+//			PreparedStatement owePs=conn.prepareStatement(oweSql.toString());
+			
 			if(rs!=null&&rs.next()){
 				for(int i=1;i<=7;i++){
 					//查询改天的计划出货数
@@ -455,18 +417,31 @@ public class ProductSendOweReportEvents {
 					if(plnRs!=null&&plnRs.next()){
 						plnQty=plnRs.getBigDecimal(1);
 					}
+					
+//					// 本周第一天欠数情况需要通过SQL获得，第二天开始可以通过前一天得到结果获得
+//					if(i==1){	
+//						owePs.setString(1, weekStr);
+//						owePs.setString(2, dateFormat.format(cal.getTime())+" 00:00:00");
+//						owePs.setString(3, materialId);
+//					    ResultSet oweRs=plnPs.executeQuery();
+//						if(oweRs!=null&&oweRs.next()){
+//							preOweQty=oweRs.getBigDecimal(1);
+//						}
+//					}
+					
 				    
 					String dayStr=getStrForDay(i);
 					BigDecimal dayOutQty=rs.getBigDecimal(dayStr+"_NOR_OUT_QTY");
 					BigDecimal dayInQty=rs.getBigDecimal(dayStr+"_NOR_IN_QTY");
 					BigDecimal dayChgQty=rs.getBigDecimal(dayStr+"_CHG_BRD_QTY");
 					BigDecimal dayBalQty=preDayBal.add(dayInQty).subtract(dayChgQty).subtract(dayOutQty);
-					BigDecimal dayOweQty=preDayBal.add(dayInQty).subtract(dayChgQty).subtract(plnQty);
+					BigDecimal dayOweQty=preOweQty.add(dayInQty).subtract(dayChgQty).subtract(plnQty);
 					JSONObject dayJson=buildRecord(cal.getTime(),rs.getString("MATERIAL_NAME"),dayOutQty,dayInQty,dayChgQty,dayBalQty,plnQty,dayOweQty);
 					records.add(dayJson);
 					
 					cal.add(Calendar.DATE, 1);
 					preDayBal=dayBalQty;
+					preOweQty = dayOweQty; // 将欠数情况传递给第二天
 				}
 				
 			}else{
@@ -482,16 +457,28 @@ public class ProductSendOweReportEvents {
 						plnQty=plnRs.getBigDecimal(1);
 					}
 					
+//					// 本周第一天欠数情况需要通过SQL获得，第二天开始可以通过前一天得到结果获得
+//					if(i==1){	
+//						owePs.setString(1, weekStr);
+//						owePs.setString(2, dateFormat.format(cal.getTime())+" 00:00:00");
+//						owePs.setString(3, materialId);
+//					    ResultSet oweRs=plnPs.executeQuery();
+//						if(oweRs!=null&&oweRs.next()){
+//							preOweQty=oweRs.getBigDecimal(1);
+//						}
+//					}
+					
 					BigDecimal dayOutQty=BigDecimal.ZERO;
 					BigDecimal dayInQty=BigDecimal.ZERO;
 					BigDecimal dayChgQty=BigDecimal.ZERO;
 					BigDecimal dayBalQty=preDayBal.add(dayInQty).subtract(dayChgQty).subtract(dayOutQty);
-					BigDecimal dayOweQty=preDayBal.add(dayInQty).subtract(dayChgQty).subtract(plnQty);
+					BigDecimal dayOweQty=preOweQty.add(dayInQty).subtract(dayChgQty).subtract(plnQty);
 					JSONObject dayJson=buildRecord(cal.getTime(),materialName,dayOutQty,dayInQty,dayChgQty,dayBalQty,plnQty,dayOweQty);
 					records.add(dayJson);
 					
 					cal.add(Calendar.DATE, 1);
 					preDayBal=dayBalQty;
+					preOweQty = dayOweQty; // 将欠数情况传递给第二天
 				}
 			}
 			

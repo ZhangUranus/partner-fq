@@ -91,7 +91,7 @@ public class ProductOutwarehouseEvents {
 						BigDecimal wsVolume = volume;
 						ProductStockType type = ProductStockType.OUT;
 						// 改版出仓时，使用改版类型，然后将改版数取负
-						if ("2".equals(v.getString("outwarehouseType"))) {
+						if ("2".equals(v.getString("outwarehouseType")) || "3".equals(v.getString("outwarehouseType"))) {
 							type = ProductStockType.CHG;
 							wsVolume = wsVolume.negate();
 						}
@@ -191,7 +191,7 @@ public class ProductOutwarehouseEvents {
 						BigDecimal wsVolume = volume;
 						ProductStockType type = ProductStockType.OUT;
 						// 改版出仓时，使用改版类型，然后将改版数取负
-						if ("2".equals(v.getString("outwarehouseType"))) {
+						if ("2".equals(v.getString("outwarehouseType")) || "3".equals(v.getString("outwarehouseType"))) {
 							type = ProductStockType.CHG;
 							wsVolume = wsVolume.negate();
 						}
@@ -365,7 +365,7 @@ public class ProductOutwarehouseEvents {
 			BigDecimal wsVolume = new BigDecimal(1);
 			ProductStockType type = ProductStockType.OUT;
 			// 改版出仓时，使用改版类型，然后将改版数取负
-			if ("2".equals(outWarehouseType)) {
+			if ("2".equals(outWarehouseType) || "3".equals(outWarehouseType)) {
 				type = ProductStockType.CHG;
 				wsVolume = wsVolume.negate();
 			}
@@ -508,7 +508,7 @@ public class ProductOutwarehouseEvents {
 			BigDecimal wsVolume = volume;
 			ProductStockType type = ProductStockType.OUT;
 			// 改版出仓时，使用改版类型，然后将改版数取负
-			if ("2".equals(entryValue.getString("outwarehouseType"))) {
+			if ("2".equals(entryValue.getString("outwarehouseType")) || "3".equals(entryValue.getString("outwarehouseType"))) {
 				type = ProductStockType.CHG;
 				wsVolume = wsVolume.negate();
 			}
