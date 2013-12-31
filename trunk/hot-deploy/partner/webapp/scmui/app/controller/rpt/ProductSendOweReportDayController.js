@@ -121,10 +121,12 @@ Ext.define('SCM.controller.rpt.ProductSendOweReportDayController', {
 			 * 显示明细情况
 			 */
 			queryDetail : function(grid,record){
-				this.searchStartDateField.setValue(new Date(record.data.BIZDATE));
-				this.searchMaterialIdField.setValue(record.data.MATERIAL_ID);
-				this.winDetailList.show();
-				this.refreshDetailRecord();
+				if(record.data.MATERIAL_ID){
+					this.searchStartDateField.setValue(new Date(record.data.BIZDATE));
+					this.searchMaterialIdField.setValue(record.data.MATERIAL_ID);
+					this.winDetailList.show();
+					this.refreshDetailRecord();
+				}
 			},
 			
 			/**
