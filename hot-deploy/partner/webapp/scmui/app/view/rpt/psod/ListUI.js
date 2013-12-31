@@ -53,6 +53,15 @@ Ext.define('SCM.view.rpt.psod.ListUI', {
 										margin : '1 0 0 0',
 										title : '',
 										region : 'center',
+								        viewConfig : {
+								        	getRowClass: function(record, rowIndex, rowParams, store){
+								        		var cls;
+								        		if(!record.get('MATERIAL_ID')){
+								        			cls =  'yellow-row';
+								        		}
+								        		return cls;
+								        	}
+								        },
 										store : 'rpt.ProductSendOweReportDayStore',
 										columns : [{
 													header : '序号',

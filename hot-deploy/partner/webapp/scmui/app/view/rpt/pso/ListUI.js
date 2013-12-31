@@ -57,7 +57,6 @@ Ext.define('SCM.view.rpt.pso.ListUI', {
 								        viewConfig : {
 								        	getRowClass: function(record, rowIndex, rowParams, store){
 								        		var cls;
-								        		debugger;
 								        		if(record.get('SORT') == 0){
 								        			cls =  'yellow-row';
 								        		}
