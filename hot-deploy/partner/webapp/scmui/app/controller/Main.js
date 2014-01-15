@@ -77,7 +77,7 @@ Ext.define('SCM.controller.Main', {
 				Ext.create('MaterialTypeStore', {
 							pageSize : SCM.comboPageSize,
 							storeId : 'MTComboStore' //下拉框－－选择时使用
-						}).load();
+						});
 				Ext.create('MaterialTypeStore', {
 							pageSize : SCM.unpageSize,
 							storeId : 'MTComboInitStore' //下拉框－－展现时使用
@@ -88,7 +88,7 @@ Ext.define('SCM.controller.Main', {
 				Ext.create('MaterialComboStore', {
 							pageSize : SCM.comboPageSize,
 							storeId : 'MComboStore' //下拉框－－选择时使用
-						}).load();
+						});
 				Ext.create('MaterialComboStore', {
 							pageSize : SCM.unpageSize,
 							storeId : 'MComboInitStore' //下拉框－－展现时使用
@@ -98,7 +98,7 @@ Ext.define('SCM.controller.Main', {
 				Ext.create('MaterialWarehouseComboStore', {
 							pageSize : SCM.comboPageSize,
 							storeId : 'MWHComboStore' //下拉框－－选择时使用
-						}).load();
+						});
 				Ext.create('MaterialWarehouseComboStore', {
 							pageSize : SCM.unpageSize,
 							storeId : 'MWHComboInitStore' //下拉框－－展现时使用
@@ -114,7 +114,7 @@ Ext.define('SCM.controller.Main', {
 				Ext.create('MaterialBomComboStore', {
 							pageSize : SCM.comboPageSize,
 							storeId : 'MBComboStore' //下拉框－－选择时使用
-						}).load();
+						});
 				Ext.create('MaterialBomComboStore', {
 							pageSize : SCM.unpageSize,
 							storeId : 'MBComboInitStore' //下拉框－－展现时使用
@@ -124,7 +124,7 @@ Ext.define('SCM.controller.Main', {
 				Ext.create('MaterialBomWarehouseComboStore', {
 							pageSize : SCM.comboPageSize,
 							storeId : 'MBWHComboStore' //下拉框－－选择时使用
-						}).load();
+						});
 				Ext.create('MaterialBomWarehouseComboStore', {
 							pageSize : SCM.unpageSize,
 							storeId : 'MBWHComboInitStore' //下拉框－－展现时使用
@@ -139,7 +139,7 @@ Ext.define('SCM.controller.Main', {
 				Ext.create('ProductComboValidStore', {
 							pageSize : SCM.comboPageSize,
 							storeId : 'PComboStore' //下拉框－－选择时使用
-						}).load();
+						});
 				Ext.create('ProductComboStore', {
 							pageSize : SCM.unpageSize,
 							storeId : 'PComboInitStore' //下拉框－－展现时使用
@@ -149,7 +149,7 @@ Ext.define('SCM.controller.Main', {
 				Ext.create('SupplierStore', {
 							pageSize : SCM.comboPageSize,
 							storeId : 'SPComboStore' //下拉框－－选择时使用
-						}).load();
+						});
 
 				Ext.create('SupplierStore', {
 							pageSize : SCM.unpageSize,
@@ -160,7 +160,7 @@ Ext.define('SCM.controller.Main', {
 				Ext.create('CustomerStore', {
 							pageSize : SCM.comboPageSize,
 							storeId : 'CComboStore' //下拉框－－选择时使用
-						}).load();
+						});
 
 				Ext.create('CustomerStore', {
 							pageSize : SCM.unpageSize,
@@ -171,7 +171,7 @@ Ext.define('SCM.controller.Main', {
 				Ext.create('WorkshopStore', {
 							pageSize : SCM.comboPageSize,
 							storeId : 'WSComboStore' //下拉框－－选择时使用
-						}).load();
+						});
 
 				Ext.create('WorkshopStore', {
 							pageSize : SCM.unpageSize,
@@ -182,7 +182,7 @@ Ext.define('SCM.controller.Main', {
 				Ext.create('WarehouseStore', {
 							pageSize : SCM.comboPageSize,
 							storeId : 'WHComboStore' //下拉框－－选择时使用
-						}).load();
+						});
 				Ext.create('WarehouseStore', {
 							pageSize : SCM.unpageSize,
 							storeId : 'WHComboInitStore' //下拉框－－展现时使用
@@ -192,7 +192,7 @@ Ext.define('SCM.controller.Main', {
 				Ext.create('UnitStore', {
 							pageSize : SCM.comboPageSize,
 							storeId : 'UComboStore' //下拉框－－选择时使用
-						}).load();
+						});
 				Ext.create('UnitStore', {
 							pageSize : SCM.unpageSize,
 							storeId : 'UComboInitStore' //下拉框－－展现时使用
@@ -202,7 +202,7 @@ Ext.define('SCM.controller.Main', {
 				Ext.create('SystemUserStore', {
 							pageSize : SCM.comboPageSize,
 							storeId : 'SUComboStore' //下拉框－－选择时使用
-						}).load();
+						});
 
 				Ext.create('SystemUserStore', {
 							pageSize : SCM.unpageSize,
@@ -218,7 +218,7 @@ Ext.define('SCM.controller.Main', {
 				Ext.create('RegionStore', {
 							pageSize : SCM.comboPageSize,
 							storeId : 'RGComboStore' //下拉框－－选择时使用
-						}).load();
+						});
 				Ext.create('RegionStore', {
 							pageSize : SCM.unpageSize,
 							storeId : 'RGComboInitStore' //下拉框－－展现时使用
@@ -227,7 +227,7 @@ Ext.define('SCM.controller.Main', {
 				/* 初始化月份的STORE */
 				Ext.create('MonthStore', {
 							storeId : 'MTHComboStore' //下拉框－－展现时使用
-						}).load();
+						});
 				/* 部门store */
 				Ext.create('DepartmentStore', {
 							pageSize : SCM.unpageSize,
@@ -262,7 +262,7 @@ Ext.define('SCM.controller.Main', {
 				Ext.create('DeliverNumberStore', {
 							pageSize : SCM.comboPageSize,
 							storeId : 'DNSComboStore' //下拉框－－选择时使用
-						}).load();
+						});
 				Ext.create('DeliverNumberStore', {
 							pageSize : SCM.unpageSize,
 							storeId : 'DNSComboInitStore' //下拉框－－展现时使用

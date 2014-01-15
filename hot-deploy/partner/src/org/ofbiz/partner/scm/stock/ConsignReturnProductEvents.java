@@ -62,6 +62,13 @@ public class ConsignReturnProductEvents {
 				if (billHead.getInteger("status") == 0) {
 					BizStockImpFactory.getBizStockImp(BillType.ConsignReturnProduct).updateStock(billHead, true, false);
 					BillBaseEvent.submitBill(request, response);// 更新单据状态
+					
+					/* 开始 增加单据处理任务 */
+					billInfoMap.put("number", billHead.get("number").toString());
+					billInfoMap.put("billType", "ConsignReturnProduct");
+					billInfoMap.put("operationType", "3");
+					dispatcher.runAsync("addBillHandleJobService", billInfoMap);
+					/* 结束 增加单据处理任务 */
 				} else {
 					// 获取单据id分录条目
 					List<GenericValue> entryList = delegator.findByAnd("ConsignReturnProductEntry", UtilMisc.toMap("parentId", billHead.getString("id")));
@@ -92,14 +99,6 @@ public class ConsignReturnProductEvents {
 						Utils.createReturnProductWarehousingBill(billHead,request);	//创建进货单
 						Utils.submitReturnProductWarehousing(billHead,request);	//提交
 						billHead.set("checkStatus", 2);
-						
-						
-						/* 开始 增加单据处理任务 */
-						billInfoMap.put("number", billHead.get("number").toString());
-						billInfoMap.put("billType", "ConsignReturnProduct");
-						billInfoMap.put("operationType", "3");
-						dispatcher.runAsync("addBillHandleJobService", billInfoMap);
-						/* 结束 增加单据处理任务 */
 					}
 					billHead.set("checkerSystemUserId", CommonEvents.getAttributeFormSession(request, "uid"));
 					billHead.store();

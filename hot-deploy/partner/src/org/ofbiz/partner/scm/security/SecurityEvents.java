@@ -1,9 +1,6 @@
 package org.ofbiz.partner.scm.security;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -15,6 +12,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import javolution.util.FastList;
 
@@ -280,25 +278,6 @@ public class SecurityEvents {
      */
 	public static String checkLogin(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String responseString = LoginWorker.checkLogin(request, response);
-		
-//		String responseString = "success";
-//		List<GenericValue> recordList = FastList.newInstance();
-//		String password = request.getParameter("password");
-//		String username = request.getParameter("username");
-//		EntityConditionList<EntityCondition> condition = null;
-//		List<EntityCondition> conds = FastList.newInstance();
-//		conds.add(EntityCondition.makeCondition("password",HashCrypt.getDigestHash(password, LoginServices.getHashType())));
-//		conds.add(EntityCondition.makeCondition("userId",username));
-//		condition = EntityCondition.makeCondition(conds);
-//		try {
-//			recordList =  CommonEvents.getDelegator(request).findList("TSystemUser", condition, null, null, null, true);
-//		} catch (Exception e) {
-//			Debug.logError(e, module);
-//			throw new Exception(UtilProperties.getPropertyValue("ErrorCode_zh_CN", "GetEntityListException"));
-//		}
-//		if (recordList == null || recordList.size() < 1) {
-//			responseString = "fail";
-//		}
 
     	String username = request.getParameter("USERNAME");
     	List<GenericValue> recordList =  CommonEvents.getDelegator(request).findList("TSystemUser", EntityCondition.makeCondition("userId",username), null, null, null, true);
@@ -326,6 +305,8 @@ public class SecurityEvents {
         	CommonEvents.setUsername(request, response);
         	String uid = systemUser.getString("id");
         	CommonEvents.setAttributeToSession(request, "uid", uid);
+//        	String userObject = "{'id':"+uid+",'userId':"+username+",'userName':"+systemUser.getString("userName")+",'departmentId':"+systemUser.getString("departmentId")+"}";
+
         	JSONObject userObject = JSONObject.fromObject(systemUser.getAllFields());
         	CommonEvents.setAttributeToSession(request, "currentUser", userObject);
 			jsonStr.put("currentUser", userObject);
@@ -338,17 +319,20 @@ public class SecurityEvents {
 	}
 	
 	public static String isLogin(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		HttpSession session = request.getSession();
+        GenericValue userLogin = (GenericValue) session.getAttribute("userLogin");
+        
 		JSONObject jsonStr = new JSONObject();
-		String username = CommonEvents.getUsername(request);
-		if("".equals(username)){
-			jsonStr.put("success", false);
-		}else{
+//		String username = CommonEvents.getUsername(request);
+		if(userLogin != null && !"".equals(userLogin.getString("userLoginId"))){
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(Utils.getCurDate());
 			jsonStr.put("currentUser", CommonEvents.getAttributeFormSession(request, "currentUser"));
 			jsonStr.put("currentYear", calendar.get(Calendar.YEAR));
 			jsonStr.put("currentMonth", calendar.get(Calendar.MONTH)+1);
 			jsonStr.put("success", true);
+		}else{
+			jsonStr.put("success", false);
 		}
 		CommonEvents.writeJsonDataToExt(response, jsonStr.toString());
 		return "success";
