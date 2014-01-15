@@ -107,7 +107,7 @@ Ext.define('SCM.controller.ConsignDrawMaterial.ConsignDrawMaterialController', {
 				this.searchStatus = this.listPanel.down('combobox[name=status]');
 				this.totalFields = this.editForm.down('textfield[name=totalsum]');
 				this.processedBomIdFields = this.editForm.down('combogrid[name=processedBomId]');
-				this.processedBomIdFields.addListener('change', this.initMaterialGrid, this);
+				this.processedBomIdFields.addListener('select', this.initMaterialGrid, this);
 				this.materialVolumeFields = this.editForm.down('numberfield[name=materialVolume]');
 				this.materialVolumeFields.addListener('change', this.materialVolumeChange, this);
 				this.MaterialBOMStore = Ext.data.StoreManager.lookup('MBAllStore');
@@ -244,11 +244,11 @@ Ext.define('SCM.controller.ConsignDrawMaterial.ConsignDrawMaterialController', {
 			 * @param {}
 			 *            oldValue
 			 */
-			initMaterialGrid : function(field, newValue, oldValue) {
+			initMaterialGrid : function(field, values, eOpts) {
 				var me = this;
-				me.MaterialBOMStore.getProxy().extraParams.whereStr = 'MaterialBomV.id = \'' + newValue + '\'';
+				me.MaterialBOMStore.getProxy().extraParams.whereStr = 'MaterialBomV.id = \'' + values[0].get("id") + '\'';
 				me.MaterialBOMStore.load(function(records, operation, success) {
-							
+							debugger;
 							// 使用新方法删除原来数据
 							var tempRecords = [];
 							me.editEntry.store.each(function(record){

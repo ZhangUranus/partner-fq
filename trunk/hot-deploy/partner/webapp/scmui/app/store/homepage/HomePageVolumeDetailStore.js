@@ -3,6 +3,6 @@ Ext.define('SCM.store.homepage.HomePageVolumeDetailStore', {
 			model : 'SCM.model.homepage.HomePageVolumeDetailModel',
 			alias : 'HomePageVolumeDetailStore',
 			remoteSort : true, // 服务器排序
-			autoLoad : true,
+			autoLoad : false,
 			autoSync : false
 		});

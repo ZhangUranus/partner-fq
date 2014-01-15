@@ -3,6 +3,6 @@ Ext.define('SCM.store.homepage.HomePageStatusStore', {
 			model : 'SCM.model.homepage.HomePageStatusModel',
 			alias : 'HomePageStatusStore',
 			remoteSort : true, // 服务器排序
-			autoLoad : true,
+			autoLoad : false,
 			autoSync : false
 		});

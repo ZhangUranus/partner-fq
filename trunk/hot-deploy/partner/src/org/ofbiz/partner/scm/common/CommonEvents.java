@@ -4,7 +4,6 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -16,7 +15,6 @@ import net.sf.json.JSONObject;
 
 import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilProperties;
-import org.ofbiz.base.util.UtilValidate;
 import org.ofbiz.entity.GenericDelegator;
 import org.ofbiz.entity.GenericValue;
 import org.ofbiz.entity.condition.EntityCondition;
@@ -30,7 +28,7 @@ import org.ofbiz.entity.util.EntityFindOptions;
  */
 public class CommonEvents {
 	private static final String module = CommonEvents.class.getName();
-	private static final String usernameCookieName = "OFBiz.Username";
+//	private static final String usernameCookieName = "OFBiz.Username";
 	private static GenericDelegator delegator = null;
 	private static SerialNumberHelper serialNumberHelper = new SerialNumberHelper();
 	
@@ -60,16 +58,16 @@ public class CommonEvents {
     public static void setUsername(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
         setAttributeToSession(request, "USERNAME", request.getParameter("USERNAME"));
-        String domain = UtilProperties.getPropertyValue("url.properties", "cookie.domain");
-        synchronized (session) {
-            if (UtilValidate.isEmpty(getUsername(request))) {
-                Cookie cookie = new Cookie(usernameCookieName, request.getParameter("USERNAME"));
-                cookie.setMaxAge(60 * 60 * 24 * 365);
-                cookie.setPath("/");
-                cookie.setDomain(domain);
-                response.addCookie(cookie);
-            }
-        }
+//        String domain = UtilProperties.getPropertyValue("url.properties", "cookie.domain");
+//        synchronized (session) {
+//            if (UtilValidate.isEmpty(getUsername(request))) {
+//                Cookie cookie = new Cookie(usernameCookieName, request.getParameter("USERNAME"));
+//                cookie.setMaxAge(60 * 60 * 24 * 365);
+//                cookie.setPath("/");
+//                cookie.setDomain(domain);
+//                response.addCookie(cookie);
+//            }
+//        }
     }
     
     /**

@@ -140,10 +140,10 @@ public class PurchaseBillBizEvents {
 					if (billHead == null){
 						throw new Exception("采购申请单不存在！");
 					}
-					Date bizDate = (Date) billHead.get("bizDate");
-					if (bizDate == null || !Utils.isCurPeriod(bizDate)) {
-						throw new Exception("单据业务日期不在当前系统期间");
-					}
+//					Date bizDate = (Date) billHead.get("bizDate");
+//					if (bizDate == null || !Utils.isCurPeriod(bizDate)) {
+//						throw new Exception("单据业务日期不在当前系统期间");
+//					}
 					if (billHead.getString("supplierSupplierId") == null) {
 						throw new Exception("供应商不存在！");
 					}
@@ -200,10 +200,10 @@ public class PurchaseBillBizEvents {
 					if (billHead == null){
 						throw new Exception("采购申请单不存在！");
 					}
-					Date bizDate = (Date) billHead.get("bizDate");
-					if (bizDate == null || !Utils.isCurPeriod(bizDate)) {
-						throw new Exception("单据业务日期不在当前系统期间");
-					}
+//					Date bizDate = (Date) billHead.get("bizDate");
+//					if (bizDate == null || !Utils.isCurPeriod(bizDate)) {
+//						throw new Exception("单据业务日期不在当前系统期间");
+//					}
 					if (billHead.getString("supplierSupplierId") == null) {
 						throw new Exception("供应商不存在！");
 					}
