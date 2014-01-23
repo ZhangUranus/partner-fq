@@ -58,7 +58,7 @@ public class WorkshopDrawMaterialEvents {
 				billInfoMap.put("number", billHead.get("number").toString());
 				billInfoMap.put("billType", "WorkshopDrawMaterial");
 				billInfoMap.put("operationType", "3");
-				dispatcher.runAsync("addBillHandleJobService", billInfoMap);
+				dispatcher.runSync("addBillHandleJobService", billInfoMap);
 				/* 结束 增加单据处理任务 */
 			}
 			TransactionUtil.commit(beganTransaction);
@@ -106,7 +106,7 @@ public class WorkshopDrawMaterialEvents {
 				billInfoMap.put("number", billHead.get("number").toString());
 				billInfoMap.put("billType", "WorkshopDrawMaterial");
 				billInfoMap.put("operationType", "4");
-				dispatcher.runAsync("addBillHandleJobService", billInfoMap);
+				dispatcher.runSync("addBillHandleJobService", billInfoMap);
 				/* 结束 增加单据处理任务 */
 			}
 			TransactionUtil.commit(beganTransaction);
