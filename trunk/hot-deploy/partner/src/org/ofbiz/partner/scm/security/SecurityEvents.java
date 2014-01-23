@@ -104,7 +104,7 @@ public class SecurityEvents {
 						delegator.create(rv);
 					}
 				}
-				dispatcher.runAsync("createUserLogin", userMap);	//增加系统用户
+				dispatcher.runSync("createUserLogin", userMap);	//增加系统用户
 				delegator.create(v);		//增加项目用户
 				TransactionUtil.commit(beganTransaction);
 			} catch (GenericEntityException e) {
@@ -278,7 +278,7 @@ public class SecurityEvents {
      */
 	public static String checkLogin(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String responseString = LoginWorker.checkLogin(request, response);
-
+		Map<String,String> userObj = new HashMap<String, String>();
     	String username = request.getParameter("USERNAME");
     	List<GenericValue> recordList =  CommonEvents.getDelegator(request).findList("TSystemUser", EntityCondition.makeCondition("userId",username), null, null, null, true);
     	GenericValue systemUser = recordList.get(0);
@@ -305,9 +305,14 @@ public class SecurityEvents {
         	CommonEvents.setUsername(request, response);
         	String uid = systemUser.getString("id");
         	CommonEvents.setAttributeToSession(request, "uid", uid);
-//        	String userObject = "{'id':"+uid+",'userId':"+username+",'userName':"+systemUser.getString("userName")+",'departmentId':"+systemUser.getString("departmentId")+"}";
+        	userObj.put("id", uid);
+        	userObj.put("userId", username);
+        	userObj.put("userName", systemUser.getString("userName"));
+        	userObj.put("departmentId", systemUser.getString("departmentId"));
+        	JSONObject userObject = JSONObject.fromObject(userObj);
+        	//String aaa = "{'id':"+uid+",'userId':"+username+",'userName':"+systemUser.getString("userName")+",'departmentId':"+systemUser.getString("departmentId")+"}";
 
-        	JSONObject userObject = JSONObject.fromObject(systemUser.getAllFields());
+        	//JSONObject userObject = JSONObject.fromObject(systemUser.getAllFields());
         	CommonEvents.setAttributeToSession(request, "currentUser", userObject);
 			jsonStr.put("currentUser", userObject);
 			jsonStr.put("currentYear", calendar.get(Calendar.YEAR));

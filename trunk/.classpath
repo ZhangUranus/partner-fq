@@ -187,8 +187,6 @@
 	<classpathentry kind="lib" path="framework/webslinger/lib/webslinger-launcher-20091211-3897-7ab22baea4b6.jar"/>
 	<classpathentry kind="src" path="framework/appserver/src"/>
 	<classpathentry kind="src" path="hot-deploy/partner/src"/>
-	<classpathentry kind="src" path="hot-deploy/practice/src"/>
-	<classpathentry kind="src" path="hot-deploy/myapp/src"/>
 	<classpathentry excluding="org/ofbiz/base/config/CoberturaInstrumenter.java" kind="src" path="framework/base/src"/>
 	<classpathentry kind="src" path="framework/bi/src"/>
 	<classpathentry kind="src" path="framework/birt/src"/>

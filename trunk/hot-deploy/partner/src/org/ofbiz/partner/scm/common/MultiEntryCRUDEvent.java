@@ -84,7 +84,7 @@ public class MultiEntryCRUDEvent {
 				billInfoMap.put("number", entityNumber);
 				billInfoMap.put("billType", headEntityName);
 				billInfoMap.put("operationType", "0");
-				dispatcher.runAsync("addBillHandleJobService", billInfoMap);
+				dispatcher.runSync("addBillHandleJobService", billInfoMap);
 		    }
 			/* 结束 增加单据处理任务 */
 		    
@@ -212,7 +212,7 @@ public class MultiEntryCRUDEvent {
 				billInfoMap.put("number", v.getString("number"));
 				billInfoMap.put("billType", headEntityName);
 				billInfoMap.put("operationType", "1");
-				dispatcher.runAsync("addBillHandleJobService", billInfoMap);
+				dispatcher.runSync("addBillHandleJobService", billInfoMap);
 		    }
 			/* 结束 增加单据处理任务 */
 			
@@ -300,7 +300,7 @@ public class MultiEntryCRUDEvent {
 				billInfoMap.put("number", entityNumber);
 				billInfoMap.put("billType", headEntityName);
 				billInfoMap.put("operationType", "2");
-				dispatcher.runAsync("addBillHandleJobService", billInfoMap);
+				dispatcher.runSync("addBillHandleJobService", billInfoMap);
 			}
 			/* 结束 增加单据处理任务 */
 			

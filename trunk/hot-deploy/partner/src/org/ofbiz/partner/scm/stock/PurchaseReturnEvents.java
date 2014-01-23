@@ -126,7 +126,7 @@ public class PurchaseReturnEvents {
 				billInfoMap.put("number", billHead.get("number").toString());
 				billInfoMap.put("billType", "PurchaseReturn");
 				billInfoMap.put("operationType", "3");
-				dispatcher.runAsync("addBillHandleJobService", billInfoMap);
+				dispatcher.runSync("addBillHandleJobService", billInfoMap);
 				/* 结束 增加单据处理任务 */
 
 			}
@@ -202,7 +202,7 @@ public class PurchaseReturnEvents {
 				billInfoMap.put("number", billHead.get("number").toString());
 				billInfoMap.put("billType", "PurchaseReturn");
 				billInfoMap.put("operationType", "4");
-				dispatcher.runAsync("addBillHandleJobService", billInfoMap);
+				dispatcher.runSync("addBillHandleJobService", billInfoMap);
 				/* 结束 增加单据处理任务 */
 			}
 			TransactionUtil.commit(beganTransaction);

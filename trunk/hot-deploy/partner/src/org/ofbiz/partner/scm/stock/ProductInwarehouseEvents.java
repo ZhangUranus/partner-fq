@@ -127,7 +127,7 @@ public class ProductInwarehouseEvents {
 				billInfoMap.put("number", billHead.get("number").toString());
 				billInfoMap.put("billType", "ProductInwarehouse");
 				billInfoMap.put("operationType", "3");
-				dispatcher.runAsync("addBillHandleJobService", billInfoMap);
+				dispatcher.runSync("addBillHandleJobService", billInfoMap);
 				/* 结束 增加单据处理任务 */
 			}
 			TransactionUtil.commit(beganTransaction);
@@ -216,7 +216,7 @@ public class ProductInwarehouseEvents {
 				billInfoMap.put("number", billHead.get("number").toString());
 				billInfoMap.put("billType", "ProductInwarehouse");
 				billInfoMap.put("operationType", "4");
-				dispatcher.runAsync("addBillHandleJobService", billInfoMap);
+				dispatcher.runSync("addBillHandleJobService", billInfoMap);
 				/* 结束 增加单据处理任务 */
 			}
 
@@ -371,7 +371,7 @@ public class ProductInwarehouseEvents {
 			billInfoMap.put("billType", "ProductInwarehouse");
 			billInfoMap.put("operationType", "0");
 			billInfoMap.put("parameter", entryId);
-			dispatcher.runAsync("addBillHandleJobService", billInfoMap);
+			dispatcher.runSync("addBillHandleJobService", billInfoMap);
 			/* 结束 增加单据处理任务 */
 			
 			StringBuffer jsonStr = new StringBuffer();
@@ -487,7 +487,7 @@ public class ProductInwarehouseEvents {
 			billInfoMap.put("billType", "ProductInwarehouse");
 			billInfoMap.put("operationType", "2");
 			billInfoMap.put("parameter", entryValue.getString("id"));
-			dispatcher.runAsync("addBillHandleJobService", billInfoMap);
+			dispatcher.runSync("addBillHandleJobService", billInfoMap);
 			/* 结束 增加单据处理任务 */
 			
 			
