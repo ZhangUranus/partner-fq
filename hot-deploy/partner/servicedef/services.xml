@@ -25,15 +25,15 @@ under the License.
     <version>1.0</version>
     <!-- Service Engine Services -->
     <service name="optimizeTableService" engine="java"
-            location="org.ofbiz.partner.scm.services.CommonServices" invoke="optimizeTableService" auth="false" transaction-timeout="120000" use-transaction="true" semaphore="wait">
+            location="org.ofbiz.partner.scm.services.CommonServices" invoke="optimizeTableService" auth="false" transaction-timeout="7200" use-transaction="true" semaphore="wait">
         <description>optimizeTableService</description>
     </service>
     <service name="logCleanJobService" engine="java"
-            location="org.ofbiz.partner.scm.services.CommonServices" invoke="logCleanJobService" auth="false" transaction-timeout="120000" use-transaction="true" semaphore="wait">
+            location="org.ofbiz.partner.scm.services.CommonServices" invoke="logCleanJobService" auth="false" transaction-timeout="7200" use-transaction="true" semaphore="wait">
         <description>logCleanJob</description>
     </service>
     <service name="backupAndClearTableData" engine="java"
-            location="org.ofbiz.partner.scm.services.CommonServices" invoke="backupAndClearTableData" auth="false" transaction-timeout="120000" use-transaction="true" semaphore="wait">
+            location="org.ofbiz.partner.scm.services.CommonServices" invoke="backupAndClearTableData" auth="false" transaction-timeout="7200" use-transaction="true" semaphore="wait">
         <description>backupAndClearTableData</description>
     </service>
     <service name="rollNextDateService" engine="java"
@@ -54,7 +54,7 @@ under the License.
         <attribute name="operationType" type="String" mode="IN" optional="true"/>
         <attribute name="parameter" type="String" mode="IN" optional="true"/>
     </service>
-    <service name="doBillHandleJobService" engine="java" auth="false" location="org.ofbiz.partner.scm.services.CurrentStockHandleServices" invoke="doBillHandleJobService" transaction-timeout="120000" use-transaction="true" semaphore="fail">
+    <service name="doBillHandleJobService" engine="java" auth="false" location="org.ofbiz.partner.scm.services.CurrentStockHandleServices" invoke="doBillHandleJobService" transaction-timeout="7200" use-transaction="true" semaphore="fail">
         <description>do bill job</description>
     </service>
 </services>
