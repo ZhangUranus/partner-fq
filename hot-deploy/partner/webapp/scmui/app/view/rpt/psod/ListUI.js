@@ -87,7 +87,7 @@ Ext.define('SCM.view.rpt.psod.ListUI', {
 													xtype : 'numbercolumn',
 													dataIndex : 'TODAY_BAL',
 													width : 100,
-													text : '库存板数(板)'
+													text : '计划结存(板)'
 												}, {
 													xtype : 'numbercolumn',
 													dataIndex : 'VOLUME',

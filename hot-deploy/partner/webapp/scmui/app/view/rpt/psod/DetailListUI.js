@@ -143,22 +143,22 @@ Ext.define('SCM.view.rpt.psod.DetailListUI', {
 													xtype : 'numbercolumn',
 													dataIndex : 'ORDER_QTY',
 													width : 100,
-													text : '订单数量 (板)'
+													text : '订单数量(板)'
 												}, {
 													xtype : 'numbercolumn',
 													dataIndex : 'TODAY_BAL',
 													width : 100,
-													text : '库存板数 (板)'
+													text : '计划结存(板)'
 												}, {
 													xtype : 'numbercolumn',
 													dataIndex : 'VOLUME',
 													width : 100,
-													text : '计划出货套数 (套)'
+													text : '计划出货套数(套)'
 												}, {
 													xtype : 'numbercolumn',
 													dataIndex : 'TODAY_TOTAL',
 													width : 100,
-													text : '总结余 (套)'
+													text : '总结余(套)'
 												}]
 									}]
 
