@@ -578,7 +578,7 @@ public class CurrentStockHandleServices {
 							if ("0".equals(job.getString("operationType")) || "1".equals(job.getString("operationType")) || "4".equals(job.getString("operationType"))) {
 								if (job.getString("parameter").equals("N")) {
 									List<GenericValue> pwList = delegator.findList("ProductInwarehouse", EntityCondition.makeCondition("number", job.getString("number")), null, null, null, false);
-									if (pwList != null) {
+									if (pwList != null && pwList.size() > 0) {
 										GenericValue gValue = pwList.get(0);
 										List<GenericValue> entryList = delegator.findList("ProductInwarehouseEntry", EntityCondition.makeCondition("parentId", gValue.getString("id")), null, null, null, false);
 										if (entryList != null && entryList.size() > 0) {
@@ -598,7 +598,7 @@ public class CurrentStockHandleServices {
 
 								if (job.getString("parameter").equals("N")) {
 									List<GenericValue> pwList = delegator.findList("ProductInwarehouse", EntityCondition.makeCondition("number", job.getString("number")), null, null, null, false);
-									if (pwList != null) {
+									if (pwList != null && pwList.size() > 0) {
 										GenericValue gValue = pwList.get(0);
 										List<GenericValue> entryList = delegator.findList("ProductInwarehouseEntry", EntityCondition.makeCondition("parentId", gValue.getString("id")), null, null, null, false);
 										if (entryList != null && entryList.size() > 0) {
@@ -620,7 +620,7 @@ public class CurrentStockHandleServices {
 							if ("0".equals(job.getString("operationType")) || "1".equals(job.getString("operationType")) || "4".equals(job.getString("operationType"))) {
 								if (job.getString("parameter").equals("N")) {
 									List<GenericValue> pwList = delegator.findList("ProductOutwarehouse", EntityCondition.makeCondition("number", job.getString("number")), null, null, null, false);
-									if (pwList != null) {
+									if (pwList != null && pwList.size() > 0) {
 										GenericValue gValue = pwList.get(0);
 										List<GenericValue> entryList = delegator.findList("ProductOutwarehouseEntry", EntityCondition.makeCondition("parentId", gValue.getString("id")), null, null, null, false);
 										if (entryList != null && entryList.size() > 0) {
@@ -640,7 +640,7 @@ public class CurrentStockHandleServices {
 
 								if (job.getString("parameter").equals("N")) {
 									List<GenericValue> pwList = delegator.findList("ProductOutwarehouse", EntityCondition.makeCondition("number", job.getString("number")), null, null, null, false);
-									if (pwList != null) {
+									if (pwList != null && pwList.size() > 0) {
 										GenericValue gValue = pwList.get(0);
 										List<GenericValue> entryList = delegator.findList("ProductOutwarehouseEntry", EntityCondition.makeCondition("parentId", gValue.getString("id")), null, null, null, false);
 										if (entryList != null && entryList.size() > 0) {
