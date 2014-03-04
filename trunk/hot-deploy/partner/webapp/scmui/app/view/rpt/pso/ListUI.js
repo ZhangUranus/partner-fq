@@ -83,6 +83,11 @@ Ext.define('SCM.view.rpt.pso.ListUI', {
 													width : 120,
 													text : '产品名称'
 												}, {
+													xtype : 'gridcolumn',
+													dataIndex : 'BOARD_COUNT',
+													width : 80,
+													text : '板数量'
+												}, {
 													xtype : 'numbercolumn',
 													dataIndex : 'LAST_WEEK_OWE_QTY',
 													width : 100,
