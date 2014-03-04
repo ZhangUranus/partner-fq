@@ -432,6 +432,8 @@ public class DataFetchEvents {
 		String supplierSeleteStr1 = "";
 		String supplierSeleteStr2 = "";
 		String supplierSeleteStr3 = "";
+		String supplierSeleteStr4 = "";
+		String supplierSeleteStr5 = "";
 		if(request.getParameter("year") != null && request.getParameter("month") != null){
 			year = request.getParameter("year");
 			month = request.getParameter("month");
@@ -447,6 +449,8 @@ public class DataFetchEvents {
 			supplierSeleteStr1 = " AND CW.PROCESSOR_SUPPLIER_ID = '" + supplierId + "'";
 			supplierSeleteStr2 = " AND CRP.PROCESSOR_SUPPLIER_ID = '" + supplierId + "'";
 			supplierSeleteStr3 = " AND RPW.PROCESSOR_ID = '" + supplierId + "'";
+			supplierSeleteStr4 = " AND CDM.PROCESSOR_ID = '" + supplierId + "'";
+			supplierSeleteStr5 = " AND CRM.PROCESSOR_ID = '" + supplierId + "'";
 		}
 		
 		String sql =" SELECT DATE(CW.BIZ_DATE) AS BIZ_DATE," +
@@ -469,6 +473,7 @@ public class DataFetchEvents {
 				" LEFT JOIN T_MATERIAL TM ON MB.MATERIAL_ID = TM.ID" +
 				" LEFT JOIN UNIT UNT ON CWE.UNIT_UNIT_ID = UNT.ID" +
 				" WHERE CW.STATUS = 4" +
+				" AND SP.NAME != ''" +
 				" AND YEAR(BIZ_DATE) = " + year +
 				" AND MONTH(BIZ_DATE) = " + month +
 				supplierSeleteStr1 +
@@ -493,6 +498,7 @@ public class DataFetchEvents {
 				" LEFT JOIN T_MATERIAL TM ON MB.MATERIAL_ID = TM.ID" +
 				" LEFT JOIN UNIT UNT ON CRPE.UNIT_UNIT_ID = UNT.ID" +
 				" WHERE CRP.STATUS = 4" +
+				" AND SP.NAME != ''" +
 				" AND YEAR(BIZ_DATE) = " + year +
 				" AND MONTH(BIZ_DATE) = " + month +
 				supplierSeleteStr2 +
@@ -517,10 +523,60 @@ public class DataFetchEvents {
 				" LEFT JOIN T_MATERIAL TM ON MB.MATERIAL_ID = TM.ID" +
 				" LEFT JOIN UNIT UNT ON RPWE.UNIT_UNIT_ID = UNT.ID" +
 				" WHERE RPW.STATUS = 4" +
+				" AND SP.NAME != ''" +
 				" AND YEAR(BIZ_DATE) = " + year +
 				" AND MONTH(BIZ_DATE) = " + month +
 				supplierSeleteStr3 +
-				" AND SP.NAME != ''";
+				" UNION ALL" +
+				" SELECT  " + 
+				"  	DATE(CDM.BIZ_DATE) AS BIZ_DATE,  " + 
+				"  	'委外领料' AS NAME,  " + 
+				"  	CDM.NUMBER,  " + 
+				"  	SP.NAME AS SUPPLIER_NAME,  " + 
+				"  	TSU.USER_NAME AS USER_NAME,  " + 
+				"  	WH.NAME AS WAREHOUSE_NAME,  " + 
+				"  	TM.NAME AS MATERIAL_NAME,  " + 
+				"  	UNT.NAME AS UNIT_NAME,  " + 
+				"  	ROUND(IFNULL(CDME.VOLUME,0),4) AS VOLUME,  " + 
+				"  	ROUND(IFNULL(CDME.PRICE,0),4) AS PROCESS_PRICE,  " + 
+				"  	ROUND(IFNULL(CDME.VOLUME * CDME.PRICE,0),4) AS PROCESS_SUM  " + 
+				" FROM CONSIGN_DRAW_MATERIAL CDM  " + 
+				" LEFT JOIN CONSIGN_DRAW_MATERIAL_ENTRY CDME ON CDM.ID = CDME.PARENT_ID  " + 
+				" LEFT JOIN SUPPLIER SP ON CDM.PROCESSOR_SUPPLIER_ID = SP.ID  " + 
+				" LEFT JOIN T_SYSTEM_USER TSU ON CDM.SUBMITTER_SYSTEM_USER_ID = TSU.ID  " + 
+				" LEFT JOIN WAREHOUSE WH ON CDME.WAREHOUSE_WAREHOUSE_ID = WH.ID  " + 
+				" LEFT JOIN T_MATERIAL TM ON CDME.MATERIAL_MATERIAL_ID = TM.ID  " + 
+				" LEFT JOIN UNIT UNT ON CDME.UNIT_UNIT_ID = UNT.ID  " + 
+				" WHERE CDM.STATUS = 4  " + 
+				" AND SP.NAME != ''" +
+				" AND YEAR(BIZ_DATE) = " + year +
+				" AND MONTH(BIZ_DATE) = " + month +
+				supplierSeleteStr4 +
+				" UNION ALL" +
+				" SELECT  " + 
+				"  	DATE(CRM.BIZ_DATE) AS BIZ_DATE,  " + 
+				"  	'委外退料' AS NAME,  " + 
+				"  	CRM.NUMBER,  " + 
+				"  	SP.NAME AS SUPPLIER_NAME,  " + 
+				"  	TSU.USER_NAME AS USER_NAME,  " + 
+				"  	WH.NAME AS WAREHOUSE_NAME,  " + 
+				"  	TM.NAME AS MATERIAL_NAME,  " + 
+				"  	UNT.NAME AS UNIT_NAME,  " + 
+				"  	ROUND(IFNULL(CRME.VOLUME,0),4) AS VOLUME,  " + 
+				"  	ROUND(IFNULL(CRME.PRICE,0),4) AS PROCESS_PRICE,  " + 
+				"  	ROUND(IFNULL(CRME.VOLUME * CRME.PRICE,0),4) AS PROCESS_SUM  " + 
+				" FROM CONSIGN_RETURN_MATERIAL CRM  " + 
+				" LEFT JOIN CONSIGN_RETURN_MATERIAL_ENTRY CRME ON CRM.ID = CRME.PARENT_ID  " + 
+				" LEFT JOIN SUPPLIER SP ON CRM.PROCESSOR_SUPPLIER_ID = SP.ID  " + 
+				" LEFT JOIN T_SYSTEM_USER TSU ON CRM.SUBMITTER_SYSTEM_USER_ID = TSU.ID  " + 
+				" LEFT JOIN WAREHOUSE WH ON CRME.WAREHOUSE_WAREHOUSE_ID = WH.ID  " + 
+				" LEFT JOIN T_MATERIAL TM ON CRME.MATERIAL_MATERIAL_ID = TM.ID  " + 
+				" LEFT JOIN UNIT UNT ON CRME.UNIT_UNIT_ID = UNT.ID  " + 
+				" WHERE CRM.STATUS = 4  " + 
+				" AND SP.NAME != ''" +
+				" AND YEAR(BIZ_DATE) = " + year +
+				" AND MONTH(BIZ_DATE) = " + month +
+				supplierSeleteStr5;
 		return sql;
 	}
 	
