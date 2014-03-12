@@ -449,8 +449,8 @@ public class DataFetchEvents {
 			supplierSeleteStr1 = " AND CW.PROCESSOR_SUPPLIER_ID = '" + supplierId + "'";
 			supplierSeleteStr2 = " AND CRP.PROCESSOR_SUPPLIER_ID = '" + supplierId + "'";
 			supplierSeleteStr3 = " AND RPW.PROCESSOR_ID = '" + supplierId + "'";
-			supplierSeleteStr4 = " AND CDM.PROCESSOR_ID = '" + supplierId + "'";
-			supplierSeleteStr5 = " AND CRM.PROCESSOR_ID = '" + supplierId + "'";
+			supplierSeleteStr4 = " AND CDM.PROCESSOR_SUPPLIER_ID = '" + supplierId + "'";
+			supplierSeleteStr5 = " AND CRM.PROCESSOR_SUPPLIER_ID = '" + supplierId + "'";
 		}
 		
 		String sql =" SELECT DATE(CW.BIZ_DATE) AS BIZ_DATE," +
