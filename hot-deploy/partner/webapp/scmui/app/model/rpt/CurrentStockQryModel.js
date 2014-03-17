@@ -17,6 +17,12 @@ Ext.define('SCM.model.rpt.CurrentStockQryModel', {
 						name : 'HOUSE_NAME',
 						type : 'string'
 					}, {
+						name : 'SAFE_STOCK',
+						type : 'float'
+					}, {
+						name : 'WEEK_OUT',
+						type : 'float'
+					}, {
 						name : 'VOLUME',
 						type : 'float'
 					}, {
