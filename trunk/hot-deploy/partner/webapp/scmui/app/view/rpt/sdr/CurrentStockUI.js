@@ -110,6 +110,28 @@ Ext.define('SCM.view.rpt.sdr.CurrentStockUI', {
 													text : '采购单未笼数量',
 													summaryType: 'sum',
 										            summaryRenderer: SCM.store.basiccode.sumRenderer
+												}, {
+													xtype : 'numbercolumn',
+													dataIndex : 'SAFE_STOCK',
+													width : 150,
+													text : '安全库存',
+													summaryType: 'average',
+										            summaryRenderer: SCM.store.basiccode.sumRenderer
+												}, {
+													xtype : 'numbercolumn',
+													dataIndex : 'WEEK_OUT',
+													width : 150,
+													text : '可供出货周数',
+													summaryType: 'sum',
+										            summaryRenderer: SCM.store.basiccode.sumRenderer
+												}, {
+													xtype : 'gridcolumn',
+													dataIndex : 'WEEK_OUT',
+													width : 150,
+													text : '库存情况',
+													renderer : SCM.store.basiccode.safeWarningRenderer,
+													summaryType: 'sum',
+										            summaryRenderer: SCM.store.basiccode.safeWarningSumRenderer
 												}],
 										viewConfig : {
 

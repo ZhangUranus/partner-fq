@@ -252,6 +252,9 @@
 .flag-red{
 	background-image: url( ../images/icons/flag-red.png ) !important;
 }
+.flag-yellow{
+	background-image: url( ../images/icons/flag-yellow.png ) !important;
+}
 
 .tree-user{
 	background-image: url( ../images/icons/tree-user.png ) !important;

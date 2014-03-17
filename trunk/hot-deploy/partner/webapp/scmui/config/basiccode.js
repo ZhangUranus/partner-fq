@@ -261,6 +261,22 @@ SCM.store.basiccode.warningRenderer = function(value) {
 	}
 };
 
+SCM.store.basiccode.safeWarningRenderer = function(value) {
+	if (value<2) {
+		return '<span  class="flag-red" >&nbsp&nbsp&nbsp&nbsp</span>';
+	} else if(value>4) {
+		return '<span class="flag-yellow" >&nbsp&nbsp&nbsp&nbsp</span>';
+	}
+};
+
+SCM.store.basiccode.safeWarningSumRenderer=function(value, summaryData, dataIndex) {
+	if (value<2) {
+		return '<span style="display:inline-block;width:16px;height:16px;" class="flag-red" >&nbsp&nbsp&nbsp&nbsp</span>';
+	} else if(value>4) {
+		return '<span style="display:inline-block;width:16px;height:16px;" class="flag-yellow" >&nbsp&nbsp&nbsp&nbsp</span>';
+	}
+};
+
 SCM.store.basiccode.numberColorRenderer = function(value) {
 	if (value < 0) {
 		return "<font color='red'><b>"+Ext.util.Format.number(value,'0,000.00')+"</b></font>";
@@ -275,7 +291,7 @@ SCM.store.basiccode.percentRenderer = function(value) {
 
 SCM.store.basiccode.sumRenderer=function(value, summaryData, dataIndex) {
     return '<p style="color:blue;font-size:12px;font-family:tahoma,arial,verdana,sans-serif">'+Ext.util.Format.number(value,'0,000.0000')+'</p>';
-}
+};
 
 /**
  * 用于处理提交数据 封装表头标题数据

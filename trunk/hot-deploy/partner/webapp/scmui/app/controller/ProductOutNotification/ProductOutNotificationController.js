@@ -561,6 +561,47 @@ Ext.define('SCM.controller.ProductOutNotification.ProductOutNotificationControll
 			getPrintEntryView : function(){
 				return 'ProductOutNotificationPrintEntryView';
 			},
+			
+			//取打印数据公共方法
+			getPrintData : function(id) {
+				/**
+				 * added by mark 2012-8-18 添加自定义打印表头表体view方法
+				 * 覆盖getPrintHeadView 和 getPrintEntryView 
+				 */
+				var headView=this.entityName + 'View';
+				var entryView= this.entityName + 'EntryView'
+				if(this.getPrintHeadView){
+					headView=this.getPrintHeadView();
+				}
+				if(this.getPrintEntryView){
+					entryView=this.getPrintEntryView();
+				}
+				
+				Ext.Ajax.request({
+							scope : this,
+							params : {
+								headId : id,
+								headView : headView,
+								entryView : entryView
+							},
+							url : '../../scm/control/getPrintData',
+							timeout : SCM.shortTimes,
+							success : function(response) {
+								var responseObj = Ext.decode(response.responseText);
+								if (responseObj.success) {
+									var printData = responseObj.printData;
+									if (printData) {
+										//添加打印时间
+										printData.printTime = printHelper.getPrintTime();
+										printData.printUserName = SCM.CurrentUser.userName;
+									}
+									this.doPrint(printData);
+								} else {
+									showError("打印数据格式出错");
+								}
+							}
+						});
+			},
 			getMainPrintHTML:function(){
 				return "<div>"
 				+"<div class='caption' >富桥旅游用品厂有限公司送货清单</div>"
@@ -582,7 +623,7 @@ Ext.define('SCM.controller.ProductOutNotification.ProductOutNotificationControll
 				+"<div class='field' style='width:30%;float:left;'>柜号:<span class='dataField' fieldindex='data.finalContainerNumber' width=150px></span></div>"
 				+"<div class='field' style='width:25%;float:left;'>封条号:<span class='dataField' fieldindex='data.sealNumber' width=150px></span></div>"
 				+"<div class='field' style='width:35%;float:left;'>收货单位及经手人(盖章):<span class='dataField' fieldindex='data.returnerSystemUserName' width=150px></span></div>"
-				+"<div class='field' style='width:35%;float:left;'>送货单位及经手人(盖章):<span class='dataField' fieldindex='data.submitterSystemUserName' width=150px></span></div>"
+				+"<div class='field' style='width:35%;float:left;'>送货单位及经手人(盖章):<span class='dataField' fieldindex='data.printUserName' width=150px ></span></div>"
 				+"<div class='field' style='width:80px;float:right;'>第<span class='dataField' fieldindex='data.curPage'></span>页/共<span class='dataField' fieldindex='data.totalPages'></span>页</div>"
 				+"</div>";
 			}

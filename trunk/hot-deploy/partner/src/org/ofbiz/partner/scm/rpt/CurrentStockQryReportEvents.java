@@ -31,6 +31,8 @@ public class CurrentStockQryReportEvents {
 		sql.append(" 	TM.NAME AS MATERIAL_NAME, ");
 		sql.append(" 	UT.NAME AS UNIT_NAME, ");
 		sql.append(" 	WH.NAME AS HOUSE_NAME, ");
+		sql.append(" 	IFNULL(TM.SAFE_STOCK,0) AS SAFE_STOCK, ");
+		sql.append(" 	SUM(IFNULL(IFNULL(VOLUME,0)/IFNULL(TM.SAFE_STOCK,0),0)) AS WEEK_OUT, ");
 		sql.append(" 	SUM(IFNULL(VOLUME,0)) AS VOLUME, ");
 		sql.append(" 	0 AS WORKSHOP_VOLUME, ");
 		sql.append(" 	0 AS SUPPLIER_VOLUME, ");
@@ -66,6 +68,8 @@ public class CurrentStockQryReportEvents {
 		sql.append(" 	TM.NAME AS MATERIAL_NAME, ");
 		sql.append(" 	UT.NAME AS UNIT_NAME, ");
 		sql.append(" 	WS.NAME AS HOUSE_NAME, ");
+		sql.append(" 	IFNULL(TM.SAFE_STOCK,0) AS SAFE_STOCK, ");
+		sql.append(" 	SUM(IFNULL(IFNULL(VOLUME,0)/IFNULL(TM.SAFE_STOCK,0),0)) AS WEEK_OUT, ");
 		sql.append(" 	0 AS VOLUME, ");
 		sql.append(" 	SUM(IFNULL(VOLUME,0)) AS WORKSHOP_VOLUME, ");
 		sql.append(" 	0 AS SUPPLIER_VOLUME, ");
@@ -101,6 +105,8 @@ public class CurrentStockQryReportEvents {
 		sql.append(" 	TM.NAME AS MATERIAL_NAME, ");
 		sql.append(" 	UT.NAME AS UNIT_NAME, ");
 		sql.append(" 	SP.NAME AS HOUSE_NAME, ");
+		sql.append(" 	IFNULL(TM.SAFE_STOCK,0) AS SAFE_STOCK, ");
+		sql.append(" 	0 AS WEEK_OUT, ");
 		sql.append(" 	0 AS VOLUME, ");
 		sql.append(" 	0 AS WORKSHOP_VOLUME, ");
 		sql.append(" 	SUM(IFNULL(VOLUME,0)) AS SUPPLIER_VOLUME, ");
@@ -136,6 +142,8 @@ public class CurrentStockQryReportEvents {
 		sql.append(" 	TM.NAME AS MATERIAL_NAME, ");
 		sql.append(" 	UT.NAME AS UNIT_NAME, ");
 		sql.append(" 	SP.NAME AS HOUSE_NAME, ");
+		sql.append(" 	IFNULL(TM.SAFE_STOCK,0) AS SAFE_STOCK, ");
+		sql.append(" 	0 AS WEEK_OUT, ");
 		sql.append(" 	0 AS VOLUME, ");
 		sql.append(" 	0 AS WORKSHOP_VOLUME, ");
 		sql.append(" 	0 AS SUPPLIER_VOLUME, ");
