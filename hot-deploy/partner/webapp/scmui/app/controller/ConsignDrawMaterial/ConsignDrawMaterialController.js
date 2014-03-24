@@ -248,7 +248,6 @@ Ext.define('SCM.controller.ConsignDrawMaterial.ConsignDrawMaterialController', {
 				var me = this;
 				me.MaterialBOMStore.getProxy().extraParams.whereStr = 'MaterialBomV.id = \'' + values[0].get("id") + '\'';
 				me.MaterialBOMStore.load(function(records, operation, success) {
-							debugger;
 							// 使用新方法删除原来数据
 							var tempRecords = [];
 							me.editEntry.store.each(function(record){

@@ -58,7 +58,7 @@ Ext.define('SCM.view.system.monthlySettlement.StockSettle', {
 							timeout : SCM.limitTimes,
 							success : function(response, option) {
 								if(response.responseText.length<1){
-									taskMask.hide();
+									//taskMask.hide();
 									showError("系统错误");
 								}
 					 			var responseArray = Ext.JSON.decode(response.responseText);
@@ -98,7 +98,7 @@ Ext.define('SCM.view.system.monthlySettlement.StockSettle', {
 							timeout : SCM.limitTimes,
 							success : function(response, option) {
 								if(response.responseText.length<1){
-									taskMask.hide();
+									//taskMask.hide();
 									showError("系统错误");
 								}
 					 			var responseArray = Ext.JSON.decode(response.responseText);

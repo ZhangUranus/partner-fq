@@ -47,7 +47,6 @@ Ext.define('SCM.controller.rpt.ProductSendOweReportDayController', {
 			 *            grid 事件触发控件
 			 */
 			initComponent : function(view) {
-				debugger;
 				this.listPanel = view.down('gridpanel[region=center]');
 				this.searchStartDate = view.down('datefield[name=searchStartDate]');
 				this.searchKeyWord = view.down('textfield[name=searchKeyWord]');

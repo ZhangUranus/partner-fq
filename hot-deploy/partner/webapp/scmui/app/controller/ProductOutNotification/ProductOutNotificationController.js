@@ -544,6 +544,9 @@ Ext.define('SCM.controller.ProductOutNotification.ProductOutNotificationControll
 						} else {
 							showWarning('上一次操作还未完成，请稍等！');
 						}
+					} else {
+						Ext.getBody().unmask();
+						return false;
 					}
 				}
 			},

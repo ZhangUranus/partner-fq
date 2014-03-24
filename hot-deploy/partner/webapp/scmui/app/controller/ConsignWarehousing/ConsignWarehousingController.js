@@ -282,6 +282,26 @@ Ext.define('SCM.controller.ConsignWarehousing.ConsignWarehousingController', {
 									}
 								});
 					}
+				} else if(e.field == 'volume') {
+					if (e.originalValue != e.value) {
+						Ext.Ajax.request({
+							params : {
+								parentId : e.record.get('id'),
+								entityName : 'WorkshopPriceDetail'
+							},
+							url : '../../scm/control/removeDataByParentId',
+							timeout : SCM.shortTimes,
+							success : function(response, option) {
+								var result = Ext.decode(response.responseText)
+								if (result.success) {
+									// Ext.Msg.alert("提示",
+									// "由于变更加工件，已经成功清理原来加工件耗料列表！");
+								} else {
+									showError(result.message);
+								}
+							}
+						});
+					}
 				}
 			},
 
