@@ -49,6 +49,10 @@ Ext.define('SCM.controller.ProductManualOutwarehouse.ProductManualOutwarehouseCo
 							'ProductManualOutwarehouselist button[action=print]' : {
 								click : this.print
 							},
+							// 列表打印按钮
+							'ProductManualOutwarehouselist button[action=extraPrint]' : {
+								click : this.extraPrint
+							},
 							// 列表导出
 							'ProductManualOutwarehouselist button[action=export]' : {
 								click : this.exportExcel
@@ -240,7 +244,179 @@ Ext.define('SCM.controller.ProductManualOutwarehouse.ProductManualOutwarehouseCo
 			getRollbackBillUrl : function(){
 				return '../../scm/control/rollbackProductManualOutwarehouse';
 			},
+			//取打印数据公共方法
+			getPrintData : function(id) {
+				/**
+				 * added by mark 2012-8-18 添加自定义打印表头表体view方法
+				 * 覆盖getPrintHeadView 和 getPrintEntryView 
+				 */
+				var headView=this.entityName + 'View';
+				var entryView= this.entityName + 'EntryView'
+				if(this.getPrintHeadView){
+					headView=this.getPrintHeadView();
+				}
+				if(this.getPrintEntryView){
+					entryView=this.getPrintEntryView();
+				}
+				
+				Ext.Ajax.request({
+							scope : this,
+							params : {
+								headId : id,
+								headView : headView,
+								entryView : entryView
+							},
+							url : '../../scm/control/getPrintData',
+							timeout : SCM.shortTimes,
+							success : function(response) {
+								var responseObj = Ext.decode(response.responseText);
+								if (responseObj.success) {
+									var printData = responseObj.printData;
+									if (printData) {
+										//添加打印时间
+										printData.printTime = printHelper.getPrintTime();
+										printData.printUserName = SCM.CurrentUser.userName;
+									}
+									this.doPrint(printData);
+								} else {
+									showError("打印数据格式出错");
+								}
+							}
+						});
+			},
 			getMainPrintHTML:function(){
-				return "";
+				return "<div>"
+				+"<div class='caption' >"+SCM.CompanyName+"</div>"
+				+"<div class='caption' >出仓单</div>"
+				+"<div class='field' style='width:45%;float:left;'>单据编号:<span class='dataField' fieldindex='data.number' width=150px></span></div>"
+				+"<div class='field' align='right' style='width:45%;float:right;'>打印时间:<span class='dataField' fieldindex='data.printTime' width=150px ></span></div>"
+				+"<div class='field' style='width:45%;float:left;'>客户:<span class='dataField' fieldindex='data.customerCustomerName' width=150px></span></div>"
+				+"<div class='field' align='right' style='width:45%;float:right;'>日期:<span class='dataField' fieldindex='data.bizDate' width=150px></span></div>"
+				+"<div class='nextLine'></div>"
+				+"<table  cellspacing='0' class='dataEntry' fieldindex='data.entry'>" 
+				+"<tr> "
+				+"<th bindfield='warehouseWarehouseName' width='10%'>仓库</th>"
+				+"<th bindfield='materialMaterialName'  width='28%'>产品名称</th> "
+				+"<th bindfield='materialMaterialModel' width='15%'>规格</th> "
+				+"<th bindfield='unitUnitName' width='8%'>单位</th>" 
+				+"<th bindfield='volume' width='13%'>数量</th> "
+				+"<th bindfield='price' width='13%'>单价</th> "
+				+"<th bindfield='entrysum' width='13%'>金额</th> "
+				+"</tr> "
+				+"</table>" 
+				+"<div class='field' style='width:30%;float:left;'>出货员:<span class='dataField' fieldindex='data.printUserName' width=150px></span></div>"
+				+"<div class='field' style='width:40%;float:left;'>收货单位及经手人（盖章）:</div>"
+				+"<div class='field' style='width:80px;float:right;'>第<span class='dataField' fieldindex='data.curPage'></span>页/共<span class='dataField' fieldindex='data.totalPages'></span>页</div>"
+				+"</div>";
+			},
+			
+			/**
+			 * 其它打印
+			 */
+			extraPrint : function(button) {
+				var sm = this.listPanel.getSelectionModel();
+				if (!sm.hasSelection()) {// 判断是否选择行记录
+					showError("请选择打印记录");
+					return;
+				}
+
+				var record = sm.getLastSelected();
+				if (record.get('status') == 4 ) {
+					this.getExtraPrintData(record.get('id'));
+				} else {
+					showError('单据未完成提交，不能打印！');
+				}
+			},
+			
+			/**
+			 * 取打印数据公共方法
+			 */
+			getExtraPrintData : function(id) {
+				
+				/**
+				 * added by mark 2012-8-18 添加自定义打印表头表体view方法
+				 * 覆盖getPrintHeadView 和 getPrintEntryView 
+				 */
+				var headView=this.entityName + 'View';
+				var entryView= this.entityName + 'EntryView'
+				if(this.getPrintHeadView){
+					headView=this.getPrintHeadView();
+				}
+				if(this.getPrintEntryView){
+					entryView=this.getPrintEntryView();
+				}
+				
+				Ext.Ajax.request({
+							scope : this,
+							params : {
+								headId : id,
+								headView : headView,
+								entryView : entryView
+							},
+							url : '../../scm/control/getPrintData',
+							timeout : SCM.shortTimes,
+							success : function(response) {
+								var responseObj = Ext.decode(response.responseText);
+								if (responseObj.success) {
+									var printData = responseObj.printData;
+									if (printData) {
+										//添加打印时间
+										printData.printTime = printHelper.getPrintTime();
+										printData.printUserName = SCM.CurrentUser.userName;
+									}
+									this.doExtraPrint(printData);
+								} else {
+									showError("打印数据格式出错");
+								}
+							}
+						});
+			},
+			
+			/**
+			 * 调用打印
+			 */
+			doExtraPrint : function(data) {
+				if (window.printframe) {
+					var printDom = window.printframe.document;
+					printDom.clear();//清除旧打印内容
+
+					//构建打印设置对象
+					var printConfig = new PrintConfig();
+					printConfig.mainBodyDiv = this.getExtraMainPrintHTML();
+					printConfig.loopBodyDiv = this.getLoopPrintHTML();
+					printConfig.tailDiv = this.getTailPrintHTML();
+					printConfig.useTailWhenOnePage = true;
+					
+					printHelper.writePrintContent(printDom, data, printConfig);
+					printDom.close();
+					window.printframe.print();
+				}
+			},
+			
+			getExtraMainPrintHTML : function() {
+				return "<div>"
+						+ "<div class='caption' >"+SCM.CompanyName+"送货清单</div>"
+						+ "<div class='field' style='width:45%;float:left;'  >单据编号:<span class='dataField' fieldindex='data.number' width=150px></span></div>"
+						+ "<div class='field' align='right' style='width:45%;float:right;'>打印时间:<span class='dataField' fieldindex='data.printTime' width=150px ></span></div>"
+						+ "<div class='field' style='width:30%;float:left;'>收货单位:<span class='dataField' fieldindex='data.customerCustomerName' width=150px></span></div>"
+						+ "<div class='field' style='width:30%;float:left;'>货号:</div>"
+						+ "<div class='field' align='right' style='width:30%;float:right;'>日期:<span class='dataField' fieldindex='data.bizDate' width=150px></span></div>"
+						+ "<div class='field' style='width:90%;float:left;'>备注:<span class='dataField' fieldindex='data.note' width=150px></span></div>"
+						+ "<div class='nextLine'></div>"
+						+ "<table  cellspacing='0' class='dataEntry' fieldindex='data.entry'>"
+						+ "<tr> "
+						+ "<th bindfield='materialMaterialName' width='40%'>产品名称</th>"
+						+ "<th bindfield='volume' width='30%'>数量</th> "
+						+ "<th bindfield='unitUnitName' width='30%'>单位</th> "
+						+ "</tr> "
+						+ "</table>"
+						+ "<div class='field' style='width:30%;float:left;'>订仓号:</div>"
+						+ "<div class='field' style='width:30%;float:left;'>车牌:</div>"
+						+ "<div class='field' style='width:30%;float:left;'>柜号:</div>"
+						+ "<div class='field' style='width:25%;float:left;'>封条号:</div>"
+						+ "<div class='field' style='width:35%;float:left;'>收货单位及经手人(盖章):</div>"
+						+ "<div class='field' style='width:35%;float:left;'>送货单位及经手人(盖章):</div>"
+						+ "<div class='field' style='width:100px;float:right;'>第<span class='dataField' fieldindex='data.curPage'></span>页/共<span class='dataField' fieldindex='data.totalPages'></span>页</div>"
+						+ "</div>";
 			}
 		});

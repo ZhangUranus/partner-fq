@@ -241,7 +241,6 @@ Ext.define('SCM.controller.ConsignReturnMaterial.ConsignReturnMaterialController
 			 * 修改加工件数量时，刷新表格数据
 			 */
 			materialVolumeChange : function(field, newValue, oldValue) {
-				debugger;
 				var me = this;
 				var count = me.editEntry.store.getCount();
 				var materialVolume = newValue ? newValue : 0;

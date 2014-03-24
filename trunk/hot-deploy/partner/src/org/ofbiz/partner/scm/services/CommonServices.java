@@ -44,13 +44,13 @@ public class CommonServices {
 
 			String deleteVisitByTimeSql = " DELETE FROM VISIT WHERE FROM_DATE < '" + dateStr + "'";
 
-			String deleteVisitorByTimeSql = " DELETE FROM VISITOR WHERE LAST_UPDATED_STAMP < '" + dateStr + "'";
+			//String deleteVisitorByTimeSql = " DELETE FROM VISITOR WHERE LAST_UPDATED_STAMP < '" + dateStr + "'";
 			
 			Statement st = conn.createStatement();
 			st.addBatch(deleteLogByTimeSql);
 			st.addBatch(deleteLogbinByTimeSql);
 			st.addBatch(deleteVisitByTimeSql);
-			st.addBatch(deleteVisitorByTimeSql);
+			//st.addBatch(deleteVisitorByTimeSql);
 			
 			st.executeBatch();
 			
