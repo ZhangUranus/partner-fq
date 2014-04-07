@@ -262,11 +262,7 @@ SCM.store.basiccode.warningRenderer = function(value) {
 };
 
 SCM.store.basiccode.safeWarningRenderer = function(value) {
-	if (value<2) {
-		return '<span  class="flag-red" >&nbsp&nbsp&nbsp&nbsp</span>';
-	} else if(value>4) {
-		return '<span class="flag-yellow" >&nbsp&nbsp&nbsp&nbsp</span>';
-	}
+	return '<span >&nbsp&nbsp&nbsp&nbsp</span>';
 };
 
 SCM.store.basiccode.safeWarningSumRenderer=function(value, summaryData, dataIndex) {

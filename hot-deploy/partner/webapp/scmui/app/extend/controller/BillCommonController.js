@@ -896,7 +896,12 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 			//调用打印
 			doPrint : function(data) {
 				if (window.printframe) {
-					var printDom = window.printframe.document;
+					var printfra = window.printframe;
+					var printDom = printfra.document;
+					if(!printDom){
+						printDom = printfra.contentWindow.document;
+						printfra = printfra.contentWindow;
+					}
 					printDom.clear();//清除旧打印内容
 
 					//构建打印设置对象
@@ -911,9 +916,10 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 					}
 					printHelper.writePrintContent(printDom, data, printConfig);
 					printDom.close();
-					window.printframe.print();
+					printfra.print();
 				}
 			},
+			
 			//判断是否能打印
 			canPrint : function(record) {
 				//单据状态为已提交或者已审核才能打印
