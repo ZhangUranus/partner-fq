@@ -55,6 +55,7 @@ public class CurrentStockQryReportEvents {
 		sql.append(" LEFT JOIN T_MATERIAL TM ON CMB.MATERIAL_ID = TM.ID ");
 		sql.append(" LEFT JOIN UNIT UT ON TM.DEFAULT_UNIT_ID = UT.ID ");
 		sql.append(" WHERE WH.NAME IS NOT NULL AND TM.NAME IS NOT NULL ");
+		sql.append(" 		AND VOLUME != 0");
 		if(!request.getParameter("warehouse").isEmpty()){
 			sql.append(" 		AND WH.NAME like '%"+request.getParameter("warehouse").trim()+"%'");
 		}
@@ -92,6 +93,7 @@ public class CurrentStockQryReportEvents {
 		sql.append(" LEFT JOIN T_MATERIAL TM ON CWP.MATERIAL_ID = TM.ID ");
 		sql.append(" LEFT JOIN UNIT UT ON TM.DEFAULT_UNIT_ID = UT.ID ");
 		sql.append(" WHERE WS.NAME IS NOT NULL AND TM.NAME IS NOT NULL ");
+		sql.append(" 		AND VOLUME != 0 ");
 		if(!request.getParameter("warehouse").isEmpty()){
 			sql.append(" 		AND WS.NAME like '%"+request.getParameter("warehouse").trim()+"%'");
 		}
@@ -129,6 +131,7 @@ public class CurrentStockQryReportEvents {
 		sql.append(" LEFT JOIN T_MATERIAL TM ON CCP.MATERIAL_ID = TM.ID ");
 		sql.append(" LEFT JOIN UNIT UT ON TM.DEFAULT_UNIT_ID = UT.ID ");
 		sql.append(" WHERE SP.NAME IS NOT NULL AND TM.NAME IS NOT NULL ");
+		sql.append(" 		AND VOLUME != 0 ");
 		if(!request.getParameter("warehouse").isEmpty()){
 			sql.append(" 		AND SP.NAME like '%"+request.getParameter("warehouse").trim()+"%'");
 		}
@@ -154,6 +157,7 @@ public class CurrentStockQryReportEvents {
 		sql.append(" LEFT JOIN T_MATERIAL TM ON PPB.MATERIAL_ID = TM.ID ");
 		sql.append(" LEFT JOIN UNIT UT ON TM.DEFAULT_UNIT_ID = UT.ID ");
 		sql.append(" WHERE SP.NAME IS NOT NULL AND TM.NAME IS NOT NULL ");
+		sql.append(" 		AND BALANCE != 0 ");
 		if(!request.getParameter("warehouse").isEmpty()){
 			sql.append(" 		AND SP.NAME like '%"+request.getParameter("warehouse").trim()+"%'");
 		}

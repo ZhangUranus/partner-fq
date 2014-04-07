@@ -377,7 +377,12 @@ Ext.define('SCM.controller.ProductManualOutwarehouse.ProductManualOutwarehouseCo
 			 */
 			doExtraPrint : function(data) {
 				if (window.printframe) {
-					var printDom = window.printframe.document;
+					var printfra = window.printframe;
+					var printDom = printfra.document;
+					if(!printDom){
+						printDom = printfra.contentWindow.document;
+						printfra = printfra.contentWindow;
+					}
 					printDom.clear();//清除旧打印内容
 
 					//构建打印设置对象
@@ -389,7 +394,7 @@ Ext.define('SCM.controller.ProductManualOutwarehouse.ProductManualOutwarehouseCo
 					
 					printHelper.writePrintContent(printDom, data, printConfig);
 					printDom.close();
-					window.printframe.print();
+					printfra.print();
 				}
 			},
 			
