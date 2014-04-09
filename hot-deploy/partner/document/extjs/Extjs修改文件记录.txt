@@ -26,3 +26,20 @@ decimalSeparator: '.',
     }
 另外在144行增加：
 decimalPrecision : 4
+
+
+
+5.处理灰屏问题
+修改ext-all-debug.js代码，
+
+在27034行增加事件如下：
+            me.mask.on('dblclick', me._onMaskDblClick, me);
+
+27058行增加事件的定义：
+    _onMaskDblClick: function() {
+    	if(!this.front){
+            this._hideModalMask();
+    	}
+    },
+出现灰屏，双击则解决问题。
+代码同步更新到ext-all.js
