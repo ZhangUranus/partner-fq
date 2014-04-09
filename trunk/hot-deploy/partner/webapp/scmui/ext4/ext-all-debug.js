@@ -27031,6 +27031,7 @@ Ext.define('Ext.ZIndexManager', {
             });
             me.mask.setVisibilityMode(Ext.Element.DISPLAY);
             me.mask.on('click', me._onMaskClick, me);
+            me.mask.on('dblclick', me._onMaskDblClick, me);
         }
         me.mask.maskTarget = maskTarget;
         maskTarget.addCls(Ext.baseCSSPrefix + 'body-masked');
@@ -27052,6 +27053,12 @@ Ext.define('Ext.ZIndexManager', {
         if (this.front) {
             this.front.focus();
         }
+    },
+    
+    _onMaskDblClick: function() {
+    	if(!this.front){
+            this._hideModalMask();
+    	}
     },
 
     _onContainerResize: function() {
