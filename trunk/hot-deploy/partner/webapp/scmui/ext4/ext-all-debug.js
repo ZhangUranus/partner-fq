@@ -27058,6 +27058,10 @@ Ext.define('Ext.ZIndexManager', {
     _onMaskDblClick: function() {
     	if(!this.front){
             this._hideModalMask();
+    	} else {
+    		if(this.front.hidden){
+    			this._hideModalMask();
+    		}
     	}
     },
 

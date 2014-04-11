@@ -39,6 +39,10 @@ decimalPrecision : 4
     _onMaskDblClick: function() {
     	if(!this.front){
             this._hideModalMask();
+    	} else {
+    		if(this.front.hidden){
+    			this._hideModalMask();
+    		}
     	}
     },
 出现灰屏，双击则解决问题。
