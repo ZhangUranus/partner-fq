@@ -97,7 +97,7 @@ public class ProductSendOweReportDayEvents {
 		}
 
 		if(request.getParameter("keyWord")!=null&&request.getParameter("keyWord").trim().length()>0){
-			filterMaterial.append(" where  (material.name like '%").append(request.getParameter("keyWord")).append("%' or material.number like '%").append(request.getParameter("keyWord")).append("%')");
+			filterMaterial.append(" AND MATERIAL_NAME like '%").append(request.getParameter("keyWord")).append("%'");
 		}
 		
 		String sql =" SELECT \r\n"+
@@ -246,7 +246,8 @@ public class ProductSendOweReportDayEvents {
 				" 			AND NOTIFICATION.STATUS=5 \r\n"+
 				" 		GROUP BY TME.NAME \r\n"+
 				" 	) T LEFT JOIN MATERIAL_BOM MB ON T.MATERIAL_ID = MB.MATERIAL_ID  \r\n"+
-				" 	WHERE MB.VALID = 'Y' OR MB.VALID IS NULL  \r\n"+
+				" 	WHERE (MB.VALID = 'Y' OR MB.VALID IS NULL)  \r\n"+
+				filterMaterial.toString() +
 				" 	GROUP BY BIZDATE ,T.MATERIAL_ID,MATERIAL_NAME "; 
 		
 		return sql;
