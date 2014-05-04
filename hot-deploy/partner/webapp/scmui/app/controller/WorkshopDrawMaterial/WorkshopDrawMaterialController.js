@@ -270,6 +270,7 @@ Ext.define('SCM.controller.WorkshopDrawMaterial.WorkshopDrawMaterialController',
 				+"<div class='field' style='width:25%;float:left;'>领料人:<span width=150px></span></div>"
 				+"<div class='field' style='width:25%;float:left;'>仓库主管签名:</div>"
 				+"<div class='field' style='width:25%;float:left;'>发料人:<span class='dataField' fieldindex='data.issuerSystemUserName' width=150px></span></div>"
+				+"<div class='field' style='width:70%;float:left;'>备注:<span class='dataField' fieldindex='data.note' width=150px></span></div>"
 				+"<div class='field' style='width:80px;float:right;'>第<span class='dataField' fieldindex='data.curPage'></span>页/共<span class='dataField' fieldindex='data.totalPages'></span>页</div>"
 				+"</div>";
 			}

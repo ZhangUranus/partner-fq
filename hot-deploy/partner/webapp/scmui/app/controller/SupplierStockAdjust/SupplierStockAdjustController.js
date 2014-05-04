@@ -219,7 +219,8 @@ Ext.define('SCM.controller.SupplierStockAdjust.SupplierStockAdjustController', {
 				+"<th bindfield='entrysum' width='13%'>金额</th> "
 				+"</tr> "
 				+"</table>" 
-				+"<div class='field' style='width:30%;float:left;'>退货员:<span class='dataField' fieldindex='data.returnerSystemUserName' width=150px></span></div>"
+				+"<div class='field' style='width:60%;float:left;'>退货员:<span class='dataField' fieldindex='data.returnerSystemUserName' width=150px></span></div>"
+				+"<div class='field' style='width:70%;float:left;'>备注:<span class='dataField' fieldindex='data.note' width=150px></span></div>"
 				+"<div class='field' style='width:80px;float:right;'>第<span class='dataField' fieldindex='data.curPage'></span>页/共<span class='dataField' fieldindex='data.totalPages'></span>页</div>"
 				+"</div>";
 			}

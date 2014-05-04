@@ -594,6 +594,7 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 				+ "<table  cellspacing='0' class='dataEntry' fieldindex='data.entry'>" + "<tr> " + "<th bindfield='materialMaterialNumber' width='13%'>货号</th>"
 				+ "<th bindfield='warehouseWarehouseName'>仓库</th> " + "<th bindfield='materialMaterialName' width='28%'>物料名称</th>" + "<th bindfield='materialMaterialModel' width='15%'>规格型号</th> "
 				+ "<th bindfield='volume'  width='13%'>数量</th> " + "<th bindfield='unitUnitName' width='8%'>单位</th> " + "<th bindfield='note' width='13%'>备注</th> " + "</tr> " + "</table>"
+				+ "<div class='field' style='width:70%;float:left;'  >备注:<span class='dataField' fieldindex='data.note' width=150px></span></div>"
 				+ "<div class='field' style='width:80px;float:right;'>第<span class='dataField' fieldindex='data.curPage'></span>页/共<span class='dataField' fieldindex='data.totalPages'></span>页</div>"
 				+ "</div>";
 	}

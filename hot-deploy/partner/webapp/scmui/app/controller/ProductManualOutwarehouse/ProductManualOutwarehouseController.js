@@ -307,6 +307,7 @@ Ext.define('SCM.controller.ProductManualOutwarehouse.ProductManualOutwarehouseCo
 				+"<div class='field' style='width:30%;float:left;'>出货员:<span class='dataField' fieldindex='data.printUserName' width=150px></span></div>"
 				+"<div class='field' style='width:40%;float:left;'>收货单位及经手人（盖章）:</div>"
 				+"<div class='field' style='width:80px;float:right;'>第<span class='dataField' fieldindex='data.curPage'></span>页/共<span class='dataField' fieldindex='data.totalPages'></span>页</div>"
+				+"<div class='field' style='width:90%;float:left;'>备注:<span class='dataField' fieldindex='data.note' width=150px></span></div>"
 				+"</div>";
 			},
 			

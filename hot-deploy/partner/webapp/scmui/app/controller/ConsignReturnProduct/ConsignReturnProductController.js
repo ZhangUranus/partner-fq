@@ -350,6 +350,7 @@ Ext.define('SCM.controller.ConsignReturnProduct.ConsignReturnProductController',
 				+"<div class='field' style='width:30%;float:left;'>退货员:<span class='dataField' fieldindex='data.returnerSystemUserName' width=150px></span></div>"
 				+"<div class='field' style='width:30%;float:left;'>供应商确认:</div>"
 				+"<div class='field' style='width:80px;float:right;'>第<span class='dataField' fieldindex='data.curPage'></span>页/共<span class='dataField' fieldindex='data.totalPages'></span>页</div>"
+				+"<div class='field' style='width:90%;float:left;'>备注:<span class='dataField' fieldindex='data.note' width=150px></span></div>"
 				+"</div>";
 			},
 			
@@ -469,8 +470,9 @@ Ext.define('SCM.controller.ConsignReturnProduct.ConsignReturnProductController',
 						+ "<th bindfield='volume*inputprice' width='12%'>金额</th> "
 						+ "</tr> "
 						+ "</table>"
-						+ "<div class='field' style='width:20%;float:left;'>验收员:<span class='dataField' fieldindex='data.checkerSystemUserName' width=150px></span></div>"
-						+ "<div class='field' style='width:25%;float:left;'>供应商确认:</div>"
+						+ "<div class='field' style='width:30%;float:left;'>验收员:<span class='dataField' fieldindex='data.checkerSystemUserName' width=150px></span></div>"
+						+ "<div class='field' style='width:30%;float:left;'>供应商确认:</div>"
+						+ "<div class='field' style='width:70%;float:left;'>备注:<span class='dataField' fieldindex='data.note' width=150px></span></div>"
 						+ "<div class='field' style='width:80px;float:right;'>第<span class='dataField' fieldindex='data.curPage'></span>页/共<span class='dataField' fieldindex='data.totalPages'></span>页</div>"
 						+ "</div>";
 			},
@@ -503,8 +505,9 @@ Ext.define('SCM.controller.ConsignReturnProduct.ConsignReturnProductController',
 						+ "<td ><span class='dataField' fieldindex='data.processSum' width=150px></span></th> "
 						+ "</tr> "
 						+ "</table>"
-						+ "<div class='field' style='width:20%;float:left;'>验收员:<span class='dataField' fieldindex='data.checkerSystemUserName' width=150px></span></div>"
-						+ "<div class='field' style='width:25%;float:left;'>供应商确认:</div>"
+						+ "<div class='field' style='width:30%;float:left;'>验收员:<span class='dataField' fieldindex='data.checkerSystemUserName' width=150px></span></div>"
+						+ "<div class='field' style='width:30%;float:left;'>供应商确认:</div>"
+						+ "<div class='field' style='width:70%;float:left;'>备注:<span class='dataField' fieldindex='data.note' width=150px></span></div>"
 						+ "<div class='field' style='width:80px;float:right;'>第<span class='dataField' fieldindex='data.curPage'></span>页/共<span class='dataField' fieldindex='data.totalPages'></span>页</div>"
 						+ "</div>";
 			}

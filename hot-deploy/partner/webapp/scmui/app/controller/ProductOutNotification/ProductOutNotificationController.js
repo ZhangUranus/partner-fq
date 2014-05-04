@@ -628,6 +628,7 @@ Ext.define('SCM.controller.ProductOutNotification.ProductOutNotificationControll
 				+"<div class='field' style='font-size:12px;font-family:宋体;width:25%;float:left;'>封条号:<span class='dataField' fieldindex='data.sealNumber' width=150px></span></div>"
 				+"<div class='field' style='font-size:12px;font-family:宋体;width:35%;float:left;'>收货单位及经手人(盖章):<span class='dataField' fieldindex='data.returnerSystemUserName' width=150px></span></div>"
 				+"<div class='field' style='font-size:12px;font-family:宋体;width:35%;float:left;'>送货单位及经手人(盖章):<span class='dataField' fieldindex='data.printUserName' width=150px ></span></div>"
+				+"<div class='field' style='font-size:12px;font-family:宋体;width:70%;float:left;'>备注:<span class='dataField' fieldindex='data.note' width=150px></span></div>"
 				+"<div class='field' style='font-size:12px;font-family:宋体;width:80px;float:right;'>第<span class='dataField' fieldindex='data.curPage'></span>页/共<span class='dataField' fieldindex='data.totalPages'></span>页</div>"
 				+"</div>";
 			}
