@@ -284,6 +284,7 @@ Ext.define('SCM.controller.ConsignReturnMaterial.ConsignReturnMaterialController
 				+"<div class='field' style='width:50%;'></div>"
 				+"<div class='field' style='width:30%;float:left;'>验收员:<span class='dataField' fieldindex='data.checkerSystemUserName' width=150px></span></div>"
 				+"<div class='field' style='width:30%;float:left;'>供应商确认:</div>"
+				+"<div class='field' style='width:70%;float:left;'>备注:<span class='dataField' fieldindex='data.note' width=150px></span></div>"
 				+"<div class='field' style='width:80px;float:right;'>第<span class='dataField' fieldindex='data.curPage'></span>页/共<span class='dataField' fieldindex='data.totalPages'></span>页</div>"
 				+"</div>";
 			}

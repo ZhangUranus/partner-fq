@@ -493,6 +493,7 @@ Ext.define('SCM.controller.WorkshopReturnProduct.WorkshopReturnProductController
 				+"</tr> "
 				+"</table>" 
 				+"<div class='field' >质检意见:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;质检人签名:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='font-weight:20px'>□</span>返工 	车间主任签名:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='font-weight:20px'>□</span>报废  	 车间主任签名:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>"
+				+"<div class='field' style='width:70%;float:left;'  >备注:<span class='dataField' fieldindex='data.note' width=150px></span></div>"
 				+"<div class='field' style='width:80px;float:right;'>第<span class='dataField' fieldindex='data.curPage'></span>页/共<span class='dataField' fieldindex='data.totalPages'></span>页</div>"
 				+"</div>";
 			}

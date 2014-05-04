@@ -223,6 +223,7 @@ Ext.define('SCM.controller.WorkshopReturnMaterial.WorkshopReturnMaterialControll
 				+"<div class='field' style='width:25%;float:left;'>退料人:<span width=150px></span></div>"
 				+"<div class='field' style='width:25%;float:left;'>仓库主管签名:</div>"
 				+"<div class='field' style='width:25%;float:left;'>验收人:<span class='dataField' fieldindex='data.checkerSystemUserName' width=150px></span></div>"
+				+"<div class='field' style='width:70%;float:left;'>备注:<span class='dataField' fieldindex='data.note' width=150px></span></div>"
 				+"<div class='field' style='width:80px;float:right;'>第<span class='dataField' fieldindex='data.curPage'></span>页/共<span class='dataField' fieldindex='data.totalPages'></span>页</div>"
 				+"</div>";
 			}
