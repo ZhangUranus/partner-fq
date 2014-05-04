@@ -304,7 +304,7 @@ public class SecurityEvents {
 			calendar.setTime(Utils.getCurDate());
         	CommonEvents.setUsername(request, response);
         	String uid = systemUser.getString("id");
-        	CommonEvents.setAttributeToSession(request, "uid", uid);
+        	CommonEvents.setAttributeToSession(request,response, "uid", uid);
         	userObj.put("id", uid);
         	userObj.put("userId", username);
         	userObj.put("userName", systemUser.getString("userName"));
@@ -313,7 +313,7 @@ public class SecurityEvents {
         	//String aaa = "{'id':"+uid+",'userId':"+username+",'userName':"+systemUser.getString("userName")+",'departmentId':"+systemUser.getString("departmentId")+"}";
 
         	//JSONObject userObject = JSONObject.fromObject(systemUser.getAllFields());
-        	CommonEvents.setAttributeToSession(request, "currentUser", userObject);
+        	CommonEvents.setAttributeToSession(request,response, "currentUser", userObject);
 			jsonStr.put("currentUser", userObject);
 			jsonStr.put("currentYear", calendar.get(Calendar.YEAR));
 			jsonStr.put("currentMonth", calendar.get(Calendar.MONTH)+1);
@@ -327,12 +327,14 @@ public class SecurityEvents {
 		HttpSession session = request.getSession();
         GenericValue userLogin = (GenericValue) session.getAttribute("userLogin");
         
+        String currentUser = CommonEvents.getAttributeFormSession(request, "currentUser");
+        
 		JSONObject jsonStr = new JSONObject();
-//		String username = CommonEvents.getUsername(request);
-		if(userLogin != null && !"".equals(userLogin.getString("userLoginId"))){
+		
+		if(userLogin != null || !currentUser.isEmpty()){
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(Utils.getCurDate());
-			jsonStr.put("currentUser", CommonEvents.getAttributeFormSession(request, "currentUser"));
+			jsonStr.put("currentUser", currentUser);
 			jsonStr.put("currentYear", calendar.get(Calendar.YEAR));
 			jsonStr.put("currentMonth", calendar.get(Calendar.MONTH)+1);
 			jsonStr.put("success", true);
@@ -344,7 +346,7 @@ public class SecurityEvents {
 	}
 	
 	public static String logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		CommonEvents.removeAttributeFromSession(request, "USERNAME");
+		CommonEvents.removeAttributeFromSession(request,response, "USERNAME");
 		LoginWorker.logout(request, response);
 		CommonEvents.writeJsonDataToExt(response, "{'success': true}");
 		return "success";
@@ -359,6 +361,9 @@ public class SecurityEvents {
     	List<EntityCondition> conds = FastList.newInstance();
     	conds.add(EntityCondition.makeCondition("menuId",request.getParameter("menuId")));
     	conds.add(EntityCondition.makeCondition("userId",CommonEvents.getUsername(request)));
+    	
+    	System.out.println("getUserPermissions menuId:"+request.getParameter("menuId"));
+    	System.out.println("getUserPermissions userId:"+CommonEvents.getUsername(request));
     	condition = EntityCondition.makeCondition(conds);
     	List<GenericValue> permissionList = FastList.newInstance();
     	
@@ -395,6 +400,7 @@ public class SecurityEvents {
 				tempObject.put("submit", true);
 			}
 		}
+		System.out.println("getUserPermissions :"+tempObject.toString());
 		CommonEvents.writeJsonDataToExt(response, tempObject.toString());
 		return "success";
 	}

@@ -1,9 +1,13 @@
 package org.ofbiz.partner.scm.common;
 
+import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -32,6 +36,10 @@ public class CommonEvents {
 	private static GenericDelegator delegator = null;
 	private static SerialNumberHelper serialNumberHelper = new SerialNumberHelper();
 	
+	private static final int MAX_AGE = 24 * 60 * 60;   //一天
+	
+	//private static String loginSaveType = "cookie";
+	
 	public static GenericDelegator getDelegator(HttpServletRequest request){
 		if(delegator == null){
 			delegator = (GenericDelegator)request.getAttribute("delegator");
@@ -41,62 +49,107 @@ public class CommonEvents {
 	
 	/**
 	 * 从Cookies中取出username
+	 * @throws UnsupportedEncodingException 
 	 * 
 	 * */
-	public static String getUsername(HttpServletRequest request) {
+	public static String getUsername(HttpServletRequest request) throws UnsupportedEncodingException {
+		System.out.println("sessionId = "+request.getSession().getId());
 		if(request.getSession().getAttribute("USERNAME") == null){
-			return "";
+    		String attributeValue = "";
+    		Cookie[] cookies = ((HttpServletRequest) request).getCookies();
+    		if (cookies != null) {  
+                for (Cookie c : cookies) {  
+                    if (c.getName().equals("username")) {
+                    	attributeValue = URLDecoder.decode(c.getValue(),"UTF-8");  
+                    }
+                }  
+            }
+			return attributeValue;
 		}else{
 			return request.getSession().getAttribute("USERNAME").toString();
 		}
     }
 	
 	/**
-	 * 设置username到Cookies中
+	 * 设置username到session和Cookies中
+	 * @throws UnsupportedEncodingException 
 	 * 
 	 * */
-    public static void setUsername(HttpServletRequest request, HttpServletResponse response) {
-        HttpSession session = request.getSession();
-        setAttributeToSession(request, "USERNAME", request.getParameter("USERNAME"));
-//        String domain = UtilProperties.getPropertyValue("url.properties", "cookie.domain");
-//        synchronized (session) {
-//            if (UtilValidate.isEmpty(getUsername(request))) {
-//                Cookie cookie = new Cookie(usernameCookieName, request.getParameter("USERNAME"));
-//                cookie.setMaxAge(60 * 60 * 24 * 365);
-//                cookie.setPath("/");
-//                cookie.setDomain(domain);
-//                response.addCookie(cookie);
-//            }
-//        }
+    public static void setUsername(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+    	HttpSession session = request.getSession();
+        System.out.println("sessionId = "+session.getId());
+        setAttributeToSession(request,response, "USERNAME", request.getParameter("USERNAME"));
+				Cookie usernameCookie = new Cookie("username",URLEncoder.encode( request.getParameter("USERNAME").toString(),"utf-8"));
+        Cookie passwordCookie = new Cookie("password", URLEncoder.encode( request.getParameter("PASSWORD").toString(),"utf-8"));  
+        
+        usernameCookie.setPath("/");
+        usernameCookie.setMaxAge(MAX_AGE);  
+        passwordCookie.setPath("/");  
+        passwordCookie.setMaxAge(MAX_AGE);
+        response.addCookie(usernameCookie);  
+        response.addCookie(passwordCookie);
     }
     
     /**
 	 * 设置属性到Session中
+     * @throws UnsupportedEncodingException 
 	 * 
 	 * */
-    public static void setAttributeToSession(HttpServletRequest request,String attributeName,Object attributeValue){
+    public static void setAttributeToSession(HttpServletRequest request,HttpServletResponse response,String attributeName,Object attributeValue) throws UnsupportedEncodingException{
     	if(!"".equals(attributeName) && attributeValue != null){
     		request.getSession().setAttribute(attributeName, attributeValue);
+        	Cookie tempCookie = new Cookie(attributeName, URLEncoder.encode(attributeValue.toString(),"utf-8"));
+        	tempCookie.setPath("/");
+        	tempCookie.setMaxAge(MAX_AGE);  
+            response.addCookie(tempCookie);  
     	}
     }
     
     /**
-	 * 清理Session中属性
+	 * 清理Session和cookie中属性
 	 * 
 	 * */
-    public static void removeAttributeFromSession(HttpServletRequest request,String attributeName){
-    	if(!"".equals(attributeName)){
-    		request.getSession().removeAttribute(attributeName);
-    	}
+    public static void removeAttributeFromSession(HttpServletRequest request,HttpServletResponse response,String attributeName){
+        Cookie usernameCookie = new Cookie("username", "");
+        Cookie passwordCookie = new Cookie("password", "");
+        Cookie currentUserCookie = new Cookie("currentUser", "");
+        
+        usernameCookie.setMaxAge(0); // 使cookie失效  
+        passwordCookie.setMaxAge(0);
+        currentUserCookie.setMaxAge(0);
+        usernameCookie.setPath("/"); // 这个不能少  
+        passwordCookie.setPath("/");
+        currentUserCookie.setPath("/");
+        response.addCookie(usernameCookie);
+        response.addCookie(passwordCookie);
+        response.addCookie(currentUserCookie);
     }
     
     /**
 	 * 从session中获取属性值
+     * @throws UnsupportedEncodingException 
 	 * 
 	 * */
-    public static String getAttributeFormSession(HttpServletRequest request,String attributeName){
+    public static String getAttributeFormSession(HttpServletRequest request,String attributeName) throws UnsupportedEncodingException{
     	if(!"".equals(attributeName)){
-    		return request.getSession().getAttribute(attributeName).toString();
+    		String attributeValue = "";
+    		Cookie[] cookies = ((HttpServletRequest) request).getCookies();
+    		if (cookies != null) {  
+                for (Cookie c : cookies) {  
+                    if (c.getName().equals(attributeName)) {  
+                    	attributeValue = URLDecoder.decode(c.getValue(),"UTF-8");
+                    }
+                }  
+            }
+    		if(attributeValue != ""){
+    			return attributeValue;
+    		}else {
+    			if(request.getSession().getAttribute(attributeName) != null){
+    				return request.getSession().getAttribute(attributeName).toString();
+    			}else{
+    				return "";
+    			}
+    		}
     	}else{
     		return "";
     	}

@@ -4,3 +4,18 @@ GRANT ALL PRIVILEGES ON *.* TO 'root'@'192.168.121.37' IDENTIFIED BY '123' WITH 
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'192.168.20.8' IDENTIFIED BY '123' WITH GRANT OPTION;
 
 SET PASSWORD FOR 'root'@'localhost' = PASSWORD('123');
+
+
+mysqldump -hlocalhost -uroot -p123 ofbiz > /home/admin/backup/ofbiz.sql
+mysqldump -hlocalhost -uroot -p123 ofbiz2 > /home/admin/backup/ofbiz2.sql
+mysqldump -hlocalhost -uroot -p123 ofbiz3 > /home/admin/backup/ofbiz3.sql
+
+mysql -hlocalhost -uroot -p123 ofbiz < C:\Users\Jeff\Desktop\partner\20140406\ofbiz\ofbiz.sql
+mysql -hlocalhost -uroot -p123 ofbiz2 < C:\Users\Jeff\Desktop\partner\20140406\ofbiz2.sql
+mysql -hlocalhost -uroot -p123 ofbiz3 < C:\Users\Jeff\Desktop\partner\20140406\ofbiz3.sql
+
+
+
+mysqldump -hlocalhost -uroot -p123 partner > C:\Users\Jeff\Desktop\partner_20140504.sql
+
+mysql -h192.168.20.94 -uroot -p123 partner < D:\partner\20140504\partner_20140504.sql
