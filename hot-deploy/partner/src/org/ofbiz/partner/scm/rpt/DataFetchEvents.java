@@ -1316,21 +1316,51 @@ public class DataFetchEvents {
 			material_id = request.getParameter("material_id");
 		}
 		
-		String sql = " SELECT \r\n"+
-					" 	TM.NAME AS MATERIAL_NAME, \r\n"+
-					" 	DATE(PO.BIZ_DATE) AS BIZ_DATE, \r\n"+
-					" 	POE.GOOD_NUMBER, \r\n"+
-					" 	SUM(BOARD_COUNT) AS VOLUME  \r\n"+
-					" FROM PRODUCT_OUTWAREHOUSE PO \r\n"+
-					" 	LEFT JOIN PRODUCT_OUTWAREHOUSE_ENTRY POE ON PO.ID=POE.PARENT_ID \r\n"+
-					" 	LEFT JOIN PRODUCT_MAP PM ON POE.MATERIAL_MATERIAL_ID = PM.MATERIAL_ID \r\n"+
-					" 	LEFT JOIN T_MATERIAL TM ON PM.ENTRY_MATERIAL_ID = TM.ID \r\n"+
-					" WHERE YEAR(PO.BIZ_DATE) = "+year+" \r\n"+
-					" 	AND MONTH(PO.BIZ_DATE) ="+month+" \r\n"+
-					" 	AND PM.ENTRY_MATERIAL_ID='"+material_id+"' \r\n"+
-					" 	AND POE.OUTWAREHOUSE_TYPE=1 \r\n"+
-					" GROUP BY TM.NAME,DATE(PO.BIZ_DATE),POE.GOOD_NUMBER ";
+//		String sql = " SELECT \r\n"+
+//					" 	TM.NAME AS MATERIAL_NAME, \r\n"+
+//					" 	DATE(PO.BIZ_DATE) AS BIZ_DATE, \r\n"+
+//					" 	POE.GOOD_NUMBER, \r\n"+
+//					" 	SUM(BOARD_COUNT) AS VOLUME  \r\n"+
+//					" FROM PRODUCT_OUTWAREHOUSE PO \r\n"+
+//					" 	LEFT JOIN PRODUCT_OUTWAREHOUSE_ENTRY POE ON PO.ID=POE.PARENT_ID \r\n"+
+//					" 	LEFT JOIN PRODUCT_MAP PM ON POE.MATERIAL_MATERIAL_ID = PM.MATERIAL_ID \r\n"+
+//					" 	LEFT JOIN T_MATERIAL TM ON PM.ENTRY_MATERIAL_ID = TM.ID \r\n"+
+//					" WHERE YEAR(PO.BIZ_DATE) = "+year+" \r\n"+
+//					" 	AND MONTH(PO.BIZ_DATE) ="+month+" \r\n"+
+//					" 	AND PM.ENTRY_MATERIAL_ID='"+material_id+"' \r\n"+
+//					" 	AND POE.OUTWAREHOUSE_TYPE=1 \r\n"+
+//					" GROUP BY TM.NAME,DATE(PO.BIZ_DATE),POE.GOOD_NUMBER ";
 		
+		String sql =" SELECT  \r\n"+
+					" 	TM.NAME AS MATERIAL_NAME,  \r\n"+
+					"  	DATE(DELI.BIZ_DATE) AS BIZ_DATE,  \r\n"+
+					"  	PON.GOOD_NUMBER,  \r\n"+
+					"  	SUM(VOLUME) AS VOLUME \r\n"+
+					" FROM PRODUCT_OUT_NOTIFICATION PON  \r\n"+
+					" LEFT JOIN PRODUCT_OUT_NOTIFICATION_ENTRY PONE ON PON.ID = PONE.PARENT_ID \r\n"+
+					" LEFT JOIN T_MATERIAL TM ON PONE.MATERIAL_ID = TM.ID  \r\n"+
+					" JOIN ( \r\n"+
+					" 	SELECT  \r\n"+
+					" 		DISTINCT \r\n"+
+					" 		OUTE.BIZ_DATE, \r\n"+
+					" 		PON2.DELIVER_NUMBER \r\n"+
+					" 	FROM PRODUCT_OUT_NOTIFICATION PON2 \r\n"+
+					" 	JOIN ( \r\n"+
+					" 		SELECT DISTINCT \r\n"+
+					" 			POE.GOOD_NUMBER, \r\n"+
+					" 			PO.BIZ_DATE \r\n"+
+					" 		FROM PRODUCT_OUTWAREHOUSE PO  \r\n"+
+					" 		LEFT JOIN PRODUCT_OUTWAREHOUSE_ENTRY POE ON PO.ID=POE.PARENT_ID \r\n"+
+					" 		LEFT JOIN PRODUCT_MAP PM ON POE.MATERIAL_MATERIAL_ID = PM.MATERIAL_ID  \r\n"+
+					" 		WHERE YEAR(PO.BIZ_DATE) = "+year+" \r\n"+
+					" 			AND MONTH(PO.BIZ_DATE) ="+month+"  \r\n"+
+					" 			AND PM.ENTRY_MATERIAL_ID='"+material_id+"'  \r\n"+
+					" 			AND POE.OUTWAREHOUSE_TYPE=1 \r\n"+
+					" 	)  OUTE ON PON2.GOOD_NUMBER = OUTE.GOOD_NUMBER \r\n"+
+					" ) DELI ON PON.DELIVER_NUMBER = DELI.DELIVER_NUMBER \r\n"+
+					" WHERE PONE.MATERIAL_ID ='"+material_id+"' \r\n"+
+					" GROUP BY TM.NAME,DATE(DELI.BIZ_DATE),PON.GOOD_NUMBER \r\n"+
+					" ORDER BY PON.DELIVER_NUMBER \r\n";
 		return sql;
 	}
 	
