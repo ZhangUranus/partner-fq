@@ -192,6 +192,7 @@ public class ProductReturnBizImp implements IBizStock {
 			List<EntityCondition> conds = FastList.newInstance();
 			conds.add(EntityCondition.makeCondition("barcode1", barcode1));
 			conds.add(EntityCondition.makeCondition("barcode2", barcode2));
+			Debug.log("++++++++barcode1：" + barcode1 + "+++++barcode2：" + barcode2, module);
 			condition = EntityCondition.makeCondition(conds);
 			//增加排序字段，优先取最晚出仓数据
 			List<String> orders = new ArrayList<String>();
@@ -218,11 +219,11 @@ public class ProductReturnBizImp implements IBizStock {
 					     entryDetailValue.set("materialId", v.getString("materialId"));
 					     
 					     entryDetailValue.set("model", v.getString("model"));
-					     entryDetailValue.set("quantity",v.getString("quantity"));//保存总耗料
+					     entryDetailValue.set("quantity",v.getBigDecimal("quantity"));//保存总耗料
 					     entryDetailValue.set("unitUnitId", v.getString("unitUnitId"));
 					     
-					     entryDetailValue.set("price", v.getString("price"));
-					     entryDetailValue.set("amount", v.getString("amount"));
+					     entryDetailValue.set("price", v.getBigDecimal("price"));
+					     entryDetailValue.set("amount", v.getBigDecimal("amount"));
 					     entryDetailValue.set("isIn", 1);
 					     entryDetailValue.set("isOut", 0);
 					     

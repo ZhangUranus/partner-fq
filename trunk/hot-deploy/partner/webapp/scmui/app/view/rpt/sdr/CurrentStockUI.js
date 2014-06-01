@@ -4,7 +4,7 @@
 Ext.define('SCM.view.rpt.sdr.CurrentStockUI', {
 			extend : 'Ext.container.Container',
 			alias : 'widget.currentstockreport',
-			title : '材料耗用汇总明细表',
+			title : '实时库存情况',
 			layout : {
 				type : 'border'
 			},

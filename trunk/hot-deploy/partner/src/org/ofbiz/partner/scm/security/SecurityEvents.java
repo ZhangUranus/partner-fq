@@ -283,6 +283,9 @@ public class SecurityEvents {
     	List<GenericValue> recordList =  CommonEvents.getDelegator(request).findList("TSystemUser", EntityCondition.makeCondition("userId",username), null, null, null, true);
     	GenericValue systemUser = recordList.get(0);
 		JSONObject jsonStr = new JSONObject();
+		if(systemUser.getString("valid").equals("N")){
+			throw new Exception("用户名已失效，请确认后重新输入！");
+		}
 		if (!"success".equals(responseString)) {
 			GenericValue userLogin = CommonEvents.getDelegator(request).findOne("UserLogin", true, "userLoginId", username);
 			Long currentFailedLogins = userLogin.getLong("successiveFailedLogins");

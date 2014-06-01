@@ -3,14 +3,22 @@ GRANT ALL PRIVILEGES ON *.* TO 'root'@'192.168.121.37' IDENTIFIED BY '123' WITH 
 
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'192.168.20.8' IDENTIFIED BY '123' WITH GRANT OPTION;
 
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'192.168.20.101' IDENTIFIED BY '123' WITH GRANT OPTION;
+
 SET PASSWORD FOR 'root'@'localhost' = PASSWORD('123');
 
 
-mysqldump -hlocalhost -uroot -p123 ofbiz > /home/admin/backup/ofbiz.sql
+mysqldump -hlocalhost -uroot -p123 ofbiz > /home/admin/backup/ofbiz20140512.sql
 mysqldump -hlocalhost -uroot -p123 ofbiz2 > /home/admin/backup/ofbiz2.sql
 mysqldump -hlocalhost -uroot -p123 ofbiz3 > /home/admin/backup/ofbiz3.sql
 
-mysql -hlocalhost -uroot -p123 ofbiz < C:\Users\Jeff\Desktop\partner\20140406\ofbiz\ofbiz.sql
+
+mysqldump -hlocalhost -uroot -p123 partner > C:\Users\Jeff\Desktop\partner\20140530\ofbiz20140530.sql
+
+mysql -hlocalhost -uroot -p123 partner < /home/tmp/ofbiz20140530.sql
+
+
+mysql -hlocalhost -uroot -p123 ofbiz < C:\Users\Jeff\Desktop\partner\20140512\ofbiz20140512.sql
 mysql -hlocalhost -uroot -p123 ofbiz2 < C:\Users\Jeff\Desktop\partner\20140406\ofbiz2.sql
 mysql -hlocalhost -uroot -p123 ofbiz3 < C:\Users\Jeff\Desktop\partner\20140406\ofbiz3.sql
 

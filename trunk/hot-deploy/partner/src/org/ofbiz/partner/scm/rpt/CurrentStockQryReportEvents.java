@@ -13,7 +13,7 @@ public class CurrentStockQryReportEvents {
 	static final SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
 	
 	/**
-	 * 材料耗用汇总明细表
+	 * 实时库存情况
 	 * @param request
 	 * @param response
 	 * @return
