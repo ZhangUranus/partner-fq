@@ -122,7 +122,8 @@ Ext.define('SCM.view.rpt.pr.ListOutStatUI', {
 												}, {
 													xtype : 'gridcolumn',
 													dataIndex : 'GOOD_NUMBER',
-													text : '货号',
+													width : 200,
+													text : '货号(成品退货单号)',
 													summaryType: 'count',
 										            summaryRenderer: function(value, summaryData, dataIndex) {
 										                return '<p style="color:blue;font-size:12px;font-family:tahoma,arial,verdana,sans-serif">(' + value + ' 个货号)</p>';
@@ -131,6 +132,7 @@ Ext.define('SCM.view.rpt.pr.ListOutStatUI', {
 													xtype : 'gridcolumn',
 													dataIndex : 'VOLUME',
 													text : '出货数量',
+													renderer : SCM.store.basiccode.numberColorRenderer,
 													summaryType: 'sum',
 										            summaryRenderer: SCM.store.basiccode.sumRenderer
 												}]

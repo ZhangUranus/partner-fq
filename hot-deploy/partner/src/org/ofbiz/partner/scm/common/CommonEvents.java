@@ -36,7 +36,7 @@ public class CommonEvents {
 	private static GenericDelegator delegator = null;
 	private static SerialNumberHelper serialNumberHelper = new SerialNumberHelper();
 	
-	private static final int MAX_AGE = 24 * 60 * 60;   //一天
+	private static final int MAX_AGE =-1; //24 * 60 * 60;   //一天
 	
 	//private static String loginSaveType = "cookie";
 	

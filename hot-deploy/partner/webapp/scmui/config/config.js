@@ -54,8 +54,8 @@ SCM.MaxSize = Ext.apply({//label等于5－6个中文字
 SCM.pageSize=20;		//整页面页大小
 SCM.halfPageSize=10;	//一半页面页大小
 SCM.billPageSize=15;	//单据页大小
-SCM.comboPageSize=50;		//下拉框最大条数
-SCM.limitPageSize=200;		//下拉框最大条数
+SCM.comboPageSize=20;		//下拉框最大条数
+SCM.limitPageSize=200;		//每页行数
 SCM.unpageSize=10000;	//不分页大小
 /**
  * 服务器请求timeout时间
