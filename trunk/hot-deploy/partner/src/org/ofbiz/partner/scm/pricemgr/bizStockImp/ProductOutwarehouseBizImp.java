@@ -92,6 +92,7 @@ public class ProductOutwarehouseBizImp implements IBizStock {
 				if(tempList.size()>0){
 					conds.add(EntityCondition.makeCondition("inParentId", tempList.get(0).getString("inParentId")));
 				} else {
+					Debug.log("未找到对应进仓单："+v.getString("id")+"-----------"+barcode2);
 					throw new Exception("未找到对应入仓单据，请确认输入产品条码、序列号是否正确？");
 				}
 				condition = EntityCondition.makeCondition(conds);

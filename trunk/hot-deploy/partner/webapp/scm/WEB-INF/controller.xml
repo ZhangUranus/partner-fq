@@ -515,6 +515,7 @@
 		<event type="java" path="org.ofbiz.partner.scm.stock.ProductOutVerifyEvents" invoke="getDeliverNumber" />
 		<response name="success" type="none" />
 	</request-map>
+	
 	<!-- 出货对数单头获取 -->
 	<request-map uri="getProductOutVerifyHead">
 		<security https="false" auth="false" />
@@ -827,6 +828,35 @@
 		<response name="success" type="none" />
 	</request-map>
 	<!-- exporter -->
+	
+	<!-- 出货对数单单号获取 -->
+	<request-map uri="getCurDeliverNumber">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductOutNotificationModifyEvents" invoke="getCurDeliverNumber" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 出货对数单货号获取 -->
+	<request-map uri="getCurGoodNumber">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductOutNotificationModifyEvents" invoke="getCurGoodNumber" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 获取通知单物料列表 -->
+	<request-map uri="getMaterialByGoodNumber">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductOutNotificationModifyEvents" invoke="getMaterialByGoodNumber" />
+		<response name="success" type="none" />
+	</request-map>
+	<request-map uri="getMaterialByDeliverNumber">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductOutNotificationModifyEvents" invoke="getMaterialByDeliverNumber" />
+		<response name="success" type="none" />
+	</request-map>
+	<request-map uri="submitNoModifyBill">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ProductOutNotificationModifyEvents" invoke="submitBill" />
+		<response name="success" type="none" />
+	</request-map>
 	
 	<!-- 系统工具类 -->
 	<!-- 导出系统所有实体数据 -->

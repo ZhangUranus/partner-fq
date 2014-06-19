@@ -56,7 +56,7 @@ SCM.halfPageSize=10;	//一半页面页大小
 SCM.billPageSize=15;	//单据页大小
 SCM.comboPageSize=20;		//下拉框最大条数
 SCM.limitPageSize=200;		//每页行数
-SCM.unpageSize=10000;	//不分页大小
+SCM.unpageSize=100000;	//不分页大小
 /**
  * 服务器请求timeout时间
  */
