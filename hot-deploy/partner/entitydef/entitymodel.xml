@@ -156,4 +156,52 @@ under the License.
 		<alias name="keyWord" entity-alias="TSystemLogType" field="keyWord"></alias>
 		<alias name="valid" entity-alias="TSystemLogType" field="valid"></alias>
 	</view-entity>
+	
+	<!-- 出货通知单变更 -->
+	<entity entity-name="ProductOutNotificationModify" package-name="org.ofbiz.partner.system" title="Product OutNotification Modify table">
+		<field name="id" type="id-uuid-ne"/>
+		<field name="number" type="name"/>
+		<field name="deliverNumber" type="value"></field><!-- 出货单号 -->
+		<field name="goodNumber" type="id-long"></field><!-- 货号 -->
+		<field name="notificationEntryId" type="id-long"></field><!-- 出货通知单分录编码 -->
+		<field name="volume" type="fixed-point"></field><!-- 订单数量 -->
+		<field name="verifyEntryId" type="id-long"></field><!-- 出货对数表分录编码 -->
+		<field name="verifyEntryVolume" type="fixed-point"></field><!-- 计划打板数量 -->
+		<field name="note" type="description"></field>
+		<field name="status" type="int"></field>
+		<field name="submitterSystemUserId" type="id-long"></field>
+		<field name="createdStamp" type="date-time"></field>
+		<field name="lastUpdatedStamp" type="date-time"></field>
+		<field name="submitStamp" type="date-time"></field>
+		<prim-key field="id"/>
+	</entity>
+	<view-entity entity-name="ProductOutNotificationModifyView" package-name="org.ofbiz.partner.system" title="ProductOutNotificationModifyView  Entity">
+		<member-entity entity-alias="ProductOutNotificationModifyV" entity-name="ProductOutNotificationModify"></member-entity>
+		<member-entity entity-alias="ProductOutNotificationEntryV" entity-name="ProductOutNotificationEntry"></member-entity>
+		<member-entity entity-alias="notificationMaterialV" entity-name="TMaterial"></member-entity>
+		<member-entity entity-alias="ProductOutVerifyEntryV" entity-name="ProductOutVerifyEntry"></member-entity>
+		<member-entity entity-alias="verifyEntryMaterialV" entity-name="TMaterial"></member-entity>
+		<member-entity entity-alias="submitterSystemUserV" entity-name="SystemUser"></member-entity>
+		<alias-all entity-alias="ProductOutNotificationModifyV"></alias-all>
+		<alias name="notificationMaterialName" entity-alias="notificationMaterialV" field="name"></alias>
+		<alias name="notificationMaterialNumber" entity-alias="notificationMaterialV" field="number"></alias>
+		<alias name="verifyEntryMaterialName" entity-alias="verifyEntryMaterialV" field="name"></alias>
+		<alias name="verifyEntryMaterialNumber" entity-alias="verifyEntryMaterialV" field="number"></alias>
+		<alias name="submitterSystemUserName" entity-alias="submitterSystemUserV" field="name"></alias>
+		<view-link entity-alias="ProductOutNotificationModifyV" rel-entity-alias="ProductOutNotificationEntryV" rel-optional="true">
+			<key-map field-name="notificationEntryId" rel-field-name="id" />
+		</view-link>
+		<view-link entity-alias="ProductOutNotificationEntryV" rel-entity-alias="notificationMaterialV" rel-optional="true">
+			<key-map field-name="materialId" rel-field-name="id" />
+		</view-link>
+		<view-link entity-alias="ProductOutNotificationModifyV" rel-entity-alias="ProductOutVerifyEntryV" rel-optional="true">
+			<key-map field-name="verifyEntryId" rel-field-name="id" />
+		</view-link>
+		<view-link entity-alias="ProductOutVerifyEntryV" rel-entity-alias="verifyEntryMaterialV" rel-optional="true">
+			<key-map field-name="materialId" rel-field-name="id" />
+		</view-link>
+		<view-link entity-alias="ProductOutNotificationModifyV" rel-entity-alias="submitterSystemUserV" rel-optional="true">
+			<key-map field-name="submitterSystemUserId" rel-field-name="id" />
+		</view-link>
+	</view-entity>
 </entitymodel>

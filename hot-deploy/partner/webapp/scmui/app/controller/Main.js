@@ -267,6 +267,45 @@ Ext.define('SCM.controller.Main', {
 							pageSize : SCM.unpageSize,
 							storeId : 'DNSComboInitStore' //下拉框－－展现时使用
 						}).load();
+				
+				/* 初始化单号的STORE */
+				Ext.create('CurDeliverNumberStore', {
+							pageSize : SCM.comboPageSize,
+							storeId : 'CDNSComboStore' //下拉框－－选择时使用
+						});
+				Ext.create('CurDeliverNumberStore', {
+							pageSize : SCM.unpageSize,
+							storeId : 'CDNSComboInitStore' //下拉框－－展现时使用
+						}).load();
+				/* 初始化货号的STORE */
+				Ext.create('CurGoodNumberStore', {
+							pageSize : SCM.comboPageSize,
+							storeId : 'CGNSComboStore' //下拉框－－选择时使用
+						});
+				Ext.create('CurGoodNumberStore', {
+							pageSize : SCM.unpageSize,
+							storeId : 'CGNSComboInitStore' //下拉框－－展现时使用
+						}).load();
+				
+				/* 初始化通知单获取STORE */
+				Ext.create('MaterialByGoodNumberStore', {
+							pageSize : SCM.comboPageSize,
+							storeId : 'MBGNSComboStore' //下拉框－－选择时使用
+						});
+				Ext.create('MaterialByGoodNumberStore', {
+							pageSize : SCM.unpageSize,
+							storeId : 'MBGNSComboInitStore' //下拉框－－展现时使用
+						}).load();
+				
+				/* 初始化对数单获取STORE */
+				Ext.create('MaterialByDeliverNumberStore', {
+							pageSize : SCM.comboPageSize,
+							storeId : 'MBDNSComboStore' //下拉框－－选择时使用
+						});
+				Ext.create('MaterialByDeliverNumberStore', {
+							pageSize : SCM.unpageSize,
+							storeId : 'MBDNSComboInitStore' //下拉框－－展现时使用
+						}).load();
 			},
 
 			initTreePanel : function() {//初始化功能模块

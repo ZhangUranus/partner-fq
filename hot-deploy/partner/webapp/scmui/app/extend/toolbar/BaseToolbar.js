@@ -40,6 +40,13 @@ Ext.define('SCM.extend.toolbar.BaseToolbar', {
 								action : 'exportDetail'
 							}]);
 				}
+				if (me.submit) {
+					tools = tools.concat([{
+						text : '提交',
+						iconCls : 'system-submit',
+						action : 'submit'
+					}]);
+				}
 				tools = tools.concat([{
 							text : '导出',
 							iconCls : 'system-export',
