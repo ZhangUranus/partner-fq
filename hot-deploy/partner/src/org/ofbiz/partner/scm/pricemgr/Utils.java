@@ -393,7 +393,7 @@ public class Utils {
 		
 		Calendar c = Calendar.getInstance();
 		c.setFirstDayOfWeek(Calendar.SUNDAY);
-		c.setMinimalDaysInFirstWeek(6);
+		c.setMinimalDaysInFirstWeek(3);
 		c.set(Calendar.YEAR,year);
 		c.set(Calendar.WEEK_OF_YEAR,week);
 		c.set(Calendar.DAY_OF_WEEK, 1);
