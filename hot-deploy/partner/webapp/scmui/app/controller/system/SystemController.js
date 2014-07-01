@@ -70,6 +70,12 @@ Ext.define('SCM.controller.system.SystemController', {
 				this.deleteButton = view.down('button[action=delete]');
 				this.saveButton = view.down('button[action=save]');
 				this.userTree.store.proxy.addListener('afterRequest', this.afterRequest, this); // 监听所有请求回调
+				
+				Ext.create('UserStore', {
+							pageSize : SCM.unpageSize,
+							storeId : 'USERComboInitStore' //下拉框－－展现时使用
+						});
+				
 				this.userStore = Ext.data.StoreManager.lookup('USERComboInitStore');
 				this.userStore.load();
 				this.userStore.proxy.addListener('afterRequest', this.afterRequest, this); // 监听所有请求回调

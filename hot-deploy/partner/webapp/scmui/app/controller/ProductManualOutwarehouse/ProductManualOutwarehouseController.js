@@ -96,6 +96,40 @@ Ext.define('SCM.controller.ProductManualOutwarehouse.ProductManualOutwarehouseCo
 							}
 						});
 			},
+			
+			/**
+			 * 重写空方法
+			 */
+			beforeInitComponent : function() {
+				if(Ext.data.StoreManager.lookup('CComboStore')==null){
+					/* 初始化客户的STORE */
+					Ext.create('CustomerStore', {
+								pageSize : SCM.comboPageSize,
+								storeId : 'CComboStore' //下拉框－－选择时使用
+							});
+				}
+				
+				if(Ext.data.StoreManager.lookup('CComboInitStore')==null){
+					Ext.create('CustomerStore', {
+						pageSize : SCM.unpageSize,
+						storeId : 'CComboInitStore' //下拉框－－展现时使用
+					}).load();
+				}
+				
+				if(Ext.data.StoreManager.lookup('MWHComboStore')==null){
+					/* 包括仓库字段的物料 store */
+					Ext.create('MaterialWarehouseComboStore', {
+								pageSize : SCM.comboPageSize,
+								storeId : 'MWHComboStore' //下拉框－－选择时使用
+							});
+				}
+				if(Ext.data.StoreManager.lookup('MWHComboInitStore')==null){
+					Ext.create('MaterialWarehouseComboStore', {
+						pageSize : SCM.unpageSize,
+						storeId : 'MWHComboInitStore' //下拉框－－展现时使用
+					}).load();
+				}
+			},
 
 			/**
 			 * 重新方法，增加查询条件控件的引用

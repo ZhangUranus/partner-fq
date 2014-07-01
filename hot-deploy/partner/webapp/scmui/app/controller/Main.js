@@ -73,16 +73,6 @@ Ext.define('SCM.controller.Main', {
 			 */
 			initStore : function() {
 				
-				/* 初始化物料分类的STORE */
-				Ext.create('MaterialTypeStore', {
-							pageSize : SCM.comboPageSize,
-							storeId : 'MTComboStore' //下拉框－－选择时使用
-						});
-				Ext.create('MaterialTypeStore', {
-							pageSize : SCM.unpageSize,
-							storeId : 'MTComboInitStore' //下拉框－－展现时使用
-						}).load();
-				
 				/* 初始化物料的STORE */
 				/* 普通物料 */
 				Ext.create('MaterialComboStore', {
@@ -94,15 +84,6 @@ Ext.define('SCM.controller.Main', {
 							storeId : 'MComboInitStore' //下拉框－－展现时使用
 						}).load();
 
-				/* 包括仓库字段的物料 store */
-				Ext.create('MaterialWarehouseComboStore', {
-							pageSize : SCM.comboPageSize,
-							storeId : 'MWHComboStore' //下拉框－－选择时使用
-						});
-				Ext.create('MaterialWarehouseComboStore', {
-							pageSize : SCM.unpageSize,
-							storeId : 'MWHComboInitStore' //下拉框－－展现时使用
-						}).load();
 				/* 只用于物料查找，下拉框不能使用该store */
 				Ext.create('MaterialComboStore', {
 							pageSize : SCM.unpageSize,
@@ -120,29 +101,10 @@ Ext.define('SCM.controller.Main', {
 							storeId : 'MBComboInitStore' //下拉框－－展现时使用
 						}).load();
 
-				/* 包括仓库字段的物料BOM store */
-				Ext.create('MaterialBomWarehouseComboStore', {
-							pageSize : SCM.comboPageSize,
-							storeId : 'MBWHComboStore' //下拉框－－选择时使用
-						});
-				Ext.create('MaterialBomWarehouseComboStore', {
-							pageSize : SCM.unpageSize,
-							storeId : 'MBWHComboInitStore' //下拉框－－展现时使用
-						}).load();
 
 				/* 只用于物料BOM查找，下拉框不能使用该store */
 				Ext.create('MaterialBomStore', {
 							storeId : 'MBAllStore' //物料BOM的Store
-						}).load();
-
-				/* 包括单个产品编码字段的板产品 store */
-				Ext.create('ProductComboValidStore', {
-							pageSize : SCM.comboPageSize,
-							storeId : 'PComboStore' //下拉框－－选择时使用
-						});
-				Ext.create('ProductComboStore', {
-							pageSize : SCM.unpageSize,
-							storeId : 'PComboInitStore' //下拉框－－展现时使用
 						}).load();
 
 				/* 初始化供应商的STORE */
@@ -154,17 +116,6 @@ Ext.define('SCM.controller.Main', {
 				Ext.create('SupplierStore', {
 							pageSize : SCM.unpageSize,
 							storeId : 'SPComboInitStore' //下拉框－－展现时使用
-						}).load();
-				
-				/* 初始化客户的STORE */
-				Ext.create('CustomerStore', {
-							pageSize : SCM.comboPageSize,
-							storeId : 'CComboStore' //下拉框－－选择时使用
-						});
-
-				Ext.create('CustomerStore', {
-							pageSize : SCM.unpageSize,
-							storeId : 'CComboInitStore' //下拉框－－展现时使用
 						}).load();
 
 				/* 初始化车间的STORE */
@@ -209,103 +160,26 @@ Ext.define('SCM.controller.Main', {
 							storeId : 'SUComboInitStore' //下拉框－－展现时使用
 						}).load();
 				
-				Ext.create('UserStore', {
-							pageSize : SCM.unpageSize,
-							storeId : 'USERComboInitStore' //下拉框－－展现时使用
-						}).load();
 
-				/* 初始化地区的STORE */
-				Ext.create('RegionStore', {
-							pageSize : SCM.comboPageSize,
-							storeId : 'RGComboStore' //下拉框－－选择时使用
-						});
-				Ext.create('RegionStore', {
-							pageSize : SCM.unpageSize,
-							storeId : 'RGComboInitStore' //下拉框－－展现时使用
-						}).load();
+//				/* 初始化地区的STORE */
+//				Ext.create('RegionStore', {
+//							pageSize : SCM.comboPageSize,
+//							storeId : 'RGComboStore' //下拉框－－选择时使用
+//						});
+//				Ext.create('RegionStore', {
+//							pageSize : SCM.unpageSize,
+//							storeId : 'RGComboInitStore' //下拉框－－展现时使用
+//						}).load();
 
 				/* 初始化月份的STORE */
 				Ext.create('MonthStore', {
 							storeId : 'MTHComboStore' //下拉框－－展现时使用
 						});
-				/* 部门store */
-				Ext.create('DepartmentStore', {
-							pageSize : SCM.unpageSize,
-							storeId : 'DepComboStore'
-						}).load();
 				
-						
-				/* 出仓实时列表 store */
-				Ext.create('ProductOutwarehouseEditEntryStore', {
-							pageSize : SCM.pageSize,
-							storeId : 'POHEntryStore',
-							autoLoad : true,
-							sorters : [{
-										property : 'lastUpdatedStamp',
-										direction : 'DESC'
-									}]
-						});
-				
-				/* 出仓情况store */
-				Ext.create('ProductOutDetailStore', {
-							pageSize : SCM.pageSize,
-							storeId : 'PODetailStore'
-						});
-				
-				/* 出仓情况store */
-				Ext.create('ProductOutNotificationDetailStore', {
-							pageSize : SCM.pageSize,
-							storeId : 'PONDetailStore'
-						});
-				
-				/* 初始化单号的STORE */
-				Ext.create('DeliverNumberStore', {
-							pageSize : SCM.comboPageSize,
-							storeId : 'DNSComboStore' //下拉框－－选择时使用
-						});
-				Ext.create('DeliverNumberStore', {
-							pageSize : SCM.unpageSize,
-							storeId : 'DNSComboInitStore' //下拉框－－展现时使用
-						}).load();
-				
-				/* 初始化单号的STORE */
-				Ext.create('CurDeliverNumberStore', {
-							pageSize : SCM.comboPageSize,
-							storeId : 'CDNSComboStore' //下拉框－－选择时使用
-						});
-				Ext.create('CurDeliverNumberStore', {
-							pageSize : SCM.unpageSize,
-							storeId : 'CDNSComboInitStore' //下拉框－－展现时使用
-						}).load();
-				/* 初始化货号的STORE */
-				Ext.create('CurGoodNumberStore', {
-							pageSize : SCM.comboPageSize,
-							storeId : 'CGNSComboStore' //下拉框－－选择时使用
-						});
-				Ext.create('CurGoodNumberStore', {
-							pageSize : SCM.unpageSize,
-							storeId : 'CGNSComboInitStore' //下拉框－－展现时使用
-						}).load();
-				
-				/* 初始化通知单获取STORE */
-				Ext.create('MaterialByGoodNumberStore', {
-							pageSize : SCM.comboPageSize,
-							storeId : 'MBGNSComboStore' //下拉框－－选择时使用
-						});
-				Ext.create('MaterialByGoodNumberStore', {
-							pageSize : SCM.unpageSize,
-							storeId : 'MBGNSComboInitStore' //下拉框－－展现时使用
-						}).load();
-				
-				/* 初始化对数单获取STORE */
-				Ext.create('MaterialByDeliverNumberStore', {
-							pageSize : SCM.comboPageSize,
-							storeId : 'MBDNSComboStore' //下拉框－－选择时使用
-						});
-				Ext.create('MaterialByDeliverNumberStore', {
-							pageSize : SCM.unpageSize,
-							storeId : 'MBDNSComboInitStore' //下拉框－－展现时使用
-						}).load();
+//				Ext.create('DeliverNumberStore', {
+//							pageSize : SCM.unpageSize,
+//							storeId : 'DNSComboInitStore' //下拉框－－展现时使用
+//						}).load();
 			},
 
 			initTreePanel : function() {//初始化功能模块

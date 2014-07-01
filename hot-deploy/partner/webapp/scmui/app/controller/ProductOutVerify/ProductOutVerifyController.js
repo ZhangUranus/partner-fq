@@ -68,6 +68,35 @@ Ext.define('SCM.controller.ProductOutVerify.ProductOutVerifyController', {
 							}
 						});
 			},
+			
+			/**
+			 * 重写空方法
+			 */
+			beforeInitComponent : function() {
+				if(Ext.data.StoreManager.lookup('PComboStore')==null){
+
+					/* 包括单个产品编码字段的板产品 store */
+					Ext.create('ProductComboValidStore', {
+								pageSize : SCM.comboPageSize,
+								storeId : 'PComboStore' //下拉框－－选择时使用
+							});
+				}
+				
+				if(Ext.data.StoreManager.lookup('PComboInitStore')==null){
+					Ext.create('ProductComboStore', {
+								pageSize : SCM.unpageSize,
+								storeId : 'PComboInitStore' //下拉框－－展现时使用
+							}).load();
+				}
+				
+				if(Ext.data.StoreManager.lookup('DNSComboStore')==null){
+					/* 初始化单号的STORE */
+					Ext.create('DeliverNumberStore', {
+								pageSize : SCM.comboPageSize,
+								storeId : 'DNSComboStore' //下拉框－－选择时使用
+							});
+				}
+			},
 
 			/**
 			 * 重新方法，增加查询条件控件的引用

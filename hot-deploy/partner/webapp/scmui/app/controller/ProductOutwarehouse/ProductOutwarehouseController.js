@@ -110,6 +110,42 @@ Ext.define('SCM.controller.ProductOutwarehouse.ProductOutwarehouseController', {
 			},
 
 			/**
+			 * 重写空方法
+			 */
+			beforeInitComponent : function() {
+				/* 出仓实时列表 store */
+				this.poeeStore = Ext.create('ProductOutwarehouseEditEntryStore', {
+							pageSize : SCM.pageSize,
+							storeId : 'POHEntryStore',
+							autoLoad : true,
+							sorters : [{
+										property : 'lastUpdatedStamp',
+										direction : 'DESC'
+									}]
+						});
+				
+				/* 出仓情况store */
+				this.podStore = Ext.create('ProductOutDetailStore', {
+							pageSize : SCM.pageSize,
+							storeId : 'PODetailStore'
+						});
+				
+				/* 出仓情况store */
+				this.pondStore = Ext.create('ProductOutNotificationDetailStore', {
+							pageSize : SCM.pageSize,
+							storeId : 'PONDetailStore'
+						});
+				
+				if(Ext.data.StoreManager.lookup('DNSComboStore')==null){
+					/* 初始化单号的STORE */
+					Ext.create('DeliverNumberStore', {
+								pageSize : SCM.comboPageSize,
+								storeId : 'DNSComboStore' //下拉框－－选择时使用
+							});
+				}
+			},
+			
+			/**
 			 * 重新方法，增加查询条件控件的引用
 			 */
 			afterInitComponent : function() {
@@ -126,6 +162,13 @@ Ext.define('SCM.controller.ProductOutwarehouse.ProductOutwarehouseController', {
 				this.getUnScanUI();
 //				this.getDetailListUI();
 				this.getNotiDetailListUI();
+				
+				Ext.Array.push(this.listContainer.destroys,this.winNotiDetailList);
+				Ext.Array.push(this.listContainer.destroys,this.winScan);
+				Ext.Array.push(this.listContainer.destroys,this.winUnScan);
+				Ext.Array.push(this.listContainer.storeDestroys,this.poeeStore);
+				Ext.Array.push(this.listContainer.storeDestroys,this.podStore);
+				Ext.Array.push(this.listContainer.storeDestroys,this.pondStore);
 			},
 			
 			/**

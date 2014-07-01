@@ -66,6 +66,68 @@ Ext.define('SCM.controller.ProductOutNotificationModify.ProductOutNotificationMo
 			},
 			
 			/**
+			 * 重写空方法
+			 */
+			beforeInitComponent : function() {
+				
+				/* 初始化单号的STORE */
+				this.cdnStore = Ext.create('CurDeliverNumberStore', {
+							pageSize : SCM.comboPageSize,
+							storeId : 'CDNSComboStore' //下拉框－－选择时使用
+						});
+				this.cdnStoreInit = Ext.create('CurDeliverNumberStore', {
+							pageSize : SCM.unpageSize,
+							storeId : 'CDNSComboInitStore' //下拉框－－展现时使用
+						}).load();
+				
+				/* 初始化货号的STORE */
+				this.cgnStore = Ext.create('CurGoodNumberStore', {
+							pageSize : SCM.comboPageSize,
+							storeId : 'CGNSComboStore' //下拉框－－选择时使用
+						});
+				this.cgnStoreInit = Ext.create('CurGoodNumberStore', {
+							pageSize : SCM.unpageSize,
+							storeId : 'CGNSComboInitStore' //下拉框－－展现时使用
+						}).load();
+				
+
+				/* 初始化通知单获取STORE */
+				this.mbgnStore = Ext.create('MaterialByGoodNumberStore', {
+							pageSize : SCM.comboPageSize,
+							storeId : 'MBGNSComboStore' //下拉框－－选择时使用
+						});
+				this.mbgnStoreInit = Ext.create('MaterialByGoodNumberStore', {
+							pageSize : SCM.unpageSize,
+							storeId : 'MBGNSComboInitStore' //下拉框－－展现时使用
+						}).load();
+				
+				/* 初始化对数单获取STORE */
+				this.mbdnStore = Ext.create('MaterialByDeliverNumberStore', {
+							pageSize : SCM.comboPageSize,
+							storeId : 'MBDNSComboStore' //下拉框－－选择时使用
+						});
+				this.mbdnStoreInit = Ext.create('MaterialByDeliverNumberStore', {
+							pageSize : SCM.unpageSize,
+							storeId : 'MBDNSComboInitStore' //下拉框－－展现时使用
+						}).load();
+			},
+			
+			/**
+			 * 重写空方法
+			 */
+			afterInitComponent : function() {
+				Ext.Array.push(this.listContainer.storeDestroys,this.cdnStore);
+				Ext.Array.push(this.listContainer.storeDestroys,this.cdnStoreInit);
+				Ext.Array.push(this.listContainer.storeDestroys,this.cgnStore);
+				Ext.Array.push(this.listContainer.storeDestroys,this.cgnStoreInit);
+				Ext.Array.push(this.listContainer.storeDestroys,this.mbgnStore);
+				Ext.Array.push(this.listContainer.storeDestroys,this.mbgnStoreInit);
+				Ext.Array.push(this.listContainer.storeDestroys,this.mbdnStore);
+				Ext.Array.push(this.listContainer.storeDestroys,this.mbdnStoreInit);
+			},
+			
+			
+			/**
 			 * 提交单据
 			 * 
 			 * @param {}

@@ -47,6 +47,24 @@ Ext.define('SCM.controller.rpt.ProductSendOweReportDayController', {
 			 *            grid 事件触发控件
 			 */
 			initComponent : function(view) {
+				this.listContainer = view;
+				this.listContainer.destroys = new Array();   // 用于销毁win对象
+				
+				if(Ext.data.StoreManager.lookup('PComboStore')==null){
+					/* 包括单个产品编码字段的板产品 store */
+					Ext.create('ProductComboValidStore', {
+								pageSize : SCM.comboPageSize,
+								storeId : 'PComboStore' //下拉框－－选择时使用
+							});
+				}
+				if(Ext.data.StoreManager.lookup('PComboInitStore')==null){
+					Ext.create('ProductComboStore', {
+								pageSize : SCM.unpageSize,
+								storeId : 'PComboInitStore' //下拉框－－展现时使用
+							}).load();
+				}
+				
+				
 				this.listPanel = view.down('gridpanel[region=center]');
 				this.searchStartDate = view.down('datefield[name=searchStartDate]');
 				this.searchKeyWord = view.down('textfield[name=searchKeyWord]');
@@ -58,6 +76,9 @@ Ext.define('SCM.controller.rpt.ProductSendOweReportDayController', {
 				this.entryListPanel = this.winDetailList.down('gridpanel[region=south]');
 				this.searchStartDateField = this.winDetailList.down('datefield[name=searchStartDate]');
 				this.searchMaterialIdField = this.winDetailList.down('combogrid[name=searchMaterialId]');
+				
+
+				Ext.Array.push(this.listContainer.destroys,this.winDetailList);
 				
 				this.refreshRecord();
 			},

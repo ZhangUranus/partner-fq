@@ -117,6 +117,27 @@ Ext.define('SCM.controller.WorkshopReturnProduct.WorkshopReturnProductController
 							}
 						});
 			},
+			
+			/**
+			 * 重写空方法
+			 */
+			beforeInitComponent : function() {
+				if(Ext.data.StoreManager.lookup('MBWHComboStore')==null){
+					/* 包括仓库字段的物料BOM store */
+					this.mbwStore = Ext.create('MaterialBomWarehouseComboStore', {
+								pageSize : SCM.comboPageSize,
+								storeId : 'MBWHComboStore' //下拉框－－选择时使用
+							});
+				}
+				
+				if(Ext.data.StoreManager.lookup('MBWHComboInitStore')==null){
+
+					this.mbwStoreInit = Ext.create('MaterialBomWarehouseComboStore', {
+								pageSize : SCM.unpageSize,
+								storeId : 'MBWHComboInitStore' //下拉框－－展现时使用
+							}).load();
+				}
+			},
 
 			/**
 			 * 重新方法，增加查询条件控件的引用
@@ -149,11 +170,17 @@ Ext.define('SCM.controller.WorkshopReturnProduct.WorkshopReturnProductController
 				this.detailEntry = this.detailWin.down('gridpanel');
 				this.detailEntry.addListener('edit', this.initDetailList, this); // 监控列表编辑事件
 
+				Ext.Array.push(this.listContainer.destroys,this.detailWin);
+
 				this.numberEditor = {
 					xtype : 'numberfield',
 					allowBlank : false,
 					hideTrigger : true
 				};
+				
+				// 用于销毁
+//				Ext.Array.push(this.listContainer.storeDestroys,this.mbwStore);
+//				Ext.Array.push(this.listContainer.storeDestroys,this.mbwStoreInit);
 			},
 			
 			/**

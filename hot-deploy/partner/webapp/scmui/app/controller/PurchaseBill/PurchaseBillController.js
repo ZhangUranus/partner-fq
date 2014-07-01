@@ -108,11 +108,23 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 							}
 						});
 			},
+			
+			/**
+			 * 重写空方法
+			 */
+			beforeInitComponent : function() {
+				/* 部门store */
+				this.dStore = Ext.create('DepartmentStore', {
+							pageSize : SCM.unpageSize,
+							storeId : 'DepComboStore'
+						}).load();
+			},
 
 			/**
 			 * 重新方法，增加查询条件控件的引用
 			 */
 			afterInitComponent : function() {
+				
 				this.searchStartDate = this.listPanel.down('datefield[name=searchStartDate]');
 				this.searchEndDate = this.listPanel.down('datefield[name=searchEndDate]');
 				//this.searchMaterialId = this.listPanel.down('combogrid[name=searchMaterialId]');
@@ -134,6 +146,9 @@ Ext.define('SCM.controller.PurchaseBill.PurchaseBillController', {
 				
 				this.editReceiveTime = this.win.down('datefield[name=receiveStamp]');
 				this.editReceiveTime.addListener('blur',this.editeReceiveTimeBlur,this);
+				
+				Ext.Array.push(this.listContainer.destroys,this.approverWin);
+				Ext.Array.push(this.listContainer.storeDestroys,this.dStore);
 			},
 
 			/**

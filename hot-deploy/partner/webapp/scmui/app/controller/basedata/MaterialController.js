@@ -95,18 +95,38 @@ Ext.define('SCM.controller.basedata.MaterialController', {
 					this.typeWin = Ext.widget('materialtypeedit');
 				}
 			},
-
+			
+			/**
+			 * 重写空方法
+			 */
+			beforeInitComponent : function() {
+				
+				/* 初始化物料分类的STORE */
+				this.mtStore = Ext.create('MaterialTypeStore', {
+							pageSize : SCM.comboPageSize,
+							storeId : 'MTComboStore' //下拉框－－选择时使用
+						});
+				this.mtStoreInit = Ext.create('MaterialTypeStore', {
+							pageSize : SCM.unpageSize,
+							storeId : 'MTComboInitStore' //下拉框－－展现时使用
+						}).load();
+			},
+			
 			/**
 			 * 重写空方法
 			 */
 			afterInitComponent : function() {
+
+				Ext.Array.push(this.listContainer.destroys,this.typeWin);
+				Ext.Array.push(this.listContainer.storeDestroys,this.mtStore);
+				Ext.Array.push(this.listContainer.storeDestroys,this.mtStoreInit);
+				
 				this.editForm.down('[name=materialTypeId]').store.load(); // 初始物料下拉框数据
 				this.editForm.down('[name=defaultUnitId]').store.load();// 初始计量单位下拉框数据
 				this.numberField = this.editForm.down('[name=number]');
 				
 				this.treePanel=this.listContainer.down('treepanel');
-				
-				
+
 
 				/**
 				 * add by marklam 2012-7-15 注册键盘事件，取消选择物料分类

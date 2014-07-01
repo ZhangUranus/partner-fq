@@ -17,7 +17,11 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 			 *            grid 事件触发控件
 			 */
 			initComponent : function(view) {
+				this.beforeInitComponent();
 				this.listContainer = view;
+				this.listContainer.destroys = new Array();   // 用于销毁win对象
+				this.listContainer.storeDestroys = new Array();   // 用于销毁store对象
+				
 				this.checkSession();
 				if (this.listContainer.down('gridpanel')) {
 					this.listPanel = this.listContainer.down('gridpanel');
@@ -29,6 +33,9 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 				this.editButton = view.down('button[action=modify]');
 				this.searchText = view.down('textfield[name=keyWord]');
 				this.getEdit();
+
+				Ext.Array.push(this.listContainer.destroys,this.win);
+				
 				this.listPanel.store.proxy.addListener('afterRequest', this.afterRequest, this); // 监听所有请求回调
 				this.listContainer.addListener('activate', this.focusSearchText, this); // 监听所有请求回调
 				this.initButtonByPermission();
@@ -38,6 +45,7 @@ Ext.define('SCM.extend.controller.CommonGridController', {
 				this.submitLock = false;
 			},
 
+			beforeInitComponent : Ext.emptyFn,
 			afterInitComponent : Ext.emptyFn,
 
 			/**

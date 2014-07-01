@@ -92,7 +92,26 @@ Ext.define('SCM.controller.PurchaseReturn.PurchaseReturnController', {
 							}
 						});
 			},
-
+			
+			/**
+			 * 重写空方法
+			 */
+			beforeInitComponent : function() {
+				if(Ext.data.StoreManager.lookup('MWHComboStore')==null){
+					/* 包括仓库字段的物料 store */
+					Ext.create('MaterialWarehouseComboStore', {
+								pageSize : SCM.comboPageSize,
+								storeId : 'MWHComboStore' //下拉框－－选择时使用
+							});
+				}
+				if(Ext.data.StoreManager.lookup('MWHComboInitStore')==null){
+					Ext.create('MaterialWarehouseComboStore', {
+						pageSize : SCM.unpageSize,
+						storeId : 'MWHComboInitStore' //下拉框－－展现时使用
+					}).load();
+				}
+			},
+			
 			/**
 			 * 重新方法，增加查询条件控件的引用
 			 */
