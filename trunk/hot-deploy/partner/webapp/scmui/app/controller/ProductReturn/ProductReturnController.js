@@ -118,6 +118,8 @@ Ext.define('SCM.controller.ProductReturn.ProductReturnController', {
 				// 初始化扫描、反扫描界面
 				this.getScanUI();
 				this.getUnScanUI();
+				Ext.Array.push(this.listContainer.destroys,this.winScan);
+				Ext.Array.push(this.listContainer.destroys,this.winUnScan);
 			},
 
 			/**

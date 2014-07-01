@@ -36,7 +36,33 @@ Ext.define('SCM.view.TabPanel', {
 									title : data.text,
 									iconCls : data.iconCls,
 									closable : true,
-									permission : permission
+									permission : permission,
+									listeners: {
+										beforedestroy: function(){
+											debugger;
+											for(k in this.destroys){
+												if (this.destroys[k].destroy){
+													this.destroys[k].destroy();
+												}
+												this.destroys[k] = null;
+												delete this.destroys[k];
+											}
+											this.destroys = null;
+											delete this.destroys;
+											
+											for(k in this.storeDestroys){
+												if (this.storeDestroys[k].destroy){
+													Ext.data.StoreManager.unregister(this.storeDestroys[k]);
+												}
+												this.storeDestroys[k] = null;
+												delete this.storeDestroys[k];
+											}
+											this.storeDestroys = null;
+											delete this.storeDestroys;
+											
+											return true;
+									    }
+									}
 								});
 					} catch (e) {// 异常时展现出错页面
 						this.add({

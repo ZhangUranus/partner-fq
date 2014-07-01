@@ -6,6 +6,7 @@ Ext.define('SCM.view.WorkshopDrawMaterial.EditUI', {
 			width : 815,
 			title : '制造领料单',
 			layout : 'fit',
+			id: 'WorkshopDrawMaterialeditId',
 			modal : true,// 背景变灰，不能编辑
 			collapsible : true,
 			resizable : false,
@@ -16,7 +17,8 @@ Ext.define('SCM.view.WorkshopDrawMaterial.EditUI', {
 			initComponent : function() {
 				var me = this;
 				var cellEditing = Ext.create('Ext.grid.plugin.CellEditing', {
-							clicksToEdit : 1
+							clicksToEdit : 1,
+							id:'WorkshopDrawMaterialeditIdcell'
 						});
 				Ext.applyIf(me, {
 							items : [{

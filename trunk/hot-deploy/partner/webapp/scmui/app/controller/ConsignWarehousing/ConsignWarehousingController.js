@@ -145,6 +145,10 @@ Ext.define('SCM.controller.ConsignWarehousing.ConsignWarehousingController', {
 				this.editDetailButton = this.win.down('gridpanel button[action=editDetail]');
 				this.detailEditWin = Ext.widget('ConsignWarehousingdetailedit');
 				this.detailEditEntry = this.detailEditWin.down('gridpanel');
+				
+
+				Ext.Array.push(this.listContainer.destroys,this.detailWin);
+				Ext.Array.push(this.listContainer.destroys,this.detailEditWin);
 			},
 
 			/**

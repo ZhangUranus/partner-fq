@@ -4,7 +4,7 @@ Ext.define('SCM.extend.toolbar.BillSearchToolbar', {
 			initComponent : function() {
 				var me = this;
 				var today = new Date();
-				var startDay = new Date(today.getFullYear(), today.getMonth(), 1);
+				//var startDay = new Date(today.getFullYear(), today.getMonth(), 1);
 
 				var tools = [{
 							xtype : 'datefield',
@@ -14,7 +14,7 @@ Ext.define('SCM.extend.toolbar.BillSearchToolbar', {
 							labelWidth : 35,
 							fieldLabel : '日期',
 							margin : '0 0 0 0',
-							value : startDay,
+							value : today,
 							editable : false
 						}, {
 							xtype : 'datefield',

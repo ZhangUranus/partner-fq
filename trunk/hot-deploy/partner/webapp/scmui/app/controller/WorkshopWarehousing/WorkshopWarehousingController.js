@@ -152,6 +152,10 @@ Ext.define('SCM.controller.WorkshopWarehousing.WorkshopWarehousingController', {
 		// 提交检查页面
 		this.checkWin = Ext.widget('WorkshopWarehousingchecklist');
 		this.checkEntry = this.checkWin.down('gridpanel');
+		
+		Ext.Array.push(this.listContainer.destroys,this.detailWin);
+		Ext.Array.push(this.listContainer.destroys,this.detailEditWin);
+		Ext.Array.push(this.listContainer.destroys,this.checkWin);
 	},
 
 	/**

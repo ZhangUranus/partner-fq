@@ -18,7 +18,10 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 			 *            grid 事件触发控件
 			 */
 			initComponent : function(view) {
+				this.beforeInitComponent();
 				this.listContainer = view;
+				this.listContainer.destroys = new Array();   // 用于销毁win对象
+				this.listContainer.storeDestroys = new Array();   // 用于销毁store对象
 				this.checkSession();
 				this.listPanel = view.down('gridpanel[region=center]');// 表头列表
 				this.detailPanel = view.down('gridpanel[region=south]');// 明细列表
@@ -31,6 +34,8 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				this.listPanel.store.proxy.addListener('afterRequest', this.afterRequest, this); // 监听所有请求回调
 
 				this.getEdit();
+				Ext.Array.push(this.listContainer.destroys,this.win);
+				
 				this.afterInitComponent();
 				this.initButtonByPermission();
 				this.changeComponentsState();
@@ -42,6 +47,7 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				this.submitLock = false;
 			},
 
+			beforeInitComponent : Ext.emptyFn,
 			afterInitComponent : Ext.emptyFn,
 
 			/**
@@ -528,10 +534,10 @@ Ext.define('SCM.extend.controller.BillCommonController', {
 				if (!this.isRollbackBillAble(record)) {
 					return;
 				}
-				if(!this.isSubmitUser(record)){
-					showWarning('非该单据提交人，无法进行撤销操作！');
-					return;
-				}
+//				if(!this.isSubmitUser(record)){
+//					showWarning('非该单据提交人，无法进行撤销操作！');
+//					return;
+//				}
 				Ext.Msg.confirm('提示', '确定撤销该' + this.gridTitle + '？', confirmChange, this);
 				function confirmChange(id) {
 					Ext.getBody().mask('正在进行撤销操作....');

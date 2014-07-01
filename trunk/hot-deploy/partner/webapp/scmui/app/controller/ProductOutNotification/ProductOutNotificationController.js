@@ -138,6 +138,22 @@ Ext.define('SCM.controller.ProductOutNotification.ProductOutNotificationControll
 			 */
 			initComponent : function(view) {
 				this.listContainer = view;
+				this.listContainer.destroys = new Array();   // 用于销毁win对象
+				
+				if(Ext.data.StoreManager.lookup('CComboStore')==null){
+					/* 初始化客户的STORE */
+					Ext.create('CustomerStore', {
+								pageSize : SCM.comboPageSize,
+								storeId : 'CComboStore' //下拉框－－选择时使用
+							});
+				}
+				if(Ext.data.StoreManager.lookup('CComboInitStore')==null){
+					Ext.create('CustomerStore', {
+						pageSize : SCM.unpageSize,
+						storeId : 'CComboInitStore' //下拉框－－展现时使用
+					}).load();
+				}
+				
 				this.checkSession();
 				this.listPanel = view.down('gridpanel[region=center]');// 表头列表
 				this.detailPanel = view.down('gridpanel[gridId=entry]');// 明细列表
@@ -150,6 +166,7 @@ Ext.define('SCM.controller.ProductOutNotification.ProductOutNotificationControll
 				this.listPanel.store.proxy.addListener('afterRequest', this.afterRequest, this); // 监听所有请求回调
 
 				this.getEdit();
+				Ext.Array.push(this.listContainer.destroys,this.win);
 				this.afterInitComponent();
 				this.initButtonByPermission();
 				this.changeComponentsState();
@@ -159,6 +176,7 @@ Ext.define('SCM.controller.ProductOutNotification.ProductOutNotificationControll
 
 				this.printdata;
 				this.submitLock = false;
+
 			},
 			
 			/**
@@ -186,6 +204,9 @@ Ext.define('SCM.controller.ProductOutNotification.ProductOutNotificationControll
 				this.editDetailButton = this.win.down('gridpanel button[action=editOutProduct]');
 				this.detailEditWin = Ext.widget('ProductOutNotificationdetailedit');
 				this.detailEditEntry = this.detailEditWin.down('gridpanel');
+
+				Ext.Array.push(this.listContainer.destroys,this.detailWin);
+				Ext.Array.push(this.listContainer.destroys,this.detailEditWin);
 			},
 			
 			/**

@@ -178,6 +178,12 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 				// 初始化扫描、反扫描界面
 				this.getScanUI();
 				this.getUnScanUI();
+				
+				Ext.Array.push(this.listContainer.destroys,this.detailWin);
+				Ext.Array.push(this.listContainer.destroys,this.detailEditWin);
+				Ext.Array.push(this.listContainer.destroys,this.checkWin);
+				Ext.Array.push(this.listContainer.destroys,this.winScan);
+				Ext.Array.push(this.listContainer.destroys,this.winUnScan);
 			},
 
 			/**
