@@ -24,3 +24,4 @@ update ofbiz.cur_material_balance set volume = 56 ,total_sum = 65723.146936 wher
 
 update ofbiz.cur_product_balance set volume = 28 ,total_sum = 164318.081755 where material_id  ='ed37cb36-da89-4c04-9a55-f90eb07231e1';
 update ofbiz.cur_material_balance set volume = 28 ,total_sum = 164318.081755 where material_id  ='ed37cb36-da89-4c04-9a55-f90eb07231e1';
+
