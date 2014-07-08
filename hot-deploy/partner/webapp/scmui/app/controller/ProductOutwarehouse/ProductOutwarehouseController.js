@@ -135,14 +135,6 @@ Ext.define('SCM.controller.ProductOutwarehouse.ProductOutwarehouseController', {
 							pageSize : SCM.pageSize,
 							storeId : 'PONDetailStore'
 						});
-				
-				if(Ext.data.StoreManager.lookup('DNSComboStore')==null){
-					/* 初始化单号的STORE */
-					Ext.create('DeliverNumberStore', {
-								pageSize : SCM.comboPageSize,
-								storeId : 'DNSComboStore' //下拉框－－选择时使用
-							});
-				}
 			},
 			
 			/**

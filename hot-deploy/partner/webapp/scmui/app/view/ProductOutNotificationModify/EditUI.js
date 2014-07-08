@@ -54,6 +54,14 @@ Ext.define('SCM.view.ProductOutNotificationModify.EditUI', {
 																}]
 													}
 												}, {
+													xtype : 'combobox',
+													name : 'operateType',
+													fieldLabel : '操作类型',
+													allowBlank : false,
+													store : SCM.store.basiccode.operateTypeStore,
+													displayField : 'name',
+													valueField : 'id'
+												}, {
 													xtype : 'combogrid',
 													fieldLabel : '货号',
 													name : 'goodNumber',
@@ -80,11 +88,40 @@ Ext.define('SCM.view.ProductOutNotificationModify.EditUI', {
 													}
 												}, {
 													xtype : 'combogrid',
+													fieldLabel : '产品名称',
+													name : 'materialId',
+													valueField : 'materialId',
+													displayField : 'materialName',
+													matchFieldWidth : false,
+													initStore : Ext.data.StoreManager.lookup('MBComboInitStore'),
+													store : Ext.data.StoreManager.lookup('MBComboStore'),
+													listConfig : {
+														width : 400,
+														height : SCM.MaxSize.COMBOGRID_HEIGHT,
+														columns : [{
+																	header : '编码',
+																	dataIndex : 'materialNumber',
+																	width : 100,
+																	hideable : false
+																}, {
+																	header : '名称',
+																	dataIndex : 'materialName',
+																	width : 280,
+																	hideable : false
+																}, {
+																	header : '备注',
+																	dataIndex : 'note',
+																	width : 100,
+																	hideable : false
+																}]
+													}
+												}, {
+													xtype : 'combogrid',
 													fieldLabel : '通知单产品名称',
 													name : 'notificationEntryId',
 													valueField : 'notificationEntryId',
 													displayField : 'materialName',
-													allowBlank : false,
+													hidden : true,
 													matchFieldWidth : false,
 													initStore : Ext.data.StoreManager.lookup('MBGNSComboInitStore'),
 													store : Ext.data.StoreManager.lookup('MBGNSComboStore'),
@@ -126,8 +163,8 @@ Ext.define('SCM.view.ProductOutNotificationModify.EditUI', {
 													name : 'verifyEntryId',
 													valueField : 'verifyEntryId',
 													displayField : 'materialName',
+													hidden : true,
 													matchFieldWidth : false,
-													allowBlank : false,
 													initStore : Ext.data.StoreManager.lookup('MBDNSComboInitStore'),
 													store : Ext.data.StoreManager.lookup('MBDNSComboStore'),
 													listeners : {

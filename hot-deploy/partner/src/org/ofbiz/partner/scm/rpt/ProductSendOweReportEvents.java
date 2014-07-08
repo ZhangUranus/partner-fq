@@ -293,6 +293,11 @@ public class ProductSendOweReportEvents {
 		
 		//查询对应的周汇总表记录
 		Connection conn = ConnectionFactory.getConnection(org.ofbiz.partner.scm.common.Utils.getConnectionHelperName());
+		
+		// 避免查到的数据不是最新的，先做提交
+		conn.setAutoCommit(false);
+		conn.commit();
+		conn.setAutoCommit(true);
 		StringBuffer sql =new StringBuffer();
 		sql.append("SELECT ");
 		sql.append("  weekinout.MATERIAL_ID as MATERIAL_ID,\r\n" );

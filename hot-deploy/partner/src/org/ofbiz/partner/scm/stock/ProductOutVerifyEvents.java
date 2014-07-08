@@ -61,6 +61,11 @@ public class ProductOutVerifyEvents {
 		}
 
 		Connection conn = ConnectionFactory.getConnection(org.ofbiz.partner.scm.common.Utils.getConnectionHelperName());
+		
+		// 避免查到的数据不是最新的，先做提交
+		conn.setAutoCommit(false);
+		conn.commit();
+		conn.setAutoCommit(true);
 
 		// 结果json字符串
 		StringBuffer jsonRs = new StringBuffer();
@@ -200,6 +205,11 @@ public class ProductOutVerifyEvents {
 		sql.append(orderStr.toString());
 
 		Connection conn = ConnectionFactory.getConnection(org.ofbiz.partner.scm.common.Utils.getConnectionHelperName());
+		
+		// 避免查到的数据不是最新的，先做提交
+		conn.setAutoCommit(false);
+		conn.commit();
+		conn.setAutoCommit(true);
 
 		// 结果json字符串
 		JSONObject json = null;
@@ -293,6 +303,11 @@ public class ProductOutVerifyEvents {
 			sql.append("where t1.status = 4 and deliver_number = '" + v.getString("deliverNumber")+"'");
 			sql.append("and material_id = '" + v.getString("materialId") +"'");
 			Connection conn = ConnectionFactory.getConnection(org.ofbiz.partner.scm.common.Utils.getConnectionHelperName());
+			
+			// 避免查到的数据不是最新的，先做提交
+			conn.setAutoCommit(false);
+			conn.commit();
+			conn.setAutoCommit(true);
 
 			BigDecimal realVolume = BigDecimal.ZERO;
 			try {
@@ -395,6 +410,11 @@ public class ProductOutVerifyEvents {
 		}
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
 		Connection conn = ConnectionFactory.getConnection(org.ofbiz.partner.scm.common.Utils.getConnectionHelperName());
+		
+		// 避免查到的数据不是最新的，先做提交
+		conn.setAutoCommit(false);
+		conn.commit();
+		conn.setAutoCommit(true);
 
 		// 构建汇总单号查询语句
 		StringBuffer sql = new StringBuffer();

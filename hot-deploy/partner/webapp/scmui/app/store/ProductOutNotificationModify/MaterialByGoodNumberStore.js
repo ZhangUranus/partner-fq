@@ -3,5 +3,5 @@ Ext.define('SCM.store.ProductOutNotificationModify.MaterialByGoodNumberStore', {
 			model : 'SCM.model.ProductOutNotificationModify.MaterialByGoodNumberModel',
 			alias : 'MaterialByGoodNumberStore',
 			autoLoad : false,
-			autoSync : true
+			autoSync : false
 		});

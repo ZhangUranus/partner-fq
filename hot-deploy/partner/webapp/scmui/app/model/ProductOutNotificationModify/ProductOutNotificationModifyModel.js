@@ -11,10 +11,19 @@ Ext.define('SCM.model.ProductOutNotificationModify.ProductOutNotificationModifyM
 						name : 'number',
 						type : 'string'
 					}, {
+						name : 'operateType',
+						type : 'int'
+					}, {
 						name : 'deliverNumber',
 						type : 'string'
 					}, {
 						name : 'goodNumber',
+						type : 'string'
+					}, {
+						name : 'materialId',
+						type : 'string'
+					}, {
+						name : 'materialName',
 						type : 'string'
 					}, {
 						name : 'notificationEntryId',

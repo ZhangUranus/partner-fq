@@ -253,6 +253,24 @@ SCM.store.basiccode.packageTypeRenderer = function(value) {
 };
 
 
+SCM.store.basiccode.operateTypeStore = new Ext.data.Store({
+	fields : ['id', 'name'],
+	data : [{
+				'id' : 0,
+				'name' : '新增'
+			}, {
+				'id' : 1,
+				'name' : '修改'
+			}]
+});
+SCM.store.basiccode.operateTypeRenderer = function(value) {
+	if (value == 0) {
+		return '新增';
+	} else if (value == 1) {
+		return '修改';
+	}
+};
+
 SCM.store.basiccode.warningRenderer = function(value) {
 	if (value) {
 		return '<span class="flag-red" >&nbsp&nbsp&nbsp&nbsp</span>';
