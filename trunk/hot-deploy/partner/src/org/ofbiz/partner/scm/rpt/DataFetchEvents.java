@@ -35,6 +35,11 @@ public class DataFetchEvents {
 //         if(true)return "success";
 		// 数据库连接
 		Connection conn = ConnectionFactory.getConnection(Utils.getConnectionHelperName());
+		
+		// 避免查到的数据不是最新的，先做提交
+		conn.setAutoCommit(false);
+		conn.commit();
+		conn.setAutoCommit(true);
 		try {
 			String sql = "select a.number,a.biz_date ,b.name from Purchase_Warehousing a inner join supplier b on a.supplier_supplier_id=b.id";
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -1962,6 +1967,11 @@ public class DataFetchEvents {
 	public static String executeSelectSQL(HttpServletRequest request,String sql) throws Exception {
 		// 数据库连接
 		Connection conn = ConnectionFactory.getConnection(Utils.getConnectionHelperName());
+		
+		// 避免查到的数据不是最新的，先做提交
+		conn.setAutoCommit(false);
+		conn.commit();
+		conn.setAutoCommit(true);
 		try {
 			PreparedStatement ps = conn.prepareStatement(addOrderParam(request,sql));
 			ResultSet rs = ps.executeQuery();
@@ -1976,6 +1986,11 @@ public class DataFetchEvents {
 	public static List<Map<String, Object>> getListWithSQL(HttpServletRequest request,String sql) throws Exception {
 		// 数据库连接
 		Connection conn = ConnectionFactory.getConnection(Utils.getConnectionHelperName());
+		
+		// 避免查到的数据不是最新的，先做提交
+		conn.setAutoCommit(false);
+		conn.commit();
+		conn.setAutoCommit(true);
 		try {
 			PreparedStatement ps = conn.prepareStatement(addOrderParam(request,sql));
 			List<Map<String, Object>> list = Utils.getList4ResultSet(ps.executeQuery());
@@ -1995,6 +2010,11 @@ public class DataFetchEvents {
 	 */
 	public static ArrayList<String> getMaterialTypeByParentId(ArrayList<String> numberArr) throws Exception {
 		Connection conn = ConnectionFactory.getConnection(Utils.getConnectionHelperName());
+		
+		// 避免查到的数据不是最新的，先做提交
+		conn.setAutoCommit(false);
+		conn.commit();
+		conn.setAutoCommit(true);
 		ArrayList<String> numberList = numberArr;
 		ArrayList<String> newList = new ArrayList<String>();
 		StringBuffer numbsers = new StringBuffer();

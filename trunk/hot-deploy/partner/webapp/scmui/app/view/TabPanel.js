@@ -39,7 +39,6 @@ Ext.define('SCM.view.TabPanel', {
 									permission : permission,
 									listeners: {
 										beforedestroy: function(){
-											debugger;
 											for(k in this.destroys){
 												if (this.destroys[k].destroy){
 													this.destroys[k].destroy();

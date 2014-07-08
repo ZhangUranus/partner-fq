@@ -1,5 +1,6 @@
 package org.ofbiz.partner.scm.stock;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
@@ -7,6 +8,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -52,6 +54,11 @@ public class ProductOutNotificationModifyEvents {
 		}
 
 		Connection conn = ConnectionFactory.getConnection(org.ofbiz.partner.scm.common.Utils.getConnectionHelperName());
+		
+		// 避免查到的数据不是最新的，先做提交
+		conn.setAutoCommit(false);
+		conn.commit();
+		conn.setAutoCommit(true);
 
 		// 结果json字符串
 		StringBuffer jsonRs = new StringBuffer();
@@ -107,6 +114,11 @@ public class ProductOutNotificationModifyEvents {
 		sql.append(" group by good_number having good_number is not null ");
 
 		Connection conn = ConnectionFactory.getConnection(org.ofbiz.partner.scm.common.Utils.getConnectionHelperName());
+		
+		// 避免查到的数据不是最新的，先做提交
+		conn.setAutoCommit(false);
+		conn.commit();
+		conn.setAutoCommit(true);
 
 		// 结果json字符串
 		StringBuffer jsonRs = new StringBuffer();
@@ -163,6 +175,11 @@ public class ProductOutNotificationModifyEvents {
 		}
 		
 		Connection conn = ConnectionFactory.getConnection(org.ofbiz.partner.scm.common.Utils.getConnectionHelperName());
+		
+		// 避免查到的数据不是最新的，先做提交
+		conn.setAutoCommit(false);
+		conn.commit();
+		conn.setAutoCommit(true);
 
 		// 结果json字符串
 		StringBuffer jsonRs = new StringBuffer();
@@ -179,11 +196,11 @@ public class ProductOutNotificationModifyEvents {
 				} else {
 					isFirst = false;
 				}
-				jsonRs.append("{'notificationEntryId':'"+rs.getString(1)+"',");
-				jsonRs.append("'orderNumber':'"+rs.getString(2)+"',");
-				jsonRs.append("'materialId':'"+rs.getString(3)+"',");
-				jsonRs.append("'materialName':'"+rs.getString(4)+"',");
-				jsonRs.append("'volume':'"+rs.getString(5)+"'}");
+				jsonRs.append("{notificationEntryId:'"+rs.getString(1)+"',");
+				jsonRs.append("orderNumber:'"+rs.getString(2)+"',");
+				jsonRs.append("materialId:'"+rs.getString(3)+"',");
+				jsonRs.append("materialName:'"+rs.getString(4)+"',");
+				jsonRs.append("volume:'"+rs.getString(5)+"'}");
 			}
 			jsonRs.append("]}");
 		} catch (Exception e) {
@@ -228,6 +245,11 @@ public class ProductOutNotificationModifyEvents {
 		}
 		
 		Connection conn = ConnectionFactory.getConnection(org.ofbiz.partner.scm.common.Utils.getConnectionHelperName());
+		
+		// 避免查到的数据不是最新的，先做提交
+		conn.setAutoCommit(false);
+		conn.commit();
+		conn.setAutoCommit(true);
 
 		// 结果json字符串
 		StringBuffer jsonRs = new StringBuffer();
@@ -244,10 +266,10 @@ public class ProductOutNotificationModifyEvents {
 				} else {
 					isFirst = false;
 				}
-				jsonRs.append("{'verifyEntryId':'"+rs.getString(1)+"',");
-				jsonRs.append("'materialId':'"+rs.getString(2)+"',");
-				jsonRs.append("'materialName':'"+rs.getString(3)+"',");
-				jsonRs.append("'verifyEntryVolume':'"+rs.getString(4)+"'}");
+				jsonRs.append("{verifyEntryId:'"+rs.getString(1)+"',");
+				jsonRs.append("materialId:'"+rs.getString(2)+"',");
+				jsonRs.append("materialName:'"+rs.getString(3)+"',");
+				jsonRs.append("verifyEntryVolume:'"+rs.getString(4)+"'}");
 			}
 			jsonRs.append("]}");
 		} catch (Exception e) {
@@ -281,63 +303,143 @@ public class ProductOutNotificationModifyEvents {
 				if (billHead == null) {
 					throw new Exception("找不到对应的出货通知变更单，请检查后重新提交！");
 				}
-				if(billHead.getString("notificationEntryId")==null || billHead.getString("notificationEntryId").isEmpty()){
-					throw new Exception("通知单编码为空，请检查后重新提交！");
-				}
 				if(billHead.getBigDecimal("volume")==null){
 					throw new Exception("通知单订单数量为空，请检查后重新提交！");
 				}
-				if(billHead.getString("verifyEntryId")==null || billHead.getString("verifyEntryId").isEmpty()){
-					throw new Exception("对数表分录编码为空，请检查后重新提交！");
+				if(billHead.getBigDecimal("volume").compareTo(BigDecimal.ZERO)<0){
+					throw new Exception("通知单订单数量为负数，请检查后重新提交！");
 				}
 				if(billHead.getBigDecimal("verifyEntryVolume")==null){
 					throw new Exception("对数表计划打板数量为空，请检查后重新提交！");
 				}
+				if(billHead.getBigDecimal("verifyEntryVolume").compareTo(BigDecimal.ZERO)<0){
+					throw new Exception("对数表计划打板数量为负数，请检查后重新提交！");
+				}
 				if(billHead.getString("deliverNumber")==null || billHead.getString("deliverNumber").isEmpty()){
 					throw new Exception("单号为空，请检查后重新提交！");
 				}
-				
-				// 更新通知单订单数量
-				Map<String, Object> fieldSet = new HashMap<String, Object>();
-				fieldSet.put("volume", billHead.getBigDecimal("volume"));// 设置通知单订单数量
-				int modifyCount = delegator.storeByCondition("ProductOutNotificationEntry", fieldSet, EntityCondition.makeConditionWhere("id='" + billHead.getString("notificationEntryId") + "'"),true);
-				if(modifyCount != 1){
-					throw new Exception("找不到对应的通知单，请检查后重新提交！");
+				if(billHead.getString("goodNumber")==null || billHead.getString("goodNumber").isEmpty()){
+					throw new Exception("货号为空，请检查后重新提交！");
 				}
 				
-				// 更新出货对数单计划打板数量
-				GenericValue verifyEntry = delegator.findOne("ProductOutVerifyEntry", UtilMisc.toMap("id", billHead.getString("verifyEntryId")), false);
-				if (verifyEntry == null) {
-					throw new Exception("找不到对应的对数表分录，请检查后重新提交！");
-				}
-				if(verifyEntry.getBigDecimal("sentQty").compareTo(billHead.getBigDecimal("verifyEntryVolume")) == 1){
-					throw new Exception("已出仓数量大于要修改的计划打板数量，请检查后重新提交！");
-				}else if(verifyEntry.getBigDecimal("sentQty").compareTo(billHead.getBigDecimal("verifyEntryVolume")) == -1){
-					verifyEntry.set("isFinished", "N");
-				}else if(verifyEntry.getBigDecimal("sentQty").compareTo(billHead.getBigDecimal("verifyEntryVolume")) == -1){
-					verifyEntry.set("isFinished", "Y");
-				}
-				verifyEntry.set("orderQty", billHead.getBigDecimal("verifyEntryVolume"));
-				verifyEntry.store();
-				
-				
-				// 判断是否更新对数单状态和数量
-				List<GenericValue> verifyHeadList = delegator.findByAnd("ProductOutVerifyHead", "deliverNumber", billHead.getString("deliverNumber"), "materialId", verifyEntry.getString("parentMaterialId"));
-				if (verifyHeadList.size() > 0) {
-					boolean isFinished = true;
-					// 通过出货通知单的“单号”和出货通知单分录的“产品编码”，查找符合出货对数单中是否存在计划出货产品
-					List<GenericValue> verifyEntryList = delegator.findByAnd("ProductOutVerifyEntry", "deliverNumber", billHead.getString("deliverNumber"), "parentMaterialId", verifyEntry.getString("parentMaterialId"));
-					for (GenericValue verifyEntryTemp : verifyEntryList) {
-						if(verifyEntryTemp.getString("isFinished").equals("N")){
-							isFinished = false;
+				if(billHead.getInteger("operateType")==1){
+					if(billHead.getString("notificationEntryId")==null || billHead.getString("notificationEntryId").isEmpty()){
+						throw new Exception("通知单编码为空，请检查后重新提交！");
+					}
+					if(billHead.getString("verifyEntryId")==null || billHead.getString("verifyEntryId").isEmpty()){
+						throw new Exception("对数表分录编码为空，请检查后重新提交！");
+					}
+					// 更新通知单订单数量
+					Map<String, Object> fieldSet = new HashMap<String, Object>();
+					fieldSet.put("volume", billHead.getBigDecimal("volume"));// 设置通知单订单数量
+					int modifyCount = delegator.storeByCondition("ProductOutNotificationEntry", fieldSet, EntityCondition.makeConditionWhere("id='" + billHead.getString("notificationEntryId") + "'"),true);
+					if(modifyCount != 1){
+						throw new Exception("找不到对应的通知单，请检查后重新提交！");
+					}
+					
+					// 更新出货对数单计划打板数量
+					GenericValue verifyEntry = delegator.findOne("ProductOutVerifyEntry", UtilMisc.toMap("id", billHead.getString("verifyEntryId")), false);
+					if (verifyEntry == null) {
+						throw new Exception("找不到对应的对数表分录，请检查后重新提交！");
+					}
+					if(verifyEntry.getBigDecimal("sentQty").compareTo(billHead.getBigDecimal("verifyEntryVolume")) == 1){
+						throw new Exception("已出仓数量大于要修改的计划打板数量，请检查后重新提交！");
+					}else if(verifyEntry.getBigDecimal("sentQty").compareTo(billHead.getBigDecimal("verifyEntryVolume")) == -1){
+						verifyEntry.set("isFinished", "N");
+					}else if(verifyEntry.getBigDecimal("sentQty").compareTo(billHead.getBigDecimal("verifyEntryVolume")) == -1){
+						verifyEntry.set("isFinished", "Y");
+					}
+					verifyEntry.set("orderQty", billHead.getBigDecimal("verifyEntryVolume"));
+					verifyEntry.store();
+					
+					
+					// 判断是否更新对数单状态和数量
+					List<GenericValue> verifyHeadList = delegator.findByAnd("ProductOutVerifyHead", "deliverNumber", billHead.getString("deliverNumber"), "materialId", verifyEntry.getString("parentMaterialId"));
+					if (verifyHeadList.size() > 0) {
+						boolean isFinished = true;
+						// 通过出货通知单的“单号”和出货通知单分录的“产品编码”，查找符合出货对数单中是否存在计划出货产品
+						List<GenericValue> verifyEntryList = delegator.findByAnd("ProductOutVerifyEntry", "deliverNumber", billHead.getString("deliverNumber"), "parentMaterialId", verifyEntry.getString("parentMaterialId"));
+						for (GenericValue verifyEntryTemp : verifyEntryList) {
+							if(verifyEntryTemp.getString("isFinished").equals("N")){
+								isFinished = false;
+							}
+						}
+						
+						GenericValue verifyHead = verifyHeadList.get(0); // 只取第一条，默认一对单号、产品编码只能唯一对应一条对数单
+						verifyHead.setString("isFinished", isFinished ? "Y" : "N");
+						
+						verifyHead.store();
+					}
+				} else {
+					if(billHead.getString("materialId")==null || billHead.getString("materialId").isEmpty()){
+						throw new Exception("通知单产品编码为空，请检查后重新提交！");
+					}
+					
+					// 检查通知单中是否已经存在该产品，存在的，提示进行修改。
+					List<GenericValue> notificationHeadTempList = delegator.findByAnd("ProductOutNotification", "goodNumber", billHead.getString("goodNumber"));
+					if(notificationHeadTempList!=null){
+						for (GenericValue notificationHeadTemp : notificationHeadTempList) {
+							List<GenericValue> tempList = delegator.findByAnd("ProductOutNotificationEntry", "parentId", notificationHeadTemp.getString("id"), "materialId", billHead.getString("materialId"));
+							if(tempList.size()>0){
+								throw new Exception("通知单中已经存在该产品，不允许使用新增进行修改，请使用修改功能，请检查后重新提交！");
+							}
 						}
 					}
 					
-					GenericValue verifyHead = verifyHeadList.get(0); // 只取第一条，默认一对单号、产品编码只能唯一对应一条对数单
-					verifyHead.setString("isFinished", isFinished ? "Y" : "N");
 					
-					verifyHead.store();
+					// 增加通知单分录
+					List<GenericValue> notificationHeadList = delegator.findByAnd("ProductOutNotification", "goodNumber", billHead.getString("goodNumber"));
+					if (notificationHeadList.size() > 0) {
+						GenericValue notificationHead = notificationHeadList.get(0); // 只取第一条，默认一个货号只对应一个通知单
+						// 处理表体
+						GenericValue entryEntity = delegator.makeValue("ProductOutNotificationEntry");
+						// 设置分录字段
+						entryEntity.set("id", UUID.randomUUID().toString());
+						entryEntity.set("parentId", notificationHead.getString("id"));
+						entryEntity.set("materialId", billHead.getString("materialId"));// 产品编码
+						entryEntity.set("volume", billHead.getBigDecimal("volume"));// 订单数量
+						entryEntity.create();
+					}
+					
+					// 不需要增加分录，需要在通知单中填写
+//					List<GenericValue> verifyEntryTempList = delegator.findByAnd("ProductOutVerifyEntry", "deliverNumber", billHead.getString("deliverNumber"), "materialId", billHead.getString("entryMaterialId"));
+//					if(verifyEntryTempList.size() > 0){
+//						// 存在记录，累加打板方式
+//						GenericValue verifyEntry = verifyEntryTempList.get(0); // 只取第一条，默认一对单号、打板产品编码只能唯一对应一条对数单分录
+//						verifyEntry.set("orderQty", verifyEntry.getBigDecimal("orderQty").add(billHead.getBigDecimal("verifyEntryVolume")));
+//						verifyEntry.set("isFinished", "N");		// 订单数量增加后，必须重置状态
+//						verifyEntry.store();
+//					}else {
+//						// 不存在记录，增加打板方式
+//						GenericValue entryEntity = delegator.makeValue("ProductOutVerifyEntry");
+//						entryEntity.set("id", UUID.randomUUID().toString());
+//						entryEntity.set("deliverNumber", billHead.getString("deliverNumber"));
+//						entryEntity.set("parentMaterialId", billHead.getString("materialId"));
+//						entryEntity.set("materialId", billHead.getString("entryMaterialId"));
+//						entryEntity.set("orderQty", billHead.getBigDecimal("verifyEntryVolume"));
+//						entryEntity.set("sentQty", BigDecimal.ZERO);
+//						entryEntity.set("isFinished", "N");	
+//						entryEntity.set("sort", 99);
+//					}					
+//					// 判断是否更新对数单状态和数量
+//					List<GenericValue> verifyHeadList = delegator.findByAnd("ProductOutVerifyHead", "deliverNumber", billHead.getString("deliverNumber"), "materialId", billHead.getString("entryMaterialId"));
+//					if (verifyHeadList.size() > 0) {
+//						boolean isFinished = true;
+//						// 通过出货通知单的“单号”和出货通知单分录的“产品编码”，查找符合出货对数单中是否存在计划出货产品
+//						List<GenericValue> verifyEntryList = delegator.findByAnd("ProductOutVerifyEntry", "deliverNumber", billHead.getString("deliverNumber"), "parentMaterialId", billHead.getString("entryMaterialId"));
+//						for (GenericValue verifyEntryTemp : verifyEntryList) {
+//							if(verifyEntryTemp.getString("isFinished").equals("N")){
+//								isFinished = false;
+//							}
+//						}
+//						
+//						GenericValue verifyHead = verifyHeadList.get(0); // 只取第一条，默认一对单号、产品编码只能唯一对应一条对数单
+//						verifyHead.setString("isFinished", isFinished ? "Y" : "N");
+//						
+//						verifyHead.store();
+//					}
 				}
+				
 				
 				
 				BillBaseEvent.submitBill(request, response);// 更新单据状态

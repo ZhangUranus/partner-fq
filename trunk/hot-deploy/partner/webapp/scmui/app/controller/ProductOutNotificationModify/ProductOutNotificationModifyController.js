@@ -124,6 +124,31 @@ Ext.define('SCM.controller.ProductOutNotificationModify.ProductOutNotificationMo
 				Ext.Array.push(this.listContainer.storeDestroys,this.mbgnStoreInit);
 				Ext.Array.push(this.listContainer.storeDestroys,this.mbdnStore);
 				Ext.Array.push(this.listContainer.storeDestroys,this.mbdnStoreInit);
+				
+				this.operateTypeFields = this.editForm.down('combobox[name=operateType]');
+				this.operateTypeFields.addListener('change', this.changeDisplay, this);
+				
+
+				this.materialIdFields = this.editForm.down('combogrid[name=materialId]');
+				this.verifyEntryVolumeFields = this.editForm.down('numberfield[name=verifyEntryVolume]');
+				this.notificationEntryIdFields = this.editForm.down('combogrid[name=notificationEntryId]');
+				this.verifyEntryIdFields = this.editForm.down('combogrid[name=verifyEntryId]');
+				
+				
+			},
+			
+			changeDisplay : function() {
+				if(this.operateTypeFields.getValue() == 0){
+					this.materialIdFields.setVisible(true);
+					this.verifyEntryVolumeFields.setVisible(false);
+					this.notificationEntryIdFields.setVisible(false);
+					this.verifyEntryIdFields.setVisible(false);
+				} else {
+					this.materialIdFields.setVisible(false);
+					this.verifyEntryVolumeFields.setVisible(true);
+					this.notificationEntryIdFields.setVisible(true);
+					this.verifyEntryIdFields.setVisible(true);
+				}
 			},
 			
 			

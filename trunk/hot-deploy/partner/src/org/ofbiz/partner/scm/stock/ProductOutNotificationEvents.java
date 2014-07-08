@@ -164,6 +164,11 @@ public class ProductOutNotificationEvents {
 
 		// 获取数据库连接
 		Connection conn = ConnectionFactory.getConnection(org.ofbiz.partner.scm.common.Utils.getConnectionHelperName());
+		
+		// 避免查到的数据不是最新的，先做提交
+		conn.setAutoCommit(false);
+		conn.commit();
+		conn.setAutoCommit(true);
 
 		// 结果json字符串
 		StringBuffer jsonRs = new StringBuffer();

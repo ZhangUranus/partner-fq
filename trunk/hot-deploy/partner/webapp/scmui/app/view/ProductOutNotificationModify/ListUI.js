@@ -17,31 +17,41 @@ Ext.define('SCM.view.ProductOutNotificationModify.ListUI', {
 									}, {
 										header : '编码',
 										dataIndex : 'number',
-										width : 200
+										width : 160
 									}, {
 										header : '单号',
 										dataIndex : 'deliverNumber',
-										width : 200
+										width : 160
+									}, {
+										xtype : 'gridcolumn',
+										renderer : SCM.store.basiccode.operateTypeRenderer,
+										dataIndex : 'operateType',
+										text : '操作类型',
+										width : 60
 									}, {
 										header : '货号',
 										dataIndex : 'goodNumber',
-										width : 200
+										width : 160
 									}, {
-										header : '通知单产品名称',
+										header : '产品名称（新增）',
+										dataIndex : 'materialName',
+										width : 160
+									}, {
+										header : '通知单产品名称（修改）',
 										dataIndex : 'notificationMaterialName',
-										width : 200
+										width : 160
 									}, {
 										header : '通知单订单数量',
 										dataIndex : 'volume',
-										width : 200
+										width : 160
 									}, {
-										header : '对数表打板产品名称',
+										header : '对数表打板产品名称（修改）',
 										dataIndex : 'verifyEntryMaterialName',
-										width : 200
+										width : 160
 									}, {
 										header : '计划打板数量',
 										dataIndex : 'verifyEntryVolume',
-										width : 200
+										width : 160
 									}, {
 										xtype : 'gridcolumn',
 										renderer : SCM.store.basiccode.billStatusRenderer,
@@ -52,7 +62,7 @@ Ext.define('SCM.view.ProductOutNotificationModify.ListUI', {
 									}, {
 										header : '提交人',
 										dataIndex : 'submitterSystemUserName',
-										width : 200
+										width : 160
 									}],
 							dockedItems : [{
 										xtype : 'basetoolbar',
