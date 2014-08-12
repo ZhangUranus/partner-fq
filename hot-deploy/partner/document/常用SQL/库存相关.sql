@@ -1,3 +1,17 @@
+--扫描未提交的
+SELECT tm.name ,count(*) FROM product_inwarehouse pi
+left join product_inwarehouse_entry pie on pi.id = pie.parent_id 
+left join t_material tm on pie.material_material_id =tm.id
+where pi.status !=4
+group by tm.name;
+
+SELECT tm.name ,count(*) FROM product_outwarehouse po
+left join product_outwarehouse_entry poe on po.id = poe.parent_id 
+left join t_material tm on poe.material_material_id =tm.id
+where po.status !=4
+group by tm.name;
+
+
 --查询未出仓产品和仓库库存产品差异数据
 SELECT cpb.material_id,cpb.volume,cpb.total_sum,cmb.volume,cmb.total_sum 
 FROM cur_material_balance cpb

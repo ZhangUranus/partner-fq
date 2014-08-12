@@ -10,7 +10,7 @@ SCM.CompanyName="江门市蓬江区富桥旅游用品厂有限公司";
 SCM.DeliveryAddr="江门市蓬江区潮连卢边工业区青年公路162号";
 //SCM.CompanyName="江门市西北五金钢管厂有限公司"; //02系统
 //SCM.DeliveryAddr="江门市蓬江区潮连富岗西比村蚕房"; //02系统
-//SCM.CompanyName="江门市蓬江区富桥旅游用品厂有限公司"; //03系统
+//SCM.CompanyName="江门市西北五金钢管厂"; //03系统
 //SCM.DeliveryAddr="江门市蓬江区潮连横滩沙工业区西北钢管厂"; //03系统
 /**
  * 系统默认尺寸
