@@ -304,10 +304,6 @@ public class ProductOutVerifyEvents {
 			sql.append("and material_id = '" + v.getString("materialId") +"'");
 			Connection conn = ConnectionFactory.getConnection(org.ofbiz.partner.scm.common.Utils.getConnectionHelperName());
 			
-			// 避免查到的数据不是最新的，先做提交
-			conn.setAutoCommit(false);
-			conn.commit();
-			conn.setAutoCommit(true);
 
 			BigDecimal realVolume = BigDecimal.ZERO;
 			try {
