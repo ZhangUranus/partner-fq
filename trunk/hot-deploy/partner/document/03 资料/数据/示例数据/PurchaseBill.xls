@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+ <Worksheet ss:Name="Table1">
+  <Table>
+   <Column ss:Index="1" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="2" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="3" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="4" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="5" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="6" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="8" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="9" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="11" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="12" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="13" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="14" ss:AutoFitWidth="0" ss:Width="110"/>   <Row>
+    <Cell><Data ss:Type="String">ID</Data></Cell>
+    <Cell><Data ss:Type="String">NUMBER</Data></Cell>
+    <Cell><Data ss:Type="String">BIZ_DATE</Data></Cell>
+    <Cell><Data ss:Type="String">SUPPLIER_SUPPLIER_ID</Data></Cell>
+    <Cell><Data ss:Type="String">BUYER_SYSTEM_USER_ID</Data></Cell>
+    <Cell><Data ss:Type="String">APPROVER_SYSTEM_USER_ID</Data></Cell>
+    <Cell><Data ss:Type="String">TOTALSUM</Data></Cell>
+    <Cell><Data ss:Type="String">NOTE</Data></Cell>
+    <Cell><Data ss:Type="String">APPROVER_NOTE</Data></Cell>
+    <Cell><Data ss:Type="String">STATUS</Data></Cell>
+    <Cell><Data ss:Type="String">CREATED_STAMP</Data></Cell>
+    <Cell><Data ss:Type="String">LAST_UPDATED_STAMP</Data></Cell>
+    <Cell><Data ss:Type="String">LAST_UPDATED_TX_STAMP</Data></Cell>
+    <Cell><Data ss:Type="String">CREATED_TX_STAMP</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">00a001ca-9a6f-410a-b2b0-09fd2dc17d97</Data></Cell>
+    <Cell><Data ss:Type="String">PUR20111102100003</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 08:00:00</Data></Cell>
+    <Cell><Data ss:Type="String">95cf10dd-d19e-4881-a55b-7db7c464e87b</Data></Cell>
+    <Cell><Data ss:Type="String">18f85a5d-1c39-44f4-9f2f-e7d64056ff7b</Data></Cell>
+    <Cell><Data ss:Type="String">18f85a5d-1c39-44f4-9f2f-e7d64056ff7b</Data></Cell>
+    <Cell><Data ss:Type="Number">10000.000000</Data></Cell>
+    <Cell><Data ss:Type="String">采购10000千克木材</Data></Cell>
+    <Cell><Data ss:Type="String">已有充足木材</Data></Cell>
+    <Cell><Data ss:Type="Number">2</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 17:00:09</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 17:00:09</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 17:00:09</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 17:00:09</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">54dcacd2-0c96-48ff-8321-b81e18a2e5ff</Data></Cell>
+    <Cell><Data ss:Type="String">PUR20111202100001</Data></Cell>
+    <Cell><Data ss:Type="String">2011-12-02 08:00:00</Data></Cell>
+    <Cell><Data ss:Type="String">95cf10dd-d19e-4881-a55b-7db7c464e87b</Data></Cell>
+    <Cell><Data ss:Type="String">18f85a5d-1c39-44f4-9f2f-e7d64056ff7b</Data></Cell>
+    <Cell><Data ss:Type="String">18f85a5d-1c39-44f4-9f2f-e7d64056ff7b</Data></Cell>
+    <Cell><Data ss:Type="Number">100000.000000</Data></Cell>
+    <Cell><Data ss:Type="String"></Data></Cell>
+    <Cell><Data ss:Type="String">同意</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="String">2011-12-02 19:20:37</Data></Cell>
+    <Cell><Data ss:Type="String">2011-12-02 19:20:37</Data></Cell>
+    <Cell><Data ss:Type="String">2011-12-02 19:20:37</Data></Cell>
+    <Cell><Data ss:Type="String">2011-12-02 19:20:37</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">5bba2a81-a85e-4ae4-ba71-86b8772bd112</Data></Cell>
+    <Cell><Data ss:Type="String">PUR20120209100001</Data></Cell>
+    <Cell><Data ss:Type="String">2012-02-22 08:00:00</Data></Cell>
+    <Cell><Data ss:Type="String">95cf10dd-d19e-4881-a55b-7db7c464e87b</Data></Cell>
+    <Cell><Data ss:Type="String">18f85a5d-1c39-44f4-9f2f-e7d64056ff7b</Data></Cell>
+    <Cell><Data ss:Type="String">18f85a5d-1c39-44f4-9f2f-e7d64056ff7b</Data></Cell>
+    <Cell><Data ss:Type="Number">90000.000000</Data></Cell>
+    <Cell><Data ss:Type="String"></Data></Cell>
+    <Cell><Data ss:Type="String">同意</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="String">2012-02-09 09:58:29</Data></Cell>
+    <Cell><Data ss:Type="String">2012-02-09 09:58:29</Data></Cell>
+    <Cell><Data ss:Type="String">2012-02-09 09:58:29</Data></Cell>
+    <Cell><Data ss:Type="String">2012-02-09 09:58:29</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">61ee0d30-acba-43f9-8da8-cad3e5209d1a</Data></Cell>
+    <Cell><Data ss:Type="String">PUR20111202100002</Data></Cell>
+    <Cell><Data ss:Type="String">2011-12-02 08:00:00</Data></Cell>
+    <Cell><Data ss:Type="String">95cf10dd-d19e-4881-a55b-7db7c464e87b</Data></Cell>
+    <Cell><Data ss:Type="String">18f85a5d-1c39-44f4-9f2f-e7d64056ff7b</Data></Cell>
+    <Cell><Data ss:Type="String">18f85a5d-1c39-44f4-9f2f-e7d64056ff7b</Data></Cell>
+    <Cell><Data ss:Type="Number">1000.000000</Data></Cell>
+    <Cell><Data ss:Type="String"></Data></Cell>
+    <Cell><Data ss:Type="String">不同意</Data></Cell>
+    <Cell><Data ss:Type="Number">2</Data></Cell>
+    <Cell><Data ss:Type="String">2011-12-02 19:20:57</Data></Cell>
+    <Cell><Data ss:Type="String">2011-12-02 19:20:57</Data></Cell>
+    <Cell><Data ss:Type="String">2011-12-02 19:20:57</Data></Cell>
+    <Cell><Data ss:Type="String">2011-12-02 19:20:57</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">6239c6c0-8f40-40dc-8ae3-e9213c2df2b0</Data></Cell>
+    <Cell><Data ss:Type="String">PUR20111102100001</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 08:00:00</Data></Cell>
+    <Cell><Data ss:Type="String">95cf10dd-d19e-4881-a55b-7db7c464e87b</Data></Cell>
+    <Cell><Data ss:Type="String">18f85a5d-1c39-44f4-9f2f-e7d64056ff7b</Data></Cell>
+    <Cell><Data ss:Type="String">18f85a5d-1c39-44f4-9f2f-e7d64056ff7b</Data></Cell>
+    <Cell><Data ss:Type="Number">27000.000000</Data></Cell>
+    <Cell><Data ss:Type="String">采购30000千克木材</Data></Cell>
+    <Cell><Data ss:Type="String">同意</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:58:18</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:58:18</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:58:18</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:58:18</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">d676c336-861f-45f5-bcbb-7c39eb0d5b15</Data></Cell>
+    <Cell><Data ss:Type="String">PUR20111102100002</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 08:00:00</Data></Cell>
+    <Cell><Data ss:Type="String">80e07116-26a9-4ace-b09c-b2b1fd5bdd32</Data></Cell>
+    <Cell><Data ss:Type="String">18f85a5d-1c39-44f4-9f2f-e7d64056ff7b</Data></Cell>
+    <Cell><Data ss:Type="String">18f85a5d-1c39-44f4-9f2f-e7d64056ff7b</Data></Cell>
+    <Cell><Data ss:Type="Number">10000.000000</Data></Cell>
+    <Cell><Data ss:Type="String">采购铁100000千克</Data></Cell>
+    <Cell><Data ss:Type="String">同意</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:59:33</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:59:33</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:59:33</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:59:33</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">ec847225-38ea-4172-b131-1d615ab470ec</Data></Cell>
+    <Cell><Data ss:Type="String">PUR20111102100004</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 08:00:00</Data></Cell>
+    <Cell><Data ss:Type="String">95cf10dd-d19e-4881-a55b-7db7c464e87b</Data></Cell>
+    <Cell><Data ss:Type="String">18f85a5d-1c39-44f4-9f2f-e7d64056ff7b</Data></Cell>
+    <Cell><Data ss:Type="String">18f85a5d-1c39-44f4-9f2f-e7d64056ff7b</Data></Cell>
+    <Cell><Data ss:Type="Number">36000.000000</Data></Cell>
+    <Cell><Data ss:Type="String">采购40000木材</Data></Cell>
+    <Cell><Data ss:Type="String">同意</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 17:08:28</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 17:08:28</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 17:08:28</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 17:08:28</Data></Cell>
+   </Row>
+  </Table>
+ </Worksheet>
+</Workbook>

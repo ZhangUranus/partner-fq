@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+ <Worksheet ss:Name="Table1">
+  <Table>
+   <Column ss:Index="1" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="2" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="3" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="4" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="5" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="6" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="7" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="8" ss:AutoFitWidth="0" ss:Width="110"/>   <Row>
+    <Cell><Data ss:Type="String">ID</Data></Cell>
+    <Cell><Data ss:Type="String">PARENT_ID</Data></Cell>
+    <Cell><Data ss:Type="String">NUMBER</Data></Cell>
+    <Cell><Data ss:Type="String">NAME</Data></Cell>
+    <Cell><Data ss:Type="String">LAST_UPDATED_STAMP</Data></Cell>
+    <Cell><Data ss:Type="String">LAST_UPDATED_TX_STAMP</Data></Cell>
+    <Cell><Data ss:Type="String">CREATED_STAMP</Data></Cell>
+    <Cell><Data ss:Type="String">CREATED_TX_STAMP</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">0c92191f-3ccc-4c46-a466-bfe35663b391</Data></Cell>
+    <Cell><Data ss:Type="String"></Data></Cell>
+    <Cell><Data ss:Type="String">DPM100002</Data></Cell>
+    <Cell><Data ss:Type="String">统计部</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:35:58</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:35:58</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:35:58</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:35:58</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">2c2f37d4-33ac-4026-9ec0-3f8571e8a4a4</Data></Cell>
+    <Cell><Data ss:Type="String"/></Cell>
+    <Cell><Data ss:Type="String">DPM100001</Data></Cell>
+    <Cell><Data ss:Type="String">系统管理</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-21 14:55:48</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-21 14:55:48</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-21 14:55:48</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-21 14:55:48</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">7fdc10ae-c7fd-4360-96c2-fedaf739f14c</Data></Cell>
+    <Cell><Data ss:Type="String"></Data></Cell>
+    <Cell><Data ss:Type="String">DPM100004</Data></Cell>
+    <Cell><Data ss:Type="String">采购部</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:36:15</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:36:15</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:36:15</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:36:15</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">8a2ac1ae-6296-4c63-8a4b-e5f192f70ff9</Data></Cell>
+    <Cell><Data ss:Type="String"></Data></Cell>
+    <Cell><Data ss:Type="String">DPM100003</Data></Cell>
+    <Cell><Data ss:Type="String">生产部</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:36:06</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:36:06</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:36:06</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 16:36:06</Data></Cell>
+   </Row>
+  </Table>
+ </Worksheet>
+</Workbook>
