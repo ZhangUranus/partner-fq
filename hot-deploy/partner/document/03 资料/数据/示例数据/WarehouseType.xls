@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+ <Worksheet ss:Name="Table1">
+  <Table>
+   <Column ss:Index="1" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="2" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="3" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="4" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="5" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="6" ss:AutoFitWidth="0" ss:Width="110"/>   <Column ss:Index="7" ss:AutoFitWidth="0" ss:Width="110"/>   <Row>
+    <Cell><Data ss:Type="String">ID</Data></Cell>
+    <Cell><Data ss:Type="String">NUMBER</Data></Cell>
+    <Cell><Data ss:Type="String">NAME</Data></Cell>
+    <Cell><Data ss:Type="String">LAST_UPDATED_STAMP</Data></Cell>
+    <Cell><Data ss:Type="String">LAST_UPDATED_TX_STAMP</Data></Cell>
+    <Cell><Data ss:Type="String">CREATED_STAMP</Data></Cell>
+    <Cell><Data ss:Type="String">CREATED_TX_STAMP</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">6d014323-07f0-4b01-afad-b2a61d87b778</Data></Cell>
+    <Cell><Data ss:Type="String">WHT100001</Data></Cell>
+    <Cell><Data ss:Type="String">成品仓</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:08:18</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:08:18</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:08:18</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:08:18</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">a00c4213-bab9-415f-bc63-5e79079165be</Data></Cell>
+    <Cell><Data ss:Type="String">WHT100002</Data></Cell>
+    <Cell><Data ss:Type="String">半成品</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:08:26</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:08:26</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:08:26</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:08:26</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">f8e8cc46-70c4-419f-a5c1-9d595ad7cfe5</Data></Cell>
+    <Cell><Data ss:Type="String">WHT100003</Data></Cell>
+    <Cell><Data ss:Type="String">原料仓</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:08:32</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:08:32</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:08:32</Data></Cell>
+    <Cell><Data ss:Type="String">2011-11-02 15:08:32</Data></Cell>
+   </Row>
+  </Table>
+ </Worksheet>
+</Workbook>

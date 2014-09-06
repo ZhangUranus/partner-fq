@@ -1,0 +1,63 @@
+1.ServerHitBin.saveHit()方法中关于MySql允许错误的解释（https://issues.apache.org/jira/browse/OFBIZ-2208）
+	20120118：重新修改该问题，新增id字段，修改类ServerHitBin.saveHit()方法，增加serverHit.set("id", UUID.randomUUID().toString());。
+				修改文件framework\webapp\entitydef\entitymodel.xml，增加id字段，并设置为主键。
+
+2.ServerHitType表找不到外键问题，增加hot-deploy\partner\data\ContentTypeData.xml文件，初始化hitType类型。
+
+3.LoginServices.createUserLogin()方法partyId缺失的问题，增加传入值的判断。
+		if (UtilValidate.isNotEmpty(partyId)) {
+        	userLoginToCreate.set("partyId", partyId);
+        }
+        
+4.在文件fieldtypemysql.xml中增加相应的类型。
+
+5.异常:
+	2013-06-01 15:41:18,808 (http-0.0.0.0-8080-17) [     ControlServlet.java:246:ERROR] An error occurred, going to the errorPage: /error/error.jsp
+	2013-06-01 15:41:18,808 (http-0.0.0.0-8080-17) [     ControlServlet.java:253:ERROR] Including errorPage: /error/error.jsp
+	2013-06-01 15:41:18,948 (http-0.0.0.0-8080-17) [     ControlServlet.java:235:ERROR] 
+	---- runtime exception report --------------------------------------------------
+	Error in request handler: 
+	Exception: java.lang.IndexOutOfBoundsException
+	Message: index: 0
+	---- stack trace ---------------------------------------------------------------
+	java.lang.IndexOutOfBoundsException: index: 0
+	javolution.util.FastList.add(FastList.java:228)
+	org.ofbiz.webapp.stats.ServerHitBin.countHit(ServerHitBin.java:212)
+	org.ofbiz.webapp.stats.ServerHitBin.countHit(ServerHitBin.java:236)
+	org.ofbiz.webapp.stats.ServerHitBin.countHit(ServerHitBin.java:86)
+	org.ofbiz.webapp.stats.ServerHitBin.countEvent(ServerHitBin.java:68)
+	org.ofbiz.webapp.control.RequestHandler.doRequest(RequestHandler.java:386)
+	org.ofbiz.webapp.control.ControlServlet.doGet(ControlServlet.java:227)
+	javax.servlet.http.HttpServlet.service(HttpServlet.java:617)
+	javax.servlet.http.HttpServlet.service(HttpServlet.java:717)
+	org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:290)
+	org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	org.ofbiz.webapp.control.ContextFilter.doFilter(ContextFilter.java:269)
+	org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:233)
+	org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:191)
+	org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:127)
+	org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:102)
+	org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:109)
+	org.apache.catalina.valves.AccessLogValve.invoke(AccessLogValve.java:555)
+	org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:298)
+	org.apache.coyote.http11.Http11Processor.process(Http11Processor.java:852)
+	org.apache.coyote.http11.Http11Protocol$Http11ConnectionHandler.process(Http11Protocol.java:588)
+	org.apache.tomcat.util.net.JIoEndpoint$Worker.run(JIoEndpoint.java:489)
+	java.lang.Thread.run(Thread.java:662)
+
+解决办法:
+
+                 }
+                 if (bin == null) {
+                     bin = new ServerHitBin(id, type, true, delegator);
+-                    binList.add(0, bin);
++                    if (binList.size() > 0) {
++                        binList.add(0, bin);
++                    } else {
++                        binList.add(bin);
++                    }
+                 }
+             }
+         }
