@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements. See the NOTICE file distributed with this work for additional information regarding copyright ownership. The ASF licenses this file to you under the Apache License, Version 2.0 (the "License"); you 
-	may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
-	OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. -->
-<entity-engine-xml>
-	<ReturnProductWarehousingEntry id="1e0419d5-96b7-48ce-8ee6-28362847b3dc" parentId="00433696-b21c-4023-8b03-56837fbc1cba" warehouseWarehouseId="eb73af61-855a-438a-83af-02c02a35b2ec" bomId="b3c38640-9a6c-494e-85da-d80eb11229fc" volume="20" price="0.20475" entrysum="4.095" />
-	<ReturnProductWarehousingEntry id="5e47c6e6-bc17-4cfc-8463-bccb9df694b2" parentId="c3343265-26c3-440d-8076-60eb2891002d" warehouseWarehouseId="12d05a2b-6a9e-4628-8ec6-346c9627271d" bomId="f04a4c48-8bb0-4745-ab0f-eff86f339cab" volume="5" price="5.032" entrysum="25.16" />
-	<ReturnProductWarehousingEntry id="858bf6be-dcdb-46bb-8433-2caac6c205b4" parentId="20efa9e0-fdfb-4e76-bb9b-c0a51a89f70f" warehouseWarehouseId="eb73af61-855a-438a-83af-02c02a35b2ec" bomId="b3c38640-9a6c-494e-85da-d80eb11229fc" volume="4" price="0.18375" entrysum="0.735" />
-</entity-engine-xml>
