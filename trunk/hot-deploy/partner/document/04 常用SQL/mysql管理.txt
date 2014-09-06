@@ -1,0 +1,42 @@
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'192.168.121.37' IDENTIFIED BY '123' WITH GRANT OPTION;
+
+
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'192.168.20.8' IDENTIFIED BY '123' WITH GRANT OPTION;
+
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'192.168.20.101' IDENTIFIED BY '123' WITH GRANT OPTION;
+
+SET PASSWORD FOR 'root'@'localhost' = PASSWORD('123');
+
+
+mysqldump -hlocalhost -uroot -p123 ofbiz > /home/admin/backup/ofbiz20140622.sql
+mysqldump -hlocalhost -uroot -p123 ofbiz2 > /home/admin/backup/ofbiz2_20140623.sql
+mysqldump -hlocalhost -uroot -p123 ofbiz3 > /home/admin/backup/ofbiz3_20140623.sql
+
+
+mysqldump -hlocalhost -uroot -p123 partner > C:\Users\Jeff\Desktop\partner\20140530\ofbiz20140530.sql
+
+mysql -hlocalhost -uroot -p123 partner < /home/tmp/ofbiz20140530.sql
+
+
+mysql -hlocalhost -uroot -p123 ofbiz < C:\Users\Jeff\Desktop\ofbiz20140622.sql
+mysql -hlocalhost -uroot -p123 ofbiz2 < C:\Users\Jeff\Desktop\partner\20140604\ofbiz2_20140604.sql
+mysql -hlocalhost -uroot -p123 ofbiz3 < C:\Users\Jeff\Desktop\ofbiz3_20140623.sql
+
+
+
+mysqldump -hlocalhost -uroot -p123 partner > C:\Users\Jeff\Desktop\partner_20140612.sql
+
+mysql -h192.168.20.94 -uroot -p123 partner < D:\partner\20140612\partner_20140612.sql
+
+mysql -hlocalhost -uroot -p123 partner < /home/tmp/partner_20140612.sql
+
+mysqldump -hlocalhost -uroot -p123 checkwireprint > C:\Users\Jeff\Desktop\checkwireprint_20140614.sql
+mysql -hlocalhost -uroot -p123 checkwireprint < /home/tmp/checkwireprint_20140614.sql
+
+
+mysql -hlocalhost -uroot -p123 partner < C:\Users\Jeff\Desktop\partner-201406180232_2.sql
+mysqldump -hlocalhost -uroot -p123 partner > /home/tmp/partner_20140617.sql
+
+
+mysql -hlocalhost -uroot -p123 partner < /home/tmp/partner_20140617_4_done.sql
+mysqldump -hlocalhost -uroot -p123 partner > C:\Users\Jeff\Desktop\partner\20140617\partner_20140617_4_done.sql
