@@ -698,9 +698,9 @@ PrintHelper.prototype.getPrintTime = function() {
 	tStr += "-" + (nd.getMonth() + 1);
 	tStr += "-" + nd.getDate();
 
-	tStr += " " + nd.getHours();
-	tStr += ":" + nd.getMinutes();
-	tStr += ":" + nd.getSeconds();
+	//tStr += " " + nd.getHours();
+	//tStr += ":" + nd.getMinutes();
+	//tStr += ":" + nd.getSeconds();
 
 	return tStr;
 };
