@@ -192,6 +192,20 @@ Ext.define('SCM.controller.ProductOutwarehouse.ProductOutwarehouseController', {
 					this.submitEditButton.setDisabled(true);
 				}
 			},
+			
+			/**
+			 * 设置界面可编辑性
+			 * 
+			 * @param {}
+			 *            isReadOnly
+			 */
+			setFieldsReadOnly : function(isReadOnly) {
+				Ext.each(this.fields, function(item, index, length) {
+							if(item.name !='note'){
+								item.setReadOnly(isReadOnly);
+							}
+						})
+			},
 
 			/**
 			 * 重写刷新方法

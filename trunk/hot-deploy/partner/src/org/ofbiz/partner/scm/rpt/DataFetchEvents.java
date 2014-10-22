@@ -1338,7 +1338,7 @@ public class DataFetchEvents {
 		
 		String sql =" SELECT   \r\n"+ 
 					" 	TM.NAME AS MATERIAL_NAME,   \r\n"+ 
-					"  	DATE(DELI.BIZ_DATE) AS BIZ_DATE,   \r\n"+ 
+					"  	DELI.BIZ_DATE,   \r\n"+ 
 					"  	PON.GOOD_NUMBER,   \r\n"+ 
 					"  	SUM(VOLUME) AS VOLUME  \r\n"+ 
 					" FROM PRODUCT_OUT_NOTIFICATION PON   \r\n"+ 
@@ -1353,7 +1353,7 @@ public class DataFetchEvents {
 					" 	JOIN (  \r\n"+ 
 					" 		SELECT DISTINCT  \r\n"+ 
 					" 			POE.GOOD_NUMBER,  \r\n"+ 
-					" 			PO.BIZ_DATE  \r\n"+ 
+					" 			DATE(PO.BIZ_DATE) AS BIZ_DATE  \r\n"+ 
 					" 		FROM PRODUCT_OUTWAREHOUSE PO   \r\n"+ 
 					" 		LEFT JOIN PRODUCT_OUTWAREHOUSE_ENTRY POE ON PO.ID=POE.PARENT_ID  \r\n"+ 
 					" 		LEFT JOIN PRODUCT_MAP PM ON POE.MATERIAL_MATERIAL_ID = PM.MATERIAL_ID   \r\n"+ 

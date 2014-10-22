@@ -237,7 +237,21 @@ Ext.define('SCM.controller.ProductInwarehouse.ProductInwarehouseController', {
 							}
 						})
 			},
-
+			
+			/**
+			 * 设置界面可编辑性
+			 * 
+			 * @param {}
+			 *            isReadOnly
+			 */
+			setFieldsReadOnly : function(isReadOnly) {
+				Ext.each(this.fields, function(item, index, length) {
+							if(item.name !='note'){
+								item.setReadOnly(isReadOnly);
+							}
+						})
+			},
+			
 			/**
 			 * 查看加工件耗料情况
 			 */
