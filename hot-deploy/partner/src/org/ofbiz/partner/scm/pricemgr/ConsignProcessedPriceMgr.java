@@ -132,6 +132,32 @@ public class ConsignProcessedPriceMgr {
 		}
 	}
 	
+	public void changeTypeOfFinishBill(String supplierId, String materialId, BigDecimal volume) throws Exception {
+		synchronized (updateLock) {
+			TMaterial material = new TMaterial(materialId);
+			if (supplierId == null || materialId == null || volume == null) {
+				throw new Exception("supplierId or materialId or volume is null");
+			}
+			// 查找供应商结存对数表
+			GenericValue returnValue = delegator.findOne("CurConsignProcessedPrice", UtilMisc.toMap("year", new Integer(year), "month", new Integer(month), "supplierId", supplierId, "materialId", materialId, "type", new Integer(2)), false);
+			if (returnValue != null) {
+				returnValue.set("volume", returnValue.getBigDecimal("volume").add(volume.negate()));
+				returnValue.store();
+			} else {
+				throw new Exception("加工商仓（退货验收）中未找到记录（名称："+material.getName()+"，编码："+material.getNumber()+"）！");
+			}
+			
+			// 查找供应商结存对数表
+			GenericValue value = delegator.findOne("CurConsignProcessedPrice", UtilMisc.toMap("year", new Integer(year), "month", new Integer(month), "supplierId", supplierId, "materialId", materialId, "type", new Integer(1)), false);
+			if (value != null) {
+				value.set("volume", value.getBigDecimal("volume").add(volume));
+				value.store();
+			} else {
+				throw new Exception("加工商仓（正常出入库）中未找到记录（名称："+material.getName()+"，编码："+material.getNumber()+"）！");
+			}
+		}
+	}
+	
 	/**
 	 * 库存不足，抛出异常
 	 * @param materialId
