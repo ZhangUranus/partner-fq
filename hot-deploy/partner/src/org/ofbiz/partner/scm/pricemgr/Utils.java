@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -224,42 +225,40 @@ public class Utils {
 	 * @param billValue
 	 * @throws Exception
 	 */
-	public static void createReturnProductWarehousingBill(GenericValue billValue, HttpServletRequest request) throws Exception {
+	public static String createReturnProductWarehousingBill(GenericValue billValue, HttpServletRequest request, GenericValue entryValue) throws Exception {
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
-		GenericValue billHead = delegator.findOne("ReturnProductWarehousing", UtilMisc.toMap("id", billValue.getString("id")), false);
-		if (billHead != null) {
-			billHead.remove();
-		}
-		billHead = delegator.makeValue("ReturnProductWarehousing");
-		billHead.set("id", billValue.getString("id"));
+		
+		BigDecimal currentCheckVolume = entryValue.getBigDecimal("currentCheckVolume");		//验收数量
+		BigDecimal entrysum = currentCheckVolume.multiply(entryValue.getBigDecimal("price"));   //验收金额
+		
+		String billId = UUID.randomUUID().toString();
+		
+		GenericValue billHead = delegator.makeValue("ReturnProductWarehousing");
+		billHead.set("id", billId);
 		billHead.set("number", billValue.getString("number"));
-		billHead.set("bizDate", Utils.getCurDate());
+		billHead.set("bizDate", new Timestamp(Utils.getCurDate().getTime()));
 		billHead.set("processorId", billValue.containsKey("processorSupplierId") ? billValue.getString("processorSupplierId"):billValue.getString("workshopWorkshopId"));
 		billHead.set("submitterSystemUserId", billValue.getString("submitterSystemUserId"));
-		billHead.set("totalsum", billValue.getBigDecimal("totalsum"));
+		billHead.set("totalsum", entrysum);
 		billHead.set("note", billValue.containsKey("processorSupplierId") ? "CRP":"WRP");
 		billHead.set("status", 0);
 		billHead.set("createdStamp", new Timestamp(System.currentTimeMillis()));
 		billHead.set("submitStamp", new Timestamp(System.currentTimeMillis()));
 		billHead.create();
-		List<GenericValue> entryList = delegator.findByAnd("ReturnProductWarehousingEntry", UtilMisc.toMap("parentId", billValue.getString("id")));
-		if (entryList != null && entryList.size() > 0) {
-			delegator.removeByAnd("ReturnProductWarehousingEntry", UtilMisc.toMap("parentId", billValue.getString("id")));
-		}
-		entryList = delegator.findByAnd(billValue.getEntityName() + "Entry", UtilMisc.toMap("parentId", billValue.getString("id")));
-		for (GenericValue entryValue : entryList) {
-			GenericValue tempEntry = delegator.makeValue("ReturnProductWarehousingEntry");
-			tempEntry.set("id", entryValue.getString("id"));
-			tempEntry.set("parentId", entryValue.getString("parentId"));
-			tempEntry.set("warehouseWarehouseId", entryValue.getString("warehouseWarehouseId"));
-			tempEntry.set("bomId", entryValue.getString("bomId"));
-			tempEntry.set("unitUnitId", entryValue.getString("unitUnitId"));
-			tempEntry.set("volume", entryValue.getBigDecimal("volume"));
-			tempEntry.set("price", entryValue.getBigDecimal("price"));
-			tempEntry.set("entrysum", entryValue.getBigDecimal("entrysum"));
-			tempEntry.set("sort", entryValue.getInteger("sort"));
-			tempEntry.create();
-		}
+		
+		GenericValue tempEntry = delegator.makeValue("ReturnProductWarehousingEntry");
+		tempEntry.set("id", UUID.randomUUID().toString());
+		tempEntry.set("parentId", billId);
+		tempEntry.set("warehouseWarehouseId", entryValue.getString("warehouseWarehouseId"));
+		tempEntry.set("bomId", entryValue.getString("bomId"));
+		tempEntry.set("unitUnitId", entryValue.getString("unitUnitId"));
+		tempEntry.set("volume", currentCheckVolume);
+		tempEntry.set("price", entryValue.getBigDecimal("price"));
+		tempEntry.set("entrysum", entrysum);
+		tempEntry.set("sort", entryValue.getInteger("sort"));
+		tempEntry.create();
+		
+		return billId;
 	}
 	
 	/**
@@ -268,9 +267,9 @@ public class Utils {
 	 * @param request
 	 * @throws Exception
 	 */
-	public static void submitReturnProductWarehousing(GenericValue billValue, HttpServletRequest request) throws Exception {
+	public static void submitReturnProductWarehousing(String billId, HttpServletRequest request) throws Exception {
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
-		GenericValue billHead = delegator.findOne("ReturnProductWarehousing", UtilMisc.toMap("id", billValue.getString("id")), false);
+		GenericValue billHead = delegator.findOne("ReturnProductWarehousing", UtilMisc.toMap("id", billId), false);
 		if(billHead != null){
 			BizStockImpFactory.getBizStockImp(BillType.ReturnProductWarehousing).updateStock(billHead, false, false);
 			if (billHead != null) {
