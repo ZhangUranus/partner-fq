@@ -15,6 +15,11 @@ Ext.define('SCM.extend.toolbar.SaveToolbar', {
 								text : '直接提交',
 								iconCls : 'system-submit',
 								action : 'submit'
+							},{
+								text : '结束验收',
+								iconCls : 'system-submit',
+								hidden : true,
+								action : 'checkFinish'
 							}]);
 				}
 				tools = tools.concat([{
