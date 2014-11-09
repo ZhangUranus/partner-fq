@@ -90,6 +90,10 @@ Ext.define('SCM.controller.ConsignReturnProduct.ConsignReturnProductController',
 							'ConsignReturnProductedit button[action=check]' : {
 								click : this.saveAndCheckRecord
 							},
+							// 编辑界面完成验收
+							'ConsignReturnProductedit button[action=checkFinish]' : {
+								click : this.finishCheckBill
+							},
 							// 监听各field值变动事件，只监听可见控件
 							'ConsignReturnProductedit form textfield{isVisible()}' : {
 								change : this.fieldChange
@@ -143,6 +147,7 @@ Ext.define('SCM.controller.ConsignReturnProduct.ConsignReturnProductController',
 				this.MaterialBOMStore = Ext.data.StoreManager.lookup('MBAllStore');
 				this.gridToolBar = this.editEntry.down('gridedittoolbar');
 				this.checkButton = this.win.down('button[action=check]');
+				this.checkFinishButton = this.win.down('button[action=checkFinish]');
 				this.checkBill = false;
 
 				this.numberEditor = {
@@ -176,6 +181,7 @@ Ext.define('SCM.controller.ConsignReturnProduct.ConsignReturnProductController',
 					this.clearButton.setDisabled(false);
 					this.submitEditButton.setDisabled(false);
 					this.checkButton.setVisible(false);
+					this.checkFinishButton.setVisible(false);
 					this.volumeColumn.setEditor(this.numberEditor);
 					this.inputpriceColumn.setEditor(this.numberEditor);//控制输入单据字段编辑状态 add by mark 2012-5-26
 					
@@ -190,6 +196,7 @@ Ext.define('SCM.controller.ConsignReturnProduct.ConsignReturnProductController',
 					this.clearButton.setDisabled(true);
 					this.submitEditButton.setDisabled(true);
 					this.checkButton.setVisible(true);
+					this.checkFinishButton.setVisible(true);
 					this.volumeColumn.setEditor(null);
 					this.inputpriceColumn.setEditor(null);//控制输入单据字段编辑状态 add by mark 2012-5-26
 					this.currentCheckVolumeColumn.setEditor(this.numberEditor);
@@ -203,6 +210,7 @@ Ext.define('SCM.controller.ConsignReturnProduct.ConsignReturnProductController',
 					this.clearButton.setDisabled(true);
 					this.submitEditButton.setDisabled(true);
 					this.checkButton.setVisible(false);
+					this.checkFinishButton.setVisible(false);
 					this.gridToolBar.setVisible(true);
 				}
 			},
@@ -338,7 +346,56 @@ Ext.define('SCM.controller.ConsignReturnProduct.ConsignReturnProductController',
 					return true;
 				}
 			},
-
+			
+			/**
+			 * 提交单据
+			 * 
+			 * @param {}
+			 *            button
+			 */
+			finishCheckBill : function(button) {
+				var me = this;
+				record = me.getSelectRecord();
+				
+				Ext.Msg.confirm('提示', '结束验收后单据将无法进行回退操作，确认继续？', confirmChange, me);
+				
+				function confirmChange(id) {
+					Ext.getBody().mask('正在进行完成验收操作....');
+					if (id == 'yes') {
+						/* 判断是否可提交 */
+						if (me.hasSubmitLock()) {
+							me.getSubmitLock();//获取提交锁
+							Ext.Ajax.request({
+										params : {
+											billId : record.get('id'),
+											entity : me.entityName
+										},
+										url : '../../scm/control/finishConsignReturnProduct',
+										timeout : SCM.limitTimes,
+										success : function(response, option) {
+											var result = Ext.decode(response.responseText)
+											if (result.success) {
+												Ext.Msg.alert("提示", "已结束验收！");
+											} else {
+												showError(result.message);
+											}
+											Ext.getBody().unmask();
+											me.win.close();
+											me.refreshRecord();
+											me.releaseSubmitLock();
+										}
+									});
+						} else {
+							showWarning('上一次操作还未完成，请稍等！');
+						}
+					} else {
+						Ext.getBody().unmask();
+						return false;
+					}
+				}
+			},
+			
+			
 			/**
 			 * 获取单据提交URL
 			 */
