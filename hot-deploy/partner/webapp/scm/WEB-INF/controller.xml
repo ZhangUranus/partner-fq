@@ -259,6 +259,12 @@
 		<event type="java" path="org.ofbiz.partner.scm.stock.ConsignReturnProductEvents" invoke="rollbackBill" />
 		<response name="success" type="none" />
 	</request-map>
+	<!-- 委外退货单完成验收 -->
+	<request-map uri="finishConsignReturnProduct">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.stock.ConsignReturnProductEvents" invoke="finishCheckBill" />
+		<response name="success" type="none" />
+	</request-map>
 	
 	<!-- 制造领料单提交 -->
 	<request-map uri="submitWorkshopDramMaterial">
@@ -913,6 +919,14 @@
 		<response name="success" type="none" />
 	</request-map>
 	<!-- 迁移明细数据类 -->
+	
+	<!-- 批量撤销 -->
+	<request-map uri="cancelBill">
+		<security https="false" auth="false" />
+		<event type="java" path="org.ofbiz.partner.scm.tools.MonthlyProcessCheckEvents" invoke="cancelBill" />
+		<response name="success" type="none" />
+	</request-map>
+	<!-- 批量撤销 -->
 	
 	<!-- 系统工具类  -->
 	

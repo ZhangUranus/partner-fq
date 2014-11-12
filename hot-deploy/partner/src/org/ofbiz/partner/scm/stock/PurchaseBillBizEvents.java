@@ -43,16 +43,25 @@ public class PurchaseBillBizEvents {
 	 */
 	public static String submitBill(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		boolean beganTransaction = false;
+
+		String billId = request.getParameter("billId");// 单据id
+		
+		// 增加单据运行任务到运行表中
+		BillCurrentJobMgr.getInstance().update(billId, true, false, false);
 		try {
 			beganTransaction = TransactionUtil.begin();
 			Delegator delegator = (Delegator) request.getAttribute("delegator");
-			String billId = request.getParameter("billId");// 单据id
 			if (delegator != null && billId != null) {
 				Debug.log("采购申请单提交:" + billId, module);
 				GenericValue billHead = delegator.findOne("PurchaseBill", UtilMisc.toMap("id", billId), false);
 				if (billHead == null){
 					throw new Exception("采购申请单不存在！");
 				}
+
+				if(billHead.getString("status").equals("4")){
+					throw new Exception("单据已提交，请刷新数据！");
+				}
+				
 				Date bizDate = (Date) billHead.get("bizDate");
 				if (bizDate == null || !Utils.isCurPeriod(bizDate)) {
 					throw new Exception("单据业务日期不在当前系统期间");
@@ -69,6 +78,9 @@ public class PurchaseBillBizEvents {
 				Debug.logError(e2, "Unable to rollback transaction", module);
 			}
 			throw e;
+		} finally {
+			// 删除单据运行任务到运行表中
+			BillCurrentJobMgr.getInstance().update(billId, true, false, true);
 		}
 		return "success";
 	}
@@ -84,15 +96,22 @@ public class PurchaseBillBizEvents {
 	 */
 	public static String rollbackBill(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		boolean beganTransaction = false;
+		String billId = request.getParameter("billId");// 单据id
+		
+		// 增加单据运行任务到运行表中
+		BillCurrentJobMgr.getInstance().update(billId, false, true, false);
 		try {
 			beganTransaction = TransactionUtil.begin();
 			Delegator delegator = (Delegator) request.getAttribute("delegator");
-			String billId = request.getParameter("billId");// 单据id
 			if (delegator != null && billId != null) {
 				Debug.log("采购申请单提交:" + billId, module);
 				GenericValue billHead = delegator.findOne("PurchaseBill", UtilMisc.toMap("id", billId), false);
 				if (billHead == null){
 					throw new Exception("采购申请单不存在！");
+				}
+
+				if(billHead.getString("status").equals("0")){
+					throw new Exception("单据已撤销，请刷新数据！");
 				}
 				Date bizDate = (Date) billHead.get("bizDate");
 				if (bizDate == null || !Utils.isCurPeriod(bizDate)) {
@@ -109,6 +128,9 @@ public class PurchaseBillBizEvents {
 				Debug.logError(e2, "Unable to rollback transaction", module);
 			}
 			throw e;
+		} finally {
+			// 删除单据运行任务到运行表中
+			BillCurrentJobMgr.getInstance().update(billId, false, true, true);
 		}
 		return "success";
 	}
