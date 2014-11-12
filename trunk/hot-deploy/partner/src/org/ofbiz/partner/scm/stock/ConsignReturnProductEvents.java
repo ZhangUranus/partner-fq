@@ -18,6 +18,8 @@ import org.ofbiz.partner.scm.common.BillBaseEvent;
 import org.ofbiz.partner.scm.common.CommonEvents;
 import org.ofbiz.partner.scm.pricemgr.BillType;
 import org.ofbiz.partner.scm.pricemgr.BizStockImpFactory;
+import org.ofbiz.partner.scm.pricemgr.ConsignProcessedPriceMgr;
+import org.ofbiz.partner.scm.pricemgr.MaterialBomMgr;
 import org.ofbiz.partner.scm.pricemgr.Utils;
 import org.ofbiz.service.LocalDispatcher;
 
@@ -42,11 +44,16 @@ public class ConsignReturnProductEvents {
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
 		Map<String, String> billInfoMap = new HashMap<String, String>();			//单据信息
 		boolean beganTransaction = false;
+
+		String billId = request.getParameter("billId");// 单据id
+		
+		// 增加单据运行任务到运行表中
+		BillCurrentJobMgr.getInstance().update(billId, true, false, false);
+		
 		try {
 			beganTransaction = TransactionUtil.begin();
 
 			Delegator delegator = (Delegator) request.getAttribute("delegator");
-			String billId = request.getParameter("billId");// 单据id
 			if (delegator != null && billId != null) {
 				Debug.log("出库单提交:" + billId, module);
 				GenericValue billHead = delegator.findOne("ConsignReturnProduct", UtilMisc.toMap("id", billId), false);
@@ -74,6 +81,12 @@ public class ConsignReturnProductEvents {
 					List<GenericValue> entryList = delegator.findByAnd("ConsignReturnProductEntry", UtilMisc.toMap("parentId", billHead.getString("id")));
 					boolean isFinish = true;
 					for(GenericValue entryValue : entryList){
+						
+						// 每次验收增加新单据
+						String headId = Utils.createReturnProductWarehousingBill(billHead,request,entryValue);	//创建进货单
+						Utils.submitReturnProductWarehousing(headId,request);	//提交
+						
+						
 						BigDecimal checkedVolume = entryValue.getBigDecimal("checkedVolume");
 						BigDecimal currentCheckVolume = entryValue.getBigDecimal("currentCheckVolume");
 						BigDecimal volume = entryValue.getBigDecimal("volume");
@@ -87,7 +100,9 @@ public class ConsignReturnProductEvents {
 							isFinish = false;
 						}
 						entryValue.store();
+						
 					}
+					
 					
 					//当状态为未验收时，创建进货单，并置状态为验收中
 					if(billHead.getInteger("checkStatus")==0){
@@ -96,8 +111,6 @@ public class ConsignReturnProductEvents {
 					
 					//当所有物料都完成验收时，将状态改为完成验收，并提交进货单
 					if (isFinish) {
-						Utils.createReturnProductWarehousingBill(billHead,request);	//创建进货单
-						Utils.submitReturnProductWarehousing(billHead,request);	//提交
 						billHead.set("checkStatus", 2);
 					}
 					billHead.set("checkerSystemUserId", CommonEvents.getAttributeFormSession(request, "uid"));
@@ -114,6 +127,9 @@ public class ConsignReturnProductEvents {
 				Debug.logError(e2, "Unable to rollback transaction", module);
 			}
 			throw e;
+		} finally {
+			// 删除单据运行任务到运行表中
+			BillCurrentJobMgr.getInstance().update(billId, true, false, true);
 		}
 		return "success";
 	}
@@ -130,11 +146,16 @@ public class ConsignReturnProductEvents {
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
 		Map<String, String> billInfoMap = new HashMap<String, String>();			//单据信息
 		boolean beganTransaction = false;
+
+		String billId = request.getParameter("billId");// 单据id
+		
+		// 增加单据运行任务到运行表中
+		BillCurrentJobMgr.getInstance().update(billId, false, true, false);
+		
 		try {
 			beganTransaction = TransactionUtil.begin();
 
 			Delegator delegator = (Delegator) request.getAttribute("delegator");
-			String billId = request.getParameter("billId");// 单据id
 			if (delegator != null && billId != null) {
 				Debug.log("出库单撤销:" + billId, module);
 				GenericValue billHead = delegator.findOne("ConsignReturnProduct", UtilMisc.toMap("id", billId), false);
@@ -152,6 +173,59 @@ public class ConsignReturnProductEvents {
 				billInfoMap.put("operationType", "4");
 				dispatcher.runSync("addBillHandleJobService", billInfoMap);
 				/* 结束 增加单据处理任务 */
+			}
+			TransactionUtil.commit(beganTransaction);
+		} catch (Exception e) {
+			Debug.logError(e, module);
+			try {
+				TransactionUtil.rollback(beganTransaction, e.getMessage(), e);
+			} catch (GenericTransactionException e2) {
+				Debug.logError(e2, "Unable to rollback transaction", module);
+			}
+			throw e;
+		} finally {
+			// 删除单据运行任务到运行表中
+			BillCurrentJobMgr.getInstance().update(billId, false, true, true);
+		}
+		return "success";
+	}
+	
+	/**
+	 * 完成验收操作
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public static String finishCheckBill(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		boolean beganTransaction = false;
+		try {
+			beganTransaction = TransactionUtil.begin();
+
+			Delegator delegator = (Delegator) request.getAttribute("delegator");
+			String billId = request.getParameter("billId");// 单据id
+			if (delegator != null && billId != null) {
+				Debug.log("出库单完成验收:" + billId, module);
+				GenericValue billHead = delegator.findOne("ConsignReturnProduct", UtilMisc.toMap("id", billId), false);
+				if (billHead == null || billHead.get("bizDate") == null) {
+					throw new Exception("can`t find ConsignReturnProduct bill or bizdate is null");
+				}
+				
+				// 获取单据id分录条目
+				List<GenericValue> entryList = delegator.findByAnd("ConsignReturnProductEntry", UtilMisc.toMap("parentId", billHead.getString("id")));
+				String processorSupplierId = billHead.getString("processorSupplierId");
+				for(GenericValue entryValue : entryList){
+					if(entryValue.getBigDecimal("checkedVolume").compareTo(entryValue.getBigDecimal("volume"))!=0){
+						String materialId = MaterialBomMgr.getInstance().getMaterialIdByBomId(entryValue.getString("bomId"));
+						ConsignProcessedPriceMgr.getInstance().changeTypeOfFinishBill(processorSupplierId, materialId, entryValue.getBigDecimal("volume").add(entryValue.getBigDecimal("checkedVolume").negate()));
+					}
+				}
+				
+				billHead.set("checkStatus", 2);
+				billHead.set("checkerSystemUserId", CommonEvents.getAttributeFormSession(request, "uid"));
+				billHead.store();
+				BillBaseEvent.writeSuccessMessageToExt(response, "已完成验收");
 			}
 			TransactionUtil.commit(beganTransaction);
 		} catch (Exception e) {

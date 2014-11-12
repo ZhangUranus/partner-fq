@@ -48,17 +48,27 @@ public class InspectiveBizEvents {
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
 		Map<String, String> billInfoMap = new HashMap<String, String>();			//单据信息
 		boolean beganTransaction = false;
+
+		String billId = request.getParameter("billId");// 单据id
+		
+		// 增加单据运行任务到运行表中
+		BillCurrentJobMgr.getInstance().update(billId, false, false, false);
+		
 		try {
 			beganTransaction = TransactionUtil.begin();
 
 			Delegator delegator = (Delegator) request.getAttribute("delegator");
-			String billId = request.getParameter("billId");// 单据id
 			if (delegator != null && billId != null) {
 				Debug.log("入库单审核:" + billId, module);
 				GenericValue billHead = delegator.findOne("PurchaseWarehousing", UtilMisc.toMap("id", billId), false);
 				if (billHead == null || billHead.get("bizDate") == null) {
 					throw new Exception("can`t find PurchaseWarehousing bill or bizdate is null");
 				}
+
+				if(billHead.getString("status").equals("4")){
+					throw new Exception("单据已提交，请刷新数据！");
+				}
+				
 				// 注意不能使用billHead.getDate方法，出产生castException异常
 				Date bizDate = (Date) billHead.get("bizDate");
 				if (bizDate == null || !Utils.isCurPeriod(bizDate)) {
@@ -107,6 +117,9 @@ public class InspectiveBizEvents {
 				Debug.logError(e2, "Unable to rollback transaction", module);
 			}
 			throw e;
+		} finally {
+			// 删除单据运行任务到运行表中
+			BillCurrentJobMgr.getInstance().update(billId, false, false, true);
 		}
 		return "success";
 	}
@@ -124,17 +137,27 @@ public class InspectiveBizEvents {
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
 		Map<String, String> billInfoMap = new HashMap<String, String>();			//单据信息
 		boolean beganTransaction = false;
+
+		String billId = request.getParameter("billId");// 单据id
+		
+		// 增加单据运行任务到运行表中
+		BillCurrentJobMgr.getInstance().update(billId, true, true, false);
+		
 		try {
 			beganTransaction = TransactionUtil.begin();
 
 			Delegator delegator = (Delegator) request.getAttribute("delegator");
-			String billId = request.getParameter("billId");// 单据id
 			if (delegator != null && billId != null) {
 				Debug.log("入库单撤销:" + billId, module);
 				GenericValue billHead = delegator.findOne("PurchaseWarehousing", UtilMisc.toMap("id", billId), false);
 				if (billHead == null || billHead.get("bizDate") == null) {
 					throw new Exception("can`t find PurchaseWarehousing bill or bizdate is null");
 				}
+
+				if(billHead.getString("status").equals("0")){
+					throw new Exception("单据已撤销，请刷新数据！");
+				}
+				
 				// 注意不能使用billHead.getDate方法，会产生castException异常
 				Date bizDate = (Date) billHead.get("bizDate");
 				if (bizDate == null || !Utils.isCurPeriod(bizDate)) {
@@ -183,6 +206,9 @@ public class InspectiveBizEvents {
 				Debug.logError(e2, "Unable to rollback transaction", module);
 			}
 			throw e;
+		} finally {
+			// 删除单据运行任务到运行表中
+			BillCurrentJobMgr.getInstance().update(billId, true, true, true);
 		}
 		return "success";
 	}

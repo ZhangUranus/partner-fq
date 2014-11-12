@@ -42,26 +42,43 @@ public class WorkshopReturnProductEvents {
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
 		Map<String, String> billInfoMap = new HashMap<String, String>();			//单据信息
 		boolean beganTransaction = false;
+		String billId = request.getParameter("billId");// 单据id
+		
+		// 增加单据运行任务到运行表中
+		BillCurrentJobMgr.getInstance().update(billId, true, false, false);
 		try {
 			beganTransaction = TransactionUtil.begin();
 
 			Delegator delegator = (Delegator) request.getAttribute("delegator");
-			String billId = request.getParameter("billId");// 单据id
 			if (delegator != null && billId != null) {
 				Debug.log("出库单提交:" + billId, module);
 				GenericValue billHead = delegator.findOne("WorkshopReturnProduct", UtilMisc.toMap("id", billId), false);
 				if (billHead == null || billHead.get("bizDate") == null) {
 					throw new Exception("can`t find WorkshopReturnProduct bill or bizdate is null");
 				}
+				if(billHead.getString("status").equals("4")){
+					throw new Exception("单据已提交，请刷新数据！");
+				}
 
 				if (billHead.getInteger("status")==0) {
 					BizStockImpFactory.getBizStockImp(BillType.WorkshopReturnProduct).updateStock(billHead, true, false);
 					BillBaseEvent.submitBill(request, response);// 更新单据状态
+					
+					/* 开始 增加单据处理任务 */
+					billInfoMap.put("number", billHead.get("number").toString());
+					billInfoMap.put("billType", "WorkshopReturnProduct");
+					billInfoMap.put("operationType", "3");
+					dispatcher.runSync("addBillHandleJobService", billInfoMap);
+					/* 结束 增加单据处理任务 */
 				} else {
 					// 获取单据id分录条目
 					List<GenericValue> entryList = delegator.findByAnd("WorkshopReturnProductEntry", UtilMisc.toMap("parentId", billHead.getString("id")));
 					boolean isFinish = true;
 					for(GenericValue entryValue : entryList){
+
+						String headId = Utils.createReturnProductWarehousingBill(billHead,request,entryValue);	//创建进货单
+						Utils.submitReturnProductWarehousing(headId,request);	//提交
+						
 						BigDecimal checkedVolume = entryValue.getBigDecimal("checkedVolume");
 						BigDecimal currentCheckVolume = entryValue.getBigDecimal("currentCheckVolume");
 						BigDecimal volume = entryValue.getBigDecimal("volume");
@@ -84,16 +101,7 @@ public class WorkshopReturnProductEvents {
 					
 					//当所有物料都完成验收时，将状态改为完成验收，并提交进货单
 					if (isFinish) {
-						Utils.createReturnProductWarehousingBill(billHead,request);	//创建进货单
-						Utils.submitReturnProductWarehousing(billHead,request);	//提交
 						billHead.set("checkStatus", 2);
-						
-						/* 开始 增加单据处理任务 */
-						billInfoMap.put("number", billHead.get("number").toString());
-						billInfoMap.put("billType", "WorkshopReturnProduct");
-						billInfoMap.put("operationType", "3");
-						dispatcher.runSync("addBillHandleJobService", billInfoMap);
-						/* 结束 增加单据处理任务 */
 					}
 					billHead.set("checkerSystemUserId", CommonEvents.getAttributeFormSession(request, "uid"));
 					billHead.store();
@@ -109,6 +117,9 @@ public class WorkshopReturnProductEvents {
 				Debug.logError(e2, "Unable to rollback transaction", module);
 			}
 			throw e;
+		} finally {
+			// 删除单据运行任务到运行表中
+			BillCurrentJobMgr.getInstance().update(billId, true, false, true);
 		}
 		return "success";
 	}
@@ -125,16 +136,22 @@ public class WorkshopReturnProductEvents {
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
 		Map<String, String> billInfoMap = new HashMap<String, String>();			//单据信息
 		boolean beganTransaction = false;
+		String billId = request.getParameter("billId");// 单据id
+		
+		// 增加单据运行任务到运行表中
+		BillCurrentJobMgr.getInstance().update(billId, false, true, false);
 		try {
 			beganTransaction = TransactionUtil.begin();
 
 			Delegator delegator = (Delegator) request.getAttribute("delegator");
-			String billId = request.getParameter("billId");// 单据id
 			if (delegator != null && billId != null) {
 				Debug.log("出库单撤销:" + billId, module);
 				GenericValue billHead = delegator.findOne("WorkshopReturnProduct", UtilMisc.toMap("id", billId), false);
 				if (billHead == null || billHead.get("bizDate") == null) {
 					throw new Exception("can`t find WorkshopReturnProduct bill or bizdate is null");
+				}
+				if(billHead.getString("status").equals("0")){
+					throw new Exception("单据已撤销，请刷新数据！");
 				}
 
 				BizStockImpFactory.getBizStockImp(BillType.WorkshopReturnProduct).updateStock(billHead, false, true);
@@ -157,6 +174,9 @@ public class WorkshopReturnProductEvents {
 				Debug.logError(e2, "Unable to rollback transaction", module);
 			}
 			throw e;
+		} finally {
+			// 删除单据运行任务到运行表中
+			BillCurrentJobMgr.getInstance().update(billId, false, true, true);
 		}
 		return "success";
 	}

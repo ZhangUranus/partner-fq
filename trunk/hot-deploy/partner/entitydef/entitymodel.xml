@@ -157,6 +157,14 @@ under the License.
 		<alias name="valid" entity-alias="TSystemLogType" field="valid"></alias>
 	</view-entity>
 	
+	<entity entity-name="TBillCurrentJob" package-name="org.ofbiz.partner.system" title="system Bill Current Job">
+		<field name="id" type="id-uuid-ne"/>
+		<field name="number" type="name"/>
+		<field name="isOut" type="indicator"/>
+		<field name="isCancel" type="indicator"/>
+		<prim-key field="id"/>
+	</entity>
+	
 	<!-- 出货通知单变更 -->
 	<entity entity-name="ProductOutNotificationModify" package-name="org.ofbiz.partner.system" title="Product OutNotification Modify table">
 		<field name="id" type="id-uuid-ne"/>

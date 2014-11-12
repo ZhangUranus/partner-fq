@@ -47,11 +47,15 @@ public class ProductReturnEvents {
 	 */
 	public static String submitBill(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		boolean beganTransaction = false;
+		
+		String billId = request.getParameter("billId");// 单据id
+		
+		// 增加单据运行任务到运行表中
+		BillCurrentJobMgr.getInstance().update(billId, false, false, false);
 		try {
 			beganTransaction = TransactionUtil.begin();
 
 			Delegator delegator = (Delegator) request.getAttribute("delegator");
-			String billId = request.getParameter("billId");// 单据id
 			Date bizDate = null;
 			if (delegator != null && billId != null) {
 				Debug.log("成品退货单提交:" + billId, module);
@@ -60,6 +64,11 @@ public class ProductReturnEvents {
 				if (billHead == null || billHead.get("bizDate") == null) {
 					throw new Exception("can`t find ProductReturn bill or bizdate is null");
 				}
+
+				if(billHead.getString("status").equals("4")){
+					throw new Exception("单据已提交，请刷新数据！");
+				}
+				
 				// 注意不能使用billHead.getDate方法，出产生castException异常
 				bizDate = (Date) billHead.get("bizDate");
 				
@@ -119,6 +128,9 @@ public class ProductReturnEvents {
 				Debug.logError(e2, "Unable to rollback transaction", module);
 			}
 			throw e;
+		} finally {
+			// 删除单据运行任务到运行表中
+			BillCurrentJobMgr.getInstance().update(billId, false, false, true);
 		}
 		return "success";
 	}
@@ -133,11 +145,15 @@ public class ProductReturnEvents {
 	 */
 	public static String rollbackBill(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		boolean beganTransaction = false;
+
+		String billId = request.getParameter("billId");// 单据id
+		
+		// 增加单据运行任务到运行表中
+		BillCurrentJobMgr.getInstance().update(billId, true, true, false);
 		try {
 			beganTransaction = TransactionUtil.begin();
 
 			Delegator delegator = (Delegator) request.getAttribute("delegator");
-			String billId = request.getParameter("billId");// 单据id
 			Date bizDate = null;
 			if (delegator != null && billId != null) {
 				Debug.log("入库单撤销:" + billId, module);
@@ -145,6 +161,10 @@ public class ProductReturnEvents {
 
 				if (billHead == null || billHead.get("bizDate") == null) {
 					throw new Exception("can`t find ProductReturn bill or bizdate is null");
+				}
+
+				if(billHead.getString("status").equals("0")){
+					throw new Exception("单据已撤销，请刷新数据！");
 				}
 
 				// 注意不能使用billHead.getDate方法，出产生castException异常
@@ -196,6 +216,9 @@ public class ProductReturnEvents {
 				Debug.logError(e2, "Unable to rollback transaction", module);
 			}
 			throw e;
+		} finally {
+			// 删除单据运行任务到运行表中
+			BillCurrentJobMgr.getInstance().update(billId, true, true, true);
 		}
 		return "success";
 	}

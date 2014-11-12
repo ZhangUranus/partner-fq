@@ -74,6 +74,16 @@ Ext.define('SCM.view.tools.EntityDataUI', {
 																iconCls : 'system-save',
 																action : 'write'
 															}]
+												}, {
+													xtype : 'fieldset',
+													title : '批量撤销成品出仓单',
+													collapsible : true,
+													items : [{
+																xtype : 'button',
+																text : '撤销',
+																iconCls : 'system-save',
+																action : 'cancelBill'
+															}]
 												}]
 									}]
 						});

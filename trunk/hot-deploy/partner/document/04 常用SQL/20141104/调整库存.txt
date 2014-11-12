@@ -1,0 +1,43 @@
+cur_material_balance   c3c6ba07-66e4-47ce-af13-ee16e24c2748   数量：100    金额+50000
+cur_product_balance    c3c6ba07-66e4-47ce-af13-ee16e24c2748   数量：100     金额+50000
+
+
+
+cur_material_balance 6d77cca3-6023-47d4-b7ca-ed5d038beab5   数量：20 金额+50000
+cur_product_balance  6d77cca3-6023-47d4-b7ca-ed5d038beab5   数量：20 金额+50000
+
+
+
+cur_material_balance    3caf10b3-90ce-4d6e-b7b4-87586c3a3f7a    数量：10 金额+20000
+cur_product_balance    3caf10b3-90ce-4d6e-b7b4-87586c3a3f7a     数量：10 金额+20000
+
+
+cur_material_balance    c0644165-aaa3-404f-aaac-3dd48e446b2b    数量：10 金额+10000
+cur_product_balance    c0644165-aaa3-404f-aaac-3dd48e446b2b     数量：10 金额+10000
+
+cur_material_balance    3caf10b3-90ce-4d6e-b7b4-87586c3a3f7a    数量：100 金额+200000
+cur_product_balance    3caf10b3-90ce-4d6e-b7b4-87586c3a3f7a     数量：100 金额+200000
+
+
+cur_material_balance    57e0add2-1f24-4eba-9918-9992d507bfb1    数量：10 金额+10000
+cur_product_balance    57e0add2-1f24-4eba-9918-9992d507bfb1     数量：10 金额+10000
+
+
+
+SELECT po.BIZ_DATE,po.SUBMIT_STAMP,poe.* FROM product_outwarehouse po 
+left join product_outwarehouse_entry poe on po.id = poe.PARENT_ID 
+where material_material_id ='c3c6ba07-66e4-47ce-af13-ee16e24c2748' order by po.biz_date desc;
+
+SELECT po.BIZ_DATE,po.submit_stamp,poe.* FROM product_inwarehouse po 
+left join product_inwarehouse_entry poe on po.id = poe.PARENT_ID 
+where material_material_id ='c3c6ba07-66e4-47ce-af13-ee16e24c2748' order by po.biz_date desc;
+
+
+CREATE TABLE T_BILL_CURRENT_JOB (ID VARCHAR(38) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, 
+	NUMBER VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci, 
+	IS_OUT CHAR(1) CHARACTER SET utf8 COLLATE utf8_general_ci, 
+	IS_CANCEL CHAR(1) CHARACTER SET utf8 COLLATE utf8_general_ci, 
+	LAST_UPDATED_STAMP DATETIME, 
+	LAST_UPDATED_TX_STAMP DATETIME, 
+	CREATED_STAMP DATETIME, CREATED_TX_STAMP DATETIME, 
+	CONSTRAINT PK_T_BILL_CURRENT_JOB PRIMARY KEY (ID))

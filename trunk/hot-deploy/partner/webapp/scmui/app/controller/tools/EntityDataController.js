@@ -28,6 +28,10 @@ Ext.define('SCM.controller.tools.EntityDataController', {
 				
 				this.writeButton = this.listContainer.down('button[action=write]');
 				this.writeButton.addListener('click', this.writeOutDataToDetail, this); // 监听所有请求回调
+				
+
+				this.writeButton = this.listContainer.down('button[action=cancelBill]');
+				this.writeButton.addListener('click', this.cancelBill, this); // 监听所有请求回调
 			},
 			
 			/**
@@ -114,6 +118,28 @@ Ext.define('SCM.controller.tools.EntityDataController', {
 								var result = Ext.decode(response.responseText)
 								if (result.success) {
 									Ext.Msg.alert("提示", "返填数据成功！");
+								} else {
+									showError(result.message);
+								}
+							}
+						});
+			},
+			
+			/**
+			 * 批量撤销单据
+			 */
+			cancelBill : function() {
+				Ext.Ajax.request({
+							scope : this,
+							url : "../../scm/control/cancelBill",
+							timeout : SCM.bigLimitTimes,
+							success : function(response, option) {
+								if (response.responseText.length < 1) {
+									showError('系统没有返回结果');
+								}
+								var result = Ext.decode(response.responseText)
+								if (result.success) {
+									Ext.Msg.alert("提示", "撤销成功！");
 								} else {
 									showError(result.message);
 								}
