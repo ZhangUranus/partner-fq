@@ -11,6 +11,7 @@ delete FROM consign_price_detail where PARENT_ID in (SELECT id FROM consign_ware
 delete FROM consign_warehousing_entry where parent_id in (SELECT id FROM consign_warehousing where BIZ_DATE <'2014-09-01 01:01:01');
 delete FROM consign_warehousing where BIZ_DATE <'2014-09-01 01:01:01';
 
+--注意需要根据迁移的时间进行变化
 delete FROM his_consign_price where !(year > '2013' and month >'08');
 delete FROM his_consign_processed_price where !(year > '2013' and month >'08');
 delete FROM his_material_balance where !(year > '2013' and month >'08');
@@ -58,6 +59,7 @@ delete FROM product_inwarehouse_entry where parent_id in (SELECT id FROM product
 delete FROM product_inwarehouse where BIZ_DATE <'2013-12-01 01:01:01';
 
 --为出货对数表增加临时字段，以便删除数据
+--出货通知单和出货对数单的历史数据在“综合欠数表”的统计中使用到，不能删除
 ALTER TABLE product_out_verify_entry ADD COLUMN `TEMP` DATETIME NULL DEFAULT NULL AFTER `SORT`;
 update product_out_verify_entry pv,(SELECT distinct BIZ_DATE,DELIVER_NUMBER FROM ofbiz.product_out_notification) po set pv.temp = po.biz_date where pv.DELIVER_NUMBER = po.DELIVER_NUMBER;
 delete FROM product_out_verify_entry where TEMP <'2014-09-01 01:01:01';
