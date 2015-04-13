@@ -20,7 +20,7 @@ Ext.define('SCM.view.Header', {
 						        xtype: 'image',
 						        src : 'images/header-img.png',
 						        height : 55,
-						        width : 500
+						        width : 312
 						    }]
 						});
 				this.callParent(arguments);
